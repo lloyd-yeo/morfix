@@ -4,17 +4,16 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStripeDetailsTable extends Migration
-{
+class CreateStripeDetailsTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('stripe_invoice', function (Blueprint $table) {
-            $table->primary('stripe_id')->string();
+    public function up() {
+        Schema::create('stripe_details', function (Blueprint $table) {
+            $table->string('stripe_id')->primary();
             $table->string('email')->nullable();
         });
     }
@@ -24,8 +23,8 @@ class CreateStripeDetailsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('stripe_details');
     }
+
 }

@@ -4,18 +4,18 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMorfixInstagramProfileTable extends Migration
-{
+class CreateMorfixInstagramProfileTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('morfix_instagram_profile', function (Blueprint $table) {
             $table->increments('id');
-            $table->primary(['id', 'user_id']);	
+            $table->integer('user_id');
+            $table->index(['id', 'user_id']);
             $table->string('email')->nullable();
             $table->string('insta_user_id')->nullable();
             $table->string('insta_username')->unique();
@@ -31,7 +31,7 @@ class CreateMorfixInstagramProfileTable extends Migration
             $table->tinyInteger('auto_dm_delay')->default(0);
             $table->tinyInteger('niche')->nullable()->default(0);
             $table->string('niche_target_counter')->default(0);
-            $table->string('speed')->default(Slow);
+            $table->string('speed')->default("Normal");
             $table->dateTime('last_sent_dm')->nullable();
             $table->dateTime('temporary_ban')->nullable();
             $table->dateTime('next_follow_time')->nullable();
@@ -59,7 +59,7 @@ class CreateMorfixInstagramProfileTable extends Migration
             $table->integer('follow_max_followers')->default(0);
             $table->integer('follow_unfollow_delay')->default(300);
             $table->tinyInteger('invalid_user')->default(0);
-            $table->tinyInteger('checkpoint_required')->default(0);   
+            $table->tinyInteger('checkpoint_required')->default(0);
             $table->string('proxy_host')->nullable();
             $table->string('proxy_username')->nullable();
             $table->integer('proxy_port')->nullable();
@@ -72,8 +72,8 @@ class CreateMorfixInstagramProfileTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('morfix_instagram_profile');
     }
+
 }
