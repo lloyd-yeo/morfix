@@ -12,7 +12,7 @@ class CreateStripeInvoiceTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('stripe_invoice', function (Blueprint $table) {
+        Schema::create('stripe_invoices', function (Blueprint $table) {
             $table->string('stripe_id');
             $table->string('charge_id');
             $table->dateTime('charge_created')->nullable();
@@ -40,7 +40,7 @@ class CreateStripeInvoiceTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('stripe_invoice');
+        Schema::dropIfExists('stripe_invoices');
     }
 
 }

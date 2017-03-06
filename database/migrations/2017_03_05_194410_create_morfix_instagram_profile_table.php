@@ -12,7 +12,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('morfix_instagram_profile', function (Blueprint $table) {
+        Schema::create('morfix_instagram_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->index(['id', 'user_id']);
@@ -42,7 +42,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
             $table->dateTime('auto_interaction_ban_time')->nullable();
             $table->string('login_log')->nullable();
             $table->dateTime('last_instagram_login')->nullable();
-            $table->integer('follow_cycle')->default(300);
+            $table->integer('follow_cycle')->default(1000);
             $table->integer('daily_follow_quota')->default(170);
             $table->integer('daily_unfollow_quota')->default(170);
             $table->tinyInteger('auto_interaction')->default(0);
@@ -60,10 +60,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
             $table->integer('follow_unfollow_delay')->default(300);
             $table->tinyInteger('invalid_user')->default(0);
             $table->tinyInteger('checkpoint_required')->default(0);
-            $table->string('proxy_host')->nullable();
-            $table->string('proxy_username')->nullable();
-            $table->integer('proxy_port')->nullable();
-            $table->string('proxy_password')->nullable();
+            $table->string('proxy')->nullable();
         });
     }
 
@@ -73,7 +70,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('morfix_instagram_profile');
+        Schema::dropIfExists('morfix_instagram_profiles');
     }
 
 }
