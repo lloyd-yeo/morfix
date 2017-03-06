@@ -13,13 +13,13 @@ class CreateMorfixProfileLikeLogs extends Migration {
      */
     public function up() {
         Schema::create('morfix_profile_like_logs', function (Blueprint $table) {
-            $table->integer('log_id')->primary();
+            $table->integer('log_id')->increments();
             $table->string('insta_username')->nullable();
             $table->string('target_username')->nullable();
             $table->string('target_media')->nullable();
             $table->string('target_media_code')->nullable();
             $table->text('log')->nullable();
-            $table->dateTime('date_liked');
+            $table->dateTime('date_liked')->useCurrent();
         });
     }
 
