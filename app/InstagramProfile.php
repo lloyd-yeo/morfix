@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class InstagramProfile extends Model
 {
-    protected $table = "morfix_instagram_profile";
+    protected $table = "morfix_instagram_profiles";
 }
