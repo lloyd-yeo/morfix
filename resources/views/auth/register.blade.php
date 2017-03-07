@@ -41,12 +41,12 @@
         <!-- Bootstrap and OneUI CSS framework -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" id="css-main" href="assets/css/oneui.css">
-
+        <link rel="stylesheet" id="css-main" href="assets/css/app.css">
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
         <!-- END Stylesheets -->
     </head>
-    <body>
+    <body class="bg-image" style="background-image: url('assets/img/photos/photo18@2x.jpg');">
         <!-- Register Content -->
         <div class="bg-white pulldown">
             <div class="content content-boxed overflow-hidden">
@@ -55,7 +55,7 @@
                         <div class="push-30-t push-20 animated fadeIn">
                             <!-- Register Title -->
                             <div class="text-center">
-                                <img class="text-primary" style="width: 56px; height: 56px;" src="assets/img/logo/mx-black-crop.png" alt="Morfix Logo"/>
+                                <img class="text-primary morfix-front-logo" src="assets/img/logo/mx-black-crop.png" alt="Morfix Logo"/>
                                 <h1 class="h3 push-10-t">Create Account</h1>
                             </div>
                             <!-- END Register Title -->
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-                                        <button class="btn btn-sm btn-block btn-success" type="submit">Create Account</button>
+                                        <button class="btn btn-sm btn-block btn-primary" type="submit">Create Account</button>
                                     </div>
                                 </div>
                             </form>

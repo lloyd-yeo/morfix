@@ -41,7 +41,7 @@
         <!-- Bootstrap and OneUI CSS framework -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" id="css-main" href="assets/css/oneui.css">
-        
+        <link rel="stylesheet" id="css-main" href="assets/css/app.css">
         <!-- Scripts -->
         <script>
             window.Laravel = {!! json_encode([
@@ -53,7 +53,8 @@
         <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
         <!-- END Stylesheets -->
     </head>
-    <body>
+    
+    <body class="bg-image" style="background-image: url('assets/img/photos/photo18@2x.jpg');">
         <!-- Login Content -->
         <div class="bg-white pulldown">
             <div class="content content-boxed overflow-hidden">
@@ -63,7 +64,7 @@
                             <!-- Login Title -->
                             <div class="text-center">
                                 <!--<i class="fa fa-2x fa-circle-o-notch text-primary"></i>-->
-                                <img class="text-primary" style="width: 56px; height: 56px;" src="assets/img/logo/mx-black-crop.png" alt="Morfix Logo"/>
+                                <img class="text-primary morfix-front-logo" src="assets/img/logo/mx-black-crop.png" alt="Morfix Logo"/>
                                 <p class="text-muted push-15-t">Welcome to Morfix</p>
                             </div>
                             <!-- END Login Title -->
