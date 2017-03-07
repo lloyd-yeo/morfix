@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('timezone')->nullable();
-            $table->string('verification_token')->nullable();
+            $table->string('verification_token')->unique();
             $table->timestamp('last_login')->nullable();
             $table->tinyInteger('number_of_accts')->default(1);
             
@@ -55,7 +55,7 @@ class CreateUsersTable extends Migration
             $table->decimal('total_commission', 13, 4)->default(0);
             
             //proxy
-            $table->tinyInteger('proxy_id')->nullable();
+            $table->string('proxy')->nullable();
         });
     }
 

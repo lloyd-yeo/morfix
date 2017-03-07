@@ -5128,7 +5128,8 @@ a.list-group-item:focus {
   box-shadow: none;
 }
 .header-navbar-transparent.header-navbar-fixed.header-navbar-scroll #header-navbar {
-  background-color: #3e4a59;
+  /*background-color: #3e4a59;*/
+  background-color: rgba(0, 112, 184, 0.83);
 }
 .header-navbar-transparent.header-navbar-fixed #main-container {
   padding-top: 0;
@@ -11706,4 +11707,8 @@ div.tagsinput span.tag a:hover {
 }
 .editor-preview {
   z-index: 1050;
+}
+img.promo {
+    height: 700px; 
+    width: 350px;
 }

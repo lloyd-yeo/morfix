@@ -9,7 +9,8 @@
         "laravel/cashier": "^7.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "mgp25/instagram-php": "dev-master"
+        "mgp25/instagram-php": "dev-master",
+        "webpatser/laravel-uuid": "2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

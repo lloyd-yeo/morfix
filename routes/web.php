@@ -11,14 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('index');
+//});
+//
+//Route::get('/frontend_pricing.php', function() {
+//    return view('frontend_pricing');
+//});
+//
+//Route::get('/bd_dashboard', function() {
+//    return view('bd_dashboard');
+//});
 
-Route::get('/frontend_pricing.php', function() {
-    return view('frontend_pricing');
-});
-
-Route::get('/bd_dashboard.php', function() {
-    return view('bd_dashboard');
-});
+Auth::routes();
+Route::get('/', function(){ return view("index"); });
+Route::get('/home', 'HomeController@index');
