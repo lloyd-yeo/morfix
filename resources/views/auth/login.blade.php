@@ -77,9 +77,15 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-primary floating">
-                                            <input class="form-control" type="text" id="login-username" name="email" value="{{ old('email') }}" required autofocus>
-                                            <label for="login-username">Username</label>
+                                            <input class="form-control" type="text" id="login-username" name="email" 
+                                                   value="{{ old('email') }}" required autofocus>
+                                            <label for="login-username">Email</label>
                                         </div>
+                                        @if ($errors->has('email'))
+                                            <span class="help-block danger">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -88,6 +94,11 @@
                                             <input class="form-control" type="password" id="login-password" name="password" required>
                                             <label for="login-password">Password</label>
                                         </div>
+                                        @if ($errors->has('password'))
+                                            <span class="help-block danger">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="form-group">

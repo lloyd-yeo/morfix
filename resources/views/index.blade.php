@@ -87,57 +87,6 @@
             <!-- Header -->
             <header id="header-navbar" class="content-mini content-mini-full">
                 <div class="content-boxed">
-                    <!-- Header Navigation Right -->
-                    <!--                    <ul class="nav-header pull-right">
-                                            <li>
-                                                 Themes functionality initialized in App() -> uiHandleTheme() 
-                                                <div class="btn-group">
-                                                    <button class="btn btn-link text-white dropdown-toggle" data-toggle="dropdown" type="button">
-                                                        <i class="si si-drop"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-right sidebar-mini-hide font-s13">
-                                                        <li>
-                                                            <a data-toggle="theme" data-theme="default" tabindex="-1" href="javascript:void(0)">
-                                                                <i class="fa fa-circle text-default pull-right"></i> <span class="font-w600">Default</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a data-toggle="theme" data-theme="assets/css/themes/amethyst.min.css" tabindex="-1" href="javascript:void(0)">
-                                                                <i class="fa fa-circle text-amethyst pull-right"></i> <span class="font-w600">Amethyst</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a data-toggle="theme" data-theme="assets/css/themes/city.min.css" tabindex="-1" href="javascript:void(0)">
-                                                                <i class="fa fa-circle text-city pull-right"></i> <span class="font-w600">City</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a data-toggle="theme" data-theme="assets/css/themes/flat.min.css" tabindex="-1" href="javascript:void(0)">
-                                                                <i class="fa fa-circle text-flat pull-right"></i> <span class="font-w600">Flat</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a data-toggle="theme" data-theme="assets/css/themes/modern.min.css" tabindex="-1" href="javascript:void(0)">
-                                                                <i class="fa fa-circle text-modern pull-right"></i> <span class="font-w600">Modern</span>
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a data-toggle="theme" data-theme="assets/css/themes/smooth.min.css" tabindex="-1" href="javascript:void(0)">
-                                                                <i class="fa fa-circle text-smooth pull-right"></i> <span class="font-w600">Smooth</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <li class="hidden-md hidden-lg">
-                                                 Toggle class helper (for main header navigation below in small screens), functionality initialized in App() -> uiToggleClass() 
-                                                <button class="btn btn-link text-white pull-right" data-toggle="class-toggle" data-target=".js-nav-main-header" data-class="nav-main-header-o" type="button">
-                                                    <i class="fa fa-navicon"></i>
-                                                </button>
-                                            </li>
-                                        </ul>-->
-                    <!-- END Header Navigation Right -->
-
                     <!-- Main Header Navigation -->
                     <ul class="js-nav-main-header nav-main-header pull-right">
                         <li class="text-right hidden-md hidden-lg">
@@ -146,35 +95,9 @@
                                 <i class="fa fa-times"></i>
                             </button>
                         </li>
-
                         <li>
-                            <a class="active" href="frontend_home_header_nav.html">Home</a>
+                            <a class="active" href="/">Home</a>
                         </li>
-
-                        <!--                        <li>
-                                                    <a class="nav-submenu" href="javascript:void(0)">Pages</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="frontend_team.html">Team</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="frontend_support.html">Support</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="frontend_search.html">Search</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="frontend_about.html">About</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="frontend_login.html">Login</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="frontend_signup.html">Sign Up</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>-->
-
                         <li>
                             <a href="/blog">Blog</a>
                         </li>
@@ -231,7 +154,7 @@
                                     <a class="btn btn-noborder btn-lg btn-primary push-5 visibility-hidden" 
                                        style="background-color:#c41a00; font-size: 15px;"
                                        data-toggle="appear" 
-                                       data-class="animated fadeInRight" href="base_pages_dashboard.html">
+                                       data-class="animated fadeInRight" href="/register">
                                         Start My Trial Now
                                     </a>
                                 </div>
@@ -466,7 +389,7 @@
                     </section>
                 </div>
                 <!-- END Mini Stats -->
-                
+
                 <div class="bg-gray-lighter">
                     <section class="content content-boxed">
                         <div class="push-10-t push-10 text-center">
@@ -493,7 +416,7 @@
                         <!-- END Section Content -->
                     </section>
                 </div>
-                
+
                 <!-- Pricing -->
                 <div style='background-color: rgba(0, 0, 0, 0.83);'>
                     <section class="content content-boxed overflow-hidden">
@@ -518,9 +441,9 @@
                                         <div style='padding:5px; background-color:#494949; height: 274px;'>
                                             <h3 class="push-20-t block-title h1 font-w700 text-white" 
                                                 style="font-family: 'Montserrat', sans-serif; font-size: 25px;">FREE</h3>
-                                                <div class="push-10-t block-title h6 text-white" 
-                                             style="font-size: 14px; text-transform: none; font-weight: 100;
-                                             font-style: italic; font-family: 'Lora', serif;">&nbsp;</div>
+                                            <div class="push-10-t block-title h6 text-white" 
+                                                 style="font-size: 14px; text-transform: none; font-weight: 100;
+                                                 font-style: italic; font-family: 'Lora', serif;">&nbsp;</div>
                                             <div class="push-20-t text-white" 
                                                  style="font-family: 'Montserrat', sans-serif; 
                                                  font-style: normal; font-weight: normal; height: 200px;">
@@ -558,7 +481,7 @@
                                                 </p>
                                             </div>
                                             <div style='padding-top: 0px; padding-bottom: 40px;'>
-                                                <a href='' class="text-white" style='
+                                                <a href='/register' class="text-white" style='
                                                    padding: 10px 50px;
                                                    font-weight: 600; 
                                                    font-size: 15px; 
@@ -584,8 +507,8 @@
                                             <h3 class="push-20-t block-title h1 font-w700 text-white" 
                                                 style="font-family: 'Montserrat', sans-serif; font-size: 25px;">PREMIUM</h3>
                                             <div class="push-10-t block-title h6 text-white" 
-                                             style="font-size: 14px; text-transform: none; font-weight: 100;
-                                             font-style: italic; font-family: 'Lora', serif;">&nbsp;</div>
+                                                 style="font-size: 14px; text-transform: none; font-weight: 100;
+                                                 font-style: italic; font-family: 'Lora', serif;">&nbsp;</div>
                                             <div class="push-20-t text-white" 
                                                  style="font-family: 'Montserrat', sans-serif; 
                                                  font-style: normal; font-weight: normal; height: 200px;">
@@ -631,7 +554,7 @@
                                                 </p>
                                             </div>
                                             <div style='padding-top: 0px; padding-bottom: 40px;'>
-                                                <a href='' class="text-white" style='
+                                                <a href='/register' class="text-white" style='
                                                    background-color:rgb(30, 115, 190); 
                                                    padding: 10px 50px;
                                                    font-weight: 600; 
@@ -706,7 +629,7 @@
                                                 </p>
                                             </div>
                                             <div style='padding-top: 0px; padding-bottom: 40px;'>
-                                                <a href='' class="text-white" style='
+                                                <a href='/register' class="text-white" style='
                                                    padding: 10px 50px;
                                                    font-weight: 600; 
                                                    font-size: 15px; 

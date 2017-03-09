@@ -26,7 +26,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
             $table->string('insta_new_follower_template')->nullable();
             $table->string('follow_up_message')->nullable();
             $table->string('num_posts')->nullable();
-            $table->decimal('recent_activity_timestamp')->nullable()->default(0.0000);
+            $table->string('recent_activity_timestamp')->nullable();
             $table->tinyInteger('auto_dm_new_follower')->default(0);
             $table->tinyInteger('auto_dm_delay')->default(0);
             $table->tinyInteger('niche')->nullable()->default(0);

@@ -1358,6 +1358,12 @@ input[type="email"].form-control {
 .label-danger[href]:focus {
   background-color: #c54736;
 }
+.label-navy {
+    background-color: #0c5f94;
+}
+.label-violet {
+    background-color: #6A5ACD;
+}
 .badge-primary {
   background-color: #5c90d2;
 }

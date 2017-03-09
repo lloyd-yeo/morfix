@@ -15,13 +15,13 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('timezone')->nullable();
             $table->string('verification_token')->unique();
             $table->timestamp('last_login')->nullable();
-            $table->tinyInteger('number_of_accts')->default(1);
+            $table->integer('number_of_accts')->default(1);
             
             //engagement group
             $table->tinyInteger('engagement_quota')->default(0);
@@ -52,10 +52,7 @@ class CreateUsersTable extends Migration
             //commission
             $table->string('paypal_email')->nullable();
             $table->decimal('pending_commission', 13, 4)->default(0);
-            $table->decimal('total_commission', 13, 4)->default(0);
-            
-            //proxy
-            $table->string('proxy')->nullable();
+            $table->decimal('total_commission', 13, 4)->default(0); 
         });
     }
 
