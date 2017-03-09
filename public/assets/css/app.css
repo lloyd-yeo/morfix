@@ -23,3 +23,15 @@
     width: 80px; 
     height: 80px;
 }
+.text-lightred {
+  color: #E14658;
+}
+a.text-lightred:hover,
+a.text-lightred:active,
+a.text-lightred:focus,
+button.text-lightred:hover,
+button.text-lightred:active,
+button.text-lightred:focus {
+  color: #E14658;
+  opacity: .75;
+}
