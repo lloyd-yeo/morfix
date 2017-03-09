@@ -18,15 +18,15 @@ class CreateMorfixInstagramProfileTable extends Migration {
             $table->index(['id', 'user_id']);
             $table->string('email')->nullable();
             $table->string('insta_user_id')->nullable();
-            $table->string('insta_username')->unique();
+            $table->string('insta_username');
             $table->string('insta_pw')->nullable();
             $table->string('profile_pic_url')->nullable();
             $table->string('follower_count')->nullable();
             $table->string('profile_full_name')->nullable();
-            $table->string('insta_new_follower_template')->nullable();
-            $table->string('follow_up_message')->nullable();
+            $table->mediumText('insta_new_follower_template')->nullable();
+            $table->mediumText('follow_up_message')->nullable();
             $table->string('num_posts')->nullable();
-            $table->decimal('recent_activity_timestamp')->nullable()->default(0.0000);
+            $table->decimal('recent_activity_timestamp',15,4)->nullable()->default(0.0000);
             $table->tinyInteger('auto_dm_new_follower')->default(0);
             $table->tinyInteger('auto_dm_delay')->default(0);
             $table->tinyInteger('niche')->nullable()->default(0);
@@ -40,7 +40,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
             $table->tinyInteger('unfollow')->default(0);
             $table->tinyInteger('auto_interaction_ban')->default(0);
             $table->dateTime('auto_interaction_ban_time')->nullable();
-            $table->string('login_log')->nullable();
+            $table->text('login_log')->nullable();
             $table->dateTime('last_instagram_login')->nullable();
             $table->integer('follow_cycle')->default(1000);
             $table->integer('daily_follow_quota')->default(170);
