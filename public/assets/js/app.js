@@ -790,11 +790,17 @@ var App = function() {
             var $before     = $this.data('before');
             var $speed      = $this.data('speed') ? $this.data('speed') : 1500;
             var $interval   = $this.data('interval') ? $this.data('interval') : 15;
-
+            var $subject    = $this.data('subject');
+            
             $this.appear(function() {
                 $this.countTo({
                     speed: $speed,
                     refreshInterval: $interval,
+                    formatter: function(value, options) {
+                        if ($subject === "money") {
+                            return "$" + value.toFixed(options.decimals);
+                        }
+                    },
                     onComplete: function() {
                         if($after) {
                             $this.html($this.html() + $after);
@@ -1017,7 +1023,7 @@ var App = function() {
         jQuery('.js-tags-input').tagsInput({
             height: '36px',
             width: '100%',
-            defaultText: 'Add tag',
+            defaultText: 'Add new',
             removeWithBackspace: true,
             delimiter: [',']
         });

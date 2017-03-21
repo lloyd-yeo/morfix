@@ -6,11 +6,11 @@
             <source src="assets/img/videos/hero_tech.mp4" type="video/mp4"><source src="assets/img/videos/hero_tech.webm" type="video/webm">
             <source src="assets/img/videos/hero_tech.ogv" type="video/ogg"></video></div>
     <div>
-        <section class="content content-full content-boxed">
+        <section class="content content-full content-boxed" style="max-width: 100%;">
             <!-- Section Content -->
             <div class="push-200-t">
-                <h1 class="h2 text-white animated zoomIn">Morfix Dashboard</h1>
-                <h2 class="h5 text-white-op animated zoomIn">Welcome back {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}!</h2>
+                <h1 class="h1 text-white animated zoomIn font-w700 font-s36">Morfix Dashboard</h1>
+                <h2 class="h3 text-white-op animated zoomIn font-w700">Welcome back {{{ isset(Auth::user()->name) ? Auth::user()->name : Auth::user()->email }}}!</h2>
             </div>
             <!-- END Section Content -->
         </section>

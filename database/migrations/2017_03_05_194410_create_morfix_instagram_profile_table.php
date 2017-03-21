@@ -15,8 +15,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
         Schema::create('morfix_instagram_profiles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->index(['id', 'user_id']);
-            $table->string('email')->nullable();
+            $table->string('email')->index();
             $table->string('insta_user_id')->nullable();
             $table->string('insta_username');
             $table->string('insta_pw')->nullable();
@@ -61,6 +60,7 @@ class CreateMorfixInstagramProfileTable extends Migration {
             $table->tinyInteger('invalid_user')->default(0);
             $table->tinyInteger('checkpoint_required')->default(0);
             $table->string('proxy')->nullable();
+            $table->timestamps();
         });
     }
 

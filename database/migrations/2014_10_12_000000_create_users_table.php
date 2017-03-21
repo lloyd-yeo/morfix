@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('email')->unique();
@@ -51,8 +52,8 @@ class CreateUsersTable extends Migration
             
             //commission
             $table->string('paypal_email')->nullable();
-            $table->decimal('pending_commission', 13, 4)->default(0);
-            $table->decimal('total_commission', 13, 4)->default(0); 
+            $table->decimal('pending_commission', 15, 4)->default(0);
+            $table->decimal('total_commission', 15, 4)->default(0); 
         });
     }
 

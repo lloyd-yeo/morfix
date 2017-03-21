@@ -35,3 +35,16 @@ button.text-lightred:focus {
   color: #E14658;
   opacity: .75;
 }
+
+.text-moneygreen {
+  color: #4E9455;
+}
+a.text-moneygreen:hover,
+a.text-moneygreen:active,
+a.text-moneygreen:focus,
+button.text-moneygreen:hover,
+button.text-moneygreen:active,
+button.text-moneygreen:focus {
+  color: #4E9455;
+  opacity: .75;
+}

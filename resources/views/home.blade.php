@@ -1,283 +1,86 @@
 @extends('layouts.app')
 
+@section('css')
+@include('dashboard.css')
+@endsection
+
+@section('sidebar')
+@include('sidebar', ['page' => 'home'])
+@endsection
+
 @section('content')
-
 @include('dashboard.hero')
-
 @include('dashboard.statistics')
-
 <!-- Page Content -->
 <div class="content">
     <div class="row">
-        
-        <div class='col-lg-3'>
-            
-        </div>
-        
-        <div class="col-lg-6">
+        <div class="col-lg-9">
             <!-- Main Dashboard Chart -->
             <div class="block">
-                <div class="block-header">
-                    <h3 class="block-title">Daily Followers Growth</h3>
+                <div id="affiliate-chart-header" class="block-header bg-primary">
+                    <h3 class="block-title">Your affiliate link performance</h3>
                 </div>
-                <div class="block-content block-content-full bg-gray-lighter text-center">
+                <div class="block-content block-content-full bg-gray-lighter text-center chart-container">
                     <!-- Chart.js Charts (initialized in js/pages/base_pages_dashboard.js), for more examples you can check out http://www.chartjs.org/docs/ -->
-                    <div style="height: 174px;"><canvas class="js-dash-chartjs-lines"></canvas></div>
+                    <div id="affiliate-chart" style="height: 374px;"><canvas class="js-dash-chartjs-lines"></canvas></div>
                 </div>
-                <div class="block-content text-center">
+                <div class="block-content text-center" id="affiliate-chart-footer">
                     <div class="row items-push text-center">
-                        <div class="col-xs-6 col-lg-3">
-                            <div class="push-10"><i class="si si-graph fa-2x"></i></div>
-                            <div class="h5 font-w300 text-muted">+ 205 Sales</div>
-                        </div>
-                        <div class="col-xs-6 col-lg-3">
+                        <div class="col-xs-6 col-lg-12">
                             <div class="push-10"><i class="si si-users fa-2x"></i></div>
-                            <div class="h5 font-w300 text-muted">+ 25% Clients</div>
-                        </div>
-                        <div class="col-xs-6 col-lg-3 visible-lg">
-                            <div class="push-10"><i class="si si-star fa-2x"></i></div>
-                            <div class="h5 font-w300 text-muted">+ 10 Ratings</div>
-                        </div>
-                        <div class="col-xs-6 col-lg-3 visible-lg">
-                            <div class="push-10"><i class="si si-share fa-2x"></i></div>
-                            <div class="h5 font-w300 text-muted">+ 35 Followers</div>
+                            <div class="h5 font-w300 text-muted">+ 1 Client</div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- END Main Dashboard Chart -->
         </div>
-        
+
         @include('dashboard.leaderboard')
-        
+
+        <script type="text/javascript">
+            var $leaderboardHeight = $("#leaderboard-container").height();
+            var $affiliateChartHeaderHeight = $("#affiliate-chart-header").height();
+            var $affiliateChartFooterHeight = $("#affiliate-chart-footer").height();
+            var $affiliateChartHeight = $leaderboardHeight - $affiliateChartHeaderHeight - $affiliateChartFooterHeight - 20 - 20 - 20 - 15 - 15;
+            $("#affiliate-chart").css("height", $affiliateChartHeight + "px");
+        </script>
     </div>
     <div class="row">
-        <div class="col-lg-8">
-            <!-- News -->
-            <div class="block">
-                <div class="block-header">
-                    <ul class="block-options">
-                        <li>
-                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                        </li>
-                    </ul>
-                    <h3 class="block-title"> Updates</h3>
-                </div>
-                <div class="block-content bg-gray-lighter">
-                    <!-- Slick slider (.js-slider class is initialized in App() -> uiHelperSlick()) -->
-                    <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
-                    <div class="js-slider remove-margin-b" data-slider-autoplay="true" data-slider-autoplay-speed="4000">
-                        <div>
-                            <blockquote>
-                                <p>Be yourself; everyone else is already taken.</p>
-                                <footer>Oscar Wilde</footer>
-                            </blockquote>
-                        </div>
-                        <div>
-                            <blockquote>
-                                <p>Don't cry because it's over, smile because it happened.</p>
-                                <footer>Dr. Seuss</footer>
-                            </blockquote>
-                        </div>
-                        <div>
-                            <blockquote>
-                                <p>Strive not to be a success, but rather to be of value.</p>
-                                <footer>Albert Einstein</footer>
-                            </blockquote>
-                        </div>
-                        <div>
-                            <blockquote>
-                                <p>Every child is an artist. The problem is how to remain an artist once he grows up.</p>
-                                <footer>Pablo Picasso</footer>
-                            </blockquote>
-                        </div>
-                        <div>
-                            <blockquote>
-                                <p>There is only one way to avoid criticism: do nothing, say nothing, and be nothing.</p>
-                                <footer>Aristotle</footer>
-                            </blockquote>
-                        </div>
-                    </div>
-                    <!-- END Slick slider -->
-                </div>
-                <div class="block-content">
-                    <ul class="list list-timeline pull-t">
-                        <!-- Twitter Notification -->
-                        <li>
-                            <div class="list-timeline-time">12 hrs ago</div>
-                            <i class="fa fa-twitter list-timeline-icon bg-info"></i>
-                            <div class="list-timeline-content">
-                                <p class="font-w600">+ 1150 Followers</p>
-                                <p class="font-s13">You’re getting more and more followers, keep it up!</p>
-                            </div>
-                        </li>
-                        <!-- END Twitter Notification -->
-
-                        <!-- Generic Notification -->
-                        <li>
-                            <div class="list-timeline-time">4 hrs ago</div>
-                            <i class="fa fa-briefcase list-timeline-icon bg-city"></i>
-                            <div class="list-timeline-content">
-                                <p class="font-w600">+ 3 New Products were added!</p>
-                                <p class="font-s13">Congratulations!</p>
-                            </div>
-                        </li>
-                        <!-- END Generic Notification -->
-
-                        <!-- System Notification -->
-                        <li>
-                            <div class="list-timeline-time">1 day ago</div>
-                            <i class="fa fa-check list-timeline-icon bg-success"></i>
-                            <div class="list-timeline-content">
-                                <p class="font-w600">Database backup completed!</p>
-                                <p class="font-s13">Download the <a href="javascript:void(0)">latest backup</a>.</p>
-                            </div>
-                        </li>
-                        <!-- END System Notification -->
-
-                        <!-- Facebook Notification -->
-                        <li>
-                            <div class="list-timeline-time">3 hrs ago</div>
-                            <i class="fa fa-facebook list-timeline-icon bg-default"></i>
-                            <div class="list-timeline-content">
-                                <p class="font-w600">+ 290 Page Likes</p>
-                                <p class="font-s13">This is great, keep it up!</p>
-                            </div>
-                        </li>
-                        <!-- END Facebook Notification -->
-
-                        <!-- Social Notification -->
-                        <li>
-                            <div class="list-timeline-time">2 days ago</div>
-                            <i class="fa fa-user-plus list-timeline-icon bg-modern"></i>
-                            <div class="list-timeline-content">
-                                <p class="font-w600">+ 3 Friend Requests</p>
-                                <ul class="nav-users push-10-t push">
-                                    <li>
-                                        <a href="base_pages_profile.html">
-                                            <img class="img-avatar" src="assets/img/avatars/avatar11.jpg" alt="">
-                                            <i class="fa fa-circle text-success"></i> Ethan Howard
-                                            <div class="font-w400 text-muted"><small>Graphic Designer</small></div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="base_pages_profile.html">
-                                            <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
-                                            <i class="fa fa-circle text-warning"></i> Lisa Gordon
-                                            <div class="font-w400 text-muted"><small>Photographer</small></div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="base_pages_profile.html">
-                                            <img class="img-avatar" src="assets/img/avatars/avatar16.jpg" alt="">
-                                            <i class="fa fa-circle text-danger"></i> Walter Fox
-                                            <div class="font-w400 text-muted"><small>UI Designer</small></div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- END Social Notification -->
-
-                        <!-- System Notification -->
-                        <li class="push-5">
-                            <div class="list-timeline-time">1 week ago</div>
-                            <i class="fa fa-cog list-timeline-icon bg-primary-dark"></i>
-                            <div class="list-timeline-content">
-                                <p class="font-w600">System updated to v2.02</p>
-                                <p class="font-s13">Check the complete changelog at the <a href="javascript:void(0)">activity page</a>.</p>
-                            </div>
-                        </li>
-                        <!-- END System Notification -->
-                    </ul>
-                </div>
-            </div>
-            <!-- END News -->
-        </div>
-        <div class="col-lg-4">
+    @foreach ($user_ig_profiles as $ig_profile)
+    
+        <div class="col-lg-4 insta-profile" data-id="{{ $ig_profile->id }}">
             <!-- Content Grid -->
             <div class="content-grid">
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- Author of the Month -->
-                        <a class="block block-link-hover2" href="base_pages_profile.html">
-                            <div class="block-header">
-                                <h3 class="block-title text-center">Author of the Month</h3>
+                        <a class="block block-link-hover2" target="_blank" href="https://www.instagram.com/{{ $ig_profile->insta_username }}/">
+                            <div class="block-header bg-primary">
+                                <h3 class="block-title text-center text-white"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</h3>
                             </div>
                             <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo2.jpg');">
                                 <div>
-                                    <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar1.jpg" alt="">
+                                    <img class="img-avatar img-avatar96 img-avatar-thumb" src="{{ $ig_profile->profile_pic_url }}" alt="">
                                 </div>
-                                <div class="h5 text-white push-15-t push-5">Ashley Welch</div>
-                                <div class="h5 text-white-op">Web Developer</div>
+                                <div class="h5 text-white push-15-t push-5"> {{ $ig_profile->profile_full_name }}</div>
+                                <!--<div class="h5 text-white-op">Web Developer</div>-->
                             </div>
-                            <div class="block-content">
-                                <div class="row items-push text-center">
-                                    <div class="col-xs-6">
-                                        <div class="push-5"><i class="si si-briefcase fa-2x"></i></div>
-                                        <div class="h5 font-w300 text-muted">9 Projects</div>
-                                    </div>
+                            <div class="block-content text-primary">
+                                <div class="row items-push text-center font-w700">
                                     <div class="col-xs-6">
                                         <div class="push-5"><i class="si si-camera fa-2x"></i></div>
-                                        <div class="h5 font-w300 text-muted">74 Photos</div>
+                                        <div class="h5 font-w300">{{ $ig_profile->num_posts }} Posts</div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="push-5"><i class="si si-users fa-2x"></i></div>
+                                        <div class="h5 font-w300">{{ $ig_profile->follower_count }} Followers</div>
                                     </div>
                                 </div>
                             </div>
                         </a>
                         <!-- END Author of the Month -->
 
-                        <!-- Mini Stats -->
-                        <a class="block block-link-hover3" href="javascript:void(0)">
-                            <table class="block-table text-center">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 50%;">
-                                            <div class="push-30 push-30-t">
-                                                <i class="si si-graph fa-3x text-primary"></i>
-                                            </div>
-                                        </td>
-                                        <td class="bg-gray-lighter" style="width: 50%;">
-                                            <div class="h1 font-w700"><span class="h2 text-muted">+</span> 78</div>
-                                            <div class="h5 text-muted text-uppercase push-5-t">Sales</div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </a>
-                        <a class="block block-link-hover3" href="javascript:void(0)">
-                            <table class="block-table text-center">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 50%;">
-                                            <div class="push-30 push-30-t">
-                                                <i class="si si-social-dribbble fa-3x text-smooth"></i>
-                                            </div>
-                                        </td>
-                                        <td class="bg-gray-lighter" style="width: 50%;">
-                                            <div class="h1 font-w700"><span class="h2 text-muted">+</span> 69</div>
-                                            <div class="h5 text-muted text-uppercase push-5-t">Likes</div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </a>
-                        <a class="block block-link-hover3" href="javascript:void(0)">
-                            <table class="block-table text-center">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 50%;">
-                                            <div class="push-30 push-30-t">
-                                                <i class="si si-social-youtube fa-3x text-city"></i>
-                                            </div>
-                                        </td>
-                                        <td class="bg-gray-lighter" style="width: 50%;">
-                                            <div class="h1 font-w700"><span class="h2 text-muted">+</span> 88</div>
-                                            <div class="h5 text-muted text-uppercase push-5-t">Subs</div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </a>
                         <a class="block block-link-hover3" href="javascript:void(0)">
                             <table class="block-table text-center">
                                 <tbody>
@@ -288,7 +91,11 @@
                                             </div>
                                         </td>
                                         <td class="bg-gray-lighter" style="width: 50%;">
-                                            <div class="h1 font-w700"><span class="h2 text-muted">+</span> 96</div>
+                                            @if ($user_ig_new_follower[$ig_profile->insta_username] >= 0)
+                                            <div class="h1 font-w700"><span class="h2 text-muted">+</span> {{ abs($user_ig_new_follower[$ig_profile->insta_username]) }}</div>
+                                            @else
+                                            <div class="h1 font-w700"><span class="h2 text-muted">-</span> {{ abs($user_ig_new_follower[$ig_profile->insta_username]) }}</div>
+                                            @endif
                                             <div class="h5 text-muted text-uppercase push-5-t"> Followers</div>
                                         </td>
                                     </tr>
@@ -301,7 +108,73 @@
             </div>
             <!-- END Content Grid -->
         </div>
+        <div class="col-lg-8 follower-chart">
+            <div class="block">
+                <div id="follower-chart-header-{{ $ig_profile->id }}" class="block-header bg-primary">
+                    <h3 class="block-title"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}'s DAILY FOLLOWER TRENDS</h3>
+                </div>
+
+                <div class="block-content block-content-full bg-gray-lighter text-center chart-container">
+                     <!--Chart.js Charts (initialized in js/pages/base_pages_dashboard.js), for more examples you can check out http://www.chartjs.org/docs/--> 
+                    <div id="follower-count-chart-{{ $ig_profile->id }}" style="height: 374px;" >
+                        <canvas class="follower-count-chart-lines" data-csv="{{ $user_ig_analysis[$ig_profile->insta_username] }}" data-label="{{ $user_ig_analysis_label[$ig_profile->insta_username] }}"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    @endforeach
     </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <!-- Material (floating) Login -->
+            <div class="block block-themed">
+                <div class="block-header bg-primary">
+                    <h3 class="block-title"><i class="fa fa-plus"></i> Add a new Instagram Profile</h3>
+                </div>
+                <div class="block-content">
+                    <form class="form-horizontal push-10-t push-10" method="post" id="add-instagram-profile-form">
+                        <input type="hidden" name="user-id" value="{{ Auth::user()->id }}"/> 
+                        <input type="hidden" name="user-email" value="{{ Auth::user()->email }}"/> 
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="form-material floating">
+                                    <input class="form-control" type="text" id="login3-username" name="ig-username">
+                                    <label for="login3-username">Instagram Username</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="form-material floating">
+                                    <input class="form-control" type="text" id="login3-password" name="ig-password">
+                                    <label for="login3-password">Instagram Password</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-arrow-right push-5-r"></i> Add Profile</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END Material (floating) Login -->
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(".insta-profile").each(function (index) {
+            var $instaId = $(this).attr("data-id");
+            $("#follower-count-chart-" + $instaId).css("height", ($(this).height() - 24 - 40 - $("#follower-chart-header-" + $instaId).height() - 15 - 15) + "px");
+        });
+    </script>
 </div>
 <!-- END Page Content -->
+@endsection
+
+@section('js')
+@include('dashboard.js')
 @endsection

@@ -1,6 +1,6 @@
 <div class="col-lg-3">
     <!-- Latest Sales Widget -->
-    <div class="block">
+    <div id="leaderboard-container" class="block">
         <div class="block-header">
             <ul class="block-options">
             </ul>
@@ -25,30 +25,30 @@
                                 <tbody>
                                     @foreach ($leaderboard_weekly as $user)
                                         @if ($loop->iteration == 1)
-                                        <tr class='bg-default-darker'>
+                                        <tr class='bg-modern-lighter'>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                             <td><i class='text-primary fa fa-trophy'></i></td>
                                         </tr>
                                         @elseif ($loop->iteration == 2)
                                         <tr>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                             <td><i class='text-primary fa fa-diamond'></i></td>
                                         </tr>
                                         @elseif ($loop->iteration == 3)
                                         <tr>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                             <td><i class='text-primary si si-badge'></i></td>
                                         </tr>
                                         @else
                                         <tr>
                                             <td class="font-w600">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                         </tr>
                                         @endif
@@ -63,28 +63,28 @@
                                         @if ($loop->iteration == 1)
                                         <tr class='bg-modern-lighter'>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                             <td><i class='text-primary fa fa-trophy'></i></td>
                                         </tr>
                                         @elseif ($loop->iteration == 2)
                                         <tr>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                             <td><i class='text-primary fa fa-diamond'></i></td>
                                         </tr>
                                         @elseif ($loop->iteration == 3)
                                         <tr>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                             <td><i class='text-primary si si-badge'></i></td>
                                         </tr>
                                         @else
                                         <tr>
                                             <td class="font-w600">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->email }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
                                             </td>
                                         </tr>
                                         @endif

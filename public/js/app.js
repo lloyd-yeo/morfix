@@ -5,7 +5,7 @@
  *
  */
 
-var App = function() {
+var App = function () {
     // Helper variables - set in uiInit()
     var $lHtml, $lBody, $lPage, $lSidebar, $lSidebarScroll, $lSideOverlay, $lSideOverlayScroll, $lHeader, $lMain, $lFooter;
 
@@ -21,18 +21,18 @@ var App = function() {
      */
 
     // User Interface init
-    var uiInit = function() {
+    var uiInit = function () {
         // Set variables
-        $lHtml              = jQuery('html');
-        $lBody              = jQuery('body');
-        $lPage              = jQuery('#page-container');
-        $lSidebar           = jQuery('#sidebar');
-        $lSidebarScroll     = jQuery('#sidebar-scroll');
-        $lSideOverlay       = jQuery('#side-overlay');
+        $lHtml = jQuery('html');
+        $lBody = jQuery('body');
+        $lPage = jQuery('#page-container');
+        $lSidebar = jQuery('#sidebar');
+        $lSidebarScroll = jQuery('#sidebar-scroll');
+        $lSideOverlay = jQuery('#side-overlay');
         $lSideOverlayScroll = jQuery('#side-overlay-scroll');
-        $lHeader            = jQuery('#header-navbar');
-        $lMain              = jQuery('#main-container');
-        $lFooter            = jQuery('#page-footer');
+        $lHeader = jQuery('#header-navbar');
+        $lMain = jQuery('#main-container');
+        $lFooter = jQuery('#page-footer');
 
         // Initialize Tooltips
         jQuery('[data-toggle="tooltip"], .js-tooltip').tooltip({
@@ -48,7 +48,7 @@ var App = function() {
         });
 
         // Initialize Tabs
-        jQuery('[data-toggle="tabs"] a, .js-tabs a').click(function(e){
+        jQuery('[data-toggle="tabs"] a, .js-tabs a').click(function (e) {
             e.preventDefault();
             jQuery(this).tab('show');
         });
@@ -58,17 +58,17 @@ var App = function() {
     };
 
     // Layout functionality
-    var uiLayout = function() {
+    var uiLayout = function () {
         // Resizes #main-container min height (push footer to the bottom)
         var $resizeTimeout;
 
         if ($lMain.length) {
             uiHandleMain();
 
-            jQuery(window).on('resize orientationchange', function(){
+            jQuery(window).on('resize orientationchange', function () {
                 clearTimeout($resizeTimeout);
 
-                $resizeTimeout = setTimeout(function(){
+                $resizeTimeout = setTimeout(function () {
                     uiHandleMain();
                 }, 150);
             });
@@ -79,7 +79,7 @@ var App = function() {
 
         // Init transparent header functionality (solid on scroll - used in frontend)
         if ($lPage.hasClass('header-navbar-fixed') && $lPage.hasClass('header-navbar-transparent')) {
-            jQuery(window).on('scroll', function(){
+            jQuery(window).on('scroll', function () {
                 if (jQuery(this).scrollTop() > 20) {
                     $lPage.addClass('header-navbar-scroll');
                 } else {
@@ -89,7 +89,7 @@ var App = function() {
         }
 
         // Call layout API on button click
-        jQuery('[data-toggle="layout"]').on('click', function(){
+        jQuery('[data-toggle="layout"]').on('click', function () {
             var $btn = jQuery(this);
 
             uiLayoutApi($btn.data('action'));
@@ -101,10 +101,10 @@ var App = function() {
     };
 
     // Resizes #main-container to fill empty space if exists
-    var uiHandleMain = function() {
-        var $hWindow     = jQuery(window).height();
-        var $hHeader     = $lHeader.outerHeight();
-        var $hFooter     = $lFooter.outerHeight();
+    var uiHandleMain = function () {
+        var $hWindow = jQuery(window).height();
+        var $hHeader = $lHeader.outerHeight();
+        var $hFooter = $lFooter.outerHeight();
 
         if ($lPage.hasClass('header-navbar-fixed')) {
             $lMain.css('min-height', $hWindow - $hFooter);
@@ -114,7 +114,7 @@ var App = function() {
     };
 
     // Handles sidebar and side overlay custom scrolling functionality
-    var uiHandleScroll = function($mode) {
+    var uiHandleScroll = function ($mode) {
         var $windowW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
         // Init scrolling
@@ -125,10 +125,10 @@ var App = function() {
             // Handle scrolling on resize or orientation change
             var $sScrollTimeout;
 
-            jQuery(window).on('resize orientationchange', function(){
+            jQuery(window).on('resize orientationchange', function () {
                 clearTimeout($sScrollTimeout);
 
-                $sScrollTimeout = setTimeout(function(){
+                $sScrollTimeout = setTimeout(function () {
                     uiHandleScroll();
                 }, 150);
             });
@@ -145,17 +145,16 @@ var App = function() {
                         height: $lSidebar.outerHeight(),
                         color: '#fff',
                         size: '5px',
-                        opacity : .35,
-                        wheelStep : 15,
-                        distance : '2px',
+                        opacity: .35,
+                        wheelStep: 15,
+                        distance: '2px',
                         railVisible: false,
                         railOpacity: 1
                     });
-                }
-                else { // ..else resize scrolling height
+                } else { // ..else resize scrolling height
                     $lSidebarScroll
-                        .add($lSidebarScroll.parent())
-                        .css('height', $lSidebar.outerHeight());
+                            .add($lSidebarScroll.parent())
+                            .css('height', $lSidebar.outerHeight());
                 }
 
                 // If side overlay scrolling does not exist init it..
@@ -164,17 +163,16 @@ var App = function() {
                         height: $lSideOverlay.outerHeight(),
                         color: '#000',
                         size: '5px',
-                        opacity : .35,
-                        wheelStep : 15,
-                        distance : '2px',
+                        opacity: .35,
+                        wheelStep: 15,
+                        distance: '2px',
                         railVisible: false,
                         railOpacity: 1
                     });
-                }
-                else { // ..else resize scrolling height
+                } else { // ..else resize scrolling height
                     $lSideOverlayScroll
-                        .add($lSideOverlayScroll.parent())
-                        .css('height', $lSideOverlay.outerHeight());
+                            .add($lSideOverlayScroll.parent())
+                            .css('height', $lSideOverlay.outerHeight());
                 }
             } else {
                 // Turn scroll lock on (sidebar and side overlay)
@@ -184,40 +182,40 @@ var App = function() {
                 // If sidebar scrolling exists destroy it..
                 if ($lSidebarScroll.length && $lSidebarScroll.parent('.slimScrollDiv').length) {
                     $lSidebarScroll
-                        .slimScroll({destroy: true});
+                            .slimScroll({destroy: true});
                     $lSidebarScroll
-                        .attr('style', '');
+                            .attr('style', '');
                 }
 
                 // If side overlay scrolling exists destroy it..
                 if ($lSideOverlayScroll.length && $lSideOverlayScroll.parent('.slimScrollDiv').length) {
                     $lSideOverlayScroll
-                        .slimScroll({destroy: true});
+                            .slimScroll({destroy: true});
                     $lSideOverlayScroll
-                        .attr('style', '');
+                            .attr('style', '');
                 }
             }
         }
     };
 
     // Layout API
-    var uiLayoutApi = function($mode) {
+    var uiLayoutApi = function ($mode) {
         var $windowW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
         // Mode selection
-        switch($mode) {
+        switch ($mode) {
             case 'sidebar_pos_toggle':
                 $lPage.toggleClass('sidebar-l sidebar-r');
                 break;
             case 'sidebar_pos_left':
                 $lPage
-                    .removeClass('sidebar-r')
-                    .addClass('sidebar-l');
+                        .removeClass('sidebar-r')
+                        .addClass('sidebar-l');
                 break;
             case 'sidebar_pos_right':
                 $lPage
-                    .removeClass('sidebar-l')
-                    .addClass('sidebar-r');
+                        .removeClass('sidebar-l')
+                        .addClass('sidebar-r');
                 break;
             case 'sidebar_toggle':
                 if ($windowW > 991) {
@@ -300,9 +298,9 @@ var App = function() {
     };
 
     // Main navigation functionality
-    var uiNav = function() {
+    var uiNav = function () {
         // When a submenu link is clicked
-        jQuery('[data-toggle="nav-submenu"]').on('click', function(e){
+        jQuery('[data-toggle="nav-submenu"]').on('click', function (e) {
             // Get link
             var $link = jQuery(this);
 
@@ -313,12 +311,12 @@ var App = function() {
                 $parentLi.removeClass('open');
             } else { // .. else if submenu is closed, close all other (same level) submenus first before open it
                 $link
-                    .closest('ul')
-                    .find('> li')
-                    .removeClass('open');
+                        .closest('ul')
+                        .find('> li')
+                        .removeClass('open');
 
                 $parentLi
-                    .addClass('open');
+                        .addClass('open');
             }
 
             // Remove focus from submenu link
@@ -331,33 +329,33 @@ var App = function() {
     };
 
     // Blocks options functionality
-    var uiBlocks = function() {
+    var uiBlocks = function () {
         // Init default icons fullscreen and content toggle buttons
         uiBlocksApi(false, 'init');
 
         // Call blocks API on option button click
-        jQuery('[data-toggle="block-option"]').on('click', function(){
+        jQuery('[data-toggle="block-option"]').on('click', function () {
             uiBlocksApi(jQuery(this).closest('.block'), jQuery(this).data('action'));
         });
     };
 
     // Blocks API
-    var uiBlocksApi = function($block, $mode) {
+    var uiBlocksApi = function ($block, $mode) {
         // Set default icons for fullscreen and content toggle buttons
-        var $iconFullscreen         = 'si si-size-fullscreen';
-        var $iconFullscreenActive   = 'si si-size-actual';
-        var $iconContent            = 'si si-arrow-up';
-        var $iconContentActive      = 'si si-arrow-down';
+        var $iconFullscreen = 'si si-size-fullscreen';
+        var $iconFullscreenActive = 'si si-size-actual';
+        var $iconContent = 'si si-arrow-up';
+        var $iconContentActive = 'si si-arrow-down';
 
         if ($mode === 'init') {
             // Auto add the default toggle icons to fullscreen and content toggle buttons
-            jQuery('[data-toggle="block-option"][data-action="fullscreen_toggle"]').each(function(){
+            jQuery('[data-toggle="block-option"][data-action="fullscreen_toggle"]').each(function () {
                 var $this = jQuery(this);
 
                 $this.html('<i class="' + (jQuery(this).closest('.block').hasClass('block-opt-fullscreen') ? $iconFullscreenActive : $iconFullscreen) + '"></i>');
             });
 
-            jQuery('[data-toggle="block-option"][data-action="content_toggle"]').each(function(){
+            jQuery('[data-toggle="block-option"][data-action="content_toggle"]').each(function () {
                 var $this = jQuery(this);
 
                 $this.html('<i class="' + ($this.closest('.block').hasClass('block-opt-hidden') ? $iconContentActive : $iconContent) + '"></i>');
@@ -369,11 +367,11 @@ var App = function() {
             // If element exists, procceed with blocks functionality
             if ($elBlock.length) {
                 // Get block option buttons if exist (need them to update their icons)
-                var $btnFullscreen  = jQuery('[data-toggle="block-option"][data-action="fullscreen_toggle"]', $elBlock);
-                var $btnToggle      = jQuery('[data-toggle="block-option"][data-action="content_toggle"]', $elBlock);
+                var $btnFullscreen = jQuery('[data-toggle="block-option"][data-action="fullscreen_toggle"]', $elBlock);
+                var $btnToggle = jQuery('[data-toggle="block-option"][data-action="content_toggle"]', $elBlock);
 
                 // Mode selection
-                switch($mode) {
+                switch ($mode) {
                     case 'fullscreen_toggle':
                         $elBlock.toggleClass('block-opt-fullscreen');
 
@@ -388,12 +386,12 @@ var App = function() {
                         if ($btnFullscreen.length) {
                             if ($elBlock.hasClass('block-opt-fullscreen')) {
                                 jQuery('i', $btnFullscreen)
-                                    .removeClass($iconFullscreen)
-                                    .addClass($iconFullscreenActive);
+                                        .removeClass($iconFullscreen)
+                                        .addClass($iconFullscreenActive);
                             } else {
                                 jQuery('i', $btnFullscreen)
-                                    .removeClass($iconFullscreenActive)
-                                    .addClass($iconFullscreen);
+                                        .removeClass($iconFullscreenActive)
+                                        .addClass($iconFullscreen);
                             }
                         }
                         break;
@@ -406,8 +404,8 @@ var App = function() {
                         // Update block option icon
                         if ($btnFullscreen.length) {
                             jQuery('i', $btnFullscreen)
-                                .removeClass($iconFullscreen)
-                                .addClass($iconFullscreenActive);
+                                    .removeClass($iconFullscreen)
+                                    .addClass($iconFullscreenActive);
                         }
                         break;
                     case 'fullscreen_off':
@@ -419,8 +417,8 @@ var App = function() {
                         // Update block option icon
                         if ($btnFullscreen.length) {
                             jQuery('i', $btnFullscreen)
-                                .removeClass($iconFullscreenActive)
-                                .addClass($iconFullscreen);
+                                    .removeClass($iconFullscreenActive)
+                                    .addClass($iconFullscreen);
                         }
                         break;
                     case 'content_toggle':
@@ -430,12 +428,12 @@ var App = function() {
                         if ($btnToggle.length) {
                             if ($elBlock.hasClass('block-opt-hidden')) {
                                 jQuery('i', $btnToggle)
-                                    .removeClass($iconContent)
-                                    .addClass($iconContentActive);
+                                        .removeClass($iconContent)
+                                        .addClass($iconContentActive);
                             } else {
                                 jQuery('i', $btnToggle)
-                                    .removeClass($iconContentActive)
-                                    .addClass($iconContent);
+                                        .removeClass($iconContentActive)
+                                        .addClass($iconContent);
                             }
                         }
                         break;
@@ -445,8 +443,8 @@ var App = function() {
                         // Update block option icon
                         if ($btnToggle.length) {
                             jQuery('i', $btnToggle)
-                                .removeClass($iconContent)
-                                .addClass($iconContentActive);
+                                    .removeClass($iconContent)
+                                    .addClass($iconContentActive);
                         }
                         break;
                     case 'content_show':
@@ -455,8 +453,8 @@ var App = function() {
                         // Update block option icon
                         if ($btnToggle.length) {
                             jQuery('i', $btnToggle)
-                                .removeClass($iconContentActive)
-                                .addClass($iconContent);
+                                    .removeClass($iconContentActive)
+                                    .addClass($iconContent);
                         }
                         break;
                     case 'refresh_toggle':
@@ -464,7 +462,7 @@ var App = function() {
 
                         // Return block to normal state if the demostration mode is on in the refresh option button - data-action-mode="demo"
                         if (jQuery('[data-toggle="block-option"][data-action="refresh_toggle"][data-action-mode="demo"]', $elBlock).length) {
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 $elBlock.removeClass('block-opt-refresh');
                             }, 2000);
                         }
@@ -489,18 +487,18 @@ var App = function() {
     };
 
     // Material inputs helper
-    var uiForms = function() {
-        jQuery('.form-material.floating > .form-control').each(function(){
-            var $input  = jQuery(this);
+    var uiForms = function () {
+        jQuery('.form-material.floating > .form-control').each(function () {
+            var $input = jQuery(this);
             var $parent = $input.parent('.form-material');
 
-            setTimeout(function() {
-                if ($input.val() ) {
+            setTimeout(function () {
+                if ($input.val()) {
                     $parent.addClass('open');
                 }
             }, 150);
 
-            $input.on('change', function(){
+            $input.on('change', function () {
                 if ($input.val()) {
                     $parent.addClass('open');
                 } else {
@@ -511,13 +509,13 @@ var App = function() {
     };
 
     // Set active color themes functionality
-    var uiHandleTheme = function() {
+    var uiHandleTheme = function () {
         var $cssTheme = jQuery('#css-theme');
-        var $cookies  = $lPage.hasClass('enable-cookies') ? true : false;
+        var $cookies = $lPage.hasClass('enable-cookies') ? true : false;
 
         // If cookies are enabled
         if ($cookies) {
-            var $theme  = Cookies.get('colorTheme') ? Cookies.get('colorTheme') : false;
+            var $theme = Cookies.get('colorTheme') ? Cookies.get('colorTheme') : false;
 
             // Update color theme
             if ($theme) {
@@ -530,7 +528,7 @@ var App = function() {
                         $cssTheme.attr('href', $theme);
                     } else {
                         jQuery('#css-main')
-                            .after('<link rel="stylesheet" id="css-theme" href="' + $theme + '">');
+                                .after('<link rel="stylesheet" id="css-theme" href="' + $theme + '">');
                     }
                 }
             }
@@ -540,22 +538,22 @@ var App = function() {
 
         // Set the active color theme link as active
         jQuery('[data-toggle="theme"][data-theme="' + ($cssTheme.length ? $cssTheme.attr('href') : 'default') + '"]')
-            .parent('li')
-            .addClass('active');
+                .parent('li')
+                .addClass('active');
 
         // When a color theme link is clicked
-        jQuery('[data-toggle="theme"]').on('click', function(){
-            var $this   = jQuery(this);
-            var $theme  = $this.data('theme');
+        jQuery('[data-toggle="theme"]').on('click', function () {
+            var $this = jQuery(this);
+            var $theme = $this.data('theme');
 
             // Set this color theme link as active
             jQuery('[data-toggle="theme"]')
-                .parent('li')
-                .removeClass('active');
+                    .parent('li')
+                    .removeClass('active');
 
             jQuery('[data-toggle="theme"][data-theme="' + $theme + '"]')
-                .parent('li')
-                .addClass('active');
+                    .parent('li')
+                    .addClass('active');
 
             // Update color theme
             if ($theme === 'default') {
@@ -567,7 +565,7 @@ var App = function() {
                     $cssTheme.attr('href', $theme);
                 } else {
                     jQuery('#css-main')
-                        .after('<link rel="stylesheet" id="css-theme" href="' + $theme + '">');
+                            .after('<link rel="stylesheet" id="css-theme" href="' + $theme + '">');
                 }
             }
 
@@ -575,18 +573,18 @@ var App = function() {
 
             // If cookies are enabled, save the new active color theme
             if ($cookies) {
-                Cookies.set('colorTheme', $theme, { expires: 7 });
+                Cookies.set('colorTheme', $theme, {expires: 7});
             }
         });
     };
 
     // Scroll to element animation helper
-    var uiScrollTo = function() {
-        jQuery('[data-toggle="scroll-to"]').on('click', function(){
-            var $this           = jQuery(this);
-            var $target         = $this.data('target');
-            var $speed          = $this.data('speed') ? $this.data('speed') : 1000;
-            var $headerHeight   = ($lHeader.length && $lPage.hasClass('header-navbar-fixed')) ? $lHeader.outerHeight() : 0;
+    var uiScrollTo = function () {
+        jQuery('[data-toggle="scroll-to"]').on('click', function () {
+            var $this = jQuery(this);
+            var $target = $this.data('target');
+            var $speed = $this.data('speed') ? $this.data('speed') : 1000;
+            var $headerHeight = ($lHeader.length && $lPage.hasClass('header-navbar-fixed')) ? $lHeader.outerHeight() : 0;
 
             jQuery('html, body').animate({
                 scrollTop: jQuery($target).offset().top - $headerHeight
@@ -595,8 +593,8 @@ var App = function() {
     };
 
     // Toggle class helper
-    var uiToggleClass = function() {
-        jQuery('[data-toggle="class-toggle"]').on('click', function(){
+    var uiToggleClass = function () {
+        jQuery('[data-toggle="class-toggle"]').on('click', function () {
             var $el = jQuery(this);
 
             jQuery($el.data('target').toString()).toggleClass($el.data('class').toString());
@@ -608,19 +606,19 @@ var App = function() {
     };
 
     // Add the correct copyright year
-    var uiYearCopy = function() {
-        var $date       = new Date();
-        var $yearCopy   = jQuery('.js-year-copy');
+    var uiYearCopy = function () {
+        var $date = new Date();
+        var $yearCopy = jQuery('.js-year-copy');
 
         if ($date.getFullYear() === 2015) {
             $yearCopy.html('2015');
         } else {
-            $yearCopy.html('2015-' + $date.getFullYear().toString().substr(2,2));
+            $yearCopy.html('2015-' + $date.getFullYear().toString().substr(2, 2));
         }
     };
 
     // Manage page loading screen functionality
-    var uiLoader = function($mode) {
+    var uiLoader = function ($mode) {
         var $lpageLoader = jQuery('#page-loader');
 
         if ($mode === 'show') {
@@ -656,7 +654,7 @@ var App = function() {
      * App.initHelper('print-page');
      *
      */
-    var uiHelperPrint = function() {
+    var uiHelperPrint = function () {
         // Store all #page-container classes
         var $pageCls = $lPage.prop('class');
 
@@ -678,17 +676,17 @@ var App = function() {
      */
 
     // Table sections functionality
-    var uiHelperTableToolsSections = function(){
+    var uiHelperTableToolsSections = function () {
         // For each table
-        jQuery('.js-table-sections').each(function(){
+        jQuery('.js-table-sections').each(function () {
             var $table = jQuery(this);
 
             // When a row is clicked in tbody.js-table-sections-header
-            jQuery('.js-table-sections-header > tr', $table).on('click', function(e) {
-                var $row    = jQuery(this);
-                var $tbody  = $row.parent('tbody');
+            jQuery('.js-table-sections-header > tr', $table).on('click', function (e) {
+                var $row = jQuery(this);
+                var $tbody = $row.parent('tbody');
 
-                if (! $tbody.hasClass('open')) {
+                if (!$tbody.hasClass('open')) {
                     jQuery('tbody', $table).removeClass('open');
                 }
 
@@ -698,17 +696,17 @@ var App = function() {
     };
 
     // Checkable table functionality
-    var uiHelperTableToolsCheckable = function() {
+    var uiHelperTableToolsCheckable = function () {
         // For each table
-        jQuery('.js-table-checkable').each(function(){
+        jQuery('.js-table-checkable').each(function () {
             var $table = jQuery(this);
 
             // When a checkbox is clicked in thead
-            jQuery('thead input:checkbox', $table).on('click', function() {
+            jQuery('thead input:checkbox', $table).on('click', function () {
                 var $checkedStatus = jQuery(this).prop('checked');
 
                 // Check or uncheck all checkboxes in tbody
-                jQuery('tbody input:checkbox', $table).each(function() {
+                jQuery('tbody input:checkbox', $table).each(function () {
                     var $checkbox = jQuery(this);
 
                     $checkbox.prop('checked', $checkedStatus);
@@ -717,38 +715,38 @@ var App = function() {
             });
 
             // When a checkbox is clicked in tbody
-            jQuery('tbody input:checkbox', $table).on('click', function() {
+            jQuery('tbody input:checkbox', $table).on('click', function () {
                 var $checkbox = jQuery(this);
 
                 uiHelperTableToolscheckRow($checkbox, $checkbox.prop('checked'));
             });
 
             // When a row is clicked in tbody
-            jQuery('tbody > tr', $table).on('click', function(e) {
+            jQuery('tbody > tr', $table).on('click', function (e) {
                 if (e.target.type !== 'checkbox'
                         && e.target.type !== 'button'
                         && e.target.tagName.toLowerCase() !== 'a'
                         && !jQuery(e.target).parent('label').length) {
-                    var $checkbox       = jQuery('input:checkbox', this);
-                    var $checkedStatus  = $checkbox.prop('checked');
+                    var $checkbox = jQuery('input:checkbox', this);
+                    var $checkedStatus = $checkbox.prop('checked');
 
-                    $checkbox.prop('checked', ! $checkedStatus);
-                    uiHelperTableToolscheckRow($checkbox, ! $checkedStatus);
+                    $checkbox.prop('checked', !$checkedStatus);
+                    uiHelperTableToolscheckRow($checkbox, !$checkedStatus);
                 }
             });
         });
     };
 
     // Checkable table functionality helper - Checks or unchecks table row
-    var uiHelperTableToolscheckRow = function($checkbox, $checkedStatus) {
+    var uiHelperTableToolscheckRow = function ($checkbox, $checkedStatus) {
         if ($checkedStatus) {
             $checkbox
-                .closest('tr')
-                .addClass('active');
+                    .closest('tr')
+                    .addClass('active');
         } else {
             $checkbox
-                .closest('tr')
-                .removeClass('active');
+                    .closest('tr')
+                    .removeClass('active');
         }
     };
 
@@ -758,22 +756,22 @@ var App = function() {
      * App.initHelper('appear');
      *
      */
-    var uiHelperAppear = function(){
+    var uiHelperAppear = function () {
         // Add a specific class on elements (when they become visible on scrolling)
-        jQuery('[data-toggle="appear"]').each(function(){
-            var $windowW    = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-            var $this       = jQuery(this);
-            var $class      = $this.data('class') ? $this.data('class') : 'animated fadeIn';
-            var $offset     = $this.data('offset') ? $this.data('offset') : 0;
-            var $timeout    = ($lHtml.hasClass('ie9') || $windowW < 992) ? 0 : ($this.data('timeout') ? $this.data('timeout') : 0);
+        jQuery('[data-toggle="appear"]').each(function () {
+            var $windowW = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            var $this = jQuery(this);
+            var $class = $this.data('class') ? $this.data('class') : 'animated fadeIn';
+            var $offset = $this.data('offset') ? $this.data('offset') : 0;
+            var $timeout = ($lHtml.hasClass('ie9') || $windowW < 992) ? 0 : ($this.data('timeout') ? $this.data('timeout') : 0);
 
-            $this.appear(function() {
-                setTimeout(function(){
+            $this.appear(function () {
+                setTimeout(function () {
                     $this
-                        .removeClass('visibility-hidden')
-                        .addClass($class);
+                            .removeClass('visibility-hidden')
+                            .addClass($class);
                 }, $timeout);
-            },{accY: $offset});
+            }, {accY: $offset});
         });
     };
 
@@ -783,21 +781,21 @@ var App = function() {
      * App.initHelper('appear-countTo');
      *
      */
-    var uiHelperAppearCountTo = function(){
+    var uiHelperAppearCountTo = function () {
         // Init counter functionality
-        jQuery('[data-toggle="countTo"]').each(function(){
-            var $this       = jQuery(this);
-            var $after      = $this.data('after');
-            var $before     = $this.data('before');
-            var $speed      = $this.data('speed') ? $this.data('speed') : 1500;
-            var $interval   = $this.data('interval') ? $this.data('interval') : 15;
+        jQuery('[data-toggle="countTo"]').each(function () {
+            var $this = jQuery(this);
+            var $after = $this.data('after');
+            var $before = $this.data('before');
+            var $speed = $this.data('speed') ? $this.data('speed') : 1500;
+            var $interval = $this.data('interval') ? $this.data('interval') : 15;
 
-            $this.appear(function() {
+            $this.appear(function () {
                 $this.countTo({
                     speed: $speed,
                     refreshInterval: $interval,
-                    onComplete: function() {
-                        if($after) {
+                    onComplete: function () {
+                        if ($after) {
                             $this.html($this.html() + $after);
                         } else if ($before) {
                             $this.html($before + $this.html());
@@ -814,18 +812,18 @@ var App = function() {
      * App.initHelper('slimscroll');
      *
      */
-    var uiHelperSlimscroll = function(){
+    var uiHelperSlimscroll = function () {
         // Init slimScroll functionality
-        jQuery('[data-toggle="slimscroll"]').each(function(){
-            var $this       = jQuery(this);
-            var $height     = $this.data('height') ? $this.data('height') : '200px';
-            var $size       = $this.data('size') ? $this.data('size') : '5px';
-            var $position   = $this.data('position') ? $this.data('position') : 'right';
-            var $color      = $this.data('color') ? $this.data('color') : '#000';
-            var $avisible   = $this.data('always-visible') ? true : false;
-            var $rvisible   = $this.data('rail-visible') ? true : false;
-            var $rcolor     = $this.data('rail-color') ? $this.data('rail-color') : '#999';
-            var $ropacity   = $this.data('rail-opacity') ? $this.data('rail-opacity') : .3;
+        jQuery('[data-toggle="slimscroll"]').each(function () {
+            var $this = jQuery(this);
+            var $height = $this.data('height') ? $this.data('height') : '200px';
+            var $size = $this.data('size') ? $this.data('size') : '5px';
+            var $position = $this.data('position') ? $this.data('position') : 'right';
+            var $color = $this.data('color') ? $this.data('color') : '#000';
+            var $avisible = $this.data('always-visible') ? true : false;
+            var $rvisible = $this.data('rail-visible') ? true : false;
+            var $rcolor = $this.data('rail-color') ? $this.data('rail-color') : '#999';
+            var $ropacity = $this.data('rail-opacity') ? $this.data('rail-opacity') : .3;
 
             $this.slimScroll({
                 height: $height,
@@ -854,9 +852,9 @@ var App = function() {
      * App.initHelper('magnific-popup');
      *
      */
-    var uiHelperMagnific = function(){
+    var uiHelperMagnific = function () {
         // Simple Gallery init
-        jQuery('.js-gallery').each(function(){
+        jQuery('.js-gallery').each(function () {
             jQuery(this).magnificPopup({
                 delegate: 'a.img-link',
                 type: 'image',
@@ -867,7 +865,7 @@ var App = function() {
         });
 
         // Advanced Gallery init
-        jQuery('.js-gallery-advanced').each(function(){
+        jQuery('.js-gallery-advanced').each(function () {
             jQuery(this).magnificPopup({
                 delegate: 'a.img-lightbox',
                 type: 'image',
@@ -884,7 +882,7 @@ var App = function() {
      * App.initHelper('ckeditor');
      *
      */
-    var uiHelperCkeditor = function(){
+    var uiHelperCkeditor = function () {
         // Disable auto init when contenteditable property is set to true
         CKEDITOR.disableAutoInline = true;
 
@@ -905,7 +903,7 @@ var App = function() {
      * App.initHelper('summernote');
      *
      */
-    var uiHelperSummernote = function(){
+    var uiHelperSummernote = function () {
         // Init text editor in air mode (inline)
         jQuery('.js-summernote-air').summernote({
             airMode: true
@@ -925,17 +923,17 @@ var App = function() {
      * App.initHelper('slick');
      *
      */
-    var uiHelperSlick = function(){
+    var uiHelperSlick = function () {
         // Get each slider element (with .js-slider class)
-        jQuery('.js-slider').each(function(){
+        jQuery('.js-slider').each(function () {
             var $slider = jQuery(this);
 
             // Get each slider's init data
-            var $sliderArrows       = $slider.data('slider-arrows') ? $slider.data('slider-arrows') : false;
-            var $sliderDots         = $slider.data('slider-dots') ? $slider.data('slider-dots') : false;
-            var $sliderNum          = $slider.data('slider-num') ? $slider.data('slider-num') : 1;
-            var $sliderAuto         = $slider.data('slider-autoplay') ? $slider.data('slider-autoplay') : false;
-            var $sliderAutoSpeed    = $slider.data('slider-autoplay-speed') ? $slider.data('slider-autoplay-speed') : 3000;
+            var $sliderArrows = $slider.data('slider-arrows') ? $slider.data('slider-arrows') : false;
+            var $sliderDots = $slider.data('slider-dots') ? $slider.data('slider-dots') : false;
+            var $sliderNum = $slider.data('slider-num') ? $slider.data('slider-num') : 1;
+            var $sliderAuto = $slider.data('slider-autoplay') ? $slider.data('slider-autoplay') : false;
+            var $sliderAutoSpeed = $slider.data('slider-autoplay-speed') ? $slider.data('slider-autoplay-speed') : 3000;
 
             // Init slick slider
             $slider.slick({
@@ -954,7 +952,7 @@ var App = function() {
      * App.initHelper('datepicker');
      *
      */
-    var uiHelperDatepicker = function(){
+    var uiHelperDatepicker = function () {
         // Init datepicker (with .js-datepicker and .input-daterange class)
         jQuery('.js-datepicker').add('.input-daterange').datepicker({
             weekStart: 1,
@@ -969,14 +967,14 @@ var App = function() {
      * App.initHelper('colorpicker');
      *
      */
-    var uiHelperColorpicker = function(){
+    var uiHelperColorpicker = function () {
         // Get each colorpicker element (with .js-colorpicker class)
-        jQuery('.js-colorpicker').each(function(){
+        jQuery('.js-colorpicker').each(function () {
             var $colorpicker = jQuery(this);
 
             // Get each colorpicker's init data
-            var $colorpickerMode    = $colorpicker.data('colorpicker-mode') ? $colorpicker.data('colorpicker-mode') : 'hex';
-            var $colorpickerinline  = $colorpicker.data('colorpicker-inline') ? true : false;
+            var $colorpickerMode = $colorpicker.data('colorpicker-mode') ? $colorpicker.data('colorpicker-mode') : 'hex';
+            var $colorpickerinline = $colorpicker.data('colorpicker-inline') ? true : false;
 
             // Init colorpicker
             $colorpicker.colorpicker({
@@ -992,7 +990,7 @@ var App = function() {
      * App.initHelper('masked-inputs');
      *
      */
-    var uiHelperMaskedInputs = function(){
+    var uiHelperMaskedInputs = function () {
         // Init Masked Inputs
         // a - Represents an alpha character (A-Z,a-z)
         // 9 - Represents a numeric character (0-9)
@@ -1013,12 +1011,12 @@ var App = function() {
      * App.initHelper('tags-inputs');
      *
      */
-    var uiHelperTagsInputs = function(){
+    var uiHelperTagsInputs = function () {
         // Init Tags Inputs (with .js-tags-input class)
         jQuery('.js-tags-input').tagsInput({
             height: '36px',
             width: '100%',
-            defaultText: 'Add tag',
+            defaultText: 'Add something',
             removeWithBackspace: true,
             delimiter: [',']
         });
@@ -1030,7 +1028,7 @@ var App = function() {
      * App.initHelper('select2');
      *
      */
-    var uiHelperSelect2 = function(){
+    var uiHelperSelect2 = function () {
         // Init Select2 (with .js-select2 class)
         jQuery('.js-select2').select2();
     };
@@ -1041,7 +1039,7 @@ var App = function() {
      * App.initHelper('highlightjs');
      *
      */
-    var uiHelperHighlightjs = function(){
+    var uiHelperHighlightjs = function () {
         // Init Highlight.js
         hljs.initHighlightingOnLoad();
     };
@@ -1052,42 +1050,42 @@ var App = function() {
      * App.initHelper('notify');
      *
      */
-    var uiHelperNotify = function(){
+    var uiHelperNotify = function () {
         // Init notifications (with .js-notify class)
-        jQuery('.js-notify').on('click', function(){
-            var $notify         = jQuery(this);
-            var $notifyMsg      = $notify.data('notify-message');
-            var $notifyType     = $notify.data('notify-type') ? $notify.data('notify-type') : 'info';
-            var $notifyFrom     = $notify.data('notify-from') ? $notify.data('notify-from') : 'top';
-            var $notifyAlign    = $notify.data('notify-align') ? $notify.data('notify-align') : 'right';
-            var $notifyIcon     = $notify.data('notify-icon') ? $notify.data('notify-icon') : '';
-            var $notifyUrl      = $notify.data('notify-url') ? $notify.data('notify-url') : '';
+        jQuery('.js-notify').on('click', function () {
+            var $notify = jQuery(this);
+            var $notifyMsg = $notify.data('notify-message');
+            var $notifyType = $notify.data('notify-type') ? $notify.data('notify-type') : 'info';
+            var $notifyFrom = $notify.data('notify-from') ? $notify.data('notify-from') : 'top';
+            var $notifyAlign = $notify.data('notify-align') ? $notify.data('notify-align') : 'right';
+            var $notifyIcon = $notify.data('notify-icon') ? $notify.data('notify-icon') : '';
+            var $notifyUrl = $notify.data('notify-url') ? $notify.data('notify-url') : '';
 
             jQuery.notify({
-                    icon: $notifyIcon,
-                    message: $notifyMsg,
-                    url: $notifyUrl
-                },
-                {
-                    element: 'body',
-                    type: $notifyType,
-                    allow_dismiss: true,
-                    newest_on_top: true,
-                    showProgressbar: false,
-                    placement: {
-                        from: $notifyFrom,
-                        align: $notifyAlign
-                    },
-                    offset: 20,
-                    spacing: 10,
-                    z_index: 1033,
-                    delay: 5000,
-                    timer: 1000,
-                    animate: {
-                        enter: 'animated fadeIn',
-                        exit: 'animated fadeOutDown'
-                    }
-                });
+                icon: $notifyIcon,
+                message: $notifyMsg,
+                url: $notifyUrl
+            },
+                    {
+                        element: 'body',
+                        type: $notifyType,
+                        allow_dismiss: true,
+                        newest_on_top: true,
+                        showProgressbar: false,
+                        placement: {
+                            from: $notifyFrom,
+                            align: $notifyAlign
+                        },
+                        offset: 20,
+                        spacing: 10,
+                        z_index: 1033,
+                        delay: 5000,
+                        timer: 1000,
+                        animate: {
+                            enter: 'animated fadeIn',
+                            exit: 'animated fadeOutDown'
+                        }
+                    });
         });
     };
 
@@ -1097,7 +1095,7 @@ var App = function() {
      * App.initHelper('draggable-items');
      *
      */
-    var uiHelperDraggableItems = function(){
+    var uiHelperDraggableItems = function () {
         // Init draggable items functionality (with .js-draggable-items class)
         jQuery('.js-draggable-items > .draggable-column').sortable({
             connectWith: '.draggable-column',
@@ -1107,7 +1105,7 @@ var App = function() {
             handle: '.draggable-handler',
             placeholder: 'draggable-placeholder',
             tolerance: 'pointer',
-            start: function(e, ui){
+            start: function (e, ui) {
                 ui.placeholder.css({
                     'height': ui.item.outerHeight(),
                     'margin-bottom': ui.item.css('margin-bottom')
@@ -1122,7 +1120,7 @@ var App = function() {
      * App.initHelper('easy-pie-chart');
      *
      */
-    var uiHelperEasyPieChart = function(){
+    var uiHelperEasyPieChart = function () {
         // Init Easy Pie Charts (with .js-pie-chart class)
         jQuery('.js-pie-chart').easyPieChart({
             barColor: jQuery(this).data('bar-color') ? jQuery(this).data('bar-color') : '#777777',
@@ -1140,9 +1138,9 @@ var App = function() {
      * App.initHelper('maxlength');
      *
      */
-    var uiHelperMaxlength = function(){
+    var uiHelperMaxlength = function () {
         // Init Bootstrap Maxlength (with .js-maxlength class)
-        jQuery('.js-maxlength').each(function(){
+        jQuery('.js-maxlength').each(function () {
             var $input = jQuery(this);
 
             $input.maxlength({
@@ -1164,15 +1162,15 @@ var App = function() {
      * App.initHelper('datetimepicker');
      *
      */
-    var uiHelperDatetimepicker = function(){
+    var uiHelperDatetimepicker = function () {
         // Init Bootstrap Datetimepicker (with .js-datetimepicker class)
-        jQuery('.js-datetimepicker').each(function(){
+        jQuery('.js-datetimepicker').each(function () {
             var $input = jQuery(this);
 
             $input.datetimepicker({
                 format: $input.data('format') ? $input.data('format') : false,
                 useCurrent: $input.data('use-current') ? $input.data('use-current') : false,
-                locale: moment.locale('' + ($input.data('locale') ? $input.data('locale') : '') +''),
+                locale: moment.locale('' + ($input.data('locale') ? $input.data('locale') : '') + ''),
                 showTodayButton: $input.data('show-today-button') ? $input.data('show-today-button') : false,
                 showClear: $input.data('show-clear') ? $input.data('show-clear') : false,
                 showClose: $input.data('show-close') ? $input.data('show-close') : false,
@@ -1199,9 +1197,9 @@ var App = function() {
      * App.initHelper('rangeslider');
      *
      */
-    var uiHelperRangeslider = function(){
+    var uiHelperRangeslider = function () {
         // Init Ion Range Slider (with .js-rangeslider class)
-        jQuery('.js-rangeslider').each(function(){
+        jQuery('.js-rangeslider').each(function () {
             var $input = jQuery(this);
 
             $input.ionRangeSlider({
@@ -1216,17 +1214,17 @@ var App = function() {
      * App.initHelper('simplemde');
      *
      */
-    var uiHelperSimpleMDE = function(){
+    var uiHelperSimpleMDE = function () {
         // Init markdown editor (with .js-simplemde class)
-        jQuery('.js-simplemde').each(function(){
+        jQuery('.js-simplemde').each(function () {
             var el = jQuery(this);
 
-            new SimpleMDE({ element: el[0] });
+            new SimpleMDE({element: el[0]});
         });
     };
 
     return {
-        init: function($func) {
+        init: function ($func) {
             switch ($func) {
                 case 'uiInit':
                     uiInit();
@@ -1272,16 +1270,16 @@ var App = function() {
                     uiLoader('hide');
             }
         },
-        layout: function($mode) {
+        layout: function ($mode) {
             uiLayoutApi($mode);
         },
-        loader: function($mode) {
+        loader: function ($mode) {
             uiLoader($mode);
         },
-        blocks: function($block, $mode) {
+        blocks: function ($block, $mode) {
             uiBlocksApi($block, $mode);
         },
-        initHelper: function($helper) {
+        initHelper: function ($helper) {
             switch ($helper) {
                 case 'print-page':
                     uiHelperPrint();
@@ -1354,9 +1352,9 @@ var App = function() {
                     return false;
             }
         },
-        initHelpers: function($helpers) {
+        initHelpers: function ($helpers) {
             if ($helpers instanceof Array) {
-                for(var $index in $helpers) {
+                for (var $index in $helpers) {
                     App.initHelper($helpers[$index]);
                 }
             } else {
@@ -1370,7 +1368,7 @@ var App = function() {
 var OneUI = App;
 
 // Initialize app when page loads
-jQuery(function(){
+jQuery(function () {
     if (typeof angular == 'undefined') {
         App.init();
     }
