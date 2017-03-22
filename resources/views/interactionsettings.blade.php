@@ -152,10 +152,10 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-xs-12 col-lg-9">
+                                <div class="col-xs-12 col-lg-3">
                                     <div class="form-material floating">
                                         <input class="form-control" type="text" id="val-digits2" name="val-digits2">
-                                        <label for="val-digits2">Digits</label>
+                                        <label for="val-digits2">Maximum Followers Filter</label>
                                     </div>
                                 </div>
 
