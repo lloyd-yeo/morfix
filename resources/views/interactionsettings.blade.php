@@ -127,14 +127,14 @@
                         <div class="form-group">
                             <div class="col-xs-6">
                                 <div class="form-material floating">
-                                    <input class="form-control" type="text" id="material-gridf2" name="val-digits2" placeholder="3">
-                                    <label for="material-gridf2">Grid Input</label>
+                                    <input class="form-control" type="text" id="material-gridf2" name="val-digits2">
+                                    <label for="material-gridf2">Minimum User</label>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-material floating">
-                                    <input class="form-control" type="text" id="material-gridf2" name="val-digits2" placeholder="3">
-                                    <label for="material-gridf2">Grid Input</label>
+                                    <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
+                                    <label for="material-gridf3">Grid Input</label>
                                 </div>
                             </div>
                         </div>
