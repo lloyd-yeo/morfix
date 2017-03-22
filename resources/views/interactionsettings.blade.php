@@ -141,7 +141,7 @@
                 
                 <div class="block-content">
                     <div class="row items-push">
-                        <form class="col-lg-12 col-xs-12">
+                        <form>
                             <div class="form-group">
                                 <div class='col-xs-12 col-lg-12'>
                                     <div class="form-material floating">
@@ -150,11 +150,25 @@
                                         </label>
                                     </div>
                                 </div>
+                                
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="form-material floating">
+                                        <input class="form-control" type="text" id="val-digits2" name="val-digits2">
+                                        <label for="val-digits2">Maximum Followers Filter</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xs-12 col-lg-12">
+                                    <div class="form-material floating">
+                                        <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
+                                        <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
                     
-                    <div class="row items-push">
+<!--                    <div class="row items-push">
                         <form class="js-validation-material col-lg-12 col-xs-12">
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-12">
@@ -173,7 +187,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
