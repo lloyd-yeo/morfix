@@ -125,18 +125,26 @@
                 <div class="block-content">
                     <div class="row items-push">
                         <div class="form-group">
-                            <div class="col-xs-6">
+                            <div class="col-xs-3">
+                                <div class="form-material floating">
+                                    <label class="css-input css-input switch switch-square switch-primary">
+                                        <input type="checkbox" checked><span></span> Unfollow users that don't folow me
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
                                 <div class="form-material floating">
                                     <input class="form-control" type="text" id="material-gridf2" name="val-digits2">
-                                    <label for="material-gridf2">Maximum Followers</label>
+                                    <label for="material-gridf2"><i class=""></i> Maximum Followers Filter</label>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-3">
                                 <div class="form-material floating">
                                     <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
-                                    <label for="material-gridf3">Minimum Followers</label>
+                                    <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
