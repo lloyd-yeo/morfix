@@ -40,7 +40,7 @@
 
     <div class="row">
 
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <!-- Sizes -->
             <div class="block">
 
@@ -86,6 +86,20 @@
                                 @endif
                             </label>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Sizes -->
+        </div>
+
+        <div class="col-lg-6">
+            <div class="block">
+                <div class="block-header bg-info">
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
+                </div>
+
+                <div class="block-content">
+                    <div class="row items-push">
                         <div class="col-xs-6 col-sm-3 col-lg-4">
                             <div class="form-group">
                                 <div class="col-xs-12">
@@ -111,8 +125,9 @@
                         </div>
                     </div>
                 </div>
+
             </div>
-            <!-- END Sizes -->
+
         </div>
     </div>
 
@@ -124,6 +139,7 @@
                 </div>
                 <div class="block-content">
                     <div class="row items-push">
+
                         <div class='col-xs-12 col-lg-3'>
                             <div class="form-material floating">
                                 <label class="css-input css-input switch switch-square switch-primary">
@@ -131,6 +147,7 @@
                                 </label>
                             </div>
                         </div>
+
                         <form class="js-validation-material form-horizontal">
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-9">
