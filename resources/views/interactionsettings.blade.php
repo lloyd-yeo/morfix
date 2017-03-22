@@ -142,7 +142,7 @@
                 <div class="block-content">
                     <div class="row items-push">
                         <div class="col-lg-12">
-                            <form class="js-validation-material">
+                            <form class="js-validation-material form-horizontal push-10-t">
                                 <div class="form-group">
                                     <div class='col-xs-12 col-lg-12'>
                                         <div class="form-material">
@@ -151,14 +151,16 @@
                                             </label>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="form-group">
                                     <div class="col-xs-12 col-lg-12">
                                         <div class="form-material">
                                             <input class="form-control" type="text" id="val-digits2" name="val-digits2">
                                             <label for="val-digits2">Maximum Followers Filter</label>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="form-group">
                                     <div class="col-xs-12 col-lg-12">
                                         <div class="form-material">
                                             <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
@@ -166,6 +168,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </form>
                         </div>
                     </div>
