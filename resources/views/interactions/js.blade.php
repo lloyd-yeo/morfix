@@ -25,13 +25,11 @@ jQuery(function () {
             },
             highlight: function(e) {
                 var elem = jQuery(e);
-
                 elem.closest('.form-group').removeClass('has-error').addClass('has-error');
                 elem.closest('.help-block').remove();
             },
             success: function(e) {
                 var elem = jQuery(e);
-
                 elem.closest('.form-group').removeClass('has-error');
                 elem.closest('.help-block').remove();
             },
