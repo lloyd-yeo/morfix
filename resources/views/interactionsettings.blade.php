@@ -134,17 +134,16 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="block">
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Advanced Auto Follow/Unfollow Settings</h3>
                 </div>
                 <div class="block-content">
                     <div class="row items-push">
-
                         <form class="js-validation-material form-horizontal">
                             <div class="form-group">
-                                <div class='col-xs-12 col-lg-3'>
+                                <div class='col-xs-12 col-lg-12'>
                                     <div class="form-material floating">
                                         <label class="css-input css-input switch switch-square switch-primary">
                                             <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
@@ -152,14 +151,14 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-xs-12 col-lg-3">
+                                <div class="col-xs-12 col-lg-12">
                                     <div class="form-material floating">
                                         <input class="form-control" type="text" id="val-digits2" name="val-digits2">
                                         <label for="val-digits2">Maximum Followers Filter</label>
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-lg-3">
+                                <div class="col-xs-12 col-lg-12">
                                     <div class="form-material floating">
                                         <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
                                         <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
