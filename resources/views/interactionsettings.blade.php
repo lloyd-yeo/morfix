@@ -130,12 +130,6 @@
                 </div>
             </div>
         </div>
-        
-        <script type="text/javascript">
-            var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
-            $autoInteractionSettingsHeight = $autoInteractionSettingsHeight + 20;
-            $("#niche-targeting-container").css("height", $autoInteractionSettingsHeight + "px");
-        </script>
     </div>
 
     <div class="row">
@@ -191,10 +185,10 @@
         </div>
         <div class="col-lg-12">
             <div class="block">
-                <div class="block-header bg-info">
+                <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                 </div>
-                <div class="block-content">
+                <div class="block-content" style="height: 300px;">
                     <div class='row'>
                         <div class='col-lg-12'>
                             <div class="form-group">
@@ -215,6 +209,12 @@
             </div>
         </div>
     </div>
+    
+    <script type="text/javascript">
+        var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
+        $autoInteractionSettingsHeight = $autoInteractionSettingsHeight + 20;
+        $("#niche-targeting-container").css("height", $autoInteractionSettingsHeight + "px");
+    </script>
 </div>
 @endforeach
 
