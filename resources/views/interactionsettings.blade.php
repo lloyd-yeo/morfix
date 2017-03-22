@@ -40,7 +40,7 @@
 
     <div class="row">
 
-        <div class="col-xs-12 col-lg-6">
+        <div class="col-xs-12 col-lg-4">
             <!-- Sizes -->
             <div class="block">
                 <div class="block-header bg-info">
@@ -91,7 +91,7 @@
             <!-- END Sizes -->
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="block">
                 <div class="block-header bg-info">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
