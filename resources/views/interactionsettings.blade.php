@@ -157,7 +157,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group push-10-t">
+                                <div class="form-group push-20-t">
                                     <div class="col-xs-12 col-lg-12">
                                         <div class="form-material floating">
                                             <input class="form-control" type="text" id="val-digits2" name="val-digits2">
