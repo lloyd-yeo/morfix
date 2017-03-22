@@ -53,36 +53,36 @@
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_like == 1)
-                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Like</span>
+                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'>Like</span>
                                 @else
-                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Like</span>
+                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'>Like</span>
                                 @endif
                             </label>
                         </div>
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_comment == 1)
-                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Comment</span>
+                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'>Comment</span>
                                 @else
-                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Comment</span>
+                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'>Comment</span>
                                 @endif
                             </label>
                         </div>
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_follow == 1)
-                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Follow</span>
+                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'>Follow</span>
                                 @else
-                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Follow</span>
+                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'>Follow</span>
                                 @endif
                             </label>
                         </div>
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_follow == 1)
-                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Unfollow</span>
+                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow</span>
                                 @else
-                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Unfollow</span>
+                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'>Unfollow</span>
                                 @endif
                             </label>
                         </div>
@@ -124,25 +124,27 @@
                 </div>
                 <div class="block-content">
                     <div class="row items-push">
-                        <div class="col-xs-12 col-lg-5">
-                            <div class="form-material floating">
-                                <label class="css-input css-input switch switch-square switch-primary">
-                                    <input type="checkbox" checked><span></span> Unfollow users that don't folow me
-                                </label>
+                        <form class="js-validation-material">
+                            <div class="col-xs-12 col-lg-5">
+                                <div class="form-material floating">
+                                    <label class="css-input css-input switch switch-square switch-primary">
+                                        <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users the don't follow me</span>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-lg-3">
-                            <div class="form-material floating">
-                                <input class="form-control" type="text" id="material-gridf2" name="val-digits2">
-                                <label for="material-gridf2"><i class=""></i> Maximum Followers Filter</label>
+                            <div class="col-xs-12 col-lg-3">
+                                <div class="form-material floating">
+                                    <input class="form-control" type="text" id="material-gridf2" name="val-digits2">
+                                    <label for="material-gridf2"><i class=""></i> Maximum Followers Filter</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-12 col-lg-3">
-                            <div class="form-material floating">
-                                <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
-                                <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
+                            <div class="col-xs-12 col-lg-3">
+                                <div class="form-material floating">
+                                    <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
+                                    <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
