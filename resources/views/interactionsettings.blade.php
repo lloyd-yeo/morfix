@@ -53,36 +53,36 @@
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_like == 1)
-                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> Like
+                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Like</span>
                                 @else
-                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> Like
+                                <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Like</span>
                                 @endif
                             </label>
                         </div>
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_comment == 1)
-                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> Comment
+                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Comment</span>
                                 @else
-                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> Comment
+                                <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Comment</span>
                                 @endif
                             </label>
                         </div>
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_follow == 1)
-                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> Follow
+                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Follow</span>
                                 @else
-                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> Follow
+                                <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Follow</span>
                                 @endif
                             </label>
                         </div>
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
                                 @if ($ig_profile->auto_follow == 1)
-                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> Unfollow
+                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: bold;'>Unfollow</span>
                                 @else
-                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> Unfollow
+                                <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: bold;'>Unfollow</span>
                                 @endif
                             </label>
                         </div>
