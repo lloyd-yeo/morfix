@@ -132,10 +132,18 @@
                                     </label>
                                 </div>
                             </div>
+<!--                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <div class="form-material">
+                                        <input class="form-control" type="text" id="val-digits2" name="val-digits2" placeholder="3">
+                                        <label for="val-digits2">Digits</label>
+                                    </div>
+                                </div>
+                            </div>-->
                             <div class="col-xs-12 col-lg-3">
                                 <div class="form-material floating">
-                                    <input class="form-control" type="text" id="material-gridf2" name="val-digits2">
-                                    <label for="material-gridf2"><i class=""></i> Maximum Followers Filter</label>
+                                    <input class="form-control" type="text" id="val-digits2" name="val-digits2">
+                                    <label for="val-digits2"><i class=""></i> Maximum Followers Filter</label>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-lg-3">
