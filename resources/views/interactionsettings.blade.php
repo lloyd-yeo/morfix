@@ -136,22 +136,22 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="block">
-                <div class="block-header bg-info">
+                <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Advanced Auto Follow/Unfollow Settings</h3>
                 </div>
                 <div class="block-content">
                     <div class="row items-push">
 
-                        <div class='col-xs-12 col-lg-3'>
-                            <div class="form-material floating">
-                                <label class="css-input css-input switch switch-square switch-primary">
-                                    <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
-                                </label>
-                            </div>
-                        </div>
-
                         <form class="js-validation-material form-horizontal">
                             <div class="form-group">
+                                <div class='col-xs-12 col-lg-3'>
+                                    <div class="form-material floating">
+                                        <label class="css-input css-input switch switch-square switch-primary">
+                                            <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-xs-12 col-lg-9">
                                     <div class="form-material floating">
                                         <input class="form-control" type="text" id="val-digits2" name="val-digits2">
