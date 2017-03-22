@@ -128,13 +128,13 @@
                             <div class="col-xs-6">
                                 <div class="form-material floating">
                                     <input class="form-control" type="text" id="material-gridf2" name="val-digits2">
-                                    <label for="material-gridf2">Minimum User</label>
+                                    <label for="material-gridf2">Maximum Followers</label>
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="form-material floating">
                                     <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
-                                    <label for="material-gridf3">Grid Input</label>
+                                    <label for="material-gridf3">Minimum Followers</label>
                                 </div>
                             </div>
                         </div>
