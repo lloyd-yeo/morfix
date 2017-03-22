@@ -141,8 +141,9 @@
                 </div>
                 <div class="block-content">
                     <div class="row items-push">
-                        <form class="js-validation-material form-horizontal">
+                        <form class="js-validation-material">
                             <div class="form-group">
+                                
                                 <div class='col-xs-12 col-lg-12'>
                                     <div class="form-material floating">
                                         <label class="css-input css-input switch switch-square switch-primary">
