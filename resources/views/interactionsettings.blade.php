@@ -119,7 +119,7 @@
                                             </div>
                                             <div class="alert alert-info alert-dismissable">
                                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                <h3 class="font-w300 push-15">NOTE</h3>
+                                                <!--<h3 class="font-w300 push-15"></h3>-->
                                                 <p>Simply select a <a class="alert-link" href="javascript:void(0)">niche</a> and let Morfix handle the targeting for you!</p>
                                             </div>
                                         </div>
