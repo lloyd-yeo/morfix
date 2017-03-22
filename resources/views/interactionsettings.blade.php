@@ -103,7 +103,7 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-group">
-                                        <div class="col-xs-12">
+                                        <div class="col-xs-12 col-lg-12">
                                             <div class="form-material">
                                                 <select class="js-select2 form-control toggle-niche" data-id="{{ $ig_profile->id }}" name="niche" style="width: 100%;" data-placeholder="Choose a niche..">
                                                     <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
@@ -116,6 +116,11 @@
                                                     @endforeach
                                                 </select>
                                                 <label for="niche-target">Niche Targeting</label>
+                                            </div>
+                                            <div class="alert alert-info alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                                <h3 class="font-w300 push-15">NOTE</h3>
+                                                <p>Simply select a <a class="alert-link" href="javascript:void(0)">niche</a> and let Morfix handle the targeting for you!</p>
                                             </div>
                                         </div>
                                     </div>
