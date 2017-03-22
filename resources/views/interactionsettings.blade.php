@@ -145,7 +145,7 @@
                             <form class="js-validation-material">
                                 <div class="form-group">
                                     <div class='col-xs-12 col-lg-12'>
-                                        <div class="form-material floating">
+                                        <div class="form-material">
                                             <label class="css-input css-input switch switch-square switch-primary">
                                                 <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
                                             </label>
