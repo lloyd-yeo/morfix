@@ -41,11 +41,12 @@
         <div class="col-lg-12">
             <!-- Sizes -->
             <div class="block">
+
                 <div class="block-header bg-modern">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
                 </div>
-                <div class="block-content">
 
+                <div class="block-content">
                     <div class="row items-push">
                         <div class="col-xs-6 col-sm-3 col-lg-2">
                             <label class="css-input css-input switch switch-square switch-primary">
@@ -92,11 +93,11 @@
                                                 <select class="js-select2 form-control toggle-niche" data-id="{{ $ig_profile->id }}" name="niche" style="width: 100%;" data-placeholder="Choose a niche..">
                                                     <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
                                                     @foreach ($niches as $niche)
-                                                        @if ($ig_profile->niche == $niche->niche_id)
-                                                        <option value='{{ $niche->niche_id }}' selected >{{ $niche->niche }}</option>
-                                                        @else
-                                                        <option value='{{ $niche->niche_id }}'>{{ $niche->niche }}</option>
-                                                        @endif
+                                                    @if ($ig_profile->niche == $niche->niche_id)
+                                                    <option value='{{ $niche->niche_id }}' selected >{{ $niche->niche }}</option>
+                                                    @else
+                                                    <option value='{{ $niche->niche_id }}'>{{ $niche->niche }}</option>
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                                 <label for="niche-target">Niche Targeting</label>
@@ -112,28 +113,26 @@
                     </div>
                 </div>
             </div>
-            <!-- END Sizes -->
         </div>
+        <!-- END Sizes -->
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="block">
-                <div class="block-header bg-modern">
-                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
-                </div>
-                <div class="block-content">
-                    <div class='row'>
-                        <div class='col-lg-12'>
+<div class="col-lg-12">
+    <div class="block">
+        <div class="block-header bg-modern">
+            <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
+        </div>
+        <div class="block-content">
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <div class="form-group">
+                        <div class="col-xs-12">
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <div class="form-material">
-                                                <input class="js-tags-input form-control" type="text" id="comment-tags" 
-                                                       name="comments" value="">
-                                            </div>
-                                        </div>
+                                    <div class="form-material">
+                                        <input class="js-tags-input form-control" type="text" id="comment-tags" 
+                                               name="comments" value="">
                                     </div>
                                 </div>
                             </div>
@@ -143,6 +142,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endforeach
 
