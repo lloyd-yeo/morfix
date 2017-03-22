@@ -141,7 +141,7 @@
                 
                 <div class="block-content">
                     <div class="row items-push">
-                        <form class="js-validation-material col-lg-12 col-xs-12">
+                        <form class="col-lg-12 col-xs-12">
                             <div class="form-group">
                                 <div class='col-xs-12 col-lg-12'>
                                     <div class="form-material floating">
@@ -151,6 +151,10 @@
                                     </div>
                                 </div>
                             </div>
+                        </form>
+                    </div>
+                    <div class="row items-push">
+                        <form class="js-validation-material col-lg-12 col-xs-12">
                             <div class="form-group">
                                 <div class="col-xs-12 col-lg-12">
                                     <div class="form-material floating">
