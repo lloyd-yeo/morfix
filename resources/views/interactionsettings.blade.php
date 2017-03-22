@@ -139,7 +139,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="block">
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Advanced Auto Follow/Unfollow Settings</h3>
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="block">
                 <div class="block-header bg-info">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
