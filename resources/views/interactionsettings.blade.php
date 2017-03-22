@@ -91,7 +91,7 @@
             <!-- END Sizes -->
         </div>
 
-        <div class="col-xs-12 col-lg-4">
+        <div class="col-xs-12 col-lg-8">
             <div class="block">
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
@@ -124,9 +124,7 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
-
         </div>
     </div>
 
