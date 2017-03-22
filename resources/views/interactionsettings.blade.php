@@ -169,13 +169,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-12" for="example-select">Select</label>
+                                    <label class="col-xs-12" for="follow-speed-select">Follow/Unfollow Speed</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" id="example-select" name="example-select" size="1">
-                                            <option value="0">Please select</option>
-                                            <option value="1">Option #1</option>
-                                            <option value="2">Option #2</option>
-                                            <option value="3">Option #3</option>
+                                        <select class="form-control" id="follow-speed-select" name="follow-speed" size="1">
+                                            <option value="Slow" selected>Slow</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Fast">Fast</option>
                                         </select>
                                     </div>
                                 </div>
