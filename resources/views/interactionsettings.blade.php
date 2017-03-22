@@ -196,7 +196,7 @@
                                     <div class="form-group">
                                         <div class="col-xs-12">
                                             <div class="form-material">
-                                                <input class="js-tags-input form-control" type="text" id="comment-tags" 
+                                                <input class="js-tags-input form-control" type="text" id="comment-tags" style="height: 100%;"
                                                        name="comments" value="">
                                             </div>
                                         </div>
