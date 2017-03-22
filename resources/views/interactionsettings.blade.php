@@ -149,7 +149,7 @@
                         <div class="col-lg-12">
                             <form class="js-validation-material form-horizontal push-10-t">
                                 <div class="form-group">
-                                    <div class='col-xs-12 col-lg-10 col-lg-offset-2'>
+                                    <div class='col-xs-12 col-lg-10 col-lg-offset-1'>
                                         <div class="form-material">
                                             <label class="css-input css-input switch switch-square switch-primary">
                                                 <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
@@ -158,7 +158,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group push-20-t">
-                                    <div class="col-xs-12 col-lg-10 col-lg-offset-2">
+                                    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material floating">
                                             <input class="form-control" type="text" id="val-digits2" name="val-digits2">
                                             <label for="val-digits2">Maximum Followers Filter</label>
@@ -166,7 +166,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-xs-12 col-lg-10 col-lg-offset-2">
+                                    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material floating">
                                             <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
                                             <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
@@ -174,8 +174,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-xs-10 col-lg-offset-2" for="follow-speed-select">Follow/Unfollow Speed</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-xs-10 col-lg-10 col-lg-offset-1" for="follow-speed-select">Follow/Unfollow Speed</label>
+                                    <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                                         <select class="form-control" id="follow-speed-select" name="follow-speed" size="1">
                                             <option value="Slow" selected>Slow</option>
                                             <option value="Medium">Medium</option>
