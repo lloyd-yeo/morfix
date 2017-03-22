@@ -125,21 +125,15 @@
                 <div class="block-content">
                     <div class="row items-push">
                         <form class="js-validation-material form-horizontal">
-
-
                             <div class="form-group">
-                                
-                                <div class="col-xs-12 col-lg-5">
+                                <div class="col-xs-12 col-lg-9">
                                     <div class="form-material floating">
                                         <label class="css-input css-input switch switch-square switch-primary">
                                             <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
                                         </label>
                                     </div>
-                                </div>
-                                
-                                <div class="col-xs-12 col-lg-3">
                                     <div class="form-material floating">
-                                        <input class="form-control" type="text" id="val-digits2" name="val-digits2" placeholder="3">
+                                        <input class="form-control" type="text" id="val-digits2" name="val-digits2">
                                         <label for="val-digits2">Digits</label>
                                     </div>
                                 </div>
@@ -150,7 +144,6 @@
                                         <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
                                     </div>
                                 </div>
-                                
                             </div>
 
                             <!--                            <div class="col-xs-12 col-lg-3">
