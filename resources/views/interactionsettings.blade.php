@@ -133,6 +133,7 @@
         
         <script type="text/javascript">
             var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
+            $autoInteractionSettingsHeight = $autoInteractionSettingsHeight + 20;
             $("#niche-targeting-container").css("height", $autoInteractionSettingsHeight + "px");
         </script>
     </div>
