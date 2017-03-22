@@ -153,14 +153,14 @@
                                     </div>
 
                                     <div class="col-xs-12 col-lg-12">
-                                        <div class="form-material floating">
+                                        <div class="form-material">
                                             <input class="form-control" type="text" id="val-digits2" name="val-digits2">
                                             <label for="val-digits2">Maximum Followers Filter</label>
                                         </div>
                                     </div>
 
                                     <div class="col-xs-12 col-lg-12">
-                                        <div class="form-material floating">
+                                        <div class="form-material">
                                             <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
                                             <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
                                         </div>
