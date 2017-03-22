@@ -44,7 +44,7 @@
             <!-- Sizes -->
             <div class="block">
 
-                <div class="block-header bg-modern">
+                <div class="block-header bg-info">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
                 </div>
 
@@ -105,9 +105,6 @@
                                                 <label for="niche-target">Niche Targeting</label>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12">
-                                            <input class=""
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -118,22 +115,52 @@
             <!-- END Sizes -->
         </div>
     </div>
-
-    <div class="col-lg-12">
-        <div class="block">
-            <div class="block-header bg-modern">
-                <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
-            </div>
-            <div class="block-content">
-                <div class='row'>
-                    <div class='col-lg-12'>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header bg-info">
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> Advanced Auto Follow/Unfollow Settings</h3>
+                </div>
+                <div class="block-content">
+                    <div class="row items-push">
                         <div class="form-group">
-                            <div class="col-xs-12">
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="form-material">
-                                            <input class="js-tags-input form-control" type="text" id="comment-tags" 
-                                                   name="comments" value="">
+                            <div class="col-xs-6">
+                                <div class="form-material floating">
+                                    <input class="form-control" type="text" id="material-gridf2" name="val-digits2" placeholder="3">
+                                    <label for="material-gridf2">Grid Input</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="form-material floating">
+                                    <input class="form-control" type="text" id="material-gridf2" name="val-digits2" placeholder="3">
+                                    <label for="material-gridf2">Grid Input</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header bg-info">
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
+                </div>
+                <div class="block-content">
+                    <div class='row'>
+                        <div class='col-lg-12'>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <div class="form-material">
+                                                <input class="js-tags-input form-control" type="text" id="comment-tags" 
+                                                       name="comments" value="">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
