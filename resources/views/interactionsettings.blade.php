@@ -47,7 +47,7 @@
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
                 </div>
 
-                <div class="block-content">
+                <div class="block-content" id="auto-interaction-settings-container">
                     <div class="row items-push">
                         <div class="col-xs-12 col-sm-12 col-lg-12">
                             <label class="css-input css-input switch switch-square switch-lg switch-primary">
@@ -96,7 +96,7 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
                 </div>
-                <div class="block-content">
+                <div class="block-content" id="niche-targeting-container">
                     <div class="row items-push">
                         <div class="col-xs-12 col-sm-12 col-lg-12">
                             <div class="form-group">
@@ -130,6 +130,11 @@
                 </div>
             </div>
         </div>
+        
+        <script type="text/javascript">
+            var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
+            $("#niche-targeting-container").css("height", $autoInteractionSettingsHeight + "px");
+        </script>
     </div>
 
     <div class="row">
@@ -138,7 +143,6 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Advanced Auto Follow/Unfollow Settings</h3>
                 </div>
-
                 <div class="block-content">
                     <div class="row items-push">
                         <div class="col-lg-12">
@@ -180,8 +184,6 @@
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
                 </div>
             </div>
