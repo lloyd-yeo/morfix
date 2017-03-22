@@ -138,56 +138,58 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Advanced Auto Follow/Unfollow Settings</h3>
                 </div>
-                
+
                 <div class="block-content">
                     <div class="row items-push">
-                        <form>
-                            <div class="form-group">
-                                <div class='col-xs-12 col-lg-12'>
-                                    <div class="form-material floating">
-                                        <label class="css-input css-input switch switch-square switch-primary">
-                                            <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
-                                        </label>
+                        <div class="col-lg-12">
+                            <form class="js-validation-material">
+                                <div class="form-group">
+                                    <div class='col-xs-12 col-lg-12'>
+                                        <div class="form-material floating">
+                                            <label class="css-input css-input switch switch-square switch-primary">
+                                                <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-lg-12">
+                                        <div class="form-material floating">
+                                            <input class="form-control" type="text" id="val-digits2" name="val-digits2">
+                                            <label for="val-digits2">Maximum Followers Filter</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-lg-12">
+                                        <div class="form-material floating">
+                                            <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
+                                            <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
+                                        </div>
                                     </div>
                                 </div>
-                                
-                                <div class="col-xs-12 col-lg-12">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="val-digits2" name="val-digits2">
-                                        <label for="val-digits2">Maximum Followers Filter</label>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-12 col-lg-12">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
-                                        <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                    
-<!--                    <div class="row items-push">
-                        <form class="js-validation-material col-lg-12 col-xs-12">
-                            <div class="form-group">
-                                <div class="col-xs-12 col-lg-12">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="val-digits2" name="val-digits2">
-                                        <label for="val-digits2">Maximum Followers Filter</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12 col-lg-12">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
-                                        <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>-->
+
+                    <!--                    <div class="row items-push">
+                                            <form class="js-validation-material col-lg-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <div class="col-xs-12 col-lg-12">
+                                                        <div class="form-material floating">
+                                                            <input class="form-control" type="text" id="val-digits2" name="val-digits2">
+                                                            <label for="val-digits2">Maximum Followers Filter</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-xs-12 col-lg-12">
+                                                        <div class="form-material floating">
+                                                            <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
+                                                            <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>-->
                 </div>
             </div>
         </div>
