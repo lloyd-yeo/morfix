@@ -40,10 +40,10 @@
 
     <div class="row">
 
-        <div class="col-xs-12 col-lg-3">
+        <div class="col-xs-12 col-lg-4">
             <!-- Sizes -->
             <div class="block">
-                <div class="block-header bg-info">
+                <div class="block-header bg-primary-light">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
                 </div>
 
@@ -91,9 +91,9 @@
             <!-- END Sizes -->
         </div>
 
-        <div class="col-lg-4">
+        <div class="col-xs-12 col-lg-4">
             <div class="block">
-                <div class="block-header bg-info">
+                <div class="block-header bg-primary-light">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
                 </div>
 
