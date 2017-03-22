@@ -152,9 +152,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group push-10-t">
                                     <div class="col-xs-12 col-lg-12">
-                                        <div class="form-material">
+                                        <div class="form-material floating">
                                             <input class="form-control" type="text" id="val-digits2" name="val-digits2">
                                             <label for="val-digits2">Maximum Followers Filter</label>
                                         </div>
@@ -162,13 +162,23 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12 col-lg-12">
-                                        <div class="form-material">
+                                        <div class="form-material floating">
                                             <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
                                             <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="col-xs-12" for="example-select">Select</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" id="example-select" name="example-select" size="1">
+                                            <option value="0">Please select</option>
+                                            <option value="1">Option #1</option>
+                                            <option value="2">Option #2</option>
+                                            <option value="3">Option #3</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
