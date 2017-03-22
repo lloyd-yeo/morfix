@@ -120,11 +120,11 @@
         <div class="col-lg-12">
             <div class="block">
                 <div class="block-header bg-info">
-                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> Advanced Auto Follow/Unfollow Settings</h3>
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Advanced Auto Follow/Unfollow Settings</h3>
                 </div>
                 <div class="block-content">
                     <div class="row items-push">
-                        <div class="col-xs-12 col-lg-6">
+                        <div class="col-xs-12 col-lg-5">
                             <div class="form-material floating">
                                 <label class="css-input css-input switch switch-square switch-primary">
                                     <input type="checkbox" checked><span></span> Unfollow users that don't folow me
@@ -143,7 +143,6 @@
                                 <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
