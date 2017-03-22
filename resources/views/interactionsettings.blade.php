@@ -180,35 +180,13 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
 
-                    <!--                    <div class="row items-push">
-                                            <form class="js-validation-material col-lg-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <div class="col-xs-12 col-lg-12">
-                                                        <div class="form-material floating">
-                                                            <input class="form-control" type="text" id="val-digits2" name="val-digits2">
-                                                            <label for="val-digits2">Maximum Followers Filter</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-xs-12 col-lg-12">
-                                                        <div class="form-material floating">
-                                                            <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
-                                                            <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>-->
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="block">
                 <div class="block-header bg-info">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
