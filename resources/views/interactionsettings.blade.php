@@ -210,16 +210,14 @@
                                     <form>
                                         <div class="form-group">
                                             <div class="form-material">
-                                                <div class="form-control">
-                                                    <div class="input-group">
-                                                        <input type="text" id="comment-txtbox" class="form-control" 
-                                                               data-emojiable="true"
-                                                               placeholder="Add comments here..."
-                                                               name="comments" aria-describedby="basic-addon1">
-                                                    </div>
-                                                    <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
+                                                <div class="input-group">
+                                                    <input type="text" id="comment-txtbox" class="form-control" 
+                                                           data-emojiable="true"
+                                                           placeholder="Add comments here..."
+                                                           name="comments" aria-describedby="basic-addon1">
                                                 </div>
                                             </div>
+                                            <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
                                         </div>
                                     </form>
                                 </div>
