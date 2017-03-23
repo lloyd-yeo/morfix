@@ -195,7 +195,7 @@
                             <div id="comments-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
-                                    <div id="comments-well-inner-container" data-toggle="slimscroll" data-color="#46c37b" data-always-visible="true">
+                                    <div id="comments-well-inner-container" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                         <p class="nice-copy" id="comments-well-inner">
 
                                         </p>
@@ -234,7 +234,7 @@
                             <div id="users-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
-                                    <div data-toggle="slimscroll" id="users-well-inner">
+                                    <div data-toggle="slimscroll" id="users-well-inner" data-color="#568bce">
                                         
                                     </div>
                                     <!-- END SlimScroll Container -->
@@ -274,7 +274,7 @@
                             <div id="hashtags-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
-                                    <div data-toggle="slimscroll" data-color="#46c37b" data-always-visible="true">
+                                    <div data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                         <p class="nice-copy" id="hashtags-well-inner">
 
                                         </p>
