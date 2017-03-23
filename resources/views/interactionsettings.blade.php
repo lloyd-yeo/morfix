@@ -188,7 +188,7 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                 </div>
-                <div class="block-content" id="my-comments-block" style="height: 400px;">
+                <div class="block-content" id="my-comments-block" style="height: 300px;">
                     <div class='row'>
                         <div class='col-lg-12'>
 
