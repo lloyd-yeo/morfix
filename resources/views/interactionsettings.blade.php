@@ -191,6 +191,31 @@
                 <div class="block-content" style="height: 300px;">
                     <div class='row'>
                         <div class='col-lg-12'>
+                            
+                            <div class="block">
+                                <div class="block-header">
+                                    <h3 class="block-title">Labels</h3>
+                                </div>
+                                <div class="block-content">
+                                    <p class="nice-copy">
+                                        <span class="label label-default">Default</span>
+                                        <span class="label label-primary">Primary</span>
+                                        <span class="label label-success">Success</span>
+                                        <span class="label label-info">Info</span>
+                                        <span class="label label-warning">Warning</span>
+                                        <span class="label label-danger">Danger</span>
+                                    </p>
+                                    <p class="nice-copy">
+                                        <span class="label label-default"><i class="fa fa-home"></i> Home</span>
+                                        <span class="label label-primary"><i class="fa fa-cog"></i> Settings</span>
+                                        <span class="label label-success"><i class="fa fa-check"></i> Great!</span>
+                                        <span class="label label-info"><i class="fa fa-info-circle"></i> More Info</span>
+                                        <span class="label label-warning"><i class="fa fa-exclamation-circle"></i>  Attention</span>
+                                        <span class="label label-danger"><i class="fa fa-times-circle"></i> Error</span>
+                                    </p>
+                                </div>
+                            </div>
+                            
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-group">
