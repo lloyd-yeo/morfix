@@ -180,57 +180,9 @@ function toggleNiche(url, nicheId, nicheName) {
         },
         success: function (data) {
             if (data.success === true) {
-                jQuery.notify({
-                    icon: "fa fa-check",
-                    message: "You have updated your niche to: <b>" + nicheName + "</b>",
-                    url: ''
-                },
-                        {
-                            element: 'body',
-                            type: 'success',
-                            allow_dismiss: true,
-                            newest_on_top: true,
-                            showProgressbar: false,
-                            placement: {
-                                from: 'top',
-                                align: 'center'
-                            },
-                            offset: 20,
-                            spacing: 10,
-                            z_index: 1033,
-                            delay: 5000,
-                            timer: 1000,
-                            animate: {
-                                enter: 'animated fadeIn',
-                                exit: 'animated fadeOutDown'
-                            }
-                        });
+                swal('Success', "You have updated your niche to: <b>" + nicheName + "</b>", 'success');
             } else {
-                jQuery.notify({
-                    icon: "fa fa-times",
-                    message: data.message,
-                    url: ''
-                },
-                        {
-                            element: 'body',
-                            type: 'danger',
-                            allow_dismiss: true,
-                            newest_on_top: true,
-                            showProgressbar: false,
-                            placement: {
-                                from: 'top',
-                                align: 'right'
-                            },
-                            offset: 20,
-                            spacing: 10,
-                            z_index: 1033,
-                            delay: 5000,
-                            timer: 1000,
-                            animate: {
-                                enter: 'animated fadeIn',
-                                exit: 'animated fadeOutDown'
-                            }
-                        });
+                swal('Success', "You have updated your niche to: <b>" + data.message + "</b>", 'success');
             }
         }
     });
@@ -282,6 +234,6 @@ $("#add-comment").on("click", function() {
     commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
 });
 
-$(".remove-comment-btn").on("click", function(){ 
+$(".remove-comment-btn").on("click", function(){
     
 });
