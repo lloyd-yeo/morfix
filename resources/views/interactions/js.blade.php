@@ -133,7 +133,7 @@ jQuery(function () {
     // Initializes and creates emoji set from sprite sheet
     window.emojiPicker = new EmojiPicker({
         emojiable_selector: '[data-emojiable=true]',
-        assetsPath: '../assets/js/plugins/emoji-picker/img/',
+        assetsPath: '../assets/js/plugins/emoji-picker/lib/img/',
         popupButtonClasses: 'fa fa-smile-o'
     });
 //    window.emojiPicker = new EmojiPicker({
