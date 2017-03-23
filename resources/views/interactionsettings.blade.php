@@ -216,10 +216,8 @@
                                                                data-emojiable="true"
                                                                placeholder="Add comments here..."
                                                                name="comments" aria-describedby="basic-addon1">
-                                                        <span class="input-group-addon">
-                                                            <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
-                                                        </span>
                                                     </div>
+                                                    <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
                                                 </div>
                                             </div>
                                         </div>
