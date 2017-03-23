@@ -189,10 +189,10 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                 </div>
-                <div class="block-content" id="my-comments-block" style="height: 300px;">
+                <div class="block-content" id="my-comments-block" style="height: 250px;">
                     <div class='row'>
                         <div class='col-lg-12'>
-                            <div id="comments-well" class="block" style="height: 250px;">
+                            <div id="comments-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
                                     <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
@@ -228,10 +228,10 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-users"></i> Targeted Usernames</h3>
                 </div>
-                <div class="block-content" id="my-users-block" style="height: 300px;">
+                <div class="block-content" id="my-users-block" style="height: 250px;">
                     <div class='row'>
                         <div class='col-lg-12'>
-                            <div id="users-well" class="block" style="height: 250px;">
+                            <div id="users-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
                                     <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
@@ -267,10 +267,10 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-hashtag"></i> Targeted Hashtags</h3>
                 </div>
-                <div class="block-content" id="my-hashtags-block" style="height: 300px;">
+                <div class="block-content" id="my-hashtags-block" style="height: 250px;">
                     <div class='row'>
                         <div class='col-lg-12'>
-                            <div id="hashtags-well" class="block" style="height: 250px;">
+                            <div id="hashtags-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
                                     <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
