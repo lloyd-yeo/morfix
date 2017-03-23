@@ -262,6 +262,45 @@
             </div>
         </div>
         
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header bg-primary">
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-hashtag"></i> Targeted Hashtags</h3>
+                </div>
+                <div class="block-content" id="my-hashtags-block" style="height: 300px;">
+                    <div class='row'>
+                        <div class='col-lg-12'>
+                            <div id="hashtags-well" class="block" style="height: 250px;">
+                                <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
+                                    <!-- SlimScroll Container -->
+                                    <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
+                                        <p class="nice-copy" id="hashtags-well-inner">
+                                            
+                                        </p>
+                                    </div>
+                                    <!-- END SlimScroll Container -->
+                                </div>
+                            </div>
+                            <form class="form-horizontal" onsubmit="return false;">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" id="hashtags-text" 
+                                                   name="hashtags-tag" placeholder="Enter your targeted username here...">
+                                            <span class="input-group-btn">
+                                                <button id="add-hashtags-btn" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 
     <script type="text/javascript">
@@ -280,6 +319,12 @@
         var $usernameBoxHeight = $("#users-text").height();
         var $usernameBlockHeight = $myTargetedUsernameBoxHeight - $usernameBoxHeight - 20 - 20 - 20;
         $("#users-well").css("height", $usernameBlockHeight + "px");
+        
+        var $myTargetedHashtagsBoxHeight = $("#my-hashtags-block").height();
+        var $hashtagsWellHeight = $("#hashtags-well").height();
+        var $hashtagsBoxHeight = $("#hashtags-text").height();
+        var $hashtagsBlockHeight = $myTargetedHashtagsBoxHeight - $hashtagsBoxHeight - 20 - 20 - 20;
+        $("#hashtags-well").css("height", $hashtagsBlockHeight + "px");
     </script>
 </div>
 @endforeach
