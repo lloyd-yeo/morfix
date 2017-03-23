@@ -213,13 +213,11 @@
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <div class="input-group">
-                                            <div class="form-material floating">
-                                                <input class="form-control" type="text" id="comments-text" 
-                                                       name="comment-tag" placeholder="Enter your comments here...">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
-                                                </span>
-                                            </div>
+                                            <input class="form-control" type="text" id="comments-text" 
+                                                   name="comment-tag" placeholder="Enter your comments here...">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
