@@ -162,60 +162,9 @@ function toggleInteraction(url) {
         },
         success: function (data) {
             if (data.success === true) {
-                
                 swal('Success', data.message, 'success');
-                
-                jQuery.notify({
-                    icon: "fa fa-check",
-                    message: data.message,
-                    url: ''
-                },
-                        {
-                            element: 'body',
-                            type: 'success',
-                            allow_dismiss: true,
-                            newest_on_top: true,
-                            showProgressbar: false,
-                            placement: {
-                                from: 'top',
-                                align: 'center'
-                            },
-                            offset: 20,
-                            spacing: 10,
-                            z_index: 1033,
-                            delay: 5000,
-                            timer: 1000,
-                            animate: {
-                                enter: 'animated fadeIn',
-                                exit: 'animated fadeOutDown'
-                            }
-                        });
             } else {
-                jQuery.notify({
-                    icon: "fa fa-times",
-                    message: data.message,
-                    url: ''
-                },
-                        {
-                            element: 'body',
-                            type: 'danger',
-                            allow_dismiss: true,
-                            newest_on_top: true,
-                            showProgressbar: false,
-                            placement: {
-                                from: 'top',
-                                align: 'right'
-                            },
-                            offset: 20,
-                            spacing: 10,
-                            z_index: 1033,
-                            delay: 5000,
-                            timer: 1000,
-                            animate: {
-                                enter: 'animated fadeIn',
-                                exit: 'animated fadeOutDown'
-                            }
-                        });
+                swal('Oops...', data.message, 'error');
             }
         }
     });
