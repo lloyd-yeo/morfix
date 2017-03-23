@@ -193,7 +193,7 @@
                         <div class='col-lg-12'>
 
                             <div class="block" style="height: 250px;">
-                                <div class="block-content bg-gray block-content-full">
+                                <div class="block-content bg-gray-light block-content-full">
                                     <!-- SlimScroll Container -->
                                     <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
                                         <p class="nice-copy">
@@ -206,7 +206,6 @@
                                         </p>
                                     </div>
                                     <!-- END SlimScroll Container -->
-
                                 </div>
                             </div>
 
@@ -215,7 +214,7 @@
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <input class="form-control" type="text" id="comments-text" 
-                                                   name="example-input2-group1" placeholder="Enter your comments here...">
+                                                   name="comment-tag" placeholder="Enter your comments here...">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
                                             </span>
