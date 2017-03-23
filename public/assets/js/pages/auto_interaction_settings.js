@@ -162,6 +162,9 @@ function toggleInteraction(url) {
         },
         success: function (data) {
             if (data.success === true) {
+                
+                swal('Success', data.message, 'success');
+                
                 jQuery.notify({
                     icon: "fa fa-check",
                     message: data.message,
@@ -327,5 +330,9 @@ $("#add-comment").on("click", function() {
     var source = $('#comments-text').val();
     var preview = emojione.toImage(source);
     var commentsWell = $("#comments-well-inner");
-    commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+    commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+});
+
+$(".remove-comment-btn").on("click", function(){ 
+    
 });

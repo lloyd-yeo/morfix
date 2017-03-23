@@ -1,3 +1,4 @@
+<script src="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/dropzonejs/dropzone.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js') }}"></script>
