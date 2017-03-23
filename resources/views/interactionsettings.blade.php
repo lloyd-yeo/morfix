@@ -209,31 +209,11 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                            <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Username">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="input-group">
-                                            <input class="form-control" type="email" id="example-input2-group1" name="example-input2-group1" placeholder="Email">
+                                            <input class="form-control" type="text" data-emojiable="true"
+                                                   id="example-input2-group1" 
+                                                   name="example-input2-group1">
                                             <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-euro"></i></span>
-                                            <input class="form-control" type="text" id="example-input3-group1" name="example-input3-group1" placeholder="..">
-                                            <span class="input-group-addon">.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <button class="btn btn-sm btn-primary" type="submit">Submit</button>
                                     </div>
                                 </div>
                             </form>
