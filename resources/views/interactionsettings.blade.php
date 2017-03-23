@@ -183,6 +183,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="col-lg-12">
             <div class="block">
                 <div class="block-header bg-primary">
@@ -191,7 +192,6 @@
                 <div class="block-content" id="my-comments-block" style="height: 300px;">
                     <div class='row'>
                         <div class='col-lg-12'>
-
                             <div id="comments-well" class="block" style="height: 250px;">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
@@ -203,7 +203,6 @@
                                     <!-- END SlimScroll Container -->
                                 </div>
                             </div>
-
                             <form class="form-horizontal" onsubmit="return false;">
                                 <div class="form-group">
                                     <div class="col-md-4">
@@ -223,17 +222,64 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-header bg-primary">
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-users"></i> Targeted Usernames</h3>
+                </div>
+                <div class="block-content" id="my-users-block" style="height: 300px;">
+                    <div class='row'>
+                        <div class='col-lg-12'>
+                            <div id="users-well" class="block" style="height: 250px;">
+                                <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
+                                    <!-- SlimScroll Container -->
+                                    <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
+                                        <p class="nice-copy" id="users-well-inner">
+                                            
+                                        </p>
+                                    </div>
+                                    <!-- END SlimScroll Container -->
+                                </div>
+                            </div>
+                            <form class="form-horizontal" onsubmit="return false;">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" id="users-text" 
+                                                   name="comment-tag" placeholder="Enter your targeted username here...">
+                                            <span class="input-group-btn">
+                                                <button id="add-username" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 
     <script type="text/javascript">
         var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
         $autoInteractionSettingsHeight = $autoInteractionSettingsHeight + 20;
         $("#niche-targeting-container").css("height", $autoInteractionSettingsHeight + "px");
+        
         var $myCommentBoxHeight = $("#my-comments-block").height();
         var $commentsWellHeight = $("#comments-well").height();
         var $commentBoxHeight = $("#comments-text").height();
         var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20 - 20 - 20;
         $("#comments-well").css("height", $commentsBlockHeight + "px");
+        
+        var $myTargetedUsernameBoxHeight = $("#my-users-block").height();
+        var $usernameWellHeight = $("#users-well").height();
+        var $usernameBoxHeight = $("#users-text").height();
+        var $usernameBlockHeight = $myTargetedUsernameBoxHeight - $usernameBoxHeight - 20 - 20 - 20;
+        $("#users-well").css("height", $usernameBlockHeight + "px");
     </script>
 </div>
 @endforeach
