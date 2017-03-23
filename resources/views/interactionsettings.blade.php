@@ -192,7 +192,7 @@
                     <div class='row'>
                         <div class='col-lg-12'>
 
-                            <div class="block">
+                            <div class="block" style="height: 250px;">
                                 <div class="block-content bg-gray-lighter">
                                     <p class="nice-copy">
                                         <span class="label label-default"><i class="fa fa-home"></i> Home</span>
