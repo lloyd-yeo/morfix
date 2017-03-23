@@ -209,7 +209,7 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" data-emojiable="true" 
+                                            <input class="form-control" type="text" data-emojiable="true" style="width: 30%;"
                                                    id="example-input2-group1" 
                                                    name="example-input2-group1">
                                         </div>
