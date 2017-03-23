@@ -10,6 +10,7 @@
 <script src="{{ asset('assets/js/plugins/emoji-picker/nanoscroller.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/emoji-picker/tether.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/emoji-picker/util.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js"></script>
 <script>
 $.ajaxSetup({
     headers: {
