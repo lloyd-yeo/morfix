@@ -197,9 +197,21 @@
                                     <!-- SlimScroll Container -->
                                     <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
                                         <p class="nice-copy">
-                                            <button class="btn btn-info push-5-r push-10" type="button"><i class="fa fa-times"></i> CommentA</button>
-                                            <button class="btn btn-info push-5-r push-10" type="button"><i class="fa fa-times"></i> CommentB</button>
-                                            <button class="btn btn-info push-5-r push-10" type="button"><i class="fa fa-times"></i> CommentC</button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentA <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentB <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
+                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
 <!--                                            <span class="label label-default"><i class="fa fa-home"></i> Home</span>
                                             <span class="label label-primary"><i class="fa fa-cog"></i> Settings</span>
                                             <span class="label label-success"><i class="fa fa-check"></i> Great!</span>
