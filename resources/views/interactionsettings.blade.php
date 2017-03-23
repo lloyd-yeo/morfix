@@ -238,12 +238,9 @@
                                         
                                     </div>
                                     <!-- END SlimScroll Container -->
-                                    
-                                    <!-- SlimScroll Container -->
 <!--                                    <p class="nice-copy" id="users-well-inner">
 
                                     </p>-->
-                                    <!-- END SlimScroll Container -->
                                 </div>
                             </div>
                             <form class="form-horizontal" onsubmit="return false;">
@@ -277,7 +274,7 @@
                             <div id="hashtags-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
-                                    <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
+                                    <div data-toggle="slimscroll" data-color="#46c37b" data-always-visible="true">
                                         <p class="nice-copy" id="hashtags-well-inner">
 
                                         </p>
