@@ -16,7 +16,7 @@ $.ajaxSetup({
 });
 jQuery(function () {
     // Init page helpers (Select2 + Tags Inputs plugins)
-    App.initHelpers(['select2', 'tags-inputs']);
+    App.initHelpers(['select2', 'tags-inputs', 'slimscroll']);
     
     initCommentsEmojiAutocomplete();
     
