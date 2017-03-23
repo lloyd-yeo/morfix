@@ -195,7 +195,7 @@
                             <div id="comments-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
-                                    <div data-toggle="slimscroll" data-color="#46c37b" data-always-visible="true">
+                                    <div id="comments-well-inner-container" data-toggle="slimscroll" data-color="#46c37b" data-always-visible="true">
                                         <p class="nice-copy" id="comments-well-inner">
 
                                         </p>
@@ -313,6 +313,7 @@
         var $commentsWellHeight = $("#comments-well").height();
         var $commentBoxHeight = $("#comments-text").height();
         var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20 - 20 - 20;
+        $("#comments-well-inner-container").attr("data-height", $commentsWellHeight + "px")
         $("#comments-well").css("height", $commentsBlockHeight + "px");
 
         var $myTargetedUsernameBoxHeight = $("#my-users-block").height();
