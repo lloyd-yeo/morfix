@@ -191,7 +191,7 @@
                 <div class="block-content" style="height: 300px;">
                     <div class='row'>
                         <div class='col-lg-12'>
-                            
+
                             <div class="block">
                                 <div class="block-content">
                                     <p class="nice-copy">
@@ -204,33 +204,34 @@
                                     </p>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-group">
                                         <div class="col-xs-12">
                                             <div class="form-material">
-                                                <input type="text" id="comment-txtbox" class="form-control" 
+                                                <div class="input-group">
+                                                    <input type="text" id="comment-txtbox" class="form-control" 
                                                            data-emojiable="true"
                                                            placeholder="Add comments here..."
                                                            name="comments" aria-describedby="basic-addon1">
-                                                <span class="input-group-addon">
-                                                    <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
-                                                </span>
-                                                
+                                                    <span class="input-group-addon">
+                                                        <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript">
         var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
         $autoInteractionSettingsHeight = $autoInteractionSettingsHeight + 20;
