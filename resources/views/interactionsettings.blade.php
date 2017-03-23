@@ -205,19 +205,38 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <div class="form-material">
+                            <form action="base_forms_elements.html" method="post" class="form-horizontal" onsubmit="return false;">
+                                <div class="form-group">
+                                    <div class="col-md-12">
                                         <div class="input-group">
-                                            <input type="text" id="comment-txtbox" class="form-control" 
-                                                   data-emojiable="true"
-                                                   placeholder="Add comments here..."
-                                                   name="comments" aria-describedby="basic-addon1">
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Username">
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <input class="form-control" type="email" id="example-input2-group1" name="example-input2-group1" placeholder="Email">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-euro"></i></span>
+                                            <input class="form-control" type="text" id="example-input3-group1" name="example-input3-group1" placeholder="..">
+                                            <span class="input-group-addon">.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-sm btn-primary" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
 
                         </div>
                     </div>
