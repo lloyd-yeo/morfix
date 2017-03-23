@@ -188,12 +188,12 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                 </div>
-                <div class="block-content" style="height: 400px;">
+                <div class="block-content" id="my-comments-block" style="height: 400px;">
                     <div class='row'>
                         <div class='col-lg-12'>
 
-                            <div class="block" style="height: 250px;">
-                                <div class="block-content bg-gray-light block-content-full">
+                            <div id="comments-well" class="block" style="height: 250px;">
+                                <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
                                     <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
                                         <p class="nice-copy">
@@ -213,11 +213,13 @@
                                 <div class="form-group">
                                     <div class="col-md-4">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" id="comments-text" 
-                                                   name="comment-tag" placeholder="Enter your comments here...">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
-                                            </span>
+                                            <div class="form-material floating">
+                                                <input class="form-control" type="text" id="comments-text" 
+                                                       name="comment-tag" placeholder="Enter your comments here...">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -234,6 +236,10 @@
         var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
         $autoInteractionSettingsHeight = $autoInteractionSettingsHeight + 20;
         $("#niche-targeting-container").css("height", $autoInteractionSettingsHeight + "px");
+        var $commentsWellHeight = $("#comments-well").height();
+        var $commentBoxHeight = $("#comments-text").height();
+        var $commentsBlockHeight = $commentsWellHeight - $commentBoxHeight - 20;
+        $("#my-comments-block").css("height", $commentsBlockHeight + "px");
     </script>
 </div>
 @endforeach
