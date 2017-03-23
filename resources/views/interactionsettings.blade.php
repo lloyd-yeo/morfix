@@ -208,15 +208,13 @@
                             <form class="form-horizontal" onsubmit="return false;">
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <div class="input-group">
-                                            <input class="form-control" 
-                                                   type="text" 
-                                                   id="example-input2-group1"
-                                                   data-emojiable="true"
-                                                   placeholder="Add comments here..."
-                                                   name="comments" aria-describedby="basic-addon1">
-                                            <!--<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>-->
-                                        </div>
+                                        <input class="form-control" 
+                                               type="text" 
+                                               id="example-input2-group1"
+                                               data-emojiable="true"
+                                               placeholder="Add comments here..."
+                                               name="comments" aria-describedby="basic-addon1">
+                                        <!--<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>-->
                                     </div>
                                 </div>
                             </form>
