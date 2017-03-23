@@ -211,7 +211,9 @@
                                         <div class="input-group">
                                             <input class="form-control" type="text" id="comments-text" 
                                                    name="example-input2-group1" placeholder="Enter your comments here...">
-                                            <span class="input-group-addon"><i class="fa fa-plus"></i></span>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
