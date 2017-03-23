@@ -197,27 +197,7 @@
                                     <!-- SlimScroll Container -->
                                     <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
                                         <p class="nice-copy" id="comments-well-inner">
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentA <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentB <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-                                            <button class="btn btn-info push-5-r push-10" type="button">CommentC <i class="fa fa-times"></i> </button>
-<!--                                            <span class="label label-default"><i class="fa fa-home"></i> Home</span>
-                                            <span class="label label-primary"><i class="fa fa-cog"></i> Settings</span>
-                                            <span class="label label-success"><i class="fa fa-check"></i> Great!</span>
-                                            <span class="label label-info"><i class="fa fa-info-circle"></i> More Info</span>
-                                            <span class="label label-warning"><i class="fa fa-exclamation-circle"></i>  Attention</span>
-                                            <span class="label label-danger"><i class="fa fa-times-circle"></i> Error</span>-->
+                                            
                                         </p>
                                     </div>
                                     <!-- END SlimScroll Container -->
