@@ -210,7 +210,7 @@
                                             <input class="form-control" type="text" id="comments-text" 
                                                    name="comment-tag" placeholder="Enter your comments here...">
                                             <span class="input-group-btn">
-                                                <button id="add-comment" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                                <button id="add-comment-btn" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
                                             </span>
                                         </div>
                                     </div>
@@ -247,9 +247,9 @@
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <input class="form-control" type="text" id="users-text" 
-                                                   name="comment-tag" placeholder="Enter your targeted username here...">
+                                                   name="users-tag" placeholder="Enter your targeted username here...">
                                             <span class="input-group-btn">
-                                                <button id="add-username" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                                <button id="add-username-btn" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
                                             </span>
                                         </div>
                                     </div>

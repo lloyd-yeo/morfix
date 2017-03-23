@@ -227,7 +227,7 @@ $(".toggle-niche").on('change', function () {
     toggleNiche(url, valueSelected, optionSelectedText);
 });
 
-$("#add-comment").on("click", function() { 
+$("#add-comment-btn").on("click", function() { 
     var source = $('#comments-text').val();
     var preview = emojione.toImage(source);
     var commentsWell = $("#comments-well-inner");
@@ -235,5 +235,16 @@ $("#add-comment").on("click", function() {
 });
 
 $(".remove-comment-btn").on("click", function(){
+    
+});
+
+$("#add-username-btn").on("click", function() { 
+    var source = $('#users-text').val();
+    var preview = emojione.toImage(source);
+    var usersWell = $("#users-well-inner");
+    usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-username-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+});
+
+$(".remove-username-btn").on("click", function(){
     
 });
