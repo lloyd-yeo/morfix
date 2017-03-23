@@ -207,8 +207,8 @@
 
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
+                                    <form>
+                                        <div class="form-group">
                                             <div class="form-material">
                                                 <div class="form-control">
                                                     <div class="input-group">
@@ -223,7 +223,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
 
