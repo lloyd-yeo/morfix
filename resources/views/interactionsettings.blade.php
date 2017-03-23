@@ -210,14 +210,16 @@
                                     <div class="form-group">
                                         <div class="col-xs-12">
                                             <div class="form-material">
-                                                <div class="input-group">
-                                                    <input type="text" id="comment-txtbox" class="form-control" 
-                                                           data-emojiable="true"
-                                                           placeholder="Add comments here..."
-                                                           name="comments" aria-describedby="basic-addon1">
-                                                    <span class="input-group-addon">
-                                                        <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
-                                                    </span>
+                                                <div class="form-control">
+                                                    <div class="input-group">
+                                                        <input type="text" id="comment-txtbox" class="form-control" 
+                                                               data-emojiable="true"
+                                                               placeholder="Add comments here..."
+                                                               name="comments" aria-describedby="basic-addon1">
+                                                        <span class="input-group-addon">
+                                                            <button type="button" class="btn btn-default btn-add-comment"><i class="fa fa-plus"></i></button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
