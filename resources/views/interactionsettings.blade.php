@@ -236,10 +236,11 @@
         var $autoInteractionSettingsHeight = $("#auto-interaction-settings-container").height();
         $autoInteractionSettingsHeight = $autoInteractionSettingsHeight + 20;
         $("#niche-targeting-container").css("height", $autoInteractionSettingsHeight + "px");
+        var $myCommentBoxHeight = $("#my-comments-block").height();
         var $commentsWellHeight = $("#comments-well").height();
         var $commentBoxHeight = $("#comments-text").height();
-        var $commentsBlockHeight = $commentsWellHeight - $commentBoxHeight - 20;
-        $("#my-comments-block").css("height", $commentsBlockHeight + "px");
+        var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20;
+        $("#comments-well").css("height", $commentsBlockHeight + "px");
     </script>
 </div>
 @endforeach
