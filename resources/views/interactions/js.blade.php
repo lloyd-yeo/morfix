@@ -4,6 +4,12 @@
 <script src="{{ asset('assets/js/plugins/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/emoji-picker/config.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/emoji-picker/emoji-picker.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/emoji-picker/jquery.emojiarea.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/emoji-picker/nanoscroller.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/emoji-picker/tether.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/emoji-picker/util.js') }}"></script>
 <script>
 $.ajaxSetup({
     headers: {
