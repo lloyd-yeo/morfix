@@ -234,7 +234,7 @@
                             <div id="users-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
-                                    <div data-toggle="slimscroll" id="users-well-inner" data-color="#568bce">
+                                    <div id="users-well-inner" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                         
                                     </div>
                                     <!-- END SlimScroll Container -->
