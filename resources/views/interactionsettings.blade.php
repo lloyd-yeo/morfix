@@ -215,7 +215,7 @@
                                                    data-emojiable="true"
                                                    placeholder="Add comments here..."
                                                    name="comments" aria-describedby="basic-addon1">
-                                            <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                            <!--<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>-->
                                         </div>
                                     </div>
                                 </div>
