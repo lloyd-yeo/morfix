@@ -314,7 +314,7 @@
         var $commentBoxHeight = $("#comments-text").height();
         var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20 - 20 - 20;
         $("#comments-well").css("height", $commentsBlockHeight + "px");
-        $("#comments-well-inner-container").attr("data-height", $commentsWellHeight + "px");
+        $("#comments-well-inner-container").attr("data-height", $commentsBlockHeight + "px");
 
         var $myTargetedUsernameBoxHeight = $("#my-users-block").height();
         var $usernameWellHeight = $("#users-well").height();
