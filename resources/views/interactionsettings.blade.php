@@ -193,7 +193,7 @@
                         <div class='col-lg-12'>
 
                             <div class="block">
-                                <div class="block-content">
+                                <div class="block-content bg-gray-lighter">
                                     <p class="nice-copy">
                                         <span class="label label-default"><i class="fa fa-home"></i> Home</span>
                                         <span class="label label-primary"><i class="fa fa-cog"></i> Settings</span>
@@ -207,7 +207,7 @@
 
                             <form class="form-horizontal" onsubmit="return false;">
                                 <div class="form-group">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <input class="form-control" type="text" id="comments-text" 
                                                    name="example-input2-group1" placeholder="Enter your comments here...">
