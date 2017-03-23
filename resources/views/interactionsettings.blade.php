@@ -209,7 +209,7 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="input-group">
-                                            <input class="form-control" type="text" id="example-input2-group1" 
+                                            <input class="form-control" type="text" id="comments-text" 
                                                    name="example-input2-group1" placeholder="Enter your comments here...">
                                             <span class="input-group-addon"><i class="fa fa-plus"></i></span>
                                         </div>
