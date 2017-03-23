@@ -205,16 +205,14 @@
                                 </div>
                             </div>
 
-                            <form action="base_forms_elements.html" method="post" class="form-horizontal" onsubmit="return false;">
+                            <form class="form-horizontal" onsubmit="return false;">
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <p class="lead emoji-picker-container">
-                                            <div class="input-group">
-                                                <input class="form-control" type="text" data-emojiable="true" 
-                                                       id="example-input2-group1" 
-                                                       name="example-input2-group1">
-                                            </div>
-                                        </p>
+                                        <div class="input-group">
+                                            <input class="form-control" type="text" data-emojiable="true" 
+                                                   id="example-input2-group1" 
+                                                   name="example-input2-group1">
+                                        </div>
                                     </div>
                                 </div>
                             </form>
