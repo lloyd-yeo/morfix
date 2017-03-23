@@ -188,20 +188,25 @@
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                 </div>
-                <div class="block-content" style="height: 300px;">
+                <div class="block-content" style="height: 400px;">
                     <div class='row'>
                         <div class='col-lg-12'>
 
                             <div class="block" style="height: 250px;">
-                                <div class="block-content bg-gray-lighter">
-                                    <p class="nice-copy">
-                                        <span class="label label-default"><i class="fa fa-home"></i> Home</span>
-                                        <span class="label label-primary"><i class="fa fa-cog"></i> Settings</span>
-                                        <span class="label label-success"><i class="fa fa-check"></i> Great!</span>
-                                        <span class="label label-info"><i class="fa fa-info-circle"></i> More Info</span>
-                                        <span class="label label-warning"><i class="fa fa-exclamation-circle"></i>  Attention</span>
-                                        <span class="label label-danger"><i class="fa fa-times-circle"></i> Error</span>
-                                    </p>
+                                <div class="block-content bg-gray block-content-full">
+                                    <!-- SlimScroll Container -->
+                                    <div data-toggle="slimscroll" data-height="300px" data-color="#46c37b" data-always-visible="true">
+                                        <p class="nice-copy">
+                                            <span class="label label-default"><i class="fa fa-home"></i> Home</span>
+                                            <span class="label label-primary"><i class="fa fa-cog"></i> Settings</span>
+                                            <span class="label label-success"><i class="fa fa-check"></i> Great!</span>
+                                            <span class="label label-info"><i class="fa fa-info-circle"></i> More Info</span>
+                                            <span class="label label-warning"><i class="fa fa-exclamation-circle"></i>  Attention</span>
+                                            <span class="label label-danger"><i class="fa fa-times-circle"></i> Error</span>
+                                        </p>
+                                    </div>
+                                    <!-- END SlimScroll Container -->
+
                                 </div>
                             </div>
 
