@@ -234,9 +234,15 @@
                             <div id="users-well" class="block">
                                 <div class="block-content bg-gray-light block-content-full" data-toggle="slimscroll" style="height: 100%;">
                                     <!-- SlimScroll Container -->
-                                    <p class="nice-copy" id="users-well-inner">
+                                    <div data-toggle="slimscroll" id="users-well-inner">
+                                        
+                                    </div>
+                                    <!-- END SlimScroll Container -->
+                                    
+                                    <!-- SlimScroll Container -->
+<!--                                    <p class="nice-copy" id="users-well-inner">
 
-                                    </p>
+                                    </p>-->
                                     <!-- END SlimScroll Container -->
                                 </div>
                             </div>
