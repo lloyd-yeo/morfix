@@ -237,7 +237,7 @@
         var $myCommentBoxHeight = $("#my-comments-block").height();
         var $commentsWellHeight = $("#comments-well").height();
         var $commentBoxHeight = $("#comments-text").height();
-        var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20 - 20 - 20 - 20 - 20;
+        var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20 - 20 - 20 - 20;
         $("#comments-well").css("height", $commentsBlockHeight + "px");
     </script>
 </div>
