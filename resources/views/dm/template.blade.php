@@ -53,9 +53,9 @@
                             <div class="col-xs-12">
                                 <div class="form-material floating">
                                      @if (empty($ig_profile->insta_new_follower_template)) 
-                                    <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7">You have no templates set.</textarea>
+                                    <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7" placeholder="Type in your greeting message template here..."></textarea>
                                     @else
-                                    <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7">{{ $ig_profile->insta_new_follower_template }}</textarea>
+                                    <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7" placeholder="Type in your greeting message template here...">{{ $ig_profile->insta_new_follower_template }}</textarea>
                                     @endif
                                     
                                     <label for="greeting-template">Greeting Message Template</label>
@@ -95,9 +95,9 @@
                             <div class="col-xs-12">
                                 <div class="form-material floating">
                                     @if (empty($ig_profile->follow_up_message)) 
-                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7">You have no templates set.</textarea>
+                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7" placeholder="Type in your follow-up message template here..."></textarea>
                                     @else
-                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7">{{ $ig_profile->follow_up_message }}</textarea>
+                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7" placeholder="Type in your follow-up messagetemplate here...">{{ $ig_profile->follow_up_message }}</textarea>
                                     @endif
                                     <label for="followup-template">Follow-Up Message Template</label>
                                 </div>

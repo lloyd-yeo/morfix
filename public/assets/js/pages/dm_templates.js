@@ -90,35 +90,11 @@ $("#greeting-btn").on("click", function() {
     saveTemplate(url);
 });
 
-$("#greeting-template-txt").on("focus", function() { 
-    if ($(this).val() == "You have no templates set.") {
-        $(this).val("");
-    }
-});
-
-$("#greeting-template-txt").on("blur", function() { 
-    if ($(this).val() == "") {
-        $(this).val("You have no templates set.");
-    }
-});
-
 $("#followup-btn").on("click", function() { 
     var url = "save/followup/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
     saveTemplate(url);
-});
-
-$("#followup-template-txt").on("focus", function() { 
-    if ($(this).val() == "You have no templates set.") {
-        $(this).val("");
-    }
-});
-
-$("#followup-template-txt").on("blur", function() { 
-    if ($(this).val() == "") {
-        $(this).val("You have no templates set.");
-    }
 });
 
 function saveTemplate(url) {
