@@ -29,7 +29,7 @@ class DirectMessageTemplatesController extends Controller
         ]);
     }
     
-    public function saveGreetingTemplate($id) {
+    public function saveGreetingTemplate($id, Request $request) {
         $template_message = $request->input('message');
         $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->insta_new_follower_template = $template_message;
@@ -43,7 +43,7 @@ class DirectMessageTemplatesController extends Controller
         }
     }
     
-    public function saveFollowupTemplate($id) {
+    public function saveFollowupTemplate($id, Request $request) {
         $template_message = $request->input('message');
         $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->follow_up_message = $template_message;
