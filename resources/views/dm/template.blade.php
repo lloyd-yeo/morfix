@@ -52,7 +52,12 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material floating">
+                                     @if (empty($ig_profile->insta_new_follower_template)) 
                                     <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7"></textarea>
+                                    @else
+                                    <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7">{{ $ig_profile->insta_new_follower_template }}</textarea>
+                                    @endif
+                                    
                                     <label for="greeting-template">Greeting Message Template</label>
                                 </div>
                                 <div class="help-block text-right">
