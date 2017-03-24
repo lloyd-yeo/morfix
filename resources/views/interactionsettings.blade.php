@@ -177,7 +177,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-xs-12">
+                                    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <button class="btn btn-sm btn-primary" type="button" id="advanced-follow-settings-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-check push-5-r"></i> Save Advanced Settings</button>
                                     </div>
                                 </div>
