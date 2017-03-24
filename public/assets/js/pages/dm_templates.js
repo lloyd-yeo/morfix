@@ -100,7 +100,6 @@ $("#followup-btn").on("click", function() {
 });
 
 function saveTemplate(url, message) {
-    alert(message);
     $.ajax({
         type: "POST",
         url: url,
