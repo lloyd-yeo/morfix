@@ -141,7 +141,7 @@
                     <div class="row items-push">
                         <div class="col-lg-12">
                             <form class="js-validation-material form-horizontal push-10-t">
-                                <div class="form-group push-20">
+                                <div class="form-group">
                                     <div class='col-xs-12 col-lg-10 col-lg-offset-1'>
                                         <div class="form-material">
                                             <label class="css-input css-input switch switch-square switch-primary">
@@ -150,7 +150,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group push-20-t">
+                                <div class="form-group push-30-t">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material floating">
                                             <input class="form-control" type="text" id="min-follower-filter" name="min-follower-filter">
