@@ -49,5 +49,5 @@ var initTemplateBoxLiveUpdate = function() {
         var source = $('#greeting-template-txt').val();
         var preview = emojione.toImage(source);
         $('#greeting-template-txt').html(preview);
-    });    
+    });
 };
