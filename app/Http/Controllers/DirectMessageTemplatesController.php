@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class DirectMessageTemplatesController extends Controller
 {
@@ -17,12 +19,10 @@ class DirectMessageTemplatesController extends Controller
      */
     public function index($id) {
         
-        $instagram_profiles = DB::table('morfix_instagram_profiles')
-                ->where('email', Auth::user()->email)
-                ->take(10)
-                ->get();
+        $instagram_profiles = InstagramProfile::where('id', $id)
+                                ->get();
         
-        return view('dm', [
+        return view('dm.template', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
     }
