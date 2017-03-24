@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="block-content">
-                    <div class="form-group">
+                    <div class="form-group push-10-t push-10">
                         <div class="col-xs-12">
                             <div class="form-material floating">
                                 <textarea class="form-control" id="greeting-template" name="greeting-template" rows="7"></textarea>
