@@ -87,14 +87,14 @@ $("#greeting-btn").on("click", function() {
     var url = "save/greeting/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url);
+    saveTemplate(url);
 });
 
 $("#followup-btn").on("click", function() { 
     var url = "save/followup/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url);
+    saveTemplate(url);
 });
 
 function saveTemplate(url) {
