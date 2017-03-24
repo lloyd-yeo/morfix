@@ -94,10 +94,10 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material floating">
-                                    @if (empty($ig_profile->insta_new_follower_template)) 
+                                    @if (empty($ig_profile->follow_up_message)) 
                                     <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7"></textarea>
                                     @else
-                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7">{{ $ig_profile->insta_new_follower_template }}</textarea>
+                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7">{{ $ig_profile->follow_up_message }}</textarea>
                                     @endif
                                     <label for="followup-template">Follow-Up Message Template</label>
                                 </div>
