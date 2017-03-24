@@ -57,4 +57,20 @@ class DirectMessageTemplatesController extends Controller
             return Response::json(array("success" => false, 'message' => $response));
         }
     }
+    
+    public function toggleAutoDmDelay($id) {
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile->auto_dm_delay = ($instagram_profile->auto_dm_delay + 1) % 2;
+        $response = "There has been an error with the server. Please contact live support.";
+        if ($instagram_profile->save()) {
+            if ($instagram_profile->auto_dm_delay == 1) {
+                $response = "You have turned <b>ON</b> auto delay for your follow-up message.";
+            } else {
+                $response = "You have turned <b>OFF</b> auto delay for your follow-up message.";
+            }
+            return Response::json(array("success" => true, 'message' => $response));
+        } else {
+            return Response::json(array("success" => false, 'message' => $response));
+        }
+    }
 }

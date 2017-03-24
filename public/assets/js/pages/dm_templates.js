@@ -99,6 +99,31 @@ $("#followup-btn").on("click", function() {
     saveTemplate(url, message);
 });
 
+$("#followup-delay-cbx").on("click", function(){ 
+    var url = "save/followupdelay/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    toggleDelay(url);
+});
+
+function toggleDelay(url) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {
+            action: "toggle"
+        },
+        success: function (data) {
+            if (data.success === true) {
+                swal('Success', data.message, 'success');
+            } else {
+                swal('Oops...', data.message, 'error');
+            }
+        }
+    });
+};
+
 function saveTemplate(url, message) {
     $.ajax({
         type: "POST",
