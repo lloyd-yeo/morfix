@@ -109,6 +109,12 @@ var initValidationMaterial = function(){
                 required: true,
                 digits: true
             },
+            'min-follower-filter': {
+                digits: true
+            },
+            'max-follower-filter': {
+                digits: true
+            },
             'val-number2': {
                 required: true,
                 number: true
@@ -144,6 +150,8 @@ var initValidationMaterial = function(){
             'val-website2': 'Please enter your website!',
             'val-phoneus2': 'Please enter a US phone!',
             'val-digits2': 'Please enter only digits!',
+            'min-follower-filter': 'Please enter only digits!',
+            'min-follower-filter': 'Please enter only digits!',
             'val-number2': 'Please enter a number!',
             'val-range2': 'Please enter a number between 1 and 5!',
             'val-terms2': 'You must agree to the service terms!'

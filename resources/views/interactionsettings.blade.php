@@ -118,7 +118,6 @@
                                             </div>
                                             <div class="alert alert-info alert-dismissable">
                                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                                <!--<h3 class="font-w300 push-15"></h3>-->
                                                 <p>Simply select a <a class="alert-link" href="javascript:void(0)">niche</a> and let Morfix handle the targeting for you!</p>
                                             </div>
                                         </div>
@@ -154,7 +153,7 @@
                                 <div class="form-group push-20-t">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material floating">
-                                            <input class="form-control" type="text" id="val-digits2" name="val-digits2">
+                                            <input class="form-control" type="text" id="min-follower-filter" name="min-follower-filter">
                                             <label for="val-digits2">Maximum Followers Filter</label>
                                         </div>
                                     </div>
@@ -162,7 +161,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material floating">
-                                            <input class="form-control" type="text" id="material-gridf3" name="val-digits2">
+                                            <input class="form-control" type="text" id="max-follower-filter" name="max-follower-filter">
                                             <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
                                         </div>
                                     </div>
@@ -175,6 +174,11 @@
                                             <option value="Medium">Medium</option>
                                             <option value="Fast">Fast</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <button class="btn btn-sm btn-primary" type="button" id="advanced-follow-settings-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-check push-5-r"></i> Save Advanced Settings</button>
                                     </div>
                                 </div>
                             </form>
