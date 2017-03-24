@@ -90,8 +90,7 @@ $("#greeting-btn").on("click", function() {
     saveTemplate(url);
 });
 
-$("#greeting-btn").on("focus", function() { 
-    alert($(this).val());
+$("#greeting-template-txt").on("focus", function() { 
     if ($(this).val() == "You have no templates set.") {
         $(this).val("");
     }
@@ -104,7 +103,7 @@ $("#followup-btn").on("click", function() {
     saveTemplate(url);
 });
 
-$("#followup-btn").on("focus", function() { 
+$("#followup-template-txt").on("focus", function() { 
     if ($(this).val() == "You have no templates set.") {
         $(this).val("");
     }
