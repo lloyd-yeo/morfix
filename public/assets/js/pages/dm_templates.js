@@ -96,6 +96,12 @@ $("#greeting-template-txt").on("focus", function() {
     }
 });
 
+$("#greeting-template-txt").on("blur", function() { 
+    if ($(this).val() == "") {
+        $(this).val("You have no templates set.");
+    }
+});
+
 $("#followup-btn").on("click", function() { 
     var url = "save/followup/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
@@ -106,6 +112,12 @@ $("#followup-btn").on("click", function() {
 $("#followup-template-txt").on("focus", function() { 
     if ($(this).val() == "You have no templates set.") {
         $(this).val("");
+    }
+});
+
+$("#followup-template-txt").on("blur", function() { 
+    if ($(this).val() == "") {
+        $(this).val("You have no templates set.");
     }
 });
 
