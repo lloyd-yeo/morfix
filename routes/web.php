@@ -34,3 +34,6 @@ Route::post('/interactions/follow/{id}', 'InteractionsController@toggleFollow');
 Route::post('/interactions/unfollow/{id}', 'InteractionsController@toggleUnfollow');
 Route::post('/interactions/niche/{id}', 'InteractionsController@toggleNiche');
 Route::post('/instagram-profile/add', 'InstagramProfileController@store');
+Route::post('/dm', 'DirectMessageController@index');
+Route::post('/dm/templates/{id}', 'DirectMessageTemplatesController@index');
+Route::post('/dm/logs/{id}', 'DirectMessageLogsController@index');

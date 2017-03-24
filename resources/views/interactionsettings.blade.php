@@ -237,10 +237,6 @@
                                     <div id="users-well-inner" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                         
                                     </div>
-                                    <!-- END SlimScroll Container -->
-<!--                                    <p class="nice-copy" id="users-well-inner">
-
-                                    </p>-->
                                 </div>
                             </div>
                             <form class="form-horizontal" onsubmit="return false;">

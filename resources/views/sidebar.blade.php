@@ -23,7 +23,9 @@
                         <a href="/home"><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @endif
                     </li>
+                    
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AUTOMATION TOOLS</span></li>
+                    
                     <li>
                         @if ($page == 'interaction')
                         <a class="active" href="/interactions"><i class="si si-rocket"></i><span class="sidebar-mini-hide">Interactions</span></a>
@@ -31,19 +33,15 @@
                         <a href="/interactions"><i class="si si-rocket"></i><span class="sidebar-mini-hide">Interactions</span></a>
                         @endif
                     </li>
-                    <li class="">
-                        <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                            <i class="si si-envelope"></i><span class="sidebar-mini-hide">Direct Messages</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="/dm/template/{{ Auth::user()->id }}">My Templates</a>
-                            </li>
-                            <li>
-                                <a href="/dm/logs/{{ Auth::user()->id }}">Logs</a>
-                            </li>
-                        </ul>
+                    
+                    <li>
+                        @if ($page == 'dm')
+                        <a class="active" href="/dm"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Direct Message</span></a>
+                        @else
+                        <a href="/dm"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Direct Message</span></a>
+                        @endif
                     </li>
+                    
                     <li class="">
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#">
                             <i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span>
