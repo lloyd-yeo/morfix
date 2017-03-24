@@ -113,7 +113,7 @@
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label class="css-input switch switch-sm switch-success">
-                                    <input type="checkbox" id="followup-delay-cbx" name="follow-up-delay"><span></span> Send follow-up messages a day after greeting message?
+                                    <input type="checkbox" id="followup-delay-cbx" name="follow-up-delay" data-id="{{ $ig_profile->id }}"><span></span> Send follow-up messages a day after greeting message?
                                 </label>
                             </div>
                         </div>
