@@ -61,7 +61,7 @@
                         
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-send push-5-r"></i> Save Template</button>
+                                <button class="btn btn-sm btn-primary" type="button" id="greeting-btn"><i class="fa fa-send push-5-r"></i> Save Template</button>
                             </div>
                         </div>
                     </form>
@@ -92,7 +92,7 @@
                         
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-send push-5-r"></i> Save Template</button>
+                                <button class="btn btn-sm btn-primary" type="button" id="followup-btn"><i class="fa fa-send push-5-r"></i> Save Template</button>
                             </div>
                         </div>
                     </form>
