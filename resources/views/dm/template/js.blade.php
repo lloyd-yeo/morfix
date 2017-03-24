@@ -9,6 +9,5 @@ $.ajaxSetup({
 });
 jQuery(function () {
     initCommentsEmojiAutocomplete();
-    initTemplateBoxLiveUpdate();
 });
 </script>

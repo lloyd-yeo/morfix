@@ -70,6 +70,37 @@
             </div>
             <!-- END Sizes -->
         </div>
+        
+        <div class="col-xs-12 col-lg-12">
+            <!-- Sizes -->
+            <div class="block">
+                <div class="block-header bg-primary">
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-envelope"></i> GREETING MESSAGE TEMPLATE</h3>
+                </div>
+
+                <div class="block-content">
+                    <form class="form-horizontal push-10">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="form-material floating">
+                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7"></textarea>
+                                    <label for="followup-template">Follow-Up Message Template</label>
+                                </div>
+                                <div class="help-block text-right">Feel free to use common tags: &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-send push-5-r"></i> Save Template</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <!-- END Sizes -->
+        </div>
     </div>
 
 </div>
