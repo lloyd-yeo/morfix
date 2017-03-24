@@ -43,14 +43,6 @@ var initCommentsEmojiAutocomplete = function(){
     });
 };
 
-var initDirectMessageTemplateLivePreview = function() {
-    $("#comments-text").on('keyup change input',function(e) {
-        var source = $('#comments-text').val();
-        var preview = emojione.toImage(source);
-        $('#comments-text').html(preview);
-    });  
-};
-
 // Init Material Forms Validation, for more examples you can check out https://github.com/jzaefferer/jquery-validation
 var initValidationMaterial = function(){
     jQuery('.js-validation-material').validate({

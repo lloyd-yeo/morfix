@@ -42,3 +42,12 @@ var initCommentsEmojiAutocomplete = function(){
         footer: '<a href="http://www.emoji.codes" target="_blank">Browse All<span class="arrow">»</span></a>'
     });
 };
+
+
+var initTemplateBoxLiveUpdate = function() {
+    $("#greeting-template-txt").on('keyup change input',function(e) {
+        var source = $('#greeting-template-txt').val();
+        var preview = emojione.toImage(source);
+        $('#greeting-template-txt').html(preview);
+    });    
+};
