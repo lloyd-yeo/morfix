@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="block-content">
-                    <form class="form-horizontal push-10-t push-10">
+                    <form class="form-horizontal push-10">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <div class="form-material floating">
