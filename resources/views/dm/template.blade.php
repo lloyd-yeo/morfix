@@ -72,7 +72,7 @@
                         
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id; }}"><i class="fa fa-send push-5-r"></i> Save Template</button>
+                                <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-send push-5-r"></i> Save Template</button>
                             </div>
                         </div>
                     </form>
@@ -119,7 +119,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <button class="btn btn-sm btn-primary" type="button" id="followup-btn" data-id="{{ $ig_profile->id; }}"><i class="fa fa-send push-5-r"></i> Save Template</button>
+                                <button class="btn btn-sm btn-primary" type="button" id="followup-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-send push-5-r"></i> Save Template</button>
                             </div>
                         </div>
                     </form>
