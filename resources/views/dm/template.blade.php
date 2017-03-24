@@ -13,7 +13,7 @@
     <div class="row items-push">
         <div class="col-sm-7">
             <h1 class="page-heading">
-                <i class="si si-envelope"></i> Auto Direct-Message Templates <small> Your conversation starter!</small>
+                <i class="si si-envelope"></i>  Auto Direct-Message Templates <small> Your conversation starter!</small>
             </h1>
         </div>
     </div>
@@ -53,7 +53,7 @@
                             <div class="col-xs-12">
                                 <div class="form-material floating">
                                      @if (empty($ig_profile->insta_new_follower_template)) 
-                                    <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7"></textarea>
+                                    <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7">You have no templates set.</textarea>
                                     @else
                                     <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7">{{ $ig_profile->insta_new_follower_template }}</textarea>
                                     @endif
@@ -72,7 +72,7 @@
                         
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <button class="btn btn-sm btn-primary" type="button" id="greeting-btn"><i class="fa fa-send push-5-r"></i> Save Template</button>
+                                <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id; }}"><i class="fa fa-send push-5-r"></i> Save Template</button>
                             </div>
                         </div>
                     </form>
@@ -95,7 +95,7 @@
                             <div class="col-xs-12">
                                 <div class="form-material floating">
                                     @if (empty($ig_profile->follow_up_message)) 
-                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7"></textarea>
+                                    <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7">You have no templates set.</textarea>
                                     @else
                                     <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7">{{ $ig_profile->follow_up_message }}</textarea>
                                     @endif
@@ -119,7 +119,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <button class="btn btn-sm btn-primary" type="button" id="followup-btn"><i class="fa fa-send push-5-r"></i> Save Template</button>
+                                <button class="btn btn-sm btn-primary" type="button" id="followup-btn" data-id="{{ $ig_profile->id; }}"><i class="fa fa-send push-5-r"></i> Save Template</button>
                             </div>
                         </div>
                     </form>

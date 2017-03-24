@@ -28,4 +28,32 @@ class DirectMessageTemplatesController extends Controller
             'user_ig_profiles' => $instagram_profiles,
         ]);
     }
+    
+    public function saveGreetingTemplate($id) {
+        $template_message = $request->input('message');
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile->insta_new_follower_template = $template_message;
+        
+        $response = "There has been an error with the server. Please contact live support.";
+        if ($instagram_profile->save()) {
+            $response = "Your new follower greetings template has been saved!";
+            return Response::json(array("success" => fail, 'message' => $response));
+        } else {
+            return Response::json(array("success" => fail, 'message' => $response));
+        }
+    }
+    
+    public function saveFollowupTemplate($id) {
+        $template_message = $request->input('message');
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile->follow_up_message = $template_message;
+        
+        $response = "There has been an error with the server. Please contact live support.";
+        if ($instagram_profile->save()) {
+            $response = "Your follow-up template has been saved!";
+            return Response::json(array("success" => fail, 'message' => $response));
+        } else {
+            return Response::json(array("success" => fail, 'message' => $response));
+        }
+    }
 }

@@ -82,3 +82,35 @@ var initCommentsEmojiAutocomplete = function(){
         footer: '<a href="http://www.emoji.codes" target="_blank">Browse All<span class="arrow">»</span></a>'
     });
 };
+
+$("#greeting-btn").on("click", function() { 
+    var url = "save/greeting/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    toggleInteraction(url);
+});
+
+$("#followup-btn").on("click", function() { 
+    var url = "save/followup/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    toggleInteraction(url);
+});
+
+function saveTemplate(url) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {
+            action: "toggle"
+        },
+        success: function (data) {
+            if (data.success === true) {
+                swal('Success', data.message, 'success');
+            } else {
+                swal('Oops...', data.message, 'error');
+            }
+        }
+    });
+};

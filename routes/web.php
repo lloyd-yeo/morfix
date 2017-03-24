@@ -36,4 +36,6 @@ Route::post('/interactions/niche/{id}', 'InteractionsController@toggleNiche');
 Route::post('/instagram-profile/add', 'InstagramProfileController@store');
 Route::get('/dm', 'DirectMessageController@index');
 Route::get('/dm/templates/{id}', 'DirectMessageTemplatesController@index');
+Route::post('/dm/templates/save/greeting/{id}', 'DirectMessageTemplatesController@saveGreetingTemplate');
+Route::post('/dm/templates/save/followup/{id}', 'DirectMessageTemplatesController@saveFollowupTemplate');
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');

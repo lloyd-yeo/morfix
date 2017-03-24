@@ -168,8 +168,8 @@ function toggleInteraction(url) {
             }
         }
     });
-}
-;
+};
+
 function toggleNiche(url, nicheId, nicheName) {
     $.ajax({
         type: "POST",
