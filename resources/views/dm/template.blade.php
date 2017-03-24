@@ -56,7 +56,8 @@
                                     <label for="greeting-template">Greeting Message Template</label>
                                 </div>
                                 <div class="help-block text-right">
-                                    <b>PLACEHOLDERS</b>
+                                    <b>PLACEHOLDER</b>
+                                    <br/>
                                     ${full_name} - Type this as a placeholder for the recipient's instagram full name.
                                     <br/>
                                     ${Hey|Hi|Hello} - Enclose your words in a curly bracket so the system will randomly select a word to use.
@@ -96,7 +97,8 @@
                                     <label for="followup-template">Follow-Up Message Template</label>
                                 </div>
                                 <div class="help-block text-right">
-                                    <b>PLACEHOLDERS</b>
+                                    <b>PLACEHOLDER</b>
+                                    <br/>
                                     ${full_name} - Type this as a placeholder for the recipient's instagram full name.
                                     <br/>
                                     ${Hey|Hi|Hello} - Enclose your words in a curly bracket so the system will randomly select a word to use.
