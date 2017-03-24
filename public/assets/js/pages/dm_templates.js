@@ -91,6 +91,7 @@ $("#greeting-btn").on("click", function() {
 });
 
 $("#greeting-btn").on("focus", function() { 
+    alert($(this).val());
     if ($(this).val() == "You have no templates set.") {
         $(this).val("");
     }
