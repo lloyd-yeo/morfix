@@ -55,7 +55,11 @@
                                     <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7"></textarea>
                                     <label for="greeting-template">Greeting Message Template</label>
                                 </div>
-                                <div class="help-block text-right">Feel free to use common tags: &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;</div>
+                                <div class="help-block text-right">
+                                    ${full_name} - Type this as a placeholder for the recipient's instagram full name.
+                                    <br/>
+                                    ${Hey|Hi|Hello} - Enclose your words in a curly bracket so the system will randomly select a word to use.
+                                </div>
                             </div>
                         </div>
                         
@@ -90,7 +94,11 @@
                                     @endif
                                     <label for="followup-template">Follow-Up Message Template</label>
                                 </div>
-                                <div class="help-block text-right">Feel free to use common tags: &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;</div>
+                                <div class="help-block text-right">
+                                    ${full_name} - Type this as a placeholder for the recipient's instagram full name.
+                                    <br/>
+                                    ${Hey|Hi|Hello} - Enclose your words in a curly bracket so the system will randomly select a word to use.
+                                </div>
                             </div>
                         </div>
                         
