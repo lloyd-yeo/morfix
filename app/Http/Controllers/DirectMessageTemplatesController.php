@@ -38,9 +38,9 @@ class DirectMessageTemplatesController extends Controller
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
             $response = "Your new follower greetings template has been saved!";
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => true, 'message' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response));
         }
     }
     
@@ -52,9 +52,9 @@ class DirectMessageTemplatesController extends Controller
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
             $response = "Your follow-up template has been saved!";
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => true, 'message' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response));
         }
     }
 }
