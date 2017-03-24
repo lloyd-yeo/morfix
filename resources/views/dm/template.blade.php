@@ -13,7 +13,7 @@
     <div class="row items-push">
         <div class="col-sm-7">
             <h1 class="page-heading">
-                <i class="si si-envelope"></i> DM Templates <small> Your conversation starter!</small>
+                <i class="si si-envelope"></i> Auto Direct-Message Templates <small> Your conversation starter!</small>
             </h1>
         </div>
     </div>
