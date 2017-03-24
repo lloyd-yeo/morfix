@@ -86,24 +86,27 @@ var initCommentsEmojiAutocomplete = function(){
 $("#greeting-btn").on("click", function() { 
     var url = "save/greeting/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
+    var message = $("greeting-template-txt").val();
     url = url + profile_id;
-    saveTemplate(url);
+    saveTemplate(url, message);
 });
 
 $("#followup-btn").on("click", function() { 
     var url = "save/followup/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
+    var message = $("followup-template-txt").val();
     url = url + profile_id;
-    saveTemplate(url);
+    saveTemplate(url, message);
 });
 
-function saveTemplate(url) {
+function saveTemplate(url, message) {
     $.ajax({
         type: "POST",
         url: url,
         dataType: "json",
         data: {
-            action: "toggle"
+            action: "toggle",
+            message: message
         },
         success: function (data) {
             if (data.success === true) {
