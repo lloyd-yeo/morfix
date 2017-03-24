@@ -28,7 +28,7 @@ class InteractionsController extends Controller {
                 ->take(10)
                 ->get();
         
-        return view('interactions', [
+        return view('dm', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
     }
