@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    @include('dm.template.css')
+@include('dm.template.css')
 @endsection
 
 @section('sidebar')
@@ -48,15 +48,17 @@
                 </div>
 
                 <div class="block-content">
-                    <div class="form-group push-10-t push-10">
-                        <div class="col-xs-12">
-                            <div class="form-material floating">
-                                <textarea class="form-control" id="greeting-template" name="greeting-template" rows="7"></textarea>
-                                <label for="greeting-template">Template</label>
+                    <form class="form-horizontal push-10-t push-10">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="form-material floating">
+                                    <textarea class="form-control" id="greeting-template" name="greeting-template" rows="7"></textarea>
+                                    <label for="greeting-template">Template</label>
+                                </div>
+                                <div class="help-block text-right">Feel free to use common tags: &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;</div>
                             </div>
-                            <div class="help-block text-right">Feel free to use common tags: &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;</div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <!-- END Sizes -->
@@ -69,5 +71,5 @@
 @endsection
 
 @section('js')
-    @include('dm.template.js')
+@include('dm.template.js')
 @endsection
