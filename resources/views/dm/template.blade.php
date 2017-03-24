@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    @include('template_css')
+    @include('dm.template.css')
 @endsection
 
 @section('sidebar')
@@ -69,5 +69,5 @@
 @endsection
 
 @section('js')
-    @include('template_js')
+    @include('dm.template.js')
 @endsection
