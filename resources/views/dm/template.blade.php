@@ -75,7 +75,7 @@
             <!-- Sizes -->
             <div class="block">
                 <div class="block-header bg-primary">
-                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-envelope"></i> GREETING MESSAGE TEMPLATE</h3>
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-envelope"></i> FOLLOW-UP MESSAGE TEMPLATE</h3>
                 </div>
 
                 <div class="block-content">
