@@ -145,7 +145,7 @@
                                     <div class='col-xs-12 col-lg-10 col-lg-offset-1'>
                                         <div class="form-material">
                                             <label class="css-input css-input switch switch-square switch-primary">
-                                                <input type="checkbox" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
+                                                <input type="checkbox" name="unfollow-toggle" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
                                             </label>
                                         </div>
                                     </div>
