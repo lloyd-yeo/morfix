@@ -284,7 +284,7 @@ $("#advanced-follow-settings-form").submit(function (e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 });
 
-$("#comments-txt").on("keydown", function (e) {
+$("#comments-text").on("keydown", function (e) {
     var key = e.which;
     alert(key);
     if(key == 13)  // the enter key code
