@@ -234,7 +234,7 @@
                                             <input class="form-control" type="text" id="comments-text" 
                                                    name="comment-tag" placeholder="Enter your comments here...">
                                             <span class="input-group-btn">
-                                                <button id="add-comment-btn" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                                <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}" ><i class="fa fa-plus"></i></button>
                                             </span>
                                         </div>
                                     </div>
