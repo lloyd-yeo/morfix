@@ -148,9 +148,9 @@ class InteractionsController extends Controller {
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
             $response = "Your settings have been saved!";
-            return Response::json(array("success" => true, 'message' => $response));
+            return Response::json(array("success" => true, 'response' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => fail, 'response' => $response));
         }
     }
 
