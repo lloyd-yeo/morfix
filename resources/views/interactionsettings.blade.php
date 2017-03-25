@@ -154,25 +154,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group push-30-t">
+                                <div class="form-group push-30-t has-info">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
-                                        <div class="form-material floating">
+                                        <div class="form-material">
                                             <input class="form-control" type="text" id="min-follower-filter" name="min-follower-filter">
                                             <label for="min-follower-filter">Minimum Followers Filter</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-info">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
-                                        <div class="form-material floating">
+                                        <div class="form-material">
                                             <input class="form-control" type="text" id="max-follower-filter" name="max-follower-filter">
                                             <label for="max-follower-filter"><i class=""></i> Maximum Followers Filter</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-info">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
-                                        <div class="form-material floating">
+                                        <div class="form-material">
                                             <input class="form-control" type="text" id="follow-cycle" name="follow-cycle">
                                             <label for="follow-cycle"><i class=""></i> Follow/Unfollow Cycle</label>
                                         </div>
