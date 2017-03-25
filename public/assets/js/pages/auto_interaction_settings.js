@@ -284,20 +284,25 @@ $("#advanced-follow-settings-form").submit(function (e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 });
 
-$("#comments-txt").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#add-comment-btn").click();
-    }
+$("#comments-txt").enterKey(function () {
+    $("#add-comment-btn").click();
 });
 
-$("#users-text").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#add-username-btn").click();
-    }
+$("#users-text").enterKey(function () {
+    $("#add-username-btn").click();
 });
 
-$("#hashtags-text").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#add-hashtags-btn").click();
-    }
+$("#hashtags-text").enterKey(function () {
+    $("#add-hashtags-btn").click();
 });
+
+$.fn.enterKey = function (fnc) {
+    return this.each(function () {
+        $(this).keypress(function (ev) {
+            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+            if (keycode == '13') {
+                fnc.call(this, ev);
+            }
+        })
+    })
+}
