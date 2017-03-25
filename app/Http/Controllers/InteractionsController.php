@@ -9,6 +9,7 @@ use Response;
 use App\User;
 use App\InstagramProfile;
 use App\Niche;
+use App\InstagramProfileComment;
 
 class InteractionsController extends Controller {
 
@@ -61,7 +62,7 @@ class InteractionsController extends Controller {
             }
             return Response::json(array("success" => true, 'message' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response));
         }
     }
 
@@ -77,7 +78,7 @@ class InteractionsController extends Controller {
             }
             return Response::json(array("success" => true, 'message' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response));
         }
     }
 
@@ -93,7 +94,7 @@ class InteractionsController extends Controller {
             }
             return Response::json(array("success" => true, 'message' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response));
         }
     }
 
@@ -109,7 +110,7 @@ class InteractionsController extends Controller {
             }
             return Response::json(array("success" => true, 'message' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response));
         }
     }
 
@@ -126,7 +127,7 @@ class InteractionsController extends Controller {
             }
             return Response::json(array("success" => true, 'message' => $response));
         } else {
-            return Response::json(array("success" => fail, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response));
         }
     }
 
@@ -152,8 +153,38 @@ class InteractionsController extends Controller {
             $response = "Your settings have been saved!";
             return Response::json(array("success" => true, 'response' => $response));
         } else {
-            return Response::json(array("success" => fail, 'response' => $response));
+            return Response::json(array("success" => false, 'response' => $response));
         }
     }
-
+    
+    public function saveComment(Request $request, $id) {
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_comment = \App\InstagramProfileComment::where("comment", $request->input('comment'))->where("ig_profile_id", $id)->first();
+        $response = "There has been an error with the server. Please contact live support.";
+        if (is_null($instagram_comment)) {
+            $new_ig_comment = new InstagramProfileComment;
+            $new_ig_comment->comment = $instagram_comment;
+            $new_ig_comment->ig_profile_id = $id;
+        } else {
+            $response = "This comment exists alreay!";
+            return Response::json(array("success" => false, 'response' => $response));
+        }
+        
+        if ($new_ig_comment->save()) {
+            $response = "Successfully added comment!";
+            return Response::json(array("success" => true, 'response' => $response));
+        } else {
+            return Response::json(array("success" => false, 'response' => $response));
+        }
+    }
+    
+    public function saveUsername(Request $request, $id) {
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+    }
+    
+    public function saveHashtag(Request $request, $id) {
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+    }
+    
+    
 }
