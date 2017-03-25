@@ -284,14 +284,29 @@ $("#advanced-follow-settings-form").submit(function (e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 });
 
-$("#comments-txt").on("keydown", function () {
-    $("#add-comment-btn").click();
+$("#comments-txt").on("keydown", function (e) {
+    var key = e.which;
+    if(key == 13)  // the enter key code
+    {
+        $("#add-comment-btn").click();
+        return false;  
+    }
 });
 
-$("#users-text").on("keydown", function () {
-    $("#add-username-btn").click();
+$("#users-text").on("keydown", function (e) {
+    var key = e.which;
+    if(key == 13)  // the enter key code
+    {
+        $("#add-username-btn").click();
+        return false;  
+    }
 });
 
-$("#hashtags-text").on("keydown", function () {
-    $("#add-hashtags-btn").click();
+$("#hashtags-text").on("keydown", function (e) {
+    var key = e.which;
+    if(key == 13)  // the enter key code
+    {
+        $("#add-hashtags-btn").click();
+        return false;  
+    }
 });
