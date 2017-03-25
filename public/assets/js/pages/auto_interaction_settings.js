@@ -286,10 +286,7 @@ $("#advanced-follow-settings-form").submit(function (e) {
 
 $("#comments-text").on("keydown", function (e) {
     var key = e.which;
-    alert(key);
-    if(key == 13)  // the enter key code
-    {
-        alert("ENTERED!");
+    if(key == 13) {
         $("#add-comment-btn").click();
         return false;  
     }
@@ -297,10 +294,7 @@ $("#comments-text").on("keydown", function (e) {
 
 $("#users-text").on("keydown", function (e) {
     var key = e.which;
-    alert(key);
-    if(key == 13)  // the enter key code
-    {
-        alert("ENTERED!!");
+    if(key == 13) {
         $("#add-username-btn").click();
         return false;  
     }
@@ -308,10 +302,7 @@ $("#users-text").on("keydown", function (e) {
 
 $("#hashtags-text").on("keydown", function (e) {
     var key = e.which;
-    alert(key);
-    if(key == 13)  // the enter key code
-    {
-        alert("ENTERED!!!");
+    if(key == 13) {
         $("#add-hashtags-btn").click();
         return false;  
     }
