@@ -140,7 +140,7 @@
                 <div class="block-content">
                     <div class="row items-push">
                         <div class="col-lg-12">
-                            <form class="js-validation-material form-horizontal push-10-t">
+                            <form class="js-validation-material form-horizontal push-10-t" id="advanced-follow-settings-form" data-id="{{ $ig_profile->id }}">
                                 <div class="form-group">
                                     <div class='col-xs-12 col-lg-10 col-lg-offset-1'>
                                         <div class="form-material">
@@ -154,7 +154,7 @@
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material floating">
                                             <input class="form-control" type="text" id="min-follower-filter" name="min-follower-filter">
-                                            <label for="val-digits2">Maximum Followers Filter</label>
+                                            <label for="min-follower-filter">Minimum Followers Filter</label>
                                         </div>
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material floating">
                                             <input class="form-control" type="text" id="max-follower-filter" name="max-follower-filter">
-                                            <label for="material-gridf3"><i class=""></i> Minimum Followers Filter</label>
+                                            <label for="max-follower-filter"><i class=""></i> Maximum Followers Filter</label>
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +178,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
-                                        <button class="btn btn-sm btn-primary" type="button" id="advanced-follow-settings-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-check push-5-r"></i> Save Advanced Settings</button>
+                                        <button class="btn btn-sm btn-primary" type="submit" id="advanced-follow-settings-btn"><i class="fa fa-check push-5-r"></i> Save Advanced Settings</button>
                                     </div>
                                 </div>
                             </form>

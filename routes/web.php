@@ -33,6 +33,7 @@ Route::post('/interactions/comment/{id}', 'InteractionsController@toggleComment'
 Route::post('/interactions/follow/{id}', 'InteractionsController@toggleFollow');
 Route::post('/interactions/unfollow/{id}', 'InteractionsController@toggleUnfollow');
 Route::post('/interactions/niche/{id}', 'InteractionsController@toggleNiche');
+Route::post('/interactions/save/advancedfollowsettings/{id}', 'InteractionsController@saveAdvancedFollowSettings');
 Route::post('/instagram-profile/add', 'InstagramProfileController@store');
 Route::get('/dm', 'DirectMessageController@index');
 Route::get('/dm/templates/{id}', 'DirectMessageTemplatesController@index');

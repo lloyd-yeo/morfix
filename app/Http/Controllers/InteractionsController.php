@@ -22,12 +22,12 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        
+
         $instagram_profiles = DB::table('morfix_instagram_profiles')
                 ->where('email', Auth::user()->email)
                 ->take(10)
                 ->get();
-        
+
         return view('interactions', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
@@ -41,7 +41,7 @@ class InteractionsController extends Controller {
      */
     public function edit($id) {
         $instagram_profiles = InstagramProfile::where('id', $id)
-                                ->get();
+                ->get();
         $niches = Niche::all();
         return view('interactionsettings', [
             'user_ig_profiles' => $instagram_profiles,
@@ -64,7 +64,7 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => fail, 'message' => $response));
         }
     }
-    
+
     public function toggleComment($id) {
         $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_comment = ($instagram_profile->auto_comment + 1) % 2;
@@ -80,7 +80,7 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => fail, 'message' => $response));
         }
     }
-    
+
     public function toggleFollow($id) {
         $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_follow = ($instagram_profile->auto_follow + 1) % 2;
@@ -96,7 +96,7 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => fail, 'message' => $response));
         }
     }
-    
+
     public function toggleUnfollow($id) {
         $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_unfollow = ($instagram_profile->auto_unfollow + 1) % 2;
@@ -112,7 +112,7 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => fail, 'message' => $response));
         }
     }
-    
+
     public function toggleNiche(Request $request, $id) {
         $instagram_profile = InstagramProfile::where('id', $id)->first();
         $niche = $request->input('niche');
@@ -129,4 +129,29 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => fail, 'message' => $response));
         }
     }
+
+    public function saveAdvancedFollowSettings(Request $request, $id) {
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+
+        $unfollow_users_not_following_flag = 0;
+        if ($request->has('unfollow-toggle')) {
+            $unfollow_users_not_following_flag = 1;
+        }
+        $minimum_follower_filter = $request->input('min-follower-filter');
+        $maximum_follower_filter = $request->input('max-follower-filter');
+        $follow_speed = $request->input('follow-speed');
+
+        $instagram_profile->unfollow_unfollowed = $unfollow_users_not_following_flag;
+        $instagram_profile->follow_min_followers = $minimum_follower_filter;
+        $instagram_profile->follow_max_followers = $maximum_follower_filter;
+        $instagram_profile->speed = $follow_speed;
+        $response = "There has been an error with the server. Please contact live support.";
+        if ($instagram_profile->save()) {
+            $response = "Your settings have been saved!";
+            return Response::json(array("success" => true, 'message' => $response));
+        } else {
+            return Response::json(array("success" => fail, 'message' => $response));
+        }
+    }
+
 }

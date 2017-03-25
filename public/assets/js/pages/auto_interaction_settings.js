@@ -256,3 +256,25 @@ $("#add-username-btn").on("click", function() {
 $(".remove-username-btn").on("click", function(){
     
 });
+
+// this is the id of the form
+$("#advanced-follow-settings-form").submit(function (e) {
+    var url = "save/advancedfollowsettings/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: $("#add-instagram-profile-form").serialize(),
+        success: function (data) {
+            if (data.success === true) {
+                swal('Success', data.response, 'success');
+            } else {
+                swal('Oops...', data.response, 'error');
+            }
+        }
+    });
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+});
