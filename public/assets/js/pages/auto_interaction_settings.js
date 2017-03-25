@@ -286,6 +286,7 @@ $("#advanced-follow-settings-form").submit(function (e) {
 
 $("#comments-txt").on("keydown", function (e) {
     var key = e.which;
+    alert(key);
     if(key == 13)  // the enter key code
     {
         alert("ENTERED!");
@@ -296,6 +297,7 @@ $("#comments-txt").on("keydown", function (e) {
 
 $("#users-text").on("keydown", function (e) {
     var key = e.which;
+    alert(key);
     if(key == 13)  // the enter key code
     {
         alert("ENTERED!!");
@@ -306,6 +308,7 @@ $("#users-text").on("keydown", function (e) {
 
 $("#hashtags-text").on("keydown", function (e) {
     var key = e.which;
+    alert(key);
     if(key == 13)  // the enter key code
     {
         alert("ENTERED!!!");
