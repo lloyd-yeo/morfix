@@ -242,9 +242,28 @@ $(".toggle-niche").on('change', function () {
 
 $("#add-comment-btn").on("click", function() { 
     var source = $('#comments-text').val();
-    var preview = emojione.toImage(source);
-    var commentsWell = $("#comments-well-inner");
-    commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+    
+    var url = "add/comment/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: $("#advanced-follow-settings-form").serialize(),
+        success: function (data) {
+            if (data.success === true) {
+//                swal('Success', data.response, 'success');
+                var preview = emojione.toImage(source);
+                var commentsWell = $("#comments-well-inner");
+                commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+            } else {
+                swal('Oops...', data.response, 'error');
+            }
+        }
+    });
+    
 });
 
 $(".remove-comment-btn").on("click", function(){
