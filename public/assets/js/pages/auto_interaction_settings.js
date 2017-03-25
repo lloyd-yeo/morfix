@@ -288,6 +288,7 @@ $("#comments-txt").on("keydown", function (e) {
     var key = e.which;
     if(key == 13)  // the enter key code
     {
+        alert("ENTERED!");
         $("#add-comment-btn").click();
         return false;  
     }
@@ -297,6 +298,7 @@ $("#users-text").on("keydown", function (e) {
     var key = e.which;
     if(key == 13)  // the enter key code
     {
+        alert("ENTERED!!");
         $("#add-username-btn").click();
         return false;  
     }
@@ -306,6 +308,7 @@ $("#hashtags-text").on("keydown", function (e) {
     var key = e.which;
     if(key == 13)  // the enter key code
     {
+        alert("ENTERED!!!");
         $("#add-hashtags-btn").click();
         return false;  
     }
