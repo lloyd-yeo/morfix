@@ -372,7 +372,7 @@ $("#users-text").on("keydown", function (e) {
 $("#hashtags-text").on("keydown", function (e) {
     var key = e.which;
     if(key == 13) {
-        $("#add-hashtags-btn").click();
+        $("#add-hashtag-btn").click();
         return false;  
     }
 });
