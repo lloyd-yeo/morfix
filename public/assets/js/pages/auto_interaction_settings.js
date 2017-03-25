@@ -251,7 +251,9 @@ $("#add-comment-btn").on("click", function() {
         type: "POST",
         url: url,
         dataType: "json",
-        data: $("#advanced-follow-settings-form").serialize(),
+        data: {
+            comment: $("#comments-text").val()
+        },
         success: function (data) {
             if (data.success === true) {
 //                swal('Success', data.response, 'success');
