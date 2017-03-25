@@ -163,7 +163,7 @@ class InteractionsController extends Controller {
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_comment)) {
             $new_ig_comment = new InstagramProfileComment;
-            $new_ig_comment->comment = $instagram_comment;
+            $new_ig_comment->comment = $request->input('comment');
             $new_ig_comment->ig_profile_id = $id;
         } else {
             $response = "This comment exists alreay!";
