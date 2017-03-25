@@ -234,7 +234,7 @@
                                             <input class="form-control" type="text" id="comments-text" 
                                                    name="comment-tag" placeholder="Enter your comments here...">
                                             <span class="input-group-btn">
-                                                <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}" ><i class="fa fa-plus"></i></button>
+                                                <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                             </span>
                                         </div>
                                     </div>
@@ -250,7 +250,7 @@
         <div class="col-lg-12">
             <div class="block">
                 <div class="block-header bg-primary">
-                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-users"></i> Targeted Usernames</h3>
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-users"></i> Target Usernames</h3>
                 </div>
                 <div class="block-content" id="my-users-block" style="height: 250px;">
                     <div class='row'>
@@ -268,9 +268,9 @@
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <input class="form-control" type="text" id="users-text" 
-                                                   name="users-tag" placeholder="Enter your targeted username here...">
+                                                   name="users-tag" placeholder="Enter your target username here...">
                                             <span class="input-group-btn">
-                                                <button id="add-username-btn" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                                <button id="add-username-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                             </span>
                                         </div>
                                     </div>
@@ -286,7 +286,7 @@
         <div class="col-lg-12">
             <div class="block">
                 <div class="block-header bg-primary">
-                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-hashtag"></i> Targeted Hashtags</h3>
+                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-hashtag"></i> Target Hashtags</h3>
                 </div>
                 <div class="block-content" id="my-hashtags-block" style="height: 250px;">
                     <div class='row'>
@@ -307,9 +307,9 @@
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <input class="form-control" type="text" id="hashtags-text" 
-                                                   name="hashtags-tag" placeholder="Enter your targeted username here...">
+                                                   name="hashtags-tag" placeholder="Enter your target hashtag here...">
                                             <span class="input-group-btn">
-                                                <button id="add-hashtags-btn" class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                                                <button id="add-hashtag-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                             </span>
                                         </div>
                                     </div>

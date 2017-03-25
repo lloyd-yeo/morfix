@@ -256,7 +256,6 @@ $("#add-comment-btn").on("click", function() {
         },
         success: function (data) {
             if (data.success === true) {
-//                swal('Success', data.response, 'success');
                 var preview = emojione.toImage(source);
                 var commentsWell = $("#comments-well-inner");
                 commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
@@ -272,14 +271,63 @@ $(".remove-comment-btn").on("click", function(){
     
 });
 
-$("#add-username-btn").on("click", function() { 
+$("#add-username-btn").on("click", function() {
     var source = $('#users-text').val();
-    var preview = emojione.toImage(source);
-    var usersWell = $("#users-well-inner");
-    usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-username-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+    
+    var url = "add/username/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {
+            target_username: $("#users-text").val()
+        },
+        success: function (data) {
+            if (data.success === true) {
+                var preview = emojione.toImage(source);
+                var usersWell = $("#users-well-inner");
+                usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-username-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");    
+            } else {
+                swal('Oops...', data.response, 'error');
+            }
+        }
+    });
 });
 
 $(".remove-username-btn").on("click", function(){
+    
+});
+
+$("#add-hashtag-btn").on("click", function() {
+    var source = $('#hashtags-text').val();
+    
+    var url = "add/hashtag/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {
+            target_hashtag: $("#hashtags-text").val()
+        },
+        success: function (data) {
+            if (data.success === true) {
+                var preview = emojione.toImage(source);
+                var usersWell = $("#hashtags-well-inner");
+                usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-hashtag-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");    
+            } else {
+                swal('Oops...', data.response, 'error');
+            }
+        }
+    });
+});
+
+$(".remove-hashtag-btn").on("click", function(){
     
 });
 
