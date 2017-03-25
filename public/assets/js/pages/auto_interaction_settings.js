@@ -283,3 +283,21 @@ $("#advanced-follow-settings-form").submit(function (e) {
     });
     e.preventDefault(); // avoid to execute the actual submit of the form.
 });
+
+$("#comments-txt").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#add-comment-btn").click();
+    }
+});
+
+$("#users-text").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#add-username-btn").click();
+    }
+});
+
+$("#hashtags-text").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#add-hashtags-btn").click();
+    }
+});

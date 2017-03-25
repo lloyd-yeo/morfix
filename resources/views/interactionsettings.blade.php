@@ -187,7 +187,6 @@
                                             @else
                                             <option value="Medium">Medium</option>
                                             @endif
-                                            
                                             @if ($ig_profile->speed == "Fast")
                                             <option value="Fast" selected>Fast</option>
                                             @else
