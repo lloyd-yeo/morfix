@@ -284,25 +284,14 @@ $("#advanced-follow-settings-form").submit(function (e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 });
 
-$.fn.enterKey = function (fnc) {
-    return this.each(function () {
-        $(this).keypress(function (ev) {
-            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
-            if (keycode == '13') {
-                fnc.call(this, ev);
-            }
-        })
-    })
-};
-
-$("#comments-txt").enterKey(function () {
+$("#comments-txt").on("keydown", function () {
     $("#add-comment-btn").click();
 });
 
-$("#users-text").enterKey(function () {
+$("#users-text").on("keydown", function () {
     $("#add-username-btn").click();
 });
 
-$("#hashtags-text").enterKey(function () {
+$("#hashtags-text").on("keydown", function () {
     $("#add-hashtags-btn").click();
 });
