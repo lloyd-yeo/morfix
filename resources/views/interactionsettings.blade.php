@@ -171,6 +171,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+                                        <div class="form-material floating">
+                                            <input class="form-control" type="text" id="follow-cycle" name="follow-cycle">
+                                            <label for="follow-cycle"><i class=""></i> Follow/Unfollow Cycle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-xs-10 col-lg-10 col-lg-offset-1" for="follow-speed-select">Follow/Unfollow Speed</label>
                                     <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                                         <select class="form-control" id="follow-speed-select" name="follow-speed" size="1">

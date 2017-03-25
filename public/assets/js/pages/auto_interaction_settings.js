@@ -115,6 +115,10 @@ var initValidationMaterial = function(){
             'max-follower-filter': {
                 digits: true
             },
+            'follow-cycle': {
+                digits: true,
+                range: [1, 7500]
+            },
             'val-number2': {
                 required: true,
                 number: true
@@ -152,6 +156,7 @@ var initValidationMaterial = function(){
             'val-digits2': 'Please enter only digits!',
             'min-follower-filter': 'Please enter only digits!',
             'min-follower-filter': 'Please enter only digits!',
+            'follow-cycle': 'Please enter a digit within 1 to 7500!',
             'val-number2': 'Please enter a number!',
             'val-range2': 'Please enter a number between 1 and 5!',
             'val-terms2': 'You must agree to the service terms!'

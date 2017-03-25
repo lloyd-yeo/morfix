@@ -140,11 +140,13 @@ class InteractionsController extends Controller {
         $minimum_follower_filter = $request->input('min-follower-filter');
         $maximum_follower_filter = $request->input('max-follower-filter');
         $follow_speed = $request->input('follow-speed');
+        $follow_cycle = $request->input('follow-cycle');
 
         $instagram_profile->unfollow_unfollowed = $unfollow_users_not_following_flag;
         $instagram_profile->follow_min_followers = $minimum_follower_filter;
         $instagram_profile->follow_max_followers = $maximum_follower_filter;
         $instagram_profile->speed = $follow_speed;
+        $instagram_profile->follow_cycle = $follow_cycle;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
             $response = "Your settings have been saved!";
