@@ -267,7 +267,7 @@ $("#advanced-follow-settings-form").submit(function (e) {
         type: "POST",
         url: url,
         dataType: "json",
-        data: $("#add-instagram-profile-form").serialize(),
+        data: $("#advanced-follow-settings-form").serialize(),
         success: function (data) {
             if (data.success === true) {
                 swal('Success', data.response, 'success');
