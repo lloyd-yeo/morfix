@@ -157,7 +157,7 @@
                                 <div class="form-group push-30-t has-info">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material">
-                                            <input class="form-control" type="text" id="min-follower-filter" name="min-follower-filter">
+                                            <input class="form-control" type="text" id="min-follower-filter" name="min-follower-filter" value="{{ $ig_profile->follow_min_followers }}">
                                             <label for="min-follower-filter">Minimum Followers Filter</label>
                                         </div>
                                     </div>
@@ -165,7 +165,7 @@
                                 <div class="form-group has-info">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material">
-                                            <input class="form-control" type="text" id="max-follower-filter" name="max-follower-filter">
+                                            <input class="form-control" type="text" id="max-follower-filter" name="max-follower-filter" value="{{ $ig_profile->follow_max_followers }}">
                                             <label for="max-follower-filter"><i class=""></i> Maximum Followers Filter</label>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                                 <div class="form-group has-info">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material">
-                                            <input class="form-control" type="text" id="follow-cycle" name="follow-cycle">
+                                            <input class="form-control" type="text" id="follow-cycle" name="follow-cycle" value="{{ $ig_profile->follow_cycle }}">
                                             <label for="follow-cycle"><i class=""></i> Follow/Unfollow Cycle</label>
                                         </div>
                                     </div>
@@ -182,9 +182,18 @@
                                     <label class="col-xs-10 col-lg-10 col-lg-offset-1" for="follow-speed-select">Follow/Unfollow Speed</label>
                                     <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                                         <select class="form-control" id="follow-speed-select" name="follow-speed" size="1">
-                                            <option value="Slow" selected>Slow</option>
+                                            @if ($ig_profile->speed == "Medium")
+                                            <option value="Medium" selected>Medium</option>
+                                            @else
                                             <option value="Medium">Medium</option>
+                                            @endif
+                                            
+                                            @if ($ig_profile->speed == "Fast")
+                                            <option value="Fast" selected>Fast</option>
+                                            @else
                                             <option value="Fast">Fast</option>
+                                            @endif
+                                            
                                         </select>
                                     </div>
                                 </div>
