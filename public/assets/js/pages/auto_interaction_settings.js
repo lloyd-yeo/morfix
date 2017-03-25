@@ -284,6 +284,17 @@ $("#advanced-follow-settings-form").submit(function (e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 });
 
+$.fn.enterKey = function (fnc) {
+    return this.each(function () {
+        $(this).keypress(function (ev) {
+            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+            if (keycode == '13') {
+                fnc.call(this, ev);
+            }
+        })
+    })
+};
+
 $("#comments-txt").enterKey(function () {
     $("#add-comment-btn").click();
 });
@@ -295,14 +306,3 @@ $("#users-text").enterKey(function () {
 $("#hashtags-text").enterKey(function () {
     $("#add-hashtags-btn").click();
 });
-
-$.fn.enterKey = function (fnc) {
-    return this.each(function () {
-        $(this).keypress(function (ev) {
-            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
-            if (keycode == '13') {
-                fnc.call(this, ev);
-            }
-        })
-    })
-}
