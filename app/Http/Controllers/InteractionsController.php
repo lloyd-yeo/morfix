@@ -25,7 +25,6 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-
         $instagram_profiles = DB::table('morfix_instagram_profiles')
                 ->where('email', Auth::user()->email)
                 ->take(10)
@@ -46,8 +45,14 @@ class InteractionsController extends Controller {
         $instagram_profiles = InstagramProfile::where('id', $id)
                 ->get();
         $niches = Niche::all();
+        $comments = \App\InstagramProfileComment::where("ig_profile_id", $id)->get();
+        $target_usernames = \App\InstagramProfileTargetUsername::where("ig_profile_id", $id)->get();
+        $target_hashtags = \App\InstagramProfileTargetHashtag::where("ig_profile_id", $id)->get();
         return view('interactionsettings', [
             'user_ig_profiles' => $instagram_profiles,
+            'user_ig_comments' => $comments,
+            'user_ig_target_usernames' => $target_usernames,
+            'user_ig_target_hashtags' => $target_hashtags,
             'niches' => $niches,
         ]);
     }

@@ -221,7 +221,9 @@
                                     <!-- SlimScroll Container -->
                                     <div id="comments-well-inner-container" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                         <p class="nice-copy" id="comments-well-inner">
-
+                                            @foreach ($user_ig_comments as $comment)
+                                                <button class="btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10" type="button" data-id="{{ $comment->id }}">{{ $comment->comment }}<i class="fa fa-times"></i> </button>
+                                            @endforeach
                                         </p>
                                     </div>
                                     <!-- END SlimScroll Container -->
@@ -259,7 +261,9 @@
                                 <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
                                     <!-- SlimScroll Container -->
                                     <div id="users-well-inner" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
-                                        
+                                        @foreach ($user_ig_target_usernames as $target_username)
+                                            <button class="btn btn-primary btn-sm btn-rounded remove-username-btn push-5-r push-10" type="button" data-id="{{ $target_username->id }}">{{ $target_username->target_username }}<i class="fa fa-times"></i> </button>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
