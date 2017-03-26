@@ -62,8 +62,8 @@ class GetNewDmJob extends Command {
                 $config["db_host"] = "52.221.60.235:3306";
                 $config["db_name"] = "morfix";
                 $config["db_tablename"] = "instagram_sessions";
-                $settings_adapter = new SettingsAdapter($config, $ig_username);
-                $instagram = new Instagram(false, false, [
+//                $settings_adapter = new \InstagramAPI\SettingsAdapter($config, $ig_username);
+                $instagram = new \InstagramAPI\Instagram(false, false, [
                     'type' => 'mysql',
                     'db_username' => 'root',
                     'db_password' => 'inst@ffiliates123',
