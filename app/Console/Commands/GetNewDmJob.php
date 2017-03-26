@@ -64,8 +64,11 @@ class GetNewDmJob extends Command {
                 $config["db_name"] = "morfix";
                 $config["db_tablename"] = "instagram_sessions";
 //                $settings_adapter = new \InstagramAPI\SettingsAdapter($config, $ig_username);
-                $instagram = new \InstagramAPI\Instagram(false, false, [
-                    'type' => 'mysql',
+
+                $debug = 0;
+                $truncatedDebug = 0;
+                $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, [
+                    'storage' => 'mysql',
                     'db_username' => 'root',
                     'db_password' => 'inst@ffiliates123',
                     'db_host' => '52.221.60.235:3306',
@@ -98,60 +101,8 @@ class GetNewDmJob extends Command {
                     $new_profile->save();
                     $this->line(serialize($user_response));
                     
-                } catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
-
-                    $this->line($ig_ex->getMessage());
-                    $this->line("error code: " . $ig_ex->getCode());
-                    if ($ig_ex->getCode() == 3) {
-                        $settingsPath = NULL;
-                        $debug = 1;
-                        $c = new \InstagramAPI\ChallengeSMS($ig_username, $settingsPath, $debug);
-                        $c->startChallenge();
-
-                        while ($c->getStep() < 3) {
-                            switch ($c->getStep()) {
-                                case 1:
-                                    
-                                    $code = $this->ask("Insert Phone number: ");
-//                                    echo "\n\nInsert Phone number: ";
-//                                    $code = trim(fgets(STDIN));
-                                    $c->setPhone($code);
-                                    break;
-
-                                case 2:
-                                    $code = $this->ask("Insert Security Code (leavy empty to reset): ");
-//                                    echo "\n\nInsert Security Code (leavy empty to reset): ";
-//                                    $code = trim(fgets(STDIN));
-                                    if ('' == $code) {
-                                        $c->reset();
-                                    } else {
-                                        $c->setCode($code);
-                                    }
-                                    break;
-
-                                default:
-                                    $code = $this->ask("No function for this! Press Y to reset, enter to retry");
-//                                    echo "No function for this! Press Y to reset, enter to retry\n";
-//                                    $code = trim(fgets(STDIN));
-                                    if ($code == 'Y') {
-                                        $c->reset();
-                                    } else {
-                                        $c->startChallenge();
-                                    }
-                                    break;
-                            }
-                        }
-                    }
-
-
-
-
-//                    $log = CreateInstagramProfileLog::find($last_inserted_log_id);
-//                    $log->error_msg = $ig_ex->getTraceAsString();
-//                    $log->save();
-//                    $message = $ig_ex->getMessage();
-//                    $array = explode(':', $message);
-//                    return Response::json(array("success" => false, 'response' => trim($array[1]), "log" => $last_inserted_log_id));
+                } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                    $this->line($checkpoint_ex->getMessage());
                 }
             }
         }
