@@ -58,11 +58,11 @@ class GetNewDmJob extends Command {
                 $ig_password = $ig_profile->insta_pw;
                 $config = array();
                 $config["type"] = "mysql";
-                $config["db_username"] = "root";
-                $config["db_password"] = "inst@ffiliates123";
-                $config["db_host"] = "52.221.60.235:3306";
-                $config["db_name"] = "morfix";
-                $config["db_tablename"] = "instagram_sessions";
+                $config["dbusername"] = "root";
+                $config["dbpassword"] = "inst@ffiliates123";
+                $config["dbhost"] = "52.221.60.235:3306";
+                $config["dbname"] = "morfix";
+                $config["dbtablename"] = "instagram_sessions";
 //                $settings_adapter = new \InstagramAPI\SettingsAdapter($config, $ig_username);
 
                 $debug = 0;
