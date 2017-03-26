@@ -85,8 +85,8 @@ class GetNewDmJob extends Command {
                     $instagram_user = $user_response->user;
 
                     $new_profile = new InstagramProfile;
-                    $new_profile->user_id = Auth::user()->id;
-                    $new_profile->email = Auth::user()->email;
+                    $new_profile->user_id = $user->user_id;
+                    $new_profile->email = $user->email;
                     $new_profile->insta_user_id = $instagram_user->pk;
                     $new_profile->insta_username = $ig_username;
                     $new_profile->insta_pw = $ig_password;
