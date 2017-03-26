@@ -25,7 +25,7 @@
         ],
         "psr-4": {
             "App\\": "app/",
-            "Instagram\\": "vendor/mgp25/instagram-php/src/"
+            "InstagramAPI\\": "vendor/mgp25/instagram-php/src/"
         }
     },
     "autoload-dev": {
