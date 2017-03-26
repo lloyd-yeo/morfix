@@ -97,10 +97,11 @@ class GetNewDmJob extends Command {
                     $new_profile->proxy = $proxy->proxy;
                     $new_profile->save();
                     $this->line(serialize($user_response));
+                    
                 } catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
 
                     $this->line($ig_ex->getMessage());
-
+                    $this->line("error code: " . $ig_ex->getCode());
                     if ($ig_ex->getCode() == 3) {
                         $settingsPath = NULL;
                         $debug = 1;
