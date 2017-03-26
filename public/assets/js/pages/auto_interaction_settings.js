@@ -266,7 +266,7 @@ $("#add-comment-btn").on("click", function() {
     });
     
 }); 
-$("body").on("click", ".remove-comment-btn", function(){
+$("body").on("click", ".remove-comment-btn", function(e){
     var url = "delete/comment/"; // the script where you handle the form input.
     var id = $(this).attr("data-id");
     url = url + id;
@@ -312,7 +312,7 @@ $("#add-username-btn").on("click", function() {
     });
 });
 
-$("body").on("click", ".remove-username-btn",  function(){
+$("body").on("click", ".remove-username-btn",  function(e){
     var url = "delete/username/"; // the script where you handle the form input.
     var id = $(this).attr("data-id");
     url = url + id;
