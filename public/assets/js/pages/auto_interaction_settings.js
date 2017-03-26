@@ -270,7 +270,7 @@ $("body").on("click", ".remove-comment-btn", function(e){
     var url = "delete/comment/"; // the script where you handle the form input.
     var id = $(this).attr("data-id");
     url = url + id;
-    var remove = 0;
+    var $comment = $(this);
     $.ajax({
         type: "POST",
         url: url,
@@ -278,7 +278,7 @@ $("body").on("click", ".remove-comment-btn", function(e){
         data: {},
         success: function (data) {
             if (data.success === true) {
-                e.remove();
+                $comment.fadeOut().remove();
             } else {
                 swal('Oops...', data.response, 'error');
             }
