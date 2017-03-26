@@ -258,7 +258,7 @@ $("#add-comment-btn").on("click", function() {
             if (data.success === true) {
                 var preview = emojione.toImage(source);
                 var commentsWell = $("#comments-well-inner");
-                commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+                commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" data-id=\"" + data.id + "\"  type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
             } else {
                 swal('Oops...', data.response, 'error');
             }
@@ -289,7 +289,7 @@ $("#add-username-btn").on("click", function() {
             if (data.success === true) {
                 var preview = emojione.toImage(source);
                 var usersWell = $("#users-well-inner");
-                usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-username-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");    
+                usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-username-btn push-5-r push-10\" data-id=\"" + data.id + "\"  type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");    
             } else {
                 swal('Oops...', data.response, 'error');
             }
@@ -319,7 +319,8 @@ $("#add-hashtag-btn").on("click", function() {
             if (data.success === true) {
                 var preview = emojione.toImage(source);
                 var usersWell = $("#hashtags-well-inner");
-                usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-hashtag-btn push-5-r push-10\" type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");    
+                usersWell.html(usersWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-hashtag-btn push-5-r push-10\" data-id=\"" + data.id + "\" type=\"button\">" 
+                        + preview + " <i class=\"fa fa-times\"></i> </button>");    
             } else {
                 swal('Oops...', data.response, 'error');
             }
