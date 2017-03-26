@@ -57,7 +57,7 @@ class GetNewDmJob extends Command {
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
                 $config = array();
-                $config["type"] = "mysql";
+                $config["storage"] = "mysql";
                 $config["dbusername"] = "root";
                 $config["dbpassword"] = "inst@ffiliates123";
                 $config["dbhost"] = "52.221.60.235:3306";
@@ -67,14 +67,7 @@ class GetNewDmJob extends Command {
 
                 $debug = 0;
                 $truncatedDebug = 0;
-                $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, [
-                    'storage' => 'mysql',
-                    'db_username' => 'root',
-                    'db_password' => 'inst@ffiliates123',
-                    'db_host' => '52.221.60.235:3306',
-                    'db_name' => 'morfix',
-                    'db_tablename' => 'instagram_sessions'
-                ]);
+                $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
                 $proxy = Proxy::where('assigned', '=', 0)->first();
                 $instagram->setProxy($proxy->proxy);
