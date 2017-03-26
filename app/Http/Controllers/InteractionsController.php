@@ -178,7 +178,7 @@ class InteractionsController extends Controller {
 
         if ($new_ig_comment->save()) {
             $response = "Successfully added comment!";
-            return Response::json(array("success" => true, 'response' => $response));
+            return Response::json(array("success" => true, 'response' => $response, 'id' => $new_ig_comment->id));
         } else {
             return Response::json(array("success" => false, 'response' => $response));
         }
@@ -198,7 +198,7 @@ class InteractionsController extends Controller {
 
         if ($new_instagram_profile_target_username->save()) {
             $response = "Successfully added username!";
-            return Response::json(array("success" => true, 'response' => $response));
+            return Response::json(array("success" => true, 'response' => $response, 'id' => $new_instagram_profile_target_username->id));
         } else {
             return Response::json(array("success" => false, 'response' => $response));
         }
@@ -218,10 +218,44 @@ class InteractionsController extends Controller {
 
         if ($instagram_profile_target_hashtag->save()) {
             $response = "Successfully added hashtag!";
-            return Response::json(array("success" => true, 'response' => $response));
+            return Response::json(array("success" => true, 'response' => $response, 'id' => $instagram_profile_target_hashtag->id));
         } else {
             return Response::json(array("success" => false, 'response' => $response));
         }
     }
-
+    
+    public function deleteComment($id) {
+        $comment = \App\InstagramProfileComment::find($id);
+        if ($comment->delete()) {
+            $response = "Successfully deleted comment!";
+            return Response::json(array("success" => true, 'response' => $response));
+        } else {
+            $response = "There has been an error with the server. Please contact live support.";
+            return Response::json(array("success" => true, 'response' => $response));
+        }
+    }
+    
+    public function deleteTargetUsername($id) {
+        $username = \App\InstagramProfileTargetUsername::find($id);
+        if ($username->delete()) {
+            $response = "Successfully deleted username!";
+            return Response::json(array("success" => true, 'response' => $response));
+        } else {
+            $response = "There has been an error with the server. Please contact live support.";
+            return Response::json(array("success" => true, 'response' => $response));
+        }
+    }
+    
+    public function deleteTargetHashtag($id) {
+        $hashtag = \App\InstagramProfileTargetHashtag::find($id);
+        if ($hashtag->delete()) {
+            $response = "Successfully deleted hashtag!";
+            return Response::json(array("success" => true, 'response' => $response));
+        } else {
+            $response = "There has been an error with the server. Please contact live support.";
+            return Response::json(array("success" => true, 'response' => $response));
+        }
+    }
+    
+    
 }
