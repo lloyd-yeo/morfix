@@ -97,7 +97,7 @@ class GetNewDmJob extends Command {
                     $new_profile->save();
                     $this->line(serialize($user_response));
                     
-                } catch (InstagramException $ig_ex) {
+                } catch (\InstagramAPI\InstagramException $ig_ex) {
                     $this->line($ig_ex->getMessage());
 //                    $log = CreateInstagramProfileLog::find($last_inserted_log_id);
 //                    $log->error_msg = $ig_ex->getTraceAsString();
