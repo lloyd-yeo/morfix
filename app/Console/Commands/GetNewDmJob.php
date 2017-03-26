@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -53,7 +54,7 @@ class GetNewDmJob extends Command {
 
             foreach ($instagram_profiles as $ig_profile) {
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-                $ig_username =  $ig_profile->insta_username;
+                $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
                 $config = array();
                 $config["type"] = "mysql";
@@ -96,9 +97,54 @@ class GetNewDmJob extends Command {
                     $new_profile->proxy = $proxy->proxy;
                     $new_profile->save();
                     $this->line(serialize($user_response));
-                    
                 } catch (\InstagramAPI\InstagramException $ig_ex) {
+
                     $this->line($ig_ex->getMessage());
+
+                    if ($ig_ex->getCode() == 3) {
+                        $settingsPath = NULL;
+                        $debug = 1;
+                        $c = new \InstagramAPI\ChallengeSMS($ig_username, $settingsPath, $debug);
+                        $c->startChallenge();
+
+                        while ($c->getStep() < 3) {
+                            switch ($c->getStep()) {
+                                case 1:
+                                    
+                                    $code = $this->ask("Insert Phone number: ");
+//                                    echo "\n\nInsert Phone number: ";
+//                                    $code = trim(fgets(STDIN));
+                                    $c->setPhone($code);
+                                    break;
+
+                                case 2:
+                                    $code = $this->ask("Insert Security Code (leavy empty to reset): ");
+//                                    echo "\n\nInsert Security Code (leavy empty to reset): ";
+//                                    $code = trim(fgets(STDIN));
+                                    if ('' == $code) {
+                                        $c->reset();
+                                    } else {
+                                        $c->setCode($code);
+                                    }
+                                    break;
+
+                                default:
+                                    $code = $this->ask("No function for this! Press Y to reset, enter to retry");
+//                                    echo "No function for this! Press Y to reset, enter to retry\n";
+//                                    $code = trim(fgets(STDIN));
+                                    if ($code == 'Y') {
+                                        $c->reset();
+                                    } else {
+                                        $c->startChallenge();
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+
+
+
+
 //                    $log = CreateInstagramProfileLog::find($last_inserted_log_id);
 //                    $log->error_msg = $ig_ex->getTraceAsString();
 //                    $log->save();
