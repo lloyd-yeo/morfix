@@ -97,7 +97,7 @@ class GetNewDmJob extends Command {
                     $new_profile->proxy = $proxy->proxy;
                     $new_profile->save();
                     $this->line(serialize($user_response));
-                } catch (\InstagramAPI\InstagramException $ig_ex) {
+                } catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
 
                     $this->line($ig_ex->getMessage());
 
