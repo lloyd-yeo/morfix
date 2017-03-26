@@ -4,9 +4,9 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use InstagramAPI\InstagramException as InstagramException;
+use \InstagramAPI\Instagram as Instagram;
+use \InstagramAPI\SettingsAdapter as SettingsAdapter;
+use \InstagramAPI\InstagramException as InstagramException;
 use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
