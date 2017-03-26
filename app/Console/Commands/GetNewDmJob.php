@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\InstagramException as InstagramException;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use App\InstagramProfile as InstagramProfile;
+use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 
