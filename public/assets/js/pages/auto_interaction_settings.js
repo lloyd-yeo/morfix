@@ -265,10 +265,25 @@ $("#add-comment-btn").on("click", function() {
         }
     });
     
-});
-
-$(".remove-comment-btn").on("click", function(){
-    
+}); 
+$("body").on("click", ".remove-comment-btn", function(){
+    var url = "delete/comment/"; // the script where you handle the form input.
+    var id = $(this).attr("data-id");
+    url = url + id;
+    var remove = 0;
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            if (data.success === true) {
+                e.remove();
+            } else {
+                swal('Oops...', data.response, 'error');
+            }
+        }
+    });
 });
 
 $("#add-username-btn").on("click", function() {
@@ -297,8 +312,24 @@ $("#add-username-btn").on("click", function() {
     });
 });
 
-$(".remove-username-btn").on("click", function(){
-    
+$("body").on("click", ".remove-username-btn",  function(){
+    var url = "delete/username/"; // the script where you handle the form input.
+    var id = $(this).attr("data-id");
+    url = url + id;
+    var remove = 0;
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            if (data.success === true) {
+                e.remove();
+            } else {
+                swal('Oops...', data.response, 'error');
+            }
+        }
+    });
 });
 
 $("#add-hashtag-btn").on("click", function() {
@@ -328,7 +359,7 @@ $("#add-hashtag-btn").on("click", function() {
     });
 });
 
-$(".remove-hashtag-btn").on("click", function(){
+$("body").on("click", ".remove-hashtag-btn", function(e){
     var url = "delete/hashtag/"; // the script where you handle the form input.
     var id = $(this).attr("data-id");
     url = url + id;
@@ -340,16 +371,12 @@ $(".remove-hashtag-btn").on("click", function(){
         data: {},
         success: function (data) {
             if (data.success === true) {
-                remove = 1;
+                e.remove();
             } else {
                 swal('Oops...', data.response, 'error');
             }
         }
     });
-    
-    if (remove == 1) {
-        $(this).remove();
-    }
 });
 
 // this is the id of the form
