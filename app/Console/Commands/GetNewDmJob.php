@@ -1,13 +1,12 @@
 <?php
-
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\Utils\SettingsAdapter as SettingsAdapter;
+use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
-use App\InstagramProfile;
+use App\InstagramProfile as InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 
@@ -63,8 +62,8 @@ class GetNewDmJob extends Command {
                 $config["db_host"] = "52.221.60.235:3306";
                 $config["db_name"] = "morfix";
                 $config["db_tablename"] = "instagram_sessions";
-                $settings_adapter = new SettingsAdapter($config, $ig_username);
-                $instagram = new Instagram(false, false, [
+                $settings_adapter = new \InstagramAPI\SettingsAdapter($config, $ig_username);
+                $instagram = new \InstagramAPI\Instagram(false, false, [
                     'type' => 'mysql',
                     'db_username' => 'root',
                     'db_password' => 'inst@ffiliates123',
