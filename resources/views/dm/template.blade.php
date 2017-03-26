@@ -51,7 +51,7 @@
                     <form class="form-horizontal push-10">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <div class="form-material">
+                                <div class="form-material form-material-primary">
                                      @if (empty($ig_profile->insta_new_follower_template)) 
                                     <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7" placeholder="Type in your greeting message template here..."></textarea>
                                     @else
@@ -93,7 +93,7 @@
                     <form class="form-horizontal push-10">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <div class="form-material">
+                                <div class="form-material form-material-primary">
                                     @if (empty($ig_profile->follow_up_message)) 
                                     <textarea class="form-control" id="followup-template-txt" name="followup-template" rows="7" placeholder="Type in your follow-up message template here..."></textarea>
                                     @else
