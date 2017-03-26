@@ -329,7 +329,27 @@ $("#add-hashtag-btn").on("click", function() {
 });
 
 $(".remove-hashtag-btn").on("click", function(){
+    var url = "delete/hashtag/"; // the script where you handle the form input.
+    var id = $(this).attr("data-id");
+    url = url + id;
+    var remove = 0;
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {},
+        success: function (data) {
+            if (data.success === true) {
+                remove = 1;
+            } else {
+                swal('Oops...', data.response, 'error');
+            }
+        }
+    });
     
+    if (remove == 1) {
+        $(this).remove();
+    }
 });
 
 // this is the id of the form
