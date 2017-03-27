@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
+use InstagramAPI\Instagram as Instagram;
+use InstagramAPI\SettingsAdapter as SettingsAdapter;
+use InstagramAPI\InstagramException as InstagramException;
+use App\InstagramProfile;
+use App\CreateInstagramProfileLog;
+use App\Proxy;
+use App\DmJob;
+
+class SendDmJob extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'dm:send {offset : The position to start retrieving from.} {limit : The number of results to limit to.} ';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Send out unfulfilled Direct Message jobs.';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle() {
+        $offset = $this->argument('offset');
+        $limit = $this->argument('limit');
+
+        $users = DB::connection('mysql_old')->select("SELECT * FROM user WHERE tier > 1 OR admin = 1 OR vip = 1 ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
+
+        foreach ($users as $user) {
+            $this->line($user->user_id);
+
+            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile WHERE auto_dm_new_follower = 1 AND user_id = ?;", [$user->user_id]);
+
+            foreach ($instagram_profiles as $ig_profile) {
+                
+                $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                $ig_username = $ig_profile->insta_username;
+                $ig_password = $ig_profile->insta_pw;
+                
+                $dm_job = DmJob::where("insta_username", "=", $ig_username)->where("fulfilled", '=', 0)->orderBy("time_to_send", "asc")->first();
+
+                $config = array();
+                $config["storage"] = "mysql";
+                $config["dbusername"] = "root";
+                $config["dbpassword"] = "inst@ffiliates123";
+                $config["dbhost"] = "52.221.60.235:3306";
+                $config["dbname"] = "morfix";
+                $config["dbtablename"] = "instagram_sessions";
+
+                $debug = false;
+                $truncatedDebug = false;
+                $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+                $instagram->setProxy($ig_profile->proxy);
+                
+                try {
+                    $instagram->setUser($ig_username, $ig_password);
+                    $explorer_response = $instagram->login();
+                    
+                    $response = $instagram->directMessage($dm_job->recipient_insta_id, $dm_job->message);
+                    $this->line(serialize($response));
+                    if ($response->status == "ok") {
+                        $dm_job->fulfilled = 1;
+                        $dm_job->save();
+                    }
+                    
+                    //limit to 1 acct, testing.
+                    break;
+                } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                    $this->line($checkpoint_ex->getMessage());
+                }
+            }
+        }
+    }
+}

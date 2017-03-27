@@ -145,12 +145,6 @@ class GetNewDmJob extends Command {
 
                                 echo $string_replacement . "\n\n";
 
-                                //queue msg, timestamp to send is 5 mins from current time
-                                //poll last_sent if (last_sent < 10 mins ago) { dont send } else { send then update last_sent with current time }
-//                                $time_to_send = new DateTime();
-//                                $time_to_send_mysql = $time_to_send->format('Y-m-d H:i:s');
-//                                echo $time_to_send_mysql;
-                                
                                 //insert job into db here.
                                 $time_to_send = \Carbon\Carbon::now();
                                 $dm_job = new \App\DmJob;
@@ -216,7 +210,8 @@ class GetNewDmJob extends Command {
                             $this->line("\n");
                         }
                     }
-
+                    
+                    //limit to 1 acct, testing.
                     break;
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     $this->line($checkpoint_ex->getMessage());
@@ -224,5 +219,4 @@ class GetNewDmJob extends Command {
             }
         }
     }
-
 }
