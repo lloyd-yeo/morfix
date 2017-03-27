@@ -9,7 +9,7 @@
     <div class="row items-push">
         <div class="col-sm-7">
             <h1 class="page-heading">
-                <i class="si si-envelope"></i> Interactions <small> Choose a Instagram account below to set-up Auto DM templates or view history of sent DMs for.</small>
+                <i class="si si-envelope"></i> Interactions <small> Customize your Auto DM templates or view tge history of sent DMs.</small>
             </h1>
         </div>
     </div>
