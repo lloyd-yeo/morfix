@@ -50,12 +50,13 @@ class GetNewDmJob extends Command {
         foreach ($users as $user) {
             $this->line($user->user_id);
 
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT insta_username, insta_pw FROM user_insta_profile WHERE user_id = ?;", [$user->user_id]);
+            $instagram_profiles = DB::connection('mysql_old')->select("SELECT insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile WHERE user_id = ?;", [$user->user_id]);
 
             foreach ($instagram_profiles as $ig_profile) {
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
+                
                 $config = array();
                 $config["storage"] = "mysql";
                 $config["dbusername"] = "root";
@@ -68,31 +69,38 @@ class GetNewDmJob extends Command {
                 $debug = 0;
                 $truncatedDebug = 0;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-                $proxy = Proxy::where('assigned', '=', 0)->first();
-                $instagram->setProxy($proxy->proxy);
-                $proxy->assigned = 1;
-                $proxy->save();
+                
+                if (is_null($ig_profile->proxy)) {
+                    $proxy = Proxy::where('assigned', '=', 0)->first();
+                    $instagram->setProxy($proxy->proxy);
+                    $proxy->assigned = 1;
+                    $proxy->save();
+                } else {
+                    $instagram->setProxy($ig_profile->proxy);
+                }
 
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-                    $user_response = $instagram->getUserInfoByName($ig_username);
-                    $instagram_user = $user_response->user;
-
-                    $new_profile = new InstagramProfile;
-                    $new_profile->user_id = $user->user_id;
-                    $new_profile->email = $user->email;
-                    $new_profile->insta_user_id = $instagram_user->pk;
-                    $new_profile->insta_username = $ig_username;
-                    $new_profile->insta_pw = $ig_password;
-                    $new_profile->profile_pic_url = $instagram_user->profile_pic_url;
-                    $new_profile->profile_full_name = $instagram_user->full_name;
-                    $new_profile->follower_count = $instagram_user->follower_count;
-                    $new_profile->num_posts = $instagram_user->media_count;
-                    $new_profile->proxy = $proxy->proxy;
-                    $new_profile->save();
-                    $this->line(serialize($user_response));
+                    $activity_response = $instagram->getRecentActivity();
+                    foreach ($activity_response->old_stories as $story) {
+//                        $this->line(serialize($story) . "<br/>");
+                        if ($story->type == 3) {
+                            $this->line($story->args->text);
+                            $this->line($story->type);
+                            $this->line($story->args->profile_id);
+                            $this->line($story->args->timestamp);
+                            if (floatval($ig_profile->recent_activity_timestamp) < floatval($story->args->timestamp)) {
+                                $this->line("queue as new dm");
+                            }
+                            $this->line("\n");
+                        }
+                    }
+                    break;
+//                    $timeline_feed = $instagram->getTimelineFeed();
+//                    foreach ($timeline_feed->feed_items as $item) {
+//                        $this->line(serialize($item));
+//                    }
                     
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     $this->line($checkpoint_ex->getMessage());
