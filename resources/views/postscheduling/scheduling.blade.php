@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-@include('scheduling.css')
+@include('postscheduling.css')
 @endsection
 
 @section('sidebar')
@@ -136,5 +136,5 @@
 @endsection
 
 @section('js')
-@include('scheduling.js')
+@include('postscheduling.js')
 @endsection
