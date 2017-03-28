@@ -53,9 +53,9 @@
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AFFILIATE AREA</span></li>
                     <li>
                         @if ($page == 'affiliate')
-                        <a class="active" href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Affiliate Area</span></a>
+                        <a class="active" href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @else
-                        <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Affiliate Area</span></a>
+                        <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @endif
                     </li>
                     
