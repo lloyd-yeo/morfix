@@ -52,67 +52,13 @@
                     
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AFFILIATE AREA</span></li>
                     <li>
-                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Affiliate Dashboard
-                            </span></a>
-                        <ul>
-                            <li>
-                                <a href="base_comp_images.html">Images</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_charts.html">Charts (Various)</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_chartjs_v2.html">Charts.js v2</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_calendar.html">Calendar</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_sliders.html">Sliders</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_animations.html">Animations</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_scrolling.html">Scrolling</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_syntax_highlighting.html">Syntax Highlighting</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_rating.html">Rating</a>
-                            </li>
-                            <li>
-                                <a href="base_comp_treeview.html">Tree View</a>
-                            </li>
-                            <li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">Maps</a>
-                                <ul>
-                                    <li>
-                                        <a href="base_comp_maps.html">Google</a>
-                                    </li>
-                                    <li>
-                                        <a href="base_comp_maps_full.html">Google Full</a>
-                                    </li>
-                                    <li>
-                                        <a href="base_comp_maps_vector.html">Vector</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="nav-submenu" data-toggle="nav-submenu" href="#">Gallery</a>
-                                <ul>
-                                    <li>
-                                        <a href="base_comp_gallery_simple.html">Simple</a>
-                                    </li>
-                                    <li>
-                                        <a href="base_comp_gallery_advanced.html">Advanced</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        @if ($page == 'affiliate')
+                        <a class="active" href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Affiliate Area</span></a>
+                        @else
+                        <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Affiliate Area</span></a>
+                        @endif
                     </li>
-
+                    
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">PAYMENT</span></li>
                     <li class="">
                         <a class="" data-toggle="nav-submenu" href="#">
