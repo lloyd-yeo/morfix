@@ -12,6 +12,7 @@ use App\Niche;
 use App\InstagramProfileComment;
 use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
+use App\DefaultImageGallery;
 
 class PostSchedulingController extends Controller
 {
@@ -35,5 +36,19 @@ class PostSchedulingController extends Controller
         ]);
     }
     
-    
+    /**
+     * Display a gallery of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function gallery($id) {
+        $instagram_profiles = InstagramProfile::where('id', $id)
+                ->get();
+        $default_images = DefaultImageGallery::all();
+        
+        return view('interactionsettings', [
+            'user_ig_profiles' => $instagram_profiles,
+            'default_img' => $default_images,
+        ]);
+    }
 }

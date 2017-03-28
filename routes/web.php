@@ -49,3 +49,4 @@ Route::post('/dm/templates/save/followupdelay/{id}', 'DirectMessageTemplatesCont
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/legacy/instagram-profile/add', 'InstagramProfileController@store_deprecated');
 Route::get('/post-scheduling', 'PostSchedulingController@index');
+Route::get('/post-scheduling/schedule/{id}', 'PostSchedulingController@gallery');
