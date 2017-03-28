@@ -60,6 +60,8 @@
                     </li>
                     
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">PAYMENT</span></li>
+                    
+                    
                     <li class="">
                         <a class="" data-toggle="nav-submenu" href="#">
                             <i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
