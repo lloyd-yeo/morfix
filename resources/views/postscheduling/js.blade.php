@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js"></script>
 <script src="{{ asset('assets/js/plugins/jquery-textautocomplete/jquery.textcomplete.min.js') }}"></script>
 <script src="{{ asset('assets/js/pages/auto_interaction_settings.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/magnific-popup/magnific-popup.min.js') }} "></script>
 <script>
 $.ajaxSetup({
     headers: {
