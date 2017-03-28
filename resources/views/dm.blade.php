@@ -9,7 +9,7 @@
     <div class="row items-push">
         <div class="col-sm-7">
             <h1 class="page-heading">
-                <i class="si si-envelope"></i> Interactions <small> Customize your Auto DM templates or view tge history of sent DMs.</small>
+                <i class="si si-envelope"></i> Direct Message <small> Customize your Auto DM templates or view the history of sent DMs.</small>
             </h1>
         </div>
     </div>
