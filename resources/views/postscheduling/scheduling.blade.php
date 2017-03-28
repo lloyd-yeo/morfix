@@ -43,12 +43,12 @@
             <!-- Sizes -->
             <div class="block">
                 <div class="block-header bg-primary">
-                    <h3 class="block-title text-white text-uppercase"><i class="fa fa-envelope"></i> FOLLOW-UP MESSAGE TEMPLATE</h3>
+                    <h3 class="block-title text-white text-uppercase"><i class="si si-picture"></i> MY GALLERY</h3>
                 </div>
 
                 <div class="block-content">
                     <div class="row items-push js-gallery-advanced">
-                        <div class="col-sm-6 col-md-4 col-lg-3 animated fadeIn">
+                        <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn">
                             <div class="img-container fx-img-rotate-r">
                                 <img class="img-responsive" src="{{ asset('assets/img/photos/photo17.jpg') }}" alt="">
                                 <div class="img-options">
@@ -56,24 +56,6 @@
                                         <h3 class="font-w400 text-white push-5">Image Caption</h3>
                                         <h4 class="h6 font-w400 text-white-op push-15">Some Extra Info</h4>
                                         <a class="btn btn-sm btn-default img-lightbox" href="{{ asset('assets/img/photos/photo17@2x.jpg') }}">
-                                            <i class="fa fa-search-plus"></i> View
-                                        </a>
-                                        <div class="btn-group btn-group-sm">
-                                            <a class="btn btn-default" href="javascript:void(0)"><i class="fa fa-pencil"></i> Edit</a>
-                                            <a class="btn btn-default" href="javascript:void(0)"><i class="fa fa-times"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4 col-lg-3 animated fadeIn">
-                            <div class="img-container fx-img-rotate-r">
-                                <img class="img-responsive" src="assets/img/photos/photo16.jpg" alt="">
-                                <div class="img-options">
-                                    <div class="img-options-content">
-                                        <h3 class="font-w400 text-white push-5">Image Caption</h3>
-                                        <h4 class="h6 font-w400 text-white-op push-15">Some Extra Info</h4>
-                                        <a class="btn btn-sm btn-default img-lightbox" href="assets/img/photos/photo16@2x.jpg">
                                             <i class="fa fa-search-plus"></i> View
                                         </a>
                                         <div class="btn-group btn-group-sm">
