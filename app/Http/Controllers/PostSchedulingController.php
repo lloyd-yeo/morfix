@@ -46,7 +46,7 @@ class PostSchedulingController extends Controller
                 ->get();
         $default_images = DefaultImageGallery::all();
         
-        return view('interactionsettings', [
+        return view('postscheduling.scheduling', [
             'user_ig_profiles' => $instagram_profiles,
             'default_img' => $default_images,
         ]);
