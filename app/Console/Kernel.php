@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\ImportInstagramSession::class,
         Commands\GetNewDmJob::class,
         Commands\SendDmJob::class,
     ];

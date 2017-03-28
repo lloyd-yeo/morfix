@@ -19,7 +19,7 @@ class SendDmJob extends Command
      *
      * @var string
      */
-    protected $signature = 'dm:send {offset : The position to start retrieving from.} {limit : The number of results to limit to.} ';
+    protected $signature = 'dm:send {offset : The position to start retrieving from.} {limit : The number of results to limit to.}';
 
     /**
      * The console command description.
@@ -84,6 +84,11 @@ class SendDmJob extends Command
                     if ($response->status == "ok") {
                         $dm_job->fulfilled = 1;
                         $dm_job->save();
+                        
+                        //update profile's last sent dm timing
+                        $next_send_time = \Carbon\Carbon::now();
+                        $next_send_time->addMinute(rand(13, 15));
+                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set last_sent_dm = ? where id = ?;', [$next_send_time, $ig_profile->id]);
                     }
                     
                     //limit to 1 acct, testing.

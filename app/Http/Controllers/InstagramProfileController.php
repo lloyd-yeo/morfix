@@ -61,25 +61,20 @@ class InstagramProfileController extends Controller {
         $log->save();
         $last_inserted_log_id = $log->log_id;
         
-//        if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
-//            return Response::json(array("success" => false, 'response' => "The instagram profile already exists in Morfix!"));
-//        } else {
+        if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
+            return Response::json(array("success" => false, 'response' => "This instagram profile already exists in Morfix!"));
+        } else {
             $config = array();
-            $config["type"] = "mysql";
-            $config["db_username"] = "root";
-            $config["db_password"] = "inst@ffiliates123";
-            $config["db_host"] = "52.221.60.235:3306";
-            $config["db_name"] = "morfix";
-            $config["db_tablename"] = "instagram_sessions";
-            $settings_adapter = new SettingsAdapter($config, $ig_username);
-            $instagram = new Instagram(false, false, [
-                'type' => 'mysql',
-                'db_username' => 'root',
-                'db_password' => 'inst@ffiliates123',
-                'db_host' => '52.221.60.235:3306',
-                'db_name' => 'morfix',
-                'db_tablename' => 'instagram_sessions'
-            ]);
+            $config["storage"] = "mysql";
+            $config["dbusername"] = "root";
+            $config["dbpassword"] = "inst@ffiliates123";
+            $config["dbhost"] = "52.221.60.235:3306";
+            $config["dbname"] = "morfix";
+            $config["dbtablename"] = "instagram_sessions";
+
+            $debug = false;
+            $truncatedDebug = false;
+            $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
             
             $proxy = Proxy::where('assigned', '=', 0)->first();
             $instagram->setProxy($proxy->proxy);
@@ -118,6 +113,6 @@ class InstagramProfileController extends Controller {
                 $array = explode(':', $message);
                 return Response::json(array("success" => false, 'response' => trim($array[1]), "log" => $last_inserted_log_id));
             }
-//        }
+        }
     }
 }
