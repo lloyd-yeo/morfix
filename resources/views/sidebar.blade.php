@@ -42,22 +42,14 @@
                         @endif
                     </li>
                     
-                    <li class="">
-                        <a class="nav-submenu" data-toggle="nav-submenu" href="#">
-                            <i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="/gallery/{{ Auth::user()->id }}">Schedule Post</a>
-                            </li>
-                            <li>
-                                <a href="/schedule/{{ Auth::user()->id }}">My Post Schedules</a>
-                            </li>
-                            <li>
-                                <a href="/engagement/{{ Auth::user()->id }}">Engagement Group</a>
-                            </li>
-                        </ul>
+                    <li>
+                        @if ($page == 'postscheduling')
+                        <a class="active" href="/post-scheduling"><i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span></a>
+                        @else
+                        <a href="/post-scheduling"><i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span></a>
+                        @endif
                     </li>
+                    
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AFFILIATE AREA</span></li>
                     <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Affiliate Dashboard
