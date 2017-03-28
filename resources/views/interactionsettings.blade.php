@@ -162,7 +162,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group has-info">
+                                <div class="form-group">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material form-material-primary">
                                             <input class="form-control" type="text" id="max-follower-filter" name="max-follower-filter" value="{{ $ig_profile->follow_max_followers }}">
@@ -170,7 +170,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group has-info">
+                                <div class="form-group">
                                     <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                         <div class="form-material form-material-primary">
                                             <input class="form-control" type="text" id="follow-cycle" name="follow-cycle" value="{{ $ig_profile->follow_cycle }}">
