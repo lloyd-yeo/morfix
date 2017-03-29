@@ -38,7 +38,31 @@ class InstagramProfileController extends Controller {
      *
      * @return Response
      */
-    public function create() {
+    public function create(Request $request) {
+        $user = $request->input("iuser");
+        $pw = $request->input("ipw");
+        $email = $request->input("user_email");
+        
+        DB::table("")
+        
+        $instagram_profiles = DB::table('morfix_instagram_profiles')
+                ->where('email', Auth::user()->email)
+                ->take(10)
+                ->get();
+        
+        
+        
+        $config = array();
+        $config["storage"] = "mysql";
+        $config["dbusername"] = "root";
+        $config["dbpassword"] = "inst@ffiliates123";
+        $config["dbhost"] = "52.221.60.235:3306";
+        $config["dbname"] = "morfix";
+        $config["dbtablename"] = "instagram_sessions";
+
+        $debug = false;
+        $truncatedDebug = false;
+        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         
     }
 

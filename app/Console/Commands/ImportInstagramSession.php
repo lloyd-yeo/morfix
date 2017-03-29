@@ -77,11 +77,6 @@ class ImportInstagramSession extends Command {
                     $instagram->setProxy($proxy->proxy);
                     $proxy->assigned = 1;
                     $proxy->save();
-
-                    //update profile's last sent dm timing
-                    $next_send_time = \Carbon\Carbon::now();
-                    $next_send_time->addMinute(rand(13, 15));
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
                 }
 
                 try {
