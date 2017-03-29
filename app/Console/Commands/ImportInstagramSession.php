@@ -89,6 +89,10 @@ class ImportInstagramSession extends Command {
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                     $this->error($incorrectpw_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1 where id = ?;', [$ig_profile->id]);
+                } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                    $this->error($endpoint_ex->getMessage());
+                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                    
                 }
             }
         }
