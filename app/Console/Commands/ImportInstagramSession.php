@@ -74,6 +74,7 @@ class ImportInstagramSession extends Command {
                     $instagram->setProxy($ig_profile->proxy);
                 } else {
                     $proxy = Proxy::where('assigned', '=', 0)->first();
+                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
                     $instagram->setProxy($proxy->proxy);
                     $proxy->assigned = 1;
                     $proxy->save();
