@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\ImportInstagramSession::class,
         Commands\GetNewDmJob::class,
         Commands\SendDmJob::class,
+        Commands\InteractionComment::class,
     ];
 
     /**
