@@ -67,7 +67,7 @@ class SendDmJob extends Command
                 #$dm_job = DmJob::where("insta_username", "=", $ig_username)->where("fulfilled", '=', 0)->orderBy("time_to_send", "asc")->first();
                 
                 $dm_jobs = DB::connection('mysql_old')->select("SELECT job_id, recipient_username, recipient_insta_id, message "
-                        . "FROM insta_affiliate.dm_job WHERE fulfilled = 0 AND insta_username = ? AND time_to_send <= NOW() AND message >= '' "
+                        . "FROM insta_affiliate.dm_job WHERE fulfilled = 0 AND insta_username = ? AND time_to_send <= NOW() AND message > '' "
                         . "ORDER BY job_id ASC LIMIT 1;", [$ig_profile->insta_username]);
                 
                 $config = array();
