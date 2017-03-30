@@ -115,6 +115,7 @@ class SendDmJob extends Command
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                         $this->line($checkpoint_ex->getMessage());
+                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set fulfilled = 2, error_msg = ? where job_id = ?;', [$checkpoint_ex->getMessage(), $dm_job->job_id]);
                     } catch (InstagramAPI\Exception\NetworkException $network_ex) {
                         $this->line($network_ex->getMessage());
