@@ -54,7 +54,7 @@ class SendDmJob extends Command
 
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, "
                     . "insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile "
-                    . "WHERE auto_dm_new_follower = 1 AND checkpoint_required = 0"
+                    . "WHERE auto_dm_new_follower = 1 AND checkpoint_required = 0 "
                     . "AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0 "
                     . "AND NOW() >= last_sent_dm  AND user_id = ?;", [$user->user_id]);
 
@@ -97,7 +97,6 @@ class SendDmJob extends Command
                             $next_send_time->addMinute(rand(13, 15));
                             $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set last_sent_dm = ? where id = ?;', [$next_send_time, $ig_profile->id]);
                             $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set fulfilled = 1 where job_id = ?;', [$dm_job->job_id]);
-                            
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                         $this->line($checkpoint_ex->getMessage());
