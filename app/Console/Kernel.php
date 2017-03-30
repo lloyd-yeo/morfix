@@ -5,8 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-class Kernel extends ConsoleKernel
-{
+class Kernel extends ConsoleKernel {
+
     /**
      * The Artisan commands provided by your application.
      *
@@ -25,10 +25,9 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
-    {
+    protected function schedule(Schedule $schedule) {
         for ($i = 0; $i < 800; $i++) {
-            $schedule->command('dm:send ' . $i . ' 5')->everyFiveMinutes()->withoutOverlapping();
+            $schedule->command('dm:send ' . $i . ' 5')->everyFiveMinutes();
             $i += 5;
         }
         // $schedule->command('inspire')
@@ -40,8 +39,8 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
-    {
+    protected function commands() {
         require base_path('routes/console.php');
     }
+
 }

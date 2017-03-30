@@ -46,7 +46,19 @@ class SendDmJob extends Command
     public function handle() {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
-
+        
+        $execute_script = 1;
+        $execute_flags = DB::connection('mysql_old')->select("SELECT * FROM morfix_settings WHERE setting = 'dm_offset' AND value = ?;", [$offset]);
+        foreach ($execute_flags as $execute_flag) {
+            $execute_script = 0;
+        }
+        
+        if ($execute_script == 1) {
+            DB::connection('mysql_old')->insert("INSERT INTO morfix_settings (setting, value) VALUES (?,?);", ['dm_offset', $offset]);
+        } else {
+            exit();
+        }
+        
         $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
 
         foreach ($users as $user) {
@@ -114,5 +126,7 @@ class SendDmJob extends Command
                 }
             }
         }
+        
+        DB::connection('mysql_old')->delete("DELETE FROM morfix_settings (setting, value) WHERE setting = ? AND value = ?;", ['dm_offset', $offset]);
     }
 }
