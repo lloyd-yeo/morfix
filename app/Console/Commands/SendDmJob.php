@@ -104,6 +104,8 @@ class SendDmJob extends Command
                         $this->line($checkpoint_ex->getMessage());
                     } catch (InstagramAPI\Exception\NetworkException $network_ex) {
                         $this->line($network_ex->getMessage());
+                    } catch (InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                        $this->line($endpoint_ex->getMessage());
                     }
                 }
             }
