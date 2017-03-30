@@ -27,7 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('emails:send --force')->daily();
+        for ($i = 0; $i < 100; $i++) {
+            $schedule->command('dm:send ' . $i . ' 50')->everyFiveMinutes();
+            $i += 50;
+        }
         // $schedule->command('inspire')
         //          ->hourly();
     }
