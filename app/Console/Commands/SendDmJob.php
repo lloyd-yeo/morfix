@@ -95,9 +95,10 @@ class SendDmJob extends Command
 //                            $dm_job->save();
 
                             //update profile's last sent dm timing
-                            $next_send_time = \Carbon\Carbon::now();
-                            $next_send_time->addMinute(rand(13, 15));
-                            $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set last_sent_dm = ? where id = ?;', [$next_send_time, $ig_profile->id]);
+//                            $next_send_time = \Carbon\Carbon::now();
+//                            $next_send_time->addMinute(rand(13, 15));
+                            $delay = rand(13,15);
+                            $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set last_sent_dm = NOW() + INTERVAL ' . $delay . ' MINUTE where id = ?;', [$ig_profile->id]);
                             $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set fulfilled = 1, success_msg = ? where job_id = ?;', [serialize($response), $dm_job->job_id]);
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
