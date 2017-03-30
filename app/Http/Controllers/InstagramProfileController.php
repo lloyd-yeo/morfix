@@ -43,14 +43,12 @@ class InstagramProfileController extends Controller {
         $pw = $request->input("ipw");
         $email = $request->input("user_email");
         
-        DB::table("")
+        #DB::table("");
         
-        $instagram_profiles = DB::table('morfix_instagram_profiles')
-                ->where('email', Auth::user()->email)
-                ->take(10)
-                ->get();
-        
-        
+        #$instagram_profiles = DB::table('morfix_instagram_profiles')
+        #        ->where('email', Auth::user()->email)
+        #        ->take(10)
+        #        ->get();
         
         $config = array();
         $config["storage"] = "mysql";

@@ -93,7 +93,9 @@ class ImportInstagramSession extends Command {
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
-                    
+                } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+                    $this->error($acctdisabled_ex->getMessage());
+                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }
