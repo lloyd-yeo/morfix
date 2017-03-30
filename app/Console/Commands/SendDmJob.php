@@ -56,7 +56,7 @@ class SendDmJob extends Command
                     . "insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile "
                     . "WHERE auto_dm_new_follower = 1 AND checkpoint_required = 0 "
                     . "AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0 "
-                    . "AND NOW() >= last_sent_dm  AND user_id = ?;", [$user->user_id]);
+                    . "AND NOW() >= last_sent_dm AND user_id = ?;", [$user->user_id]);
 
             foreach ($instagram_profiles as $ig_profile) {
                 
@@ -100,6 +100,8 @@ class SendDmJob extends Command
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                         $this->line($checkpoint_ex->getMessage());
+                    } catch (InstagramAPI\Exception\NetworkException $network_ex) {
+                        $this->line($network_ex->getMessage());
                     }
                 }
             }
