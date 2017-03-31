@@ -143,10 +143,10 @@ class InteractionFollow extends Command {
 
                     $target_usernames = DB::connection('mysql_old')->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_profile->insta_username]);
 
-                    $skip_username = 0;
-                    if (count($target_usernames) == 0) {
-                        $skip_username = 1;
-                    }
+//                    $skip_username = 0;
+//                    if (count($target_usernames) == 0) {
+//                        $skip_username = 1;
+//                    }
                     
                     $followed = 0;
 
