@@ -135,6 +135,7 @@ class InteractionFollow extends Command {
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
+                    
                     $this->line(serialize($explorer_response) . "\n\n\n\n");
                     
                     if (($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) || ($ig_profile->auto_follow == 1 && $ig_profile->unfollow == 1)) {
@@ -152,7 +153,8 @@ class InteractionFollow extends Command {
                     $followed = 0;
 
                     foreach ($target_usernames as $target_username) {
-                        $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username));
+                        $this->line("target username: " . $target_username->target_username);
+                        $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
 //                        $this->info(serialize($user_follower_response) . "\n\n");
                         
                         $users_to_follow = $user_follower_response->users;
