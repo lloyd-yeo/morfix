@@ -144,7 +144,8 @@ class InteractionFollow extends Command {
 //                        continue;
 //                    }
 
-                    $target_usernames = DB::connection('mysql_old')->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
+                    $target_usernames = DB::connection('mysql_old')
+                            ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
 //                    $skip_username = 0;
 //                    if (count($target_usernames) == 0) {
@@ -154,7 +155,8 @@ class InteractionFollow extends Command {
                     $followed = 0;
 
                     foreach ($target_usernames as $target_username) {
-                        $this->line("target username: " . $target_username->target_username);
+                        $this->line("target username: " . $target_username->target_username . "\n\n");
+                        
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
 //                        $this->info(serialize($user_follower_response) . "\n\n");
                         
