@@ -157,20 +157,14 @@ class InteractionFollow extends Command {
                         $users_to_follow = $user_follower_response->users;
 
                         foreach ($users_to_follow as $user_to_follow) {
-                            $response = $instagram->follow($user_to_follow->pk);
-                            
-                            $this->info("following " . $response->friendship_status->following . "\n\n");
-                            
+                            if ($followed == 0) {
+                                $response = $instagram->follow($user_to_follow->pk);
+                                $this->info("following " . $response->friendship_status->following . "\n\n");
+                            }
                             if ($response->status == "ok") {
-                                $followed = 1;
-                                DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_id, log, date_inserted) VALUES (?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->pk, $response->getMessage()]);
+                                DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, $followed]);
                             }
-                            if ($followed == 1) {
-                                break;
-                            }
-                        }
-                        if ($followed == 1) {
-                            break;
+                            $followed = 1;
                         }
                     }
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
