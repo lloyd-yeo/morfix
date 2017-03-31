@@ -117,11 +117,6 @@ class SendDmJob extends Command
                             if ($ig_profile->auto_dm_delay == 1) {
                                 DB::connection('mysql_old')->update("UPDATE dm_job SET time_to_send = NOW() + INTERVAL 1 DAY "
                                         . "WHERE insta_username = ? AND recipient_insta_id = ? AND fulfilled = 0;", [$ig_profile->insta_username, $dm_job->recipient_insta_id]);
-//                                $follow_up_date = date('Y-m-d H:i:s', strtotime("+1 days"));
-//                                $stmt_update_last_sent = $conn_->prepare("UPDATE dm_job SET time_to_send = ? "
-//                                        . "WHERE insta_username = ? AND recipient_insta_id = ? AND fulfilled = 0;");
-//                                $stmt_update_last_sent->bind_param("sss", $follow_up_date, $insta_username, $recipient_insta_id);
-//                                $stmt_update_last_sent->execute();
                             }
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
@@ -134,7 +129,7 @@ class SendDmJob extends Command
                     } catch (InstagramAPI\Exception\EndpointException $endpoint_ex) {
                         $this->line($endpoint_ex->getMessage());
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set error_msg = ?, updated_at = NOW() where job_id = ?;', [$endpoint_ex->getMessage(), $dm_job->job_id]);
-                    } 
+                    }
                 }
             }
         }

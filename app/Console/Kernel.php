@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetNewDmJob::class,
         Commands\SendDmJob::class,
         Commands\InteractionComment::class,
+        Commands\InteractionFollow::class,
     ];
 
     /**
