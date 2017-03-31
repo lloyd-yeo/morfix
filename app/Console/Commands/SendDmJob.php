@@ -115,6 +115,8 @@ class SendDmJob extends Command
                         
                             //make sure follow up sends a day later.
                             if ($ig_profile->auto_dm_delay == 1) {
+                                DB::connection('mysql_old')->update("UPDATE dm_job SET time_to_send = NOW() + INTERVAL 1 DAY "
+                                        . "WHERE insta_username = ? AND recipient_insta_id = ? AND fulfilled = 0;", [$ig_profile->insta_username, $dm_job->recipient_insta_id]);
 //                                $follow_up_date = date('Y-m-d H:i:s', strtotime("+1 days"));
 //                                $stmt_update_last_sent = $conn_->prepare("UPDATE dm_job SET time_to_send = ? "
 //                                        . "WHERE insta_username = ? AND recipient_insta_id = ? AND fulfilled = 0;");
