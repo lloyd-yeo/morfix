@@ -136,14 +136,15 @@ class InteractionFollow extends Command {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     
-                    $this->line(serialize($explorer_response) . "\n\n\n\n");
+//                    $this->line(serialize($explorer_response) . "\n\n\n\n");
                     
                     if (($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) || ($ig_profile->auto_follow == 1 && $ig_profile->unfollow == 1)) {
                         //unfollow
+                        $this->line("reached here...\n\n\n");
                         continue;
                     }
 
-                    $target_usernames = DB::connection('mysql_old')->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_profile->insta_username]);
+                    $target_usernames = DB::connection('mysql_old')->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
 //                    $skip_username = 0;
 //                    if (count($target_usernames) == 0) {
