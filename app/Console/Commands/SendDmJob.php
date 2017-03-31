@@ -139,6 +139,6 @@ class SendDmJob extends Command
             }
         }
         
-        DB::connection('mysql_old')->delete("DELETE FROM morfix_settings (setting, value) WHERE setting = ? AND value = ?;", ['dm_offset', $offset]);
+        DB::connection('mysql_old')->delete("DELETE FROM morfix_settings (setting, value) WHERE setting = 'dm_offset' AND value = ?;", [$offset]);
     }
 }
