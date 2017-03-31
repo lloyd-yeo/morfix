@@ -65,7 +65,7 @@ class SendDmJob extends Command
             $this->line($user->user_id);
 
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, "
-                    . "insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile "
+                    . "insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message, auto_dm_delay FROM user_insta_profile "
                     . "WHERE auto_dm_new_follower = 1 AND checkpoint_required = 0 "
                     . "AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0 "
                     . "AND NOW() >= last_sent_dm AND user_id = ?;", [$user->user_id]);
@@ -112,6 +112,15 @@ class SendDmJob extends Command
                             $delay = rand(13,15);
                             $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set last_sent_dm = NOW() + INTERVAL ' . $delay . ' MINUTE where id = ?;', [$ig_profile->id]);
                             $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set fulfilled = 1, success_msg = ?, updated_at = NOW() where job_id = ?;', [serialize($response), $dm_job->job_id]);
+                        
+                            //make sure follow up sends a day later.
+                            if ($ig_profile->auto_dm_delay == 1) {
+//                                $follow_up_date = date('Y-m-d H:i:s', strtotime("+1 days"));
+//                                $stmt_update_last_sent = $conn_->prepare("UPDATE dm_job SET time_to_send = ? "
+//                                        . "WHERE insta_username = ? AND recipient_insta_id = ? AND fulfilled = 0;");
+//                                $stmt_update_last_sent->bind_param("sss", $follow_up_date, $insta_username, $recipient_insta_id);
+//                                $stmt_update_last_sent->execute();
+                            }
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                         $this->line($checkpoint_ex->getMessage());
