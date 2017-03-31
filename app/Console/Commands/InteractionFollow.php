@@ -127,7 +127,7 @@ class InteractionFollow extends Command {
                 $config["dbname"] = "morfix";
                 $config["dbtablename"] = "instagram_sessions";
 
-                $debug = false;
+                $debug = true;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
                 $instagram->setProxy($ig_profile->proxy);
@@ -136,6 +136,7 @@ class InteractionFollow extends Command {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     $this->line(serialize($explorer_response) . "\n\n\n\n");
+                    
                     if (($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) || ($ig_profile->auto_follow == 1 && $ig_profile->unfollow == 1)) {
                         //unfollow
                         continue;
