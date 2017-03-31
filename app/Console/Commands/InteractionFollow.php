@@ -158,11 +158,12 @@ class InteractionFollow extends Command {
 
                         foreach ($users_to_follow as $user_to_follow) {
                             $response = $instagram->follow($user_to_follow->pk);
+                            
                             $this->info("following " . $response->friendship_status->following . "\n\n");
                             
                             if ($response->status == "ok") {
                                 $followed = 1;
-                                DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_id, log, date_inserted) VALUES (?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->pk, serialize($response)]);
+                                DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_id, log, date_inserted) VALUES (?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->pk, $response->getMessage()]);
                             }
                             if ($followed == 1) {
                                 break;
