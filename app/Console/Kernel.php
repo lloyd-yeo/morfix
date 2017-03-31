@@ -27,9 +27,8 @@ class Kernel extends ConsoleKernel {
      */
     protected function schedule(Schedule $schedule) {
         for ($i = 0; $i < 800; $i++) {
-            $i = $i * 5;
-            $schedule->command('dm:send ' . $i . ' 5')->everyMinute();
-            
+            $counter = $i * 5;
+            $schedule->command('dm:send ' . $counter . ' 5')->everyMinute();
         }
         // $schedule->command('inspire')
         //          ->hourly();
