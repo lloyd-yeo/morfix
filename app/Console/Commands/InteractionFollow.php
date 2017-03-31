@@ -158,7 +158,7 @@ class InteractionFollow extends Command {
 
                         foreach ($users_to_follow as $user_to_follow) {
                             $response = $instagram->follow($user_to_follow->pk);
-                            $this->info(serialize($response) . "\n\n");
+                            $this->info("following " . $response->friendship_status->following . "\n\n");
                             
                             if ($response->status == "ok") {
                                 $followed = 1;
