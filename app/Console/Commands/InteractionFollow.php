@@ -152,7 +152,7 @@ class InteractionFollow extends Command {
 
                     foreach ($target_usernames as $target_username) {
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username));
-                        $this->info(serialize($user_follower_response) . "\n\n");
+//                        $this->info(serialize($user_follower_response) . "\n\n");
                         
                         $users_to_follow = $user_follower_response->users;
 
