@@ -220,7 +220,7 @@ class InteractionFollow extends Command {
                     }
 
                     if ($followed == 0) {
-                        $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", $ig_profile->niche);
+                        $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
                         foreach ($niche_targets as $niche_target) {
 //                            $tgt_username = $niche_target->target_username;
                             $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($niche_target->target_username));
