@@ -169,6 +169,12 @@ class InteractionFollow extends Command {
                                 }
                                 $followed = 1;
                             }
+                            if ($followed == 1) {
+                                break;
+                            }
+                        }
+                        if ($followed == 1) {
+                            break;
                         }
                     }
 
