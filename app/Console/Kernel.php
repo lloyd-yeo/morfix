@@ -31,6 +31,10 @@ class Kernel extends ConsoleKernel {
             $counter = $i * 5;
             $schedule->command('dm:send ' . $counter . ' 5')->everyMinute();
         }
+        
+        for ($i = 0; $i < 700; $i++) {
+            $schedule->command('dm:send ' . $i . ' 1')->everyFiveMinutes();
+        }
         // $schedule->command('inspire')
         //          ->hourly();
     }

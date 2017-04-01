@@ -150,7 +150,6 @@ class InteractionFollow extends Command {
                         $this->info("target username: " . $target_username->target_username . "\n\n");
 
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
-//                        $this->info(serialize($user_follower_response) . "\n\n");
 
                         $users_to_follow = $user_follower_response->users;
 
@@ -160,7 +159,7 @@ class InteractionFollow extends Command {
                                 $this->info("following " . $response->friendship_status->following . "\n\n");
                             }
                             if ($response->status == "ok") {
-                                DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, $followed]);
+                                DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                             }
                             $followed = 1;
                         }
@@ -177,6 +176,7 @@ class InteractionFollow extends Command {
                                 $user_to_follow = $item->user;
                                 $followed_users = DB::connection('mysql_old')
                                         ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
+                                
                                 foreach ($followed_users as $followed_user) {
                                     continue;
                                 }
@@ -185,7 +185,11 @@ class InteractionFollow extends Command {
                                     $response = $instagram->follow($user_to_follow->pk);
                                     $this->info("following " . $response->friendship_status->following . "\n\n");
                                     if ($response->status == "ok") {
-                                        DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, $followed]);
+                                        if ($response->friendship_status->is_private) {
+                                            $this->info("user is pvt" . "\n\n");
+                                            continue;
+                                        }
+                                        DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                                         $followed = 1;
                                     }
                                 }
