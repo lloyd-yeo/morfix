@@ -164,11 +164,11 @@ class InteractionFollow extends Command {
                             if ($followed == 0) {
                                 $response = $instagram->follow($user_to_follow->pk);
                                 $this->info("following " . $response->friendship_status->following . "\n\n");
+                                if ($response->status == "ok") {
+                                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
+                                }
+                                $followed = 1;
                             }
-                            if ($response->status == "ok") {
-                                DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
-                            }
-                            $followed = 1;
                         }
                     }
 
