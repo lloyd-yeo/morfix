@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel {
         }
         
         for ($i = 0; $i < 700; $i++) {
-            $schedule->command('dm:send ' . $i . ' 1')->everyFiveMinutes();
+            $schedule->command('interaction:follow ' . $i . ' 1')->everyFiveMinutes();
         }
         // $schedule->command('inspire')
         //          ->hourly();
