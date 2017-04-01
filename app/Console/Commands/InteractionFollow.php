@@ -154,6 +154,13 @@ class InteractionFollow extends Command {
                         $users_to_follow = $user_follower_response->users;
 
                         foreach ($users_to_follow as $user_to_follow) {
+                            $followed_users = DB::connection('mysql_old')
+                                    ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
+
+                            foreach ($followed_users as $followed_user) {
+                                continue;
+                            }
+
                             if ($followed == 0) {
                                 $response = $instagram->follow($user_to_follow->pk);
                                 $this->info("following " . $response->friendship_status->following . "\n\n");
@@ -176,7 +183,7 @@ class InteractionFollow extends Command {
                                 $user_to_follow = $item->user;
                                 $followed_users = DB::connection('mysql_old')
                                         ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
-                                
+
                                 foreach ($followed_users as $followed_user) {
                                     continue;
                                 }
