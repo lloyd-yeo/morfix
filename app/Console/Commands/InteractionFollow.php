@@ -143,7 +143,8 @@ class InteractionFollow extends Command {
 //                    }
 
                     $target_usernames = DB::connection('mysql_old')
-                            ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
+                            ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", 
+                                    [$ig_username]);
 
                     $followed = 0;
                     foreach ($target_usernames as $target_username) {
@@ -154,6 +155,7 @@ class InteractionFollow extends Command {
                         $users_to_follow = $user_follower_response->users;
 
                         foreach ($users_to_follow as $user_to_follow) {
+                            
                             $followed_users = DB::connection('mysql_old')
                                     ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
 
@@ -172,10 +174,12 @@ class InteractionFollow extends Command {
                                 }
                                 $followed = 1;
                             }
+                            
                             if ($followed == 1) {
                                 break;
                             }
                         }
+                        
                         if ($followed == 1) {
                             break;
                         }
@@ -220,6 +224,7 @@ class InteractionFollow extends Command {
                     }
 
                     if ($followed == 0) {
+                        
                         $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
                         foreach ($niche_targets as $niche_target) {
 //                            $tgt_username = $niche_target->target_username;
@@ -257,10 +262,13 @@ class InteractionFollow extends Command {
                     }
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     $this->error($checkpoint_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
                 } catch (InstagramAPI\Exception\NetworkException $network_ex) {
                     $this->error($network_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                 } catch (InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }
