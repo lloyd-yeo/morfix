@@ -52,7 +52,6 @@ class InteractionFollow extends Command {
 //        foreach ($execute_flags as $execute_flag) {
 //            $execute_script = 0;
 //        }
-
 //        if ($execute_script == 1) {
 //            DB::connection('mysql_old')->insert("INSERT INTO morfix_settings (setting, value) VALUES (?,?);", ['interaction', $offset]);
 //        } else {
@@ -135,11 +134,10 @@ class InteractionFollow extends Command {
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-                    
+
 //                    $this->line(serialize($explorer_response) . "\n\n\n\n");
-                    
 //                    if (($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) || ($ig_profile->auto_follow == 1 && $ig_profile->unfollow == 1)) {
-                        //unfollow
+                    //unfollow
 //                        $this->line("reached here...\n\n\n");
 //                        continue;
 //                    }
@@ -147,19 +145,13 @@ class InteractionFollow extends Command {
                     $target_usernames = DB::connection('mysql_old')
                             ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
-//                    $skip_username = 0;
-//                    if (count($target_usernames) == 0) {
-//                        $skip_username = 1;
-//                    }
-                    
                     $followed = 0;
-
                     foreach ($target_usernames as $target_username) {
                         $this->info("target username: " . $target_username->target_username . "\n\n");
-                        
+
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
 //                        $this->info(serialize($user_follower_response) . "\n\n");
-                        
+
                         $users_to_follow = $user_follower_response->users;
 
                         foreach ($users_to_follow as $user_to_follow) {
@@ -171,6 +163,39 @@ class InteractionFollow extends Command {
                                 DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, $followed]);
                             }
                             $followed = 1;
+                        }
+                    }
+
+                    if ($followed == 0) {
+                        $target_hashtags = DB::connection('mysql_old')
+                                ->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
+
+                        foreach ($target_hashtags as $target_hashtag) {
+                            $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
+                            $hashtag_feed = $instagram->getHashtagFeed($target_hashtag->hashtag);
+                            foreach ($hashtag_feed->items as $item) {
+                                $user_to_follow = $item->user;
+                                $followed_users = DB::connection('mysql_old')
+                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
+                                foreach ($followed_users as $followed_user) {
+                                    continue;
+                                }
+
+                                if ($followed == 0) {
+                                    $response = $instagram->follow($user_to_follow->pk);
+                                    $this->info("following " . $response->friendship_status->following . "\n\n");
+                                    if ($response->status == "ok") {
+                                        DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, $followed]);
+                                        $followed = 1;
+                                    }
+                                }
+                                if ($followed == 1) {
+                                    break;
+                                }
+                            }
+                            if ($followed == 1) {
+                                break;
+                            }
                         }
                     }
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
