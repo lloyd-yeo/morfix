@@ -46,7 +46,7 @@ class GetNewDmJob extends Command {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
 
-        $users = DB::connection('mysql_old')->select("SELECT * FROM user WHERE tier > 1 OR admin = 1 OR vip = 1 ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        $users = DB::connection('mysql_old')->select("SELECT user_id, email FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
 
         foreach ($users as $user) {
             $this->line($user->user_id);
