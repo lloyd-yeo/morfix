@@ -140,7 +140,7 @@ class GetNewDmJob extends Command {
                                 $this->line("queue as new dm");
 
                                 $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
-                                $this->line(serialize($user_info_response));
+//                                $this->line(serialize($user_info_response));
                                 
                                 $new_follower = $user_info_response->user;
 
