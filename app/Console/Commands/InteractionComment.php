@@ -70,14 +70,15 @@ class InteractionComment extends Command {
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
-                if (!is_null($ig_profile->proxy)) {
-                    $instagram->setProxy($ig_profile->proxy);
+                if ($ig_profile->proxy === NULL) {
+                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
+                    foreach ($proxies as $proxy) {
+                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
+                        $instagram->setProxy($proxy->proxy);
+                        $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
+                    }
                 } else {
-                    $proxy = Proxy::where('assigned', '=', 0)->first();
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-                    $instagram->setProxy($proxy->proxy);
-                    $proxy->assigned = 1;
-                    $proxy->save();
+                    $instagram->setProxy($ig_profile->proxy);
                 }
 
                 try {

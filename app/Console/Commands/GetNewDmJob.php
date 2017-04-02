@@ -74,25 +74,13 @@ class GetNewDmJob extends Command {
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
-//                $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-                
                 if ($ig_profile->proxy === NULL) {
-                    $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                     $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
                     foreach ($proxies as $proxy) {
                         $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
                         $instagram->setProxy($proxy->proxy);
                         $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
                     }
-//                    $proxy = Proxy::where('assigned', '=', 0)->first();
-//                    if ($proxy === NULL) {
-//                        $this->info("INVALID PROXY.");
-//                    } else {
-//                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-//                        $instagram->setProxy($proxy->proxy);
-//                        $proxy->assigned = 1;
-//                        $proxy->save();
-//                    }
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }

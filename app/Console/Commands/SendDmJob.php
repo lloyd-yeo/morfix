@@ -93,7 +93,16 @@ class SendDmJob extends Command
                 $debug = false;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                $instagram->setProxy($ig_profile->proxy);
+                if ($ig_profile->proxy === NULL) {
+                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
+                    foreach ($proxies as $proxy) {
+                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
+                        $instagram->setProxy($proxy->proxy);
+                        $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
+                    }
+                } else {
+                    $instagram->setProxy($ig_profile->proxy);
+                }
                 
                 foreach ($dm_jobs as $dm_job) {
                     try {
