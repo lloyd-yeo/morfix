@@ -143,11 +143,12 @@ class InteractionFollow extends Command {
 //                    }
 
                     $target_usernames = DB::connection('mysql_old')
-                            ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", 
-                                    [$ig_username]);
+                            ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
                     $followed = 0;
+
                     foreach ($target_usernames as $target_username) {
+
                         $this->info("target username: " . $target_username->target_username . "\n\n");
 
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
@@ -155,7 +156,7 @@ class InteractionFollow extends Command {
                         $users_to_follow = $user_follower_response->users;
 
                         foreach ($users_to_follow as $user_to_follow) {
-                            
+
                             $followed_users = DB::connection('mysql_old')
                                     ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
 
@@ -169,23 +170,26 @@ class InteractionFollow extends Command {
                                 if ($response->friendship_status->is_private) {
                                     continue;
                                 }
-                                if ($response->status == "ok") {
+                                if ($response->friendship_status->following) {
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
+                                } else {
+                                    continue;
                                 }
                                 $followed = 1;
                             }
-                            
+
                             if ($followed == 1) {
                                 break;
                             }
                         }
-                        
+
                         if ($followed == 1) {
                             break;
                         }
                     }
 
                     if ($followed == 0) {
+
                         $target_hashtags = DB::connection('mysql_old')
                                 ->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
@@ -224,10 +228,10 @@ class InteractionFollow extends Command {
                     }
 
                     if ($followed == 0) {
-                        
+
                         $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
                         foreach ($niche_targets as $niche_target) {
-//                            $tgt_username = $niche_target->target_username;
+
                             $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($niche_target->target_username));
 
                             $users_to_follow = $user_follower_response->users;
