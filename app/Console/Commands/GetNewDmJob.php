@@ -76,7 +76,7 @@ class GetNewDmJob extends Command {
 
                 $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 
-                if (is_null($ig_profile->proxy)) {
+                if ($ig_profile->proxy === NULL) {
                     $proxy = Proxy::where('assigned', '=', 0)->first();
                     $instagram->setProxy($proxy->proxy);
                     $proxy->assigned = 1;
