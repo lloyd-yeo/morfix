@@ -46,8 +46,6 @@ class GetNewDmJob extends Command {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
 
-        
-        
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
@@ -86,6 +84,7 @@ class GetNewDmJob extends Command {
                 }
 
                 try {
+                    $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     $activity_response = $instagram->getRecentActivity();
