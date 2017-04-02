@@ -19,7 +19,7 @@ class SendDmJob extends Command
      *
      * @var string
      */
-    protected $signature = 'dm:send {offset : The position to start retrieving from.} {limit : The number of results to limit to.}';
+    protected $signature = 'dm:send {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
 
     /**
      * The console command description.
