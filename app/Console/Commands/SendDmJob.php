@@ -96,7 +96,7 @@ class SendDmJob extends Command
                 $config["dbname"] = "morfix";
                 $config["dbtablename"] = "instagram_sessions";
 
-                $debug = false;
+                $debug = true;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
                 if ($ig_profile->proxy === NULL) {
@@ -114,7 +114,6 @@ class SendDmJob extends Command
                     try {
                         $instagram->setUser($ig_username, $ig_password);
                         $explorer_response = $instagram->login();
-
                         $response = $instagram->directMessage($dm_job->recipient_insta_id, $dm_job->message);
                         $this->line(serialize($response));
                         if ($response->status == "ok") {
