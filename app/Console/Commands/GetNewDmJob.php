@@ -137,12 +137,13 @@ class GetNewDmJob extends Command {
                             if (floatval($ig_profile->recent_activity_timestamp) < floatval($story->args->timestamp)) {
                                 
                                 $this->line("queue as new dm");
-                                try {
-                                    $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
-                                } catch (\Symfony\Component\Debug\Exception\FatalThrowableError $ex) {
-                                    $this->alert("ERROR!");
-                                    continue;
-                                }
+                                $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
+//                                try {
+//                                    $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
+//                                } catch (\Symfony\Component\Debug\Exception\FatalThrowableError $ex) {
+//                                    $this->alert("ERROR!");
+//                                    continue;
+//                                }
 //                                $this->line(serialize($user_info_response));
                                 
                                 $new_follower = $user_info_response->user;
