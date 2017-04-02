@@ -57,13 +57,13 @@ class InteractionFollow extends Command {
 //        } else {
 //            exit();
 //        }
-        
+
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
-        
+
 
         foreach ($users as $user) {
             $this->line($user->user_id);
@@ -160,12 +160,19 @@ class InteractionFollow extends Command {
 
                         $users_to_follow = $user_follower_response->users;
 
+                        $duplicate = 0;
                         foreach ($users_to_follow as $user_to_follow) {
 
                             $followed_users = DB::connection('mysql_old')
                                     ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
 
                             foreach ($followed_users as $followed_user) {
+                                $duplicate = 1;
+                                break;
+                                ;
+                            }
+
+                            if ($duplicate == 1) {
                                 continue;
                             }
 
@@ -176,8 +183,7 @@ class InteractionFollow extends Command {
                                     continue;
                                 }
                                 if ($response->friendship_status->following) {
-                                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", 
-                                            [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
+                                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                                 } else {
                                     continue;
                                 }
@@ -205,9 +211,14 @@ class InteractionFollow extends Command {
                             foreach ($hashtag_feed->items as $item) {
                                 $user_to_follow = $item->user;
                                 $followed_users = DB::connection('mysql_old')
-                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
+                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
 
                                 foreach ($followed_users as $followed_user) {
+                                    $duplicate = 1;
+                                    continue;
+                                }
+
+                                if ($duplicate == 1) {
                                     continue;
                                 }
 
@@ -248,9 +259,14 @@ class InteractionFollow extends Command {
 
                             foreach ($users_to_follow as $user_to_follow) {
                                 $followed_users = DB::connection('mysql_old')
-                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
+                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
 
                                 foreach ($followed_users as $followed_user) {
+                                    $duplicate = 1;
+                                    continue;
+                                }
+                                
+                                if ($duplicate == 1) {
                                     continue;
                                 }
 
