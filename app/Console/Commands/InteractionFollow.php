@@ -169,12 +169,12 @@ class InteractionFollow extends Command {
                             foreach ($followed_users as $followed_user) {
                                 $duplicate = 1;
                                 break;
-                                ;
+                                
                             }
 
-                            if ($duplicate == 1) {
-                                continue;
-                            }
+//                            if ($duplicate == 1) {
+//                                continue;
+//                            }
 
                             if ($followed == 0) {
                                 $response = $instagram->follow($user_to_follow->pk);
@@ -218,9 +218,9 @@ class InteractionFollow extends Command {
                                     continue;
                                 }
 
-                                if ($duplicate == 1) {
-                                    continue;
-                                }
+//                                if ($duplicate == 1) {
+//                                    continue;
+//                                }
 
                                 if ($followed == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
@@ -266,9 +266,9 @@ class InteractionFollow extends Command {
                                     continue;
                                 }
                                 
-                                if ($duplicate == 1) {
-                                    continue;
-                                }
+//                                if ($duplicate == 1) {
+//                                    continue;
+//                                }
 
                                 if ($followed == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
