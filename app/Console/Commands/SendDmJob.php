@@ -123,17 +123,16 @@ class SendDmJob extends Command
                         $this->line($checkpoint_ex->getMessage());
                         $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set error_msg = ?, updated_at = NOW() where job_id = ?;', [$checkpoint_ex->getMessage(), $dm_job->job_id]);
-                    } catch (InstagramAPI\Exception\NetworkException $network_ex) {
+                    } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                         $this->line($network_ex->getMessage());
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set error_msg = ?, updated_at = NOW() where job_id = ?;', [$network_ex->getMessage(), $dm_job->job_id]);
-                    } catch (InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                    } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                         $this->line($endpoint_ex->getMessage());
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set error_msg = ?, updated_at = NOW() where job_id = ?;', [$endpoint_ex->getMessage(), $dm_job->job_id]);
                     }
                 }
             }
         }
-        
         DB::connection('mysql_old')->delete("DELETE FROM morfix_settings WHERE setting = 'dm_offset' AND value = ?;", [$offset]);
     }
 }
