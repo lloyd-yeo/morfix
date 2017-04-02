@@ -274,10 +274,10 @@ class InteractionFollow extends Command {
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     $this->error($checkpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
-                } catch (InstagramAPI\Exception\NetworkException $network_ex) {
+                } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                     $this->error($network_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
-                } catch (InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                 }
