@@ -46,7 +46,7 @@ class GetNewDmJob extends Command {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
 
-        $users = DB::connection('mysql_old')->select("SELECT user_id, email FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        $users = DB::connection('mysql_old')->select("SELECT user_id, email, user_tier FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
 
         foreach ($users as $user) {
             $this->line($user->user_id);
@@ -185,7 +185,7 @@ class GetNewDmJob extends Command {
                                 
                                 $follow_up_message = trim($follow_up_template);
 
-                                if (!is_null($follow_up_message) && $follow_up_message != "") {
+                                if ((!is_null($follow_up_message) && $follow_up_message != "") && $user->user_tier > 1) {
                                     
                                     if ($new_follower->full_name) {
                                         $message2 = str_replace("\${full_name}", $new_follower->full_name, $follow_up_message);
