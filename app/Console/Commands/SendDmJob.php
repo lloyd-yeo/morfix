@@ -59,7 +59,13 @@ class SendDmJob extends Command
             exit();
         }
         
-        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        if (NULL !== $this->argument("email")) {
+            $users = DB::connection('mysql_old')->select("SELECT * FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+        } else {
+            $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        }
+        
+//        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
 
         foreach ($users as $user) {
             $this->line($user->user_id);
