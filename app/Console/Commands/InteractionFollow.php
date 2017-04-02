@@ -19,7 +19,7 @@ class InteractionFollow extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:follow {offset : The position to start retrieving from.} {limit : The number of results to limit to.}';
+    protected $signature = 'interaction:follow {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
 
     /**
      * The console command description.
@@ -57,8 +57,13 @@ class InteractionFollow extends Command {
 //        } else {
 //            exit();
 //        }
-
-        $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        
+        if (isset($this->argument("email"))) {
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+        } else {
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        }
+        
 
         foreach ($users as $user) {
             $this->line($user->user_id);
