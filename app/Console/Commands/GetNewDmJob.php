@@ -89,6 +89,7 @@ class GetNewDmJob extends Command {
                             if ($newest_timestamp == 0) {
                                 $newest_timestamp = $story->args->timestamp;
                                 //update instagram profile's timestamp here.
+                                DB::connection('mysql_old')->update("UPDATE user_insta_profile SET recent_activity_timestamp = ? WHERE id = ?;", [$newest_timestamp, $ig_profile]);
                             }
                             
                             $new_follower_template = $ig_profile->insta_new_follower_template;
