@@ -142,7 +142,7 @@ class InstagramProfileController extends Controller {
                 $new_profile->profile_full_name = $instagram_user->full_name;
                 $new_profile->follower_count = $instagram_user->follower_count;
                 $new_profile->num_posts = $instagram_user->media_count;
-                $new_profile->proxy = $proxy->proxy;
+                $new_profile->proxy = $proxy;
                 $new_profile->save();
 
                 return Response::json(array("success" => true, 'response' => serialize($explorer_response), 'user' => serialize($user_response), 'proxy' => $proxy->proxy));
