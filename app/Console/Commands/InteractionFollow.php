@@ -95,7 +95,7 @@ class InteractionFollow extends Command {
                 WHERE auto_interaction = 1
                 AND email = ?
                 AND (auto_follow = 1 OR auto_unfollow = 1) 
-                AND NOW() >= next_follow_time 
+                AND (NOW() >= next_follow_time OR next_follow_time IS NULL) 
                 AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->email]);
 
             foreach ($instagram_profiles as $ig_profile) {
