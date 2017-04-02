@@ -82,9 +82,9 @@ class GetNewDmJob extends Command {
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }
-
+                 $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 try {
-                    $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                   
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     $activity_response = $instagram->getRecentActivity();
