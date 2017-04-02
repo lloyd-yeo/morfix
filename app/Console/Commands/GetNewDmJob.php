@@ -140,8 +140,8 @@ class GetNewDmJob extends Command {
                                 $this->line("queue as new dm");
                                 try {
                                     $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
-                                } catch (Exception $ex) {
-                                    $this->alert($ex->getMessage());
+                                } catch (\Symfony\Component\Debug\Exception\FatalThrowableError $ex) {
+                                    $this->alert("ERROR!");
                                     continue;
                                 }
 //                                $this->line(serialize($user_info_response));
