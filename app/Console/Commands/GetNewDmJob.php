@@ -141,9 +141,9 @@ class GetNewDmJob extends Command {
 
                                 $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
 //                                $this->line(serialize($user_info_response));
-//                                $this->line("SOMETHING HERE.");
+                                $this->line("SOMETHING HERE.");
                                 $new_follower = $user_info_response->user;
-
+                                
                                 if ($new_follower->full_name) {
                                     $message = str_replace("\${full_name}", $new_follower->full_name, $new_follower_template);
                                 } else if (empty($new_follower->full_name)) {
