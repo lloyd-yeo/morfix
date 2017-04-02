@@ -191,7 +191,10 @@ class GetNewDmJob extends Command {
                                         . "VALUES (?,?,?,?,?,?,NOW());", 
                                             [$ig_username, $new_follower->username, $new_follower->pk, $new_follower->full_name, 0, $string_replacement]);
                                 
-                                $follow_up_message = trim($follow_up_template);
+                                $follow_up_message = "";
+                                if (!is_null($follow_up_template)) {
+                                    $follow_up_message = trim($follow_up_template);
+                                }
 
                                 if ((!is_null($follow_up_message) && $follow_up_message != "") && $user->user_tier > 1) {
                                     

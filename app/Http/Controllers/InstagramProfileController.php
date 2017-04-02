@@ -42,14 +42,7 @@ class InstagramProfileController extends Controller {
         $user = $request->input("iuser");
         $pw = $request->input("ipw");
         $email = $request->input("user_email");
-        
-        #DB::table("");
-        
-        #$instagram_profiles = DB::table('morfix_instagram_profiles')
-        #        ->where('email', Auth::user()->email)
-        #        ->take(10)
-        #        ->get();
-        
+
         $config = array();
         $config["storage"] = "mysql";
         $config["dbusername"] = "root";
@@ -61,7 +54,26 @@ class InstagramProfileController extends Controller {
         $debug = false;
         $truncatedDebug = false;
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-        
+
+        $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
+        foreach ($proxies as $proxy) {
+            $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
+            try {
+                $instagram->setProxy($proxy->proxy);
+                $instagram->setUser($ig_username, $ig_password);
+                $explorer_response = $instagram->login();
+                $create_log_id = DB::connection('mysql_old')->insertGetId("");
+                
+            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+                $this->error($checkpt_ex->getMessage());
+            } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                $this->error($incorrectpw_ex->getMessage());
+            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                $this->error($endpoint_ex->getMessage());
+            }
+
+            $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
+        }
     }
 
     /**
@@ -75,14 +87,14 @@ class InstagramProfileController extends Controller {
         $user_email = $request->input('user-email');
         $ig_username = $request->input('ig-username');
         $ig_password = $request->input('ig-password');
-        
+
         $log = new CreateInstagramProfileLog;
         $log->insta_username = $ig_username;
         $log->insta_pw = $ig_password;
         $log->email = $user_email;
         $log->save();
         $last_inserted_log_id = $log->log_id;
-        
+
         if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
             return Response::json(array("success" => false, 'response' => "This instagram profile already exists in Morfix!"));
         } else {
@@ -97,22 +109,22 @@ class InstagramProfileController extends Controller {
             $debug = false;
             $truncatedDebug = false;
             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-            
+
             $proxy = Proxy::where('assigned', '=', 0)->first();
             $instagram->setProxy($proxy->proxy);
             $proxy->assigned = 1;
             $proxy->save();
-            
+
             try {
                 $instagram->setUser($ig_username, $ig_password);
                 $explorer_response = $instagram->login();
                 $user_response = $instagram->getUserInfoByName($ig_username);
                 $instagram_user = $user_response->user;
-                
+
                 $log = CreateInstagramProfileLog::find($last_inserted_log_id);
                 $log->success_msg = serialize($explorer_response);
                 $log->save();
-                
+
                 $new_profile = new InstagramProfile;
                 $new_profile->user_id = Auth::user()->id;
                 $new_profile->email = Auth::user()->email;
@@ -125,7 +137,7 @@ class InstagramProfileController extends Controller {
                 $new_profile->num_posts = $instagram_user->media_count;
                 $new_profile->proxy = $proxy->proxy;
                 $new_profile->save();
-                
+
                 return Response::json(array("success" => true, 'response' => serialize($explorer_response), 'user' => serialize($user_response), 'proxy' => $proxy->proxy));
             } catch (InstagramException $ig_ex) {
                 $log = CreateInstagramProfileLog::find($last_inserted_log_id);
@@ -137,4 +149,5 @@ class InstagramProfileController extends Controller {
             }
         }
     }
+
 }
