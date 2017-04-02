@@ -162,12 +162,13 @@ class InteractionFollow extends Command {
 
                         $duplicate = 0;
                         foreach ($users_to_follow as $user_to_follow) {
-
+                            $duplicate = 0;
                             $followed_users = DB::connection('mysql_old')
                                     ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
 
                             foreach ($followed_users as $followed_user) {
                                 $duplicate = 1;
+                                $this->info("Duplicate user found: \n\n\n");
                                 break;
                             }
 
@@ -208,12 +209,14 @@ class InteractionFollow extends Command {
                             $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
                             $hashtag_feed = $instagram->getHashtagFeed($target_hashtag->hashtag);
                             foreach ($hashtag_feed->items as $item) {
+                                $duplicate = 0;
                                 $user_to_follow = $item->user;
                                 $followed_users = DB::connection('mysql_old')
                                         ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
 
                                 foreach ($followed_users as $followed_user) {
                                     $duplicate = 1;
+                                    $this->info("Duplicate user found: \n\n\n");
                                     break;
                                 }
 
@@ -257,11 +260,13 @@ class InteractionFollow extends Command {
                             $users_to_follow = $user_follower_response->users;
 
                             foreach ($users_to_follow as $user_to_follow) {
+                                $duplicate = 0;
                                 $followed_users = DB::connection('mysql_old')
                                         ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
 
                                 foreach ($followed_users as $followed_user) {
                                     $duplicate = 1;
+                                    $this->info("Duplicate user found: \n\n\n");
                                     break;
                                 }
                                 
