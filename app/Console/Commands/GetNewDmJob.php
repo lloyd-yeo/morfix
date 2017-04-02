@@ -79,6 +79,9 @@ class GetNewDmJob extends Command {
                 if ($ig_profile->proxy === NULL) {
                     $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                     $proxy = Proxy::where('assigned', '=', 0)->first();
+                    if ($proxy === NULL) {
+                        $this->info("INVALID PROXY.");
+                    }
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
                     $instagram->setProxy($proxy->proxy);
                     $proxy->assigned = 1;
