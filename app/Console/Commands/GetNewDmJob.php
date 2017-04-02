@@ -74,6 +74,8 @@ class GetNewDmJob extends Command {
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
+                $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                
                 if (is_null($ig_profile->proxy)) {
                     $proxy = Proxy::where('assigned', '=', 0)->first();
                     $instagram->setProxy($proxy->proxy);
@@ -82,7 +84,7 @@ class GetNewDmJob extends Command {
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }
-                 $this->info("Adding user: " . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                
                 try {
                    
                     $instagram->setUser($ig_username, $ig_password);
