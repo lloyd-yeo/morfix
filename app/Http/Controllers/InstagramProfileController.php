@@ -109,12 +109,19 @@ class InstagramProfileController extends Controller {
             $debug = false;
             $truncatedDebug = false;
             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-            $proxy = Proxy::where('assigned', '=', 0)->first();
-            $instagram->setProxy($proxy->proxy);
-            $proxy->assigned = 1;
-            $proxy->save();
-
+            
+            $proxy = "";
+            $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
+            foreach ($proxies as $proxy_) {
+                $proxy = $proxy_->proxy;
+                $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy_->proxy]);
+            }
+            
+//            $proxy = Proxy::where('assigned', '=', 0)->first();
+//            $instagram->setProxy($proxy->proxy);
+//            $proxy->assigned = 1;
+//            $proxy->save();
+            $instagram->setProxy($proxy);
             try {
                 $instagram->setUser($ig_username, $ig_password);
                 $explorer_response = $instagram->login();
