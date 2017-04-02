@@ -69,16 +69,16 @@ class SendDmJob extends Command
 
         foreach ($users as $user) {
             $this->line($user->user_id);
-
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, "
                     . "insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message, auto_dm_delay FROM user_insta_profile "
                     . "WHERE auto_dm_new_follower = 1 AND checkpoint_required = 0 "
                     . "AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0 "
-                    . "AND NOW() >= last_sent_dm AND user_id = ?;", [$user->user_id]);
+                    . "AND (NOW() >= last_sent_dm OR last_sent_dm IS NULL) AND user_id = ?;", [$user->user_id]);
 
             foreach ($instagram_profiles as $ig_profile) {
                 
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
                 
