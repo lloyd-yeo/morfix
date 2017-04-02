@@ -243,9 +243,11 @@ class GetNewDmJob extends Command {
                     }
                     
                     //limit to 1 acct, testing.
-                    break;
+//                    break;
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     $this->line($checkpoint_ex->getMessage());
+                } catch (\Symfony\Component\Debug\Exception\FatalThrowableError $fatalthrowable_ex) {
+                    $this->line($fatalthrowable_ex->getTraceAsString());
                 }
             }
         }
