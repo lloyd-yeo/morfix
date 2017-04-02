@@ -138,10 +138,10 @@ class GetNewDmJob extends Command {
                             if (floatval($ig_profile->recent_activity_timestamp) < floatval($story->args->timestamp)) {
                                 
                                 $this->line("queue as new dm");
-
+                                $this->line($story->args->profile_id);
                                 $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
 //                                $this->line(serialize($user_info_response));
-                                $this->line("SOMETHING HERE.");
+                                
                                 $new_follower = $user_info_response->user;
                                 
                                 if ($new_follower->full_name) {
