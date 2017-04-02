@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/RefreshInstagramProfile.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/InteractionComment.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/ImportInstagramSession.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Http/Controllers/InstagramProfileController.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Kernel.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/InteractionFollow.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/GetNewDmJob.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/SendDmJob.php</file>
+        </group>
     </open-files>
 </project-private>
