@@ -70,7 +70,7 @@ class GetNewDmJob extends Command {
                 $config["dbname"] = "morfix";
                 $config["dbtablename"] = "instagram_sessions";
 
-                $debug = false;
+                $debug = true;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
@@ -86,7 +86,6 @@ class GetNewDmJob extends Command {
                 }
                 
                 try {
-                    
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     $activity_response = $instagram->getRecentActivity();
