@@ -163,7 +163,7 @@ class InteractionFollow extends Command {
                         foreach ($users_to_follow as $user_to_follow) {
 
                             $followed_users = DB::connection('mysql_old')
-                                    ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_username = ?;", [$ig_username, $user_to_follow->username]);
+                                    ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
 
                             foreach ($followed_users as $followed_user) {
                                 continue;
