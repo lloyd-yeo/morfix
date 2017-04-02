@@ -145,7 +145,7 @@ class InstagramProfileController extends Controller {
                 $new_profile->proxy = $proxy;
                 $new_profile->save();
 
-                return Response::json(array("success" => true, 'response' => serialize($explorer_response), 'user' => serialize($user_response), 'proxy' => $proxy->proxy));
+                return Response::json(array("success" => true, 'response' => serialize($explorer_response), 'user' => serialize($user_response), 'proxy' => $proxy));
             } catch (InstagramException $ig_ex) {
                 $log = CreateInstagramProfileLog::find($last_inserted_log_id);
                 $log->error_msg = $ig_ex->getTraceAsString();
