@@ -42,7 +42,7 @@ class Kernel extends ConsoleKernel {
         
         for ($i = 0; $i < 70; $i++) {
             $counter = $i * 10;
-            $schedule->command('interaction:follow ' . $counter . ' 10')->everyFiveMinutes();
+            $schedule->command('interaction:follow ' . $counter . ' 10')->cron("*/3 * * * * *");
         }
         
         for ($i = 0; $i < 80; $i++) {
