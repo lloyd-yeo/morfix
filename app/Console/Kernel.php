@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel {
         Commands\SendDmJob::class,
         Commands\InteractionComment::class,
         Commands\InteractionFollow::class,
+        Commands\InteractionLike::class,
         Commands\RefreshInstagramProfile::class,
         Commands\SnapshotFollowerAnalysis::class,
     ];

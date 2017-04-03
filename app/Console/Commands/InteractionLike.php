@@ -12,28 +12,29 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 
-class InteractionFollow extends Command {
-
+class InteractionLike extends Command
+{
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'interaction:follow {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'interaction:like {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Follow user\'s intended targets.';
+    protected $description = 'Like photos of user\'s intended targets.';
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -42,87 +43,31 @@ class InteractionFollow extends Command {
      *
      * @return mixed
      */
-    public function handle() {
-
+    public function handle()
+    {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
-
-//        $execute_script = 1;
-//        $execute_flags = DB::connection('mysql_old')->select("SELECT * FROM morfix_settings WHERE setting = 'interaction' AND value = ?;", [$offset]);
-//        foreach ($execute_flags as $execute_flag) {
-//            $execute_script = 0;
-//        }
-//        if ($execute_script == 1) {
-//            DB::connection('mysql_old')->insert("INSERT INTO morfix_settings (setting, value) VALUES (?,?);", ['interaction', $offset]);
-//        } else {
-//            exit();
-//        }
-
+        
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
-
-
         foreach ($users as $user) {
             $this->line($user->user_id);
-
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT DISTINCT(insta_username),
                 insta_user_id, 
                 id, 
-                insta_pw,
-                niche, 
-                next_follow_time, 
-                niche_target_counter, 
-                unfollow, 
-                auto_interaction_ban, 
-                auto_interaction_ban_time,
-                follow_cycle,
-                auto_unfollow,
-                auto_follow,
-                auto_follow_ban,
-                auto_follow_ban_time,
-                follow_unfollow_delay,
-                speed,
-                follow_min_followers,
-                follow_max_followers,
-                unfollow_unfollowed,
-                daily_follow_quota,
-                daily_unfollow_quota,
-                proxy
-                FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
+                insta_pw, proxy
+                FROM insta_affiliate.user_insta_profile WHERE auto_interaction = 1
                 AND email = ?
-                AND (auto_follow = 1 OR auto_unfollow = 1) 
-                AND (NOW() >= next_follow_time OR next_follow_time IS NULL) 
+                AND auto_like = 1
                 AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->email]);
-
             foreach ($instagram_profiles as $ig_profile) {
-
-                $follow_unfollow_delay = 0;
-
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
-
-                if ($ig_profile->auto_follow_ban == 1) {
-                    continue;
-                }
-
-                if ($ig_profile->speed == "Fast") {
-                    $follow_unfollow_delay = rand(1, 2);
-                }
-                if ($ig_profile->speed == "Medium") {
-                    $follow_unfollow_delay = rand(3, 4);
-                }
-                if ($ig_profile->speed == "Slow") {
-                    $follow_unfollow_delay = rand(5, 6);
-                }
-                if ($ig_profile->speed == "Ultra Fast") {
-                    $follow_unfollow_delay = 0;
-                }
-
+                
                 $config = array();
                 $config["storage"] = "mysql";
                 $config["dbusername"] = "root";
@@ -145,25 +90,18 @@ class InteractionFollow extends Command {
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }
-
+                
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
 
-//                    $this->line(serialize($explorer_response) . "\n\n\n\n");
-//                    if (($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) || ($ig_profile->auto_follow == 1 && $ig_profile->unfollow == 1)) {
-                    //unfollow
-//                        $this->line("reached here...\n\n\n");
-//                        continue;
-//                    }
-
                     $target_usernames = DB::connection('mysql_old')
                             ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
-                    $followed = 0;
+                    $liked = 0;
 
                     foreach ($target_usernames as $target_username) {
-
+                        $like_quota = rand(1,3);
                         $this->info("target username: " . $target_username->target_username . "\n\n");
 
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
@@ -174,7 +112,7 @@ class InteractionFollow extends Command {
                         foreach ($users_to_follow as $user_to_follow) {
                             $duplicate = 0;
                             $followed_users = DB::connection('mysql_old')
-                                    ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
+                                    ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
 
                             foreach ($followed_users as $followed_user) {
                                 $duplicate = 1;
@@ -186,7 +124,18 @@ class InteractionFollow extends Command {
                                 continue;
                             }
 
-                            if ($followed == 0) {
+                            if ($liked == 0) {
+                                
+                                $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                $user_items = $user_feed_response->items;
+                                
+                                foreach ($user_items as $item) {
+                                    $like_response = $instagram->like($item->id);
+                                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
+                                            . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
+                                    $like_quota--;
+                                }
+                                
                                 $response = $instagram->follow($user_to_follow->pk);
                                 $this->info("following " . $response->friendship_status->following . "\n\n");
                                 if ($response->friendship_status->is_private) {
@@ -197,20 +146,20 @@ class InteractionFollow extends Command {
                                 } else {
                                     continue;
                                 }
-                                $followed = 1;
+                                $liked = 1;
                             }
 
-                            if ($followed == 1) {
+                            if ($liked == 1) {
                                 break;
                             }
                         }
 
-                        if ($followed == 1) {
+                        if ($liked == 1) {
                             break;
                         }
                     }
 
-                    if ($followed == 0) {
+                    if ($liked == 0) {
 
                         $target_hashtags = DB::connection('mysql_old')
                                 ->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
@@ -234,7 +183,7 @@ class InteractionFollow extends Command {
                                     continue;
                                 }
 
-                                if ($followed == 0) {
+                                if ($liked == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
                                     $this->info("following " . $response->friendship_status->following . "\n\n");
                                     if ($response->status == "ok") {
@@ -247,20 +196,20 @@ class InteractionFollow extends Command {
                                         } else {
                                             continue;
                                         }
-                                        $followed = 1;
+                                        $liked = 1;
                                     }
                                 }
-                                if ($followed == 1) {
+                                if ($liked == 1) {
                                     break;
                                 }
                             }
-                            if ($followed == 1) {
+                            if ($liked == 1) {
                                 break;
                             }
                         }
                     }
 
-                    if ($followed == 0) {
+                    if ($liked == 0) {
 
                         $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
                         foreach ($niche_targets as $niche_target) {
@@ -284,7 +233,7 @@ class InteractionFollow extends Command {
                                     continue;
                                 }
 
-                                if ($followed == 0) {
+                                if ($liked == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
                                     $this->info("following " . $response->friendship_status->following . "\n\n");
                                     if ($response->friendship_status->is_private) {
@@ -295,13 +244,13 @@ class InteractionFollow extends Command {
                                     } else {
                                         continue;
                                     }
-                                    $followed = 1;
+                                    $liked = 1;
                                 }
-                                if ($followed == 1) {
+                                if ($liked == 1) {
                                     break;
                                 }
                             }
-                            if ($followed == 1) {
+                            if ($liked == 1) {
                                 break;
                             }
                         }
@@ -324,8 +273,5 @@ class InteractionFollow extends Command {
                 }
             }
         }
-
-//        DB::connection('mysql_old')->delete("DELETE FROM morfix_settings WHERE setting = 'interaction' AND value = ?;", [$offset]);
     }
-
 }
