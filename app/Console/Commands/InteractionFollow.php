@@ -315,6 +315,9 @@ class InteractionFollow extends Command {
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                    $this->error($incorrectpw_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }
