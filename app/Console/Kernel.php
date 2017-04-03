@@ -44,7 +44,7 @@ class Kernel extends ConsoleKernel {
             $schedule->command('interaction:follow ' . $i . ' 1')->everyFiveMinutes();
         }
         
-        for ($i = 0; $i < 8000; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $schedule->command('ig:refresh ' . $i . ' 1')->everyThirtyMinutes();
         }
         
