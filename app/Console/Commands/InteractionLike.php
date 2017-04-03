@@ -56,6 +56,7 @@ class InteractionLike extends Command {
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT DISTINCT(insta_username),
                 insta_user_id, 
                 id, 
+                niche,
                 insta_pw, proxy
                 FROM insta_affiliate.user_insta_profile WHERE auto_interaction = 1
                 AND email = ?
@@ -192,7 +193,7 @@ class InteractionLike extends Command {
                         }
                     }
 
-                    if ($liked == 0) {
+                    if ($like_quota > 0) {
 
                         $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
                         foreach ($niche_targets as $niche_target) {
