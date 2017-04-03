@@ -52,7 +52,7 @@ class RefreshInstagramProfile extends Command {
         }
 
         foreach ($users as $user) {
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT insta_username, insta_pw FROM user_insta_profile WHERE user_id = ?;", [$user->user_id]);
+            $instagram_profiles = DB::connection('mysql_old')->select("SELECT insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? AND checkpoint_required = 0 AND proxy IS NOT NULL;", [$user->user_id]);
             $config = array();
             $config["storage"] = "mysql";
             $config["dbusername"] = "root";
