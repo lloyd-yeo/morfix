@@ -30,21 +30,23 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-        for ($i = 0; $i < 800; $i++) {
-            $counter = $i * 5;
-            $schedule->command('dm:get ' . $counter . ' 5')->everyMinute();
+        for ($i = 0; $i < 500; $i++) {
+            $counter = $i * 10;
+            $schedule->command('dm:get ' . $counter . ' 10')->everyMinute();
         }
         
-        for ($i = 0; $i < 800; $i++) {
-            $counter = $i * 5;
-            $schedule->command('dm:send ' . $counter . ' 5')->everyMinute();
+        for ($i = 0; $i < 500; $i++) {
+            $counter = $i * 10;
+            $schedule->command('dm:send ' . $counter . ' 10')->everyMinute();
         }
         
-        for ($i = 0; $i < 600; $i++) {
-            $schedule->command('interaction:follow ' . $i . ' 1')->everyFiveMinutes();
+        for ($i = 0; $i < 70; $i++) {
+            $counter = $i * 10;
+            $schedule->command('interaction:follow ' . $counter . ' 10')->everyFiveMinutes();
         }
         
-        for ($i = 0; $i < 800; $i++) {
+        for ($i = 0; $i < 80; $i++) {
+            $counter = $i * 10;
             $schedule->command('ig:refresh ' . $i . ' 1')->everyThirtyMinutes();
         }
         
