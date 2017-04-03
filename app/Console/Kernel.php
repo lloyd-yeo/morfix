@@ -42,6 +42,8 @@ class Kernel extends ConsoleKernel {
         for ($i = 0; $i < 700; $i++) {
             $schedule->command('interaction:follow ' . $i . ' 1')->everyFiveMinutes();
         }
+        
+        $schedule->command('analysis:follower')->daily();
         // $schedule->command('inspire')
         //          ->hourly();
     }
