@@ -43,8 +43,10 @@ class RefreshInstagramProfile extends Command {
      * @return mixed
      */
     public function handle() {
+        
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
+        
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
@@ -77,8 +79,8 @@ class RefreshInstagramProfile extends Command {
 
                     DB::connection('mysql_old')->
                             update("UPDATE user_insta_profile SET follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
-
-                    foreach ($instagram->getSelfUserFeed()->items as $item) {
+                    $items = $instagram->getSelfUserFeed()->items;
+                    foreach ($items as $item) {
                         DB:connection('mysql_old')->
                                 insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates->url]);
                     }
@@ -110,5 +112,4 @@ class RefreshInstagramProfile extends Command {
             }
         }
     }
-
 }
