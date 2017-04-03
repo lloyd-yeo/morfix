@@ -84,6 +84,7 @@ class ImportInstagramSession extends Command {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     $this->line(serialize($instagram->getCurrentUser()));
+                    
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
                     $this->error($checkpt_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);

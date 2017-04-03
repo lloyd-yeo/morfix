@@ -76,7 +76,7 @@ class RefreshInstagramProfile extends Command {
                     $instagram_user = $user_response->user;
 
                     DB::connection('mysql_old')->
-                            update("UPDATE user_insta_profile SET follower_count = ?, num_posts = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $ig_username]);
+                            update("UPDATE user_insta_profile SET follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
 
 //                    $new_profile = new InstagramProfile;
 //                    $new_profile->user_id = Auth::user()->id;
@@ -100,7 +100,7 @@ class RefreshInstagramProfile extends Command {
                     $this->error($endpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                    $this->error($endpoint_ex->getMessage());
+                    $this->error($incorrectpw_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                 }
             }
