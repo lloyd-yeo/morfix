@@ -78,6 +78,10 @@ class RefreshInstagramProfile extends Command {
                     DB::connection('mysql_old')->
                             update("UPDATE user_insta_profile SET follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
 
+                    foreach ($instagram->getSelfUserFeed()->items as $item) {
+                        DB:connection('mysql_old')->
+                                insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates->url]);
+                    }
 //                    $new_profile = new InstagramProfile;
 //                    $new_profile->user_id = Auth::user()->id;
 //                    $new_profile->email = Auth::user()->email;
