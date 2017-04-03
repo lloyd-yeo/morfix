@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel {
             $schedule->command('ig:refresh ' . $i . ' 1')->everyThirtyMinutes();
         }
         
-        $schedule->command('analysis:follower')->daily();
+        //$schedule->command('analysis:follower')->daily();
         // $schedule->command('inspire')
         //          ->hourly();
     }
