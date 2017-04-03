@@ -12,7 +12,6 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 
-
 class RefreshInstagramProfile extends Command {
 
     /**
@@ -54,25 +53,31 @@ class RefreshInstagramProfile extends Command {
 
         foreach ($users as $user) {
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT insta_username, insta_pw FROM user_insta_profile WHERE user_id = ?;", [$user->user_id]);
+            $config = array();
+            $config["storage"] = "mysql";
+            $config["dbusername"] = "root";
+            $config["dbpassword"] = "inst@ffiliates123";
+            $config["dbhost"] = "52.221.60.235:3306";
+            $config["dbname"] = "morfix";
+            $config["dbtablename"] = "instagram_sessions";
+            $debug = true;
+            $truncatedDebug = false;
+            $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
             foreach ($instagram_profiles as $ig_profile) {
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
-                
+
                 try {
-                    $debug = true;
-                    $truncatedDebug = false;
-                    $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
                     $instagram->setUser($ig_username, $ig_password);
                     $instagram->setProxy($ig_profile->proxy);
                     $explorer_response = $instagram->login();
                     $user_response = $instagram->getUserInfoByName($ig_username);
                     $instagram_user = $user_response->user;
-                    
+
                     DB::connection('mysql_old')->
-                            update("UPDATE user_insta_profile SET follower_count = ?, num_posts = ? WHERE insta_username = ?;", 
-                                    [$instagram_user->follower_count, $instagram_user->media_count, $ig_username]);
-                    
+                            update("UPDATE user_insta_profile SET follower_count = ?, num_posts = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $ig_username]);
+
 //                    $new_profile = new InstagramProfile;
 //                    $new_profile->user_id = Auth::user()->id;
 //                    $new_profile->email = Auth::user()->email;
@@ -85,7 +90,6 @@ class RefreshInstagramProfile extends Command {
 //                    $new_profile->num_posts = $instagram_user->media_count;
 //                    $new_profile->proxy = $proxy;
 //                    $new_profile->save();
-                    
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     $this->error($checkpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
