@@ -145,7 +145,7 @@ class InstagramProfileController extends Controller {
                 $new_profile->proxy = $proxy;
                 $new_profile->save();
                 
-                DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, target_media, log, date_commented) VALUES (?,?,?,?,?,?);", [$ig_profile->insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), \Carbon\Carbon::now()]);
+//                DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, target_media, log, date_commented) VALUES (?,?,?,?,?,?);", [$ig_profile->insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), \Carbon\Carbon::now()]);
                 
                 return Response::json(array("success" => true, 'response' => serialize($explorer_response), 'user' => serialize($user_response), 'proxy' => $proxy));
             } catch (InstagramException $ig_ex) {

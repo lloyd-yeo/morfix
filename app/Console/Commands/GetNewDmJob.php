@@ -239,7 +239,7 @@ class GetNewDmJob extends Command {
                                     
                                     DB::connection('mysql_old')->insert("INSERT INTO dm_job (insta_username, recipient_username, recipient_insta_id, recipient_fullname, follow_up_order, message, time_to_send) "
                                         . "VALUES (?,?,?,?,?,?,NOW());", 
-                                            [$ig_username, $new_follower->username, $new_follower->pk, $new_follower->full_name, 0, $string_replacement2]);
+                                            [$ig_username, $new_follower->username, $new_follower->pk, $new_follower->full_name, 1, $string_replacement2]);
                                 }
                             } else {
                                 break;
