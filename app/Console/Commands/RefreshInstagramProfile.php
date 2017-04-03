@@ -48,11 +48,11 @@ class RefreshInstagramProfile extends Command {
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
 
         foreach ($users as $user) {
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? AND checkpoint_required = 0 AND proxy IS NOT NULL;", [$user->user_id]);
+            $instagram_profiles = DB::connection('mysql_old')->select("SELECT insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? AND checkpoint_required = 0 AND incorrect_pw = 0 AND proxy IS NOT NULL;", [$user->user_id]);
             $config = array();
             $config["storage"] = "mysql";
             $config["dbusername"] = "root";
@@ -99,6 +99,9 @@ class RefreshInstagramProfile extends Command {
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
+                } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                    $this->error($endpoint_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }
