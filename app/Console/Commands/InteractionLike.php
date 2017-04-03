@@ -12,8 +12,8 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 
-class InteractionLike extends Command
-{
+class InteractionLike extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -33,8 +33,7 @@ class InteractionLike extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -43,11 +42,10 @@ class InteractionLike extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
-        
+
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
@@ -67,7 +65,7 @@ class InteractionLike extends Command
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
-                
+
                 $config = array();
                 $config["storage"] = "mysql";
                 $config["dbusername"] = "root";
@@ -79,7 +77,7 @@ class InteractionLike extends Command
                 $debug = true;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                
+
                 if ($ig_profile->proxy === NULL) {
                     $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
                     foreach ($proxies as $proxy) {
@@ -90,8 +88,9 @@ class InteractionLike extends Command
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }
-                
+
                 try {
+                    $like_quota = rand(1, 3);
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
 
@@ -101,7 +100,7 @@ class InteractionLike extends Command
                     $liked = 0;
 
                     foreach ($target_usernames as $target_username) {
-                        $like_quota = rand(1,3);
+
                         $this->info("target username: " . $target_username->target_username . "\n\n");
 
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
@@ -124,42 +123,33 @@ class InteractionLike extends Command
                                 continue;
                             }
 
-                            if ($liked == 0) {
-                                
+                            if ($like_quota > 0) {
+
                                 $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
                                 $user_items = $user_feed_response->items;
-                                
+
                                 foreach ($user_items as $item) {
+                                    if ($like_quota == 0) {
+                                        break;
+                                    }
                                     $like_response = $instagram->like($item->id);
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
                                             . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
                                     $like_quota--;
                                 }
-                                
-                                $response = $instagram->follow($user_to_follow->pk);
-                                $this->info("following " . $response->friendship_status->following . "\n\n");
-                                if ($response->friendship_status->is_private) {
-                                    continue;
-                                }
-                                if ($response->friendship_status->following) {
-                                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
-                                } else {
-                                    continue;
-                                }
-                                $liked = 1;
                             }
 
-                            if ($liked == 1) {
+                            if ($like_quota == 0) {
                                 break;
                             }
                         }
 
-                        if ($liked == 1) {
+                        if ($like_quota == 0) {
                             break;
                         }
                     }
 
-                    if ($liked == 0) {
+                    if ($like_quota > 0) {
 
                         $target_hashtags = DB::connection('mysql_old')
                                 ->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
@@ -171,7 +161,7 @@ class InteractionLike extends Command
                                 $duplicate = 0;
                                 $user_to_follow = $item->user;
                                 $followed_users = DB::connection('mysql_old')
-                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
+                                        ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
 
                                 foreach ($followed_users as $followed_user) {
                                     $duplicate = 1;
@@ -183,27 +173,20 @@ class InteractionLike extends Command
                                     continue;
                                 }
 
-                                if ($liked == 0) {
-                                    $response = $instagram->follow($user_to_follow->pk);
-                                    $this->info("following " . $response->friendship_status->following . "\n\n");
-                                    if ($response->status == "ok") {
-                                        if ($response->friendship_status->is_private) {
-                                            $this->info("user is pvt" . "\n\n");
-                                            continue;
-                                        }
-                                        if ($response->friendship_status->following) {
-                                            DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
-                                        } else {
-                                            continue;
-                                        }
-                                        $liked = 1;
+                                if ($like_quota > 0) {
+                                    if ($like_quota == 0) {
+                                        break;
                                     }
+                                    $like_response = $instagram->like($item->id);
+                                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
+                                            . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
+                                    $like_quota--;
                                 }
-                                if ($liked == 1) {
+                                if ($like_quota == 0) {
                                     break;
                                 }
                             }
-                            if ($liked == 1) {
+                            if ($like_quota == 0) {
                                 break;
                             }
                         }
@@ -221,36 +204,39 @@ class InteractionLike extends Command
                             foreach ($users_to_follow as $user_to_follow) {
                                 $duplicate = 0;
                                 $followed_users = DB::connection('mysql_old')
-                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
+                                        ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
 
                                 foreach ($followed_users as $followed_user) {
                                     $duplicate = 1;
                                     $this->info("Duplicate user found: \n\n\n");
                                     break;
                                 }
-                                
+
                                 if ($duplicate == 1) {
                                     continue;
                                 }
 
-                                if ($liked == 0) {
-                                    $response = $instagram->follow($user_to_follow->pk);
-                                    $this->info("following " . $response->friendship_status->following . "\n\n");
-                                    if ($response->friendship_status->is_private) {
-                                        continue;
+                                if ($like_quota > 0) {
+
+                                    $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                    $user_items = $user_feed_response->items;
+
+                                    foreach ($user_items as $item) {
+                                        if ($like_quota == 0) {
+                                            break;
+                                        }
+                                        $like_response = $instagram->like($item->id);
+                                        DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
+                                                . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
+                                        $like_quota--;
                                     }
-                                    if ($response->friendship_status->following) {
-                                        DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
-                                    } else {
-                                        continue;
-                                    }
-                                    $liked = 1;
                                 }
-                                if ($liked == 1) {
+
+                                if ($like_quota == 0) {
                                     break;
                                 }
                             }
-                            if ($liked == 1) {
+                            if ($like_quota == 0) {
                                 break;
                             }
                         }
@@ -274,4 +260,5 @@ class InteractionLike extends Command
             }
         }
     }
+
 }
