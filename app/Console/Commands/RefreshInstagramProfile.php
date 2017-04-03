@@ -83,7 +83,7 @@ class RefreshInstagramProfile extends Command {
                     $this->info(serialize($items));
                     foreach ($items as $item) {
                         DB::connection('mysql_old')->
-                                insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->getItemUrl()]);
+                                insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates[0]]);
                     }
 //                    $new_profile = new InstagramProfile;
 //                    $new_profile->user_id = Auth::user()->id;
