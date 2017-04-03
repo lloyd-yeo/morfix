@@ -85,7 +85,7 @@ class RefreshInstagramProfile extends Command {
                         try {
                             DB::connection('mysql_old')->
                                 insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
-                        } catch (\Exception $e) {
+                        } catch (\ErrorException $e) {
                             $this->error("ERROR: " . $e->getMessage());
                             break;
                         }
