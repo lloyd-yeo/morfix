@@ -55,7 +55,8 @@ class GetNewDmJob extends Command {
         foreach ($users as $user) {
             $this->line($user->user_id);
 
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile WHERE auto_dm_new_follower = 1 AND user_id = ?;", [$user->user_id]);
+            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message "
+                    . "FROM user_insta_profile WHERE auto_dm_new_follower = 1 AND user_id = ?;", [$user->user_id]);
 
             foreach ($instagram_profiles as $ig_profile) {
                 

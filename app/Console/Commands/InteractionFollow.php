@@ -149,7 +149,14 @@ class InteractionFollow extends Command {
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-
+                    
+                    $num_followed = DB::connection('mysql_old')
+                            ->select(DB::raw("SELECT COUNT(log_id) as num_follows 
+                        FROM user_insta_profile_follow_log 
+                        WHERE follow = 1 AND unfollowed = 0 AND insta_username = \"" . $ig_username ."\"; "));
+                    foreach ($num_followed as $num_followed_row) {
+                        $this->line($ig_username . " follows:\t" . $num_followed_row->num_follows);
+                    }
 //                    $this->line(serialize($explorer_response) . "\n\n\n\n");
 //                    if (($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) || ($ig_profile->auto_follow == 1 && $ig_profile->unfollow == 1)) {
                     //unfollow

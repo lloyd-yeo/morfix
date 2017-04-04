@@ -68,7 +68,9 @@ class SendDmJob extends Command
 //        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
 
         foreach ($users as $user) {
+            
             $this->line($user->user_id);
+            
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, "
                     . "insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message, auto_dm_delay FROM user_insta_profile "
                     . "WHERE auto_dm_new_follower = 1 AND checkpoint_required = 0 "
