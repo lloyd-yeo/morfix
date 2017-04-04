@@ -120,6 +120,9 @@ class InteractionComment extends Command {
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                    $this->error($network_ex->getMessage());
+                    continue;
                 }
             }
         }
