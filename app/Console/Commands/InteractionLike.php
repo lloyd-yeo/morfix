@@ -94,9 +94,9 @@ class InteractionLike extends Command {
                     $like_quota = rand(1, 3);
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-                    
+
                     $this->line("Logged in \t quota: " . $like_quota);
-                    
+
                     $target_usernames = DB::connection('mysql_old')
                             ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
@@ -105,15 +105,23 @@ class InteractionLike extends Command {
                     foreach ($target_usernames as $target_username) {
 
                         $this->line("target username: " . $target_username->target_username . "\n\n");
-
-                        $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
+                        $user_follower_response = NULL;
+                        try {
+                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
+                        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                            $this->error("error retrieving profile: " . $endpoint_ex->getMessage());
+                            continue;
+//                            DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                        }
 
                         $users_to_follow = $user_follower_response->users;
 
                         $duplicate = 0;
                         foreach ($users_to_follow as $user_to_follow) {
+
                             $this->line($user_to_follow->username . "\n\n");
                             $duplicate = 0;
+
                             $followed_users = DB::connection('mysql_old')
                                     ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
 
@@ -130,18 +138,18 @@ class InteractionLike extends Command {
                             if ($like_quota > 0) {
 
                                 $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
-                                
+
                                 $user_items = $user_feed_response->items;
 
                                 foreach ($user_items as $item) {
                                     if ($like_quota == 0) {
                                         break;
                                     }
-                                    
+
                                     $like_response = $instagram->like($item->id);
-                                    
+
                                     $this->info("liked " . serialize($like_response));
-                                    
+
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
                                             . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
                                     $like_quota--;
@@ -164,13 +172,13 @@ class InteractionLike extends Command {
                                 ->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
                         foreach ($target_hashtags as $target_hashtag) {
-                            
+
                             $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
-                            
+
                             $hashtag_feed = $instagram->getHashtagFeed($target_hashtag->hashtag);
-                            
+
                             foreach ($hashtag_feed->items as $item) {
-                                
+
                                 $duplicate = 0;
                                 $user_to_follow = $item->user;
                                 $followed_users = DB::connection('mysql_old')
@@ -190,15 +198,15 @@ class InteractionLike extends Command {
                                     if ($like_quota == 0) {
                                         break;
                                     }
-                                    
+
                                     $like_response = $instagram->like($item->id);
                                     $this->info("liked " . serialize($like_response));
-                                    
+
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
                                             . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
                                     $like_quota--;
                                 }
-                                
+
                                 if ($like_quota == 0) {
                                     break;
                                 }
@@ -236,18 +244,18 @@ class InteractionLike extends Command {
                                 if ($like_quota > 0) {
 
                                     $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
-                                    
+
                                     $user_items = $user_feed_response->items;
 
                                     foreach ($user_items as $item) {
                                         if ($like_quota == 0) {
                                             break;
                                         }
-                                        
+
                                         $like_response = $instagram->like($item->id);
-                                        
+
                                         $this->info("liked " . serialize($like_response));
-                                        
+
                                         DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
                                                 . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
                                         $like_quota--;
@@ -281,7 +289,7 @@ class InteractionLike extends Command {
                 } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                     continue;
                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-                     $this->error($acctdisabled_ex->getMessage());
+                    $this->error($acctdisabled_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                 }
             }
