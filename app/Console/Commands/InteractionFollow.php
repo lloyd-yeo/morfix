@@ -134,7 +134,7 @@ class InteractionFollow extends Command {
                 $debug = true;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                
+
                 if ($ig_profile->proxy === NULL) {
                     $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
                     foreach ($proxies as $proxy) {
@@ -150,19 +150,43 @@ class InteractionFollow extends Command {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     
+                    $num_followers = 0;
                     $num_followed = DB::connection('mysql_old')
                             ->select(DB::raw("SELECT COUNT(log_id) as num_follows 
                         FROM user_insta_profile_follow_log 
-                        WHERE follow = 1 AND unfollowed = 0 AND insta_username = \"" . $ig_username ."\"; "));
+                        WHERE follow = 1 AND unfollowed = 0 AND insta_username = \"" . $ig_username . "\"; "));
                     foreach ($num_followed as $num_followed_row) {
+                        $num_followers = $num_followed_row->num_follows;
                         $this->line($ig_username . " follows:\t" . $num_followed_row->num_follows);
                     }
-//                    $this->line(serialize($explorer_response) . "\n\n\n\n");
-//                    if (($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) || ($ig_profile->auto_follow == 1 && $ig_profile->unfollow == 1)) {
-                    //unfollow
-//                        $this->line("reached here...\n\n\n");
-//                        continue;
-//                    }
+
+                    $on_unfollow_cycle = $ig_profile->follow_cycle;
+
+                    if ($num_followers == 0) {
+                        if ($ig_profile->auto_follow == 1 && $ig_profile->auto_unfollow == 1) {
+                            DB::connection('mysql_old')
+                                    ->update("UPDATE user_insta_profile SET unfollow = 0 WHERE insta_username = ?;", [$ig_username]);
+                        }
+                    } else if ($num_followers >= $ig_profile->follow_cycle) {
+                        if ($ig_profile->auto_unfollow == 1) {
+                            $on_unfollow_cycle = 1;
+                            DB::connection('mysql_old')
+                                    ->update("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;", [$ig_username]);
+                        }
+                    }
+
+                    if ($on_unfollow_cycle == 1) {
+                        $users_to_unfollow = DB::connection('mysql_old')->select("SELECT log_id, insta_username, follower_username, follower_id 
+                            FROM user_insta_profile_follow_log
+                            WHERE insta_username = ? AND follow = 1 AND unfollowed = 0 
+                            ORDER BY log_id ASC LIMIT 10;", [$ig_profile->insta_username]);
+                        
+                        foreach ($users_to_unfollow as $user_to_unfollow) {
+                            $unfollow_response = $instagram->unfollow($user_to_unfollow->follower_id);
+                            DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = ? WHERE log_id = ?;", [serialize($unfollow_response), $user_to_unfollow->log_id]);
+                            break;
+                        }
+                    }
 
                     $target_usernames = DB::connection('mysql_old')
                             ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
@@ -194,7 +218,7 @@ class InteractionFollow extends Command {
                             }
 
                             if ($followed == 0) {
-                                
+
                                 $response = $instagram->follow($user_to_follow->pk);
                                 $this->info("following " . $response->friendship_status->following . "\n\n");
                                 if ($response->friendship_status->is_private) {
@@ -206,7 +230,6 @@ class InteractionFollow extends Command {
                                     continue;
                                 }
                                 $followed = 1;
-                                
                             }
 
                             if ($followed == 1) {
@@ -288,7 +311,7 @@ class InteractionFollow extends Command {
                                     $this->info("Duplicate user found: \n\n\n");
                                     break;
                                 }
-                                
+
                                 if ($duplicate == 1) {
                                     continue;
                                 }
