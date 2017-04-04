@@ -241,8 +241,9 @@ class InteractionLike extends Command {
                         if ($like_quota > 0) {
 
                             $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
+                            
                             foreach ($niche_targets as $niche_target) {
-
+                                $this->info("niche target:\t" . $niche_target->target_username);
                                 $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($niche_target->target_username));
 
                                 $users_to_follow = $user_follower_response->users;
