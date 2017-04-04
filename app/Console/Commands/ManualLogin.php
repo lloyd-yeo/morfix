@@ -61,6 +61,7 @@ class ManualLogin extends Command {
         
         $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
         foreach ($proxies as $proxy) {
+            $this->line($proxy->proxy);
             $instagram->setUser($ig_username, $ig_password);
             $instagram->setProxy($proxy->proxy);
             $explorer_response = $instagram->login();
