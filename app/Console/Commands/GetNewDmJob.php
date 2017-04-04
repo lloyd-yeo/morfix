@@ -47,7 +47,7 @@ class GetNewDmJob extends Command {
         $limit = $this->argument('limit');
 
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, user_tier FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
             $users = DB::connection('mysql_old')->select("SELECT user_id, email, user_tier FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
