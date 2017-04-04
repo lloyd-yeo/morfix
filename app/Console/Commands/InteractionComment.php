@@ -19,7 +19,7 @@ class InteractionComment extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:comment {offset : The position to start retrieving from.} {limit : The number of results to limit to.}';
+    protected $signature = 'interaction:comment {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
 
     /**
      * The console command description.
@@ -46,8 +46,14 @@ class InteractionComment extends Command {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
 
-        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
-
+//        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        
+        if (NULL !== $this->argument("email")) {
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+        } else {
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        }
+        
         foreach ($users as $user) {
             $this->line($user->user_id);
 
