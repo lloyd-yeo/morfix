@@ -75,7 +75,7 @@ class InteractionLike extends Command {
                 $config["dbname"] = "morfix";
                 $config["dbtablename"] = "instagram_sessions";
 
-                $debug = true;
+                $debug = false;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
@@ -94,7 +94,6 @@ class InteractionLike extends Command {
                     $like_quota = rand(1, 3);
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-
                     $target_usernames = DB::connection('mysql_old')
                             ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
