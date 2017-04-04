@@ -74,21 +74,21 @@ class LegacyInstagramProfileController extends Controller {
                 
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
                 
-                $this->error($checkpt_ex->getMessage());
+//                $this->error($checkpt_ex->getMessage());
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
                 return Response::json(array("success" => false, 'response' => $checkpt_ex->getMessage(), 'type' => 'checkpoint'));
                 
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 
-                $this->error($incorrectpw_ex->getMessage());
+//                $this->error($incorrectpw_ex->getMessage());
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$incorrectpw_ex->getMessage(), $db_log_id]);
                 return Response::json(array("success" => false, 'response' => $incorrectpw_ex->getMessage(), 'type' => 'incorrectpw'));
                 
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                 
-                $this->error($endpoint_ex->getMessage());
+//                $this->error($endpoint_ex->getMessage());
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$endpoint_ex->getMessage(), $db_log_id]);
                 return Response::json(array("success" => false, 'response' => $endpoint_ex->getMessage(), 'type' => 'endpoint'));
@@ -97,14 +97,14 @@ class LegacyInstagramProfileController extends Controller {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$feedback_ex->getMessage(), $db_log_id]);
-                $this->error($feedback_ex->getMessage());
+//                $this->error($feedback_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $feedback_ex->getMessage(), 'type' => 'feedback'));
                 
             } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$emptyresponse_ex->getMessage(), $db_log_id]);
-                $this->error($emptyresponse_ex->getMessage());
+//                $this->error($emptyresponse_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $emptyresponse_ex->getMessage(), 'type' => 'empty_response'));
                 
                 
@@ -112,14 +112,14 @@ class LegacyInstagramProfileController extends Controller {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$acctdisabled_ex->getMessage(), $db_log_id]);
-                $this->error($acctdisabled_ex->getMessage());
+//                $this->error($acctdisabled_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $acctdisabled_ex->getMessage(), 'type' => 'account_disabled'));
                 
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$network_ex->getMessage(), $db_log_id]);
-                $this->error($network_ex->getMessage());
+//                $this->error($network_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $network_ex->getMessage(), 'type' => 'network'));
                 
             } catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
@@ -133,7 +133,7 @@ class LegacyInstagramProfileController extends Controller {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$internal_ex->getMessage(), $db_log_id]);
-                $this->error($internal_ex->getMessage());
+//                $this->error($internal_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $internal_ex->getMessage(), 'type' => 'internal'));
                 
             } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
@@ -147,21 +147,21 @@ class LegacyInstagramProfileController extends Controller {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$invaliduser_ex->getMessage(), $db_log_id]);
-                $this->error($invaliduser_ex->getMessage());
+//                $this->error($invaliduser_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $invaliduser_ex->getMessage(), 'type' => 'invaliduser'));
                 
             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$request_ex->getMessage(), $db_log_id]);
-                $this->error($request_ex->getMessage());
+//                $this->error($request_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $request_ex->getMessage(), 'type' => 'request'));
                 
             } catch (\ErrorException $ex) {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$ex->getMessage(), $db_log_id]);
-                $this->error($ex->getMessage());
+//                $this->error($ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $ex->getMessage(), 'type' => 'exception'));
                 
             }
