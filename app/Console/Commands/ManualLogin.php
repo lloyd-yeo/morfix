@@ -46,6 +46,7 @@ class ManualLogin extends Command {
         $ig_username = $this->argument("ig_username");
         $ig_password = $this->argument("ig_password");
         $this->line($ig_username . " " . $ig_password);
+        
         $config = array();
         $config["storage"] = "mysql";
         $config["dbusername"] = "root";
