@@ -134,10 +134,12 @@ class InteractionLike extends Command {
 
                                 $user_feed_response = NULL;
                                 try {
+
                                     if (is_null($user_to_follow)) {
                                         $this->error("null user - target username");
                                         continue;
                                     }
+
                                     $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
                                 } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                     $this->error($endpt_ex->getMessage());
@@ -255,6 +257,12 @@ class InteractionLike extends Command {
                                 if ($like_quota > 0) {
 
                                     $user_feed_response = NULL;
+
+                                    if (is_null($user_to_follow)) {
+                                        $this->error("null user");
+                                        continue;
+                                    }
+
                                     try {
                                         $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
                                     } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
