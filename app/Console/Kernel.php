@@ -45,6 +45,11 @@ class Kernel extends ConsoleKernel {
             $schedule->command('interaction:follow ' . $counter . ' 10')->cron("*/3 * * * * *");
         }
         
+        for ($i = 0; $i < 300; $i++) {
+            $counter = $i * 20;
+            $schedule->command('interaction:like ' . $counter . ' 20')->cron("*/3 * * * * *");
+        }
+        
         for ($i = 0; $i < 80; $i++) {
             $counter = $i * 10;
             $schedule->command('ig:refresh ' . $i . ' 1')->everyThirtyMinutes();
