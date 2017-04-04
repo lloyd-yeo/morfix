@@ -94,6 +94,9 @@ class InteractionLike extends Command {
                     $like_quota = rand(1, 3);
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
+                    
+                    $this->line("Logged in \t quota: " . $like_quota);
+                    
                     $target_usernames = DB::connection('mysql_old')
                             ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
@@ -101,7 +104,7 @@ class InteractionLike extends Command {
 
                     foreach ($target_usernames as $target_username) {
 
-                        $this->info("target username: " . $target_username->target_username . "\n\n");
+                        $this->line("target username: " . $target_username->target_username . "\n\n");
 
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
 
@@ -109,6 +112,7 @@ class InteractionLike extends Command {
 
                         $duplicate = 0;
                         foreach ($users_to_follow as $user_to_follow) {
+                            $this->line($user_to_follow->username . "\n\n");
                             $duplicate = 0;
                             $followed_users = DB::connection('mysql_old')
                                     ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
