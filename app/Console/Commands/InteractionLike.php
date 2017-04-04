@@ -119,7 +119,7 @@ class InteractionLike extends Command {
 
                             foreach ($followed_users as $followed_user) {
                                 $duplicate = 1;
-                                $this->info("Duplicate user found: \n\n\n");
+                                $this->info("Duplicate user found.\t" . $followed_user->log_id . " \n\n\n");
                                 break;
                             }
 
