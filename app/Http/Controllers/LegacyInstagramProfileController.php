@@ -71,25 +71,25 @@ class LegacyInstagramProfileController extends Controller
                 
                 return Response::json(array("success" => true, 'response' => "Profile added!", 'type' => 'profile_added'));
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-                return Response::json(array("success" => false, 'response' => $checkpt_ex->getMessage(), 'type' => 'checkpoint'));
                 $this->error($checkpt_ex->getMessage());
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
+                return Response::json(array("success" => false, 'response' => $checkpt_ex->getMessage(), 'type' => 'checkpoint'));
                 
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                return Response::json(array("success" => false, 'response' => $incorrectpw_ex->getMessage(), 'type' => 'incorrectpw'));
                 $this->error($incorrectpw_ex->getMessage());
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$incorrectpw_ex->getMessage(), $db_log_id]);
+                return Response::json(array("success" => false, 'response' => $incorrectpw_ex->getMessage(), 'type' => 'incorrectpw'));
                 
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                return Response::json(array("success" => false, 'response' => $endpoint_ex->getMessage(), 'type' => 'endpoint'));
                 $this->error($endpoint_ex->getMessage());
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$endpoint_ex->getMessage(), $db_log_id]);
+                return Response::json(array("success" => false, 'response' => $endpoint_ex->getMessage(), 'type' => 'endpoint'));
             }
         }
     }
