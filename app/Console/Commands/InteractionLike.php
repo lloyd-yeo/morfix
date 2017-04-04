@@ -109,7 +109,6 @@ class InteractionLike extends Command {
 
                         $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
 
-
                         $users_to_follow = $user_follower_response->users;
 
                         $duplicate = 0;
@@ -135,6 +134,10 @@ class InteractionLike extends Command {
 
                                 $user_feed_response = NULL;
                                 try {
+                                    if (is_null($user_to_follow)) {
+                                        $this->error("null user - target username");
+                                        continue;
+                                    }
                                     $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
                                 } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                     $this->error($endpt_ex->getMessage());
@@ -207,7 +210,7 @@ class InteractionLike extends Command {
                                     }
 
                                     $like_response = $instagram->like($item->id);
-                                    
+
                                     $this->info("liked " . serialize($like_response));
 
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
@@ -265,7 +268,7 @@ class InteractionLike extends Command {
                                         if ($like_quota == 0) {
                                             break;
                                         }
-                                        
+
                                         $like_response = $instagram->like($item->id);
 
                                         $this->info("liked " . serialize($like_response));
