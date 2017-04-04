@@ -187,6 +187,7 @@ class InteractionFollow extends Command {
                             }
 
                             if ($followed == 0) {
+                                
                                 $response = $instagram->follow($user_to_follow->pk);
                                 $this->info("following " . $response->friendship_status->following . "\n\n");
                                 if ($response->friendship_status->is_private) {
@@ -198,6 +199,7 @@ class InteractionFollow extends Command {
                                     continue;
                                 }
                                 $followed = 1;
+                                
                             }
 
                             if ($followed == 1) {
