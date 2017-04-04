@@ -259,6 +259,9 @@ class InteractionLike extends Command {
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                     continue;
+                } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+                     $this->error($acctdisabled_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }
