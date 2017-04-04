@@ -63,7 +63,7 @@ class RefreshInstagramProfile extends Command {
             $config["dbhost"] = "52.221.60.235:3306";
             $config["dbname"] = "morfix";
             $config["dbtablename"] = "instagram_sessions";
-            $debug = true;
+            $debug = false;
             $truncatedDebug = false;
             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
             foreach ($instagram_profiles as $ig_profile) {
