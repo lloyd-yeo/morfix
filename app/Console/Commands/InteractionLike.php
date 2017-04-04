@@ -132,7 +132,7 @@ class InteractionLike extends Command {
                             }
 
                             if ($like_quota > 0) {
-                                
+
                                 $user_feed_response = NULL;
                                 try {
                                     $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
@@ -183,6 +183,10 @@ class InteractionLike extends Command {
 
                                 $duplicate = 0;
                                 $user_to_follow = $item->user;
+                                if (is_null($user_to_follow)) {
+                                    $this->error("null user");
+                                    continue;
+                                }
                                 $followed_users = DB::connection('mysql_old')
                                         ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
 
@@ -197,12 +201,13 @@ class InteractionLike extends Command {
                                 }
 
                                 if ($like_quota > 0) {
-                                    
+
                                     if ($like_quota == 0) {
                                         break;
                                     }
 
                                     $like_response = $instagram->like($item->id);
+                                    
                                     $this->info("liked " . serialize($like_response));
 
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
@@ -260,7 +265,7 @@ class InteractionLike extends Command {
                                         if ($like_quota == 0) {
                                             break;
                                         }
-
+                                        
                                         $like_response = $instagram->like($item->id);
 
                                         $this->info("liked " . serialize($like_response));
