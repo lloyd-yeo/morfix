@@ -131,7 +131,7 @@ class InteractionFollow extends Command {
                 $config["dbname"] = "morfix";
                 $config["dbtablename"] = "instagram_sessions";
 
-                $debug = false;
+                $debug = true;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
