@@ -193,6 +193,8 @@ class InteractionFollow extends Command {
                             DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = ? WHERE log_id = ?;", [serialize($unfollow_response), $user_to_unfollow->log_id]);
                             break;
                         }
+                        
+                        continue;
                     }
 
                     $target_usernames = DB::connection('mysql_old')
