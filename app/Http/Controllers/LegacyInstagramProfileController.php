@@ -22,7 +22,9 @@ class LegacyInstagramProfileController extends Controller
      */
     public function create(Request $request) {
         $user = $request->input("iuser");
+        $ig_username = $request->input("iuser");
         $pw = $request->input("ipw");
+        $ig_password = $request->input("ipw");
         $email = $request->input("user_email");
         $user_id = $request->input("user_id");
         $db_log_id = $request->input("log_id");
