@@ -42,12 +42,12 @@ class Kernel extends ConsoleKernel {
         
         for ($i = 0; $i < 70; $i++) {
             $counter = $i * 10;
-            $schedule->command('interaction:follow ' . $counter . ' 10')->cron("*/3 * * * * *");
+            $schedule->command('interaction:follow ' . $counter . ' 10')->everyFiveMinutes();
         }
         
         for ($i = 0; $i < 300; $i++) {
             $counter = $i * 20;
-            $schedule->command('interaction:like ' . $counter . ' 20')->cron("*/3 * * * * *");
+            $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
         }
         
         for ($i = 0; $i < 80; $i++) {
