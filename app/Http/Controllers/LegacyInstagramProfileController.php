@@ -57,7 +57,7 @@ class LegacyInstagramProfileController extends Controller
                 $user_response = $instagram->getUserInfoByName($ig_username);
                 $instagram_user = $user_response->user;
                 DB::connection('mysql_old')->
-                        update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
+                        update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ?, profile_full_name = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $instagram_user->full_name, $ig_username]);
                 $items = $instagram->getSelfUserFeed()->items;
 //                $this->info(serialize($items));
                 foreach ($items as $item) {
