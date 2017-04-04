@@ -59,7 +59,6 @@ class LegacyInstagramProfileController extends Controller
                 DB::connection('mysql_old')->
                         update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ?, profile_full_name = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $instagram_user->full_name, $ig_username]);
                 $items = $instagram->getSelfUserFeed()->items;
-//                $this->info(serialize($items));
                 foreach ($items as $item) {
                     try {
                         DB::connection('mysql_old')->
@@ -72,21 +71,21 @@ class LegacyInstagramProfileController extends Controller
                 
                 return Response::json(array("success" => true, 'response' => "Profile added!"));
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-                return Response::json(array("success" => false, 'response' => serialize($checkpt_ex)));
+                return Response::json(array("success" => false, 'response' => $checkpt_ex->getMessage()));
                 $this->error($checkpt_ex->getMessage());
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
                 
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                return Response::json(array("success" => false, 'response' => serialize($incorrectpw_ex)));
+                return Response::json(array("success" => false, 'response' => $incorrectpw_ex->getMessage()));
                 $this->error($incorrectpw_ex->getMessage());
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$incorrectpw_ex->getMessage(), $db_log_id]);
                 
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                return Response::json(array("success" => false, 'response' => serialize($endpoint_ex)));
+                return Response::json(array("success" => false, 'response' => $endpoint_ex->getMessage()));
                 $this->error($endpoint_ex->getMessage());
                 
                 DB::connection('mysql_old')->
