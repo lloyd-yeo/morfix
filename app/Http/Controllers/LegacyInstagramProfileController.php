@@ -133,6 +133,13 @@ class LegacyInstagramProfileController extends Controller {
                 $this->error($internal_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $internal_ex->getMessage(), 'type' => 'sentryblock'));
                 
+            } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+                
+                DB::connection('mysql_old')->
+                        update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$loginrequired_ex->getMessage(), $db_log_id]);
+                $this->error($loginrequired_ex->getMessage());
+                return Response::json(array("success" => false, 'response' => $loginrequired_ex->getMessage(), 'type' => 'sentryblock'));
+                
             }
         }
     }
