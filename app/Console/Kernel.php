@@ -32,12 +32,12 @@ class Kernel extends ConsoleKernel {
     protected function schedule(Schedule $schedule) {
         for ($i = 0; $i < 500; $i++) {
             $counter = $i * 10;
-            $schedule->command('dm:get ' . $counter . ' 10')->everyMinute();
+            $schedule->command('dm:get ' . $counter . ' 10')->everyFiveMinutes();
         }
         
         for ($i = 0; $i < 500; $i++) {
             $counter = $i * 10;
-            $schedule->command('dm:send ' . $counter . ' 10')->everyMinute();
+            $schedule->command('dm:send ' . $counter . ' 10')->everyFiveMinutes();
         }
         
         for ($i = 0; $i < 70; $i++) {
