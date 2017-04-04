@@ -137,6 +137,9 @@ class InteractionLike extends Command {
                                         break;
                                     }
                                     $like_response = $instagram->like($item->id);
+                                    
+                                    $this->info("liked " . serialize($like_response));
+                                    
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
                                             . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_follow->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
                                     $like_quota--;
