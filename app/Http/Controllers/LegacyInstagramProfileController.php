@@ -158,6 +158,13 @@ class LegacyInstagramProfileController extends Controller {
                 $this->error($request_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $request_ex->getMessage(), 'type' => 'request'));
                 
+            } catch (\Exception $ex) {
+                
+                DB::connection('mysql_old')->
+                        update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$ex->getMessage(), $db_log_id]);
+                $this->error($ex->getMessage());
+                return Response::json(array("success" => false, 'response' => $ex->getMessage(), 'type' => 'request'));
+                
             }
         }
     }
