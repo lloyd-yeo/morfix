@@ -58,6 +58,7 @@ class GetNewDmJob extends Command {
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile WHERE auto_dm_new_follower = 1 AND user_id = ?;", [$user->user_id]);
 
             foreach ($instagram_profiles as $ig_profile) {
+                
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
@@ -107,25 +108,18 @@ class GetNewDmJob extends Command {
                             $this->line($story->args->profile_id);
                             $this->line($story->args->timestamp);
                             
-                            $existing_dm_jobs = DB::connection('mysql_old')->select("SELECT `dm_job`.`job_id`,
-                                    `dm_job`.`insta_username`,
-                                    `dm_job`.`recipient_username`,
-                                    `dm_job`.`recipient_insta_id`,
-                                    `dm_job`.`recipient_fullname`,
-                                    `dm_job`.`time_to_send`,
-                                    `dm_job`.`fulfilled`,
-                                    `dm_job`.`message`,
-                                    `dm_job`.`date_job_inserted`,
-                                    `dm_job`.`follow_up_order`,
-                                    `dm_job`.`error_msg`,
-                                    `dm_job`.`success_msg`,
-                                    `dm_job`.`updated_at`
+                            $existing_dm_jobs = DB::connection('mysql_old')->select("SELECT job_id
                                 FROM `insta_affiliate`.`dm_job`
                                 WHERE insta_username = ?
                                 AND recipient_insta_id = ?;", [$ig_username, $story->args->profile_id]);
                             
+                            $job_exists = 0;
                             foreach ($existing_dm_jobs as $existing_dm_job) {
                                 $this->line("dm job exists!");
+                                $job_exists = 1;
+                                break;
+                            }
+                            if ($job_exists) {
                                 break;
                             }
                             
