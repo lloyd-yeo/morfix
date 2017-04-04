@@ -132,6 +132,8 @@ class InteractionLike extends Command {
                             }
 
                             if ($like_quota > 0) {
+                                
+                                $user_feed_response = NULL;
                                 try {
                                     $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
                                 } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
@@ -195,6 +197,7 @@ class InteractionLike extends Command {
                                 }
 
                                 if ($like_quota > 0) {
+                                    
                                     if ($like_quota == 0) {
                                         break;
                                     }
@@ -243,7 +246,13 @@ class InteractionLike extends Command {
 
                                 if ($like_quota > 0) {
 
-                                    $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                    $user_feed_response = NULL;
+                                    try {
+                                        $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                    } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
+                                        $this->error($endpt_ex->getMessage());
+                                        continue;
+                                    }
 
                                     $user_items = $user_feed_response->items;
 
