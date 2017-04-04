@@ -72,7 +72,7 @@ class RefreshInstagramProfile extends Command {
                 $ig_password = $ig_profile->insta_pw;
                 
                 if ($ig_profile->proxy === NULL) {
-                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
+                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
                     foreach ($proxies as $proxy) {
                         $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
                         $instagram->setProxy($proxy->proxy);
