@@ -21,6 +21,7 @@ class LegacyInstagramProfileController extends Controller {
      * @return Response
      */
     public function create(Request $request) {
+        
         $user = $request->input("iuser");
         $ig_username = $request->input("iuser");
         $pw = $request->input("ipw");
@@ -43,6 +44,7 @@ class LegacyInstagramProfileController extends Controller {
 
         $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
         foreach ($proxies as $proxy) {
+            
             try {
                 $instagram->setProxy($proxy->proxy);
                 $instagram->setUser($ig_username, $ig_password);
@@ -58,6 +60,7 @@ class LegacyInstagramProfileController extends Controller {
                 DB::connection('mysql_old')->
                         update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ?, profile_full_name = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $instagram_user->full_name, $ig_username]);
                 $items = $instagram->getSelfUserFeed()->items;
+                
                 foreach ($items as $item) {
                     try {
                         DB::connection('mysql_old')->
@@ -67,6 +70,7 @@ class LegacyInstagramProfileController extends Controller {
                         break;
                     }
                 }
+                
                 return Response::json(array("success" => true, 'response' => "Profile added!", 'type' => 'profile_added'));
                 
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
