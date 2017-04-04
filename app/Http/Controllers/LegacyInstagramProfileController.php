@@ -49,7 +49,7 @@ class LegacyInstagramProfileController extends Controller
                 $instagram->setUser($ig_username, $ig_password);
                 $explorer_response = $instagram->login();
 
-                $create_log_id = DB::connection('mysql_old')->insertGetId("INSERT INTO `insta_affiliate`.`user_insta_profile`
+                $create_log_id = DB::connection('mysql_old')->insert("INSERT INTO `insta_affiliate`.`user_insta_profile`
                         (`user_id`,`email`,`insta_username`,`insta_pw`,`proxy`) VALUES (?,?,?,?,?);", [$user_id, $email, $user, $pw, $proxy->proxy]);
                 DB::connection("mysql_old")->update("UPDATE insta_affiliate.proxy SET assigned = 1 WHERE proxy = ?;", [$proxy->proxy]);
                 $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
