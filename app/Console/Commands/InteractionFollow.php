@@ -167,7 +167,7 @@ class InteractionFollow extends Command {
                             DB::connection('mysql_old')
                                     ->update("UPDATE user_insta_profile SET unfollow = 0 WHERE insta_username = ?;", [$ig_username]);
                         }
-                    } else if ($num_followers >= $ig_profile->follow_cycle) {
+                    } else if ($num_followers >= $ig_profile->follow_cycle && $ig_profile->auto_unfollow == 1) {
                         if ($ig_profile->auto_unfollow == 1) {
                             $on_unfollow_cycle = 1;
                             DB::connection('mysql_old')
