@@ -321,6 +321,8 @@ class InteractionFollow extends Command {
                 } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
                     $this->error($feedback_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
+                } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+                    continue;
                 }
             }
         }
