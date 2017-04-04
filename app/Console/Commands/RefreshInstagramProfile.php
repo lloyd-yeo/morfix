@@ -126,6 +126,12 @@ class RefreshInstagramProfile extends Command {
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                     $this->error($incorrectpw_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
+                } catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
+                    $this->error($accountdisabled_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$accountdisabled_ex->getMessage(), $ig_profile->id]);
+                } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                    $this->error($request_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$request_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }
