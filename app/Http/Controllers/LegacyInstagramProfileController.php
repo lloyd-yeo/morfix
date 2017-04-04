@@ -70,7 +70,6 @@ class LegacyInstagramProfileController extends Controller {
                         break;
                     }
                 }
-                
                 return Response::json(array("success" => true, 'response' => "Profile added!", 'type' => 'profile_added'));
                 
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
