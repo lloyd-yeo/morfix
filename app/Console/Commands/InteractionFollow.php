@@ -149,7 +149,7 @@ class InteractionFollow extends Command {
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-                    
+
                     $num_followers = 0;
                     $num_followed = DB::connection('mysql_old')
                             ->select(DB::raw("SELECT COUNT(log_id) as num_follows 
@@ -180,15 +180,15 @@ class InteractionFollow extends Command {
                             FROM user_insta_profile_follow_log
                             WHERE insta_username = ? AND follow = 1 AND unfollowed = 0 
                             ORDER BY log_id ASC LIMIT 10;", [$ig_profile->insta_username]);
-                        
+
                         foreach ($users_to_unfollow as $user_to_unfollow) {
-                            
-                        try {
-                            $instagram->getUsernameId($user_to_unfollow->follower_username);
-                        } catch (\InstagramAPI\Exception\RequestException $ex) {
-                            $this->error($ex->getMessage());
-                        }
-                            
+                            try {
+                                $instagram->getUsernameId($user_to_unfollow->follower_username);
+                            } catch (\InstagramAPI\Exception\RequestException $ex) {
+                                DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = NULL WHERE log_id = ?;", [$user_to_unfollow->log_id]);
+                                $this->error($ex->getMessage());
+                                continue;
+                            }
                             $unfollow_response = $instagram->unfollow($user_to_unfollow->follower_id);
                             DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = ? WHERE log_id = ?;", [serialize($unfollow_response), $user_to_unfollow->log_id]);
                             break;
