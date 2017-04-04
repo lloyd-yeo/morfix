@@ -123,6 +123,10 @@ class InteractionComment extends Command {
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                     $this->error($network_ex->getMessage());
                     continue;
+                } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+                    $this->error($acctdisabled_ex->getMessage());
+                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
+                    continue;
                 }
             }
         }
