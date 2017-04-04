@@ -62,7 +62,8 @@ class ManualLogin extends Command {
         foreach ($proxies as $proxy) {
             $instagram->setUser($ig_username, $ig_password);
             $instagram->setProxy($proxy->proxy);
-            $instagram->login();
+            $explorer_response = $instagram->login();
+            $this->line(serialize($explorer_response));
         }
     }
 
