@@ -131,21 +131,28 @@ class LegacyInstagramProfileController extends Controller {
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$internal_ex->getMessage(), $db_log_id]);
                 $this->error($internal_ex->getMessage());
-                return Response::json(array("success" => false, 'response' => $internal_ex->getMessage(), 'type' => 'sentryblock'));
+                return Response::json(array("success" => false, 'response' => $internal_ex->getMessage(), 'type' => 'internal'));
                 
             } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$loginrequired_ex->getMessage(), $db_log_id]);
                 $this->error($loginrequired_ex->getMessage());
-                return Response::json(array("success" => false, 'response' => $loginrequired_ex->getMessage(), 'type' => 'sentryblock'));
+                return Response::json(array("success" => false, 'response' => $loginrequired_ex->getMessage(), 'type' => 'loginrequired'));
                 
             } catch (\InstagramAPI\Exception\InvalidUserException $invaliduser_ex) {
                 
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$invaliduser_ex->getMessage(), $db_log_id]);
                 $this->error($invaliduser_ex->getMessage());
-                return Response::json(array("success" => false, 'response' => $invaliduser_ex->getMessage(), 'type' => 'sentryblock'));
+                return Response::json(array("success" => false, 'response' => $invaliduser_ex->getMessage(), 'type' => 'invaliduser'));
+                
+            } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                
+                DB::connection('mysql_old')->
+                        update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$request_ex->getMessage(), $db_log_id]);
+                $this->error($request_ex->getMessage());
+                return Response::json(array("success" => false, 'response' => $request_ex->getMessage(), 'type' => 'request'));
                 
             }
         }
