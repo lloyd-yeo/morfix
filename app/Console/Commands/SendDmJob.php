@@ -147,7 +147,7 @@ class SendDmJob extends Command
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set error_msg = ?, updated_at = NOW() where job_id = ?;', [$endpoint_ex->getMessage(), $dm_job->job_id]);
                     } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedbackrequired_ex) {
                         $this->line($endpoint_ex->getMessage());
-                        $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set feedback_required = 1, error_msg = ?, updated_at = NOW() where job_id = ?;', [$feedbackrequired_ex->getMessage(), $dm_job->job_id]);
+                        $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set temporary_ban = NOW() + INTERVAL 4 HOUR, feedback_required = 1, error_msg = ?, updated_at = NOW() where job_id = ?;', [$feedbackrequired_ex->getMessage(), $dm_job->job_id]);
                     }
                 }
             }
