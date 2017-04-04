@@ -144,6 +144,9 @@ class InteractionLike extends Command {
                                 } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                     $this->error($endpt_ex->getMessage());
                                     continue;
+                                } catch (\Exception $ex) {
+                                    $this->error($ex->getMessage());
+                                    continue;
                                 }
 
                                 $user_items = $user_feed_response->items;
@@ -187,11 +190,14 @@ class InteractionLike extends Command {
                             foreach ($hashtag_feed->items as $item) {
 
                                 $duplicate = 0;
+
                                 $user_to_follow = $item->user;
+
                                 if (is_null($user_to_follow)) {
                                     $this->error("null user");
                                     continue;
                                 }
+
                                 $followed_users = DB::connection('mysql_old')
                                         ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
 
@@ -267,6 +273,9 @@ class InteractionLike extends Command {
                                         $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
                                     } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                         $this->error($endpt_ex->getMessage());
+                                        continue;
+                                    } catch (\Exception $ex) {
+                                        $this->error($ex->getMessage());
                                         continue;
                                     }
 
