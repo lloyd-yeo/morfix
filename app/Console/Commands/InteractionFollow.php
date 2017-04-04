@@ -182,6 +182,13 @@ class InteractionFollow extends Command {
                             ORDER BY log_id ASC LIMIT 10;", [$ig_profile->insta_username]);
                         
                         foreach ($users_to_unfollow as $user_to_unfollow) {
+                            
+                        try {
+                            $instagram->getUsernameId($user_to_unfollow->follower_username);
+                        } catch (\InstagramAPI\Exception\RequestException $ex) {
+                            $this->error($ex->getMessage());
+                        }
+                            
                             $unfollow_response = $instagram->unfollow($user_to_unfollow->follower_id);
                             DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = ? WHERE log_id = ?;", [serialize($unfollow_response), $user_to_unfollow->log_id]);
                             break;
