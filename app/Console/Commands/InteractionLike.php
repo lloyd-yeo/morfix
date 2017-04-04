@@ -119,7 +119,7 @@ class InteractionLike extends Command {
 
                             foreach ($followed_users as $followed_user) {
                                 $duplicate = 1;
-                                $this->info("Duplicate user found.\t" . $followed_user->log_id . " \n\n\n");
+                                $this->info("duplicate log found:\t" . $followed_user->log_id);
                                 break;
                             }
 
@@ -178,7 +178,7 @@ class InteractionLike extends Command {
 
                                 foreach ($followed_users as $followed_user) {
                                     $duplicate = 1;
-                                    $this->info("Duplicate user found: \n\n\n");
+                                    $this->info("duplicate log found:\t" . $followed_user->log_id);
                                     break;
                                 }
 
@@ -225,7 +225,7 @@ class InteractionLike extends Command {
 
                                 foreach ($followed_users as $followed_user) {
                                     $duplicate = 1;
-                                    $this->info("Duplicate user found.\t" . $followed_user->log_id . " \n\n\n");
+                                    $this->info("duplicate log found:\t" . $followed_user->log_id);
                                     break;
                                 }
 
@@ -245,6 +245,7 @@ class InteractionLike extends Command {
                                         }
                                         
                                         $like_response = $instagram->like($item->id);
+                                        
                                         $this->info("liked " . serialize($like_response));
                                         
                                         DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
