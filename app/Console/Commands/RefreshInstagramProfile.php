@@ -92,7 +92,7 @@ class RefreshInstagramProfile extends Command {
                     DB::connection('mysql_old')->
                             update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
                     $items = $instagram->getSelfUserFeed()->items;
-                    $this->info(serialize($items));
+//                    $this->info(serialize($items));
                     foreach ($items as $item) {
                         try {
                             DB::connection('mysql_old')->
