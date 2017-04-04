@@ -71,36 +71,53 @@ class LegacyInstagramProfileController extends Controller {
 
                 return Response::json(array("success" => true, 'response' => "Profile added!", 'type' => 'profile_added'));
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+                
                 $this->error($checkpt_ex->getMessage());
-
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
                 return Response::json(array("success" => false, 'response' => $checkpt_ex->getMessage(), 'type' => 'checkpoint'));
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                
                 $this->error($incorrectpw_ex->getMessage());
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$incorrectpw_ex->getMessage(), $db_log_id]);
                 return Response::json(array("success" => false, 'response' => $incorrectpw_ex->getMessage(), 'type' => 'incorrectpw'));
+                
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                
                 $this->error($endpoint_ex->getMessage());
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$endpoint_ex->getMessage(), $db_log_id]);
                 return Response::json(array("success" => false, 'response' => $endpoint_ex->getMessage(), 'type' => 'endpoint'));
+                
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+                
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$feedback_ex->getMessage(), $db_log_id]);
                 $this->error($feedback_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $feedback_ex->getMessage(), 'type' => 'feedback'));
+                
             } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+                
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$emptyresponse_ex->getMessage(), $db_log_id]);
                 $this->error($emptyresponse_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $emptyresponse_ex->getMessage(), 'type' => 'empty_response'));
+                
+                
             } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+                
                 DB::connection('mysql_old')->
                         update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$acctdisabled_ex->getMessage(), $db_log_id]);
                 $this->error($acctdisabled_ex->getMessage());
                 return Response::json(array("success" => false, 'response' => $acctdisabled_ex->getMessage(), 'type' => 'account_disabled'));
+                
+            } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                
+                DB::connection('mysql_old')->
+                        update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$network_ex->getMessage(), $db_log_id]);
+                $this->error($network_ex->getMessage());
+                return Response::json(array("success" => false, 'response' => $network_ex->getMessage(), 'type' => 'network'));
                 
             }
         }
