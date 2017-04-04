@@ -63,7 +63,7 @@ class InteractionLike extends Command {
                 AND auto_like = 1
                 AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->email]);
             foreach ($instagram_profiles as $ig_profile) {
-                
+
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
@@ -106,14 +106,9 @@ class InteractionLike extends Command {
                     foreach ($target_usernames as $target_username) {
 
                         $this->line("target username: " . $target_username->target_username . "\n\n");
-                        $user_follower_response = NULL;
-                        try {
-                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
-                        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                            $this->error("error retrieving profile: " . $endpoint_ex->getMessage());
-                            continue;
-//                            DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
-                        }
+
+                        $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
+
 
                         $users_to_follow = $user_follower_response->users;
 
@@ -137,8 +132,12 @@ class InteractionLike extends Command {
                             }
 
                             if ($like_quota > 0) {
-
-                                $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                try {
+                                    $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
+                                    $this->error($endpt_ex->getMessage());
+                                    continue;
+                                }
 
                                 $user_items = $user_feed_response->items;
 
