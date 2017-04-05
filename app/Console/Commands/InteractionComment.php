@@ -174,7 +174,7 @@ class InteractionComment extends Command {
                             
                             if ($commented == 0) {
                                 $comment_response = NULL;
-                                $rows_affected = DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, date_commented) VALUES (?,?,?,NOW());", [$ig_profile->insta_username, $item->user->username, $item->user->pk]);
+                                $rows_affected = DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, date_commented) VALUES (?,?,?,NOW());", [$ig_profile->insta_username, $new_follower->follower_username, $new_follower->follower_id]);
                             }
                             
                             break;
