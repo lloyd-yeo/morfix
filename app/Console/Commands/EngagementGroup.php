@@ -50,7 +50,7 @@ class EngagementGroup extends Command {
             DB::connection('mysql_old')
                     ->update("UPDATE engagement_group_job SET engaged = 1, date_worked_on = NOW() WHERE media_id = ?;", [$media_id]);
             $engagement_group_users = DB::connection('mysql_old')
-                    ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment
+                    ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id
                                 FROM user_insta_profile p, user u
                                 WHERE p.user_id = u.user_id
                                 AND p.checkpoint_required = 0
@@ -63,7 +63,8 @@ class EngagementGroup extends Command {
                                 u.user_tier = 1 
                                 OR (u.user_tier > 1 AND p.auto_interaction = 1 AND (p.auto_like = 1 OR p.auto_comment = 1))
                                 )
-                                LIMIT 10000;");
+                                ORDER BY RAND()
+                                LIMIT 450;");
 
             foreach ($engagement_group_users as $ig_profile) {
                 $ig_username = $ig_profile->insta_username;
@@ -122,7 +123,7 @@ class EngagementGroup extends Command {
                     $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                     continue;
-                }
+                } 
             }
         }
     }
