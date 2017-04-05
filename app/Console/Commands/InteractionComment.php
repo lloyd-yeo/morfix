@@ -105,7 +105,7 @@ class InteractionComment extends Command {
                         foreach ($comments as $comment) {
                             $comment_response = NULL;
                             try {
-                                $comment_response = $instagram->comment($media_id, $comment);
+                                $comment_response = $instagram->comment($media_id, $comment->comment);
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                                 DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
