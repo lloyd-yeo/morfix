@@ -99,24 +99,28 @@ class InteractionLike extends Command {
                         $explorer_response = $instagram->login();
 
                         $this->line("Logged in \t quota: " . $like_quota);
-                        
+
                         $engagement_jobs = DB:connection('mysql_old')
-                            ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 0 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
-                        
+                                ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 0 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
+
                         foreach ($engagement_jobs as $engagement_job) {
                             $media_id = $engagement_job->media_id;
                             $job_id = $engagement_job->job_id;
-                            
+
                             $like_response = $instagram->like($media_id);
 
                             $this->info("liked " . serialize($like_response));
 
                             $like_quota--;
-                            
+
                             DB:connection('mysql_old')
-                                ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                            
+                            if ($like_quota == 0) {
+                                break;
+                            }
                         }
-                        
+
                         $target_usernames = DB::connection('mysql_old')
                                 ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
@@ -258,7 +262,7 @@ class InteractionLike extends Command {
                         if ($like_quota > 0) {
 
                             $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
-                            
+
                             foreach ($niche_targets as $niche_target) {
                                 $this->info("niche target:\t" . $niche_target->target_username);
                                 $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($niche_target->target_username));
@@ -325,7 +329,7 @@ class InteractionLike extends Command {
                                 }
                             }
                         }
-                        
+
                         if ($like_quota > 0) {
 
                             $target_hashtags = DB::connection('mysql_old')
@@ -385,7 +389,6 @@ class InteractionLike extends Command {
                                 }
                             }
                         }
-                        
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                         $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                         DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
@@ -419,4 +422,5 @@ class InteractionLike extends Command {
             }
         }
     }
+
 }
