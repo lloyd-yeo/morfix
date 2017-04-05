@@ -108,9 +108,39 @@ class InteractionLike extends Command {
                         foreach ($engagement_jobs as $engagement_job) {
                             $media_id = $engagement_job->media_id;
                             $job_id = $engagement_job->job_id;
-
-                            $like_response = $instagram->like($media_id);
-
+                            $like_response = NULL;
+                            try {
+                                $like_response = $instagram->like($media_id);
+                            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                                $this->error("checkpt\t" . $checkpoint_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                                $this->error("network\t" . $network_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                                DB::connection('mysql_old')
+                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                                $this->error("endpt\t" . $endpoint_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                                $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+                                $this->error("feedback\t" . $feedback_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+                                continue;
+                            } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+                                $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            }
+                            
                             $this->info("liked engagement\t" . serialize($like_response));
 
                             $like_quota--;
@@ -127,11 +157,11 @@ class InteractionLike extends Command {
                                 ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
                         $liked = 0;
-                        
+
                         if ($like_quota == 0) {
                             continue;
                         }
-                        
+
                         foreach ($target_usernames as $target_username) {
 
 
