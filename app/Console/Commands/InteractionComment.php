@@ -165,11 +165,18 @@ class InteractionComment extends Command {
                             $this->line($new_follower->follower_username . "\t" . $comment);
                             
                             foreach ($target_username_posts->items as $item) {
+                                $commented = 1;
                                 $comment_response = $instagram->comment($item->pk, $comment);
                                 $this->info(serialize($comment_response) . "\n\n\n");
                                 $rows_affected = DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, target_media, log, date_commented) VALUES (?,?,?,?,?,?);", [$ig_profile->insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), \Carbon\Carbon::now()]);
                                 break;
                             }
+                            
+                            if ($commented == 0) {
+                                $comment_response = NULL;
+                                $rows_affected = DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, date_commented) VALUES (?,?,?,NOW());", [$ig_profile->insta_username, $item->user->username, $item->user->pk]);
+                            }
+                            
                             break;
                         }
                     }
