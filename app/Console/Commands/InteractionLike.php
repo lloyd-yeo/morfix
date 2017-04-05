@@ -127,6 +127,10 @@ class InteractionLike extends Command {
                         $liked = 0;
 
                         foreach ($target_usernames as $target_username) {
+                            
+                            if ($like_quota == 0) {
+                                break;
+                            }
 
                             $this->line("target username: " . $target_username->target_username . "\n\n");
 
