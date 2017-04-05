@@ -109,7 +109,7 @@ class InteractionLike extends Command {
 
                             $like_response = $instagram->like($media_id);
 
-                            $this->info("liked " . serialize($like_response));
+                            $this->info("liked engagement\t" . serialize($like_response));
 
                             $like_quota--;
 
