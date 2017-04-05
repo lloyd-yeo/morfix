@@ -48,10 +48,10 @@ class EngagementGroup extends Command {
         foreach ($outstanding_engagements as $outstanding_engagement) {
             $media_id = $outstanding_engagement->media_id;
             $comment_count = 50;
-            
+
             DB::connection('mysql_old')
                     ->update("UPDATE engagement_group_job SET engaged = 1, date_worked_on = NOW() WHERE media_id = ?;", [$media_id]);
-            
+
             $engagement_group_users = DB::connection('mysql_old')
                     ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id
                                 FROM user_insta_profile p, user u
@@ -66,15 +66,19 @@ class EngagementGroup extends Command {
                                 u.user_tier = 1 
                                 OR (u.user_tier > 1 AND p.auto_interaction = 1 AND (p.auto_like = 1 OR p.auto_comment = 1))
                                 );");
-            
+
             foreach ($engagement_group_users as $ig_profile) {
                 $ig_username = $ig_profile->insta_username;
-                DB::connection('mysql_old')
-                            ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username,0]);
-                if ($ig_profile->auto_comment == 1 && $comment_count > 0) {
+                try {
                     DB::connection('mysql_old')
-                            ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username,1]);
-                    $comment_count = $comment_count - 1;
+                            ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 0]);
+                    if ($ig_profile->auto_comment == 1 && $comment_count > 0) {
+                        DB::connection('mysql_old')
+                                ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 1]);
+                        $comment_count = $comment_count - 1;
+                    }
+                } catch (\PDOException $pdo_ex) {
+                    continue;
                 }
             }
         }
