@@ -47,6 +47,8 @@ class EngagementGroup extends Command {
                 ->select("SELECT media_id FROM insta_affiliate.engagement_group_job WHERE engaged = 0 ORDER BY date_logged DESC LIMIT 1;");
         foreach ($outstanding_engagements as $outstanding_engagement) {
             $media_id = $outstanding_engagement->media_id;
+            DB::connection('mysql_old')
+                    ->update("UPDATE engagement_group_job SET engaged = 1, date_worked_on = NOW() WHERE media_id = ?;", [$media_id]);
             $engagement_group_users = DB::connection('mysql_old')
                     ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment
                                 FROM user_insta_profile p, user u
