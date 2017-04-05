@@ -152,7 +152,7 @@ class InteractionComment extends Command {
                     }  
                     
                     if ($commented == 1) {
-                        break;
+                        continue;
                     }
 
                     $new_followers = DB::connection("mysql_old")->select("SELECT follower_username, follower_id FROM insta_affiliate.user_insta_profile_follow_log 
