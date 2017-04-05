@@ -100,7 +100,7 @@ class InteractionLike extends Command {
 
                         $this->line("Logged in \t quota: " . $like_quota);
 
-                        $engagement_jobs = DB:connection('mysql_old')
+                        $engagement_jobs = DB::connection('mysql_old')
                                 ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 0 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
 
                         foreach ($engagement_jobs as $engagement_job) {
