@@ -103,14 +103,13 @@ class InteractionComment extends Command {
                         $job_id = $engagement_job->job_id;
                         $this->line($job_id . "\t" . $media_id);
                         foreach ($comments as $comment) {
-                            
+
                             $comment_response = NULL;
-                            
+
                             try {
-                                
+
                                 $comment_response = $instagram->comment($media_id, $comment->comment);
                                 $commented = 1;
-                                
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                                 DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
@@ -148,8 +147,8 @@ class InteractionComment extends Command {
                             break;
                         }
                         break;
-                    }  
-                    
+                    }
+
                     if ($commented == 1) {
                         continue;
                     }
@@ -163,7 +162,7 @@ class InteractionComment extends Command {
                             $comment = $comment->comment;
                             $target_username_posts = $instagram->getUserFeed($new_follower->follower_id);
                             $this->line($new_follower->follower_username . "\t" . $comment);
-                            
+
                             foreach ($target_username_posts->items as $item) {
                                 $commented = 1;
                                 $comment_response = $instagram->comment($item->pk, $comment);
@@ -171,12 +170,12 @@ class InteractionComment extends Command {
                                 $rows_affected = DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, target_media, log, date_commented) VALUES (?,?,?,?,?,?);", [$ig_profile->insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), \Carbon\Carbon::now()]);
                                 break;
                             }
-                            
+
                             if ($commented == 0) {
                                 $comment_response = NULL;
                                 $rows_affected = DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, date_commented) VALUES (?,?,?,NOW());", [$ig_profile->insta_username, $new_follower->follower_username, $new_follower->follower_id]);
                             }
-                            
+
                             break;
                         }
                     }
@@ -194,6 +193,9 @@ class InteractionComment extends Command {
                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
                     $this->error($acctdisabled_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
+                } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                    $this->error($request_ex->getMessage());
+                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$request_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }
