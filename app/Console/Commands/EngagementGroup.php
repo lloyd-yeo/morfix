@@ -71,7 +71,7 @@ class EngagementGroup extends Command {
                 $ig_username = $ig_profile->insta_username;
                 DB::connection('mysql_old')
                             ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username,0]);
-                if ($ig_profile->auto_comment == 1 && $$comment_count > 0) {
+                if ($ig_profile->auto_comment == 1 && $comment_count > 0) {
                     DB::connection('mysql_old')
                             ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username,1]);
                     $comment_count = $comment_count - 1;
