@@ -105,7 +105,7 @@ class InteractionComment extends Command {
                         foreach ($comments as $comment) {
                             $comment_response = NULL;
                             try {
-                                $comment_response = $instagram->comment($media_id);
+                                $comment_response = $instagram->comment($media_id, $comment);
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                                 DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
@@ -142,6 +142,7 @@ class InteractionComment extends Command {
                                     ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                             break;
                         }
+                        break;
                     }
 
                     $new_followers = DB::connection("mysql_old")->select("SELECT follower_username, follower_id FROM insta_affiliate.user_insta_profile_follow_log 
