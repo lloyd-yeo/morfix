@@ -123,6 +123,10 @@ class EngagementGroup extends Command {
                     $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                     continue;
+                } catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
+                    $this->error("forcedpwreset\t" . $forcedpwreset_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$forcedpwreset_ex->getMessage(), $ig_profile->id]);
+                    continue;
                 } 
             }
         }
