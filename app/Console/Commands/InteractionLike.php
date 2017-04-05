@@ -113,7 +113,7 @@ class InteractionLike extends Command {
 
                             $like_quota--;
 
-                            DB:connection('mysql_old')
+                            DB::connection('mysql_old')
                                     ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                             
                             if ($like_quota == 0) {
