@@ -99,10 +99,9 @@ class InteractionComment extends Command {
                             ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 1 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
                     $commented = 0;
                     foreach ($engagement_jobs as $engagement_job) {
-                        $this->line($job_id . "\t" . $media_id);
                         $media_id = $engagement_job->media_id;
                         $job_id = $engagement_job->job_id;
-                        
+                        $this->line($job_id . "\t" . $media_id);
                         foreach ($comments as $comment) {
                             
                             $comment_response = NULL;
@@ -163,7 +162,7 @@ class InteractionComment extends Command {
                         foreach ($comments as $comment) {
                             $comment = $comment->comment;
                             $target_username_posts = $instagram->getUserFeed($new_follower->follower_id);
-
+                            $this->line($new_follower->follower_id . "\t" . $comment);
                             foreach ($target_username_posts->items as $item) {
                                 $comment_response = $instagram->comment($item->pk, $comment);
                                 $this->info(serialize($comment_response) . "\n\n\n");
