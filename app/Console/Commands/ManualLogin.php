@@ -66,6 +66,7 @@ class ManualLogin extends Command {
             $instagram->setProxy($proxy->proxy);
             $explorer_response = $instagram->login();
             $this->line(serialize($explorer_response));
+            break;
         }
     }
 
