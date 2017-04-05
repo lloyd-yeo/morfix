@@ -95,6 +95,7 @@ class EngagementGroup extends Command {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
                     $like_response = $instagram->like($media_id);
+                    $this->line($ig_username . "\t" . serialize($like_response));
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
