@@ -163,6 +163,7 @@ class InteractionComment extends Command {
                             $comment = $comment->comment;
                             $target_username_posts = $instagram->getUserFeed($new_follower->follower_id);
                             $this->line($new_follower->follower_id . "\t" . $comment);
+                            
                             foreach ($target_username_posts->items as $item) {
                                 $comment_response = $instagram->comment($item->pk, $comment);
                                 $this->info(serialize($comment_response) . "\n\n\n");
@@ -183,11 +184,9 @@ class InteractionComment extends Command {
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                     $this->error($network_ex->getMessage());
-                    continue;
                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
                     $this->error($acctdisabled_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
-                    continue;
                 }
             }
         }
