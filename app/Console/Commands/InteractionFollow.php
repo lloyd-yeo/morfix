@@ -160,7 +160,7 @@ class InteractionFollow extends Command {
                         $this->line($ig_username . " follows:\t" . $num_followed_row->num_follows);
                     }
 
-                    $on_unfollow_cycle = $ig_profile->follow_cycle;
+                    $on_unfollow_cycle = $ig_profile->unfollow;
 
                     if ($num_followers == 0) {
                         if ($ig_profile->auto_follow == 1 && $ig_profile->auto_unfollow == 1) {
