@@ -47,7 +47,7 @@ class InteractionComment extends Command {
         $limit = $this->argument('limit');
 
 //        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
-        
+
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
@@ -55,7 +55,7 @@ class InteractionComment extends Command {
                     . "WHERE u.email IN (SELECT email FROM user_insta_profile) AND u.user_id IN (SELECT user_id FROM user_insta_profile)  "
                     . "ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
-        
+
         foreach ($users as $user) {
             $this->line($user->user_id);
 
@@ -92,18 +92,67 @@ class InteractionComment extends Command {
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-                    $this->line(serialize($instagram->getCurrentUser()));
+
+                    $comments = DB::connection("mysql_old")->select("SELECT comment FROM user_insta_profile_comment WHERE insta_username = ? ORDER BY RAND() LIMIT 1;", [$ig_profile->insta_username]);
+
+                    $engagement_jobs = DB::connection('mysql_old')
+                            ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 1 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
+
+                    foreach ($engagement_jobs as $engagement_job) {
+                        $media_id = $engagement_job->media_id;
+                        $job_id = $engagement_job->job_id;
+                        
+                        foreach ($comments as $comment) {
+                            $comment_response = NULL;
+                            try {
+                                $comment_response = $instagram->comment($media_id);
+                            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                                $this->error("checkpt\t" . $checkpoint_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                                $this->error("network\t" . $network_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                                DB::connection('mysql_old')
+                                        ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                                $this->error("endpt\t" . $endpoint_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                                $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+                                $this->error("feedback\t" . $feedback_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+                                continue;
+                            } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+                                $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
+                                DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
+                                continue;
+                            }
+
+                            $this->info("commented engagement\t" . serialize($comment_response));
+
+                            DB::connection('mysql_old')
+                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                            break;
+                        }
+                    }
 
                     $new_followers = DB::connection("mysql_old")->select("SELECT follower_username, follower_id FROM insta_affiliate.user_insta_profile_follow_log 
                         WHERE follow = 1 AND unfollowed = 0 AND insta_username = ? 
                         AND follower_username NOT IN (SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = ?) ORDER BY date_inserted DESC LIMIT 1;", [$ig_profile->insta_username, $ig_profile->insta_username]);
 
                     foreach ($new_followers as $new_follower) {
-                        $comments = DB::connection("mysql_old")->select("SELECT comment FROM user_insta_profile_comment WHERE insta_username = ? ORDER BY RAND() LIMIT 1;", [$ig_profile->insta_username]);
                         foreach ($comments as $comment) {
                             $comment = $comment->comment;
                             $target_username_posts = $instagram->getUserFeed($new_follower->follower_id);
-                            
+
                             foreach ($target_username_posts->items as $item) {
                                 $comment_response = $instagram->comment($item->pk, $comment);
                                 $this->info(serialize($comment_response) . "\n\n\n");
