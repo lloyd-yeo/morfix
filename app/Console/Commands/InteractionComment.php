@@ -162,7 +162,7 @@ class InteractionComment extends Command {
                         foreach ($comments as $comment) {
                             $comment = $comment->comment;
                             $target_username_posts = $instagram->getUserFeed($new_follower->follower_id);
-                            $this->line($new_follower->follower_id . "\t" . $comment);
+                            $this->line($new_follower->follower_username . "\t" . $comment);
                             
                             foreach ($target_username_posts->items as $item) {
                                 $comment_response = $instagram->comment($item->pk, $comment);
