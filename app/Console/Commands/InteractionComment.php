@@ -99,14 +99,19 @@ class InteractionComment extends Command {
                             ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 1 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
                     $commented = 0;
                     foreach ($engagement_jobs as $engagement_job) {
+                        $this->line($job_id . "\t" . $media_id);
                         $media_id = $engagement_job->media_id;
                         $job_id = $engagement_job->job_id;
                         
                         foreach ($comments as $comment) {
+                            
                             $comment_response = NULL;
+                            
                             try {
+                                
                                 $comment_response = $instagram->comment($media_id, $comment->comment);
                                 $commented = 1;
+                                
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                                 DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
