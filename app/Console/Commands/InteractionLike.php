@@ -107,6 +107,14 @@ class InteractionLike extends Command {
                             $media_id = $engagement_job->media_id;
                             $job_id = $engagement_job->job_id;
                             
+                            $like_response = $instagram->like($media_id);
+
+                            $this->info("liked " . serialize($like_response));
+
+                            $like_quota--;
+                            
+                            DB:connection('mysql_old')
+                                ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                         }
                         
                         $target_usernames = DB::connection('mysql_old')
