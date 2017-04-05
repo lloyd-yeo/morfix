@@ -107,7 +107,7 @@ class EngagementGroup extends Command {
                     continue;
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error("endpt\t" . $endpoint_ex->getMessage());
-                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                    DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                     continue;
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                     $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
