@@ -115,7 +115,7 @@ class InteractionLike extends Command {
 
                             DB::connection('mysql_old')
                                     ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
-                            
+
                             if ($like_quota == 0) {
                                 break;
                             }
@@ -125,12 +125,14 @@ class InteractionLike extends Command {
                                 ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
                         $liked = 0;
-
+                        
+                        if ($like_quota == 0) {
+                            continue;
+                        }
+                        
                         foreach ($target_usernames as $target_username) {
-                            
-                            if ($like_quota == 0) {
-                                break;
-                            }
+
+
 
                             $this->line("target username: " . $target_username->target_username . "\n\n");
 
