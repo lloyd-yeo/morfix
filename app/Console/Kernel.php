@@ -84,10 +84,7 @@ class Kernel extends ConsoleKernel {
         
         $schedule->command('interaction:like 0 3000')->everyFiveMinutes();
         
-//        for ($i = 0; $i < 80; $i++) {
-//            $counter = $i * 10;
-//            $schedule->command('ig:refresh ' . $i . ' 1')->everyThirtyMinutes();
-//        }
+        $schedule->command('ig:refresh 0 3000')->everyThirtyMinutes();
         
         //$schedule->command('analysis:follower')->daily();
         // $schedule->command('inspire')
