@@ -238,7 +238,7 @@ class InteractionFollow extends Command {
                             if ($followed == 0) {
 
                                 $response = $instagram->follow($user_to_follow->pk);
-                                $this->info("following " . $response->friendship_status->following . "\n\n");
+                                $this->info("targetedusername following " . $response->friendship_status->following . "\n\n");
                                 if ($response->friendship_status->is_private) {
                                     continue;
                                 }
@@ -286,7 +286,7 @@ class InteractionFollow extends Command {
 
                                 if ($followed == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
-                                    $this->info("following " . $response->friendship_status->following . "\n\n");
+                                    $this->info("hashtag following " . $response->friendship_status->following . "\n\n");
                                     if ($response->status == "ok") {
                                         if ($response->friendship_status->is_private) {
                                             $this->info("user is pvt" . "\n\n");
@@ -336,7 +336,7 @@ class InteractionFollow extends Command {
 
                                 if ($followed == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
-                                    $this->info("following " . $response->friendship_status->following . "\n\n");
+                                    $this->info("nichetarget following " . $response->friendship_status->following . "\n\n");
                                     if ($response->friendship_status->is_private) {
                                         continue;
                                     }
