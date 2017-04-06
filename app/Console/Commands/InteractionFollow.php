@@ -174,7 +174,13 @@ class InteractionFollow extends Command {
                                     ->update("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;", [$ig_username]);
                         }
                     }
-
+                    
+                    if ($ig_profile->auto_follow == 0 && $ig_profile->auto_unfollow == 1) {
+                        $on_unfollow_cycle = 1;
+                        DB::connection('mysql_old')
+                                    ->update("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;", [$ig_username]);
+                    }
+                    
                     if ($on_unfollow_cycle == 1) {
                         $users_to_unfollow = DB::connection('mysql_old')->select("SELECT log_id, insta_username, follower_username, follower_id 
                             FROM user_insta_profile_follow_log
@@ -203,10 +209,6 @@ class InteractionFollow extends Command {
                             
                             break;
                         }
-                        continue;
-                    }
-                    
-                    if ($ig_profile->auto_follow == 0) {
                         continue;
                     }
                     
