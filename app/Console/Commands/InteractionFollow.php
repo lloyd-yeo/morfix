@@ -236,7 +236,11 @@ class InteractionFollow extends Command {
                             }
 
                             if ($followed == 0) {
-
+                                
+                                if ($user_to_follow->has_anonymous_profile_picture == 1) {
+                                    continue;
+                                }
+                                
                                 $response = $instagram->follow($user_to_follow->pk);
                                 $this->info("targetedusername following " . $response->friendship_status->following . "\n\n");
                                 if ($response->friendship_status->is_private) {
