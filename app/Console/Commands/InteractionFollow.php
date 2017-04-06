@@ -176,6 +176,7 @@ class InteractionFollow extends Command {
                     }
                     
                     if ($ig_profile->auto_follow == 0 && $ig_profile->auto_unfollow == 1) {
+                        $this->line("only switched on auto unfollow");
                         $on_unfollow_cycle = 1;
                         DB::connection('mysql_old')
                                     ->update("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;", [$ig_username]);
