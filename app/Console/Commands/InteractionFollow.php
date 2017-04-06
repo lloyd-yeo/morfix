@@ -205,7 +205,11 @@ class InteractionFollow extends Command {
                         }
                         continue;
                     }
-
+                    
+                    if ($ig_profile->auto_follow == 0) {
+                        continue;
+                    }
+                    
                     $target_usernames = DB::connection('mysql_old')
                             ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
