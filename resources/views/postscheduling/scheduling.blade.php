@@ -96,7 +96,7 @@
                 <div class="block-content">
                     <div class="row items-push js-gallery-advanced">
                         @foreach ($default_imgs as $default_img)
-                        <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn">
+                        <div class="col-sm-4 col-md-3 col-lg-3 animated fadeIn">
                             <div class="img-container fx-img-rotate-r">
                                 <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
                                 <div class="img-options">
