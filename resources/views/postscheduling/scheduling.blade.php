@@ -87,7 +87,7 @@
         </div>
 
         <div class="col-xs-12 col-lg-12">
-
+            <h2 class="content-heading">Morfix Stock Images</h2>
             <!-- Block Tabs Justified Alternative Style -->
             <div class="block">
                 <ul class="nav nav-tabs nav-tabs-alt nav-justified" data-toggle="tabs">
