@@ -57,7 +57,7 @@ class PostSchedulingController extends Controller
             'user_ig_profiles' => $instagram_profiles,
             'default_imgs' => $default_images,
             'default_img_category' => $default_categories,
-            'img' => $imgs,
+            'imgs' => $imgs,
         ]);
     }
 }
