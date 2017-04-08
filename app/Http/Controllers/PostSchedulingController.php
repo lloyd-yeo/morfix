@@ -45,7 +45,7 @@ class PostSchedulingController extends Controller
         
         return view('postscheduling.scheduling', [
             'user_ig_profiles' => $instagram_profiles,
-            'default_img' => $default_images,
+            'default_imgs' => $default_images,
         ]);
     }
 }
