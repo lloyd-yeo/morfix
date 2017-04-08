@@ -37,7 +37,6 @@
         </div>
 
         @include('dashboard.leaderboard')
-
         <script type="text/javascript">
             var $leaderboardHeight = $("#leaderboard-container").height();
             var $affiliateChartHeaderHeight = $("#affiliate-chart-header").height();

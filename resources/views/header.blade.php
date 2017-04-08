@@ -80,12 +80,12 @@
                 </ul>
             </div>
         </li>
-        <li>
+        <!--<li>-->
             <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-            <button class="btn btn-default" data-toggle="layout" data-action="side_overlay_toggle" type="button">
+<!--            <button class="btn btn-default" data-toggle="layout" data-action="side_overlay_toggle" type="button">
                 <i class="fa fa-tasks"></i>
-            </button>
-        </li>
+            </button>-->
+        <!--</li>-->
     </ul>
     <!-- END Header Navigation Right -->
 
