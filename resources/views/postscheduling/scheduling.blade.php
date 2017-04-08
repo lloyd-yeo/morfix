@@ -92,6 +92,11 @@
             <div class="block">
                 <ul class="nav nav-tabs nav-tabs-alt nav-justified" data-toggle="tabs">
                     @foreach ($default_img_category as $category)
+                    @if ($category->id == 1)
+                    <li class="active">
+                        <a href="#cat-{{ $category->category }}"><i class="fa fa-tag"></i> {{ $category->category }}</a>
+                    </li>
+                    @else
                     <li>
                         <a href="#cat-{{ $category->category }}"><i class="fa fa-tag"></i> {{ $category->category }}</a>
                     </li>
@@ -109,7 +114,11 @@
                 
                 <div class="block-content tab-content">
                     @foreach ($default_img_category as $category)
+                    @if ($category->id == 1)
+                    <div class="tab-pane active" id="cat-{{ $category->category }}">
+                    @else
                     <div class="tab-pane" id="cat-{{ $category->category }}">
+                    @endif
                         <h4 class="font-w300 push-15">{{ $category->category }}</h4>
                         @foreach ($imgs[$category->id] as $default_img)
                         <div class="col-sm-4 col-md-3 col-lg-3 animated fadeIn">
