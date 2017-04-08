@@ -26,7 +26,7 @@ class HomeController extends Controller {
      */
     public function index() {
         $leaderboard_alltime = DB::connection("mysql_old")->table('user')
-                ->select(DB::raw('email, name, (SUM(pending_commission)+SUM(total_commission)) AS total_comms'))
+                ->select(DB::raw('email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms'))
                 ->groupBy('email')
                 ->orderBy('total_comms', 'desc')
                 ->take(10)
