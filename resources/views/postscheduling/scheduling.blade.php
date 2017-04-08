@@ -121,7 +121,7 @@
                     <div class="tab-pane" id="cat-{{ $category->category }}">
                     @endif
                         @foreach ($imgs[$category->id] as $default_img)
-                        <div class="col-sm-4 col-md-3 col-lg-3 animated fadeIn push-15">
+                        <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
                             <div class="img-container fx-img-rotate-r">
                                 <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
                                 <div class="img-options">
