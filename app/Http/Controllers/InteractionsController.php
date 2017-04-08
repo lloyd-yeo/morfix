@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
 use App\User;
+use App\IgProfile;
 use App\InstagramProfile;
 use App\Niche;
 use App\InstagramProfileComment;
