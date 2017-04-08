@@ -64,7 +64,7 @@
                                         <button type="button"><i class="si si-close"></i></button>
                                     </li>
                                 </ul>
-                                <h3 class="block-title text-center text-white"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</h3>
+                                <h3 class="block-title text-white"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</h3>
                             </div>
                             <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo2.jpg');">
                                 <div>
