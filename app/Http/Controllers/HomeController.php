@@ -42,10 +42,12 @@ class HomeController extends Controller {
             $ranking++;
         }
 
-        $instagram_profiles = DB::table('morfix_instagram_profiles')
-                ->where('email', Auth::user()->email)
-                ->take(10)
-                ->get();
+        $instagram_profiles = IgProfile::where('insta_username', Auth::user()->email);
+                
+//                DB::table('morfix_instagram_profiles')
+//                ->where('email', Auth::user()->email)
+//                ->take(10)
+//                ->get();
 
         $new_profile_follower_analysis = array();
         $new_profile_follower_analysis_label = array();
