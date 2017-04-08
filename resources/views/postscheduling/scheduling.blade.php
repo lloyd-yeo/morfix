@@ -156,39 +156,6 @@
                 </div>
             </div>
             <!-- END Block Tabs Justified Default Style -->
-
-
-            <!-- Sizes -->
-            <div class="block">
-                <div class="block-header bg-primary">
-                    <h3 class="block-title text-white text-uppercase"><i class="si si-picture"></i> MORFIX STOCK PHOTOS</h3>
-                </div>
-                <div class="block-content">
-                    <div class="row items-push js-gallery-advanced">
-                        @foreach ($default_imgs as $default_img)
-                        <div class="col-sm-4 col-md-3 col-lg-3 animated fadeIn">
-                            <div class="img-container fx-img-rotate-r">
-                                <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
-                                <div class="img-options">
-                                    <div class="img-options-content">
-                                        <h3 class="font-w400 text-white push-5">Upload this photo!</h3>
-                                        <h4 class="h6 font-w400 text-white-op push-15">Click below</h4>
-                                        <a class="btn btn-sm btn-default img-lightbox" href="{{ asset("storage/" . $default_img->image_path) }}">
-                                            <i class="fa fa-search-plus"></i> View
-                                        </a>
-                                        <div class="btn-group btn-group-sm">
-                                            <a class="btn btn-default upload-default-photo" data-image-id="{{ $default_img->image_id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-
-                    </div>
-                </div>
-            </div>
-            <!-- END Sizes -->
         </div>
 
     </div>
