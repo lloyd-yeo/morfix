@@ -46,17 +46,23 @@
         </script>
     </div>
     <div class="row">
-    @foreach ($user_ig_profiles as $ig_profile)
-    
+        @foreach ($user_ig_profiles as $ig_profile)
+
         <div class="col-lg-4 insta-profile" data-id="{{ $ig_profile->id }}">
             <!-- Content Grid -->
             <div class="content-grid">
                 <div class="row">
                     <div class="col-xs-12">
-                        <!-- Author of the Month -->
+                        <!-- Instagram Profile -->
                         <a class="block block-link-hover2" target="_blank" href="https://www.instagram.com/{{ $ig_profile->insta_username }}/">
                             <div class="block-header bg-primary">
+                                <ul class="block-options">
+                                    <li>
+                                        <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                    </li>
+                                </ul>
                                 <h3 class="block-title text-center text-white"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</h3>
+
                             </div>
                             <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo2.jpg');">
                                 <div>
@@ -78,7 +84,7 @@
                                 </div>
                             </div>
                         </a>
-                        <!-- END Author of the Month -->
+                        <!-- END Instagram Profile -->
 
                         <a class="block block-link-hover3" href="javascript:void(0)">
                             <table class="block-table text-center">
@@ -114,15 +120,15 @@
                 </div>
 
                 <div class="block-content block-content-full bg-gray-lighter text-center chart-container">
-                     <!--Chart.js Charts (initialized in js/pages/base_pages_dashboard.js), for more examples you can check out http://www.chartjs.org/docs/--> 
+                    <!--Chart.js Charts (initialized in js/pages/base_pages_dashboard.js), for more examples you can check out http://www.chartjs.org/docs/--> 
                     <div id="follower-count-chart-{{ $ig_profile->id }}" style="height: 374px;" >
                         <canvas class="follower-count-chart-lines" data-csv="{{ $user_ig_analysis[$ig_profile->insta_username] }}" data-label="{{ $user_ig_analysis_label[$ig_profile->insta_username] }}"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-    
-    @endforeach
+
+        @endforeach
     </div>
 
     <div class="row">
