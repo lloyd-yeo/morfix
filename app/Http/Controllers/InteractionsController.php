@@ -55,7 +55,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleLike($id) {
-        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile = IgProfile::where('id', $id)->first();
         $instagram_profile->auto_like = ($instagram_profile->auto_like + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -71,7 +71,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleComment($id) {
-        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile = IgProfile::where('id', $id)->first();
         $instagram_profile->auto_comment = ($instagram_profile->auto_comment + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -87,7 +87,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleFollow($id) {
-        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile = IgProfile::where('id', $id)->first();
         $instagram_profile->auto_follow = ($instagram_profile->auto_follow + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -103,7 +103,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleUnfollow($id) {
-        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile = IgProfile::where('id', $id)->first();
         $instagram_profile->auto_unfollow = ($instagram_profile->auto_unfollow + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -119,7 +119,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleNiche(Request $request, $id) {
-        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile = IgProfile::where('id', $id)->first();
         $niche = $request->input('niche');
         $instagram_profile->niche = $niche;
         $response = "There has been an error with the server. Please contact live support.";
@@ -136,7 +136,7 @@ class InteractionsController extends Controller {
     }
 
     public function saveAdvancedFollowSettings(Request $request, $id) {
-        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile = IgProfile::where('id', $id)->first();
 
         $unfollow_users_not_following_flag = 0;
         if ($request->has('unfollow-toggle')) {
@@ -182,7 +182,7 @@ class InteractionsController extends Controller {
     }
 
     public function saveUsername(Request $request, $id) {
-        $instagram_profile_target_username = \App\InstagramProfileTargetUsername::where("target_username", $request->input('target_username'))->where("ig_profile_id", $id)->first();
+        $instagram_profile_target_username = \App\InstagramProfileTargetUsername::where("target_username", $request->input('target_username'))->where("insta_id", $id)->first();
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_profile_target_username)) {
             $new_instagram_profile_target_username = new InstagramProfileTargetUsername;
@@ -202,7 +202,7 @@ class InteractionsController extends Controller {
     }
 
     public function saveHashtag(Request $request, $id) {
-        $instagram_profile_target_hashtag = \App\InstagramProfileTargetHashtag::where("target_hashtag", $request->input('target_hashtag'))->where("ig_profile_id", $id)->first();
+        $instagram_profile_target_hashtag = \App\InstagramProfileTargetHashtag::where("target_hashtag", $request->input('target_hashtag'))->where("insta_id", $id)->first();
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_profile_target_hashtag)) {
             $instagram_profile_target_hashtag = new InstagramProfileTargetHashtag;
