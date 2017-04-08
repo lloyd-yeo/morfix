@@ -75,14 +75,14 @@ class Kernel extends ConsoleKernel {
 //            $schedule->command('interaction:comment ' . $counter . ' 20')->everyFiveMinutes();
 //        }
         
-        $schedule->command('interaction:comment 0 100')->everyFiveMinutes();
-        $schedule->command('interaction:comment 100 100')->everyFiveMinutes();
-        $schedule->command('interaction:comment 200 100')->everyFiveMinutes();
-        $schedule->command('interaction:comment 300 100')->everyFiveMinutes();
-        $schedule->command('interaction:comment 400 100')->everyFiveMinutes();
-        $schedule->command('interaction:comment 500 100')->everyFiveMinutes();
-        $schedule->command('interaction:comment 600 100')->everyFiveMinutes();
-        $schedule->command('interaction:comment 700 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 0 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 100 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 200 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 300 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 400 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 500 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 600 100')->everyFiveMinutes();
+//        $schedule->command('interaction:comment 700 100')->everyFiveMinutes();
         
 //        $schedule->command('interaction:like 0 3000')->everyFiveMinutes();
         
