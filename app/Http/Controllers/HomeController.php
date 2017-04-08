@@ -28,7 +28,7 @@ class HomeController extends Controller {
         $leaderboard_alltime = DB::connection("mysql_old")
                 ->select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
                         GROUP BY email, name
-                        ORDER BY total_comms DESC;");
+                        ORDER BY total_comms DESC LIMIT 10;");
 
         $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take(10)->get();
 
