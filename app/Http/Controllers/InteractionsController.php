@@ -25,11 +25,7 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $instagram_profiles = DB::table('morfix_instagram_profiles')
-                ->where('email', Auth::user()->email)
-                ->take(10)
-                ->get();
-
+        $instagram_profiles = IgProfile::where('email', Auth::user()->email)->take(10)->get();
         return view('interactions', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
@@ -42,14 +38,15 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $instagram_profiles = InstagramProfile::where('id', $id)
-                ->get();
+        $ig_profile = IgProfile::where('id', $id)->first();
+//        $instagram_profiles = InstagramProfile::where('id', $id)
+//                ->get();
         $niches = Niche::all();
-        $comments = \App\InstagramProfileComment::where("ig_profile_id", $id)->get();
-        $target_usernames = \App\InstagramProfileTargetUsername::where("ig_profile_id", $id)->get();
-        $target_hashtags = \App\InstagramProfileTargetHashtag::where("ig_profile_id", $id)->get();
+        $comments = \App\InstagramProfileComment::where("insta_username", $ig_profile->insta_username)->get();
+        $target_usernames = \App\InstagramProfileTargetUsername::where("insta_username", $ig_profile->insta_username)->get();
+        $target_hashtags = \App\InstagramProfileTargetHashtag::where("insta_username", $ig_profile->insta_username)->get();
         return view('interactionsettings', [
-            'user_ig_profiles' => $instagram_profiles,
+            'ig_profile' => $ig_profile,
             'user_ig_comments' => $comments,
             'user_ig_target_usernames' => $target_usernames,
             'user_ig_target_hashtags' => $target_hashtags,

@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-@foreach ($user_ig_profiles as $ig_profile)
+
 <div class="content content-narrow">
 
     <div class="row">
@@ -355,7 +355,6 @@
         $("#hashtags-well").css("height", $hashtagsBlockHeight + "px");
     </script>
 </div>
-@endforeach
 
 @endsection
 
