@@ -39,7 +39,7 @@ class PostSchedulingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function gallery($id) {
-        $instagram_profiles = InstagramProfile::where('id', $id)
+        $instagram_profiles = IgProfile::where('id', $id)
                 ->get();
         $default_images = DefaultImageGallery::all();
         
