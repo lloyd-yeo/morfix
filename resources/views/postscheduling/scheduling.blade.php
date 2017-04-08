@@ -101,14 +101,13 @@
                                 <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
                                 <div class="img-options">
                                     <div class="img-options-content">
-                                        <h3 class="font-w400 text-white push-5">Image Caption</h3>
-                                        <h4 class="h6 font-w400 text-white-op push-15">Some Extra Info</h4>
+                                        <h3 class="font-w400 text-white push-5">Upload this photo!</h3>
+                                        <h4 class="h6 font-w400 text-white-op push-15">Click below</h4>
                                         <a class="btn btn-sm btn-default img-lightbox" href="{{ asset("storage/" . $default_img->image_path) }}">
                                             <i class="fa fa-search-plus"></i> View
                                         </a>
                                         <div class="btn-group btn-group-sm">
-                                            <a class="btn btn-default" href="javascript:void(0)"><i class="fa fa-pencil"></i> Edit</a>
-                                            <a class="btn btn-default" href="javascript:void(0)"><i class="fa fa-times"></i> Delete</a>
+                                            <a class="btn btn-default upload-default-photo" data-image-id="{{ $default_img->image_id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
                                         </div>
                                     </div>
                                 </div>
