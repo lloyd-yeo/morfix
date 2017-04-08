@@ -32,7 +32,7 @@ class HomeController extends Controller {
                         ORDER BY total_comms DESC LIMIT 10;");
 
         $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take(10)->get();
-
+        
         $leaderboard_alltime_ranking = "UNRANKED";
 
         $ranking = 1;
@@ -44,23 +44,20 @@ class HomeController extends Controller {
         }
 
         $instagram_profiles = IgProfile::where('insta_username', Auth::user()->email);
-                
-//                DB::table('morfix_instagram_profiles')
-//                ->where('email', Auth::user()->email)
-//                ->take(10)
-//                ->get();
-
+        
         $new_profile_follower_analysis = array();
         $new_profile_follower_analysis_label = array();
         $new_follower_count = array();
 
         foreach ($instagram_profiles as $ig_profile) {
 
-            $follower_analysis = DB::table('morfix_instagram_profile_follower_analysis')
-                    ->where('insta_username', $ig_profile->insta_username)
-                    ->orderBy('date', 'desc')
-                    ->take(10)
-                    ->get();
+//            $follower_analysis = DB::table('user_insta_follower_analysis')
+//                    ->where('insta_username', $ig_profile->insta_username)
+//                    ->orderBy('date', 'desc')
+//                    ->take(10)
+//                    ->get();
+            
+            $follower_analysis = DB::connection("mysql_old")->select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;",[$ig_profile->insta_username]);
             $analysis_csv = "";
             $analysis_date_csv = "";
 
@@ -77,8 +74,6 @@ class HomeController extends Controller {
                     $new_follower_diff = $new_follower - $analysis->follower_count;
                     $new_follower_2 = $analysis->follower_count;
                 }
-                
-
                 $analysis_csv = $analysis->follower_count . "," . $analysis_csv;
                 $analysis_date = date_create($analysis->date);
                 $analysis_date_formatted = date_format($analysis_date, "d M");
