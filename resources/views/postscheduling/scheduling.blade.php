@@ -98,12 +98,12 @@
                         @foreach ($default_imgs as $default_img)
                         <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn">
                             <div class="img-container fx-img-rotate-r">
-                                <img class="img-responsive" src="{{ asset($default_img->image_path) }}" alt="">
+                                <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
                                 <div class="img-options">
                                     <div class="img-options-content">
                                         <h3 class="font-w400 text-white push-5">Image Caption</h3>
                                         <h4 class="h6 font-w400 text-white-op push-15">Some Extra Info</h4>
-                                        <a class="btn btn-sm btn-default img-lightbox" href="{{ asset($default_img->image_path) }}">
+                                        <a class="btn btn-sm btn-default img-lightbox" href="{{ asset("storage/" . $default_img->image_path) }}">
                                             <i class="fa fa-search-plus"></i> View
                                         </a>
                                         <div class="btn-group btn-group-sm">
