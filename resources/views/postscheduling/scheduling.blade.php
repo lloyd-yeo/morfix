@@ -39,7 +39,7 @@
     </div>
 
     <div class="row">
-        
+
         <div class="col-lg-12">
             <!-- DropzoneJS -->
             <!-- For more info and examples you can check out http://www.dropzonejs.com/#usage -->
@@ -52,7 +52,7 @@
             </div>
             <!-- END DropzoneJS -->
         </div>
-        
+
         <div class="col-xs-12 col-lg-12">
             <!-- Sizes -->
             <div class="block">
@@ -85,14 +85,57 @@
             </div>
             <!-- END Sizes -->
         </div>
-        
+
         <div class="col-xs-12 col-lg-12">
+
+            <!-- Block Tabs Justified Alternative Style -->
+            <div class="block">
+                <ul class="nav nav-tabs nav-tabs-alt nav-justified" data-toggle="tabs">
+                    @foreach ($default_img_category as $category)
+                    <li>
+                        <a href="#cat-{{ $category->category }}"><i class="fa fa-tag"></i> {{ $category->category }}</a>
+                    </li>
+                    @endforeach
+<!--                    <li class="active">
+                        <a href="#btabs-alt-static-justified-home"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li>
+                        <a href="#btabs-alt-static-justified-profile"><i class="fa fa-pencil"></i> Profile</a>
+                    </li>
+                    <li>
+                        <a href="#btabs-alt-static-justified-settings"><i class="fa fa-cog"></i> Settings</a>
+                    </li>-->
+                </ul>
+                
+                <div class="block-content tab-content">
+                    @foreach ($default_img_category as $category)
+                    <div class="tab-pane" id="cat-{{ $category->category }}">
+                        <h4 class="font-w300 push-15">{{ $category->category }}</h4>
+                        
+                    </div>
+                    @endforeach
+<!--                    <div class="tab-pane active" id="btabs-alt-static-justified-home">
+                        <h4 class="font-w300 push-15">Home Tab</h4>
+                        <p>...</p>
+                    </div>
+                    <div class="tab-pane" id="btabs-alt-static-justified-profile">
+                        <h4 class="font-w300 push-15">Profile Tab</h4>
+                        <p>...</p>
+                    </div>
+                    <div class="tab-pane" id="btabs-alt-static-justified-settings">
+                        <h4 class="font-w300 push-15">Settings Tab</h4>
+                        <p>...</p>
+                    </div>-->
+                </div>
+            </div>
+            <!-- END Block Tabs Justified Default Style -->
+
+
             <!-- Sizes -->
             <div class="block">
                 <div class="block-header bg-primary">
                     <h3 class="block-title text-white text-uppercase"><i class="si si-picture"></i> MORFIX STOCK PHOTOS</h3>
                 </div>
-
                 <div class="block-content">
                     <div class="row items-push js-gallery-advanced">
                         @foreach ($default_imgs as $default_img)
@@ -114,13 +157,13 @@
                             </div>
                         </div>
                         @endforeach
-                        
+
                     </div>
                 </div>
             </div>
             <!-- END Sizes -->
         </div>
-        
+
     </div>
 
 </div>

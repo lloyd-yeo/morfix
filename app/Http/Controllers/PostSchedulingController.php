@@ -42,10 +42,12 @@ class PostSchedulingController extends Controller
         $instagram_profiles = IgProfile::where('id', $id)
                 ->get();
         $default_images = DefaultImageGallery::all();
+        $default_categories = DB::connection('mysql_old')->select("SELECT id, category FROM insta_affiliate.default_image_category;");
         
         return view('postscheduling.scheduling', [
             'user_ig_profiles' => $instagram_profiles,
             'default_imgs' => $default_images,
+            'default_img_category' => $default_categories,
         ]);
     }
 }
