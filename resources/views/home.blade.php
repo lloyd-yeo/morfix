@@ -61,7 +61,7 @@
                                         <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                                     </li>
                                     <li>
-                                        <button type="button"><i class="si si-close"></i></button>
+                                        <button type="button" data-id="{{ $ig_profile->id }}" data-user-id="{{ Auth::user()->id }}" ><i class="si si-close"></i></button>
                                     </li>
                                 </ul>
                                 <h3 class="block-title text-white"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</h3>
