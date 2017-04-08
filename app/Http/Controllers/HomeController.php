@@ -25,13 +25,10 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $leaderboard_alltime = DB::connection("mysql_old")->table('user')
-                ->select(DB::raw('email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms'))
-                ->groupBy('email')
-                ->groupBy('name')
-                ->orderBy('total_comms', 'desc')
-                ->take(10)
-                ->get();
+        $leaderboard_alltime = DB::connection("mysql_old")
+                ->select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
+                        GROUP BY email, name
+                        ORDER BY total_comms DESC;");
 
         $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take(10)->get();
 
