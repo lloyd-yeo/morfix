@@ -100,6 +100,7 @@
                     <li>
                         <a href="#cat-{{ $category->category }}"><i class="fa fa-tag"></i> {{ $category->category }}</a>
                     </li>
+                    @endif
                     @endforeach
 <!--                    <li class="active">
                         <a href="#btabs-alt-static-justified-home"><i class="fa fa-home"></i> Home</a>
