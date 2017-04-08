@@ -37,4 +37,6 @@ jQuery(function () {
 
     });
 });
+
+$(".remove-profile-btn").on("click");
 </script>
