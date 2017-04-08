@@ -54,7 +54,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <!-- Instagram Profile -->
-                        <a class="block block-link-hover2 block-themed" target="_blank" href="https://www.instagram.com/{{ $ig_profile->insta_username }}/">
+                        <div class="block block-themed" target="_blank" href="https://www.instagram.com/{{ $ig_profile->insta_username }}/">
                             <div class="block-header bg-primary">
                                 <ul class="block-options">
                                     <li>
@@ -85,10 +85,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                         <!-- END Instagram Profile -->
 
-                        <a class="block block-link-hover3" href="javascript:void(0)">
+                        <div class="block" href="javascript:void(0)">
                             <table class="block-table text-center">
                                 <tbody>
                                     <tr>
@@ -108,7 +108,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </a>
+                        </div>
                         <!-- END Mini Stats -->
                     </div>
                 </div>
