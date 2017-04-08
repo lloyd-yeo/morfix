@@ -58,7 +58,7 @@
                             <div class="block-header bg-primary">
                                 <ul class="block-options">
                                     <li>
-                                        <button type="button" data-toggle="block-option"><i class="si si-refresh"></i></button>
+                                        <button type="button"><i class="si si-refresh"></i></button>
                                     </li>
                                 </ul>
                                 <h3 class="block-title text-center text-white"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</h3>
