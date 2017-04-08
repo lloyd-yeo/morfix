@@ -43,7 +43,7 @@ class HomeController extends Controller {
             $ranking++;
         }
 
-        $instagram_profiles = IgProfile::where('insta_username', Auth::user()->email);
+        $instagram_profiles = IgProfile::where('insta_username', Auth::user()->email)->take(10)->get();
         
         $new_profile_follower_analysis = array();
         $new_profile_follower_analysis_label = array();
