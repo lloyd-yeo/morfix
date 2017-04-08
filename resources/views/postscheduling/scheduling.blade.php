@@ -22,6 +22,18 @@
 <div class="content content-narrow">
 
     <div class="row">
+        <div class="col-lg-6">
+            <!-- DropzoneJS -->
+            <!-- For more info and examples you can check out http://www.dropzonejs.com/#usage -->
+            <h2 class="content-heading">DropzoneJS</h2>
+            <div class="block">
+                <div class="block-content block-content-full">
+                    <!-- DropzoneJS Container -->
+                    <form class="dropzone" action="base_forms_pickers_more.html"></form>
+                </div>
+            </div>
+            <!-- END DropzoneJS -->
+        </div>
         <div class="col-sm-12 col-lg-12">
             <!-- Crystal on Background Color -->
             <div class="block">
@@ -39,11 +51,12 @@
     </div>
 
     <div class="row">
+        
         <div class="col-xs-12 col-lg-12">
             <!-- Sizes -->
             <div class="block">
                 <div class="block-header bg-primary">
-                    <h3 class="block-title text-white text-uppercase"><i class="si si-picture"></i> MY GALLERY</h3>
+                    <h3 class="block-title text-white text-uppercase"><i class="si si-picture"></i> MY PHOTOS</h3>
                 </div>
 
                 <div class="block-content">
