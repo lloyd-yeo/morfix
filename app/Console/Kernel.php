@@ -23,6 +23,7 @@ class Kernel extends ConsoleKernel {
         Commands\RefreshInstagramProfile::class,
         Commands\SnapshotFollowerAnalysis::class,
         Commands\ManualLogin::class,
+        Commands\ReplicateSetting::class,
     ];
 
     /**
