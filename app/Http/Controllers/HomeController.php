@@ -43,7 +43,7 @@ class HomeController extends Controller {
             $ranking++;
         }
 
-        $instagram_profiles = IgProfile::where('insta_username', Auth::user()->email)->take(10)->get();
+        $instagram_profiles = IgProfile::where('email', Auth::user()->email)->take(10)->get();
         
         $new_profile_follower_analysis = array();
         $new_profile_follower_analysis_label = array();
@@ -57,7 +57,8 @@ class HomeController extends Controller {
 //                    ->take(10)
 //                    ->get();
             
-            $follower_analysis = DB::connection("mysql_old")->select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;",[$ig_profile->insta_username]);
+            $follower_analysis = DB::connection("mysql_old")->
+                    select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;", [$ig_profile->insta_username]);
             $analysis_csv = "";
             $analysis_date_csv = "";
 
