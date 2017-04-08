@@ -10,6 +10,9 @@
                 <a class="h5 text-white" href="/home">
                     <span class="h4 font-w600 sidebar-mini-hide">Morfix</span>
                 </a>
+                <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button" data-toggle="layout" data-action="sidebar_close">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
             <!-- END Side Header -->
 
@@ -23,9 +26,9 @@
                         <a href="/home"><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @endif
                     </li>
-                    
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AUTOMATION TOOLS</span></li>
-                    
+
                     <li>
                         @if ($page == 'interaction')
                         <a class="active" href="/interactions"><i class="si si-rocket"></i><span class="sidebar-mini-hide">Interactions</span></a>
@@ -33,7 +36,7 @@
                         <a href="/interactions"><i class="si si-rocket"></i><span class="sidebar-mini-hide">Interactions</span></a>
                         @endif
                     </li>
-                    
+
                     <li>
                         @if ($page == 'dm')
                         <a class="active" href="/dm"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Direct Message</span></a>
@@ -41,7 +44,7 @@
                         <a href="/dm"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Direct Message</span></a>
                         @endif
                     </li>
-                    
+
                     <li>
                         @if ($page == 'postscheduling')
                         <a class="active" href="/post-scheduling"><i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span></a>
@@ -49,7 +52,7 @@
                         <a href="/post-scheduling"><i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span></a>
                         @endif
                     </li>
-                    
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AFFILIATE AREA</span></li>
                     <li>
                         @if ($page == 'affiliate')
@@ -58,10 +61,10 @@
                         <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @endif
                     </li>
-                    
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">PAYMENT</span></li>
-                    
-                    
+
+
                     <li class="">
                         <a class="" data-toggle="nav-submenu" href="#">
                             <i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
@@ -196,7 +199,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                 </ul>
 
 
