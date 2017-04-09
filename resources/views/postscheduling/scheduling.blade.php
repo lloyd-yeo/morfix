@@ -102,69 +102,73 @@
                     </li>
                     @endif
                     @endforeach
-<!--                    <li class="active">
-                        <a href="#btabs-alt-static-justified-home"><i class="fa fa-home"></i> Home</a>
-                    </li>
-                    <li>
-                        <a href="#btabs-alt-static-justified-profile"><i class="fa fa-pencil"></i> Profile</a>
-                    </li>
-                    <li>
-                        <a href="#btabs-alt-static-justified-settings"><i class="fa fa-cog"></i> Settings</a>
-                    </li>-->
+                    <!--                    <li class="active">
+                                            <a href="#btabs-alt-static-justified-home"><i class="fa fa-home"></i> Home</a>
+                                        </li>
+                                        <li>
+                                            <a href="#btabs-alt-static-justified-profile"><i class="fa fa-pencil"></i> Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="#btabs-alt-static-justified-settings"><i class="fa fa-cog"></i> Settings</a>
+                                        </li>-->
                 </ul>
-                
+
                 <div class="block-content tab-content">
                     @foreach ($default_img_category as $category)
                     @if ($category->id == 1)
                     <div class="tab-pane active" id="cat-{{ $category->category }}">
-                    @else
-                    <div class="tab-pane" id="cat-{{ $category->category }}">
-                    @endif
-                        @foreach ($imgs[$category->id] as $default_img)
-                        <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
-                            <div class="img-container fx-img-rotate-r">
-                                <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
-                                <div class="img-options">
-                                    <div class="img-options-content">
-                                        <h3 class="font-w400 text-white push-5">Upload this photo!</h3>
-                                        <h4 class="h6 font-w400 text-white-op push-15">Click below</h4>
-                                        <a class="btn btn-sm btn-default img-lightbox" href="{{ asset("storage/" . $default_img->image_path) }}">
-                                            <i class="fa fa-search-plus"></i> View
-                                        </a>
-                                        <div class="btn-group btn-group-sm">
-                                            <a class="btn btn-default upload-default-photo" data-image-id="{{ $default_img->image_id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                        @else
+                        <div class="tab-pane" id="cat-{{ $category->category }}">
+                            @endif
+                            @foreach ($imgs[$category->id]->chunk(6) as $default_imgs)
+                            <div class='row'>
+                                @foreach ($default_imgs as $default_img)
+                                <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
+                                    <div class="img-container fx-img-rotate-r">
+                                        <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
+                                        <div class="img-options">
+                                            <div class="img-options-content">
+                                                <h3 class="font-w400 text-white push-5">Upload this photo!</h3>
+                                                <h4 class="h6 font-w400 text-white-op push-15">Click below</h4>
+                                                <a class="btn btn-sm btn-default img-lightbox" href="{{ asset("storage/" . $default_img->image_path) }}">
+                                                    <i class="fa fa-search-plus"></i> View
+                                                </a>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a class="btn btn-default upload-default-photo" data-image-id="{{ $default_img->image_id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
+                            @endforeach
                         </div>
                         @endforeach
+                        <!--                    <div class="tab-pane active" id="btabs-alt-static-justified-home">
+                                                <h4 class="font-w300 push-15">Home Tab</h4>
+                                                <p>...</p>
+                                            </div>
+                                            <div class="tab-pane" id="btabs-alt-static-justified-profile">
+                                                <h4 class="font-w300 push-15">Profile Tab</h4>
+                                                <p>...</p>
+                                            </div>
+                                            <div class="tab-pane" id="btabs-alt-static-justified-settings">
+                                                <h4 class="font-w300 push-15">Settings Tab</h4>
+                                                <p>...</p>
+                                            </div>-->
                     </div>
-                    @endforeach
-<!--                    <div class="tab-pane active" id="btabs-alt-static-justified-home">
-                        <h4 class="font-w300 push-15">Home Tab</h4>
-                        <p>...</p>
-                    </div>
-                    <div class="tab-pane" id="btabs-alt-static-justified-profile">
-                        <h4 class="font-w300 push-15">Profile Tab</h4>
-                        <p>...</p>
-                    </div>
-                    <div class="tab-pane" id="btabs-alt-static-justified-settings">
-                        <h4 class="font-w300 push-15">Settings Tab</h4>
-                        <p>...</p>
-                    </div>-->
                 </div>
+                <!-- END Block Tabs Justified Default Style -->
             </div>
-            <!-- END Block Tabs Justified Default Style -->
+
         </div>
 
     </div>
+    @endforeach
 
-</div>
-@endforeach
+    @endsection
 
-@endsection
-
-@section('js')
-@include('postscheduling.js')
-@endsection
+    @section('js')
+    @include('postscheduling.js')
+    @endsection
