@@ -120,23 +120,27 @@
                         @else
                         <div class="tab-pane" id="cat-{{ $category->category }}">
                             @endif
-                            @foreach ($imgs[$category->id]->chunk(6) as $default_img)
-                            <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
-                                <div class="img-container fx-img-rotate-r">
-                                    <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
-                                    <div class="img-options">
-                                        <div class="img-options-content">
-                                            <h3 class="font-w400 text-white push-5">Upload this photo!</h3>
-                                            <h4 class="h6 font-w400 text-white-op push-15">Click below</h4>
-                                            <a class="btn btn-sm btn-default img-lightbox" href="{{ asset("storage/" . $default_img->image_path) }}">
-                                                <i class="fa fa-search-plus"></i> View
-                                            </a>
-                                            <div class="btn-group btn-group-sm">
-                                                <a class="btn btn-default upload-default-photo" data-image-id="{{ $default_img->image_id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                            @foreach ($imgs[$category->id]->chunk(6) as $default_imgs)
+                            <div class='row'>
+                                @foreach ($default_imgs as $default_img)
+                                <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
+                                    <div class="img-container fx-img-rotate-r">
+                                        <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
+                                        <div class="img-options">
+                                            <div class="img-options-content">
+                                                <h3 class="font-w400 text-white push-5">Upload this photo!</h3>
+                                                <h4 class="h6 font-w400 text-white-op push-15">Click below</h4>
+                                                <a class="btn btn-sm btn-default img-lightbox" href="{{ asset("storage/" . $default_img->image_path) }}">
+                                                    <i class="fa fa-search-plus"></i> View
+                                                </a>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a class="btn btn-default upload-default-photo" data-image-id="{{ $default_img->image_id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
                             @endforeach
                         </div>
