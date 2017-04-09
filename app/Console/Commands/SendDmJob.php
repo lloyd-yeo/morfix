@@ -86,7 +86,7 @@ class SendDmJob extends Command
                 
                 #$dm_job = DmJob::where("insta_username", "=", $ig_username)->where("fulfilled", '=', 0)->orderBy("time_to_send", "asc")->first();
                 
-                $dm_jobs = DB::connection('mysql_old')->select("SELECT job_id, recipient_username, recipient_insta_id, message "
+                $dm_jobs = DB::connection('mysql_old')->select("SELECT job_id, recipient_username, recipient_insta_id, message, follow_up_order "
                         . "FROM insta_affiliate.dm_job WHERE fulfilled = 0 AND insta_username = ? AND time_to_send <= NOW() AND message > '' "
                         . "ORDER BY job_id ASC LIMIT 1;", [$ig_profile->insta_username]);
                 
@@ -102,7 +102,7 @@ class SendDmJob extends Command
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
                 if ($ig_profile->proxy === NULL) {
-                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
+                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 2;");
                     foreach ($proxies as $proxy) {
                         $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
                         $instagram->setProxy($proxy->proxy);
@@ -113,6 +113,11 @@ class SendDmJob extends Command
                 }
                 
                 foreach ($dm_jobs as $dm_job) {
+                    if ($dm_job->follow_up_order == 1 && $user->user_tier <= 3) {
+                        $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set fulfilled = 1, success_msg = ?, updated_at = NOW() where job_id = ?;', ["Not a Business user.", $dm_job->job_id]);
+                        continue;
+                    }
+                    
                     try {
                         $instagram->setUser($ig_username, $ig_password);
                         $explorer_response = $instagram->login();
