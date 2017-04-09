@@ -120,7 +120,8 @@
                         @else
                         <div class="tab-pane" id="cat-{{ $category->category }}">
                             @endif
-                            @foreach ($imgs[$category->id]->chunk(6) as $default_imgs)
+                            @foreach ($imgs[$category->id] as $cat_default_imgs)
+                            @foreach ($cat_default_imgs->chunk(6) as $default_imgs)
                             <div class='row'>
                                 @foreach ($default_imgs as $default_img)
                                 <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
@@ -142,6 +143,7 @@
                                 </div>
                                 @endforeach
                             </div>
+                            @endforeach
                             @endforeach
                         </div>
                         @endforeach
