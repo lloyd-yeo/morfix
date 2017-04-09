@@ -53,6 +53,10 @@ class PostSchedulingController extends Controller
             $imgs[$default_image->category_id][] = $default_image;
         }
         
+        foreach ($default_categories as $category) { //populate categories first
+            $imgs[$category->id] = collect($imgs[$category->id][]);
+        }
+        
         return view('postscheduling.scheduling', [
             'user_ig_profiles' => $instagram_profiles,
             'default_imgs' => $default_images,
