@@ -54,7 +54,7 @@ class PostSchedulingController extends Controller
         }
         
         foreach ($default_categories as $category) { //populate categories first
-            $imgs[$category->id] = collect($imgs[$category->id][]);
+            $imgs[$category->id] = collect($imgs[$category->id]);
         }
         
         return view('postscheduling.scheduling', [
