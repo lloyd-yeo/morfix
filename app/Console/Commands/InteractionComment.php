@@ -186,7 +186,7 @@ class InteractionComment extends Command {
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1 where id = ?;', [$ig_profile->id]);
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error("endpt1 " . $endpoint_ex->getMessage());
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+//                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                     $this->error("network1 " . $network_ex->getMessage());
                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
