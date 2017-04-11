@@ -178,21 +178,21 @@ class InteractionComment extends Command {
                         }
                     }
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-                    $this->error($checkpt_ex->getMessage());
+                    $this->error("checkpt1 " . $checkpt_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                    $this->error($incorrectpw_ex->getMessage());
+                    $this->error("incorrectpw1 " . $incorrectpw_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1 where id = ?;', [$ig_profile->id]);
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                    $this->error($endpoint_ex->getMessage());
+                    $this->error("endpt1 " . $endpoint_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                    $this->error($network_ex->getMessage());
+                    $this->error("network1 " . $network_ex->getMessage());
                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-                    $this->error($acctdisabled_ex->getMessage());
+                    $this->error("acctdisabled1 " . $acctdisabled_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                    $this->error($request_ex->getMessage());
+                    $this->error("request1 " . $request_ex->getMessage());
                     $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$request_ex->getMessage(), $ig_profile->id]);
                 }
             }
