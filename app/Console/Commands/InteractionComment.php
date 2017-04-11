@@ -59,7 +59,8 @@ class InteractionComment extends Command {
         foreach ($users as $user) {
             $this->line($user->user_id);
 
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile WHERE auto_interaction = 1 AND auto_comment = 1 AND checkpoint_required = 0 AND user_id = ?;", [$user->user_id]);
+            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, "
+                    . "insta_pw, proxy FROM user_insta_profile WHERE auto_interaction = 1 AND auto_comment = 1 AND checkpoint_required = 0 AND user_id = ?;", [$user->user_id]);
 
             foreach ($instagram_profiles as $ig_profile) {
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
@@ -96,7 +97,7 @@ class InteractionComment extends Command {
                     $comments = DB::connection("mysql_old")->select("SELECT comment FROM user_insta_profile_comment WHERE insta_username = ? ORDER BY RAND() LIMIT 1;", [$ig_profile->insta_username]);
 
                     $engagement_jobs = DB::connection('mysql_old')
-                            ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 1 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
+                            ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 1 AND fulfilled = 0 AND insta_username = ? LIMIT 3;", [$ig_username]);
                     $commented = 0;
                     foreach ($engagement_jobs as $engagement_job) {
                         $media_id = $engagement_job->media_id;
@@ -140,11 +141,9 @@ class InteractionComment extends Command {
                                 DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                                 continue;
                             }
-
                             $this->info("commented engagement\t" . serialize($comment_response));
                             break;
                         }
-                        break;
                     }
 
                     if ($commented == 1) {
