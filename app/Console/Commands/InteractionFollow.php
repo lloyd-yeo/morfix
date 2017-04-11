@@ -253,7 +253,7 @@ class InteractionFollow extends Command {
                                 if ($response->friendship_status->is_private) {
                                     continue;
                                 }
-                                if ($response->friendship_status->following) {
+                                if ($response->friendship_status->following == 1) {
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                                     $followed = 1;
                                     $this->info("targeted username Breaking.");
