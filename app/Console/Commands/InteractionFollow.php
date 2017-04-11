@@ -249,13 +249,14 @@ class InteractionFollow extends Command {
                                 }
                                 
                                 $response = $instagram->follow($user_to_follow->pk);
-                                $this->info("targetedusername following " . $response->friendship_status->following . "\n\n");
+                                $this->info("targeted username following " . $response->friendship_status->following . "\n\n");
                                 if ($response->friendship_status->is_private) {
                                     continue;
                                 }
                                 if ($response->friendship_status->following) {
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                                     $followed = 1;
+                                    $this->info("targeted username Breaking.");
                                     break;
                                 } else {
                                     continue;
@@ -299,7 +300,7 @@ class InteractionFollow extends Command {
 
                                 if ($followed == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
-                                    $this->info("hashtag following " . $response->friendship_status->following . "\n\n");
+                                    $this->info("targeted hashtag following " . $response->friendship_status->following . "\n\n");
                                     if ($response->status == "ok") {
                                         if ($response->friendship_status->is_private) {
                                             $this->info("user is pvt" . "\n\n");
@@ -308,6 +309,7 @@ class InteractionFollow extends Command {
                                         if ($response->friendship_status->following) {
                                             DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                                             $followed = 1;
+                                            $this->info("targetedhashtag Breaking.");
                                             break;
                                         } else {
                                             continue;
@@ -360,6 +362,7 @@ class InteractionFollow extends Command {
                                     if ($response->friendship_status->following) {
                                         DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                                         $followed = 1;
+                                        $this->info("nichetarget Breaking.");
                                         break;
                                     } else {
                                         continue;
