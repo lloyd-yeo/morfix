@@ -347,15 +347,18 @@ class InteractionFollow extends Command {
 
                                 if ($followed == 0) {
                                     $response = $instagram->follow($user_to_follow->pk);
+                                    
                                     $this->info("nichetarget following " . $response->friendship_status->following . "\n\n");
                                     if ($response->friendship_status->is_private) {
                                         continue;
                                     }
+                                    
                                     if ($response->friendship_status->following) {
                                         DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
                                     } else {
                                         continue;
                                     }
+                                    
                                     $followed = 1;
                                 }
                                 if ($followed == 1) {
@@ -384,6 +387,9 @@ class InteractionFollow extends Command {
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                     continue;
+                } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+                    $this->error($throttled_ex->getMessage());
+                    DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$throttled_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }

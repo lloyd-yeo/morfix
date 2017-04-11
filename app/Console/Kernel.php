@@ -33,21 +33,21 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-        for ($i = 0; $i < 500; $i++) {
-            $counter = $i * 10;
-            $schedule->command('dm:get ' . $counter . ' 10')->everyFiveMinutes();
+        for ($i = 0; $i < 200; $i++) {
+            $counter = $i * 30;
+            $schedule->command('dm:get ' . $counter . ' 30')->everyFiveMinutes();
         }
         
-        for ($i = 0; $i < 500; $i++) {
-            $counter = $i * 10;
-            $schedule->command('dm:send ' . $counter . ' 10')->everyFiveMinutes();
+        for ($i = 0; $i < 200; $i++) {
+            $counter = $i * 30;
+            $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
         }
         
 //        for ($i = 0; $i < 70; $i++) {
 //            $counter = $i * 10;
 //            $schedule->command('interaction:follow ' . $counter . ' 10')->everyFiveMinutes();
 //        }
-//        $schedule->command('interaction:follow 0 3000')->everyFiveMinutes();
+
         $schedule->command('interaction:follow 0 100')->everyFiveMinutes();
         $schedule->command('interaction:follow 100 100')->everyFiveMinutes();
         $schedule->command('interaction:follow 200 100')->everyFiveMinutes();
@@ -55,7 +55,6 @@ class Kernel extends ConsoleKernel {
         $schedule->command('interaction:follow 400 100')->everyFiveMinutes();
         $schedule->command('interaction:follow 500 100')->everyFiveMinutes();
         $schedule->command('interaction:follow 600 100')->everyFiveMinutes();
-        $schedule->command('interaction:follow 700 100')->everyFiveMinutes();
         
 //        for ($i = 0; $i < 300; $i++) {
 //            $counter = $i * 20;
@@ -66,9 +65,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('interaction:like 200 100')->everyFiveMinutes();
         $schedule->command('interaction:like 300 100')->everyFiveMinutes();
         $schedule->command('interaction:like 400 100')->everyFiveMinutes();
-        $schedule->command('interaction:like 500 100')->everyFiveMinutes();
-        $schedule->command('interaction:like 600 100')->everyFiveMinutes();
-        $schedule->command('interaction:like 700 100')->everyFiveMinutes();
+        
 //        $schedule->command('interaction:like 0 3000')->everyFiveMinutes();
 //        for ($i = 0; $i < 300; $i++) {
 //            $counter = $i * 20;
@@ -84,8 +81,7 @@ class Kernel extends ConsoleKernel {
 //        $schedule->command('interaction:comment 600 100')->everyFiveMinutes();
 //        $schedule->command('interaction:comment 700 100')->everyFiveMinutes();
         
-//        $schedule->command('interaction:like 0 3000')->everyFiveMinutes();
-        
+        $schedule->command("engagement:add")->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('ig:refresh 0 3000')->everyThirtyMinutes();
         
         //$schedule->command('analysis:follower')->daily();
