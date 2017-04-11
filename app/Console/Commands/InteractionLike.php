@@ -110,6 +110,8 @@ class InteractionLike extends Command {
                             $job_id = $engagement_job->job_id;
                             $like_response = NULL;
                             try {
+                                DB::connection('mysql_old')
+                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                                 $like_response = $instagram->like($media_id);
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
@@ -121,7 +123,7 @@ class InteractionLike extends Command {
                                 continue;
                             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                                 DB::connection('mysql_old')
-                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                                    ->update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;", [$media_id]);
                                 $this->error("endpt\t" . $endpoint_ex->getMessage());
                                 DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                                 continue;
@@ -144,9 +146,6 @@ class InteractionLike extends Command {
                             $this->info("liked engagement\t" . serialize($like_response));
 
                             $like_quota--;
-
-                            DB::connection('mysql_old')
-                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
 
                             if ($like_quota == 0) {
                                 break;
