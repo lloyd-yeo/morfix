@@ -43,34 +43,37 @@ class Kernel extends ConsoleKernel {
             $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
         }
         
-//        for ($i = 0; $i < 70; $i++) {
-//            $counter = $i * 10;
-//            $schedule->command('interaction:follow ' . $counter . ' 10')->everyFiveMinutes();
-//        }
+        for ($i = 0; $i < 24; $i++) {
+            $counter = $i * 20;
+            $schedule->command('interaction:follow ' . $counter . ' 20')->everyFiveMinutes();
+        }
 
-        $schedule->command('interaction:follow 0 100')->everyFiveMinutes();
-        $schedule->command('interaction:follow 100 100')->everyFiveMinutes();
-        $schedule->command('interaction:follow 200 100')->everyFiveMinutes();
-        $schedule->command('interaction:follow 300 100')->everyFiveMinutes();
-        $schedule->command('interaction:follow 400 100')->everyFiveMinutes();
-        $schedule->command('interaction:follow 500 100')->everyFiveMinutes();
-        $schedule->command('interaction:follow 600 100')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 0 100')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 100 100')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 200 100')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 300 100')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 400 100')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 500 100')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 600 100')->everyFiveMinutes();
         
-//        for ($i = 0; $i < 300; $i++) {
-//            $counter = $i * 20;
-//            $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
-//        }
-        $schedule->command('interaction:like 0 100')->everyFiveMinutes();
-        $schedule->command('interaction:like 100 100')->everyFiveMinutes();
-        $schedule->command('interaction:like 200 100')->everyFiveMinutes();
-        $schedule->command('interaction:like 300 100')->everyFiveMinutes();
-        $schedule->command('interaction:like 400 100')->everyFiveMinutes();
+        for ($i = 0; $i < 24; $i++) {
+            $counter = $i * 20;
+            $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
+        }
+        
+//        $schedule->command('interaction:like 0 100')->everyFiveMinutes();
+//        $schedule->command('interaction:like 100 100')->everyFiveMinutes();
+//        $schedule->command('interaction:like 200 100')->everyFiveMinutes();
+//        $schedule->command('interaction:like 300 100')->everyFiveMinutes();
+//        $schedule->command('interaction:like 400 50')->everyFiveMinutes();
+//        $schedule->command('interaction:like 450 25')->everyFiveMinutes();
+//        $schedule->command('interaction:like 475 25')->everyFiveMinutes();
         
 //        $schedule->command('interaction:like 0 3000')->everyFiveMinutes();
-//        for ($i = 0; $i < 300; $i++) {
-//            $counter = $i * 20;
-//            $schedule->command('interaction:comment ' . $counter . ' 20')->everyFiveMinutes();
-//        }
+        for ($i = 0; $i < 24; $i++) {
+            $counter = $i * 20;
+            $schedule->command('interaction:comment ' . $counter . ' 20')->everyFiveMinutes();
+        }
         
 //        $schedule->command('interaction:comment 0 100')->everyFiveMinutes();
 //        $schedule->command('interaction:comment 100 100')->everyFiveMinutes();
