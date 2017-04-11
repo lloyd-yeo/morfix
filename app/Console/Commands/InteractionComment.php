@@ -107,7 +107,8 @@ class InteractionComment extends Command {
                             $comment_response = NULL;
 
                             try {
-
+                                DB::connection('mysql_old')
+                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                                 $comment_response = $instagram->comment($media_id, $comment->comment);
                                 $commented = 1;
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
@@ -141,9 +142,6 @@ class InteractionComment extends Command {
                             }
 
                             $this->info("commented engagement\t" . serialize($comment_response));
-
-                            DB::connection('mysql_old')
-                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                             break;
                         }
                         break;
@@ -158,6 +156,7 @@ class InteractionComment extends Command {
                         AND follower_username NOT IN (SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = ?) ORDER BY date_inserted DESC LIMIT 1;", [$ig_profile->insta_username, $ig_profile->insta_username]);
 
                     foreach ($new_followers as $new_follower) {
+                        
                         foreach ($comments as $comment) {
                             $comment = $comment->comment;
                             $target_username_posts = $instagram->getUserFeed($new_follower->follower_id);
