@@ -122,7 +122,7 @@ class InteractionComment extends Command {
                                 continue;
                             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                                 DB::connection('mysql_old')
-                                        ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                                        ->update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;", [$media_id]);
                                 $this->error("endpt\t" . $endpoint_ex->getMessage());
                                 DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                                 continue;
