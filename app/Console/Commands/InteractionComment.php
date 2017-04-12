@@ -98,7 +98,7 @@ class InteractionComment extends Command {
                     $comments = DB::connection("mysql_old")->select("SELECT comment FROM user_insta_profile_comment WHERE insta_username = ? ORDER BY RAND() LIMIT 1;", [$ig_profile->insta_username]);
 
                     $engagement_jobs = DB::connection('mysql_old')
-                            ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 1 AND fulfilled = 0 AND insta_username = ? LIMIT 3;", [$ig_username]);
+                            ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 1 AND fulfilled = 0 AND insta_username = ? LIMIT 1;", [$ig_username]);
                     $commented = 0;
                     foreach ($engagement_jobs as $engagement_job) {
                         $media_id = $engagement_job->media_id;
