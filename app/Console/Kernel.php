@@ -49,18 +49,27 @@ class Kernel extends ConsoleKernel {
             $schedule->command('interaction:follow ' . $counter . ' 20')->everyFiveMinutes();
         }
 
-        for ($i = 0; $i < 24; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $counter = $i * 20;
             $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
         }
         
-        for ($i = 0; $i < 24; $i++) {
-            $counter = $i * 20;
-            $schedule->command('interaction:comment ' . $counter . ' 20')->everyFiveMinutes();
+        for ($i = 0; $i < 50; $i++) {
+            $counter = $i * 10;
+            $schedule->command('interaction:comment ' . $counter . ' 10')->everyFiveMinutes();
         }
         
         $schedule->command("engagement:add")->everyThirtyMinutes()->withoutOverlapping();
-        $schedule->command('ig:refresh 0 3000')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 100')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 200')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 300')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 400')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 500')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 600')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 700')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 800')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 900')->everyThirtyMinutes();
+        $schedule->command('ig:refresh 0 1000')->everyThirtyMinutes();
         
         //$schedule->command('analysis:follower')->daily();
         // $schedule->command('inspire')
