@@ -128,7 +128,7 @@ class SendDmJob extends Command
 //                            $dm_job->save();
 
                             //update profile's last sent dm timing
-                            $delay = rand(15,20);
+                            $delay = rand(25,30);
                             $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set last_sent_dm = NOW() + INTERVAL ' . $delay . ' MINUTE where id = ?;', [$ig_profile->id]);
                             $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set fulfilled = 1, success_msg = ?, updated_at = NOW() where job_id = ?;', [serialize($response), $dm_job->job_id]);
                         
@@ -150,7 +150,7 @@ class SendDmJob extends Command
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set error_msg = ?, updated_at = NOW() where job_id = ?;', [$endpoint_ex->getMessage(), $dm_job->job_id]);
                     } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedbackrequired_ex) {
                         $this->line($feedbackrequired_ex->getMessage());
-                        $rows_affected = DB::connection('mysql_old')->update("UPDATE user_insta_profile SET temporary_ban = NOW() + INTERVAL 4 HOUR WHERE insta_username =?;", [$ig_profile->insta_username]);
+                        $rows_affected = DB::connection('mysql_old')->update("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL 1 DAY, temporary_ban = NOW() + INTERVAL 4 HOUR WHERE insta_username = ?;", [$ig_profile->insta_username]);
                         $rows_affected_msg = DB::connection('mysql_old')->update('update dm_job set error_msg = ?, updated_at = NOW() where job_id = ?;', [$feedbackrequired_ex->getMessage(), $dm_job->job_id]);
                     }
                 }
