@@ -329,7 +329,7 @@ class InteractionFollow extends Command {
                     }
 
                     if ($followed == 0) {
-
+                        $tries = 10;
                         $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
                         foreach ($niche_targets as $niche_target) {
 
@@ -367,6 +367,10 @@ class InteractionFollow extends Command {
                                         $this->info("nichetarget Breaking.");
                                         break;
                                     } else {
+                                        $tries = $tries - 1;
+                                        if ($tries == 0) {
+                                            break;
+                                        }
                                         continue;
                                     }
                                     
