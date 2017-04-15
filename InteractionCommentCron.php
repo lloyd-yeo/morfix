@@ -121,24 +121,39 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             $ig_password = $insta_pw;
                             $instagram->setUser($ig_username, $ig_password);
                             $instagram->login();
-                            $target_username_posts = $instagram->getUserFeed($newest_follow["follower_id"]);
-                            if (count($target_username_posts->items) == 0) {
-                                insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], "0", "User doesn't have any posts.");
-                                continue;
-                            }
-                            $throttle_limit = 41;
-                            $throttle_count = 0;
-                            foreach ($target_username_posts->items as $item) {
-                                $throttle_count++;
-                                if ($throttle_count == $throttle_limit) {
-                                    break;
+                            $outstanding_engagement_job = getOutstandingEngagementJob($insta_username, $servername, $username, $password, $dbname);
+                            if (is_null($outstanding_engagement_job)) {
+                                $target_username_posts = $instagram->getUserFeed($newest_follow["follower_id"]);
+                                if (count($target_username_posts->items) == 0) {
+                                    insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], "0", "User doesn't have any posts.");
+                                    continue;
                                 }
-                                $comment_response = $instagram->comment($item->pk, $profile_comment);
+                                $throttle_limit = 41;
+                                $throttle_count = 0;
+                                foreach ($target_username_posts->items as $item) {
+                                    $throttle_count++;
+                                    if ($throttle_count == $throttle_limit) {
+                                        break;
+                                    }
+                                    $comment_response = $instagram->comment($item->pk, $profile_comment);
+                                    if ($comment_response->isOk()) {
+                                        $commented = 1;
+                                        insertCommentLog($insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), $servername, $username, $password, $dbname);
+                                        echo "[" . $insta_username . "] commented on [" . $item->user->username . "] [" . $item->getItemUrl() . "]\n";
+                                    }
+                                    if ($commented == 1) {
+                                        break;
+                                    }
+                                }
+                            } else {
+                                $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
+                                
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
-                                    insertCommentLog($insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), $servername, $username, $password, $dbname);
-                                    echo "[" . $insta_username . "] commented on [" . $item->user->username . "] [" . $item->getItemUrl() . "]\n";
+                                    updateEngagementJob($outstanding_engagement_job["job_id"], $servername, $username, $password, $dbname);
+                                    echo "[" . $insta_username . "] commented on engagement job[" . $outstanding_engagement_job["job_id"] . "]\n";
                                 }
+                                
                                 if ($commented == 1) {
                                     break;
                                 }
@@ -150,7 +165,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 $followed = 1;
                                 break;
                             }
-                            
                         }
                     }
                 } catch (Exception $ex) {
@@ -257,4 +271,35 @@ function insertCommentLog($insta_username, $item_username, $item_userid, $item_i
     $stmt_insert_comment_log->bind_param("sssss", $insta_username, $item_username, $item_userid, $item_id, $resp);
     $stmt_insert_comment_log->execute();
     $conn_insert_comment_log->close();
+}
+
+function getOutstandingEngagementJob($insta_username, $servername, $username, $password, $dbname) {
+    $engagement_job = NULL;
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("set names utf8mb4");
+    $stmt_get_engagement_job = $conn->prepare("SELECT job_id, media_id FROM insta_affiliate.engagement_job_queue WHERE insta_username = ? AND action = 1 AND fulfilled = 0 ORDER BY job_id ASC;");
+    $stmt_get_engagement_job->bind_param("s", $insta_username);
+    $stmt_get_engagement_job->execute();
+    $stmt_get_engagement_job->store_result();
+    $stmt_get_engagement_job->bind_result($job_id, $media_id);
+    while ($stmt_get_engagement_job->fetch()) {
+        $engagement_job = array(
+            "job_id" => $job_id,
+            "media_id" => $media_id
+        );
+    }
+    $stmt_get_engagement_job->free_result();
+    $stmt_get_engagement_job->close();
+    $conn->close();
+    return $engagement_job;
+}
+
+function updateEngagementJob($job_id, $servername, $username, $password, $dbname) {
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("set names utf8mb4");
+    $update_engagement_job = $conn->prepare("UPDATE insta_affiliate.engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;");
+    $update_engagement_job->bind_param("i", $job_id);
+    $update_engagement_job->execute();
+    $update_engagement_job->close();
+    $conn->close();
 }
