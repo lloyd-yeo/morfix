@@ -220,12 +220,12 @@ foreach ($emails as $email) {
                 } else {
                     $instagram->setProxy($proxy);
                 }
-                
+
                 $ig_username = $insta_username;
                 $ig_password = $insta_pw;
                 $instagram->setUser($ig_username, $ig_password);
                 $instagram->login();
-                
+
                 //start with targeted usernames/hashtags
                 $use_hashtags = rand(0, 1);
                 $target_hashtags = NULL;
@@ -245,7 +245,7 @@ foreach ($emails as $email) {
                 }
                 $followed = 0;
                 $throttle_limit = 41;
-                
+
                 if ($use_hashtags == 1 && count($target_hashtags) > 0) {
                     $throttle_count = 0;
                     try {
@@ -276,6 +276,7 @@ foreach ($emails as $email) {
                                                 updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
                                                 insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
                                                 $followed = 1;
+                                                echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
                                                 break;
                                             } else {
                                                 continue;
@@ -298,8 +299,52 @@ foreach ($emails as $email) {
                         echo "[" . $insta_username . "] hashtag-error: " . $ex->getMessage() . "\n";
                     }
                 } else if ($use_hashtags == 0 && count($target_usernames) > 0) {
+                    $throttle_count = 0;
                     try {
-                        
+
+                        foreach ($target_usernames as $target_username) {
+                            echo "[" . $insta_username . "] using target username: " . $target_username . "\n";
+
+                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username));
+                            $users_to_follow = $user_follower_response->users;
+                            foreach ($users_to_follow as $user_to_follow) {
+                                if ($user_to_follow->is_private) {
+                                    echo "[" . $insta_username . "] [$user_to_follow->username] is private.\n";
+                                    continue;
+                                } else if ($user_to_follow->has_anonymous_profile_picture) {
+                                    echo "[" . $insta_username . "] [$user_to_follow->username] has no profile pic.\n";
+                                    continue;
+                                } else {
+                                    if (checkUserFollowLogs($insta_username, $user_to_follow->pk, $servername, $username, $password, $dbname)) {
+                                        //user exists aka duplicate
+                                        echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
+                                        continue;
+                                    } else {
+                                        try {
+                                            $follow_resp = $instagram->follow($user_to_follow->pk);
+                                            if ($follow_resp->friendship_status->following == true) {
+                                                updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
+                                                insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
+                                                $followed = 1;
+                                                echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
+                                                break;
+                                            } else {
+                                                continue;
+                                            }
+                                        } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                                            echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                            continue;
+                                        }
+                                    }
+                                }
+                            }
+                            if ($throttle_count == $throttle_limit) {
+                                break;
+                            }
+                            if ($followed == 1) {
+                                break;
+                            }
+                        }
                     } catch (Exception $ex) {
                         echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
                     }
