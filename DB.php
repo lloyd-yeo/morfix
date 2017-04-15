@@ -26,6 +26,32 @@ $get_premium_users_sql = "SELECT u.email FROM insta_affiliate.user u "
 $get_premium_and_free_trial_users_by_email_sql = "SELECT u.email FROM insta_affiliate.user u "
         . "WHERE u.email = ?;";
 
+$get_all_profile_sql = "SELECT DISTINCT(insta_username),
+                insta_user_id, 
+                id, 
+                insta_pw,
+                niche, 
+                next_follow_time, 
+                niche_target_counter, 
+                unfollow, 
+                auto_interaction_ban, 
+                auto_interaction_ban_time,
+                follow_cycle,
+                auto_unfollow,
+                auto_follow,
+                auto_follow_ban,
+                auto_follow_ban_time,
+                follow_unfollow_delay,
+                speed,
+                follow_min_followers,
+                follow_max_followers,
+                unfollow_unfollowed,
+                daily_follow_quota,
+                daily_unfollow_quota,
+                proxy
+                FROM insta_affiliate.user_insta_profile 
+                WHERE email = ?;";
+
 $get_follow_profile_sql = "SELECT DISTINCT(insta_username),
                 insta_user_id, 
                 id, 
