@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel {
             $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
         }
         
-        for ($i = 0; $i < 24; $i++) {
+        for ($i = 1; $i < 24; $i++) {
             $counter = $i * 20;
             $schedule->command('interaction:follow ' . $counter . ' 20')->everyFiveMinutes();
         }

@@ -37,7 +37,6 @@ if (is_null($specific_email)) {
     $stmt_get_user->free_result();
     $stmt_get_user->close();
 }
-
 $conn_get_user->close();
 
 foreach ($emails as $email) {
@@ -174,7 +173,7 @@ foreach ($emails as $email) {
                             var_dump($resp);
                             if ($resp->friendship_status->following === false) {
                                 updateUnfollowLog($user_to_unfollow["log_id"], $insta_username, $servername, $username, $password, $dbname);
-                                updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "unfollow", $insta_username, $servername, $username, $password, $dbname);
+                                updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "unfollow", $servername, $username, $password, $dbname);
                                 break;
                             }
                         }
@@ -196,8 +195,7 @@ foreach ($emails as $email) {
                 } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                     echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
                 }
-            } else if ($unfollow == 0 && $auto_follow == 1) {
-
+            } else if ($unfollow == 0 && $auto_follow == 1) { //follow sequence
                 if ($daily_follow_quota < 1) {
                     echo "[" . $insta_username . "] has reached quota for following today.\n";
                     continue;
@@ -224,6 +222,53 @@ foreach ($emails as $email) {
                 }
 
                 //start with targeted usernames/hashtags
+                $use_hashtags = rand(0, 1);
+                $target_hashtags = NULL;
+                $target_usernames = NULL;
+                if ($use_hashtags == 1) {
+                    $target_hashtags = getTargetedHashtagsByIgUsername($insta_username, $servername, $username, $password, $dbname);
+                    if (count($target_hashtags) == 0) {
+                        $target_usernames = getTargetedUsernamesByIgUsername($insta_username, $servername, $username, $password, $dbname);
+                        $use_hashtags = 0;
+                    }
+                } else if ($use_hashtags == 0) {
+                    $target_usernames = getTargetedUsernamesByIgUsername($insta_username, $servername, $username, $password, $dbname);
+                    if (count($target_usernames) == 0) {
+                        $target_hashtags = getTargetedHashtagsByIgUsername($insta_username, $servername, $username, $password, $dbname);
+                        $use_hashtags = 1;
+                    }
+                }
+
+                if ($use_hashtags == 1 && count($target_hashtags) > 0) {
+                    try {
+                        
+                        foreach ($target_hashtags as $target_hashtag) {
+                            echo "[" . $insta_username . "] using hashtag: " . $target_hashtag . "\n";
+                            $hashtag_feed = $instagram->getHashtagFeed($target_hashtag);
+                            foreach ($hashtag_feed->items as $item) {
+                                $duplicate = 0;
+                                $user_to_follow = $item->user;
+                                
+                            }
+                            
+                        }
+                        
+                    } catch (Exception $ex) {
+                        echo "[" . $insta_username . "] hashtag-error: " . $ex->getMessage() . "\n";
+                    }
+                } else if ($use_hashtags == 0 && count($target_usernames) > 0) {
+                    try {
+                        
+                    } catch (Exception $ex) {
+                        echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
+                    }
+                } else if ($use_hashtags == 0 && count($target_usernames) == 0 && count($target_hashtags) == 0) {
+                    try {
+                        
+                    } catch (Exception $ex) {
+                        echo "[" . $insta_username . "] niche-error: " . $ex->getMessage() . "\n";
+                    }
+                }
             }
         } catch (Exception $ex) {
             echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
@@ -307,7 +352,7 @@ function updateUserNextFollowTime($insta_username, $delay, $mode, $servername, $
     }
 }
 
-function getTargetedUsernames($insta_username, $servername, $username, $password, $dbname) {
+function getTargetedUsernamesByIgUsername($insta_username, $servername, $username, $password, $dbname) {
     $target_usernames = array();
     $conn_get_target_usernames = getConnection($servername, $username, $password, $dbname);
     $stmt_get_target_usernames = $conn_get_target_usernames->prepare("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();");
@@ -322,4 +367,33 @@ function getTargetedUsernames($insta_username, $servername, $username, $password
     $stmt_get_target_usernames->close();
     $conn_get_target_usernames->close();
     return $target_usernames;
+}
+
+function getTargetedHashtagsByIgUsername($insta_username, $servername, $username, $password, $dbname) {
+    $target_hashtags = array();
+    $conn_get_target_hashtags = getConnection($servername, $username, $password, $dbname);
+    $stmt_get_target_hashtags = $conn_get_target_hashtags->prepare("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ? ORDER BY RAND();");
+    $stmt_get_target_hashtags->bind_param("s", $insta_username);
+    $stmt_get_target_hashtags->execute();
+    $stmt_get_target_hashtags->store_result();
+    $stmt_get_target_hashtags->bind_result($hashtag);
+    while ($stmt_get_target_hashtags->fetch()) {
+        $target_hashtags[] = $hashtag;
+    }
+    $stmt_get_target_hashtags->free_result();
+    $stmt_get_target_hashtags->close();
+    $conn_get_target_hashtags->close();
+    return $target_hashtags;
+}
+
+function checkUserFollowLogs($insta_username, $follower_id, $servername, $username, $password, $dbname) {
+    $exists = false;
+    $conn_get_followed_username = getConnection($servername, $username, $password, $dbname);
+    $stmt_get_followed_username = $conn_get_followed_username->prepare("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;");
+    $stmt_get_followed_username->bind_param("ss", $insta_username, $follower_id);
+    $stmt_get_followed_username->execute();
+    while ($stmt_get_followed_username->fetch()) {
+        
+    }
+    
 }
