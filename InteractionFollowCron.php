@@ -1,18 +1,15 @@
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
-require __DIR__ . 'DB.php';
+require __DIR__ . '/DB.php';
 $start = microtime(true);
 
 $offset = $argv[1];
 $num_result = $argv[2]; //this is the constant
 
 $emails = array();
-
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$conn_get_user = getConnection();
-$stmt_get_user = $conn_get_user->prepare("SELECT u.email FROM insta_affiliate.user u "
-        . "WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;");
+$conn_get_user = getConnection($servername, $username, $password, $dbname);
+$stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_user_sql);
 $stmt_get_user->bind_param("ii", $offset, $num_result);
 $stmt_get_user->execute();
 $stmt_get_user->store_result();
@@ -26,68 +23,14 @@ $conn_get_user->close();
 
 foreach ($emails as $email) {
     $insta_profiles = array();
-    $conn_get_profiles = getConnection();
-    $stmt_get_profile = $conn_get_profiles->prepare("SELECT DISTINCT(insta_username),
-                insta_user_id, 
-                id, 
-                insta_pw,
-                niche, 
-                next_follow_time, 
-                niche_target_counter, 
-                unfollow, 
-                auto_interaction_ban, 
-                auto_interaction_ban_time,
-                follow_cycle,
-                auto_unfollow,
-                auto_follow,
-                auto_follow_ban,
-                auto_follow_ban_time,
-                follow_unfollow_delay,
-                speed,
-                follow_min_followers,
-                follow_max_followers,
-                unfollow_unfollowed,
-                daily_follow_quota,
-                daily_unfollow_quota,
-                proxy
-                FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
-                AND email = ?
-                AND NOW() >= next_follow_time
-                AND auto_follow_ban = 0
-                AND (auto_follow = 1 OR auto_unfollow = 1) 
-                AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0 AND feedback_required = 0;");
+    $conn_get_profiles = getConnection($servername, $username, $password, $dbname);
+    $stmt_get_profile = $conn_get_profiles->prepare($get_follow_profile_sql);
     $stmt_get_profile->bind_param("s", $email);
     $stmt_get_profile->execute();
     $stmt_get_profile->store_result();
-    $stmt_get_profile->bind_result(
-            $insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy);
+    $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy);
     while ($stmt_get_profile->fetch()) {
-        $insta_profiles[] = array(
-            "insta_username" => $insta_username,
-            "insta_user_id" => $insta_user_id,
-            "insta_id" => $insta_id,
-            "insta_pw" => $insta_pw,
-            "niche" => $niche,
-            "next_follow_time" => $next_follow_time,
-            "niche_target_counter" => $niche_target_counter,
-            "unfollow" => $unfollow,
-            "auto_interaction_ban" => $auto_interaction_ban,
-            "auto_interaction_ban_time" => $auto_interaction_ban_time,
-            "follow_cycle" => $follow_cycle,
-            "auto_unfollow" => $auto_unfollow,
-            "auto_follow" => $auto_follow,
-            "auto_follow_ban" => $auto_follow_ban,
-            "auto_follow_ban_time" => $auto_follow_ban_time,
-            "follow_unfollow_delay" => $follow_unfollow_delay,
-            "speed" => $speed,
-            "follow_min_follower" => $follow_min_follower,
-            "follow_max_follower" => $follow_max_follower,
-            "unfollow_unfollowed" => $unfollow_unfollowed,
-            "daily_follow_quota" => $daily_follow_quota,
-            "daily_unfollow_quota" => $daily_unfollow_quota,
-            "proxy" => $proxy
-        );
+        $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy);
     }
     $stmt_get_profile->free_result();
     $stmt_get_profile->close();
@@ -173,10 +116,14 @@ foreach ($emails as $email) {
                 if (is_null($proxy)) {
                     continue;
                 } else {
-                    $instagram->setProxy($ig_profile->proxy);
+                    $instagram->setProxy($proxy);
                 }
+                
                 try {
+                    $ig_username = $insta_username;
+                    $ig_password = $insta_pw;
                     $instagram->setUser($ig_username, $ig_password);
+                    $instagram->login();
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     echo "[" . $insta_username . "] " . $checkpoint_ex->getMessage() . "\n";
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
@@ -191,12 +138,42 @@ foreach ($emails as $email) {
                     echo "[" . $insta_username . "] " . $emptyresponse_ex->getMessage() . "\n";
                 } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
                     echo "[" . $insta_username . "] " . $throttled_ex->getMessage() . "\n";
+                } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                    echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
                 }
             }
         } catch (Exception $ex) {
             echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
         }
     }
+}
+
+function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy) {
+    return array(
+        "insta_username" => $insta_username,
+        "insta_user_id" => $insta_user_id,
+        "insta_id" => $insta_id,
+        "insta_pw" => $insta_pw,
+        "niche" => $niche,
+        "next_follow_time" => $next_follow_time,
+        "niche_target_counter" => $niche_target_counter,
+        "unfollow" => $unfollow,
+        "auto_interaction_ban" => $auto_interaction_ban,
+        "auto_interaction_ban_time" => $auto_interaction_ban_time,
+        "follow_cycle" => $follow_cycle,
+        "auto_unfollow" => $auto_unfollow,
+        "auto_follow" => $auto_follow,
+        "auto_follow_ban" => $auto_follow_ban,
+        "auto_follow_ban_time" => $auto_follow_ban_time,
+        "follow_unfollow_delay" => $follow_unfollow_delay,
+        "speed" => $speed,
+        "follow_min_follower" => $follow_min_follower,
+        "follow_max_follower" => $follow_max_follower,
+        "unfollow_unfollowed" => $unfollow_unfollowed,
+        "daily_follow_quota" => $daily_follow_quota,
+        "daily_unfollow_quota" => $daily_unfollow_quota,
+        "proxy" => $proxy
+    );
 }
 
 $time_elapsed_secs = microtime(true) - $start;
