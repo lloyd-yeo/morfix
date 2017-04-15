@@ -240,7 +240,7 @@ function getUserNewestFollow($insta_username, $servername, $username, $password,
 
 function updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname) {
     $conn_f = new mysqli($servername, $username, $password, $dbname);
-    $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET feedback_required = 1 WHERE insta_username = ?;");
+    $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET comment_feedback_required = 1 WHERE insta_username = ?;");
     $stmt_update_user_profile->bind_param("s", $insta_username);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();

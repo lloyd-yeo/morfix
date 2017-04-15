@@ -84,7 +84,8 @@ $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
                 WHERE auto_interaction = 1
                 AND email = ?
                 AND auto_comment = 1
-                AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0 AND feedback_required = 0;";
+                AND comment_feedback_required = 0
+                AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0;";
 
 
 $get_follows_sql = "SELECT log_id, follower_username, follower_id FROM insta_affiliate.user_insta_profile_follow_log WHERE insta_username = ? AND unfollowed = 0 AND follow = 1 ORDER BY date_inserted ASC LIMIT 2;";
