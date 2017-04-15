@@ -447,7 +447,8 @@ function insertNewFollowLogEntry($insta_username, $follower_username, $follower_
     $stmt_update_follow_log = $conn_insert_follow->prepare("INSERT INTO `insta_affiliate`.`user_insta_profile_follow_log`
                             (`insta_username`, `follower_username`, `follower_id`, `log`, `follow_success`) 
                             VALUES (?,?,?,?,?);");
-    $stmt_update_follow_log->bind_param("ssssi", $insta_username, $follower_username, $follower_id, $resp, 1);
+    $follow_success = 1;
+    $stmt_update_follow_log->bind_param("ssssi", $insta_username, $follower_username, $follower_id, $resp, $follow_success);
     $stmt_update_follow_log->execute();
     $stmt_update_follow_log->close();
     $conn_insert_follow->close();
