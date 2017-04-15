@@ -137,7 +137,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
                                     insertCommentLog($insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), $servername, $username, $password, $dbname);
-                                    
+                                    echo "[" . $insta_username . "] commented on [".$item->user->username."] [" . $item->getItemUrl() . "]\n";
                                 }
                                 if ($commented == 1) {
                                     break;
@@ -242,7 +242,7 @@ function updateUserFeedbackRequired($insta_username, $servername, $username, $pa
 }
 
 function insertCommentLog($insta_username, $item_username, $item_userid, $item_id, $resp, $servername, $username, $password, $dbname) {
-    $conn_insert_comment_log = new mysqli($servername, $username, $password, $dbname);
+    $conn_insert_comment_log = getConnection($servername, $username, $password, $dbname);
     $stmt_insert_comment_log = $conn_insert_comment_log->prepare("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, target_media, log, date_commented) VALUES (?,?,?,?,?,NOW());");
     $stmt_insert_comment_log->bind_param("sssss", $insta_username, $item_username, $item_userid, $item_id, $resp);
     $stmt_insert_comment_log->execute();
