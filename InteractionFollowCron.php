@@ -249,7 +249,7 @@ foreach ($emails as $email) {
                     }
                 }
                 echo "[" . $insta_username . "] AFTER random use hashtag: $use_hashtags\n";
-                echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) ."] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $niche . "]\n";
+                echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) . "] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $niche . "]\n";
                 $followed = 0;
                 $throttle_limit = 41;
 
@@ -391,6 +391,9 @@ foreach ($emails as $email) {
                                                 }
                                             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                                 echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                                if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                                    
+                                                }
                                                 continue;
                                             }
                                         }
@@ -567,4 +570,13 @@ function getNicheTargets($niche, $servername, $username, $password, $dbname) {
     $stmt_get_niche_targets->close();
     $conn_get_niche_targets->close();
     return $niche_targets;
+}
+
+function updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname) {
+    $conn_f = new mysqli($servername, $username, $password, $dbname);
+    $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET feedback_required = 1 WHERE insta_username = ?;");
+    $stmt_update_user_profile->bind_param("s", $insta_username);
+    $stmt_update_user_profile->execute();
+    $stmt_update_user_profile->close();
+    $conn_f->close();
 }
