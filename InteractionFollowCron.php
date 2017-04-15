@@ -269,9 +269,6 @@ foreach ($emails as $email) {
                                     } else if ($user_to_follow->has_anonymous_profile_picture) {
                                         echo "[" . $insta_username . "] [$user_to_follow->username] has no profile pic.\n";
                                         continue;
-                                    } else if ($user_to_follow->media_count == 0) {
-                                        echo "[" . $insta_username . "] [$user_to_follow->username] has no posts.\n";
-                                        continue;
                                     } else {
                                         try {
                                             $follow_resp = $instagram->follow($user_to_follow->pk);
