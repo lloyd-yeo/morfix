@@ -45,15 +45,15 @@ class Kernel extends ConsoleKernel {
             $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
         }
         
-        for ($i = 1; $i < 24; $i++) {
-            $counter = $i * 20;
-            $schedule->command('interaction:follow ' . $counter . ' 20')->everyFiveMinutes();
-        }
-        $schedule->command('interaction:follow 0 0 annegreenfield323@gmail.com')->everyFiveMinutes();
-        $schedule->command('interaction:follow 0 0 caleb@calebthetrainer.com')->everyFiveMinutes();
-        $schedule->command('interaction:follow 0 0 xtremewealth@gmail.com')->everyFiveMinutes();
-        $schedule->command('interaction:follow 0 0 Shawnjosiah.pd@gmail.com')->everyFiveMinutes();
-        $schedule->command('interaction:follow 0 0 nicolasmaton@gmail.com ')->everyFiveMinutes();
+//        for ($i = 1; $i < 24; $i++) {
+//            $counter = $i * 20;
+//            $schedule->command('interaction:follow ' . $counter . ' 20')->everyFiveMinutes();
+//        }
+//        $schedule->command('interaction:follow 0 0 annegreenfield323@gmail.com')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 0 0 caleb@calebthetrainer.com')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 0 0 xtremewealth@gmail.com')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 0 0 Shawnjosiah.pd@gmail.com')->everyFiveMinutes();
+//        $schedule->command('interaction:follow 0 0 nicolasmaton@gmail.com ')->everyFiveMinutes();
         
         
         for ($i = 0; $i < 50; $i++) {
