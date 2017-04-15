@@ -136,7 +136,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 $comment_response = $instagram->comment($item->pk, $profile_comment);
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
-                                    insertCommentLog($insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response));
+                                    insertCommentLog($insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), $servername, $username, $password, $dbname);
                                 }
                                 if ($commented == 1) {
                                     break;
