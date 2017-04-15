@@ -54,10 +54,10 @@ class Kernel extends ConsoleKernel {
             $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
         }
         
-        for ($i = 0; $i < 50; $i++) {
-            $counter = $i * 10;
-            $schedule->command('interaction:comment ' . $counter . ' 10')->everyFiveMinutes();
-        }
+//        for ($i = 0; $i < 50; $i++) {
+//            $counter = $i * 10;
+//            $schedule->command('interaction:comment ' . $counter . ' 10')->everyFiveMinutes();
+//        }
         
         $schedule->command("engagement:add")->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command('ig:refresh 0 100')->everyThirtyMinutes();
