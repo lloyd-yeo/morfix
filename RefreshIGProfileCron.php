@@ -21,7 +21,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $stmt_get_user = NULL;
     if (is_null($specific_email)) {
         echo "Retrieving users off $offset $num_result\n\n";
-        $stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_users_sql);
+        $stmt_get_user = $conn_get_user->prepare($get_all_users_sql);
         $stmt_get_user->bind_param("ii", $offset, $num_result);
         $stmt_get_user->execute();
         $stmt_get_user->store_result();
