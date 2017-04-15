@@ -122,6 +122,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             $instagram->setUser($ig_username, $ig_password);
                             $instagram->login();
                             $outstanding_engagement_job = getOutstandingEngagementJob($insta_username, $servername, $username, $password, $dbname);
+                            //comment on engagement group first else as per usual.
                             if (is_null($outstanding_engagement_job)) {
                                 $target_username_posts = $instagram->getUserFeed($newest_follow["follower_id"]);
                                 if (count($target_username_posts->items) == 0) {
@@ -145,9 +146,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         break;
                                     }
                                 }
-                            } else {
+                            } else { 
                                 $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
-                                
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
                                     updateEngagementJob($outstanding_engagement_job["job_id"], $servername, $username, $password, $dbname);

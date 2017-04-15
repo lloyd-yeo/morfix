@@ -52,7 +52,7 @@ $get_follow_profile_sql = "SELECT DISTINCT(insta_username),
                 FROM insta_affiliate.user_insta_profile 
                 WHERE auto_interaction = 1
                 AND email = ?
-                AND NOW() >= next_follow_time
+                AND (NOW() >= next_follow_time OR next_follow_time = NULL)
                 AND auto_follow_ban = 0
                 AND (auto_follow = 1 OR auto_unfollow = 1) 
                 AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0 AND feedback_required = 0;";
