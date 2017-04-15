@@ -109,7 +109,7 @@ foreach ($emails as $email) {
                 $config["dbname"] = "morfix";
                 $config["dbtablename"] = "instagram_sessions";
 
-                $debug = true;
+                $debug = false;
                 $truncatedDebug = false;
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
@@ -150,6 +150,12 @@ foreach ($emails as $email) {
                     } else {
                         foreach ($users_to_unfollow as $user_to_unfollow) {
                             echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow["follower_username"] . "\n";
+                            $resp = $instagram->unfollow($user_to_unfollow["follower_id"]);
+                            echo "[" . $insta_username . "] ";
+                            var_dump($resp);
+                            if ($resp->friendship_status->following === false) {
+                                updateUnfollowLog($user_to_unfollow["log_id"], $insta_username, $servername, $username, $password, $dbname);
+                            }
                         }
                     }
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
@@ -218,4 +224,17 @@ function switchFollowCycle($insta_id, $insta_username, $servername, $username, $
     }
     $stmt_switch_follow->close();
     $conn_switch_follow_status->close();
+}
+
+function updateUnfollowLog($logid, $insta_username, $servername, $username, $password, $dbname) {
+    $conn_ = new mysqli($servername, $username, $password, $dbname);
+    $conn_->query("set names utf8mb4");
+    $stmt_update_follow_log = $conn_->prepare("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW() "
+            . "WHERE log_id = ?;");
+    $stmt_update_follow_log->bind_param("i", $logid);
+    if ($stmt_update_follow_log->execute()) {
+        echo "[" . $insta_username . "] marked as unfollowed & updated log: " . $logid . "\n\n";
+    }
+    $stmt_update_follow_log->close();
+    $conn_->close();
 }
