@@ -242,7 +242,8 @@ function updateUserFeedbackRequired($insta_username, $servername, $username, $pa
 }
 
 function insertCommentLog($insta_username, $item_username, $item_userid, $item_id, $resp, $servername, $username, $password, $dbname) {
-    $conn_insert_comment_log = getConnection($servername, $username, $password, $dbname);
+    $conn_insert_comment_log = new mysqli($servername, $username, $password, $dbname);
+    $conn_insert_comment_log->query("set names utf8mb4");
     $stmt_insert_comment_log = $conn_insert_comment_log->prepare("INSERT INTO insta_affiliate.user_insta_profile_comment_log (insta_username, target_username, target_insta_id, target_media, log, date_commented) VALUES (?,?,?,?,?,NOW());");
     $stmt_insert_comment_log->bind_param("sssss", $insta_username, $item_username, $item_userid, $item_id, $resp);
     $stmt_insert_comment_log->execute();

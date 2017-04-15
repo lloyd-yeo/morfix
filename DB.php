@@ -10,9 +10,9 @@ if (function_exists('getConnection')) {
 } else {
 
     function getConnection($servername, $username, $password, $dbname) {
-        $conn_get_profiles = new mysqli($servername, $username, $password, $dbname);
-        $conn_get_profiles->query("set names utf8mb4");
-        return $conn_get_profiles;
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        $conn->query("set names utf8mb4");
+        return $conn;
     }
 
 }
