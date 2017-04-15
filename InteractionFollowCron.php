@@ -290,6 +290,11 @@ foreach ($emails as $email) {
                                             }
                                         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                             echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                            if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                                updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                                                $followed = 1;
+                                                break;
+                                            }
                                             continue;
                                         }
                                     }
@@ -340,6 +345,11 @@ foreach ($emails as $email) {
                                             }
                                         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                             echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                            if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                                updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                                                $followed = 1;
+                                                break;
+                                            }
                                             continue;
                                         }
                                     }
@@ -392,7 +402,9 @@ foreach ($emails as $email) {
                                             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                                 echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
                                                 if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
-                                                    
+                                                    updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                                                    $followed = 1;
+                                                    break;
                                                 }
                                                 continue;
                                             }
