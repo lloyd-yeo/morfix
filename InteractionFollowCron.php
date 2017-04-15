@@ -243,6 +243,7 @@ foreach ($emails as $email) {
                         $use_hashtags = 1;
                     }
                 }
+                echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) ."] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $niche . "]\n";
                 $followed = 0;
                 $throttle_limit = 41;
 
@@ -354,9 +355,7 @@ foreach ($emails as $email) {
                             continue;
                         } else {
                             foreach (getNicheTargets($niche, $servername, $username, $password, $dbname) as $target_username) {
-
                                 echo "[" . $insta_username . "] using NICHE target username: " . $target_username . "\n";
-
                                 $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username));
                                 $users_to_follow = $user_follower_response->users;
                                 foreach ($users_to_follow as $user_to_follow) {
