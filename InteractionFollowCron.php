@@ -241,7 +241,11 @@ foreach ($emails as $email) {
                     $target_usernames = getTargetedUsernamesByIgUsername($insta_username, $servername, $username, $password, $dbname);
                     if (count($target_usernames) == 0) {
                         $target_hashtags = getTargetedHashtagsByIgUsername($insta_username, $servername, $username, $password, $dbname);
-                        $use_hashtags = 1;
+                        if (count($target_hashtags) > 0) {
+                            $use_hashtags = 1;
+                        } else {
+                            $use_hashtags = 0;
+                        }
                     }
                 }
                 echo "[" . $insta_username . "] AFTER random use hashtag: $use_hashtags\n";
