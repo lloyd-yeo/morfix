@@ -3,22 +3,40 @@
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/DB.php';
 $start = microtime(true);
-
+$specific_email = NULL;
 $offset = $argv[1];
 $num_result = $argv[2]; //this is the constant
+if (isset($argv[3])) {
+    $specific_email = $argv[3];
+}
 
 $emails = array();
 $conn_get_user = getConnection($servername, $username, $password, $dbname);
-$stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_user_sql);
-$stmt_get_user->bind_param("ii", $offset, $num_result);
-$stmt_get_user->execute();
-$stmt_get_user->store_result();
-$stmt_get_user->bind_result($email_);
-while ($stmt_get_user->fetch()) {
-    $emails[$email_] = $email_;
+$stmt_get_user = NULL;
+if (is_null($specific_email)) {
+    $stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_users_sql);
+    $stmt_get_user->bind_param("ii", $offset, $num_result);
+    $stmt_get_user->execute();
+    $stmt_get_user->store_result();
+    $stmt_get_user->bind_result($email_);
+    while ($stmt_get_user->fetch()) {
+        $emails[$email_] = $email_;
+    }
+    $stmt_get_user->free_result();
+    $stmt_get_user->close();
+} else {
+    $stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_users_by_email_sql);
+    $stmt_get_user->bind_param("s", $specific_email);
+    $stmt_get_user->execute();
+    $stmt_get_user->store_result();
+    $stmt_get_user->bind_result($email_);
+    while ($stmt_get_user->fetch()) {
+        $emails[$email_] = $email_;
+    }
+    $stmt_get_user->free_result();
+    $stmt_get_user->close();
 }
-$stmt_get_user->free_result();
-$stmt_get_user->close();
+
 $conn_get_user->close();
 
 foreach ($emails as $email) {
@@ -178,12 +196,12 @@ foreach ($emails as $email) {
                     echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
                 }
             } else if ($unfollow == 0 && $auto_follow == 1) {
-                
+
                 if ($daily_follow_quota < 1) {
                     echo "[" . $insta_username . "] has reached quota for following today.\n";
                     continue;
                 }
-                
+
                 echo "[" . $insta_username . "] beginning following sequence.\n";
 
                 $config = array();
@@ -203,9 +221,8 @@ foreach ($emails as $email) {
                 } else {
                     $instagram->setProxy($proxy);
                 }
-                
+
                 //start with targeted usernames/hashtags
-                
             }
         } catch (Exception $ex) {
             echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
@@ -215,6 +232,7 @@ foreach ($emails as $email) {
 
 $time_elapsed_secs = microtime(true) - $start;
 echo $time_elapsed_secs;
+
 //END OF SCRIPT
 
 function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy) {
@@ -301,6 +319,6 @@ function getTargetedUsernames($insta_username, $servername, $username, $password
     }
     $stmt_get_target_usernames->free_result();
     $stmt_get_target_usernames->close();
-    $conn_get_target_usernames->close(); 
+    $conn_get_target_usernames->close();
     return $target_usernames;
 }
