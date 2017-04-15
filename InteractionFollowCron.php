@@ -356,6 +356,7 @@ foreach ($emails as $email) {
                         echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
                     }
                 } else if ($use_hashtags == 0 && count($target_usernames) == 0 && count($target_hashtags) == 0) {
+                    $throttle_count = 0;
                     try {
                         if ($niche == 0) {
                             continue;
