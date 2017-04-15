@@ -151,7 +151,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
                                     updateEngagementJob($outstanding_engagement_job["job_id"], $servername, $username, $password, $dbname);
-                                    echo "[" . $insta_username . "] commented on engagement job[" . $outstanding_engagement_job["job_id"] . "]\n";
+                                    echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
                                 }
                                 
                                 if ($commented == 1) {
