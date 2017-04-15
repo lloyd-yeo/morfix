@@ -12,8 +12,8 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 
-class UnbanInteraction extends Command
-{
+class UnbanInteraction extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -33,8 +33,7 @@ class UnbanInteraction extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -43,9 +42,20 @@ class UnbanInteraction extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $invalidate_proxy = DB::connection("mysql_old")->update("UPDATE user_insta_profile SET proxy = NULL, invalid_proxy = 0 WHERE invalid_proxy = 1;");
+
+        $ig_profiles = DB::connection('mysql_old')->select("SELECT id FROM user_insta_profile WHERE proxy = NULL;");
+        
+        foreach ($ig_profiles as $ig_profile) {
+            $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
+            foreach ($proxies as $proxy) {
+                $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
+                $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = assigned + 1 where proxy = ?;', [$proxy->proxy]);
+            }
+        }
+
         $remove_follow_ban = DB::connection("mysql_old")->update("UPDATE user_insta_profile SET auto_follow_ban = 0, auto_follow_ban_time = NULL WHERE auto_follow_ban = 1 AND NOW() >= auto_follow_ban_time;");
     }
+
 }
