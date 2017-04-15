@@ -273,7 +273,7 @@ foreach ($emails as $email) {
                                         try {
                                             $follow_resp = $instagram->follow($user_to_follow->pk);
                                             if ($follow_resp->friendship_status->following == true) {
-                                                updateUserNextFollowTime($insta_username, $follow_unfollow_delay, $servername, $username, $password, $dbname);
+                                                updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
                                                 insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
                                                 $followed = 1;
                                                 break;
