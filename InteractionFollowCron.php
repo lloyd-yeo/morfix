@@ -1,20 +1,16 @@
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . 'DB.php';
 $start = microtime(true);
 
 $offset = $argv[1];
 $num_result = $argv[2]; //this is the constant
 
-$servername = "52.221.60.235";
-$username = "root";
-$password = "inst@ffiliates123";
-$dbname = "insta_affiliate";
-
 $emails = array();
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$conn_get_user = new mysqli($servername, $username, $password, $dbname);
+$conn_get_user = getConnection();
 $stmt_get_user = $conn_get_user->prepare("SELECT u.email FROM insta_affiliate.user u "
         . "WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;");
 $stmt_get_user->bind_param("ii", $offset, $num_result);
@@ -30,8 +26,7 @@ $conn_get_user->close();
 
 foreach ($emails as $email) {
     $insta_profiles = array();
-    $conn_get_profiles = new mysqli($servername, $username, $password, $dbname);
-    $conn_get_profiles->query("set names utf8mb4");
+    $conn_get_profiles = getConnection();
     $stmt_get_profile = $conn_get_profiles->prepare("SELECT DISTINCT(insta_username),
                 insta_user_id, 
                 id, 
@@ -61,7 +56,7 @@ foreach ($emails as $email) {
                 AND NOW() >= next_follow_time
                 AND auto_follow_ban = 0
                 AND (auto_follow = 1 OR auto_unfollow = 1) 
-                AND checkpoint_required = 0 AND invalid_user = 0;");
+                AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0 AND feedback_required = 0;");
     $stmt_get_profile->bind_param("s", $email);
     $stmt_get_profile->execute();
     $stmt_get_profile->store_result();
@@ -153,7 +148,6 @@ foreach ($emails as $email) {
             }
 
             $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
-            
             //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
             if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $unfollow == 1)) {
 
@@ -181,6 +175,23 @@ foreach ($emails as $email) {
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }
+                try {
+                    $instagram->setUser($ig_username, $ig_password);
+                } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                    echo "[" . $insta_username . "] " . $checkpoint_ex->getMessage() . "\n";
+                } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                    echo "[" . $insta_username . "] " . $network_ex->getMessage() . "\n";
+                } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                    echo "[" . $insta_username . "] " . $endpoint_ex->getMessage() . "\n";
+                } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                    echo "[" . $insta_username . "] " . $incorrectpw_ex->getMessage() . "\n";
+                } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+                    echo "[" . $insta_username . "] " . $feedback_ex->getMessage() . "\n";
+                } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+                    echo "[" . $insta_username . "] " . $emptyresponse_ex->getMessage() . "\n";
+                } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+                    echo "[" . $insta_username . "] " . $throttled_ex->getMessage() . "\n";
+                }
             }
         } catch (Exception $ex) {
             echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
@@ -191,5 +202,4 @@ foreach ($emails as $email) {
 $time_elapsed_secs = microtime(true) - $start;
 echo $time_elapsed_secs;
 //END OF SCRIPT
-
 ?>
