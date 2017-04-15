@@ -46,5 +46,6 @@ class SnapshotFollowerAnalysis extends Command
     public function handle()
     {
         DB::connection("mysql_old")->insert("INSERT INTO user_insta_follower_analysis(insta_username, follower_count) SELECT insta_username, follower_count FROM user_insta_profile;");
+        DB::connection("mysql_old")->update("UPDATE user SET engagement_quota = 1;");
     }
 }

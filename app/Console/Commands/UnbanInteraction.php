@@ -43,10 +43,9 @@ class UnbanInteraction extends Command {
      * @return mixed
      */
     public function handle() {
+        $update_user_trial_activation = DB::connection("mysql_old")->update("UPDATE user SET trial_activation = 2 WHERE user_tier > 1;");
         $invalidate_proxy = DB::connection("mysql_old")->update("UPDATE user_insta_profile SET proxy = NULL, invalid_proxy = 0 WHERE invalid_proxy = 1;");
-
         $ig_profiles = DB::connection('mysql_old')->select("SELECT id FROM user_insta_profile WHERE proxy = NULL;");
-        
         foreach ($ig_profiles as $ig_profile) {
             $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
             foreach ($proxies as $proxy) {
@@ -56,6 +55,8 @@ class UnbanInteraction extends Command {
         }
 
         $remove_follow_ban = DB::connection("mysql_old")->update("UPDATE user_insta_profile SET auto_follow_ban = 0, auto_follow_ban_time = NULL WHERE auto_follow_ban = 1 AND NOW() >= auto_follow_ban_time;");
+        
+        
     }
 
 }
