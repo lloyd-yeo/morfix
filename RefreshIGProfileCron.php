@@ -11,9 +11,9 @@ if (isset($argv[3])) {
 }
 $file = NULL;
 if (isset($argv[3])) {
-    $file = fopen("profile-lock/cron-refresh-" . $specific_email . ".txt", "w+");
+    $file = fopen("/home/ubuntu/profile-lock/cron-refresh-" . $specific_email . ".txt", "w+");
 } else {
-    $file = fopen("profile-lock/cron-refresh-" . $offset . ".txt", "w+");
+    $file = fopen("/home/ubuntu/profile-lock/cron-refresh-" . $offset . ".txt", "w+");
 }
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();

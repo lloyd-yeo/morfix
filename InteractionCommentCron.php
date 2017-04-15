@@ -11,9 +11,9 @@ if (isset($argv[3])) {
 }
 $file = NULL;
 if (isset($argv[3])) {
-    $file = fopen("comment-lock/cron-interaction-comment-" . $specific_email . ".txt", "w+");
+    $file = fopen("/home/ubuntu/comment-lock/cron-interaction-comment-" . $specific_email . ".txt", "w+");
 } else {
-    $file = fopen("comment-lock/cron-interaction-comment-" . $offset . ".txt", "w+");
+    $file = fopen("/home/ubuntu/comment-lock/cron-interaction-comment-" . $offset . ".txt", "w+");
 }
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();

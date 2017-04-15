@@ -11,9 +11,9 @@ if (isset($argv[3])) {
 }
 $file = NULL;
 if (isset($argv[3])) {
-    $file = fopen("follow-lock/cron-interaction-follow-user-" . $specific_email . ".txt", "w+");
+    $file = fopen("/home/ubuntu/follow-lock/cron-interaction-follow-user-" . $specific_email . ".txt", "w+");
 } else {
-    $file = fopen("follow-lock/cron-interaction-follow-user-" . $offset . ".txt", "w+");
+    $file = fopen("/home/ubuntu/follow-lock/cron-interaction-follow-user-" . $offset . ".txt", "w+");
 }
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();
