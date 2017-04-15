@@ -18,7 +18,7 @@ if (function_exists('getConnection')) {
 }
 
 $get_premium_and_free_trial_users_sql = "SELECT u.email FROM insta_affiliate.user u "
-        . "WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;";
+        . "WHERE (u.user_tier > 1 OR u.trial_activation = 1) AND u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;";
 
 $get_premium_and_free_trial_users_by_email_sql = "SELECT u.email FROM insta_affiliate.user u "
         . "WHERE u.email = ?;";
