@@ -49,11 +49,19 @@ class Kernel extends ConsoleKernel {
             $counter = $i * 20;
             $schedule->command('interaction:follow ' . $counter . ' 20')->everyFiveMinutes();
         }
-
+        $schedule->command('interaction:follow 0 0 annegreenfield323@gmail.com')->everyFiveMinutes();
+        $schedule->command('interaction:follow 0 0 caleb@calebthetrainer.com')->everyFiveMinutes();
+        $schedule->command('interaction:follow 0 0 xtremewealth@gmail.com')->everyFiveMinutes();
+        
+        
         for ($i = 0; $i < 50; $i++) {
             $counter = $i * 20;
             $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
         }
+        
+        $schedule->command('interaction:like 0 0 annegreenfield323@gmail.com')->everyFiveMinutes();
+        $schedule->command('interaction:like 0 0 caleb@calebthetrainer.com')->everyFiveMinutes();
+        $schedule->command('interaction:like 0 0 xtremewealth@gmail.com')->everyFiveMinutes();
         
 //        for ($i = 0; $i < 50; $i++) {
 //            $counter = $i * 10;

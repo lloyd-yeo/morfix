@@ -92,7 +92,7 @@ foreach ($emails as $email) {
 
             $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
             //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
-            if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $unfollow == 1)) {
+            if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
 
                 if ($daily_unfollow_quota < 1) {
                     echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
@@ -155,6 +155,8 @@ foreach ($emails as $email) {
                             var_dump($resp);
                             if ($resp->friendship_status->following === false) {
                                 updateUnfollowLog($user_to_unfollow["log_id"], $insta_username, $servername, $username, $password, $dbname);
+                                updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "unfollow", $insta_username, $servername, $username, $password, $dbname);
+                                break;
                             }
                         }
                     }
@@ -175,6 +177,35 @@ foreach ($emails as $email) {
                 } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                     echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
                 }
+            } else if ($unfollow == 0 && $auto_follow == 1) {
+                
+                if ($daily_follow_quota < 1) {
+                    echo "[" . $insta_username . "] has reached quota for following today.\n";
+                    continue;
+                }
+                
+                echo "[" . $insta_username . "] beginning following sequence.\n";
+
+                $config = array();
+                $config["storage"] = "mysql";
+                $config["dbusername"] = "root";
+                $config["dbpassword"] = "inst@ffiliates123";
+                $config["dbhost"] = "52.221.60.235:3306";
+                $config["dbname"] = "morfix";
+                $config["dbtablename"] = "instagram_sessions";
+
+                $debug = false;
+                $truncatedDebug = false;
+                $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+
+                if (is_null($proxy)) {
+                    continue;
+                } else {
+                    $instagram->setProxy($proxy);
+                }
+                
+                //start with targeted usernames/hashtags
+                
             }
         } catch (Exception $ex) {
             echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
@@ -237,4 +268,39 @@ function updateUnfollowLog($logid, $insta_username, $servername, $username, $pas
     }
     $stmt_update_follow_log->close();
     $conn_->close();
+}
+
+function updateUserNextFollowTime($insta_username, $delay, $mode, $servername, $username, $password, $dbname) {
+    if ($mode == "unfollow") {
+        $conn_f = new mysqli($servername, $username, $password, $dbname);
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, daily_unfollow_quota = daily_unfollow_quota - 1 WHERE insta_username = ?;");
+        $stmt_update_user_profile->bind_param("s", $insta_username);
+        $stmt_update_user_profile->execute();
+        $stmt_update_user_profile->close();
+        $conn_f->close();
+    } else if ($mode == "follow") {
+        $conn_f = new mysqli($servername, $username, $password, $dbname);
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, daily_follow_quota = daily_follow_quota - 1 WHERE insta_username = ?;");
+        $stmt_update_user_profile->bind_param("s", $insta_username);
+        $stmt_update_user_profile->execute();
+        $stmt_update_user_profile->close();
+        $conn_f->close();
+    }
+}
+
+function getTargetedUsernames($insta_username, $servername, $username, $password, $dbname) {
+    $target_usernames = array();
+    $conn_get_target_usernames = getConnection($servername, $username, $password, $dbname);
+    $stmt_get_target_usernames = $conn_get_target_usernames->prepare("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();");
+    $stmt_get_target_usernames->bind_param("s", $insta_username);
+    $stmt_get_target_usernames->execute();
+    $stmt_get_target_usernames->store_result();
+    $stmt_get_target_usernames->bind_result($target_username);
+    while ($stmt_get_target_usernames->fetch()) {
+        $target_usernames[] = $target_username;
+    }
+    $stmt_get_target_usernames->free_result();
+    $stmt_get_target_usernames->close();
+    $conn_get_target_usernames->close(); 
+    return $target_usernames;
 }
