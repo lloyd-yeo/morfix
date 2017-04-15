@@ -137,14 +137,20 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
                                     insertCommentLog($insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), $servername, $username, $password, $dbname);
-                                    echo "[" . $insta_username . "] commented on [".$item->user->username."] [" . $item->getItemUrl() . "]\n";
+                                    echo "[" . $insta_username . "] commented on [" . $item->user->username . "] [" . $item->getItemUrl() . "]\n";
                                 }
                                 if ($commented == 1) {
                                     break;
                                 }
                             }
                         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                            echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                            echo "[" . $insta_username . "] req-error: " . $request_ex->getMessage() . "\n";
+                            if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                                $followed = 1;
+                                break;
+                            }
+                            
                         }
                     }
                 } catch (Exception $ex) {
