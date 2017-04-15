@@ -201,6 +201,7 @@ function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta
 function getRandomUserComment($insta_username, $servername, $username, $password, $dbname) {
     $comment = NULL;
     $conn_get_comments = new mysqli($servername, $username, $password, $dbname);
+    $conn_get_comments->query("set names utf8mb4");
     $stmt_get_comments = $conn_get_comments->prepare("SELECT comment FROM user_insta_profile_comment WHERE insta_username = ? ORDER BY RAND() LIMIT 1;");
     $stmt_get_comments->bind_param("s", $insta_username);
     $stmt_get_comments->execute();
@@ -218,6 +219,7 @@ function getRandomUserComment($insta_username, $servername, $username, $password
 function getUserNewestFollow($insta_username, $servername, $username, $password, $dbname) {
     $newest_follow = NULL;
     $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("set names utf8mb4");
     $stmt_get_newest_follower = $conn->prepare("SELECT follower_username, follower_id FROM insta_affiliate.user_insta_profile_follow_log 
     WHERE follow = 1 AND unfollowed = 0 AND insta_username = ? 
     AND follower_username NOT IN (SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = ?)
@@ -240,6 +242,7 @@ function getUserNewestFollow($insta_username, $servername, $username, $password,
 
 function updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname) {
     $conn_f = new mysqli($servername, $username, $password, $dbname);
+    $conn_f->query("set names utf8mb4");
     $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET comment_feedback_required = 1 WHERE insta_username = ?;");
     $stmt_update_user_profile->bind_param("s", $insta_username);
     $stmt_update_user_profile->execute();
