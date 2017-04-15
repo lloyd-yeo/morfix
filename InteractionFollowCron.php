@@ -228,6 +228,7 @@ foreach ($emails as $email) {
 
                 //start with targeted usernames/hashtags
                 $use_hashtags = rand(0, 1);
+                echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
                 $target_hashtags = NULL;
                 $target_usernames = NULL;
                 if ($use_hashtags == 1) {
@@ -243,6 +244,7 @@ foreach ($emails as $email) {
                         $use_hashtags = 1;
                     }
                 }
+                echo "[" . $insta_username . "] AFTER random use hashtag: $use_hashtags\n";
                 echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) ."] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $niche . "]\n";
                 $followed = 0;
                 $throttle_limit = 41;
