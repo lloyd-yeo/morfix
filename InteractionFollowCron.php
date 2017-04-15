@@ -350,7 +350,54 @@ foreach ($emails as $email) {
                     }
                 } else if ($use_hashtags == 0 && count($target_usernames) == 0 && count($target_hashtags) == 0) {
                     try {
-                        
+                        if ($niche == 0) {
+                            continue;
+                        } else {
+                            foreach (getNicheTargets($niche, $servername, $username, $password, $dbname) as $target_username) {
+
+                                echo "[" . $insta_username . "] using NICHE target username: " . $target_username . "\n";
+
+                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username));
+                                $users_to_follow = $user_follower_response->users;
+                                foreach ($users_to_follow as $user_to_follow) {
+                                    if ($user_to_follow->is_private) {
+                                        echo "[" . $insta_username . "] [$user_to_follow->username] is private.\n";
+                                        continue;
+                                    } else if ($user_to_follow->has_anonymous_profile_picture) {
+                                        echo "[" . $insta_username . "] [$user_to_follow->username] has no profile pic.\n";
+                                        continue;
+                                    } else {
+                                        if (checkUserFollowLogs($insta_username, $user_to_follow->pk, $servername, $username, $password, $dbname)) {
+                                            //user exists aka duplicate
+                                            echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
+                                            continue;
+                                        } else {
+                                            try {
+                                                $follow_resp = $instagram->follow($user_to_follow->pk);
+                                                if ($follow_resp->friendship_status->following == true) {
+                                                    updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
+                                                    insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
+                                                    $followed = 1;
+                                                    echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
+                                                    break;
+                                                } else {
+                                                    continue;
+                                                }
+                                            } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                                                echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                }
+                                if ($throttle_count == $throttle_limit) {
+                                    break;
+                                }
+                                if ($followed == 1) {
+                                    break;
+                                }
+                            }
+                        }
                     } catch (Exception $ex) {
                         echo "[" . $insta_username . "] niche-error: " . $ex->getMessage() . "\n";
                     }
@@ -363,7 +410,7 @@ foreach ($emails as $email) {
 }
 
 $time_elapsed_secs = microtime(true) - $start;
-echo $time_elapsed_secs;
+echo "\n" . $time_elapsed_secs;
 
 //END OF SCRIPT
 
@@ -497,4 +544,21 @@ function insertNewFollowLogEntry($insta_username, $follower_username, $follower_
     $stmt_update_follow_log->execute();
     $stmt_update_follow_log->close();
     $conn_insert_follow->close();
+}
+
+function getNicheTargets($niche, $servername, $username, $password, $dbname) {
+    $niche_targets = array();
+    $conn_get_niche_targets = getConnection($servername, $username, $password, $dbname);
+    $stmt_get_niche_targets = $conn_get_niche_targets->prepare("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();");
+    $stmt_get_niche_targets->bind_param("i", $niche);
+    $stmt_get_niche_targets->execute();
+    $stmt_get_niche_targets->store_result();
+    $stmt_get_niche_targets->bind_result($niche_target);
+    while ($stmt_get_niche_targets->fetch()) {
+        $niche_targets[] = $niche_target;
+    }
+    $stmt_get_niche_targets->free_result();
+    $stmt_get_niche_targets->close();
+    $conn_get_niche_targets->close();
+    return $niche_targets;
 }
