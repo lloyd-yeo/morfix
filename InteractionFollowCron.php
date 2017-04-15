@@ -9,11 +9,11 @@ $num_result = $argv[2]; //this is the constant
 if (isset($argv[3])) {
     $specific_email = $argv[3];
 }
-
 $emails = array();
 $conn_get_user = getConnection($servername, $username, $password, $dbname);
 $stmt_get_user = NULL;
 if (is_null($specific_email)) {
+    echo "Retrieving users off $offset $num_result\n\n";
     $stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_users_sql);
     $stmt_get_user->bind_param("ii", $offset, $num_result);
     $stmt_get_user->execute();
@@ -25,6 +25,7 @@ if (is_null($specific_email)) {
     $stmt_get_user->free_result();
     $stmt_get_user->close();
 } else {
+    echo "Retrieving users off $specific_email\n\n";
     $stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_users_by_email_sql);
     $stmt_get_user->bind_param("s", $specific_email);
     $stmt_get_user->execute();

@@ -21,7 +21,7 @@ $get_premium_and_free_trial_users_sql = "SELECT u.email FROM insta_affiliate.use
         . "WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;";
 
 $get_premium_and_free_trial_users_by_email_sql = "SELECT u.email FROM insta_affiliate.user u "
-        . "WHERE u.email = ?";
+        . "WHERE u.email = ?;";
 
 $get_follow_profile_sql = "SELECT DISTINCT(insta_username),
                 insta_user_id, 
