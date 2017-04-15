@@ -243,7 +243,7 @@ function getUserNewestFollow($insta_username, $servername, $username, $password,
 function updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname) {
     $conn_f = new mysqli($servername, $username, $password, $dbname);
     $conn_f->query("set names utf8mb4");
-    $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET comment_feedback_required = 1 WHERE insta_username = ?;");
+    $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET auto_comment_ban = 1, auto_comment_ban_time = NOW() + INTERVAL 6 HOUR, comment_feedback_required = 1 WHERE insta_username = ?;");
     $stmt_update_user_profile->bind_param("s", $insta_username);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
