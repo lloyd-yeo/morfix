@@ -177,17 +177,7 @@ foreach ($emails as $email) {
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
                 if (is_null($proxy)) {
-                    
-                    $conn_get_proxy = new mysqli($servername, $username, $password, $dbname);
-                    
-                    $conn_get_proxy->close();
-                    
-                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
-                    foreach ($proxies as $proxy) {
-                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-                        $instagram->setProxy($proxy->proxy);
-                        $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
-                    }
+                    continue;
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }
@@ -201,9 +191,5 @@ foreach ($emails as $email) {
 $time_elapsed_secs = microtime(true) - $start;
 echo $time_elapsed_secs;
 //END OF SCRIPT
-
-function setNewProxy($insta_username, $servername, $username, $password, $dbname) {
-    
-}
 
 ?>
