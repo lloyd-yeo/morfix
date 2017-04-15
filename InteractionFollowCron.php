@@ -238,21 +238,60 @@ foreach ($emails as $email) {
                         $use_hashtags = 1;
                     }
                 }
-
+                $followed = 0;
+                $throttle_limit = 41;
+                
                 if ($use_hashtags == 1 && count($target_hashtags) > 0) {
+                    $throttle_count = 0;
                     try {
-                        
                         foreach ($target_hashtags as $target_hashtag) {
                             echo "[" . $insta_username . "] using hashtag: " . $target_hashtag . "\n";
                             $hashtag_feed = $instagram->getHashtagFeed($target_hashtag);
                             foreach ($hashtag_feed->items as $item) {
-                                $duplicate = 0;
+                                $throttle_count++;
+                                if ($throttle_count == $throttle_limit) {
+                                    break;
+                                }
                                 $user_to_follow = $item->user;
-                                
+                                if (checkUserFollowLogs($insta_username, $user_to_follow->pk, $servername, $username, $password, $dbname)) {
+                                    //user exists aka duplicate
+                                    echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
+                                    continue;
+                                } else {
+                                    if ($user_to_follow->is_private) {
+                                        echo "[" . $insta_username . "] [$user_to_follow->username] is private.\n";
+                                        continue;
+                                    } else if ($user_to_follow->has_anonymous_profile_picture) {
+                                        echo "[" . $insta_username . "] [$user_to_follow->username] has no profile pic.\n";
+                                        continue;
+                                    } else if ($user_to_follow->media_count == 0) {
+                                        echo "[" . $insta_username . "] [$user_to_follow->username] has no posts.\n";
+                                        continue;
+                                    } else {
+                                        try {
+                                            $follow_resp = $instagram->follow($user_to_follow->pk);
+                                            if ($follow_resp->friendship_status->following == true) {
+                                                updateUserNextFollowTime($insta_username, $follow_unfollow_delay, $servername, $username, $password, $dbname);
+                                                insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
+                                                $followed = 1;
+                                                break;
+                                            } else {
+                                                continue;
+                                            }
+                                        } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                                            echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                            continue;
+                                        }
+                                    }
+                                }
                             }
-                            
+                            if ($throttle_count == $throttle_limit) {
+                                break;
+                            }
+                            if ($followed == 1) {
+                                break;
+                            }
                         }
-                        
                     } catch (Exception $ex) {
                         echo "[" . $insta_username . "] hashtag-error: " . $ex->getMessage() . "\n";
                     }
@@ -393,7 +432,21 @@ function checkUserFollowLogs($insta_username, $follower_id, $servername, $userna
     $stmt_get_followed_username->bind_param("ss", $insta_username, $follower_id);
     $stmt_get_followed_username->execute();
     while ($stmt_get_followed_username->fetch()) {
-        
+        $exists = true;
     }
-    
+    $stmt_get_followed_username->close();
+    $conn_get_followed_username->close();
+    return $exists;
+}
+
+function insertNewFollowLogEntry($insta_username, $follower_username, $follower_id, $resp, $servername, $username, $password, $dbname) {
+    $conn_insert_follow = getConnection($servername, $username, $password, $dbname);
+
+    $stmt_update_follow_log = $conn_insert_follow->prepare("INSERT INTO `insta_affiliate`.`user_insta_profile_follow_log`
+                            (`insta_username`, `follower_username`, `follower_id`, `log`, `follow_success`) 
+                            VALUES (?,?,?,?,?);");
+    $stmt_update_follow_log->bind_param("ssssi", $insta_username, $follower_username, $follower_id, $resp, 1);
+    $stmt_update_follow_log->execute();
+    $stmt_update_follow_log->close();
+    $conn_insert_follow->close();
 }
