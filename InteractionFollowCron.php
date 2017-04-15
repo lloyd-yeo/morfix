@@ -220,7 +220,12 @@ foreach ($emails as $email) {
                 } else {
                     $instagram->setProxy($proxy);
                 }
+                
+                $ig_username = $insta_username;
+                $ig_password = $insta_pw;
+                $instagram->setUser($ig_username, $ig_password);
                 $instagram->login();
+                
                 //start with targeted usernames/hashtags
                 $use_hashtags = rand(0, 1);
                 $target_hashtags = NULL;
