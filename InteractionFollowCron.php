@@ -118,12 +118,40 @@ foreach ($emails as $email) {
                 } else {
                     $instagram->setProxy($proxy);
                 }
-                
+
                 try {
                     $ig_username = $insta_username;
                     $ig_password = $insta_pw;
                     $instagram->setUser($ig_username, $ig_password);
                     $instagram->login();
+
+                    $users_to_unfollow = array();
+
+                    $conn_get_follows = getConnection($servername, $username, $password, $dbname);
+                    $stmt_get_follows = $conn_get_follows->prepare($get_follows_sql);
+                    $stmt_get_follows->bind_param("s", $ig_username);
+                    $stmt_get_follows->execute();
+                    $stmt_get_follows->store_result();
+                    $stmt_get_follows->bind_result($log_id, $follower_username, $follower_id);
+                    while ($stmt_get_follows->fetch()) {
+                        $users_to_unfollow[] = array(
+                            "log_id" => $log_id,
+                            "follower_username" => $follower_username,
+                            "follower_id" => $follower_id
+                        );
+                    }
+                    $stmt_get_follows->free_result();
+                    $stmt_get_follows->close();
+                    $conn_get_follows->close();
+
+                    if (count($users_to_unfollow) == 0) {
+                        echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
+                        switchFollowCycle($insta_id, $insta_username, $servername, $username, $password, $dbname);
+                    } else {
+                        foreach ($users_to_unfollow as $user_to_unfollow) {
+                            echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow["follower_username"] . "\n";
+                        }
+                    }
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                     echo "[" . $insta_username . "] " . $checkpoint_ex->getMessage() . "\n";
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
@@ -147,6 +175,10 @@ foreach ($emails as $email) {
         }
     }
 }
+
+$time_elapsed_secs = microtime(true) - $start;
+echo $time_elapsed_secs;
+//END OF SCRIPT
 
 function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy) {
     return array(
@@ -176,7 +208,14 @@ function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta
     );
 }
 
-$time_elapsed_secs = microtime(true) - $start;
-echo $time_elapsed_secs;
-//END OF SCRIPT
-?>
+function switchFollowCycle($insta_id, $insta_username, $servername, $username, $password, $dbname) {
+    $conn_switch_follow_status = new mysqli($servername, $username, $password, $dbname);
+    $conn_switch_follow_status->query("set names utf8mb4");
+    $stmt_switch_follow = $conn_switch_follow_status->prepare("UPDATE user_insta_profile SET unfollow = 0 WHERE id = ?;");
+    $stmt_switch_follow->bind_param("i", $insta_id);
+    if ($stmt_switch_follow->execute()) {
+        echo "[" . $insta_username . "] is following next round.\n\n";
+    }
+    $stmt_switch_follow->close();
+    $conn_switch_follow_status->close();
+}
