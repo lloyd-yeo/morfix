@@ -34,7 +34,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
         $stmt_get_user->close();
     } else {
         echo "Retrieving users off $specific_email\n\n";
-        $stmt_get_user = $conn_get_user->prepare($get_all_users_sql);
+        $stmt_get_user = $conn_get_user->prepare($get_all_users_by_email_sql);
         $stmt_get_user->bind_param("s", $specific_email);
         $stmt_get_user->execute();
         $stmt_get_user->store_result();
