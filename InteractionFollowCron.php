@@ -350,6 +350,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
                                                     break;
                                                 } else {
+                                                    if ($follow_resp->friendship_status->is_private) {
+                                                        continue;
+                                                    } else if ($follow_resp->friendship_status->following == false) {
+                                                        updateUserNextFollowTime($insta_username, 180, "follow", $servername, $username, $password, $dbname);
+                                                    }
                                                     continue;
                                                 }
                                             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
