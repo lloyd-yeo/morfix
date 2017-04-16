@@ -143,7 +143,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     } else {
                         $instagram->setProxy($proxy);
                     }
-
+                    
+                    $current_log_id = "";
                     try {
                         $ig_username = $insta_username;
                         $ig_password = $insta_pw;
@@ -174,6 +175,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             switchFollowCycle($insta_id, $insta_username, $servername, $username, $password, $dbname);
                         } else {
                             foreach ($users_to_unfollow as $user_to_unfollow) {
+                                $current_log_id = $user_to_unfollow["log_id"];
                                 echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow["follower_username"] . "\n";
                                 $resp = $instagram->unfollow($user_to_unfollow["follower_id"]);
                                 echo "[" . $insta_username . "] ";
@@ -197,6 +199,13 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         echo "[" . $insta_username . "] feedback_ex: " . $feedback_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                         echo "[" . $insta_username . "] emptyresponse_ex: " . $emptyresponse_ex->getMessage() . "\n";
+                        
+                        if (stripos(trim($emptyresponse_ex->getMessage()), "No response from server. Either a connection or configuration error") !== false) {
+                            updateUnfollowLogWithNull($current_log_id, $servername, $username, $password, $dbname);
+                            $followed = 1;
+                            break;
+                        }
+                        
                     } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
                         echo "[" . $insta_username . "] throttled_ex: " . $throttled_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
@@ -297,11 +306,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 }
                                             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                                 echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
-                                                if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
-                                                    updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
-                                                    $followed = 1;
-                                                    break;
-                                                }
                                                 continue;
                                             }
                                         }
@@ -600,6 +604,15 @@ function updateUserFeedbackRequired($insta_username, $servername, $username, $pa
     $conn_f = new mysqli($servername, $username, $password, $dbname);
     $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET feedback_required = 1 WHERE insta_username = ?;");
     $stmt_update_user_profile->bind_param("s", $insta_username);
+    $stmt_update_user_profile->execute();
+    $stmt_update_user_profile->close();
+    $conn_f->close();
+}
+
+function updateUnfollowLogWithNull($log_id, $servername, $username, $password, $dbname) {
+    $conn_f = getConnection($servername, $username, $password, $dbname);
+    $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile_follow_log SET unfollowed = 1 WHERE log_id = ?;");
+    $stmt_update_user_profile->bind_param("i", $log_id);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
     $conn_f->close();
