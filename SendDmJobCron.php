@@ -84,6 +84,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $follow_up_message = $insta_profile['follow_up_message'];
             $proxy = $insta_profile['proxy'];
             echo "[$insta_username] retrieved...\n";
+            
             $dm_job = getDmJobsByIgUsername($insta_username, $servername, $username, $password, $dbname);
             
             if (is_null($dm_job)) {
@@ -309,7 +310,7 @@ function updateUserCheckpointRequired($insta_username, $servername, $username, $
 
 function updateDmJobFulfilled($job_id, $servername, $username, $password, $dbname) {
     $conn = getConnection($servername, $username, $password, $dbname);
-    $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET fulfilled = 1 WHERE job_id = ?;");
+    $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET fulfilled = 1, updated_at = NOW() WHERE job_id = ?;");
     $stmt_update_user_profile->bind_param("i", $job_id);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
