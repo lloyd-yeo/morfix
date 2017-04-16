@@ -41,7 +41,7 @@ $get_all_dm_profile_sql = "SELECT DISTINCT(insta_username),
                 FROM insta_affiliate.user_insta_profile 
                 WHERE email = ?
                 AND auto_dm_new_follower = 1
-                AND NOW() >= last_sent_dm;";
+                AND NOW() >= last_sent_dm AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;";
 
 $get_all_profile_sql = "SELECT DISTINCT(insta_username),
                 insta_user_id, 

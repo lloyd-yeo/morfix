@@ -125,6 +125,10 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             updateUserFeedbackRequired($insta_username, $dm_job["job_id"], $request_ex->getMessage(), $servername, $username, $password, $dbname);
                             continue;
                         }
+                        if (stripos(trim($request_ex->getMessage()), "checkpoint_required") !== false) {
+                            updateUserCheckpointRequired($insta_username, $servername, $username, $password, $dbname);
+                            continue;
+                        }
                     }
                 }
             } catch (Exception $ex) {
@@ -288,6 +292,16 @@ function updateUserFeedbackRequired($insta_username, $job_id, $error_msg, $serve
     $stmt_update_dm_job->execute();
     $stmt_update_dm_job->close();
     
+    $conn->close();
+}
+
+function updateUserCheckpointRequired($insta_username, $servername, $username, $password, $dbname) {
+    
+    $conn = getConnection($servername, $username, $password, $dbname);
+    $stmt_update_user_profile = $conn->prepare("UPDATE user_insta_profile SET checkpoint_required = 1 WHERE insta_username = ?;");
+    $stmt_update_user_profile->bind_param("s", $insta_username);
+    $stmt_update_user_profile->execute();
+    $stmt_update_user_profile->close();
     $conn->close();
 }
 
