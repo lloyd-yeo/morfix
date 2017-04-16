@@ -186,21 +186,21 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             }
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                        echo "[" . $insta_username . "] " . $checkpoint_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] checkpoint_ex: " . $checkpoint_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                        echo "[" . $insta_username . "] " . $network_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] network_ex: " . $network_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                        echo "[" . $insta_username . "] " . $endpoint_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] endpoint_ex: " . $endpoint_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                        echo "[" . $insta_username . "] " . $incorrectpw_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] incorrectpw_ex: " . $incorrectpw_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
-                        echo "[" . $insta_username . "] " . $feedback_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] feedback_ex: " . $feedback_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
-                        echo "[" . $insta_username . "] " . $emptyresponse_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] emptyresponse_ex: " . $emptyresponse_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
-                        echo "[" . $insta_username . "] " . $throttled_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] throttled_ex: " . $throttled_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                        echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                        echo "[" . $insta_username . "] request_ex: " . $request_ex->getMessage() . "\n";
                     }
                 } else if ($unfollow == 0 && $auto_follow == 1) { //follow sequence
                     if ($daily_follow_quota < 1) {
