@@ -17,7 +17,7 @@ if (function_exists('getConnection')) {
 
 }
 
-$get_all_users_sql = $get_premium_and_free_trial_users_sql = "SELECT u.email FROM insta_affiliate.user u "
+$get_all_users_sql = "SELECT u.email FROM insta_affiliate.user u "
         . "WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;";
 
 $get_premium_and_free_trial_users_sql = "SELECT u.email FROM insta_affiliate.user u "

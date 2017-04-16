@@ -48,6 +48,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
+        echo "[$email] getting profiles...\n";
         $insta_profiles = array();
         $conn_get_profiles = getConnection($servername, $username, $password, $dbname);
         $stmt_get_profile = $conn_get_profiles->prepare($get_all_dm_profile_sql);
@@ -73,7 +74,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
         $conn_get_profiles->close();
 
         foreach ($insta_profiles as $insta_profile) {
-
             $insta_username = $insta_profile['insta_username'];
             $insta_user_id = $insta_profile['insta_user_id'];
             $insta_id = $insta_profile['insta_id'];
@@ -83,7 +83,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $insta_new_follower_template = $insta_profile['insta_new_follower_template'];
             $follow_up_message = $insta_profile['follow_up_message'];
             $proxy = $insta_profile['proxy'];
-            
+            echo "[$insta_username] retrieved...\n";
             $dm_job = getDmJobsByIgUsername($insta_username, $servername, $username, $password, $dbname);
             
             if (is_null($dm_job)) {
