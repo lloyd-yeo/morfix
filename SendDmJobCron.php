@@ -129,6 +129,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 }
             } catch (Exception $ex) {
                 echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
+                echo "[" . $insta_username . "] " .$ex->getTraceAsString() . "\n";
             }
         }
     }
