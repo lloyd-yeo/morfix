@@ -18,6 +18,7 @@ if (isset($argv[3])) {
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();
     $conn_get_user = getConnection($servername, $username, $password, $dbname);
+    $conn_get_user->query($clear_empty_jobs_sql);
     $stmt_get_user = NULL;
     if (is_null($specific_email)) {
         echo "Retrieving users off $offset $num_result\n\n";

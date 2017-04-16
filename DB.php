@@ -132,3 +132,5 @@ $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
 
 
 $get_follows_sql = "SELECT log_id, follower_username, follower_id FROM insta_affiliate.user_insta_profile_follow_log WHERE insta_username = ? AND unfollowed = 0 AND follow = 1 ORDER BY date_inserted ASC LIMIT 2;";
+
+$clear_empty_jobs_sql = "UPDATE dm_job SET fulfilled = 2 WHERE !(message>'');";
