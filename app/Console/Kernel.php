@@ -40,17 +40,16 @@ class Kernel extends ConsoleKernel {
             $schedule->command('dm:get ' . $counter . ' 30')->everyFiveMinutes();
         }
         
-        for ($i = 0; $i < 200; $i++) {
-            $counter = $i * 30;
-            $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
-        }
+//        for ($i = 0; $i < 200; $i++) {
+//            $counter = $i * 30;
+//            $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
+//        }
         
         
         for ($i = 0; $i < 50; $i++) {
             $counter = $i * 20;
             $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
         }
-        
         $schedule->command('interaction:like 0 0 annegreenfield323@gmail.com')->everyFiveMinutes();
         $schedule->command('interaction:like 0 0 caleb@calebthetrainer.com')->everyFiveMinutes();
         $schedule->command('interaction:like 0 0 xtremewealth@gmail.com')->everyFiveMinutes();
