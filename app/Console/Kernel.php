@@ -54,7 +54,8 @@ class Kernel extends ConsoleKernel {
         $schedule->command('interaction:like 0 0 caleb@calebthetrainer.com')->everyFiveMinutes();
         $schedule->command('interaction:like 0 0 xtremewealth@gmail.com')->everyFiveMinutes();
         $schedule->command('interaction:like 0 0 Shawnjosiah.pd@gmail.com')->everyFiveMinutes();
-        $schedule->command('interaction:like 0 0 nicolasmaton@gmail.com ')->everyFiveMinutes();
+        $schedule->command('interaction:like 0 0 nicolasmaton@gmail.com')->everyFiveMinutes();
+        $schedule->command('interaction:like 0 0 raultraining@yahoo.com')->everyFiveMinutes();
         
         $schedule->command("engagement:add")->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command("interaction:unban")->everyThirtyMinutes()->withoutOverlapping();

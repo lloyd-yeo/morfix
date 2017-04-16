@@ -199,13 +199,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         echo "[" . $insta_username . "] feedback_ex: " . $feedback_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                         echo "[" . $insta_username . "] emptyresponse_ex: " . $emptyresponse_ex->getMessage() . "\n";
-                        
                         if (stripos(trim($emptyresponse_ex->getMessage()), "No response from server. Either a connection or configuration error") !== false) {
                             updateUnfollowLogWithNull($current_log_id, $servername, $username, $password, $dbname);
                             $followed = 1;
                             break;
                         }
-                        
                     } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
                         echo "[" . $insta_username . "] throttled_ex: " . $throttled_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
