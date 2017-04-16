@@ -302,13 +302,14 @@ function updateDmJobFulfilled($job_id, $servername, $username, $password, $dbnam
 function getDmJobsByIgUsername($insta_username, $servername, $username, $password, $dbname) {
     $dm_job = NULL;
     $conn = getConnection($servername, $username, $password, $dbname);
-    $stmt_get_dm_job = $conn->prepare("SELECT recipient_username, recipient_insta_id, recipient_fullname, message FROM insta_affiliate.dm_job WHERE insta_username = ? AND fulfilled = 0 ORDER BY job_id ASC LIMIT 1;");
+    $stmt_get_dm_job = $conn->prepare("SELECT job_id, recipient_username, recipient_insta_id, recipient_fullname, message FROM insta_affiliate.dm_job WHERE insta_username = ? AND fulfilled = 0 ORDER BY job_id ASC LIMIT 1;");
     $stmt_get_dm_job->bind_param("s", $insta_username);
     $stmt_get_dm_job->execute();
     $stmt_get_dm_job->store_result();
-    $stmt_get_dm_job->bind_result($recipient_username, $recipient_insta_id, $recipient_fullname, $message);
+    $stmt_get_dm_job->bind_result($job_id, $recipient_username, $recipient_insta_id, $recipient_fullname, $message);
     while ($stmt_get_dm_job->fetch()) {
         $dm_job = array(
+            "job_id" => $job_id,
             "recipient_username" => $recipient_username, 
             "recipient_insta_id" => $recipient_insta_id, 
             "recipient_fullname" => $recipient_fullname, 
