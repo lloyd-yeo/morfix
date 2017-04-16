@@ -277,7 +277,7 @@ function getNicheTargets($niche, $servername, $username, $password, $dbname) {
 function updateUserFeedbackRequired($insta_username, $job_id, $error_msg, $servername, $username, $password, $dbname) {
     
     $conn = getConnection($servername, $username, $password, $dbname);
-    $stmt_update_user_profile = $conn->prepare("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL 6 HOURS, temporary_ban = NOW() + INTERVAL 6 HOUR WHERE insta_username = ?;");
+    $stmt_update_user_profile = $conn->prepare("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL 6 HOUR, temporary_ban = NOW() + INTERVAL 6 HOUR WHERE insta_username = ?;");
     $stmt_update_user_profile->bind_param("s", $insta_username);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
