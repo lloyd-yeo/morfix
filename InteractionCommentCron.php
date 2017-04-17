@@ -277,7 +277,7 @@ function getOutstandingEngagementJob($insta_username, $servername, $username, $p
     $engagement_job = NULL;
     $conn = new mysqli($servername, $username, $password, $dbname);
     $conn->query("set names utf8mb4");
-    $stmt_get_engagement_job = $conn->prepare("SELECT job_id, media_id FROM insta_affiliate.engagement_job_queue WHERE insta_username = ? AND action = 1 AND fulfilled = 0 ORDER BY job_id ASC;");
+    $stmt_get_engagement_job = $conn->prepare("SELECT job_id, media_id FROM insta_affiliate.engagement_job_queue WHERE insta_username = ? AND action = 1 AND fulfilled = 0 ORDER BY job_id DESC;");
     $stmt_get_engagement_job->bind_param("s", $insta_username);
     $stmt_get_engagement_job->execute();
     $stmt_get_engagement_job->store_result();
