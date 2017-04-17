@@ -115,6 +115,19 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $update_stmt->execute();
                     $update_stmt->close();
                     $conn->close();
+                    
+                    $items = $instagram->getSelfUserFeed()->items;
+                    foreach ($items as $item) {
+                        try {
+                            $conn = getConnection($servername, $username, $password, $dbname);
+                            $insert_stmt = $conn->prepare("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);");
+                            $insert_stmt->bind_param("sss", $ig_username, $item->id, $item->image_versions2->candidates[0]->url);
+                            $conn->close();
+                        } catch (Exception $e) {
+                            break;
+                        }
+                    }
+                    
                 }
             } catch (Exception $ex) {
                 echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
