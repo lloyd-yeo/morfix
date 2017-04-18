@@ -44,7 +44,6 @@ for ($i = 0; $i < count($ig_profiles); $i++) {
 }
 
 
-
 $time_elapsed_secs = microtime(true) - $start;
 echo "\n" . $time_elapsed_secs;
 //END OF SCRIPT
