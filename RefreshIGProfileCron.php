@@ -54,9 +54,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
         $stmt_get_profile->bind_param("s", $email);
         $stmt_get_profile->execute();
         $stmt_get_profile->store_result();
-        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
+        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $proxy);
         while ($stmt_get_profile->fetch()) {
-            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
+            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $proxy);
         }
         $stmt_get_profile->free_result();
         $stmt_get_profile->close();
@@ -68,24 +68,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $insta_user_id = $insta_profile['insta_user_id'];
             $insta_id = $insta_profile['insta_id'];
             $insta_pw = $insta_profile['insta_pw'];
-            $niche = $insta_profile['niche'];
-            $next_follow_time = $insta_profile['next_follow_time'];
-            
-            $unfollow = $insta_profile['unfollow'];
-            $auto_interaction_ban = $insta_profile['auto_interaction_ban'];
-            $auto_interaction_ban_time = $insta_profile['auto_interaction_ban_time'];
-            $follow_cycle = $insta_profile['follow_cycle'];
-            $auto_unfollow = $insta_profile['auto_unfollow'];
-            $auto_follow = $insta_profile['auto_follow'];
-            $auto_follow_ban = $insta_profile['auto_follow_ban'];
-            $auto_follow_ban_time = $insta_profile['auto_follow_ban_time'];
-            $follow_unfollow_delay = $insta_profile['follow_unfollow_delay'];
-            $speed = $insta_profile['speed'];
-            $follow_min_follower = $insta_profile['follow_min_follower'];
-            $follow_max_follower = $insta_profile['follow_max_follower'];
-            $unfollow_unfollowed = $insta_profile['unfollow_unfollowed'];
-            $follow_quota = $insta_profile['follow_quota'];
-            $unfollow_quota = $insta_profile['unfollow_quota'];
             $proxy = $insta_profile['proxy'];
 
             try {
@@ -147,29 +129,12 @@ fclose($file);
 
 //END OF SCRIPT
 
-function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy) {
+function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $proxy) {
     return array(
         "insta_username" => $insta_username,
         "insta_user_id" => $insta_user_id,
         "insta_id" => $insta_id,
         "insta_pw" => $insta_pw,
-        "niche" => $niche,
-        "next_follow_time" => $next_follow_time,
-        "unfollow" => $unfollow,
-        "auto_interaction_ban" => $auto_interaction_ban,
-        "auto_interaction_ban_time" => $auto_interaction_ban_time,
-        "follow_cycle" => $follow_cycle,
-        "auto_unfollow" => $auto_unfollow,
-        "auto_follow" => $auto_follow,
-        "auto_follow_ban" => $auto_follow_ban,
-        "auto_follow_ban_time" => $auto_follow_ban_time,
-        "follow_unfollow_delay" => $follow_unfollow_delay,
-        "speed" => $speed,
-        "follow_min_follower" => $follow_min_follower,
-        "follow_max_follower" => $follow_max_follower,
-        "unfollow_unfollowed" => $unfollow_unfollowed,
-        "follow_quota" => $follow_quota,
-        "unfollow_quota" => $unfollow_quota,
         "proxy" => $proxy
     );
 }
