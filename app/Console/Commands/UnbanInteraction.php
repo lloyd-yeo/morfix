@@ -54,8 +54,7 @@ class UnbanInteraction extends Command {
             }
         }
 
-        $remove_follow_ban = DB::connection("mysql_old")->update("UPDATE user_insta_profile SET auto_follow_ban = 0, auto_follow_ban_time = NULL WHERE auto_follow_ban = 1 AND NOW() >= auto_follow_ban_time;");
-        
+        //$remove_follow_ban = DB::connection("mysql_old")->update("UPDATE user_insta_profile SET auto_follow_ban = 0, auto_follow_ban_time = NULL WHERE auto_follow_ban = 1 AND NOW() >= auto_follow_ban_time;");
         
     }
 
