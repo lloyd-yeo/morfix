@@ -8,7 +8,7 @@ $conn = getConnection($servername, $username, $password, $dbname);
 $conn->query("UPDATE user SET trial_activation = 2 WHERE user_tier > 1;");
 $conn->query("UPDATE user_insta_profile SET proxy = NULL, invalid_proxy = 0 WHERE invalid_proxy = 1;");
 $ig_profiles = array();
-$get_profile_stmt = $conn->prepare("SELECT id FROM user_insta_profile WHERE proxy = NULL;");
+$get_profile_stmt = $conn->prepare("SELECT id FROM user_insta_profile WHERE proxy IS NULL;");
 $get_profile_stmt->execute();
 $get_profile_stmt->store_result();
 $get_profile_stmt->bind_result($profile_id);
