@@ -146,7 +146,7 @@ $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
                 AND auto_comment = 1
                 AND comment_feedback_required = 0
                 AND auto_comment_ban = 0
-                AND NOW() >= next_comment_time
+                AND (NOW() >= next_comment_time OR next_comment_time IS NULL)
                 AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0;";
 
 
