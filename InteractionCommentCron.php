@@ -88,19 +88,19 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $proxy = $insta_profile['proxy'];
             $profile_comment = getRandomUserComment($insta_username, $servername, $username, $password, $dbname);
             
-            $comment_delay = 29;
+            $comment_delay = 25;
             
             if ($speed == "Fast") {
-                $comment_delay = 9;
+                $comment_delay = 5;
             }
             if ($speed == "Medium") {
-                $comment_delay = 19;
+                $comment_delay = 15;
             }
             if ($speed == "Slow") {
-                $comment_delay = 29;
+                $comment_delay = 25;
             }
 
-            $comment_delay = rand($comment_delay, $comment_delay + 2);
+            $comment_delay = rand($comment_delay, $comment_delay + 10);
             
             if (is_null($profile_comment)) {
                 echo "[" . $insta_username . "] has NULL comment.\n";
