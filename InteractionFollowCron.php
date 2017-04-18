@@ -59,8 +59,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $niche = $insta_profile['niche'];
             $next_follow_time = $insta_profile['next_follow_time'];
             $unfollow = $insta_profile['unfollow'];
-            $auto_interaction_ban = $insta_profile['auto_interaction_ban'];
-            $auto_interaction_ban_time = $insta_profile['auto_interaction_ban_time'];
             $follow_cycle = $insta_profile['follow_cycle'];
             $auto_unfollow = $insta_profile['auto_unfollow'];
             $auto_follow = $insta_profile['auto_follow'];
