@@ -66,8 +66,8 @@ $get_all_profile_sql = "SELECT DISTINCT(insta_username),
                 follow_min_followers,
                 follow_max_followers,
                 unfollow_unfollowed,
-                daily_follow_quota,
-                daily_unfollow_quota,
+                follow_quota,
+                unfollow_quota,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
                 WHERE email = ?;";
@@ -92,8 +92,8 @@ $get_follow_profile_sql = "SELECT DISTINCT(insta_username),
                 follow_min_followers,
                 follow_max_followers,
                 unfollow_unfollowed,
-                daily_follow_quota,
-                daily_unfollow_quota,
+                follow_quota,
+                unfollow_quota,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
                 WHERE auto_interaction = 1
@@ -137,8 +137,8 @@ $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
                 follow_min_followers,
                 follow_max_followers,
                 unfollow_unfollowed,
-                daily_follow_quota,
-                daily_unfollow_quota,
+                follow_quota,
+                unfollow_quota,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
                 WHERE auto_interaction = 1

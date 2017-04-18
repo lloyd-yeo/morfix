@@ -53,9 +53,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
         $stmt_get_profile->bind_param("s", $email);
         $stmt_get_profile->execute();
         $stmt_get_profile->store_result();
-        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy);
+        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
         while ($stmt_get_profile->fetch()) {
-            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy);
+            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
         }
         $stmt_get_profile->free_result();
         $stmt_get_profile->close();
@@ -83,8 +83,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $follow_min_follower = $insta_profile['follow_min_follower'];
             $follow_max_follower = $insta_profile['follow_max_follower'];
             $unfollow_unfollowed = $insta_profile['unfollow_unfollowed'];
-            $daily_follow_quota = $insta_profile['daily_follow_quota'];
-            $daily_unfollow_quota = $insta_profile['daily_unfollow_quota'];
+            $follow_quota = $insta_profile['follow_quota'];
+            $unfollow_quota = $insta_profile['unfollow_quota'];
             $proxy = $insta_profile['proxy'];
             $profile_comment = getRandomUserComment($insta_username, $servername, $username, $password, $dbname);
             
@@ -100,6 +100,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 $comment_delay = 29;
             }
 
+            $comment_delay = rand($comment_delay, $comment_delay + 2);
+            
             if (is_null($profile_comment)) {
                 echo "[" . $insta_username . "] has NULL comment.\n";
                 continue;
@@ -198,7 +200,7 @@ fclose($file);
 
 //END OF SCRIPT
 
-function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy) {
+function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy) {
     return array(
         "insta_username" => $insta_username,
         "insta_user_id" => $insta_user_id,
@@ -220,8 +222,8 @@ function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta
         "follow_min_follower" => $follow_min_follower,
         "follow_max_follower" => $follow_max_follower,
         "unfollow_unfollowed" => $unfollow_unfollowed,
-        "daily_follow_quota" => $daily_follow_quota,
-        "daily_unfollow_quota" => $daily_unfollow_quota,
+        "follow_quota" => $follow_quota,
+        "unfollow_quota" => $unfollow_quota,
         "proxy" => $proxy
     );
 }

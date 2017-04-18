@@ -53,9 +53,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
         $stmt_get_profile->bind_param("s", $email);
         $stmt_get_profile->execute();
         $stmt_get_profile->store_result();
-        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy);
+        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
         while ($stmt_get_profile->fetch()) {
-            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy);
+            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
         }
         $stmt_get_profile->free_result();
         $stmt_get_profile->close();
@@ -83,8 +83,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $follow_min_follower = $insta_profile['follow_min_follower'];
             $follow_max_follower = $insta_profile['follow_max_follower'];
             $unfollow_unfollowed = $insta_profile['unfollow_unfollowed'];
-            $daily_follow_quota = $insta_profile['daily_follow_quota'];
-            $daily_unfollow_quota = $insta_profile['daily_unfollow_quota'];
+            $follow_quota = $insta_profile['follow_quota'];
+            $unfollow_quota = $insta_profile['unfollow_quota'];
             $proxy = $insta_profile['proxy'];
 
             try {
@@ -119,7 +119,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
                 if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
 
-                    if ($daily_unfollow_quota < 1) {
+                    if ($unfollow_quota < 1) {
                         echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
                         continue;
                     }
@@ -210,7 +210,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         echo "[" . $insta_username . "] request_ex: " . $request_ex->getMessage() . "\n";
                     }
                 } else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) { //follow sequence
-                    if ($daily_follow_quota < 1) {
+                    if ($follow_quota < 1) {
                         echo "[" . $insta_username . "] has reached quota for following today.\n";
                         continue;
                     }
@@ -454,7 +454,7 @@ fclose($file);
 
 //END OF SCRIPT
 
-function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy) {
+function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy) {
     return array(
         "insta_username" => $insta_username,
         "insta_user_id" => $insta_user_id,
@@ -476,8 +476,8 @@ function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta
         "follow_min_follower" => $follow_min_follower,
         "follow_max_follower" => $follow_max_follower,
         "unfollow_unfollowed" => $unfollow_unfollowed,
-        "daily_follow_quota" => $daily_follow_quota,
-        "daily_unfollow_quota" => $daily_unfollow_quota,
+        "follow_quota" => $follow_quota,
+        "unfollow_quota" => $unfollow_quota,
         "proxy" => $proxy
     );
 }
@@ -510,14 +510,14 @@ function updateUnfollowLog($logid, $insta_username, $servername, $username, $pas
 function updateUserNextFollowTime($insta_username, $delay, $mode, $servername, $username, $password, $dbname) {
     if ($mode == "unfollow") {
         $conn_f = new mysqli($servername, $username, $password, $dbname);
-        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, daily_unfollow_quota = daily_unfollow_quota - 1 WHERE insta_username = ?;");
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, unfollow_quota = unfollow_quota - 1 WHERE insta_username = ?;");
         $stmt_update_user_profile->bind_param("s", $insta_username);
         $stmt_update_user_profile->execute();
         $stmt_update_user_profile->close();
         $conn_f->close();
     } else if ($mode == "follow") {
         $conn_f = new mysqli($servername, $username, $password, $dbname);
-        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, daily_follow_quota = daily_follow_quota - 1 WHERE insta_username = ?;");
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, follow_quota = follow_quota - 1 WHERE insta_username = ?;");
         $stmt_update_user_profile->bind_param("s", $insta_username);
         $stmt_update_user_profile->execute();
         $stmt_update_user_profile->close();

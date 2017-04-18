@@ -155,7 +155,7 @@ fclose($file);
 
 //END OF SCRIPT
 
-function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $daily_follow_quota, $daily_unfollow_quota, $proxy) {
+function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $daily_unfollow_quota, $proxy) {
     return array(
         "insta_username" => $insta_username,
         "insta_user_id" => $insta_user_id,
@@ -177,7 +177,7 @@ function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta
         "follow_min_follower" => $follow_min_follower,
         "follow_max_follower" => $follow_max_follower,
         "unfollow_unfollowed" => $unfollow_unfollowed,
-        "daily_follow_quota" => $daily_follow_quota,
+        "follow_quota" => $follow_quota,
         "daily_unfollow_quota" => $daily_unfollow_quota,
         "proxy" => $proxy
     );
