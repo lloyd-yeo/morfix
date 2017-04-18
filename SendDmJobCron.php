@@ -346,14 +346,14 @@ function getDmJobsByIgUsername($insta_username, $servername, $username, $passwor
 function updateUserNextSendTime($insta_username, $delay, $mode, $servername, $username, $password, $dbname) {
     if ($mode == "banned") {
         $conn_f = getConnection($servername, $username, $password, $dbname);
-        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL 1 DAY, temporary_ban = NULL WHERE insta_username = ?;");
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL 1 DAY, temporary_ban = NULL, dm_probation = 1 WHERE insta_username = ?;");
         $stmt_update_user_profile->bind_param("s", $insta_username);
         $stmt_update_user_profile->execute();
         $stmt_update_user_profile->close();
         $conn_f->close();
     } else if ($mode == "normal") {
         $conn_f = getConnection($servername, $username, $password, $dbname);
-        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL $delay MINUTE, dm_probation = 0 WHERE insta_username = ?;");
         $stmt_update_user_profile->bind_param("s", $insta_username);
         $stmt_update_user_profile->execute();
         $stmt_update_user_profile->close();
