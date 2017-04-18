@@ -88,8 +88,59 @@ if (!function_exists('getFollowProfiles')) {
 
 }
 
+if (!function_exists('getCommentProfiles')) {
+
+    function getCommentProfiles($email, $servername, $username, $password, $dbname) {
+        $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
+                insta_user_id, 
+                id, 
+                insta_pw,
+                niche, 
+                speed,
+                proxy
+                FROM insta_affiliate.user_insta_profile 
+                WHERE auto_interaction = 1
+                AND email = ?
+                AND ((user_tier > 1 AND auto_comment = 1) OR (user_tier = 1))
+                AND ((comment_feedback_required = 0 AND auto_comment_ban = 0) OR (comment_feedback_required = 1 AND auto_comment_ban = 1 AND NOW() >= auto_comment_ban_time))
+                AND (NOW() >= next_comment_time OR next_comment_time IS NULL)
+                AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0;";
+
+        $insta_profiles = array();
+        $conn_get_profiles = getConnection($servername, $username, $password, $dbname);
+        $stmt_get_profile = $conn_get_profiles->prepare($get_comment_profile_sql);
+        $stmt_get_profile->bind_param("s", $email);
+        $stmt_get_profile->execute();
+        $stmt_get_profile->store_result();
+        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $speed, $proxy);
+        while ($stmt_get_profile->fetch()) {
+            $insta_profiles[] = array(
+                "insta_username" => $insta_username,
+                "insta_user_id" => $insta_user_id,
+                "insta_id" => $insta_id,
+                "insta_pw" => $insta_pw,
+                "niche" => $niche,
+                "speed" => $speed,
+                "proxy" => $proxy
+            );
+        }
+        $stmt_get_profile->free_result();
+        $stmt_get_profile->close();
+        $conn_get_profiles->close();
+        return $insta_profiles;
+    }
+
+}
+
+
 $get_all_users_sql = "SELECT u.email FROM insta_affiliate.user u "
         . "WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;";
+
+$get_all_users_with_tier_sql = "SELECT u.email, u.user_tier FROM insta_affiliate.user u "
+        . "WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;";
+
+$get_premium_and_free_trial_users_with_tier_by_email_sql = "SELECT u.email, u.user_tier FROM insta_affiliate.user u "
+        . "WHERE u.email = ?;";
 
 $get_all_users_by_email_sql = "SELECT u.email FROM insta_affiliate.user u "
         . "WHERE u.email IN (SELECT email FROM user_insta_profile) AND u.email = ?;";

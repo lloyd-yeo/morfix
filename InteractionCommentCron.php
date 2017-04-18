@@ -21,25 +21,25 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $stmt_get_user = NULL;
     if (is_null($specific_email)) {
         echo "Retrieving users off $offset $num_result\n\n";
-        $stmt_get_user = $conn_get_user->prepare($get_premium_users_sql);
+        $stmt_get_user = $conn_get_user->prepare($get_all_users_with_tier_sql);
         $stmt_get_user->bind_param("ii", $offset, $num_result);
         $stmt_get_user->execute();
         $stmt_get_user->store_result();
-        $stmt_get_user->bind_result($email_);
+        $stmt_get_user->bind_result($email_, $tier_);
         while ($stmt_get_user->fetch()) {
-            $emails[$email_] = $email_;
+            $emails[$email_] = array("email" => $email_, "tier" => $tier_);
         }
         $stmt_get_user->free_result();
         $stmt_get_user->close();
     } else {
         echo "Retrieving users off $specific_email\n\n";
-        $stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_users_by_email_sql);
+        $stmt_get_user = $conn_get_user->prepare($get_premium_and_free_trial_users_with_tier_by_email_sql);
         $stmt_get_user->bind_param("s", $specific_email);
         $stmt_get_user->execute();
         $stmt_get_user->store_result();
-        $stmt_get_user->bind_result($email_);
+        $stmt_get_user->bind_result($email_, $tier_);
         while ($stmt_get_user->fetch()) {
-            $emails[$email_] = $email_;
+            $emails[$email_] = array("email" => $email_, "tier" => $tier_);
         }
         $stmt_get_user->free_result();
         $stmt_get_user->close();
@@ -47,19 +47,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
-        $insta_profiles = array();
-        $conn_get_profiles = getConnection($servername, $username, $password, $dbname);
-        $stmt_get_profile = $conn_get_profiles->prepare($get_comment_profile_sql);
-        $stmt_get_profile->bind_param("s", $email);
-        $stmt_get_profile->execute();
-        $stmt_get_profile->store_result();
-        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
-        while ($stmt_get_profile->fetch()) {
-            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
-        }
-        $stmt_get_profile->free_result();
-        $stmt_get_profile->close();
-        $conn_get_profiles->close();
+        $insta_profiles = getCommentProfiles($email, $servername, $username, $password, $dbname);
 
         foreach ($insta_profiles as $insta_profile) {
 
@@ -68,28 +56,12 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $insta_id = $insta_profile['insta_id'];
             $insta_pw = $insta_profile['insta_pw'];
             $niche = $insta_profile['niche'];
-            $next_follow_time = $insta_profile['next_follow_time'];
-            
-            $unfollow = $insta_profile['unfollow'];
-            $auto_interaction_ban = $insta_profile['auto_interaction_ban'];
-            $auto_interaction_ban_time = $insta_profile['auto_interaction_ban_time'];
-            $follow_cycle = $insta_profile['follow_cycle'];
-            $auto_unfollow = $insta_profile['auto_unfollow'];
-            $auto_follow = $insta_profile['auto_follow'];
-            $auto_follow_ban = $insta_profile['auto_follow_ban'];
-            $auto_follow_ban_time = $insta_profile['auto_follow_ban_time'];
-            $follow_unfollow_delay = $insta_profile['follow_unfollow_delay'];
             $speed = $insta_profile['speed'];
-            $follow_min_follower = $insta_profile['follow_min_follower'];
-            $follow_max_follower = $insta_profile['follow_max_follower'];
-            $unfollow_unfollowed = $insta_profile['unfollow_unfollowed'];
-            $follow_quota = $insta_profile['follow_quota'];
-            $unfollow_quota = $insta_profile['unfollow_quota'];
             $proxy = $insta_profile['proxy'];
             $profile_comment = getRandomUserComment($insta_username, $servername, $username, $password, $dbname);
-            
+
             $comment_delay = 25;
-            
+
             if ($speed == "Fast") {
                 $comment_delay = 5;
             }
@@ -101,7 +73,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             }
 
             $comment_delay = rand($comment_delay, $comment_delay + 10);
-            
+
             if (is_null($profile_comment)) {
                 echo "[" . $insta_username . "] has NULL comment.\n";
                 continue;
@@ -200,34 +172,6 @@ fclose($file);
 
 //END OF SCRIPT
 
-function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $niche_target_counter, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy) {
-    return array(
-        "insta_username" => $insta_username,
-        "insta_user_id" => $insta_user_id,
-        "insta_id" => $insta_id,
-        "insta_pw" => $insta_pw,
-        "niche" => $niche,
-        "next_follow_time" => $next_follow_time,
-        $niche_target_counter,
-        "unfollow" => $unfollow,
-        "auto_interaction_ban" => $auto_interaction_ban,
-        "auto_interaction_ban_time" => $auto_interaction_ban_time,
-        "follow_cycle" => $follow_cycle,
-        "auto_unfollow" => $auto_unfollow,
-        "auto_follow" => $auto_follow,
-        "auto_follow_ban" => $auto_follow_ban,
-        "auto_follow_ban_time" => $auto_follow_ban_time,
-        "follow_unfollow_delay" => $follow_unfollow_delay,
-        "speed" => $speed,
-        "follow_min_follower" => $follow_min_follower,
-        "follow_max_follower" => $follow_max_follower,
-        "unfollow_unfollowed" => $unfollow_unfollowed,
-        "follow_quota" => $follow_quota,
-        "unfollow_quota" => $unfollow_quota,
-        "proxy" => $proxy
-    );
-}
-
 function getRandomUserComment($insta_username, $servername, $username, $password, $dbname) {
     $comment = NULL;
     $conn_get_comments = new mysqli($servername, $username, $password, $dbname);
@@ -318,7 +262,7 @@ function updateEngagementJob($job_id, $delay, $insta_username, $servername, $use
     $update_engagement_job->execute();
     $update_engagement_job->close();
     $conn->close();
-    
+
     $conn = new mysqli($servername, $username, $password, $dbname);
     $conn->query("set names utf8mb4");
     $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET comment_quota = comment_quota - 1, next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
