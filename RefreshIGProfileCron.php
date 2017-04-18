@@ -47,6 +47,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
+        
         $insta_profiles = array();
         $conn_get_profiles = getConnection($servername, $username, $password, $dbname);
         $stmt_get_profile = $conn_get_profiles->prepare($get_all_profile_sql);

@@ -47,7 +47,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
-        
+
         $insta_profiles = getFollowProfiles($email, $servername, $username, $password, $dbname);
 
         foreach ($insta_profiles as $insta_profile) {
@@ -129,7 +129,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     } else {
                         $instagram->setProxy($proxy);
                     }
-                    
+
                     $current_log_id = "";
                     try {
                         $ig_username = $insta_username;
@@ -195,8 +195,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         echo "[" . $insta_username . "] request_ex: " . $request_ex->getMessage() . "\n";
                     }
-                } 
-                else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) { //follow sequence
+                } else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) { //follow sequence
                     if ($follow_quota < 1) {
                         echo "[" . $insta_username . "] has reached quota for following today.\n";
                         continue;
@@ -395,6 +394,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     if ($follow_resp->friendship_status->following == true) {
                                                         updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
                                                         insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
+                                                        switchUnFollowCycle($insta_username, $follow_cycle, $servername, $username, $password, $dbname);
                                                         $followed = 1;
                                                         echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
                                                         break;
@@ -442,7 +442,7 @@ fclose($file);
 
 //END OF SCRIPT
 
-function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time,  $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy) {
+function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy) {
     return array(
         "insta_username" => $insta_username,
         "insta_user_id" => $insta_user_id,
@@ -478,6 +478,29 @@ function switchFollowCycle($insta_id, $insta_username, $servername, $username, $
         echo "[" . $insta_username . "] is following next round.\n\n";
     }
     $stmt_switch_follow->close();
+    $conn_switch_follow_status->close();
+}
+
+function switchUnFollowCycle($insta_username, $follow_cycle, $servername, $username, $password, $dbname) {
+    $conn_switch_follow_status = new mysqli($servername, $username, $password, $dbname);
+    $conn_switch_follow_status->query("set names utf8mb4");
+
+    $stmt_get_follows = $conn_switch_follow_status->prepare("SELECT log_id FROM insta_affiliate.user_insta_profile_follow_log WHERE insta_username = ? AND follow = 1 AND unfollowed = 0;");
+    $stmt_get_follows->bind_param("s", $insta_username);
+    $stmt_get_follows->execute();
+    $stmt_get_follows->store_result();
+    $stmt_get_follows->bind_result($follow_count);
+
+    if ($stmt_get_follows->num_rows >= $follow_cycle) { //if it hits the upper bound of the follow cycle, start unfollowing.
+        $conn_switch_follow_status_ = new mysqli($servername, $username, $password, $dbname);
+        $conn_switch_follow_status_->query("set names utf8mb4");
+        $stmt_switch_follow = $conn_switch_follow_status_->prepare("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;");
+        $stmt_switch_follow->bind_param("s", $insta_username);
+        $stmt_switch_follow->execute();
+        $stmt_switch_follow->close();
+        $conn_switch_follow_status_->close();
+    }
+
     $conn_switch_follow_status->close();
 }
 
