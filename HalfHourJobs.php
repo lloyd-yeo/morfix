@@ -34,7 +34,9 @@ $get_proxies_stmt->close();
 $conn->close();
 
 for ($i = 0; $i < count($ig_profiles); $i++) {
+    echo $ig_profiles[$i] ."\t". $proxies[$i] . "\n";
     $conn = getConnection($servername, $username, $password, $dbname);
+    
     $update_profile_proxy = $conn->prepare("UPDATE user_insta_profile set proxy = ? where id = ?;");
     $update_profile_proxy->bind_param("si", $proxies[$i], $ig_profiles[$i]);
     $update_profile_proxy->execute();
