@@ -37,11 +37,11 @@ for ($i = 0; $i < count($ig_profiles); $i++) {
     echo $ig_profiles[$i] ."\t". $proxies[$i] . "\n";
     $conn = getConnection($servername, $username, $password, $dbname);
     
-    $update_profile_proxy = $conn->prepare("UPDATE user_insta_profile set proxy = ? where id = ?;");
+    $update_profile_proxy = $conn->prepare("UPDATE user_insta_profile SET proxy = ? WHERE id = ?;");
     $update_profile_proxy->bind_param("si", $proxies[$i], $ig_profiles[$i]);
     $update_profile_proxy->execute();
     
-    $update_proxy = $conn->prepare("UPDATE proxy set assigned = assigned + 1 where proxy = ?;");
+    $update_proxy = $conn->prepare("UPDATE proxy SET assigned = assigned + 1 WHERE proxy = ?;");
     $update_proxy->bind_param("s", $proxies[$i]);
     $update_proxy->execute();
     
