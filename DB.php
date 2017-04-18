@@ -1,4 +1,5 @@
 <?php
+
 $servername = "52.221.60.235";
 $username = "root";
 $password = "inst@ffiliates123";
@@ -13,6 +14,80 @@ if (function_exists('getConnection')) {
         $conn = new mysqli($servername, $username, $password, $dbname);
         $conn->query("set names utf8mb4");
         return $conn;
+    }
+
+}
+
+if (!function_exists('getFollowProfiles')) {
+
+    function getFollowProfiles($email, $servername, $username, $password, $dbname) {
+
+        $get_follow_profile_sql = "SELECT DISTINCT(insta_username),
+                insta_user_id, 
+                id, 
+                insta_pw,
+                niche, 
+                next_follow_time, 
+                unfollow, 
+                auto_interaction_ban, 
+                auto_interaction_ban_time,
+                follow_cycle,
+                auto_unfollow,
+                auto_follow,
+                auto_follow_ban,
+                auto_follow_ban_time,
+                follow_unfollow_delay,
+                speed,
+                follow_min_followers,
+                follow_max_followers,
+                unfollow_unfollowed,
+                follow_quota,
+                unfollow_quota,
+                proxy
+                FROM insta_affiliate.user_insta_profile 
+                WHERE auto_interaction = 1
+                AND email = ?
+                AND (NOW() >= next_follow_time OR next_follow_time IS NULL)
+                AND auto_follow_ban = 0
+                AND (auto_follow = 1 OR auto_unfollow = 1) 
+                AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0 AND feedback_required = 0;";
+
+        $insta_profiles = array();
+        $conn = getConnection($servername, $username, $password, $dbname);
+        $stmt_get_profile = $conn->prepare($get_follow_profile_sql);
+        $stmt_get_profile->bind_param("s", $email);
+        $stmt_get_profile->execute();
+        $stmt_get_profile->store_result();
+        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $id, $insta_pw, $niche, $next_follow_time, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_followers, $follow_max_followers, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
+        while ($stmt_get_profile->fetch()) {
+            $insta_profiles[] = array(
+                "insta_username" => $insta_username,
+                "insta_user_id" => $insta_user_id,
+                "insta_id" => $id,
+                "insta_pw" => $insta_pw,
+                "niche" => $niche,
+                "next_follow_time" => $next_follow_time,
+                "unfollow" => $unfollow,
+                "auto_interaction_ban" => $auto_interaction_ban,
+                "auto_interaction_ban_time" => $auto_interaction_ban_time,
+                "follow_cycle" => $follow_cycle,
+                "auto_unfollow" => $auto_unfollow,
+                "auto_follow" => $auto_follow,
+                "auto_follow_ban" => $auto_follow_ban,
+                "auto_follow_ban_time" => $auto_follow_ban_time,
+                "follow_unfollow_delay" => $follow_unfollow_delay,
+                "speed" => $speed,
+                "follow_min_follower" => $follow_min_follower,
+                "follow_max_follower" => $follow_max_follower,
+                "unfollow_unfollowed" => $unfollow_unfollowed,
+                "follow_quota" => $follow_quota,
+                "unfollow_quota" => $unfollow_quota,
+                "proxy" => $proxy
+            );
+        }
+        $stmt_get_profile->close();
+        $conn->close();
+        return $insta_profiles;
     }
 
 }
