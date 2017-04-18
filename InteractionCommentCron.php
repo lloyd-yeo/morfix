@@ -113,7 +113,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             if (is_null($outstanding_engagement_job)) {
                                 $target_username_posts = $instagram->getUserFeed($newest_follow["follower_id"]);
                                 if (count($target_username_posts->items) == 0) {
-                                    insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], "0", "User doesn't have any posts.");
+                                    insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], "0", "User doesn't have any posts.", $servername, $username, $password, $dbname);
                                     continue;
                                 }
                                 $throttle_limit = 41;
