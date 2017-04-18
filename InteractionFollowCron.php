@@ -209,7 +209,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         echo "[" . $insta_username . "] request_ex: " . $request_ex->getMessage() . "\n";
                     }
-                } else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) { //follow sequence
+                } 
+                else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) { //follow sequence
                     if ($follow_quota < 1) {
                         echo "[" . $insta_username . "] has reached quota for following today.\n";
                         continue;
@@ -230,6 +231,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
                     if (is_null($proxy)) {
+                        echo "[" . $insta_username . "] has no proxies.\n";
                         continue;
                     } else {
                         $instagram->setProxy($proxy);
