@@ -87,6 +87,19 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $daily_unfollow_quota = $insta_profile['daily_unfollow_quota'];
             $proxy = $insta_profile['proxy'];
             $profile_comment = getRandomUserComment($insta_username, $servername, $username, $password, $dbname);
+            
+            $comment_delay = 29;
+            
+            if ($speed == "Fast") {
+                $comment_delay = 9;
+            }
+            if ($speed == "Medium") {
+                $comment_delay = 19;
+            }
+            if ($speed == "Slow") {
+                $comment_delay = 29;
+            }
+
             if (is_null($profile_comment)) {
                 echo "[" . $insta_username . "] has NULL comment.\n";
                 continue;
@@ -146,14 +159,14 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         break;
                                     }
                                 }
-                            } else { 
+                            } else {
                                 $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
                                     updateEngagementJob($outstanding_engagement_job["job_id"], $servername, $username, $password, $dbname);
                                     echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
                                 }
-                                
+
                                 if ($commented == 1) {
                                     break;
                                 }
@@ -294,12 +307,20 @@ function getOutstandingEngagementJob($insta_username, $servername, $username, $p
     return $engagement_job;
 }
 
-function updateEngagementJob($job_id, $servername, $username, $password, $dbname) {
+function updateEngagementJob($job_id, $delay, $insta_username, $servername, $username, $password, $dbname) {
     $conn = new mysqli($servername, $username, $password, $dbname);
     $conn->query("set names utf8mb4");
     $update_engagement_job = $conn->prepare("UPDATE insta_affiliate.engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;");
     $update_engagement_job->bind_param("i", $job_id);
     $update_engagement_job->execute();
     $update_engagement_job->close();
+    $conn->close();
+    
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("set names utf8mb4");
+    $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
+    $update_comment_delay->bind_param("s", $insta_username);
+    $update_comment_delay->execute();
+    $update_comment_delay->close();
     $conn->close();
 }
