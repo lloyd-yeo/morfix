@@ -60,7 +60,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('interaction:like 0 0 peizhisim@gmail.com')->everyFiveMinutes();
         
         $schedule->command("engagement:add")->everyThirtyMinutes()->withoutOverlapping();
-        $schedule->command("interaction:unban")->everyThirtyMinutes()->withoutOverlapping();
+        //$schedule->command("interaction:unban")->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command("analysis:follower")->daily("00:00")->withoutOverlapping();
 //        $schedule->command('ig:refresh 0 100')->everyThirtyMinutes();
 //        $schedule->command('ig:refresh 0 200')->everyThirtyMinutes();
