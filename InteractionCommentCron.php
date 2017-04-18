@@ -138,7 +138,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
-                                    updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $servername, $username, $password, $dbname);
+                                    updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $insta_username, $servername, $username, $password, $dbname);
                                     echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
                                 }
 
