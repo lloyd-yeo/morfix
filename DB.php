@@ -56,7 +56,7 @@ if (!function_exists('getFollowProfiles')) {
         $stmt_get_profile->bind_param("s", $email);
         $stmt_get_profile->execute();
         $stmt_get_profile->store_result();
-        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $id, $insta_pw, $niche, $next_follow_time, $unfollow, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_followers, $follow_max_followers, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
+        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $id, $insta_pw, $niche, $next_follow_time, $unfollow, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
         while ($stmt_get_profile->fetch()) {
             $insta_profiles[] = array(
                 "insta_username" => $insta_username,
