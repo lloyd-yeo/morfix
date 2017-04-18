@@ -197,16 +197,32 @@ function getUserNewestFollow($insta_username, $servername, $username, $password,
     $stmt_get_newest_follower = $conn->prepare("SELECT follower_username, follower_id FROM insta_affiliate.user_insta_profile_follow_log 
     WHERE follow = 1 AND unfollowed = 0 AND insta_username = ? 
     AND follower_username NOT IN (SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = ?)
-    ORDER BY date_inserted DESC LIMIT 1;");
+    ORDER BY date_inserted DESC LIMIT 5;");
     $stmt_get_newest_follower->bind_param("ss", $insta_username, $insta_username);
     $stmt_get_newest_follower->execute();
     $stmt_get_newest_follower->store_result();
     $stmt_get_newest_follower->bind_result($follower_un, $follower_id);
     while ($stmt_get_newest_follower->fetch()) {
+        $exists = 0;
+        $stmt_check_newest_follower = $conn->prepare("SELECT 1 FROM user_insta_profile_comment_log WHERE insta_username = ? AND target_username = ?;");
+        $stmt_check_newest_follower->bind_param("ss", $insta_username, $follower_un);
+        $stmt_check_newest_follower->execute();
+        $stmt_check_newest_follower->store_result();
+        $stmt_check_newest_follower->bind_result($count);
+        while ($stmt_check_newest_follower->fetch()) {
+            $exists = 1;
+        }
+        $stmt_check_newest_follower->close();
+        
+        if ($exists) {
+            continue;
+        }
+        
         $newest_follow = array(
             "follower_username" => $follower_un,
             "follower_id" => $follower_id
         );
+        break;
     }
     $stmt_get_newest_follower->free_result();
     $stmt_get_newest_follower->close();
