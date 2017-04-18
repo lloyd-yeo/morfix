@@ -464,7 +464,6 @@ function generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta
         "insta_pw" => $insta_pw,
         "niche" => $niche,
         "next_follow_time" => $next_follow_time,
-        
         "unfollow" => $unfollow,
         "auto_interaction_ban" => $auto_interaction_ban,
         "auto_interaction_ban_time" => $auto_interaction_ban_time,
