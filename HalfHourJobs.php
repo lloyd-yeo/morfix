@@ -21,8 +21,9 @@ $conn->close();
 
 $proxies = array();
 $conn = getConnection($servername, $username, $password, $dbname);
+$ig_profiles_sz = count($ig_profiles);
 $get_proxies_stmt = $conn->prepare("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND() LIMIT ?;");
-$get_proxies_stmt->bind_param("i", count($ig_profiles));
+$get_proxies_stmt->bind_param("i", $ig_profiles_sz);
 $get_proxies_stmt->execute();
 $get_proxies_stmt->bind_result($proxy, $assigned);
 while ($get_proxies_stmt->fetch()) {
