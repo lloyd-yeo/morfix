@@ -103,6 +103,20 @@ $get_follow_profile_sql = "SELECT DISTINCT(insta_username),
                 AND (auto_follow = 1 OR auto_unfollow = 1) 
                 AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0 AND feedback_required = 0;";
 
+$get_like_profile_sql = "SELECT DISTINCT(insta_username),
+                insta_user_id, 
+                id, 
+                insta_pw,
+                niche,
+                proxy
+                FROM insta_affiliate.user_insta_profile 
+                WHERE auto_interaction = 1
+                AND email = ?
+                AND auto_like = 1
+                AND auto_like_ban = 0
+                AND like_quota > 0
+                AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0 AND feedback_required = 0;";
+
 $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
                 insta_user_id, 
                 id, 
@@ -131,6 +145,7 @@ $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
                 AND email = ?
                 AND auto_comment = 1
                 AND comment_feedback_required = 0
+                AND auto_comment_ban = 0
                 AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0;";
 
 

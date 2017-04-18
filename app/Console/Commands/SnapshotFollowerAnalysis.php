@@ -45,7 +45,8 @@ class SnapshotFollowerAnalysis extends Command
      */
     public function handle()
     {
-        DB::connection("mysql_old")->insert("INSERT INTO user_insta_follower_analysis(insta_username, follower_count) SELECT insta_username, follower_count FROM user_insta_profile;");
+        DB::connection("mysql_old")->insert("INSERT INTO user_insta_follower_analysis(insta_username, follower_count) SELECT insta_username, follower_count FROM user_insta_profile WHERE invalid_user = 0 AND checkpoint_required = 0 AND account_disabled = 0 AND incorrect_pw = 0;");
         DB::connection("mysql_old")->update("UPDATE user SET engagement_quota = 1;");
+//        DB::connection("mysql_old")->update("UPDATE user_insta_profile SET auto_comment_ban = 0, auto_comment_ban_time = NULL, next_comment_time = NOW() + INTERVAL 10 MINUTE, comment_feedback_required = 0 WHERE NOW() >= auto_comment_ban_time;");
     }
 }
