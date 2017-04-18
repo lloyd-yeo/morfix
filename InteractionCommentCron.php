@@ -153,6 +153,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                     if ($comment_response->isOk()) {
                                         $commented = 1;
                                         insertCommentLog($insta_username, $item->user->username, $item->user->pk, $item->pk, serialize($comment_response), $servername, $username, $password, $dbname);
+                                        updateUserCommentDelay($insta_username, $comment_delay, $servername, $username, $password, $dbname);
                                         echo "[" . $insta_username . "] commented on [" . $item->user->username . "] [" . $item->getItemUrl() . "]\n";
                                     }
                                     if ($commented == 1) {
@@ -163,7 +164,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
-                                    updateEngagementJob($outstanding_engagement_job["job_id"], $servername, $username, $password, $dbname);
+                                    updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $servername, $username, $password, $dbname);
                                     echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
                                 }
 
@@ -318,7 +319,17 @@ function updateEngagementJob($job_id, $delay, $insta_username, $servername, $use
     
     $conn = new mysqli($servername, $username, $password, $dbname);
     $conn->query("set names utf8mb4");
-    $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
+    $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET comment_quota = comment_quota - 1, next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
+    $update_comment_delay->bind_param("s", $insta_username);
+    $update_comment_delay->execute();
+    $update_comment_delay->close();
+    $conn->close();
+}
+
+function updateUserCommentDelay($insta_username, $delay, $servername, $username, $password, $dbname) {
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("set names utf8mb4");
+    $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET comment_quota = comment_quota - 1, next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
     $update_comment_delay->bind_param("s", $insta_username);
     $update_comment_delay->execute();
     $update_comment_delay->close();

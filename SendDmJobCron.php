@@ -122,6 +122,10 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         } else {
                             updateUserNextSendTime($insta_username, $delay, "normal", $servername, $username, $password, $dbname);
                         }
+                        
+                        if ($auto_dm_delay == 1) {
+                            
+                        }
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
                         if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
