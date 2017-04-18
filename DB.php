@@ -90,7 +90,8 @@ if (!function_exists('getFollowProfiles')) {
 
 if (!function_exists('getCommentProfiles')) {
 
-    function getCommentProfiles($email, $servername, $username, $password, $dbname) {
+    function getCommentProfiles($email, $tier, $servername, $username, $password, $dbname) {
+        
         $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
                 insta_user_id, 
                 id, 
@@ -101,7 +102,7 @@ if (!function_exists('getCommentProfiles')) {
                 FROM insta_affiliate.user_insta_profile 
                 WHERE auto_interaction = 1
                 AND email = ?
-                AND ((user_tier > 1 AND auto_comment = 1) OR (user_tier = 1))
+                AND (($tier > 1 AND auto_comment = 1) OR ($tier = 1))
                 AND ((comment_feedback_required = 0 AND auto_comment_ban = 0) OR (comment_feedback_required = 1 AND auto_comment_ban = 1 AND NOW() >= auto_comment_ban_time))
                 AND (NOW() >= next_comment_time OR next_comment_time IS NULL)
                 AND checkpoint_required = 0 AND invalid_user = 0 AND account_disabled = 0 AND incorrect_pw = 0;";

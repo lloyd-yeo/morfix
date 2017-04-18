@@ -47,7 +47,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
-        $insta_profiles = getCommentProfiles($email, $servername, $username, $password, $dbname);
+        $insta_profiles = getCommentProfiles($email["email"], $email["tier"], $servername, $username, $password, $dbname);
 
         foreach ($insta_profiles as $insta_profile) {
 
