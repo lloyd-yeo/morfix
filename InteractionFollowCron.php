@@ -47,19 +47,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
-        $insta_profiles = array();
-        $conn_get_profiles = getConnection($servername, $username, $password, $dbname);
-        $stmt_get_profile = $conn_get_profiles->prepare($get_follow_profile_sql);
-        $stmt_get_profile->bind_param("s", $email);
-        $stmt_get_profile->execute();
-        $stmt_get_profile->store_result();
-        $stmt_get_profile->bind_result($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time,  $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
-        while ($stmt_get_profile->fetch()) {
-            $insta_profiles[] = generateProfileArray($insta_username, $insta_user_id, $insta_id, $insta_pw, $niche, $next_follow_time, $unfollow, $auto_interaction_ban, $auto_interaction_ban_time, $follow_cycle, $auto_unfollow, $auto_follow, $auto_follow_ban, $auto_follow_ban_time, $follow_unfollow_delay, $speed, $follow_min_follower, $follow_max_follower, $unfollow_unfollowed, $follow_quota, $unfollow_quota, $proxy);
-        }
-        $stmt_get_profile->free_result();
-        $stmt_get_profile->close();
-        $conn_get_profiles->close();
+        
+        $insta_profiles = getFollowProfiles($email, $servername, $username, $password, $dbname);
 
         foreach ($insta_profiles as $insta_profile) {
 
