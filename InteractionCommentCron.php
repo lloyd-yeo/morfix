@@ -68,7 +68,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 );
                 $index = rand(0,6);
                 $profile_comment = $default_comments[$index];
-                echo "[" . $insta_username . "] using comment [$profile_comment].\n";
             } 
             
             $comment_delay = 25;
