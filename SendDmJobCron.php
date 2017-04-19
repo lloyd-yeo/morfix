@@ -338,6 +338,7 @@ function getDmJobsByIgUsername($insta_username, $servername, $username, $passwor
         );
     }
     $stmt_get_dm_job->free_result();
+    $stmt_get_dm_job->close();
     $conn->close();
     return $dm_job;
 }
