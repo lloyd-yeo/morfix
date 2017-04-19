@@ -47,6 +47,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
+        
         $insta_profiles = getCommentProfiles($email["email"], $email["tier"], $servername, $username, $password, $dbname);
 
         foreach ($insta_profiles as $insta_profile) {
@@ -59,7 +60,17 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $speed = $insta_profile['speed'];
             $proxy = $insta_profile['proxy'];
             $profile_comment = getRandomUserComment($insta_username, $servername, $username, $password, $dbname);
-
+            
+            if (is_null($profile_comment) && $email["tier"] == 1) {
+                $default_comments = array(
+                    "Awesome!", "That looks incredible!", "Well done!", "That is exquisite!", "Looking good there!",
+                    "World class!", "Good stuff!"
+                );
+                $index = rand(0,6);
+                $profile_comment = $default_comments[$index];
+                echo "[" . $insta_username . "] using comment [$profile_comment].\n";
+            } 
+            
             $comment_delay = 25;
 
             if ($speed == "Fast") {
