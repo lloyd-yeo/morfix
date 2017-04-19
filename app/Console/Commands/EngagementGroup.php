@@ -53,7 +53,7 @@ class EngagementGroup extends Command {
                     ->update("UPDATE engagement_group_job SET engaged = 1, date_worked_on = NOW() WHERE media_id = ?;", [$media_id]);
 
             $engagement_group_users = DB::connection('mysql_old')
-                    ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id
+                    ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id, u.user_tier
                                 FROM user_insta_profile p, user u
                                 WHERE p.user_id = u.user_id
                                 AND p.checkpoint_required = 0
