@@ -116,7 +116,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         $delay = rand(25,40);
                         $direct_msg_resp = $instagram->directMessage($dm_job["recipient_insta_id"], $dm_job["message"]);
                         var_dump($direct_msg_resp);
+                        
                         updateDmJobFulfilled($dm_job["job_id"], $servername, $username, $password, $dbname);
+                        
                         if (!is_null($temporary_ban)) {
                             updateUserNextSendTime($insta_username, $delay, "banned", $servername, $username, $password, $dbname);
                         } else {
