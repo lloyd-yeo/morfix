@@ -307,7 +307,7 @@ function updateEngagementJob($job_id, $delay, $insta_username, $servername, $use
 function updateUserCommentDelay($insta_username, $delay, $servername, $username, $password, $dbname) {
     $conn = new mysqli($servername, $username, $password, $dbname);
     $conn->query("set names utf8mb4");
-    $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET comment_quota = comment_quota - 1, next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
+    $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET auto_comment_ban_time = NULL, auto_comment_ban = 0, comment_quota = comment_quota - 1, next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
     $update_comment_delay->bind_param("s", $insta_username);
     $update_comment_delay->execute();
     $update_comment_delay->close();
