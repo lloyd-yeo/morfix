@@ -121,11 +121,17 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             $outstanding_engagement_job = getOutstandingEngagementJob($insta_username, $servername, $username, $password, $dbname);
                             //comment on engagement group first else as per usual.
                             if (is_null($outstanding_engagement_job)) {
+                                
+                                if (checkCommentedOnUser($insta_username, $newest_follow["follower_username"], $servername, $username, $password, $dbname)) {
+                                    continue;
+                                }
+                                
                                 $target_username_posts = $instagram->getUserFeed($newest_follow["follower_id"]);
                                 if (count($target_username_posts->items) == 0) {
                                     insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], "0", "User doesn't have any posts.", $servername, $username, $password, $dbname);
                                     continue;
                                 }
+                                
                                 $throttle_limit = 41;
                                 $throttle_count = 0;
                                 foreach ($target_username_posts->items as $item) {
@@ -306,4 +312,22 @@ function updateUserCommentDelay($insta_username, $delay, $servername, $username,
     $update_comment_delay->execute();
     $update_comment_delay->close();
     $conn->close();
+}
+
+function checkCommentedOnUser($insta_username, $follower_username, $servername, $username, $password, $dbname) {
+    $exists = false;
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("set names utf8mb4");
+    $update_comment_delay = $conn->prepare("SELECT target_username FROM insta_affiliate.user_insta_profile_comment_log WHERE insta_username = ? AND target_username = ?;");
+    $update_comment_delay->bind_param("ss", $insta_username, $follower_username);
+    $update_comment_delay->execute();
+    $update_comment_delay->store_result();
+    $update_comment_delay->bind_result($target_username);
+    while ($update_comment_delay->fetch()) {
+        $exists = true;
+    }
+    $update_comment_delay->free_result();
+    $update_comment_delay->close();
+    $conn->close();
+    return $exists;
 }
