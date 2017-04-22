@@ -83,13 +83,13 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $follow_up_message = $insta_profile['follow_up_message'];
             $proxy = $insta_profile['proxy'];
             echo "[$insta_username] retrieved...\n";
-            
+
             $dm_job = getDmJobsByIgUsername($insta_username, $servername, $username, $password, $dbname);
-            
+
             if (is_null($dm_job)) {
                 continue;
             }
-            
+
             try {
                 $config = array();
                 $config["storage"] = "mysql";
@@ -110,20 +110,20 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $instagram->setProxy($proxy);
                     $instagram->setUser($ig_username, $ig_password);
                     $instagram->login();
-                    
+
                     try {
-                        $delay = rand(35,45);
+                        $delay = rand(35, 45);
                         $direct_msg_resp = $instagram->directMessage($dm_job["recipient_insta_id"], $dm_job["message"]);
                         var_dump($direct_msg_resp);
-                        
-                        updateDmJobFulfilled($dm_job["job_id"], $ig_username, $dm_job["recipient_insta_id"], $servername, $username, $password, $dbname);
-                        
+
+                        updateDmJobFulfilled($dm_job["job_id"], $auto_dm_delay, $ig_username, $dm_job["recipient_insta_id"], $servername, $username, $password, $dbname);
+
                         if (!is_null($temporary_ban)) {
                             updateUserNextSendTime($insta_username, $delay, "banned", $servername, $username, $password, $dbname);
                         } else {
                             updateUserNextSendTime($insta_username, $delay, "normal", $servername, $username, $password, $dbname);
                         }
-                        
+
                         if ($auto_dm_delay == 1) {
                             
                         }
@@ -141,7 +141,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 }
             } catch (Exception $ex) {
                 echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
-                echo "[" . $insta_username . "] " .$ex->getTraceAsString() . "\n";
+                echo "[" . $insta_username . "] " . $ex->getTraceAsString() . "\n";
             }
         }
     }
@@ -287,23 +287,23 @@ function getNicheTargets($niche, $servername, $username, $password, $dbname) {
 }
 
 function updateUserFeedbackRequired($insta_username, $job_id, $error_msg, $servername, $username, $password, $dbname) {
-    
+
     $conn = getConnection($servername, $username, $password, $dbname);
     $stmt_update_user_profile = $conn->prepare("UPDATE user_insta_profile SET last_sent_dm = NOW() + INTERVAL 6 HOUR, temporary_ban = NOW() + INTERVAL 6 HOUR WHERE insta_username = ?;");
     $stmt_update_user_profile->bind_param("s", $insta_username);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
-    
+
     $stmt_update_dm_job = $conn->prepare("UPDATE dm_job SET error_msg = ? WHERE job_id = ?;");
     $stmt_update_dm_job->bind_param("si", $error_msg, $job_id);
     $stmt_update_dm_job->execute();
     $stmt_update_dm_job->close();
-    
+
     $conn->close();
 }
 
 function updateUserCheckpointRequired($insta_username, $servername, $username, $password, $dbname) {
-    
+
     $conn = getConnection($servername, $username, $password, $dbname);
     $stmt_update_user_profile = $conn->prepare("UPDATE user_insta_profile SET checkpoint_required = 1 WHERE insta_username = ?;");
     $stmt_update_user_profile->bind_param("s", $insta_username);
@@ -312,20 +312,21 @@ function updateUserCheckpointRequired($insta_username, $servername, $username, $
     $conn->close();
 }
 
-function updateDmJobFulfilled($job_id, $insta_username, $recipient_insta_id, $servername, $username, $password, $dbname) {
+function updateDmJobFulfilled($job_id, $auto_dm_delay, $insta_username, $recipient_insta_id, $servername, $username, $password, $dbname) {
     $conn = getConnection($servername, $username, $password, $dbname);
     $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET fulfilled = 1, updated_at = NOW() WHERE job_id = ?;");
     $stmt_update_user_profile->bind_param("i", $job_id);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
     $conn->close();
-    
-    $conn = getConnection($servername, $username, $password, $dbname);
-    $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET time_to_send = NOW() + INTERVAL 1 DAY WHERE recipient_insta_id = ? AND insta_username = ? AND fulfilled = 0;");
-    $stmt_update_user_profile->bind_param("ss", $recipient_insta_id, $insta_username);
-    $stmt_update_user_profile->execute();
-    $stmt_update_user_profile->close();
-    $conn->close();
+    if ($auto_dm_delay == 1) {
+        $conn = getConnection($servername, $username, $password, $dbname);
+        $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET time_to_send = NOW() + INTERVAL 1 DAY WHERE recipient_insta_id = ? AND insta_username = ? AND fulfilled = 0;");
+        $stmt_update_user_profile->bind_param("ss", $recipient_insta_id, $insta_username);
+        $stmt_update_user_profile->execute();
+        $stmt_update_user_profile->close();
+        $conn->close();
+    }
 }
 
 function getDmJobsByIgUsername($insta_username, $servername, $username, $password, $dbname) {
@@ -339,9 +340,9 @@ function getDmJobsByIgUsername($insta_username, $servername, $username, $passwor
     while ($stmt_get_dm_job->fetch()) {
         $dm_job = array(
             "job_id" => $job_id,
-            "recipient_username" => $recipient_username, 
-            "recipient_insta_id" => $recipient_insta_id, 
-            "recipient_fullname" => $recipient_fullname, 
+            "recipient_username" => $recipient_username,
+            "recipient_insta_id" => $recipient_insta_id,
+            "recipient_fullname" => $recipient_fullname,
             "message" => $message
         );
     }
