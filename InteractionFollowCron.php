@@ -395,6 +395,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
                                                 }
+                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
+                                                }
                                                 try {
                                                     $follow_resp = $instagram->follow($user_to_follow->pk);
                                                     if ($follow_resp->friendship_status->following == true) {
