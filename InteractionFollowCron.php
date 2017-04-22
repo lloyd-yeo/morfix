@@ -283,6 +283,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 if ($follow_resp->friendship_status->following == true) {
                                                     updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
                                                     insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
+                                                    switchUnFollowCycle($insta_username, $follow_cycle, $servername, $username, $password, $dbname);
                                                     $followed = 1;
                                                     echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
                                                     break;
@@ -333,6 +334,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 if ($follow_resp->friendship_status->following == true) {
                                                     updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
                                                     insertNewFollowLogEntry($insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($follow_resp), $servername, $username, $password, $dbname);
+                                                    switchUnFollowCycle($insta_username, $follow_cycle, $servername, $username, $password, $dbname);
                                                     $followed = 1;
                                                     echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
                                                     break;
