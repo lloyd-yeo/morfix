@@ -392,11 +392,17 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
+                                                if ($user_to_follow->media_count < 3) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: < 3 photos \n";
+                                                    continue;
+                                                }
                                                 if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
-                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
+                                                    continue;
                                                 }
                                                 if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
-                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
+                                                    continue;
                                                 }
                                                 try {
                                                     $follow_resp = $instagram->follow($user_to_follow->pk);
