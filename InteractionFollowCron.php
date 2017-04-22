@@ -491,7 +491,7 @@ function switchUnFollowCycle($insta_username, $follow_cycle, $servername, $usern
     $stmt_get_follows->store_result();
     $stmt_get_follows->bind_result($follow_count);
 
-    if ($stmt_get_follows->num_rows >= $follow_cycle) { //if it hits the upper bound of the follow cycle, start unfollowing.
+    if ($stmt_get_follows->num_rows() >= $follow_cycle) { //if it hits the upper bound of the follow cycle, start unfollowing.
         $conn_switch_follow_status_ = new mysqli($servername, $username, $password, $dbname);
         $conn_switch_follow_status_->query("set names utf8mb4");
         $stmt_switch_follow = $conn_switch_follow_status_->prepare("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;");
