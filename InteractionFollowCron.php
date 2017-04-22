@@ -497,9 +497,9 @@ function switchFollowCycle($insta_id, $insta_username, $servername, $username, $
 }
 
 function switchUnFollowCycle($insta_username, $follow_cycle, $servername, $username, $password, $dbname) {
+    echo "[$insta_username] follow cycle: " . $follow_cycle;
     $conn_switch_follow_status = new mysqli($servername, $username, $password, $dbname);
     $conn_switch_follow_status->query("set names utf8mb4");
-
     $stmt_get_follows = $conn_switch_follow_status->prepare("SELECT log_id FROM insta_affiliate.user_insta_profile_follow_log WHERE insta_username = ? AND follow = 1 AND unfollowed = 0;");
     $stmt_get_follows->bind_param("s", $insta_username);
     $stmt_get_follows->execute();
