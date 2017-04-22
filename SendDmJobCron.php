@@ -116,7 +116,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         $direct_msg_resp = $instagram->directMessage($dm_job["recipient_insta_id"], $dm_job["message"]);
                         var_dump($direct_msg_resp);
                         
-                        updateDmJobFulfilled($dm_job["job_id"], $servername, $username, $password, $dbname);
+                        updateDmJobFulfilled($dm_job["job_id"], $ig_username, $dm_job["recipient_insta_id"], $servername, $username, $password, $dbname);
                         
                         if (!is_null($temporary_ban)) {
                             updateUserNextSendTime($insta_username, $delay, "banned", $servername, $username, $password, $dbname);
@@ -312,10 +312,17 @@ function updateUserCheckpointRequired($insta_username, $servername, $username, $
     $conn->close();
 }
 
-function updateDmJobFulfilled($job_id, $servername, $username, $password, $dbname) {
+function updateDmJobFulfilled($job_id, $insta_username, $recipient_insta_id, $servername, $username, $password, $dbname) {
     $conn = getConnection($servername, $username, $password, $dbname);
     $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET fulfilled = 1, updated_at = NOW() WHERE job_id = ?;");
     $stmt_update_user_profile->bind_param("i", $job_id);
+    $stmt_update_user_profile->execute();
+    $stmt_update_user_profile->close();
+    $conn->close();
+    
+    $conn = getConnection($servername, $username, $password, $dbname);
+    $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET time_to_send = NOW() + INTERVAL 1 DAY WHERE recipient_insta_id = ? AND insta_username = ? AND fulfilled = 0;");
+    $stmt_update_user_profile->bind_param("ss", $recipient_insta_id, $insta_username);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
     $conn->close();
