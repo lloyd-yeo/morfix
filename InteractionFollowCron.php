@@ -499,7 +499,7 @@ function switchFollowCycle($insta_id, $insta_username, $servername, $username, $
 }
 
 function switchUnFollowCycle($insta_username, $follow_cycle, $servername, $username, $password, $dbname) {
-    echo "[$insta_username] follow cycle: " . $follow_cycle;
+    echo "[$insta_username] follow cycle: " . $follow_cycle . "\n";
     $conn_switch_follow_status = new mysqli($servername, $username, $password, $dbname);
     $conn_switch_follow_status->query("set names utf8mb4");
     $stmt_get_follows = $conn_switch_follow_status->prepare("SELECT log_id FROM insta_affiliate.user_insta_profile_follow_log WHERE insta_username = ? AND follow = 1 AND unfollowed = 0;");
@@ -507,7 +507,7 @@ function switchUnFollowCycle($insta_username, $follow_cycle, $servername, $usern
     $stmt_get_follows->execute();
     $stmt_get_follows->store_result();
     $stmt_get_follows->bind_result($follow_count);
-    echo "[$insta_username] number of follows: " . $stmt_get_follows->num_rows;
+    echo "[$insta_username] number of follows: " . $stmt_get_follows->num_rows . "\n";
     if ($stmt_get_follows->num_rows >= $follow_cycle) { //if it hits the upper bound of the follow cycle, start unfollowing.
         $conn_switch_follow_status_ = new mysqli($servername, $username, $password, $dbname);
         $conn_switch_follow_status_->query("set names utf8mb4");
