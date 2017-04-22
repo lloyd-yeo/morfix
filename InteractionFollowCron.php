@@ -389,6 +389,12 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
                                                 continue;
                                             } else {
+                                                
+                                                $user_info = $instagram->getUserInfoById($user_to_follow->pk);
+                                                $user_to_follow = $user_info->user;
+                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
+                                                }
                                                 try {
                                                     $follow_resp = $instagram->follow($user_to_follow->pk);
                                                     if ($follow_resp->friendship_status->following == true) {
