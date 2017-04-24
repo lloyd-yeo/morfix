@@ -168,6 +168,10 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
                                 $followed = 1;
                                 break;
+                            } else if (stripos(trim($request_ex->getMessage()), "Not authorized to view user") !== false) {
+                                insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], NULL, NULL, $servername, $username, $password, $dbname);
+                                $followed = 1;
+                                break;
                             }
                         }
                     }
