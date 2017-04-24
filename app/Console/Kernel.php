@@ -44,6 +44,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('dm:get 0 0 madenotw@aol.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 lifestyle.kyler@gmail.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 julidasvierte@gmail.com')->everyFiveMinutes();
+        $schedule->command('dm:get 0 0 ailyndigital@gmail.com')->everyFiveMinutes();
 //        for ($i = 0; $i < 200; $i++) {
 //            $counter = $i * 30;
 //            $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
