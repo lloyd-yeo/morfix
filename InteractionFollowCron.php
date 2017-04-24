@@ -162,7 +162,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         } else {
                             foreach ($users_to_unfollow as $user_to_unfollow) {
                                 echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow["follower_username"] . "\n";
-                                
+                                $current_log_id = $user_to_unfollow["log_id"];
                                 if ($unfollow_unfollowed == 1) {
                                     $friendship = $instagram->getUserFriendship($user_to_unfollow["follower_id"]);
                                     if ($friendship->followed_by == true) {
@@ -171,8 +171,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         continue;
                                     }
                                 }
-                                
-                                $current_log_id = $user_to_unfollow["log_id"];
                                 
                                 $resp = $instagram->unfollow($user_to_unfollow["follower_id"]);
                                 echo "[" . $insta_username . "] ";
