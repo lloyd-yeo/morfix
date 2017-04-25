@@ -268,7 +268,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         try {
                             foreach ($target_hashtags as $target_hashtag) {
                                 echo "[" . $insta_username . "] using hashtag: " . $target_hashtag . "\n";
-                                $hashtag_feed = $instagram->getHashtagFeed($target_hashtag);
+                                $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag));
                                 foreach ($hashtag_feed->items as $item) {
                                     $throttle_count++;
                                     if ($throttle_count == $throttle_limit) {
