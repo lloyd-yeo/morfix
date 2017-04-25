@@ -45,6 +45,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('dm:get 0 0 lifestyle.kyler@gmail.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 julidasvierte@gmail.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 ailyndigital@gmail.com')->everyFiveMinutes();
+        $schedule->command('dm:get 0 0 julian.kussin@gmail.com')->everyFiveMinutes();
 //        for ($i = 0; $i < 200; $i++) {
 //            $counter = $i * 30;
 //            $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
@@ -63,6 +64,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('interaction:like 0 0 nicolasmaton@gmail.com')->everyFiveMinutes();
         $schedule->command('interaction:like 0 0 raultraining@yahoo.com')->everyFiveMinutes();
         $schedule->command('interaction:like 0 0 peizhisim@gmail.com')->everyFiveMinutes();
+        $schedule->command('interaction:like 0 0 julian.kussin@gmail.com')->everyFiveMinutes();
         
         $schedule->command("engagement:add")->everyThirtyMinutes()->withoutOverlapping();
         //$schedule->command("interaction:unban")->everyThirtyMinutes()->withoutOverlapping();
