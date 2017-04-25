@@ -5,7 +5,7 @@ require __DIR__ . '/DB.php';
 $start = microtime(true);
 
 $conn = getConnection($servername, $username, $password, $dbname);
-$conn->query("UPDATE user SET trial_activation = 2 WHERE user_tier > 1;");
+#$conn->query("UPDATE user SET trial_activation = 2 WHERE user_tier > 1;");
 $conn->query("UPDATE user_insta_profile SET proxy = NULL, invalid_proxy = 0 WHERE invalid_proxy = 1;");
 
 $ig_profiles = array();
