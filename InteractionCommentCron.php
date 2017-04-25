@@ -104,7 +104,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         $stmt_comment_job->bind_param("s", $insta_username);
                         $stmt_comment_job->execute();
                         $stmt_comment_job->store_result();
-                        $stmt_comment_job->bind_result($media_id);
+                        $stmt_comment_job->bind_result($media_id, $date_logged);
                         $media_id_ = "";
                         while ($stmt_comment_job->fetch()) {
                             $media_id_ = $media_id;
