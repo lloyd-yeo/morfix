@@ -94,6 +94,24 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     if (is_null($newest_follow)) {
                         echo "[" . $insta_username . "] newest follower [ " . $newest_follow["follower_username"] . "].\n";
                         
+                        $config = array();
+                        $config["storage"] = "mysql";
+                        $config["dbusername"] = "root";
+                        $config["dbpassword"] = "inst@ffiliates123";
+                        $config["dbhost"] = "52.221.60.235:3306";
+                        $config["dbname"] = "morfix";
+                        $config["dbtablename"] = "instagram_sessions";
+
+                        $debug = false;
+                        $truncatedDebug = false;
+                        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+
+                        if (is_null($proxy)) {
+                            continue;
+                        } else {
+                            $instagram->setProxy($proxy);
+                        }
+                        
                         $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
                         $stmt_comment_job = $conn_get_new_job->prepare("SELECT DISTINCT(gj.media_id), gj.date_logged FROM engagement_group_job gj, engagement_job_queue jq
                             WHERE jq.insta_username != ?
