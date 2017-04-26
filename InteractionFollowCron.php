@@ -295,11 +295,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                     continue;
                                                 }
-                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count > $follow_min_follower) {
+                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
                                                     continue;
                                                 }
-                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count < $follow_max_follower) {
+                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
                                                     continue;
                                                 }
@@ -362,11 +362,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                     continue;
                                                 }
-                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count > $follow_min_follower) {
+                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
                                                     continue;
                                                 }
-                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count < $follow_max_follower) {
+                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
                                                     continue;
                                                 }
@@ -432,18 +432,17 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
                                                 continue;
                                             } else {
-                                                
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
                                                 if ($user_to_follow->media_count == 0) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                     continue;
                                                 }
-                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count > $follow_min_follower) {
+                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
                                                     continue;
                                                 }
-                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count < $follow_max_follower) {
+                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
                                                     continue;
                                                 }
