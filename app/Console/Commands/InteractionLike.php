@@ -165,7 +165,7 @@ class InteractionLike extends Command {
 
                             $this->line("target username: " . $target_username->target_username . "\n\n");
 
-                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
+                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
 
                             $users_to_follow = $user_follower_response->users;
 
@@ -243,7 +243,7 @@ class InteractionLike extends Command {
 
                                 $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
 
-                                $hashtag_feed = $instagram->getHashtagFeed($target_hashtag->hashtag);
+                                $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
 
                                 foreach ($hashtag_feed->items as $item) {
 
@@ -300,7 +300,7 @@ class InteractionLike extends Command {
 
                             foreach ($niche_targets as $niche_target) {
                                 $this->info("niche target:\t" . $niche_target->target_username);
-                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($niche_target->target_username));
+                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($niche_target->target_username)));
 
                                 $users_to_follow = $user_follower_response->users;
 
@@ -374,7 +374,7 @@ class InteractionLike extends Command {
 
                                 $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
 
-                                $hashtag_feed = $instagram->getHashtagFeed($target_hashtag->hashtag);
+                                $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
 
                                 foreach ($hashtag_feed->items as $item) {
 
