@@ -65,9 +65,6 @@ class ManualLogin extends Command {
             $instagram->setUser($ig_username, $ig_password);
             $instagram->setProxy($proxy->proxy);
             $explorer_response = $instagram->login();
-            if (isset($this->argument("two_fa"))) {
-                
-            }
             $this->line(serialize($explorer_response));
             break;
         }
