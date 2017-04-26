@@ -264,7 +264,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) . "] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $niche . "]\n";
                     $followed = 0;
                     $throttle_limit = 41;
-
                     if ($use_hashtags == 1 && count($target_hashtags) > 0) {
                         $throttle_count = 0;
                         try {
@@ -290,10 +289,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                             continue;
                                         } else {
                                             try {
-                                                
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
-                                                if ($user_to_follow->media_count > 0) {
+                                                if ($user_to_follow->media_count == 0) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                     continue;
                                                 }
@@ -360,7 +358,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
-                                                if ($user_to_follow->media_count > 0) {
+                                                if ($user_to_follow->media_count == 0) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                     continue;
                                                 }
@@ -437,7 +435,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
-                                                if ($user_to_follow->media_count > 0) {
+                                                if ($user_to_follow->media_count == 0) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                     continue;
                                                 }
