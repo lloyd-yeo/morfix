@@ -405,7 +405,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
-                                                if ($user_to_follow->media_count < 1) {
+                                                if ($user_to_follow->media_count < 2) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: < 1 photos \n";
                                                     continue;
                                                 }
