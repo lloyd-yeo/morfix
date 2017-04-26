@@ -9,11 +9,13 @@ $num_result = $argv[2]; //this is the constant
 if (isset($argv[3])) {
     $specific_email = $argv[3];
 }
+$path = "/home/ubuntu/dm-send-lock";
+#$path = "/root/dm-send-lock";
 $file = NULL;
 if (isset($argv[3])) {
-    $file = fopen("/home/ubuntu/dm-send-lock/cron-send-" . $specific_email . ".txt", "w+");
+    $file = fopen("$path/cron-send-" . $specific_email . ".txt", "w+");
 } else {
-    $file = fopen("/home/ubuntu/dm-send-lock/cron-send-" . $offset . ".txt", "w+");
+    $file = fopen("$path/cron-send-" . $offset . ".txt", "w+");
 }
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();

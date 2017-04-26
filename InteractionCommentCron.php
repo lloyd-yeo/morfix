@@ -9,11 +9,13 @@ $num_result = $argv[2]; //this is the constant
 if (isset($argv[3])) {
     $specific_email = $argv[3];
 }
+$path = "/home/ubuntu/comment-lock";
+#$path = "/root/comment-lock";
 $file = NULL;
 if (isset($argv[3])) {
-    $file = fopen("/home/ubuntu/comment-lock/cron-interaction-comment-" . $specific_email . ".txt", "w+");
+    $file = fopen("$path/cron-interaction-comment-" . $specific_email . ".txt", "w+");
 } else {
-    $file = fopen("/home/ubuntu/comment-lock/cron-interaction-comment-" . $offset . ".txt", "w+");
+    $file = fopen("$path/cron-interaction-comment-" . $offset . ".txt", "w+");
 }
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();

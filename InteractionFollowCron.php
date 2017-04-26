@@ -9,11 +9,13 @@ $num_result = $argv[2]; //this is the constant
 if (isset($argv[3])) {
     $specific_email = $argv[3];
 }
+$path = "/home/ubuntu/follow-lock";
+#$path = "/root/follow-lock";
 $file = NULL;
 if (isset($argv[3])) {
-    $file = fopen("/home/ubuntu/follow-lock/cron-interaction-follow-user-" . $specific_email . ".txt", "w+");
+    $file = fopen($path . "/cron-interaction-follow-user-" . $specific_email . ".txt", "w+");
 } else {
-    $file = fopen("/home/ubuntu/follow-lock/cron-interaction-follow-user-" . $offset . ".txt", "w+");
+    $file = fopen($path . "/cron-interaction-follow-user-" . $offset . ".txt", "w+");
 }
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();
@@ -403,8 +405,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
-                                                if ($user_to_follow->media_count < 3) {
-                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: < 3 photos \n";
+                                                if ($user_to_follow->media_count < 1) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: < 1 photos \n";
                                                     continue;
                                                 }
                                                 if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
