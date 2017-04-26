@@ -290,6 +290,22 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                             continue;
                                         } else {
                                             try {
+                                                
+                                                $user_info = $instagram->getUserInfoById($user_to_follow->pk);
+                                                $user_to_follow = $user_info->user;
+                                                if ($user_to_follow->media_count > 0) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
+                                                    continue;
+                                                }
+                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count > $follow_min_follower) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
+                                                    continue;
+                                                }
+                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count < $follow_max_follower) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
+                                                    continue;
+                                                }
+                                                
                                                 $follow_resp = $instagram->follow($user_to_follow->pk);
                                                 if ($follow_resp->friendship_status->following == true) {
                                                     updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
@@ -341,6 +357,22 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                             continue;
                                         } else {
                                             try {
+                                                
+                                                $user_info = $instagram->getUserInfoById($user_to_follow->pk);
+                                                $user_to_follow = $user_info->user;
+                                                if ($user_to_follow->media_count > 0) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
+                                                    continue;
+                                                }
+                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count > $follow_min_follower) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
+                                                    continue;
+                                                }
+                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count < $follow_max_follower) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
+                                                    continue;
+                                                }
+                                                
                                                 $follow_resp = $instagram->follow($user_to_follow->pk);
                                                 if ($follow_resp->friendship_status->following == true) {
                                                     updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
@@ -405,8 +437,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
-                                                if ($user_to_follow->media_count < 2) {
-                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: < 1 photos \n";
+                                                if ($user_to_follow->media_count > 0) {
+                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                     continue;
                                                 }
                                                 if ($follow_min_follower != 0 && $user_to_follow->follower_count > $follow_min_follower) {
