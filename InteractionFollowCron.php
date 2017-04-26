@@ -173,7 +173,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         continue;
                                     }
                                 }
-                                
+
                                 $resp = $instagram->unfollow($user_to_unfollow["follower_id"]);
                                 echo "[" . $insta_username . "] ";
                                 var_dump($resp);
@@ -308,7 +308,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
                                                     continue;
                                                 }
-                                                
+
                                                 $follow_resp = $instagram->follow($user_to_follow->pk);
                                                 if ($follow_resp->friendship_status->following == true) {
                                                     updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
@@ -369,7 +369,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                             continue;
                                         } else {
                                             try {
-                                                
+                                                $throttle_count++;
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
                                                 if ($user_to_follow->media_count == 0) {
@@ -384,7 +384,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
                                                     continue;
                                                 }
-                                                
+
                                                 $follow_resp = $instagram->follow($user_to_follow->pk);
                                                 if ($follow_resp->friendship_status->following == true) {
                                                     updateUserNextFollowTime($insta_username, $follow_unfollow_delay, "follow", $servername, $username, $password, $dbname);
@@ -434,6 +434,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                     $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username)));
                                     $users_to_follow = $user_follower_response->users;
                                     foreach ($users_to_follow as $user_to_follow) {
+                                        if ($throttle_count == $throttle_limit) {
+                                            break;
+                                        }
                                         if ($user_to_follow->is_private) {
                                             echo "[" . $insta_username . "] [$user_to_follow->username] is private.\n";
                                             continue;
@@ -446,6 +449,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
                                                 continue;
                                             } else {
+                                                $throttle_count++;
                                                 $user_info = $instagram->getUserInfoById($user_to_follow->pk);
                                                 $user_to_follow = $user_info->user;
                                                 if ($user_to_follow->media_count == 0) {
@@ -701,4 +705,3 @@ function updateUnfollowLogWithNull($log_id, $servername, $username, $password, $
     $stmt_update_user_profile->close();
     $conn_f->close();
 }
-
