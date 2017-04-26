@@ -409,11 +409,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: < 1 photos \n";
                                                     continue;
                                                 }
-                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
+                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count > $follow_min_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
                                                     continue;
                                                 }
-                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
+                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count < $follow_max_follower) {
                                                     echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
                                                     continue;
                                                 }
