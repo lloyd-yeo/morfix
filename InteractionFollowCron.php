@@ -327,6 +327,10 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                     $followed = 1;
                                                     break;
                                                 }
+                                                if (stripos(trim($request_ex->getMessage()), "Sorry, you're following the max limit of accounts. You'll need to unfollow some accounts to start following more.") !== false) {
+                                                    $followed = 1;
+                                                    break;
+                                                }
                                                 continue;
                                             }
                                         }
