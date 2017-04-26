@@ -353,7 +353,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             foreach ($target_usernames as $target_username) {
                                 echo "[" . $insta_username . "] using target username: " . $target_username . "\n";
 
-                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username));
+                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username)));
                                 $users_to_follow = $user_follower_response->users;
                                 foreach ($users_to_follow as $user_to_follow) {
                                     if ($user_to_follow->is_private) {
@@ -701,3 +701,4 @@ function updateUnfollowLogWithNull($log_id, $servername, $username, $password, $
     $stmt_update_user_profile->close();
     $conn_f->close();
 }
+
