@@ -205,6 +205,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         echo "[" . $insta_username . "] throttled_ex: " . $throttled_ex->getMessage() . "\n";
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         echo "[" . $insta_username . "] request_ex: " . $request_ex->getMessage() . "\n";
+                        if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                            updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                            $followed = 1;
+                            break;
+                        }
                     }
                 } else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) { //follow sequence
                     if ($follow_quota < 1) {
@@ -317,6 +322,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                 }
                                             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                                 echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                                if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                                    updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                                                    $followed = 1;
+                                                    break;
+                                                }
                                                 continue;
                                             }
                                         }
