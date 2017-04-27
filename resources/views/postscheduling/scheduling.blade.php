@@ -125,7 +125,7 @@
                                 @foreach ($default_imgs as $default_img)
                                 <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
                                     <div class="img-container fx-img-rotate-r">
-                                        <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
+                                        <img class="img-responsive" src="{{ asset("storage" . $default_img->image_path) }}" alt="">
                                         <div class="img-options">
                                             <div class="img-options-content">
                                                 <h3 class="font-w400 text-white push-5">Upload this photo!</h3>
