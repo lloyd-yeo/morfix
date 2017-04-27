@@ -122,7 +122,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $config["dbname"] = "morfix";
                     $config["dbtablename"] = "instagram_sessions";
 
-                    $debug = false;
+                    $debug = true;
                     $truncatedDebug = false;
                     $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
@@ -227,7 +227,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $config["dbname"] = "morfix";
                     $config["dbtablename"] = "instagram_sessions";
 
-                    $debug = false;
+                    $debug = true;
                     $truncatedDebug = false;
                     $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
