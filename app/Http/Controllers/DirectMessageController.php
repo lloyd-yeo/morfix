@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\IgProfile;
+use App\InstagramProfile;
 
 class DirectMessageController extends Controller
 {
@@ -19,7 +19,7 @@ class DirectMessageController extends Controller
      */
     public function index() {
         
-        $instagram_profiles = IgProfile::where('email', Auth::user()->email)->take(10)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(10)->get();
         return view('dm', [
             'user_ig_profiles' => $instagram_profiles,
         ]);

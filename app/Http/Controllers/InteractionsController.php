@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
 use App\User;
-use App\IgProfile;
 use App\InstagramProfile;
 use App\Niche;
 use App\InstagramProfileComment;
@@ -26,7 +25,7 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $instagram_profiles = IgProfile::where('email', Auth::user()->email)->take(10)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(10)->get();
         return view('interactions', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
@@ -39,7 +38,7 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $ig_profile = IgProfile::where('id', $id)->first();
+        $ig_profile = InstagramProfile::where('id', $id)->first();
 //        $instagram_profiles = InstagramProfile::where('id', $id)
 //                ->get();
         $niches = Niche::all();
@@ -56,7 +55,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleLike($id) {
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_like = ($instagram_profile->auto_like + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -72,7 +71,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleComment($id) {
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_comment = ($instagram_profile->auto_comment + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -88,7 +87,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleFollow($id) {
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_follow = ($instagram_profile->auto_follow + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -104,7 +103,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleUnfollow($id) {
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_unfollow = ($instagram_profile->auto_unfollow + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
@@ -120,7 +119,7 @@ class InteractionsController extends Controller {
     }
 
     public function toggleNiche(Request $request, $id) {
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $niche = $request->input('niche');
         $instagram_profile->niche = $niche;
         $response = "There has been an error with the server. Please contact live support.";
@@ -137,7 +136,7 @@ class InteractionsController extends Controller {
     }
 
     public function saveAdvancedFollowSettings(Request $request, $id) {
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
 
         $unfollow_users_not_following_flag = 0;
         if ($request->has('unfollow-toggle')) {

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
 use App\User;
-use App\IgProfile;
 use App\InstagramProfile;
 use App\Niche;
 use App\InstagramProfileComment;
@@ -27,7 +26,7 @@ class PostSchedulingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $instagram_profiles = IgProfile::where('email', Auth::user()->email)->take(10)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(10)->get();
         return view('postscheduling', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
@@ -39,7 +38,7 @@ class PostSchedulingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function gallery($id) {
-        $instagram_profiles = IgProfile::where('id', $id)
+        $instagram_profiles = InstagramProfile::where('id', $id)
                 ->get();
         $default_images = DefaultImageGallery::orderBy('image_id', 'desc')->get();
         $default_categories = DB::connection('mysql_old')->select("SELECT id, category FROM insta_affiliate.default_image_category;");

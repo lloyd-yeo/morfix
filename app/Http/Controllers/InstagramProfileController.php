@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
-use App\IgProfile;
 use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
@@ -121,7 +120,7 @@ class InstagramProfileController extends Controller {
         $log_id = DB::connection("mysql_old")->insertGetId("INSERT INTO insta_affiliate.create_insta_profile_log (insta_username, insta_pw, email ) VALUES (?,?,?);", 
                 [$ig_username, $ig_password, $user_email]);
         
-        if (IgProfile::where('insta_username', '=', $ig_username)->count() > 0) {
+        if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
             $error_msg = "This instagram profile already exists in Morfix!";
             DB::connection("mysql_old")->update("UPDATE insta_affiliate.create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$error_msg, $log_id]);
             return Response::json(array("success" => false, 'response' => $error_msg));

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
-use App\IgProfile;
 use App\InstagramProfile;
 use Response;
 
@@ -22,7 +21,7 @@ class DirectMessageTemplatesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($id) {
-        $instagram_profiles = IgProfile::where('id', $id)->take(1)->get();
+        $instagram_profiles = InstagramProfile::where('id', $id)->take(1)->get();
         return view('dm.template', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
@@ -30,7 +29,7 @@ class DirectMessageTemplatesController extends Controller
     
     public function saveGreetingTemplate($id, Request $request) {
         $template_message = $request->input('message');
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->insta_new_follower_template = $template_message;
         
         $response = "There has been an error with the server. Please contact live support.";
@@ -44,7 +43,7 @@ class DirectMessageTemplatesController extends Controller
     
     public function saveFollowupTemplate($id, Request $request) {
         $template_message = $request->input('message');
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->follow_up_message = $template_message;
         
         $response = "There has been an error with the server. Please contact live support.";
@@ -57,7 +56,7 @@ class DirectMessageTemplatesController extends Controller
     }
     
     public function toggleAutoDmDelay($id) {
-        $instagram_profile = IgProfile::where('id', $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
         $instagram_profile->auto_dm_delay = ($instagram_profile->auto_dm_delay + 1) % 2;
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
