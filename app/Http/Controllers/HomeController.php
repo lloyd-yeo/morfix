@@ -26,6 +26,7 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        echo Auth::user()->email;
         $leaderboard_alltime = DB::connection("mysql_old")
                 ->select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
                         GROUP BY email, name
