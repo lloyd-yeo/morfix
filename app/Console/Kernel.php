@@ -46,11 +46,6 @@ class Kernel extends ConsoleKernel {
         $schedule->command('dm:get 0 0 julidasvierte@gmail.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 ailyndigital@gmail.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 julian.kussin@gmail.com')->everyFiveMinutes();
-//        for ($i = 0; $i < 200; $i++) {
-//            $counter = $i * 30;
-//            $schedule->command('dm:send ' . $counter . ' 30')->everyFiveMinutes();
-//        }
-        
         
         for ($i = 0; $i < 50; $i++) {
             $counter = $i * 20;
@@ -67,22 +62,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('interaction:like 0 0 julian.kussin@gmail.com')->everyFiveMinutes();
         
         $schedule->command("engagement:add")->everyThirtyMinutes()->withoutOverlapping();
-        //$schedule->command("interaction:unban")->everyThirtyMinutes()->withoutOverlapping();
         $schedule->command("analysis:follower")->daily("00:00")->withoutOverlapping();
-//        $schedule->command('ig:refresh 0 100')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 200')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 300')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 400')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 500')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 600')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 700')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 800')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 900')->everyThirtyMinutes();
-//        $schedule->command('ig:refresh 0 1000')->everyThirtyMinutes();
-        
-        //$schedule->command('analysis:follower')->daily();
-        // $schedule->command('inspire')
-        //          ->hourly();
     }
 
     /**
