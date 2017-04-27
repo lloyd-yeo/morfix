@@ -43,7 +43,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '52.221.60.235'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'morfix'),
+            'database' => env('DB_DATABASE', 'insta_affiliate'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', 'inst@ffiliates123'),
             'charset' => 'utf8mb4',
