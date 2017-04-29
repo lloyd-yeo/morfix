@@ -127,11 +127,10 @@ class RefreshInstagramProfile extends Command {
                         $instagram->setUser("entrepreneur_xyz", "instaffiliates123");
                         $instagram->login();
                         $resp = serialize($instagram->getUserInfoById($ig_profile->insta_user_id));
-                        
                         DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$resp, $ig_profile->id]);
+                    } else {
+                        DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                     }
-
-                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                     $this->error($incorrectpw_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
