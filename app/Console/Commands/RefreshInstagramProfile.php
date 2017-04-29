@@ -43,10 +43,10 @@ class RefreshInstagramProfile extends Command {
      * @return mixed
      */
     public function handle() {
-        
+
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
-        
+
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
@@ -55,7 +55,7 @@ class RefreshInstagramProfile extends Command {
 
         foreach ($users as $user) {
             $this->line($user->email);
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? AND checkpoint_required = 0 AND incorrect_pw = 0 AND invalid_user = 0;", [$user->user_id]);
+            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_user_id, insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? AND checkpoint_required = 0 AND incorrect_pw = 0 AND invalid_user = 0;", [$user->user_id]);
             $config = array();
             $config["storage"] = "mysql";
             $config["dbusername"] = "root";
@@ -70,7 +70,7 @@ class RefreshInstagramProfile extends Command {
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
-                
+
                 if ($ig_profile->proxy === NULL) {
                     $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
                     foreach ($proxies as $proxy) {
@@ -81,7 +81,7 @@ class RefreshInstagramProfile extends Command {
                 } else {
                     $instagram->setProxy($ig_profile->proxy);
                 }
-                
+
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $instagram->setProxy($ig_profile->proxy);
@@ -96,7 +96,7 @@ class RefreshInstagramProfile extends Command {
                     foreach ($items as $item) {
                         try {
                             DB::connection('mysql_old')->
-                                insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
+                                    insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
                         } catch (\ErrorException $e) {
                             $this->error("ERROR: " . $e->getMessage());
                             break;
@@ -122,6 +122,13 @@ class RefreshInstagramProfile extends Command {
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
+                    if (stripos(trim($endpoint_ex->getMessage()), "The username you entered doesn't appear to belong to an account. Please check your username and try again.") !== false) {
+                        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+                        $instagram->setUser("entrepreneur_xyz", "instaffiliates123");
+                        $instagram->login();
+                        var_dump($instagram->getUserInfoById($ig_profile->insta_user_id));
+                    }
+
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                     $this->error($incorrectpw_ex->getMessage());
@@ -136,4 +143,5 @@ class RefreshInstagramProfile extends Command {
             }
         }
     }
+
 }
