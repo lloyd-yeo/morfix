@@ -126,7 +126,7 @@ class RefreshInstagramProfile extends Command {
                         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
                         $instagram->setUser("entrepreneur_xyz", "instaffiliates123");
                         $instagram->login();
-                        $resp = $instagram->getUserInfoById($ig_profile->insta_user_id);
+                        $resp = serialize($instagram->getUserInfoById($ig_profile->insta_user_id));
                         
                         DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$resp, $ig_profile->id]);
                     }
