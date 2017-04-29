@@ -62,9 +62,9 @@ class InteractionLike extends Command {
                 niche,
                 insta_pw, proxy
                 FROM insta_affiliate.user_insta_profile WHERE auto_interaction = 1
-                AND email = ?
+                AND user_id = ?
                 AND auto_like = 1
-                AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->email]);
+                AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->user_id]);
             try {
                 foreach ($instagram_profiles as $ig_profile) {
 
