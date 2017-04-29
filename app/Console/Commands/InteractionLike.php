@@ -49,8 +49,8 @@ class InteractionLike extends Command {
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u "
-                    . "WHERE (u.user_tier > 1 OR u.trial_activation = 1) AND u.user_id IN (SELECT user_id FROM user_insta_profile) "
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u "
+                    . "WHERE u.user_id IN (SELECT user_id FROM user_insta_profile) "
                     . "ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
 
@@ -104,7 +104,7 @@ class InteractionLike extends Command {
 
                         $engagement_jobs = DB::connection('mysql_old')
                                 ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 0 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
-
+                        
                         foreach ($engagement_jobs as $engagement_job) {
                             $media_id = $engagement_job->media_id;
                             $job_id = $engagement_job->job_id;
@@ -151,7 +151,11 @@ class InteractionLike extends Command {
                                 break;
                             }
                         }
-
+                        
+                        if (!($user->user_tier > 1 || $user->trial_activation == 1)) {
+                            continue;
+                        }
+                        
                         $target_usernames = DB::connection('mysql_old')
                                 ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
 
