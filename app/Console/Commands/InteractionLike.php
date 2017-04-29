@@ -47,7 +47,7 @@ class InteractionLike extends Command {
         $limit = $this->argument('limit');
 
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u "
                     . "WHERE u.user_id IN (SELECT user_id FROM user_insta_profile) "
