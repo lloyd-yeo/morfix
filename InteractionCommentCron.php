@@ -126,7 +126,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                                                         SELECT  insta_username
                                                                         FROM    engagement_job_queue
                                                                         WHERE   media_id = gj.media_id
-                                                                        AND		action = 1
+                                                                        AND	action = 1
                                                                         ORDER BY job_id DESC
                                                                         )
                                                                         AND jq.media_id = gj.media_id
@@ -136,22 +136,23 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         $stmt_comment_job->store_result();
                         $stmt_comment_job->bind_result($media_id, $date_logged);
                         $media_id_ = "";
+
                         while ($stmt_comment_job->fetch()) {
                             $media_id_ = $media_id;
                         }
+
                         $conn_get_new_job->close();
 
                         if ($media_id_ != "") {
+                            echo "[" . $insta_username . "] retrieved [" . $media_id_ . "]\n";
+                            $comment_response = $instagram->comment($media_id_, $profile_comment);
                             $outstanding_engagement_job_media_id = $media_id;
                             $conn_update_job = getConnection($servername, $username, $password, $dbname);
                             $result = $conn_update_job->query("INSERT INTO engagement_job_queue (media_id, insta_username, action, fulfilled) VALUES (\"$media_id_\",\"$insta_username\",1,1);");
-                            if ($result) {
-                                $conn_update_job->close();
-                                echo "[" . $insta_username . "] commented before on engagement job [" . $media_id_ . "]\n";
-                            } else {
-                                $comment_response = $instagram->comment($media_id_, $profile_comment);
-                                echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
-                            }
+                            var_dump($result);
+                            $conn_update_job->close();
+//                            echo "[" . $insta_username . "] commented before on engagement job [" . $media_id_ . "]\n";
+//                            echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
                         }
                         continue;
                     } else {
