@@ -97,69 +97,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 
                     if (is_null($newest_follow)) {
                         echo "[" . $insta_username . "] has no newest follower [ " . $newest_follow["follower_username"] . "].\n";
-                        $config = array();
-                        $config["storage"] = "mysql";
-                        $config["dbusername"] = "root";
-                        $config["dbpassword"] = "inst@ffiliates123";
-                        $config["dbhost"] = "52.221.60.235:3306";
-                        $config["dbname"] = "morfix";
-                        $config["dbtablename"] = "instagram_sessions";
-
-                        $debug = false;
-                        $truncatedDebug = false;
-                        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-                        if (is_null($proxy)) {
-                            continue;
-                        } else {
-                            $instagram->setProxy($proxy);
-                        }
-                        $instagram->setUser($insta_username, $insta_pw);
-                        $instagram->login();
-                        $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
-                        $stmt_comment_job = $conn_get_new_job->prepare("SELECT gj.media_id, gj.date_logged
-                                                                        FROM engagement_group_job gj, engagement_job_queue jq
-                                                                        WHERE jq.insta_username = ?
-                                                                        AND jq.fulfilled != 2
-                                                                        AND jq.insta_username NOT IN
-                                                                        (
-                                                                        SELECT  insta_username
-                                                                        FROM    engagement_job_queue
-                                                                        WHERE   media_id = gj.media_id
-                                                                        AND	action = 1
-                                                                        ORDER BY job_id DESC
-                                                                        )
-                                                                        AND jq.media_id = gj.media_id
-                                                                        ORDER BY gj.date_logged DESC;");
-                        $stmt_comment_job->bind_param("s", $insta_username);
-                        $stmt_comment_job->execute();
-                        $stmt_comment_job->store_result();
-                        $stmt_comment_job->bind_result($media_id, $date_logged);
-                        $media_id_ = "";
-
-                        while ($stmt_comment_job->fetch()) {
-                            $media_id_ = $media_id;
-                        }
-
-                        $conn_get_new_job->close();
-
-                        if ($media_id_ != "") {
-                            echo "[" . $insta_username . "] retrieved [" . $media_id_ . "]\n";
-                            $response = $comment_response = $instagram->comment($media_id_, $profile_comment);
-                            $outstanding_engagement_job_media_id = $media_id;
-                            $conn_update_job = getConnection($servername, $username, $password, $dbname);
-                            $result = $conn_update_job->query("INSERT INTO engagement_job_queue (media_id, insta_username, action, fulfilled) VALUES (\"$media_id_\",\"$insta_username\",1,1);");
-                            var_dump($result);
-                            $conn_update_job->close();
-                            
-                            if ($response->isOk()) {
-                                var_dump($response);
-                            }
-                            
-                            
-//                            echo "[" . $insta_username . "] commented before on engagement job [" . $media_id_ . "]\n";
-//                            echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
-                        }
                         continue;
                     } else {
                         $config = array();
