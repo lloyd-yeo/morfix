@@ -311,12 +311,14 @@ function updateUserCheckpointRequired($insta_username, $servername, $username, $
 }
 
 function updateDmJobFulfilled($job_id, $auto_dm_delay, $insta_username, $recipient_insta_id, $servername, $username, $password, $dbname) {
+    echo "[$insta_username] auto-delay: " . $auto_dm_delay . "\n";
     $conn = getConnection($servername, $username, $password, $dbname);
     $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET fulfilled = 1, updated_at = NOW() WHERE job_id = ?;");
     $stmt_update_user_profile->bind_param("i", $job_id);
     $stmt_update_user_profile->execute();
     $stmt_update_user_profile->close();
     $conn->close();
+    
     if ($auto_dm_delay == 1) {
         $conn = getConnection($servername, $username, $password, $dbname);
         $stmt_update_user_profile = $conn->prepare("UPDATE dm_job SET time_to_send = NOW() + INTERVAL 1 DAY WHERE recipient_insta_id = ? AND insta_username = ? AND fulfilled = 0;");
