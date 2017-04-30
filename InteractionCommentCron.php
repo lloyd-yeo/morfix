@@ -117,7 +117,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         $instagram->setUser($insta_username, $insta_pw);
                         $instagram->login();
                         $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
-                        $stmt_comment_job = $conn_get_new_job->prepare("SELECT gj.media_id, gj.date_logged, jq.*
+                        $stmt_comment_job = $conn_get_new_job->prepare("SELECT gj.media_id, gj.date_logged
                                                                         FROM engagement_group_job gj, engagement_job_queue jq
                                                                         WHERE jq.insta_username = ?
                                                                         AND jq.fulfilled != 2
