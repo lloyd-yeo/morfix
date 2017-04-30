@@ -145,12 +145,18 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 
                         if ($media_id_ != "") {
                             echo "[" . $insta_username . "] retrieved [" . $media_id_ . "]\n";
-                            $comment_response = $instagram->comment($media_id_, $profile_comment);
+                            $response = $comment_response = $instagram->comment($media_id_, $profile_comment);
                             $outstanding_engagement_job_media_id = $media_id;
                             $conn_update_job = getConnection($servername, $username, $password, $dbname);
                             $result = $conn_update_job->query("INSERT INTO engagement_job_queue (media_id, insta_username, action, fulfilled) VALUES (\"$media_id_\",\"$insta_username\",1,1);");
                             var_dump($result);
                             $conn_update_job->close();
+                            
+                            if ($response->isOk()) {
+                                var_dump($response);
+                            }
+                            
+                            
 //                            echo "[" . $insta_username . "] commented before on engagement job [" . $media_id_ . "]\n";
 //                            echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
                         }
