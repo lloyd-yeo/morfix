@@ -332,7 +332,7 @@ function updateDmJobFulfilled($job_id, $auto_dm_delay, $insta_username, $recipie
 function getDmJobsByIgUsername($insta_username, $servername, $username, $password, $dbname) {
     $dm_job = NULL;
     $conn = getConnection($servername, $username, $password, $dbname);
-    $stmt_get_dm_job = $conn->prepare("SELECT job_id, recipient_username, recipient_insta_id, recipient_fullname, message FROM insta_affiliate.dm_job WHERE insta_username = ? AND fulfilled = 0 ORDER BY job_id ASC LIMIT 1;");
+    $stmt_get_dm_job = $conn->prepare("SELECT job_id, recipient_username, recipient_insta_id, recipient_fullname, message FROM insta_affiliate.dm_job WHERE insta_username = ? AND fulfilled = 0 AND NOW() > time_to_send ORDER BY job_id ASC LIMIT 1;");
     $stmt_get_dm_job->bind_param("s", $insta_username);
     $stmt_get_dm_job->execute();
     $stmt_get_dm_job->store_result();
