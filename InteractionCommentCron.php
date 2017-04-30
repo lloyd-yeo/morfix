@@ -234,7 +234,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         }
                     }
                 } catch (Exception $ex) {
-                    echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
+                    echo "Exception - [" . $insta_username . "] " . $ex->getMessage() . "\n";
                     if (stripos(trim($ex->getMessage()), "Sorry, this media has been deleted") !== false) {
                         invalidateEngagementJob($outstanding_engagement_job_media_id, $servername, $username, $password, $dbname);
                         $followed = 1;
