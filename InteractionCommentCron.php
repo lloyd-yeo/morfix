@@ -225,7 +225,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], NULL, NULL, $servername, $username, $password, $dbname);
                                 $followed = 1;
                                 break;
-                            } else if (stripos(trim($request_ex->getMessage()), "Sorry, this media has been deleted.") !== false) {
+                            } else if (stripos(trim($request_ex->getMessage()), "Sorry, this media has been deleted") !== false) {
                                 invalidateEngagementJob($outstanding_engagement_job_media_id, $servername, $username, $password, $dbname);
                                 $followed = 1;
                                 break;
@@ -234,6 +234,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     }
                 } catch (Exception $ex) {
                     echo "[" . $insta_username . "] " . $ex->getMessage() . "\n";
+                    if (stripos(trim($ex->getMessage()), "Sorry, this media has been deleted") !== false) {
+                        invalidateEngagementJob($outstanding_engagement_job_media_id, $servername, $username, $password, $dbname);
+                        $followed = 1;
+                        break;
+                    }
                 }
             }
         }
