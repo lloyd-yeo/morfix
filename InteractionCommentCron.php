@@ -49,7 +49,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
     $conn_get_user->close();
 
     foreach ($emails as $email) {
-        
+
         $insta_profiles = getCommentProfiles($email["email"], $email["tier"], $servername, $username, $password, $dbname);
 
         foreach ($insta_profiles as $insta_profile) {
@@ -62,16 +62,16 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
             $speed = $insta_profile['speed'];
             $proxy = $insta_profile['proxy'];
             $profile_comment = getRandomUserComment($insta_username, $servername, $username, $password, $dbname);
-            
+
             if (is_null($profile_comment) && $email["tier"] == 1) {
                 $default_comments = array(
                     "Awesome!", "That looks incredible!", "Well done!", "That is exquisite!", "Looking good there!",
                     "World class!", "Good stuff!"
                 );
-                $index = rand(0,6);
+                $index = rand(0, 6);
                 $profile_comment = $default_comments[$index];
             }
-            
+
             $comment_delay = 25;
 
             if ($speed == "Fast") {
@@ -95,7 +95,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $newest_follow = getUserNewestFollow($insta_username, $servername, $username, $password, $dbname);
                     if (is_null($newest_follow)) {
                         echo "[" . $insta_username . "] newest follower [ " . $newest_follow["follower_username"] . "].\n";
-                        
+
                         $config = array();
                         $config["storage"] = "mysql";
                         $config["dbusername"] = "root";
@@ -167,20 +167,20 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             $instagram->setUser($ig_username, $ig_password);
                             $instagram->login();
                             $outstanding_engagement_job = getOutstandingEngagementJob($insta_username, $servername, $username, $password, $dbname);
-                            
+
                             //comment on engagement group first else as per usual.
                             if (is_null($outstanding_engagement_job)) {
-                                
+
                                 if (checkCommentedOnUser($insta_username, $newest_follow["follower_username"], $servername, $username, $password, $dbname)) {
                                     continue;
                                 }
-                                
+
                                 $target_username_posts = $instagram->getUserFeed($newest_follow["follower_id"]);
                                 if (count($target_username_posts->items) == 0) {
                                     insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], "0", "User doesn't have any posts.", $servername, $username, $password, $dbname);
                                     continue;
                                 }
-                                
+
                                 $throttle_limit = 41;
                                 $throttle_count = 0;
                                 foreach ($target_username_posts->items as $item) {
@@ -188,6 +188,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                     if ($throttle_count == $throttle_limit) {
                                         break;
                                     }
+
                                     $comment_response = $instagram->comment($item->pk, $profile_comment);
                                     if ($comment_response->isOk()) {
                                         $commented = 1;
@@ -195,12 +196,13 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         updateUserCommentDelay($insta_username, $comment_delay, $servername, $username, $password, $dbname);
                                         echo "[" . $insta_username . "] commented on [" . $item->user->username . "] [" . $item->getItemUrl() . "]\n";
                                     }
+
                                     if ($commented == 1) {
                                         break;
                                     }
                                 }
                             } else if (!is_null($outstanding_engagement_job)) {
-                                
+
 //                                if (trim($newest_follow["follower_username"]) == "") {
 //                                    $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
 //                                    $stmt_comment_job = $conn_get_new_job->prepare("SELECT DISTINCT(gj.media_id), gj.date_logged FROM engagement_group_job gj, engagement_job_queue jq
@@ -231,14 +233,14 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 //                                        break;
 //                                    }
 //                                } else {
-                                    $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
-                                    if ($comment_response->isOk()) {
-                                        $commented = 1;
-                                        updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $insta_username, $servername, $username, $password, $dbname);
-                                        echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
-                                    }
+                                $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
+                                if ($comment_response->isOk()) {
+                                    $commented = 1;
+                                    updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $insta_username, $servername, $username, $password, $dbname);
+                                    echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
+                                }
 //                                }
-                                
+
                                 if ($commented == 1) {
                                     break;
                                 }
@@ -315,11 +317,11 @@ function getUserNewestFollow($insta_username, $servername, $username, $password,
         }
         $stmt_check_newest_follower->free_result();
         $stmt_check_newest_follower->close();
-        
+
         if ($exists) {
             continue;
         }
-        
+
         $newest_follow = array(
             "follower_username" => $follower_un,
             "follower_id" => $follower_id
