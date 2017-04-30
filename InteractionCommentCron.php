@@ -70,7 +70,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 );
                 $index = rand(0,6);
                 $profile_comment = $default_comments[$index];
-            } 
+            }
             
             $comment_delay = 25;
 
@@ -199,7 +199,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         break;
                                     }
                                 }
-                            } else if (!is_null($outstanding_engagement_job) || (trim($newest_follow["follower_username"]) == "")) {
+                            } else if (!is_null($outstanding_engagement_job)) {
                                 
                                 if (trim($newest_follow["follower_username"]) == "") {
                                     $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
@@ -238,6 +238,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
                                     }
                                 }
+                                
                                 if ($commented == 1) {
                                     break;
                                 }
