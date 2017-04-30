@@ -160,7 +160,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         } else {
                             $instagram->setProxy($proxy);
                         }
-
+                        
+                        $outstanding_engagement_job_media_id = "";
                         try {
                             $ig_username = $insta_username;
                             $ig_password = $insta_pw;
@@ -202,7 +203,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                     }
                                 }
                             } else if (!is_null($outstanding_engagement_job)) {
-
+                                $outstanding_engagement_job_media_id = $outstanding_engagement_job["media_id"];
                                 $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
                                 if ($comment_response->isOk()) {
                                     $commented = 1;
@@ -222,6 +223,10 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 break;
                             } else if (stripos(trim($request_ex->getMessage()), "Not authorized to view user") !== false) {
                                 insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], NULL, NULL, $servername, $username, $password, $dbname);
+                                $followed = 1;
+                                break;
+                            } else if (stripos(trim($request_ex->getMessage()), "Sorry, this media has been deleted.") !== false) {
+                                invalidateEngagementJob($outstanding_engagement_job_media_id, $servername, $username, $password, $dbname);
                                 $followed = 1;
                                 break;
                             }
@@ -366,6 +371,16 @@ function updateUserCommentDelay($insta_username, $delay, $servername, $username,
     $conn->query("set names utf8mb4");
     $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.user_insta_profile SET auto_comment_ban_time = NULL, auto_comment_ban = 0, comment_quota = comment_quota - 1, next_comment_time = NOW() + INTERVAL $delay MINUTE WHERE insta_username = ?;");
     $update_comment_delay->bind_param("s", $insta_username);
+    $update_comment_delay->execute();
+    $update_comment_delay->close();
+    $conn->close();
+}
+
+function invalidateEngagementJob($media_id, $servername, $username, $password, $dbname) {
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->query("set names utf8mb4");
+    $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;");
+    $update_comment_delay->bind_param("s", $media_id);
     $update_comment_delay->execute();
     $update_comment_delay->close();
     $conn->close();
