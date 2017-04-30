@@ -94,7 +94,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 $outstanding_engagement_job_media_id = "";
                 try {
                     $newest_follow = getUserNewestFollow($insta_username, $servername, $username, $password, $dbname);
-                    
+
                     if (is_null($newest_follow)) {
                         echo "[" . $insta_username . "] has no newest follower [ " . $newest_follow["follower_username"] . "].\n";
                         $config = array();
@@ -135,18 +135,15 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         $conn_get_new_job->close();
 
                         if ($media_id_ != "") {
-                            $outstanding_engagement_job_media_id  = $media_id;
-                            if ($comment_response->isOk()) {
-                                $conn_update_job = getConnection($servername, $username, $password, $dbname);
-                                $result = $conn_update_job->query("INSERT INTO engagement_job_queue (media_id, insta_username, action, fulfilled) VALUES (\"$media_id_\",\"$insta_username\",1,1);");
-                                if ($result) {
-                                    $conn_update_job->close();
-                                    echo "[" . $insta_username . "] commented before on engagement job [" . $media_id_ . "]\n";
-                                } else {
-                                    $comment_response = $instagram->comment($media_id_, $profile_comment);
-                                    echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
-                                }
-                                
+                            $outstanding_engagement_job_media_id = $media_id;
+                            $conn_update_job = getConnection($servername, $username, $password, $dbname);
+                            $result = $conn_update_job->query("INSERT INTO engagement_job_queue (media_id, insta_username, action, fulfilled) VALUES (\"$media_id_\",\"$insta_username\",1,1);");
+                            if ($result) {
+                                $conn_update_job->close();
+                                echo "[" . $insta_username . "] commented before on engagement job [" . $media_id_ . "]\n";
+                            } else {
+                                $comment_response = $instagram->comment($media_id_, $profile_comment);
+                                echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
                             }
                         }
                         continue;
@@ -168,7 +165,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         } else {
                             $instagram->setProxy($proxy);
                         }
-                        
+
                         try {
                             $ig_username = $insta_username;
                             $ig_password = $insta_pw;
@@ -217,7 +214,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                     updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $insta_username, $servername, $username, $password, $dbname);
                                     echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
                                 }
-                                
+
                                 if ($commented == 1) {
                                     break;
                                 }
