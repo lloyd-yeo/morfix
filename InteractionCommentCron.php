@@ -91,6 +91,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 continue;
             } else {
                 echo "[" . $insta_username . "] using comment [$profile_comment].\n";
+                $outstanding_engagement_job_media_id = "";
                 try {
                     $newest_follow = getUserNewestFollow($insta_username, $servername, $username, $password, $dbname);
                     if (is_null($newest_follow)) {
@@ -161,7 +162,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             $instagram->setProxy($proxy);
                         }
                         
-                        $outstanding_engagement_job_media_id = "";
+                        
                         try {
                             $ig_username = $insta_username;
                             $ig_password = $insta_pw;
