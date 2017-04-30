@@ -201,43 +201,43 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                 }
                             } else if (!is_null($outstanding_engagement_job)) {
                                 
-                                if (trim($newest_follow["follower_username"]) == "") {
-                                    $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
-                                    $stmt_comment_job = $conn_get_new_job->prepare("SELECT DISTINCT(gj.media_id), gj.date_logged FROM engagement_group_job gj, engagement_job_queue jq
-                                        WHERE jq.insta_username != ?
-                                        AND jq.action != 1
-                                        AND gj.media_id = jq.media_id
-                                        ORDER BY gj.date_logged DESC
-                                        LIMIT 1;");
-                                    $stmt_comment_job->bind_param("s", $insta_username);
-                                    $stmt_comment_job->execute();
-                                    $stmt_comment_job->store_result();
-                                    $stmt_comment_job->bind_result($media_id);
-                                    $media_id_ = "";
-                                    while ($stmt_comment_job->fetch()) {
-                                        $media_id_ = $media_id;
-                                    }
-                                    $conn_get_new_job->close();
-                                    
-                                    if ($media_id_ != "") {
-                                        $comment_response = $instagram->comment($media_id_, $profile_comment);
-                                        if ($comment_response->isOk()) {
-                                            $conn_update_job = getConnection($servername, $username, $password, $dbname);
-                                            $conn_update_job->query("INSERT INTO engagement_job_queue (media_id, insta_username, action, fulfilled) VALUES ($media_id_,$insta_username,1,1);");
-                                            $conn_update_job->close();
-                                            echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
-                                        }
-                                    } else {
-                                        break;
-                                    }
-                                } else {
+//                                if (trim($newest_follow["follower_username"]) == "") {
+//                                    $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
+//                                    $stmt_comment_job = $conn_get_new_job->prepare("SELECT DISTINCT(gj.media_id), gj.date_logged FROM engagement_group_job gj, engagement_job_queue jq
+//                                        WHERE jq.insta_username != ?
+//                                        AND jq.action != 1
+//                                        AND gj.media_id = jq.media_id
+//                                        ORDER BY gj.date_logged DESC
+//                                        LIMIT 1;");
+//                                    $stmt_comment_job->bind_param("s", $insta_username);
+//                                    $stmt_comment_job->execute();
+//                                    $stmt_comment_job->store_result();
+//                                    $stmt_comment_job->bind_result($media_id);
+//                                    $media_id_ = "";
+//                                    while ($stmt_comment_job->fetch()) {
+//                                        $media_id_ = $media_id;
+//                                    }
+//                                    $conn_get_new_job->close();
+//                                    
+//                                    if ($media_id_ != "") {
+//                                        $comment_response = $instagram->comment($media_id_, $profile_comment);
+//                                        if ($comment_response->isOk()) {
+//                                            $conn_update_job = getConnection($servername, $username, $password, $dbname);
+//                                            $conn_update_job->query("INSERT INTO engagement_job_queue (media_id, insta_username, action, fulfilled) VALUES ($media_id_,$insta_username,1,1);");
+//                                            $conn_update_job->close();
+//                                            echo "[" . $insta_username . "] commented on engagement job [" . $media_id_ . "]\n";
+//                                        }
+//                                    } else {
+//                                        break;
+//                                    }
+//                                } else {
                                     $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
                                     if ($comment_response->isOk()) {
                                         $commented = 1;
                                         updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $insta_username, $servername, $username, $password, $dbname);
                                         echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
                                     }
-                                }
+//                                }
                                 
                                 if ($commented == 1) {
                                     break;
