@@ -387,7 +387,9 @@ function invalidateEngagementJob($media_id, $servername, $username, $password, $
     $conn->query("set names utf8mb4");
     $update_comment_delay = $conn->prepare("UPDATE insta_affiliate.engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;");
     $update_comment_delay->bind_param("s", $media_id);
-    $update_comment_delay->execute();
+    if ($update_comment_delay->execute()) {
+        echo "Invalidated media_id: $media_id \n\n";
+    }
     $update_comment_delay->close();
     $conn->close();
 }
