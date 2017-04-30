@@ -65,7 +65,7 @@ class EngagementGroup extends Command {
                                 AND (
                                 u.user_tier = 1 
                                 OR (u.user_tier > 1 AND p.auto_interaction = 1 AND (p.auto_like = 1 OR p.auto_comment = 1))
-                                ) ORDER BY u.user_tier ASC;");
+                                ) ORDER BY RAND()");
 
             foreach ($engagement_group_users as $ig_profile) {
                 $ig_username = $ig_profile->insta_username;
