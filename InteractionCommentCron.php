@@ -117,13 +117,20 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                         $instagram->setUser($insta_username, $insta_pw);
                         $instagram->login();
                         $conn_get_new_job = getConnection($servername, $username, $password, $dbname);
-                        $stmt_comment_job = $conn_get_new_job->prepare("SELECT DISTINCT(gj.media_id), gj.date_logged FROM engagement_group_job gj, engagement_job_queue jq
-                            WHERE jq.insta_username != ?
-                            AND jq.action != 1
-                            AND jq.fulfilled != 2
-                            AND gj.media_id = jq.media_id
-                            ORDER BY gj.date_logged DESC
-                            LIMIT 1;");
+                        $stmt_comment_job = $conn_get_new_job->prepare("SELECT gj.media_id, gj.date_logged, jq.*
+                                                                        FROM engagement_group_job gj, engagement_job_queue jq
+                                                                        WHERE jq.insta_username = ?
+                                                                        AND jq.fulfilled != 2
+                                                                        AND jq.insta_username NOT IN
+                                                                        (
+                                                                        SELECT  insta_username
+                                                                        FROM    engagement_job_queue
+                                                                        WHERE   media_id = gj.media_id
+                                                                        AND		action = 1
+                                                                        ORDER BY job_id DESC
+                                                                        )
+                                                                        AND jq.media_id = gj.media_id
+                                                                        ORDER BY gj.date_logged DESC;");
                         $stmt_comment_job->bind_param("s", $insta_username);
                         $stmt_comment_job->execute();
                         $stmt_comment_job->store_result();
