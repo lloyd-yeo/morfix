@@ -91,10 +91,74 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                 continue;
             } else {
                 echo "[" . $insta_username . "] using comment [$profile_comment].\n";
+                
                 try {
+                    
+                    $outstanding_engagement_job = getOutstandingEngagementJob($insta_username, $servername, $username, $password, $dbname);
+                    
                     $newest_follow = getUserNewestFollow($insta_username, $servername, $username, $password, $dbname);
                     if (is_null($newest_follow)) {
                         echo "[" . $insta_username . "] has no newest follower [ " . $newest_follow["follower_username"] . "].\n";
+                        
+                        $config = array();
+                        $config["storage"] = "mysql";
+                        $config["dbusername"] = "root";
+                        $config["dbpassword"] = "inst@ffiliates123";
+                        $config["dbhost"] = "52.221.60.235:3306";
+                        $config["dbname"] = "morfix";
+                        $config["dbtablename"] = "instagram_sessions";
+
+                        $debug = true;
+                        $truncatedDebug = false;
+                        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+
+                        if (is_null($proxy)) {
+                            continue;
+                        } else {
+                            $instagram->setProxy($proxy);
+                        }
+
+                        try {
+                            $ig_username = $insta_username;
+                            $ig_password = $insta_pw;
+                            $instagram->setUser($ig_username, $ig_password);
+                            $instagram->login();
+                            $outstanding_engagement_job = getOutstandingEngagementJob($insta_username, $servername, $username, $password, $dbname);
+
+                            //comment on engagement group first else as per usual.
+                            if (is_null($outstanding_engagement_job)) {
+                                continue;
+                            } else if (!is_null($outstanding_engagement_job)) {
+                                $outstanding_engagement_job_media_id = $outstanding_engagement_job["media_id"];
+                                $comment_response = $instagram->comment($outstanding_engagement_job["media_id"], $profile_comment);
+                                if ($comment_response->isOk()) {
+                                    $commented = 1;
+                                    updateEngagementJob($outstanding_engagement_job["job_id"], $comment_delay, $insta_username, $servername, $username, $password, $dbname);
+                                    echo "[" . $insta_username . "] commented on engagement job [" . $outstanding_engagement_job["job_id"] . "]\n";
+                                }
+
+                                if ($commented == 1) {
+                                    break;
+                                }
+                            }
+                        } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                            echo "[" . $insta_username . "] req-error: " . $request_ex->getMessage() . "\n";
+                            if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                                $followed = 1;
+                                break;
+                            } else if (stripos(trim($request_ex->getMessage()), "Not authorized to view user") !== false) {
+                                insertCommentLog($insta_username, $newest_follow["follower_username"], $newest_follow["follower_id"], NULL, NULL, $servername, $username, $password, $dbname);
+                                $followed = 1;
+                                break;
+                            } else if (stripos(trim($request_ex->getMessage()), "Sorry, this media has been deleted") !== false) {
+                                #invalidateEngagementJob($outstanding_engagement_job_media_id, $servername, $username, $password, $dbname);
+                                $followed = 1;
+                                break;
+                            }
+                        }
+                        
+                        
                         continue;
                     } else {
                         $config = array();
