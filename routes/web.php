@@ -50,4 +50,4 @@ Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/legacy/instagram-profile/add', 'LegacyInstagramProfileController@create');
 Route::get('/post-scheduling', 'PostSchedulingController@index');
 Route::get('/post-scheduling/schedule/{id}', 'PostSchedulingController@gallery');
-Route::post('stripe/StripeWebhookController','\Laravel\Cashier\Http\Controllers\StripeWebhookController@handleWebhook');
+Route::post('stripe/webhook','\Laravel\Cashier\Http\Controllers\StripeWebhookController@handleWebhook');

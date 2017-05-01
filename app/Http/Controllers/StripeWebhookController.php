@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravel\Cashier\Http\Controllers\WebhookController as CashierController;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 use Log;
 
 
