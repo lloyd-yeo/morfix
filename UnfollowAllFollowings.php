@@ -6,7 +6,7 @@ $specific_email = NULL;
 $email = $argv[1];
 $path = "/home/ubuntu/unfollow-lock";
 $file = NULL;
-$file = fopen($path . "/cron-interaction-unfollow-user-" . $specific_email . ".txt", "w+");
+$file = fopen($path . "/cron-interaction-unfollow-user-" . $email . ".txt", "w+");
 
 if (flock($file, LOCK_EX | LOCK_NB)) {
     $emails = array();
