@@ -498,6 +498,11 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             }
                         } catch (Exception $ex) {
                             echo "[" . $insta_username . "] niche-error: " . $ex->getMessage() . "\n";
+                            if (stripos(trim($ex->getMessage()), "Throttled by Instagram because of too many API requests") !== false) {
+                                updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
+                                $followed = 1;
+                                break;
+                            }
                         }
                     }
                 }
