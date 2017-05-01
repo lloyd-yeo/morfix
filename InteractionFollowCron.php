@@ -501,7 +501,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                             if (stripos(trim($ex->getMessage()), "Throttled by Instagram because of too many API requests") !== false) {
                                 updateUserFeedbackRequired($insta_username, $servername, $username, $password, $dbname);
                                 $followed = 1;
-                                break;
+                                continue;
                             }
                         }
                     }
