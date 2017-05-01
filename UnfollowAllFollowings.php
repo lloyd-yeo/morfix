@@ -218,3 +218,16 @@ function updateUnfollowLogWithNull($log_id, $servername, $username, $password, $
     $stmt_update_user_profile->close();
     $conn_f->close();
 }
+
+function updateUnfollowLog($logid, $insta_username, $servername, $username, $password, $dbname) {
+    $conn_ = new mysqli($servername, $username, $password, $dbname);
+    $conn_->query("set names utf8mb4");
+    $stmt_update_follow_log = $conn_->prepare("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW() "
+            . "WHERE log_id = ?;");
+    $stmt_update_follow_log->bind_param("i", $logid);
+    if ($stmt_update_follow_log->execute()) {
+        echo "[" . $insta_username . "] marked as unfollowed & updated log: " . $logid . "\n\n";
+    }
+    $stmt_update_follow_log->close();
+    $conn_->close();
+}
