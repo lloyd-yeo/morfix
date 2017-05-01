@@ -13,8 +13,7 @@ class WebhookController extends CashierController {
     public function handleInvoiceCreated(array $payload) {
         Log::info('Invoice Created - StripeWebhook - handlewWebhook()', ['details' => json_encode($payload)]);
         DB::connection('mysql_old')->insert("INSERT INTO stripe_webhook_log (log) VALUES (?)", [serialize($payload)]);
-        return response('Webhook Handled', 200);
+        return new Response('Webhook Handled', 200);
     }
 
 }
-    
