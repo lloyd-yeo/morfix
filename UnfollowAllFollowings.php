@@ -191,3 +191,22 @@ function insertNewFollowLogEntry($insta_username, $follower_username, $follower_
     $stmt_update_follow_log->close();
     $conn_insert_follow->close();
 }
+
+
+function updateUserNextFollowTime($insta_username, $delay, $mode, $servername, $username, $password, $dbname) {
+    if ($mode == "unfollow") {
+        $conn_f = new mysqli($servername, $username, $password, $dbname);
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, unfollow_quota = unfollow_quota - 1 WHERE insta_username = ?;");
+        $stmt_update_user_profile->bind_param("s", $insta_username);
+        $stmt_update_user_profile->execute();
+        $stmt_update_user_profile->close();
+        $conn_f->close();
+    } else if ($mode == "follow") {
+        $conn_f = new mysqli($servername, $username, $password, $dbname);
+        $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile SET next_follow_time = NOW() + INTERVAL $delay MINUTE, follow_quota = follow_quota - 1 WHERE insta_username = ?;");
+        $stmt_update_user_profile->bind_param("s", $insta_username);
+        $stmt_update_user_profile->execute();
+        $stmt_update_user_profile->close();
+        $conn_f->close();
+    }
+}
