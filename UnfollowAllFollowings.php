@@ -185,7 +185,7 @@ function insertNewFollowLogEntry($insta_username, $follower_username, $follower_
     $follow_success = 1;
     $stmt_update_follow_log->bind_param("ssssi", $insta_username, $follower_username, $follower_id, $resp, $follow_success);
     if ($stmt_update_follow_log->execute()) {
-        echo "[$inta_username] inserted as follow entry: [$follower_username]\n";
+        echo "[$insta_username] inserted as follow entry: [$follower_username]\n";
     }
     $stmt_update_follow_log->close();
     $conn_insert_follow->close();
