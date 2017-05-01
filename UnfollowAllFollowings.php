@@ -209,3 +209,12 @@ function updateUserNextFollowTime($insta_username, $delay, $mode, $servername, $
         $conn_f->close();
     }
 }
+
+function updateUnfollowLogWithNull($log_id, $servername, $username, $password, $dbname) {
+    $conn_f = getConnection($servername, $username, $password, $dbname);
+    $stmt_update_user_profile = $conn_f->prepare("UPDATE user_insta_profile_follow_log SET unfollowed = 1 WHERE log_id = ?;");
+    $stmt_update_user_profile->bind_param("i", $log_id);
+    $stmt_update_user_profile->execute();
+    $stmt_update_user_profile->close();
+    $conn_f->close();
+}
