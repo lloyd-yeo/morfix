@@ -14,7 +14,52 @@
 <!-- Page Content -->
 <div class="content">
     <div class="row">
-        <div class='col-lg-4' style='height: 600px;'>
+        <div class='col-lg-4 col-xs-12' style='height: 600px;'>
+            <!-- Category -->
+            <div class="bg-image col-lg-6 col-xs-6" style="background-image: url('assets/img/photos/photo25.jpg');">
+                <div class="bg-black-op">
+                    <div class="block block-themed block-transparent">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button"><i class="si si-settings"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title">Category</h3>
+                        </div>
+                        <div class="block-content block-content-full text-center">
+                            <a class="h1 font-w300 text-white" href="javascript:void(0)">Photography</a>
+                        </div>
+                        <div class="block-content block-content-full text-center">
+                            <span class="text-white-op"><em>Updated 3 hours ago</em></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Category -->
+            
+            <!-- Category -->
+            <div class="bg-image col-lg-6 col-xs-6" style="background-image: url('assets/img/photos/photo25.jpg');">
+                <div class="bg-black-op">
+                    <div class="block block-themed block-transparent">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button"><i class="si si-settings"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title">Category</h3>
+                        </div>
+                        <div class="block-content block-content-full text-center">
+                            <a class="h1 font-w300 text-white" href="javascript:void(0)">Photography</a>
+                        </div>
+                        <div class="block-content block-content-full text-center">
+                            <span class="text-white-op"><em>Updated 3 hours ago</em></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Category -->
             
         </div>
         
