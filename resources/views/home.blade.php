@@ -16,6 +16,43 @@
     <div class="row">
         <div class='col-lg-4' style='height: 570px; margin-bottom:30px;'>
             <!-- Category -->
+            <!--<div class="bg-image col-lg-12 col-xs-12" style="height: 275px; margin-bottom: 20px; background-image: url('assets/img/photos/photo25.jpg');">-->
+                <a class="col-lg-12 col-xs-12 block block-link-hover3 text-center" style="height: 275px; margin-bottom: 20px;" href="javascript:void(0)">
+                    <div class="block-content block-content-full">
+                        <i class="si si-music-tone fa-4x text-primary-darker"></i>
+                        <div class="font-w600 push-15-t">Songs</div>
+                    </div>
+                </a>
+            <!--</div>-->
+            <!-- END Category -->
+            
+            <!-- Category -->
+            <div class="bg-image col-lg-12 col-xs-12" style="height: 275px; background-image: url('assets/img/photos/photo25.jpg');">
+                <div class="bg-black-op">
+                    <div class="block block-themed block-transparent">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button"><i class="si si-settings"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title">Category</h3>
+                        </div>
+                        <div class="block-content block-content-full text-center">
+                            <a class="h1 font-w300 text-white" href="javascript:void(0)">Photography</a>
+                        </div>
+                        <div class="block-content block-content-full text-center">
+                            <span class="text-white-op"><em>Updated 3 hours ago</em></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Category -->
+            
+        </div>
+        
+        <div class='col-lg-4' style='height: 570px; margin-bottom:30px;'>
+            <!-- Category -->
             <div class="bg-image col-lg-12 col-xs-12" style="height: 275px; margin-bottom: 20px; background-image: url('assets/img/photos/photo25.jpg');">
                 <div class="bg-black-op">
                     <div class="block block-themed block-transparent">
@@ -60,11 +97,6 @@
                 </div>
             </div>
             <!-- END Category -->
-            
-        </div>
-        
-        <div class='col-lg-4' style='height: 570px; margin-bottom:30px;'>
-            
         </div>
 
         @include('dashboard.leaderboard')
