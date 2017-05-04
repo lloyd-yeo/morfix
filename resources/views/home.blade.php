@@ -14,35 +14,22 @@
 <!-- Page Content -->
 <div class="content">
     <div class="row">
-        <div class="col-lg-9">
-            <!-- Main Dashboard Chart -->
-            <div class="block">
-                <div id="affiliate-chart-header" class="block-header bg-primary">
-                    <h3 class="block-title">Your affiliate link performance</h3>
-                </div>
-                <div class="block-content block-content-full bg-gray-lighter text-center chart-container">
-                    <!-- Chart.js Charts (initialized in js/pages/base_pages_dashboard.js), for more examples you can check out http://www.chartjs.org/docs/ -->
-                    <div id="affiliate-chart" style="height: 374px;"><canvas class="js-dash-chartjs-lines"></canvas></div>
-                </div>
-                <div class="block-content text-center" id="affiliate-chart-footer">
-                    <div class="row items-push text-center">
-                        <div class="col-xs-6 col-lg-12">
-                            <div class="push-10"><i class="si si-users fa-2x"></i></div>
-                            <div class="h5 font-w300 text-muted">+ 1 Client</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END Main Dashboard Chart -->
+        <div class='col-lg-4' style='height: 600px;'>
+            
+        </div>
+        
+        <div class='col-lg-4' style='height: 600px;'>
+            
         </div>
 
         @include('dashboard.leaderboard')
+        
         <script type="text/javascript">
-            var $leaderboardHeight = $("#leaderboard-container").height();
-            var $affiliateChartHeaderHeight = $("#affiliate-chart-header").height();
-            var $affiliateChartFooterHeight = $("#affiliate-chart-footer").height();
-            var $affiliateChartHeight = $leaderboardHeight - $affiliateChartHeaderHeight - $affiliateChartFooterHeight - 20 - 20 - 20 - 15 - 15;
-            $("#affiliate-chart").css("height", $affiliateChartHeight + "px");
+            //var $leaderboardHeight = $("#leaderboard-container").height();
+            //var $affiliateChartHeaderHeight = $("#affiliate-chart-header").height();
+            //var $affiliateChartFooterHeight = $("#affiliate-chart-footer").height();
+            //var $affiliateChartHeight = $leaderboardHeight - $affiliateChartHeaderHeight - $affiliateChartFooterHeight - 20 - 20 - 20 - 15 - 15;
+            //$("#affiliate-chart").css("height", $affiliateChartHeight + "px");
         </script>
     </div>
     <div class="row">
