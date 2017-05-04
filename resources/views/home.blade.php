@@ -16,7 +16,7 @@
     <div class="row">
         <div class='col-lg-4 col-xs-12' style='height: 600px;'>
             <!-- Category -->
-            <div class="bg-image col-lg-6 col-xs-6" style="background-image: url('assets/img/photos/photo25.jpg');">
+            <div class="bg-image col-lg-12 col-xs-12" style="background-image: url('assets/img/photos/photo25.jpg');">
                 <div class="bg-black-op">
                     <div class="block block-themed block-transparent">
                         <div class="block-header">
@@ -39,7 +39,7 @@
             <!-- END Category -->
             
             <!-- Category -->
-            <div class="bg-image col-lg-6 col-xs-6" style="background-image: url('assets/img/photos/photo25.jpg');">
+            <div class="bg-image col-lg-12 col-xs-12" style="background-image: url('assets/img/photos/photo25.jpg');">
                 <div class="bg-black-op">
                     <div class="block block-themed block-transparent">
                         <div class="block-header">
