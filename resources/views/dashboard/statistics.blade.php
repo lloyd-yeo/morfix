@@ -3,10 +3,7 @@
     <div class="row items-push text-uppercase">
         
         <div class="col-xs-6 col-sm-2">
-            <div class="block-content block-content-full bg-modern">
-                <i class="si si-crop fa-4x text-white"></i>
-                <div class="font-w600 text-white-op push-15-t">Crop</div>
-            </div>
+            <button class="btn btn-minw btn-rounded btn-primary" type="button"><i class="si si-plus"></i> Add Instagram Profile</button>
         </div>
         
 <!--        <div class="col-xs-6 col-sm-2">
