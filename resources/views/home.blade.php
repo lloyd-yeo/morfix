@@ -14,9 +14,9 @@
 <!-- Page Content -->
 <div class="content">
     <div class="row">
-        <div class='col-lg-4' style='margin-bottom:30px;'>
+        <div class='col-lg-4' style='height: 600px; margin-bottom:30px;'>
             <!-- Category -->
-            <div class="bg-image col-lg-12 col-xs-12" style="height:300px; background-image: url('assets/img/photos/photo25.jpg');">
+            <div class="bg-image col-lg-12 col-xs-12" style="background-image: url('assets/img/photos/photo25.jpg');">
                 <div class="bg-black-op">
                     <div class="block block-themed block-transparent">
                         <div class="block-header">
