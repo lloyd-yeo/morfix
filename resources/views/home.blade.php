@@ -16,14 +16,14 @@
     <div class="row">
         <div class='col-lg-4' style='height: 570px; margin-bottom:30px;'>
             <!-- Category -->
-            <!--<div class="bg-image col-lg-12 col-xs-12" style="height: 275px; margin-bottom: 20px; background-image: url('assets/img/photos/photo25.jpg');">-->
-                <a class="col-lg-12 col-xs-12 block block-link-hover3 text-center" style="height: 275px; margin-bottom: 20px;" href="javascript:void(0)">
+            <div class="col-lg-12 col-xs-12" style="height: 275px; margin-bottom: 20px;">
+                <a class="block block-link-hover3 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full">
                         <i class="si si-music-tone fa-4x text-primary-darker"></i>
                         <div class="font-w600 push-15-t">Songs</div>
                     </div>
                 </a>
-            <!--</div>-->
+            </div>
             <!-- END Category -->
             
             <!-- Category -->
