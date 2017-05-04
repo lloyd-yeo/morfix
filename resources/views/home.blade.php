@@ -20,15 +20,15 @@
                 <a class="block block-link-hover3 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full">
                         <!--<i class="si si-music-tone fa-4x text-primary-darker"></i>-->
-                        <span class="h2 font-w700 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo" data-decimals="2" data-to="100.0000">$100.00</span>
-                        <div class="text-primary font-w600 push-15-t">Pending Commission</div>
+                        <span class="h2 font-w700 text-primary animated flipInX" data-subject="money" data-toggle="countTo" data-decimals="2" data-to="100.0000">$100.00</span>
+                        <div class="text-primary-dark font-w600 push-15-t">Pending Commission</div>
                     </div>
                 </a>
                 <a class="block block-link-hover3 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full">
                         <!--<i class="si si-music-tone fa-4x text-primary-darker"></i>-->
-                        <span class="h2 font-w700 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo" data-decimals="2" data-to="100.0000">$100.00</span>
-                        <div class="text-primary font-w600 push-15-t">Pending Commission</div>
+                        <span class="h2 font-w700 text-primary animated flipInX" data-subject="money" data-toggle="countTo" data-decimals="2" data-to="100.0000">$100.00</span>
+                        <div class="text-primary-dark font-w600 push-15-t">Pending Commission</div>
                     </div>
                 </a>
             </div>
