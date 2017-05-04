@@ -112,7 +112,7 @@ var BasePagesDashboard = function () {
     return {
         init: function () {
             // Init ChartJS chart
-            initDashChartJS();
+            //initDashChartJS();
             initDashChart();
         }
     };
