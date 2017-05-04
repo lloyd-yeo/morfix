@@ -19,8 +19,9 @@
             <div class="col-lg-12 col-xs-12" style="height: 275px; margin-bottom: 20px;">
                 <a class="block block-link-hover3 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full">
-                        <i class="si si-music-tone fa-4x text-primary-darker"></i>
-                        <div class="font-w600 push-15-t">Songs</div>
+                        <!--<i class="si si-music-tone fa-4x text-primary-darker"></i>-->
+                        <span class="h2 font-w700 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo" data-decimals="2" data-to="100.0000">$100.00</span>
+                        <div class="font-w600 push-15-t">Pending Commission</div>
                     </div>
                 </a>
             </div>
