@@ -2,12 +2,11 @@
 <div class="content bg-white border-b">
     <div class="row items-push text-uppercase">
 
-        <div class="col-xs-6 col-sm-2 col-lg-3">
-            <div class="font-w700 text-gray-darker animated fadeIn">INSTAGRAM PROFILES</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> 6 quota remaining</small></div>
+        <div class="col-xs-6 col-sm-2 col-lg-9">
+            <div class="font-w700 text-gray-darker animated fadeIn">My Instagram Profiles</div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining</small></div>
             <button class="btn btn-minw btn-rounded btn-primary" type="button"><i class="si si-plus"></i> Add Profile</button>
         </div>
-        <div class="col-lg-6">
 <!--            <div class="col-xs-6 col-sm-2 col-lg-2">
                 <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
                 <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> This month</small></div>
@@ -22,7 +21,6 @@
                       data-decimals="2" data-to="{{ Auth::user()->total_commission }}"
                       >$ {{ number_format(Auth::user()->total_commission, 2, '.', ',')  }}</span>
             </div>-->
-        </div>
         <!--        <div class="col-xs-6 col-sm-2 col-lg-2">
                     <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
                     <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> This month</small></div>
@@ -50,7 +48,7 @@
                           >$ {{ number_format(Auth::user()->total_commission, 2, '.', ',')  }}</span>
                 </div>-->
         <div class="col-xs-6 col-sm-3 col-lg-3">
-            <div class="font-w700 text-gray-darker animated fadeIn">Leaderboard Ranking</div>
+            <div class="font-w700 text-gray-darker animated fadeIn">My Leaderboard Ranking</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-trophy"></i> All Time</small></div>
             <span class="h2 font-w300 text-modern animated flipInX">{{ $user_leaderboard_alltime_ranking }}</span>
         </div>
