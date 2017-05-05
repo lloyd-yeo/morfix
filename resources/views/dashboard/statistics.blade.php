@@ -4,24 +4,37 @@
 
         <div class="col-xs-6 col-sm-6 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">My Instagram Profiles</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining <i class="fa fa-question-circle text-modern" style="margin-left: 5px;" data-toggle="tooltip" data-placement="top" title="Remaining instagram slots you can add in Morfix" type="button"></i></small></div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining 
+                    <i class="fa fa-question-circle text-info" style="margin-left: 5px;" data-toggle="tooltip" 
+                       data-placement="top" title="Remaining instagram slots you can add in Morfix" type="button"></i></small>
+            </div>
             <button class="btn btn-minw btn-rounded btn-primary" style="margin-top: 10px;" type="button"><i class="si si-plus"></i> Add Profile</button>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Payable this month</small></div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Payable this month
+                <i class="fa fa-question-circle text-info" style="margin-left: 5px;" data-toggle="tooltip" 
+                       data-placement="top" title="Commissions that will be paid out the 25th of this month" type="button"></i>
+                </small>
+            </div>
             <span class="h2 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo"
                   data-decimals="2" data-to="{{ Auth::user()->pending_commission_payable }}"></span>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Total</small></div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Total
+                <i class="fa fa-question-circle text-info" style="margin-left: 5px;" data-toggle="tooltip" 
+                       data-placement="top" title="The total accumulated commission that have not been paid out" type="button"></i>
+                </small></div>
             <span class="h2 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo"
                   data-decimals="2" data-to="{{ Auth::user()->pending_commission }}"></span>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">Total Commission</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-credit-card"></i> Paid out</small></div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-credit-card"></i> Paid out
+                <i class="fa fa-question-circle text-info" style="margin-left: 5px;" data-toggle="tooltip" 
+                       data-placement="top" title="The total commissions that Morfix has already paid out to you." type="button"></i>
+                </small></div>
             <span class="h2 text-moneygreen animated flipInX" 
                   data-subject="money" data-toggle="countTo"
                   data-decimals="2" data-to="{{ Auth::user()->all_time_commission }}"
