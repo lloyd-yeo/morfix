@@ -1,10 +1,13 @@
 <!-- Twitter Notification -->
 <li>
-    <div class="list-timeline-time">12 hrs ago</div>
+    <div class="list-timeline-time">{{ $update->created_at }}</div>
+    @if ($update->type == "NEW_REFERRAL")
     <i class="fa fa-thumbs-o-up list-timeline-icon bg-info"></i>
+    @else
+    <i class="fa fa-coffee list-timeline-icon bg-info"></i>
     <div class="list-timeline-content">
-        <p class="font-w600">NEW REFERRAL!</p>
-        <p class="font-s13"><a href="#">ywz.lloyd@gmail.com</a> just joined! You’re getting more and more referrals, keep it up!</p>
+        <p class="font-w600">{{ $update->title }}</p>
+        <p class="font-s13">{{ $update->content }}</p>
     </div>
 </li>
 <!-- END Twitter Notification -->
