@@ -4,7 +4,7 @@
 
         <div class="col-xs-6 col-sm-6 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">My Instagram Profiles</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining</small></div>
+            <div class="text-muted animated fadeIn" data-toggle="tooltip" data-placement="top" title="Remaining instagram slots you can add in Morfix" type="button"><small><i class="si si-calendar"></i> <b>6</b> quota remaining</small></div>
             <button class="btn btn-minw btn-rounded btn-primary" style="margin-top: 10px;" type="button"><i class="si si-plus"></i> Add Profile</button>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
@@ -27,6 +27,9 @@
                   data-decimals="2" data-to="{{ Auth::user()->all_time_commission }}"
                   >$ {{ number_format(Auth::user()->all_time_commission, 2, '.', ',')  }}</span>
         </div>
+        
+        
+        
         
         <!--        <div class="col-xs-6 col-sm-2">
                     <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
