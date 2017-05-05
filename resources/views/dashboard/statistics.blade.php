@@ -2,7 +2,7 @@
 <div class="content bg-white border-b">
     <div class="row items-push text-uppercase">
 
-        <div class="col-xs-6 col-sm-2 col-lg-9">
+        <div class="col-xs-6 col-sm-2 col-lg-3">
             <div class="font-w700 text-gray-darker animated fadeIn">My Instagram Profiles</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining</small></div>
             <button class="btn btn-minw btn-rounded btn-primary" style="margin-top: 10px;" type="button"><i class="si si-plus"></i> Add Profile</button>
