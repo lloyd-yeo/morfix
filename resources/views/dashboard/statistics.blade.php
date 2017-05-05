@@ -10,19 +10,19 @@
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Payable this month</small></div>
-            <span class="h2 font-w700 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo"
+            <span class="h2 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo"
                   data-decimals="2" data-to="{{ Auth::user()->pending_commission_payable }}"></span>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Total</small></div>
-            <span class="h2 font-w700 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo"
+            <span class="h2 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo"
                   data-decimals="2" data-to="{{ Auth::user()->pending_commission }}"></span>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">Total Commission</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-credit-card"></i> Paid out</small></div>
-            <span class="h2 font-w700 text-moneygreen animated flipInX" 
+            <span class="h2 text-moneygreen animated flipInX" 
                   data-subject="money" data-toggle="countTo"
                   data-decimals="2" data-to="{{ Auth::user()->all_time_commission }}"
                   >$ {{ number_format(Auth::user()->all_time_commission, 2, '.', ',')  }}</span>
