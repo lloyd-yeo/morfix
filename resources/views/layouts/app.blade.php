@@ -42,13 +42,13 @@
 
         <!-- Page JS Plugins CSS -->
         @yield('css')
-        
+
         <!-- Bootstrap and OneUI CSS framework -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/oneui.css') }}">
         <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/app.css') }}">
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-         <!--<link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/modern.min.css') }}">--> 
+        <!--<link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/modern.min.css') }}">--> 
         <!-- END Stylesheets -->
 
         <!-- Scripts -->
@@ -56,27 +56,24 @@
         <script>
             window.Laravel = {!! json_encode([
                     'csrfToken' => csrf_token(),
-            ]) !!}
-            ;
+            ]) !!};
         </script>
     </head>
     <body>
         <div id="page-loader"></div>
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
             @include('side_overlay')
-            
+
             @yield('sidebar')
 
             @include('header')
 
             <!-- Main Container -->
-            <main id="main-container" style="padding-top: 0px;">
-                @yield('content')
-            </main>
+            @yield('content')
             <!-- END Main Container -->
-            
+
             @include('footer')
-            
+
         </div>
         <!-- END Page Container -->
 
@@ -121,7 +118,7 @@
             </div>
         </div>
         <!-- END Apps Modal -->
-        
+
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
         <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/jquery.slimscroll.min.js') }}"></script>
@@ -131,8 +128,8 @@
         <script src="{{ asset('assets/js/core/jquery.placeholder.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/js.cookie.min.js') }}"></script>
         <script src="{{ asset('assets/js/app.js') }}"></script>
-        
+
         @yield('js')
     </body>
-    
+
 </html>
