@@ -4,7 +4,7 @@
 
         <div class="col-xs-6 col-sm-6 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">My Instagram Profiles</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining <button class="btn btn-xs btn-info" data-toggle="tooltip" data-placement="top" title="Remaining instagram slots you can add in Morfix" type="button"><i class="fa fa-info-circle"></i></button></small></div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining <i class="fa fa-question-circle-o btn-info"  data-toggle="tooltip" data-placement="top" title="Remaining instagram slots you can add in Morfix" type="button"></i></small></div>
             <button class="btn btn-minw btn-rounded btn-primary" style="margin-top: 10px;" type="button"><i class="si si-plus"></i> Add Profile</button>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
