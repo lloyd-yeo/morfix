@@ -8,7 +8,7 @@
     @endif
     <div class="list-timeline-content">
         <p class="font-w600">{{ $update->title }}</p>
-        <p class="font-s13">{{!! $update->content !!}}</p>
+        <p class="font-s13">{!! $update->content !!}</p>
     </div>
 </li>
 <!-- END Twitter Notification -->
