@@ -3,7 +3,9 @@
     <div class="row items-push text-uppercase">
 
         <div class="col-xs-6 col-sm-2 col-lg-3">
-            <button class="btn btn-minw btn-rounded btn-primary" type="button"><i class="si si-plus"></i> Add Instagram Profile</button>
+            <div class="font-w700 text-gray-darker animated fadeIn">INSTAGRAM PROFILES</div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> 6 quota remaining</small></div>
+            <button class="btn btn-minw btn-rounded btn-primary" type="button"><i class="si si-plus"></i> Add Profile</button>
         </div>
         <div class="col-lg-6">
 <!--            <div class="col-xs-6 col-sm-2 col-lg-2">
