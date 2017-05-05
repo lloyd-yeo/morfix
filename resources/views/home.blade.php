@@ -15,7 +15,6 @@
     <!-- Page Content -->
     <div class="content">
         <div class="row">
-
             <div class="col-lg-8">
                 <!-- News -->
                 <div class="block">
@@ -26,15 +25,6 @@
                             </li>
                         </ul>
                         <h3 class="block-title"> Updates</h3>
-                    </div>
-                    <div class="block-content bg-gray-lighter">
-                        <div>
-                            <blockquote>
-                                <p>Be yourself; everyone else is already taken.</p>
-                                <footer>Oscar Wilde</footer>
-                            </blockquote>
-                        </div>
-                        <!-- END Slick slider -->
                     </div>
                     <div class="block-content">
                         <ul class="list list-timeline pull-t">
