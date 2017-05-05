@@ -1,6 +1,6 @@
 <!-- Twitter Notification -->
 <li>
-    <div class="list-timeline-time">{{ $update->created_at }}</div>
+    <div class="list-timeline-time">{{ $update->created_at->diffForHumans() }}</div>
     @if ($update->type == "NEW_REFERRAL")
     <i class="fa fa-thumbs-o-up list-timeline-icon bg-info"></i>
     @else
