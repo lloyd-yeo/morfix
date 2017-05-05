@@ -24,8 +24,8 @@
             <div class="text-muted animated fadeIn"><small><i class="si si-credit-card"></i> Paid out</small></div>
             <span class="h2 font-w700 text-moneygreen animated flipInX" 
                   data-subject="money" data-toggle="countTo"
-                  data-decimals="2" data-to="{{ Auth::user()->total_commission }}"
-                  >$ {{ number_format(Auth::user()->total_commission, 2, '.', ',')  }}</span>
+                  data-decimals="2" data-to="{{ Auth::user()->all_time_commission }}"
+                  >$ {{ number_format(Auth::user()->all_time_commission, 2, '.', ',')  }}</span>
         </div>
         
         <!--        <div class="col-xs-6 col-sm-2">
