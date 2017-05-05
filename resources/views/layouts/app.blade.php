@@ -70,7 +70,7 @@
             @include('header')
 
             <!-- Main Container -->
-            <main id="main-container">
+            <main id="main-container" style="padding-top: 0px;">
                 @yield('content')
             </main>
             <!-- END Main Container -->
