@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-<main id="main-container" style="padding-top: 0px;">
+<main id="main-container" style="padding-top: 10px;">
     @include('dashboard.hero')
     @include('dashboard.statistics')
     <!-- Page Content -->
