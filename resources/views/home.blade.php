@@ -303,6 +303,12 @@
                 $("#follower-count-chart-" + $instaId).css("height", ($(this).height() - 24 - 40 - $("#follower-chart-header-" + $instaId).height() - 15 - 15) + "px");
             });
         </script>
+        <script>
+            jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script>
     </div>
     <!-- END Page Content -->
 </main>
