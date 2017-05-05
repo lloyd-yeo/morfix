@@ -28,39 +28,11 @@
                         <h3 class="block-title"> Updates</h3>
                     </div>
                     <div class="block-content bg-gray-lighter">
-                        <!-- Slick slider (.js-slider class is initialized in App() -> uiHelperSlick()) -->
-                        <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
-                        <div class="js-slider remove-margin-b" data-slider-autoplay="true" data-slider-autoplay-speed="4000">
-                            <div>
-                                <blockquote>
-                                    <p>Be yourself; everyone else is already taken.</p>
-                                    <footer>Oscar Wilde</footer>
-                                </blockquote>
-                            </div>
-                            <div>
-                                <blockquote>
-                                    <p>Don't cry because it's over, smile because it happened.</p>
-                                    <footer>Dr. Seuss</footer>
-                                </blockquote>
-                            </div>
-                            <div>
-                                <blockquote>
-                                    <p>Strive not to be a success, but rather to be of value.</p>
-                                    <footer>Albert Einstein</footer>
-                                </blockquote>
-                            </div>
-                            <div>
-                                <blockquote>
-                                    <p>Every child is an artist. The problem is how to remain an artist once he grows up.</p>
-                                    <footer>Pablo Picasso</footer>
-                                </blockquote>
-                            </div>
-                            <div>
-                                <blockquote>
-                                    <p>There is only one way to avoid criticism: do nothing, say nothing, and be nothing.</p>
-                                    <footer>Aristotle</footer>
-                                </blockquote>
-                            </div>
+                        <div>
+                            <blockquote>
+                                <p>Be yourself; everyone else is already taken.</p>
+                                <footer>Oscar Wilde</footer>
+                            </blockquote>
                         </div>
                         <!-- END Slick slider -->
                     </div>
@@ -301,12 +273,6 @@
             $(".insta-profile").each(function (index) {
                 var $instaId = $(this).attr("data-id");
                 $("#follower-count-chart-" + $instaId).css("height", ($(this).height() - 24 - 40 - $("#follower-chart-header-" + $instaId).height() - 15 - 15) + "px");
-            });
-        </script>
-        <script>
-            jQuery(function () {
-                // Init page helpers (Slick Slider plugin)
-                App.initHelpers('slick');
             });
         </script>
     </div>
