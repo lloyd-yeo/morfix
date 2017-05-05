@@ -15,98 +15,150 @@
     <!-- Page Content -->
     <div class="content">
         <div class="row">
-            <div class='col-lg-4' style='height: 570px; margin-bottom:30px;'>
-                <!-- Category -->
-                <div class="col-lg-12 col-xs-12" style="height: 275px; margin-bottom: 20px;">
-                    <a class="block block-link-hover3 text-center" href="javascript:void(0)">
-                        <div class="block-content block-content-full">
-                            <!--<i class="si si-music-tone fa-4x text-primary-darker"></i>-->
-                            <span class="h2 font-w700 text-primary animated flipInX" data-subject="money" data-toggle="countTo" data-decimals="2" data-to="100.0000">$100.00</span>
-                            <div class="text-primary-dark font-w600 push-15-t">Pending Commission</div>
-                        </div>
-                    </a>
-                    <a class="block block-link-hover3 text-center" href="javascript:void(0)">
-                        <div class="block-content block-content-full">
-                            <!--<i class="si si-music-tone fa-4x text-primary-darker"></i>-->
-                            <span class="h2 font-w700 text-primary animated flipInX" data-subject="money" data-toggle="countTo" data-decimals="2" data-to="100.0000">$100.00</span>
-                            <div class="text-primary-dark font-w600 push-15-t">Pending Commission</div>
-                        </div>
-                    </a>
-                </div>
-                <!-- END Category -->
 
-                <!-- Category -->
-                <div class="bg-image col-lg-12 col-xs-12" style="height: 275px; background-image: url('assets/img/photos/photo25.jpg');">
-                    <div class="bg-black-op">
-                        <div class="block block-themed block-transparent">
-                            <div class="block-header">
-                                <ul class="block-options">
-                                    <li>
-                                        <button type="button"><i class="si si-settings"></i></button>
-                                    </li>
-                                </ul>
-                                <h3 class="block-title">Category</h3>
+            <div class="col-lg-8">
+                <!-- News -->
+                <div class="block">
+                    <div class="block-header">
+                        <ul class="block-options">
+                            <li>
+                                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                            </li>
+                        </ul>
+                        <h3 class="block-title"> Updates</h3>
+                    </div>
+                    <div class="block-content bg-gray-lighter">
+                        <!-- Slick slider (.js-slider class is initialized in App() -> uiHelperSlick()) -->
+                        <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
+                        <div class="js-slider remove-margin-b" data-slider-autoplay="true" data-slider-autoplay-speed="4000">
+                            <div>
+                                <blockquote>
+                                    <p>Be yourself; everyone else is already taken.</p>
+                                    <footer>Oscar Wilde</footer>
+                                </blockquote>
                             </div>
-                            <div class="block-content block-content-full text-center">
-                                <a class="h1 font-w300 text-white" href="javascript:void(0)">Photography</a>
+                            <div>
+                                <blockquote>
+                                    <p>Don't cry because it's over, smile because it happened.</p>
+                                    <footer>Dr. Seuss</footer>
+                                </blockquote>
                             </div>
-                            <div class="block-content block-content-full text-center">
-                                <span class="text-white-op"><em>Updated 3 hours ago</em></span>
+                            <div>
+                                <blockquote>
+                                    <p>Strive not to be a success, but rather to be of value.</p>
+                                    <footer>Albert Einstein</footer>
+                                </blockquote>
+                            </div>
+                            <div>
+                                <blockquote>
+                                    <p>Every child is an artist. The problem is how to remain an artist once he grows up.</p>
+                                    <footer>Pablo Picasso</footer>
+                                </blockquote>
+                            </div>
+                            <div>
+                                <blockquote>
+                                    <p>There is only one way to avoid criticism: do nothing, say nothing, and be nothing.</p>
+                                    <footer>Aristotle</footer>
+                                </blockquote>
                             </div>
                         </div>
+                        <!-- END Slick slider -->
+                    </div>
+                    <div class="block-content">
+                        <ul class="list list-timeline pull-t">
+                            <!-- Twitter Notification -->
+                            <li>
+                                <div class="list-timeline-time">12 hrs ago</div>
+                                <i class="fa fa-twitter list-timeline-icon bg-info"></i>
+                                <div class="list-timeline-content">
+                                    <p class="font-w600">+ 1150 Followers</p>
+                                    <p class="font-s13">You’re getting more and more followers, keep it up!</p>
+                                </div>
+                            </li>
+                            <!-- END Twitter Notification -->
+
+                            <!-- Generic Notification -->
+                            <li>
+                                <div class="list-timeline-time">4 hrs ago</div>
+                                <i class="fa fa-briefcase list-timeline-icon bg-city"></i>
+                                <div class="list-timeline-content">
+                                    <p class="font-w600">+ 3 New Products were added!</p>
+                                    <p class="font-s13">Congratulations!</p>
+                                </div>
+                            </li>
+                            <!-- END Generic Notification -->
+
+                            <!-- System Notification -->
+                            <li>
+                                <div class="list-timeline-time">1 day ago</div>
+                                <i class="fa fa-check list-timeline-icon bg-success"></i>
+                                <div class="list-timeline-content">
+                                    <p class="font-w600">Database backup completed!</p>
+                                    <p class="font-s13">Download the <a href="javascript:void(0)">latest backup</a>.</p>
+                                </div>
+                            </li>
+                            <!-- END System Notification -->
+
+                            <!-- Facebook Notification -->
+                            <li>
+                                <div class="list-timeline-time">3 hrs ago</div>
+                                <i class="fa fa-facebook list-timeline-icon bg-default"></i>
+                                <div class="list-timeline-content">
+                                    <p class="font-w600">+ 290 Page Likes</p>
+                                    <p class="font-s13">This is great, keep it up!</p>
+                                </div>
+                            </li>
+                            <!-- END Facebook Notification -->
+
+                            <!-- Social Notification -->
+                            <li>
+                                <div class="list-timeline-time">2 days ago</div>
+                                <i class="fa fa-user-plus list-timeline-icon bg-modern"></i>
+                                <div class="list-timeline-content">
+                                    <p class="font-w600">+ 3 Friend Requests</p>
+                                    <ul class="nav-users push-10-t push">
+                                        <li>
+                                            <a href="base_pages_profile.html">
+                                                <img class="img-avatar" src="assets/img/avatars/avatar11.jpg" alt="">
+                                                <i class="fa fa-circle text-success"></i> Ethan Howard
+                                                <div class="font-w400 text-muted"><small>Graphic Designer</small></div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="base_pages_profile.html">
+                                                <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
+                                                <i class="fa fa-circle text-warning"></i> Lisa Gordon
+                                                <div class="font-w400 text-muted"><small>Photographer</small></div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="base_pages_profile.html">
+                                                <img class="img-avatar" src="assets/img/avatars/avatar16.jpg" alt="">
+                                                <i class="fa fa-circle text-danger"></i> Walter Fox
+                                                <div class="font-w400 text-muted"><small>UI Designer</small></div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!-- END Social Notification -->
+
+                            <!-- System Notification -->
+                            <li class="push-5">
+                                <div class="list-timeline-time">1 week ago</div>
+                                <i class="fa fa-cog list-timeline-icon bg-primary-dark"></i>
+                                <div class="list-timeline-content">
+                                    <p class="font-w600">System updated to v2.02</p>
+                                    <p class="font-s13">Check the complete changelog at the <a href="javascript:void(0)">activity page</a>.</p>
+                                </div>
+                            </li>
+                            <!-- END System Notification -->
+                        </ul>
                     </div>
                 </div>
-                <!-- END Category -->
-
+                <!-- END News -->
             </div>
 
-            <div class='col-lg-4' style='height: 570px; margin-bottom:30px;'>
-                <!-- Category -->
-                <div class="bg-image col-lg-12 col-xs-12" style="height: 275px; margin-bottom: 20px; background-image: url('assets/img/photos/photo25.jpg');">
-                    <div class="bg-black-op">
-                        <div class="block block-themed block-transparent">
-                            <div class="block-header">
-                                <ul class="block-options">
-                                    <li>
-                                        <button type="button"><i class="si si-settings"></i></button>
-                                    </li>
-                                </ul>
-                                <h3 class="block-title">Category</h3>
-                            </div>
-                            <div class="block-content block-content-full text-center">
-                                <a class="h1 font-w300 text-white" href="javascript:void(0)">Photography</a>
-                            </div>
-                            <div class="block-content block-content-full text-center">
-                                <span class="text-white-op"><em>Updated 3 hours ago</em></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Category -->
-
-                <!-- Category -->
-                <div class="bg-image col-lg-12 col-xs-12" style="height: 275px; background-image: url('assets/img/photos/photo25.jpg');">
-                    <div class="bg-black-op">
-                        <div class="block block-themed block-transparent">
-                            <div class="block-header">
-                                <ul class="block-options">
-                                    <li>
-                                        <button type="button"><i class="si si-settings"></i></button>
-                                    </li>
-                                </ul>
-                                <h3 class="block-title">Category</h3>
-                            </div>
-                            <div class="block-content block-content-full text-center">
-                                <a class="h1 font-w300 text-white" href="javascript:void(0)">Photography</a>
-                            </div>
-                            <div class="block-content block-content-full text-center">
-                                <span class="text-white-op"><em>Updated 3 hours ago</em></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Category -->
-            </div>
 
             @include('dashboard.leaderboard')
 
