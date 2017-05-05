@@ -93,7 +93,15 @@ class HomeController extends Controller {
             $new_profile_follower_analysis_label[$ig_profile->insta_username] = $analysis_date_csv;
             $new_follower_count[$ig_profile->insta_username] = $new_follower_diff;
         }
-
+        
+        $user_updates = DB::connection('mysql_old')->select("SELECT `user_updates`.`id`,
+                            `user_updates`.`email`,
+                            `user_updates`.`title`,
+                            `user_updates`.`content`,
+                            `user_updates`.`type`,
+                            `user_updates`.`created_at`
+                        FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ?;", [Auth::user()->email]);
+        
         return view('home', [
             'leaderboard_alltime' => $leaderboard_alltime,
             'leaderboard_weekly' => $leaderboard_weekly,
@@ -102,6 +110,7 @@ class HomeController extends Controller {
             'user_ig_analysis' => $new_profile_follower_analysis,
             'user_ig_analysis_label' => $new_profile_follower_analysis_label,
             'user_ig_new_follower' => $new_follower_count,
+            'user_updates' => $user_updates,
         ]);
     }
 
