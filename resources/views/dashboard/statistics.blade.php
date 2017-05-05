@@ -48,7 +48,7 @@
                           data-decimals="2" data-to="{{ Auth::user()->total_commission }}"
                           >$ {{ number_format(Auth::user()->total_commission, 2, '.', ',')  }}</span>
                 </div>-->
-        <div class="col-xs-6 col-sm-6 col-lg-offset-1 col-lg-3">
+        <div class="col-xs-6 col-sm-6 col-lg-4">
             <div class="font-w700 text-gray-darker animated fadeIn">My Leaderboard Ranking</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-trophy"></i> All Time</small></div>
             <span class="h2 font-w300 text-modern animated flipInX">{{ $user_leaderboard_alltime_ranking }}</span>
