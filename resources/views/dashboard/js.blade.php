@@ -12,12 +12,14 @@
 <!-- Page JS Code -->
 <script src="{{ asset('assets/js/pages/base_forms_wizard.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/slick/slick.min.js') }}"></script>
+
 <script>
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
 jQuery(function () {
     // Init page helpers (Slick Slider plugin, Appear, CountTo)
     App.initHelpers(['slick', 'appear', 'appear-countTo']);

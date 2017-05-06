@@ -245,58 +245,49 @@
                                                             To solve this, follow the instructions below:
                                                         </p>
                                                         
-                                                        <!-- FAQ -->
+                                                        <!-- Avatars -->
                                                         <div class="block">
                                                             <div class="block-header">
-                                                                <ul class="block-options">
-                                                                    <li>
-                                                                        <button type="button"><i class="si si-question"></i></button>
-                                                                    </li>
-                                                                </ul>
-                                                                <h3 class="block-title">FAQ</h3>
+                                                                <h3 class="block-title">Avatars</h3>
                                                             </div>
-                                                            <div class="block-content block-content-full text-center">
-                                                                <!-- Slick slider (.js-slider class is initialized in App() -> uiHelperSlick()) -->
-                                                                <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
-                                                                <div class="js-slider slick-nav-white slick-nav-hover" data-slider-dots="true">
+                                                            <div class="block-content">
+                                                                <!-- Slider with Avatars -->
+                                                                <div class="js-slider text-center" data-slider-dots="true" data-slider-arrows="true">
                                                                     <div>
-                                                                        <div class="push-30-t">
-                                                                            <span class="item item-2x item-circle bg-gray-lighter">
-                                                                                <i class="si si-call-in text-black"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <h3 class="font-w300 text-black push-30-t push-30">Do I have access to phone support?</h3>
-                                                                        <div class="mheight-150">
-                                                                            <p class="text-gray-dark">Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum,</p>
-                                                                        </div>
+                                                                        <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
+                                                                        <div class="push-10-t font-w600">Denise Watson</div>
+                                                                        <div class="font-s13 text-muted">Web Designer</div>
                                                                     </div>
                                                                     <div>
-                                                                        <div class="push-30-t">
-                                                                            <span class="item item-2x item-circle bg-gray-lighter">
-                                                                                <i class="si si-calendar text-black"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <h3 class="font-w300 text-black push-30-t push-30">How can I manage my events?</h3>
-                                                                        <div class="mheight-150">
-                                                                            <p class="text-gray-dark">Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum,</p>
-                                                                        </div>
+                                                                        <img class="img-avatar" src="assets/img/avatars/avatar5.jpg" alt="">
+                                                                        <div class="push-10-t font-w600">Judy Alvarez</div>
+                                                                        <div class="font-s13 text-muted">Font Designer</div>
                                                                     </div>
                                                                     <div>
-                                                                        <div class="push-30-t">
-                                                                            <span class="item item-2x item-circle bg-gray-lighter">
-                                                                                <i class="si si-speedometer text-black"></i>
-                                                                            </span>
-                                                                        </div>
-                                                                        <h3 class="font-w300 text-black push-30-t push-30">What if I need more power?</h3>
-                                                                        <div class="mheight-150">
-                                                                            <p class="text-gray-dark">Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum,</p>
-                                                                        </div>
+                                                                        <img class="img-avatar" src="assets/img/avatars/avatar4.jpg" alt="">
+                                                                        <div class="push-10-t font-w600">Amber Walker</div>
+                                                                        <div class="font-s13 text-muted">Artist</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <img class="img-avatar" src="assets/img/avatars/avatar3.jpg" alt="">
+                                                                        <div class="push-10-t font-w600">Amber Walker</div>
+                                                                        <div class="font-s13 text-muted">Graphic Designer</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <img class="img-avatar" src="assets/img/avatars/avatar2.jpg" alt="">
+                                                                        <div class="push-10-t font-w600">Ann Parker</div>
+                                                                        <div class="font-s13 text-muted">Photographer</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <img class="img-avatar" src="assets/img/avatars/avatar1.jpg" alt="">
+                                                                        <div class="push-10-t font-w600">Tiffany Kim</div>
+                                                                        <div class="font-s13 text-muted">Web Developer</div>
                                                                     </div>
                                                                 </div>
+                                                                <!-- END Slider with Avatars -->
                                                             </div>
                                                         </div>
-                                                        <!-- END FAQ -->
-                                                        
+                                                        <!-- END Avatars -->
                                                         <!--<textarea class="form-control" id="validation-details" name="validation-details" rows="9" placeholder="Share something about yourself"></textarea>-->
                                                         <!--<label for="validation-details">Details</label>-->
                                                     </div>
