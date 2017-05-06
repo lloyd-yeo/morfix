@@ -239,8 +239,66 @@
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material">
-                                                        <textarea class="form-control" id="validation-details" name="validation-details" rows="9" placeholder="Share something about yourself"></textarea>
-                                                        <label for="validation-details">Details</label>
+                                                        <center><h1 class='push'>Verification Required</h1></center>
+                                                        <p class='lead'>
+                                                            Morfix is unable to link-up your profile because of additional verification required from Instagram.
+                                                            To solve this, follow the instructions below:
+                                                        </p>
+                                                        
+                                                        <!-- FAQ -->
+                                                        <div class="block">
+                                                            <div class="block-header">
+                                                                <ul class="block-options">
+                                                                    <li>
+                                                                        <button type="button"><i class="si si-question"></i></button>
+                                                                    </li>
+                                                                </ul>
+                                                                <h3 class="block-title">FAQ</h3>
+                                                            </div>
+                                                            <div class="block-content block-content-full text-center">
+                                                                <!-- Slick slider (.js-slider class is initialized in App() -> uiHelperSlick()) -->
+                                                                <!-- For more info and examples you can check out http://kenwheeler.github.io/slick/ -->
+                                                                <div class="js-slider slick-nav-white slick-nav-hover" data-slider-dots="true">
+                                                                    <div>
+                                                                        <div class="push-30-t">
+                                                                            <span class="item item-2x item-circle bg-gray-lighter">
+                                                                                <i class="si si-call-in text-black"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <h3 class="font-w300 text-black push-30-t push-30">Do I have access to phone support?</h3>
+                                                                        <div class="mheight-150">
+                                                                            <p class="text-gray-dark">Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum,</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="push-30-t">
+                                                                            <span class="item item-2x item-circle bg-gray-lighter">
+                                                                                <i class="si si-calendar text-black"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <h3 class="font-w300 text-black push-30-t push-30">How can I manage my events?</h3>
+                                                                        <div class="mheight-150">
+                                                                            <p class="text-gray-dark">Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum,</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="push-30-t">
+                                                                            <span class="item item-2x item-circle bg-gray-lighter">
+                                                                                <i class="si si-speedometer text-black"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <h3 class="font-w300 text-black push-30-t push-30">What if I need more power?</h3>
+                                                                        <div class="mheight-150">
+                                                                            <p class="text-gray-dark">Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum,</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- END FAQ -->
+                                                        
+                                                        <!--<textarea class="form-control" id="validation-details" name="validation-details" rows="9" placeholder="Share something about yourself"></textarea>-->
+                                                        <!--<label for="validation-details">Details</label>-->
                                                     </div>
                                                 </div>
                                             </div>

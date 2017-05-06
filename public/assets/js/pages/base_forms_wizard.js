@@ -278,14 +278,14 @@ var BaseFormWizard = function() {
                             if (data.success === true) {
                                 swal('Success', data.response, 'success');
                             } else {
-                                
                                 if (data.type === 'ig_added') {
-                                    swal('Oops...', data.response, 'error');
-                                    $current = $current - 1;
-                                    $success = false;
+                                    //swal('Oops...', data.response, 'error');
+                                    //$current = $current - 1;
+                                    //$success = false;
+                                    $success = true;
                                 } else if (data.type === 'checkpoint') {
 //                                    swal('Oops...', data.response, 'error');
-                                    $success = false;
+                                    $success = true;
                                 }
                             }
                         }
