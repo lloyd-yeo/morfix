@@ -262,8 +262,6 @@ var BaseFormWizard = function() {
                 
                 
                 if ($index === 1) {
-                    var $success = true;
-                    
                     var $igUsername = jQuery('#validation-ig-username').val();
                     var $igPassword = jQuery('#validation-ig-password').val();
                     
@@ -280,12 +278,11 @@ var BaseFormWizard = function() {
                                 swal('Success', data.response, 'success');
                             } else {
                                 swal('Oops...', data.response, 'error');
-                                $success = false;
+                                $current = $current - 1;
+                                return false;
                             }
                         }
                     });
-                    
-                    return $success;
                 }
                 
                 
