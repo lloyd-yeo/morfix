@@ -249,6 +249,7 @@ var BaseFormWizard = function() {
 		}
             },
             'onNext': function($tab, $navigation, $index) {
+                var $success = true;
                 var $current    = $index + 1;
                 
                 var $valid = $form2.valid();
@@ -279,12 +280,13 @@ var BaseFormWizard = function() {
                             } else {
                                 swal('Oops...', data.response, 'error');
                                 $current = $current - 1;
-                                return false;
+                                $success = false;
                             }
                         }
                     });
                 }
                 
+                return $success;
                 
             },
             onTabClick: function($tab, $navigation, $index) {
