@@ -249,7 +249,8 @@ var BaseFormWizard = function() {
 		}
             },
             'onNext': function($tab, $navigation, $index) {
-                var $success = true;
+                var $success    = true;
+                
                 var $current    = $index + 1;
                 
                 var $valid = $form2.valid();
@@ -267,6 +268,7 @@ var BaseFormWizard = function() {
                     var $igPassword = jQuery('#validation-ig-password').val();
                     
                     $.ajax({
+                        async: false,
                         type: "POST",
                         url: "profile/ig/add",
                         dataType: "json",
