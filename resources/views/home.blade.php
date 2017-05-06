@@ -196,13 +196,13 @@
                                 <!-- Step Tabs -->
                                 <ul class="nav nav-tabs nav-tabs-alt nav-justified">
                                     <li class="active">
-                                        <a class="inactive" href="#validation-step1" data-toggle="tab">1. Personal</a>
+                                        <a class="inactive" href="#validation-step1" data-toggle="tab">1. Link Instagram</a>
                                     </li>
                                     <li>
-                                        <a class="inactive" href="#validation-step2" data-toggle="tab">2. Details</a>
+                                        <a class="inactive" href="#validation-step2" data-toggle="tab">2. Verification</a>
                                     </li>
                                     <li>
-                                        <a class="inactive" href="#validation-step3" data-toggle="tab">3. Extra</a>
+                                        <a class="inactive" href="#validation-step3" data-toggle="tab">3. Finish</a>
                                     </li>
                                 </ul>
                                 <!-- END Step Tabs -->
@@ -218,24 +218,16 @@
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material">
-                                                        <input class="form-control" type="text" id="validation-firstname" name="validation-firstname" placeholder="Please enter your firstname">
-                                                        <label for="validation-firstname">First Name</label>
+                                                        <input class="form-control" type="text" id="validation-firstname" name="validation-firstname" placeholder="Please enter your Instagram Username/Handle">
+                                                        <label for="validation-firstname">Instagram Username/Handle</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material">
-                                                        <input class="form-control" type="text" id="validation-lastname" name="validation-lastname" placeholder="Please enter your lastname">
-                                                        <label for="validation-lastname">Last Name</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-8 col-sm-offset-2">
-                                                    <div class="form-material">
-                                                        <input class="form-control" type="email" id="validation-email" name="validation-email" placeholder="Please enter your email">
-                                                        <label for="validation-email">Email</label>
+                                                        <input class="form-control" type="text" id="validation-lastname" name="validation-lastname" placeholder="Please enter your Instagram Password">
+                                                        <label for="validation-lastname">Instagram Password</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -298,7 +290,7 @@
                                                 <button class="wizard-prev btn btn-warning" type="button"><i class="fa fa-arrow-circle-o-left"></i> Previous</button>
                                             </div>
                                             <div class="col-xs-6 text-right">
-                                                <button class="wizard-next btn btn-success" type="button">Next <i class="fa fa-arrow-circle-o-right"></i></button>
+                                                <button class="wizard-next btn btn-primary" type="button">Next <i class="fa fa-arrow-circle-o-right"></i></button>
                                                 <button class="wizard-finish btn btn-primary" type="submit"><i class="fa fa-check-circle-o"></i> Submit</button>
                                             </div>
                                         </div>
@@ -309,10 +301,6 @@
                             </div>
                             <!-- END Validation Wizard Wizard -->
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
-                        <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"><i class="fa fa-check"></i> Ok</button>
                     </div>
                 </div>
             </div>

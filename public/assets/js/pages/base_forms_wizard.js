@@ -161,7 +161,7 @@ var BaseFormWizard = function() {
             messages: {
                 'validation-firstname': {
                     required: 'Please enter a firstname',
-                    minlength: 'Your firtname must consist of at least 2 characters'
+                    minlength: 'Your firstname must consist of at least 2 characters'
                 },
                 'validation-lastname': {
                     required: 'Please enter a lastname',
