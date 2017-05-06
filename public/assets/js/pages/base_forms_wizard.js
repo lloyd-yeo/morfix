@@ -265,7 +265,7 @@ var BaseFormWizard = function() {
                     
                     $.ajax({
                         type: "POST",
-                        url: "/profile/ig/add",
+                        url: "profile/ig/add",
                         dataType: "json",
                         data: {
                             'ig-username': $igUsername,
