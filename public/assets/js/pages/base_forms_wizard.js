@@ -261,8 +261,6 @@ var BaseFormWizard = function() {
                     return false;
                 }
                 
-                
-                
                 if ($index === 1) {
                     var $igUsername = jQuery('#validation-ig-username').val();
                     var $igPassword = jQuery('#validation-ig-password').val();
@@ -280,9 +278,15 @@ var BaseFormWizard = function() {
                             if (data.success === true) {
                                 swal('Success', data.response, 'success');
                             } else {
-                                swal('Oops...', data.response, 'error');
-                                $current = $current - 1;
-                                $success = false;
+                                
+                                if (data.type === 'ig_added') {
+                                    swal('Oops...', data.response, 'error');
+                                    $current = $current - 1;
+                                    $success = false;
+                                } else if (data.type === 'checkpoint') {
+//                                    swal('Oops...', data.response, 'error');
+                                    $success = false;
+                                }
                             }
                         }
                     });

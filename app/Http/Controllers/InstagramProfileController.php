@@ -62,7 +62,7 @@ class InstagramProfileController extends Controller {
         try {
 
             if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
-                return Response::json(array("success" => false, 'response' => "This instagram username has already been added!"));
+                return Response::json(array("success" => false, 'type' =>'ig_added', 'response' => "This instagram username has already been added!"));
             }
 
             $instagram->setProxy($proxy->proxy);
@@ -103,7 +103,7 @@ class InstagramProfileController extends Controller {
             return Response::json(array("success" => true, 'response' => "Profile added!"));
             
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-            return Response::json(array("success" => false, 'response' => serialize($checkpt_ex)));
+            return Response::json(array("success" => false, 'type' =>'checkpoint', 'response' => serialize($checkpt_ex)));
             $this->error($checkpt_ex->getMessage());
             DB::connection('mysql_old')->
                     update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
