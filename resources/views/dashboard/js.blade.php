@@ -1,5 +1,4 @@
 <!-- Page Plugins -->
-<script src="{{ asset('assets/js/plugins/slick/slick.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/chartjs/Chart.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 <!-- Page JS Code -->
@@ -12,7 +11,7 @@
 
 <!-- Page JS Code -->
 <script src="{{ asset('assets/js/pages/base_forms_wizard.js') }}"></script>
-
+<script src="{{ asset('assets/js/plugins/slick/slick.min.js') }}"></script>
 <script>
 $.ajaxSetup({
     headers: {
