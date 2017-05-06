@@ -24,7 +24,7 @@
             <div class="font-w700 text-gray-darker animated fadeIn">Pending Commission</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> Total
                 <i class="fa fa-question-circle text-info" style="margin-left: 5px;" data-toggle="tooltip" 
-                       data-placement="top" title="The total accumulated commission that have not been paid out" type="button"></i>
+                       data-placement="top" title="All commissions that hasn't been paid out" type="button"></i>
                 </small></div>
             <span class="h2 text-moneygreen animated flipInX" data-subject="money" data-toggle="countTo"
                   data-decimals="2" data-to="{{ Auth::user()->pending_commission }}"></span>
@@ -33,7 +33,7 @@
             <div class="font-w700 text-gray-darker animated fadeIn">Total Commission</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-credit-card"></i> Paid out
                 <i class="fa fa-question-circle text-info" style="margin-left: 5px;" data-toggle="tooltip" 
-                       data-placement="top" title="The total commissions that Morfix has already paid out to you." type="button"></i>
+                       data-placement="top" title="Total commissions that Morfix has paid out to date." type="button"></i>
                 </small></div>
             <span class="h2 text-moneygreen animated flipInX" 
                   data-subject="money" data-toggle="countTo"
