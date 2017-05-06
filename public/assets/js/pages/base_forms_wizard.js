@@ -156,6 +156,14 @@ var BaseFormWizard = function() {
                 },
                 'validation-terms': {
                     required: true
+                },
+                'validation-ig-username': {
+                    required: true,
+                    minlength: 2
+                },
+                'validation-ig-password': {
+                    required: true,
+                    minlength: 2
                 }
             },
             messages: {
@@ -166,6 +174,12 @@ var BaseFormWizard = function() {
                 'validation-lastname': {
                     required: 'Please enter a lastname',
                     minlength: 'Your lastname must consist of at least 2 characters'
+                },
+                'validation-ig-username': {
+                    required: 'Please enter your Instagram username'
+                },
+                'validation-ig-password': {
+                    required: 'Please enter your Instagram password'
                 },
                 'validation-email': 'Please enter a valid email address',
                 'validation-details': 'Let us know a few thing about yourself',
@@ -235,6 +249,8 @@ var BaseFormWizard = function() {
 		}
             },
             'onNext': function($tab, $navigation, $index) {
+                var $current    = $index + 1;
+                
                 var $valid = $form2.valid();
 
                 if(!$valid) {
@@ -242,6 +258,30 @@ var BaseFormWizard = function() {
 
                     return false;
                 }
+                
+                if ($index === 0) {
+                    var $igUsername = jQuery('.validation-ig-username').val();
+                    var $igPassword = jQuery('.validation-ig-password').val();
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "/profile/ig/add",
+                        dataType: "json",
+                        data: {
+                            'ig-username': $igUsername,
+                            'ig-password': $igPassword
+                        },
+                        success: function (data) {
+                            if (data.success === true) {
+                                swal('Success', data.message, 'success');
+                            } else {
+                                swal('Oops...', data.message, 'error');
+                            }
+                        }
+                    });
+                }
+                
+                
             },
             onTabClick: function($tab, $navigation, $index) {
 		return false;

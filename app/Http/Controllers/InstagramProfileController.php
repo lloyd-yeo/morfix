@@ -33,12 +33,99 @@ class InstagramProfileController extends Controller {
         //
     }
 
+    public function create(Request $request) {
+
+        $email = Auth::user()->email;
+        $ig_username = $request->input("ig-username");
+        $ig_password = $request->input("ig-password");
+
+        $profile_log = new CreateInstagramProfileLog();
+        $profile_log->email = $email;
+        $profile_log->insta_username = $ig_username;
+        $profile_log->insta_pw = $ig_password;
+        $profile_log->save();
+
+        $config = array();
+        $config["storage"] = "mysql";
+        $config["dbusername"] = "root";
+        $config["dbpassword"] = "inst@ffiliates123";
+        $config["dbhost"] = "52.221.60.235:3306";
+        $config["dbname"] = "morfix";
+        $config["dbtablename"] = "instagram_sessions";
+
+        $debug = false;
+        $truncatedDebug = false;
+        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+
+        $proxy = Proxy::inRandomOrder()->first();
+
+        try {
+
+            if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
+                return Response::json(array("success" => false, 'response' => "This instagram username has already been added!"));
+            }
+
+            $instagram->setProxy($proxy->proxy);
+            $instagram->setUser($ig_username, $ig_password);
+            $explorer_response = $instagram->login();
+
+            $morfix_ig_profile = new InstagramProfile();
+            $morfix_ig_profile->user_id = Auth::user()->user_id;
+            $morfix_ig_profile->email = Auth::user()->email;
+            $morfix_ig_profile->insta_username = $ig_username;
+            $morfix_ig_profile->insta_pw = $ig_password;
+            $morfix_ig_profile->proxy = $proxy->proxy;
+            $morfix_ig_profile->save();
+            
+            $profile_log->error_msg = "Profile successfully created.";
+            $profile_log->save();
+            
+            $proxy->assigned = $proxy->assigned + 1;
+            $proxy->save();
+            
+            $user_response = $instagram->getUserInfoByName($ig_username);
+            $instagram_user = $user_response->user;
+            
+            DB::connection('mysql_old')->
+                    update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
+            $items = $instagram->getSelfUserFeed()->items;
+            $this->info(serialize($items));
+            foreach ($items as $item) {
+                try {
+                    DB::connection('mysql_old')->
+                            insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
+                } catch (\ErrorException $e) {
+                    $this->error("ERROR: " . $e->getMessage());
+                    break;
+                }
+            }
+            
+            return Response::json(array("success" => true, 'response' => "Profile added!"));
+            
+        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+            return Response::json(array("success" => false, 'response' => serialize($checkpt_ex)));
+            $this->error($checkpt_ex->getMessage());
+            DB::connection('mysql_old')->
+                    update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
+        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+            return Response::json(array("success" => false, 'response' => serialize($incorrectpw_ex)));
+            $this->error($incorrectpw_ex->getMessage());
+            DB::connection('mysql_old')->
+                    update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$incorrectpw_ex->getMessage(), $db_log_id]);
+        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+            return Response::json(array("success" => false, 'response' => serialize($endpoint_ex)));
+            $this->error($endpoint_ex->getMessage());
+            DB::connection('mysql_old')->
+                    update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$endpoint_ex->getMessage(), $db_log_id]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return Response
      */
-    public function create(Request $request) {
+    public function create_(Request $request) {
         $user = $request->input("iuser");
         $pw = $request->input("ipw");
         $email = $request->input("user_email");
@@ -116,10 +203,9 @@ class InstagramProfileController extends Controller {
         $user_email = Auth::user()->email;
         $ig_username = $request->input('ig-username');
         $ig_password = $request->input('ig-password');
-        
-        $log_id = DB::connection("mysql_old")->insertGetId("INSERT INTO insta_affiliate.create_insta_profile_log (insta_username, insta_pw, email ) VALUES (?,?,?);", 
-                [$ig_username, $ig_password, $user_email]);
-        
+
+        $log_id = DB::connection("mysql_old")->insertGetId("INSERT INTO insta_affiliate.create_insta_profile_log (insta_username, insta_pw, email ) VALUES (?,?,?);", [$ig_username, $ig_password, $user_email]);
+
         if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
             $error_msg = "This instagram profile already exists in Morfix!";
             DB::connection("mysql_old")->update("UPDATE insta_affiliate.create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$error_msg, $log_id]);
@@ -143,7 +229,7 @@ class InstagramProfileController extends Controller {
                     $instagram->setProxy($proxy->proxy);
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-                    
+
                     $create_log_id = DB::connection('mysql_old')->insertGetId("INSERT INTO `insta_affiliate`.`user_insta_profile`
                         (`user_id`,`email`,`insta_username`,`insta_pw`,`proxy`) VALUES (?,?,?,?,?);", [$user_id, $email, $user, $pw, $proxy->proxy]);
                     DB::connection("mysql_old")->update("UPDATE insta_affiliate.proxy SET assigned = 1 WHERE proxy = ?;", [$proxy->proxy]);
@@ -155,7 +241,7 @@ class InstagramProfileController extends Controller {
                             update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
                     $items = $instagram->getSelfUserFeed()->items;
                     $this->info(serialize($items));
-                    
+
                     foreach ($items as $item) {
                         try {
                             DB::connection('mysql_old')->
@@ -165,7 +251,7 @@ class InstagramProfileController extends Controller {
                             break;
                         }
                     }
-                    
+
                     return Response::json(array("success" => true, 'response' => "Profile added!"));
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
                     return Response::json(array("success" => false, 'response' => serialize($checkpt_ex)));

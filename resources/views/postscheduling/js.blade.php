@@ -23,6 +23,5 @@ jQuery(function () {
     
     initValidationMaterial();
     
-    
 });
 </script>

@@ -218,16 +218,16 @@
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material">
-                                                        <input class="form-control" type="text" id="validation-firstname" name="validation-firstname" placeholder="Please enter your Instagram Username/Handle">
-                                                        <label for="validation-firstname">Instagram Username/Handle</label>
+                                                        <input class="form-control" type="text" id="validation-ig-username" name="validation-ig-username" placeholder="Please enter your Instagram Username/Handle">
+                                                        <label for="validation-ig-username">Instagram Username/Handle</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material">
-                                                        <input class="form-control" type="text" id="validation-lastname" name="validation-lastname" placeholder="Please enter your Instagram Password">
-                                                        <label for="validation-lastname">Instagram Password</label>
+                                                        <input class="form-control" type="text" id="validation-ig-password" name="validation-ig-password" placeholder="Please enter your Instagram Password">
+                                                        <label for="validation-ig-password">Instagram Password</label>
                                                     </div>
                                                 </div>
                                             </div>

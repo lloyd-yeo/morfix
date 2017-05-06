@@ -41,6 +41,7 @@ Route::post('/interactions/delete/username/{id}', 'InteractionsController@delete
 Route::post('/interactions/delete/hashtag/{id}', 'InteractionsController@deleteTargetHashtag');
 Route::post('/interactions/save/advancedfollowsettings/{id}', 'InteractionsController@saveAdvancedFollowSettings');
 Route::post('/instagram-profile/add', 'InstagramProfileController@store');
+Route::post('/profile/ig/add', 'InstagramProfileController@create');
 Route::get('/dm', 'DirectMessageController@index');
 Route::get('/dm/templates/{id}', 'DirectMessageTemplatesController@index');
 Route::post('/dm/templates/save/greeting/{id}', 'DirectMessageTemplatesController@saveGreetingTemplate');
