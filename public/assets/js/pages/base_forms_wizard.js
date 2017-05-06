@@ -260,8 +260,9 @@ var BaseFormWizard = function() {
                 }
                 
                 if ($index === 1) {
-                    var $igUsername = jQuery('.validation-ig-username').val();
-                    var $igPassword = jQuery('.validation-ig-password').val();
+                    
+                    var $igUsername = jQuery('#validation-ig-username').val();
+                    var $igPassword = jQuery('#validation-ig-password').val();
                     
                     $.ajax({
                         type: "POST",
