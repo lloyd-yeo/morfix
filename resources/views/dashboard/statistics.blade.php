@@ -52,7 +52,7 @@
 <!-- END Stats -->
 
 <!-- Pop In Modal -->
-<div class="modal fade" id="modal-popin" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modal-addprofile" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-popin">
         <div class="modal-content">
             <div class="block block-themed block-transparent remove-margin-b">
