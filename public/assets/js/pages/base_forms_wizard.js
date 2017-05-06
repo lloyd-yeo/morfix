@@ -259,7 +259,10 @@ var BaseFormWizard = function() {
                     return false;
                 }
                 
+                
+                
                 if ($index === 1) {
+                    var $success = true;
                     
                     var $igUsername = jQuery('#validation-ig-username').val();
                     var $igPassword = jQuery('#validation-ig-password').val();
@@ -274,12 +277,15 @@ var BaseFormWizard = function() {
                         },
                         success: function (data) {
                             if (data.success === true) {
-                                swal('Success', data.message, 'success');
+                                swal('Success', data.response, 'success');
                             } else {
-                                swal('Oops...', data.message, 'error');
+                                swal('Oops...', data.response, 'error');
+                                $success = false;
                             }
                         }
                     });
+                    
+                    return $success;
                 }
                 
                 
