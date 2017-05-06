@@ -259,7 +259,7 @@ var BaseFormWizard = function() {
                     return false;
                 }
                 
-                if ($index === 0) {
+                if ($index === 1) {
                     var $igUsername = jQuery('.validation-ig-username').val();
                     var $igPassword = jQuery('.validation-ig-password').val();
                     
