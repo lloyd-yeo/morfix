@@ -242,7 +242,7 @@
                                                         <center><h1 class='push'>Verification Required</h1></center>
                                                         <p class='lead'>
                                                             Morfix is unable to link-up your profile because of additional verification required from Instagram.
-                                                            To solve this, follow the instructions below:
+                                                            To solve this, follow the instructions below (3 mins):
                                                         </p>
                                                         <center><h4 class='push'>1. Login to Instagram with your account</h4></center>
                                                         <p>
@@ -262,6 +262,20 @@
                                                             You will now be presented with something like this:
                                                         </p>
                                                         <center><img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" style="width: 70%;" alt="It was me"></center>
+                                                        <p>
+                                                            Click "It was me" & then press "Ok".
+                                                            After that browse to your profile's page & switch back to Morfix.
+                                                        </p>
+                                                        <center><h4 class='push'>4. Retry adding</h4></center>
+                                                        <div>
+                                                            <center><button class="btn btn-primary" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
+                                                        </div>
+                                                        <p>
+                                                            Depending on whether your account gets added or not.<br/>
+                                                            Repeat the process from Step 3.<br/>
+                                                            Try for up to a total of 10 times & if you still can't add, do contact live chat on the bottom right hand corner.
+                                                        </p>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
