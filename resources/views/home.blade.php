@@ -239,7 +239,7 @@
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material">
-                                                        <center><h1 class='push'>Verification Required</h1></center>
+                                                        <center><h1 class='push text-modern'><i class='fa fa-info-circle'></i> Verification Required</h1></center>
                                                         <p class='lead'>
                                                             Morfix is unable to link-up your profile because of additional verification required from Instagram.
                                                             To solve this, follow the instructions below (3 mins):
@@ -254,7 +254,7 @@
                                                             <center><button class="btn btn-primary" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
                                                         </div>
                                                         <br/>
-                                                        <p class='text-warning text-center'>
+                                                        <p class='text-danger text-center'>
                                                             <b>It will fail again! Do not worry.</b>
                                                         </p>
                                                         <center><h4 class='push'>3. Verify "It was me"</h4></center>
