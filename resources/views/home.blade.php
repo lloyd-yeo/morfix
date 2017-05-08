@@ -261,7 +261,7 @@
                                                             Wait for the previous step to fail then switch back to Instagram & refresh the page.
                                                             You will now be presented with something like this:
                                                         </p>
-                                                        <img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" style="width: 100%;" alt="It was me">
+                                                        <center><img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" style="width: 70%;" alt="It was me"></center>
                                                     </div>
                                                 </div>
                                             </div>
