@@ -253,7 +253,7 @@
                                                         <div>
                                                             <center><button class="btn btn-primary" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
                                                         </div>
-                                                        <p class='lead text-warning text-center'>
+                                                        <p class='text-warning text-center'>
                                                             <b>It will fail again! Do not worry.</b>
                                                         </p>
                                                         <center><h4 class='push'>3. Verify "It was me"</h4></center>
