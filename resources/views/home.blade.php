@@ -245,23 +245,23 @@
                                                             To solve this, follow the instructions below:
                                                         </p>
                                                         <center><h3 class='push'>1. Login to Instagram with your account</h3></center>
-                                                        <p class='lead'>
-                                                            Go to <a href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
+                                                        <p>
+                                                            Go to <a target='_blank' href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
                                                             Leave the page on for now & go back to Morfix.
                                                         </p>
                                                         <center><h3 class='push'>2. Retry adding</h3></center>
                                                         <div>
-                                                            <button class="btn btn-primary" type="button"><i class="fa fa-refresh"></i> Retry</button>
+                                                            <center><button class="btn btn-primary" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
                                                         </div>
-                                                        <p class='lead text-warning'>
+                                                        <p class='lead text-warning text-center'>
                                                             <b>It will fail again! Do not worry.</b>
                                                         </p>
                                                         <center><h3 class='push'>3. Verify "It was me"</h3></center>
-                                                        <p class='lead'>
+                                                        <p>
                                                             Wait for the previous step to fail then switch back to Instagram & refresh the page.
                                                             You will now be presented with something like this:
                                                         </p>
-                                                        <img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" alt="It was me">
+                                                        <img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" style="width: 100%;" alt="It was me">
                                                     </div>
                                                 </div>
                                             </div>
