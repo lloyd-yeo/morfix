@@ -244,52 +244,24 @@
                                                             Morfix is unable to link-up your profile because of additional verification required from Instagram.
                                                             To solve this, follow the instructions below:
                                                         </p>
-                                                        
-                                                        <!-- Avatars -->
-                                                        <div class="block">
-                                                            <div class="block-header">
-                                                                <h3 class="block-title">Avatars</h3>
-                                                            </div>
-                                                            <div class="block-content">
-                                                                <!-- Slider with Avatars -->
-                                                                <div class="js-slider text-center" data-slider-dots="true" data-slider-arrows="true">
-                                                                    <div>
-                                                                        <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
-                                                                        <div class="push-10-t font-w600">Denise Watson</div>
-                                                                        <div class="font-s13 text-muted">Web Designer</div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <img class="img-avatar" src="assets/img/avatars/avatar5.jpg" alt="">
-                                                                        <div class="push-10-t font-w600">Judy Alvarez</div>
-                                                                        <div class="font-s13 text-muted">Font Designer</div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <img class="img-avatar" src="assets/img/avatars/avatar4.jpg" alt="">
-                                                                        <div class="push-10-t font-w600">Amber Walker</div>
-                                                                        <div class="font-s13 text-muted">Artist</div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <img class="img-avatar" src="assets/img/avatars/avatar3.jpg" alt="">
-                                                                        <div class="push-10-t font-w600">Amber Walker</div>
-                                                                        <div class="font-s13 text-muted">Graphic Designer</div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <img class="img-avatar" src="assets/img/avatars/avatar2.jpg" alt="">
-                                                                        <div class="push-10-t font-w600">Ann Parker</div>
-                                                                        <div class="font-s13 text-muted">Photographer</div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <img class="img-avatar" src="assets/img/avatars/avatar1.jpg" alt="">
-                                                                        <div class="push-10-t font-w600">Tiffany Kim</div>
-                                                                        <div class="font-s13 text-muted">Web Developer</div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- END Slider with Avatars -->
-                                                            </div>
+                                                        <center><h3 class='push'>1. Login to Instagram with your account</h3></center>
+                                                        <p class='lead'>
+                                                            Go to <a href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
+                                                            Leave the page on for now & go back to Morfix.
+                                                        </p>
+                                                        <center><h3 class='push'>2. Retry adding</h3></center>
+                                                        <div>
+                                                            <button class="btn btn-primary" type="button"><i class="fa fa-refresh"></i> Retry</button>
                                                         </div>
-                                                        <!-- END Avatars -->
-                                                        <!--<textarea class="form-control" id="validation-details" name="validation-details" rows="9" placeholder="Share something about yourself"></textarea>-->
-                                                        <!--<label for="validation-details">Details</label>-->
+                                                        <p class='lead text-warning'>
+                                                            <b>It will fail again! Do not worry.</b>
+                                                        </p>
+                                                        <center><h3 class='push'>3. Verify "It was me"</h3></center>
+                                                        <p class='lead'>
+                                                            Wait for the previous step to fail then switch back to Instagram & refresh the page.
+                                                            You will now be presented with something like this:
+                                                        </p>
+                                                        <img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" alt="It was me">
                                                     </div>
                                                 </div>
                                             </div>
