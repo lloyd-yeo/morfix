@@ -244,19 +244,19 @@
                                                             Morfix is unable to link-up your profile because of additional verification required from Instagram.
                                                             To solve this, follow the instructions below:
                                                         </p>
-                                                        <center><h3 class='push'>1. Login to Instagram with your account</h3></center>
+                                                        <center><h4 class='push'>1. Login to Instagram with your account</h4></center>
                                                         <p>
                                                             Go to <a target='_blank' href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
                                                             Leave the page on for now & go back to Morfix.
                                                         </p>
-                                                        <center><h3 class='push'>2. Retry adding</h3></center>
+                                                        <center><h4 class='push'>2. Retry adding</h4></center>
                                                         <div>
                                                             <center><button class="btn btn-primary" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
                                                         </div>
                                                         <p class='lead text-warning text-center'>
                                                             <b>It will fail again! Do not worry.</b>
                                                         </p>
-                                                        <center><h3 class='push'>3. Verify "It was me"</h3></center>
+                                                        <center><h4 class='push'>3. Verify "It was me"</h4></center>
                                                         <p>
                                                             Wait for the previous step to fail then switch back to Instagram & refresh the page.
                                                             You will now be presented with something like this:
