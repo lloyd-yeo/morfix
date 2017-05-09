@@ -74,9 +74,11 @@
                 <div class="block-content block-content-full">
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
-                            <p class="font-w500 push-15 font-s36"><i class="fa fa-thumbs-up"></i> 
-                               Use your affiliate links at the top of this page to promote MorfiX and start earning!
+                            <p class="font-w300 push-15"><i class="fa fa-info-circle"></i> 
+                                Use the links below to promote MorfiX!<br/>
+                                Our system will track your referrals in real-time and track your affiliate commissions earned. 
                             </p>
+                            <p>You automatically <b>EARN</b> when users sign up using your affiliate link and upgrade to any of our premium plans!</p>
                         </div>
                     </div>
                     <table class="table table-hover">
@@ -102,11 +104,9 @@
         <div class="row font-s13">
             <div class="col-lg-12">
                 <div class="alert alert-success alert-dismissable">
-                    <p class="font-w300 push-15"><i class="fa fa-info-circle"></i> 
-                        Use the links below to promote MorfiX!<br/>
-                        Our system will track your referrals in real-time and track your affiliate commissions earned. 
+                    <p class="font-w500 push-15" style="font-size: 24px;"><i class="fa fa-thumbs-up"></i> 
+                        Use your affiliate links at the top of this page to promote MorfiX and start earning!
                     </p>
-                    <p>You automatically <b>EARN</b> when users sign up using your affiliate link and upgrade to any of our premium plans!</p>
                 </div>
             </div>
         </div>
