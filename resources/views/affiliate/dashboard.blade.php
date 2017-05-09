@@ -75,10 +75,10 @@
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <h3 class="font-w300 push-15"><i class="fa fa-info"></i> 
+                            <h4 class="font-w300 push-15"><i class="fa fa-info-circle"></i> 
                                 Use the links below to promote MorfiX!<br/>
                                 Our system will track your referrals in real-time and track your affiliate commissions earned. 
-                            </h3>
+                            </h4>
                             <p>You automatically <b>EARN</b> when users sign up using your affiliate link and upgrade to any of our premium plans!</p>
                         </div>
                     </div>
