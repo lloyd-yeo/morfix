@@ -30,10 +30,8 @@ class AffiliateController extends Controller
                                 AND charge_refunded = 0
                                 AND NOW() >= start_date
                                 AND NOW() <= expiry_date;', [Auth::user()->email]);
-        $active_users_count = $active_users->count();
         return view('affiliate.dashboard', [
             'active_users' => $active_users,
-            'active_users_count' => $active_users_count,
         ]);
     }
 }
