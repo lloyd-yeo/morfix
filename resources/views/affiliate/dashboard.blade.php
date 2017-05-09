@@ -71,7 +71,7 @@
                     </ul>
                     <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-link"></i> Referral Links</h2>
                 </div>
-                <div class="block-content block-content-full block-content-narrow">
+                <div class="block-content block-content-full">
                     <div class="col-lg-12">
                         <div class="alert alert-info alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
