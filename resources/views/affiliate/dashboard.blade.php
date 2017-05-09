@@ -85,8 +85,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width: 65%;"><i class="fa fa-filter"></i> Funnel</th>
-                                <th class="text-center" style="width: 35%;"><i class="fa fa-link"></i> Referral Link</th>
+                                <th class="" style="width: 65%;"><i class="fa fa-filter"></i> Funnel</th>
+                                <th class="" style="width: 35%;"><i class="fa fa-link"></i> Referral Link</th>
                             </tr>
                         </thead>
                         <tbody>

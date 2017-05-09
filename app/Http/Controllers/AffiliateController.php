@@ -30,6 +30,8 @@ class AffiliateController extends Controller
                                 AND charge_refunded = 0
                                 AND NOW() >= start_date
                                 AND NOW() <= expiry_date;', [Auth::user()->email]);
+        $user_id = Auth::user()->user_id;
+        $referral_links = DB::connection('mysql_old')->select('SELECT * FROM yourls_url WHERE url LIKE "%redir=' . $user_id . '&%";');
         return view('affiliate.dashboard', [
             'active_users' => $active_users,
         ]);
