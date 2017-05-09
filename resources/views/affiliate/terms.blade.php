@@ -1,32 +1,32 @@
 <div class="col-lg-12">
-    <ul class='list-unstyled'>
-        <li style="list-style: circle">
+    <ul>
+        <li>
             <span style="font-size: 16px; font-weight: 300;">
                 Affiliates are paid monthly on the 25th of each month for the previous month's commissions
             </span>
         </li>
-        <li style="list-style: circle">
+        <li>
             <span style="font-size: 16px; font-weight: 300;">
                 Payable Commission are commissions that will be paid on the 25th of this month.
             </span>
         </li>
-        <li style="list-style: circle">
+        <li>
             <span style="font-size: 16px; font-weight: 300;">
                 Pending Commission are commissions are the consolidation of all commissions pending pay-out.
             </span>
         </li>
-        <li style="list-style: circle">
+        <li>
             <span style="font-size: 16px; font-weight: 300;">If total commissions earned is less than $50.00, payment will accrue until $50.00 minimum payment threshold is exceeded
                 <br/><span style="font-size: 13px; font-weight: 900;">For example: Referral commissions earned 1/1-1/31 paid on 2/25</span>
             </span>
         </li>
-        <li style="list-style: circle">
+        <li>
             <span style="font-size: 16px; font-weight: 300;">No ceiling or limit to earning potential</span>
         </li>
-        <li style="list-style: circle">
+        <li>
             <span style="font-size: 16px; font-weight: 300;">Earn monthly residual income</span>
         </li>
-        <li style="list-style: circle">
+        <li>
             <span style="font-size: 16px; font-weight: 300;">Commissions are paid by PayPal (<a target="_blank" href="https://www.paypal.com/us/webapps/mpp/account-selection">PayPal Signup</a>)</span>
         </li>   
     </ul>
@@ -170,7 +170,7 @@
                         <tr>
                             <td align="center" colspan="2">
                                 <b>Applicable to:</b><br/>
-                                <ul style="padding-left: 0px;">
+                                <ul class="list-unstyled" style="padding-left: 0px;">
                                     <li>Business affiliates earn $50/month for every $97/month subscriber referred</li>
                                     <li>Mastermind affiliates earn $50/month for every $97/month subscriber referred</li>
                                     <li>$500/year for every $997/year add-on subscriber referred.</li>
@@ -201,14 +201,14 @@
                     <tbody>
                         <tr>
                             <td align="center" colspan="2">
-                                <ul style="padding-left: 0px;">
+                                <ul class="list-unstyled" style="padding-left: 0px;">
                                     <li><b>$97/month referred</b></li>
                                     <li>10 Referrals = $500/month</li>
                                     <li>100 Referrals = $5,000/month</li>
                                     <li>1,000 Referrals = $50,000/month</li>
                                 </ul>
                                 <br/>
-                                <ul style="padding-left: 0px;">
+                                <ul class="list-unstyled" style="padding-left: 0px;">
                                     <li><b>$997/yearly referred</b></li>
                                     <li>10 Referrals = $5,000/yearly</li>
                                     <li>100 Referrals = $50,000/yearly</li>
