@@ -217,7 +217,7 @@
                                         <div class="tab-pane fade fade-right in push-30-t push-50 active" id="validation-step1">
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
-                                                    <div class="form-material">
+                                                    <div class="form-material form-material-primary">
                                                         <input class="form-control" type="text" id="validation-ig-username" name="validation-ig-username" placeholder="Please enter your Instagram Username/Handle">
                                                         <label for="validation-ig-username">Instagram Username/Handle</label>
                                                     </div>
@@ -225,7 +225,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-8 col-sm-offset-2">
-                                                    <div class="form-material">
+                                                    <div class="form-material form-material-primary">
                                                         <input class="form-control" type="text" id="validation-ig-password" name="validation-ig-password" placeholder="Please enter your Instagram Password">
                                                         <label for="validation-ig-password">Instagram Password</label>
                                                     </div>
