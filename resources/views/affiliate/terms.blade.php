@@ -1,5 +1,5 @@
 <div class="col-lg-12">
-    <ul>
+    <ul class='list-unstyled'>
         <li style="list-style: circle">
             <span style="font-size: 16px; font-weight: 300;">
                 Affiliates are paid monthly on the 25th of each month for the previous month's commissions
@@ -51,7 +51,7 @@
                             <td align="center" colspan="2">
                                 <b>Applicable to:</b>
                                 <br/>
-                                <ul style="padding-left: 0px;">
+                                <ul class='list-unstyled' style="padding-left: 0px;">
                                     <li>For $37/monthly affiliates earn $20/month for every $37/monthly subscriber referred</li>
                                 </ul>
                             </td>
@@ -76,7 +76,7 @@
                     <tbody>
                         <tr>
                             <td align="center" colspan="2">
-                                <ul style="padding-left: 0px;">
+                                <ul class="list-unstyled" style="padding-left: 0px;">
                                     <li><b>$20/month referred</b></li>
                                     <li>10 Referrals = $200/month</li>
                                     <li>100 Referrals = $2,000/month</li>
@@ -108,7 +108,7 @@
                         <tr>
                             <td align="center" colspan="2">
                                 <b>Applicable to:</b><br/>
-                                <ul style="padding-left: 0px;">
+                                <ul class="list-unstyled" style="padding-left: 0px;">
                                     <li>$370/yearly (PRO) affiliates earn $20 for every $37/month subscriber referred</li>
                                     <li>$200/yearly for every $370/yearly subscriber (PRO) referred</li>
                                 </ul>
@@ -138,7 +138,7 @@
                     <tbody>
                         <tr>
                             <td align="center" colspan="2">
-                                <ul style="padding-left: 0px;">
+                                <ul class="list-unstyled" style="padding-left: 0px;">
                                     <li><b>$200/yearly referred</b></li>
                                     <li>10 Referrals = $2,000/yearly</li>
                                     <li>100 Referrals = $20,000/yearly</li>
