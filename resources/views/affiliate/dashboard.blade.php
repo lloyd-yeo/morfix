@@ -92,7 +92,7 @@
                         <tbody>
                             @foreach ($referral_links as $referral_link)
                             <tr>
-                                <td>{{ $referral_link->name }}</td>
+                                <td>{{ $referral_link->title }}</td>
                                 <td><a href="http://morfix.co/r/{{ $referral_link->keyword }}">http://morfix.co/r/{{ $referral_link->keyword }}</a></td>
                             </tr>
                             @endforeach
