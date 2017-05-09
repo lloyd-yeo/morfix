@@ -119,35 +119,10 @@
                             <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
                         </li>
                     </ul>
-                    <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-link"></i> Referral Links</h2>
+                    <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-handshake-o"></i> Affiliate Payment Terms</h2>
                 </div>
                 <div class="block-content block-content-full">
-                    <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                            <p class="font-w300 push-15"><i class="fa fa-info-circle"></i> 
-                                Use the links below to promote MorfiX!<br/>
-                                Our system will track your referrals in real-time and track your affiliate commissions earned. 
-                            </p>
-                            <p>You automatically <b>EARN</b> when users sign up using your affiliate link and upgrade to any of our premium plans!</p>
-                        </div>
-                    </div>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="" style="width: 65%;"><i class="fa fa-filter"></i> Funnel</th>
-                                <th class="" style="width: 35%;"><i class="fa fa-link"></i> Referral Link</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($referral_links as $referral_link)
-                            <tr>
-                                <td>{{ $referral_link->title }}</td>
-                                <td><a href="http://morfix.co/r/{{ $referral_link->keyword }}">http://morfix.co/r/{{ $referral_link->keyword }}</a></td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @include('affiliate.terms');
                 </div>
             </div>
         </div>
