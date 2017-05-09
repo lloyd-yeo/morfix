@@ -42,7 +42,9 @@
                 <a class="block block-link-hover3 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full text-modern">
                         <div class="h1 font-w700" data-subject="money" data-toggle="countTo"
-                  data-decimals="2" data-to="{{ Auth::user()->all_time_commission }}"></div>
+                            data-decimals="2" data-to="{{ Auth::user()->all_time_commission }}">
+                            $ {{ number_format(Auth::user()->all_time_commission, 2, '.', ',')  }}
+                        </div>
                     </div>
                     <div class="block-content block-content-full block-content-mini bg-gray-lighter text-muted font-w600">Total Commission</div>
                 </a>
