@@ -73,7 +73,7 @@
                 </div>
                 <div class="block-content block-content-full">
                     <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
+                        <div class="alert alert-info alert-dismissable" style="font-size: 16px;">
                             <p class="font-w300 push-15"><i class="fa fa-info-circle"></i> 
                                 Use the links below to promote MorfiX!<br/>
                                 Our system will track your referrals in real-time and track your affiliate commissions earned. 
