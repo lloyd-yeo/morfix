@@ -302,7 +302,7 @@
                                         <div data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                             <p class="nice-copy" id="hashtags-well-inner">
                                                 @foreach ($user_ig_target_hashtags as $target_hashtag)
-                                                <button class="btn btn-primary btn-sm btn-rounded remove-hashtag-btn push-5-r push-10" type="button" data-id="{{ $target_hashtag->id }}">{{ $target_hashtag->target_hashtag }}<i class="fa fa-times"></i> </button>
+                                                <button class="btn btn-primary btn-sm btn-rounded remove-hashtag-btn push-5-r push-10" type="button" data-id="{{ $target_hashtag->id }}">{{ $target_hashtag->hashtag }}<i class="fa fa-times"></i> </button>
                                                 @endforeach
                                             </p>
                                         </div>

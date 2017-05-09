@@ -52,3 +52,4 @@ Route::post('/legacy/instagram-profile/add', 'LegacyInstagramProfileController@c
 Route::get('/post-scheduling', 'PostSchedulingController@index');
 Route::get('/post-scheduling/schedule/{id}', 'PostSchedulingController@gallery');
 Route::post('stripe/webhook','WebhookController@handleWebhook');
+Route::get('/affiliate', 'AffiliateController@index');
