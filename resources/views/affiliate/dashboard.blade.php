@@ -69,7 +69,7 @@
                             <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
                         </li>
                     </ul>
-                    <h2 class="block-title h3 font-w600 push-30-t push text-modern text-center"><i class="fa fa-link"></i> Referral Links</h2>
+                    <h2 class="h3 font-w600 push-30-t push text-modern text-center block-title "><i class="fa fa-link"></i> Referral Links</h2>
                 </div>
                 <div class="block-content block-content-full block-content-narrow">
                     <!-- Introduction -->
