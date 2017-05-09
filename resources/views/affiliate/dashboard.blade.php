@@ -65,8 +65,9 @@
             <div class="block">
                 <div class="block-content block-content-full block-content-narrow">
                     <!-- Introduction -->
+                    <h2 class="h3 font-w600 push-30-t push"><i class="fa fa-link"></i> Referral Links</h2>
                     <div id="faq1" class="panel-group">
-                        <div class="panel panel-default panel-primary">
+                        <div class="panel panel-default panel-modern">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
                                     <a class="accordion-toggle text-center" data-toggle="collapse" data-parent="#faq1" href="#faq1_q1">My Referral Links</a>
