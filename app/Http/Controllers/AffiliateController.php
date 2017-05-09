@@ -34,6 +34,7 @@ class AffiliateController extends Controller
         $referral_links = DB::connection('mysql_old')->select('SELECT * FROM yourls_url WHERE url LIKE "%redir=' . $user_id . '&%";');
         return view('affiliate.dashboard', [
             'active_users' => $active_users,
+            'referral_links' => $referral_links,
         ]);
     }
 }
