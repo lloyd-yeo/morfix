@@ -67,3 +67,7 @@
     </div>
 </main>
 @endsection
+
+@section('js')
+@include('dashboard.js')
+@endsection
