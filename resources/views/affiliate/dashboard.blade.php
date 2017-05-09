@@ -62,10 +62,17 @@
         
         
         <div class="row font-s13">
-            <div class="block">
+            <div class="block" id="affiliate-link-block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                        </li>
+                    </ul>
+                    <h2 class="block-title h3 font-w600 push-30-t push text-modern text-center"><i class="fa fa-link"></i> Referral Links</h2>
+                </div>
                 <div class="block-content block-content-full block-content-narrow">
                     <!-- Introduction -->
-                    <h2 class="h3 font-w600 push-30-t push text-modern text-center"><i class="fa fa-link"></i> Referral Links</h2>
                     <div id="faq1" class="panel-group">
                         <div class="panel panel-default panel-modern">
                             <div class="panel-heading">
