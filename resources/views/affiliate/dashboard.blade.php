@@ -85,10 +85,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center" style="width: 50px;">#</th>
-                                <th>Name</th>
-                                <th class="hidden-xs" style="width: 15%;">Access</th>
-                                <th class="text-center" style="width: 100px;">Actions</th>
+                                <th class="text-center" style="width: 65%;"><i class="fa fa-filter"></i> Funnel</th>
+                                <th class="text-center" style="width: 35%;"><i class="fa fa-link"></i> Referral Link</th>
                             </tr>
                         </thead>
                         <tbody>
