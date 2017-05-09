@@ -54,7 +54,7 @@
                     <div class="block-content block-content-full text-modern">
                         <div class="h1 font-w700" data-toggle="countTo" data-to="57890"></div>
                     </div>
-                    <div class="block-content block-content-full block-content-mini bg-gray-lighter text-muted font-w600">This Month</div>
+                    <div class="block-content block-content-full block-content-mini bg-gray-lighter text-muted font-w600">Active Affiliates</div>
                 </a>
             </div>
         </div>
