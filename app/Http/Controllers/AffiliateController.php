@@ -12,6 +12,7 @@ class AffiliateController extends Controller
      * @return View
      */
     public function index(Request $request) {
+        
         return view('affiliate.dashboard', [
             
         ]);
