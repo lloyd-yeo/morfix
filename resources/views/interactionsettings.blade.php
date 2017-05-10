@@ -271,7 +271,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                     </div>
-                    <div class="block-content" id="my-comments-block" style="height: 350px;">
+                    <div class="block-content" id="my-comments-block" style="height: 330px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="comments-well" class="block">
@@ -289,7 +289,7 @@
                                 </div>
                                 <form class="form-horizontal" onsubmit="return false;">
                                     <div class="form-group">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="input-group">
                                                 <input class="form-control" type="text" id="comments-text" 
                                                        name="comment-tag" placeholder="Enter your comments here...">
