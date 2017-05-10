@@ -77,9 +77,9 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto like function has been turned <b>off</b>.";
             }
-            return Response::json(array("success" => true, 'message' => $response));
+            return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_like));
         } else {
-            return Response::json(array("success" => false, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response, 'status' => $instagram_profile->auto_like));
         }
     }
 
@@ -93,9 +93,9 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto comment function has been turned <b>off</b>.";
             }
-            return Response::json(array("success" => true, 'message' => $response));
+            return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_comment));
         } else {
-            return Response::json(array("success" => false, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response, 'status' => $instagram_profile->auto_comment));
         }
     }
 
@@ -109,9 +109,9 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto follow function has been turned <b>off</b>.";
             }
-            return Response::json(array("success" => true, 'message' => $response));
+            return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_follow));
         } else {
-            return Response::json(array("success" => false, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response, 'status' => $instagram_profile->auto_follow));
         }
     }
 
@@ -125,9 +125,9 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto unfollow function has been turned <b>off</b>.";
             }
-            return Response::json(array("success" => true, 'message' => $response));
+            return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_unfollow));
         } else {
-            return Response::json(array("success" => false, 'message' => $response));
+            return Response::json(array("success" => false, 'message' => $response, 'status' => $instagram_profile->auto_unfollow));
         }
     }
 

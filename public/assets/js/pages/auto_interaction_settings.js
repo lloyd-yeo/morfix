@@ -165,7 +165,7 @@ var initValidationMaterial = function(){
 };
 
 
-function toggleInteraction(url) {
+function toggleInteraction(url, spinnerElem) {
     $.ajax({
         type: "POST",
         url: url,
@@ -176,6 +176,11 @@ function toggleInteraction(url) {
         success: function (data) {
             if (data.success === true) {
                 swal('Success', data.message, 'success');
+                if (data.status === 1) {
+                    spinnerElem.addClass("fa-spin");
+                } else {
+                    spinnerElem.removeClass("fa-spin");
+                }
             } else {
                 swal('Oops...', data.message, 'error');
             }
@@ -206,28 +211,28 @@ $(".toggle-like-btn").on("click", function () {
     var url = "like/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url);
+    toggleInteraction(url, jQuery('#like-spinner'));
 });
 
 $(".toggle-comment-btn").on("click", function () {
     var url = "comment/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url);
+    toggleInteraction(url, jQuery('#comment-spinner'));
 });
 
 $(".toggle-follow-btn").on("click", function () {
     var url = "follow/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url);
+    toggleInteraction(url, jQuery('#follow-spinner'));
 });
 
 $(".toggle-unfollow-btn").on("click", function () {
     var url = "unfollow/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url);
+    toggleInteraction(url, jQuery('#unfollow-spinner'));
 });
 
 $(".toggle-niche").on('change', function () {
