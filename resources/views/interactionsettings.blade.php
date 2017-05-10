@@ -297,6 +297,11 @@
                                                     <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
+                                            <div class="help-block text-left">
+                                                <b>How to enter emojis</b>
+                                                <br/>
+                                                Press the ":" button & select from the dropdown list your desired Emoji.
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
