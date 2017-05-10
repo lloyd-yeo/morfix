@@ -136,46 +136,6 @@
             @endforeach
         </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <!-- Material (floating) Login -->
-                <div class="block block-themed">
-                    <div class="block-header bg-primary">
-                        <h3 class="block-title"><i class="fa fa-plus"></i> Add a new Instagram Profile</h3>
-                    </div>
-                    <div class="block-content">
-                        <form class="form-horizontal push-10-t push-10" method="post" id="add-instagram-profile-form">
-                            <input type="hidden" name="user-id" value="{{ Auth::user()->id }}"/> 
-                            <input type="hidden" name="user-email" value="{{ Auth::user()->email }}"/> 
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="login3-username" name="ig-username">
-                                        <label for="login3-username">Instagram Username</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <div class="form-material floating">
-                                        <input class="form-control" type="text" id="login3-password" name="ig-password">
-                                        <label for="login3-password">Instagram Password</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-arrow-right push-5-r"></i> Add Profile</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- END Material (floating) Login -->
-            </div>
-        </div>
-
-
         <!-- Add Instagram Profile Modal -->
         <div class="modal fade" id="modal-addprofile" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-popin modal-lg">
