@@ -23,6 +23,37 @@ $.ajaxSetup({
 jQuery(function () {
     // Init page helpers (Slick Slider plugin, Appear, CountTo)
     App.initHelpers(['slick', 'appear', 'appear-countTo']);
+    
+    $(".btn-retry").on("click", function(){
+        var $igUsername = jQuery('#validation-ig-username').val();
+        var $igPassword = jQuery('#validation-ig-password').val();
+        
+        $.ajax({
+                async: false,
+                type: "POST",
+                url: "profile/ig/add",
+                dataType: "json",
+                data: {
+                    'ig-username': $igUsername,
+                    'ig-password': $igPassword
+                },
+                success: function (data) {
+                    if (data.success === true) {
+                        swal('Success', data.response, 'success');
+                        jQuery('#modal-addprofile').modal('hide');
+                    } else {
+                        if (data.type === 'ig_added') {
+                            swal('Oops...', data.response, 'error');
+                        } else if (data.type === 'checkpoint') {
+                            swal('Oops...', data.response, 'error');
+                        } else {
+                           swal('Oops...', data.response, 'error');
+                        }
+                    }
+                }
+            });
+        
+    });
 });
 
 $(".remove-profile-btn").on("click");
