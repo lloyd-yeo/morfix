@@ -188,13 +188,13 @@
                                 @endif
                                 <td class="font-w600">{{ $referral->email }}</td>
                                 @if ($referral->user_tier == 2)
-                                <td class="hidden-xs">Premium</td>
+                                <td>Premium</td>
                                 @elseif ($referral->user_tier == 3)
-                                <td class="hidden-xs">Pro</td>
+                                <td>Pro</td>
                                 @elseif ($referral->user_tier == 4)
-                                <td class="hidden-xs">Business</td>
+                                <td>Business</td>
                                 @elseif ($referral->user_tier == 5)
-                                <td class="hidden-xs">Mastermind</td>
+                                <td>Mastermind</td>
                                 @endif
                             </tr>
                             @endforeach
