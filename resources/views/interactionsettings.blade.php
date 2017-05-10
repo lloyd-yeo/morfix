@@ -102,17 +102,22 @@
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_like == 1)
                                     <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> Like</span>
+                                    <i class="fa fa-spin fa-refresh text-modern" id="like-spinner"></i>
                                     @else
                                     <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> Like</span>
+                                    <i class="fa fa-refresh text-modern" id="like-spinner"></i>
                                     @endif
+                                    
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_comment == 1)
                                     <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> Comment</span>
+                                    <i class="fa fa-spin fa-refresh text-modern" id="comment-spinner"></i>
                                     @else
                                     <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> Comment</span>
+                                    <i class="fa fa-refresh text-modern" id="comment-spinner"></i>
                                     @endif
                                 </label>
                             </div>
@@ -120,8 +125,10 @@
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_follow == 1)
                                     <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> Follow</span>
+                                    <i class="fa fa-spin fa-refresh text-modern" id="follow-spinner"></i>
                                     @else
                                     <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> Follow</span>
+                                    <i class="fa fa-refresh text-modern" id="follow-spinner"></i>
                                     @endif
                                 </label>
                             </div>
@@ -129,8 +136,10 @@
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_follow == 1)
                                     <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> Unfollow</span>
+                                    <i class="fa fa-spin fa-refresh text-modern" id="unfollow-spinner"></i>
                                     @else
                                     <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> Unfollow</span>
+                                    <i class="fafa-refresh text-modern" id="unfollow-spinner"></i>
                                     @endif
                                 </label>
                             </div>
