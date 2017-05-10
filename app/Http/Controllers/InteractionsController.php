@@ -90,6 +90,10 @@ class InteractionsController extends Controller {
             'comments_done' => $comments_done,
             'follows_done' => $follows_done,
             'unfollows_done' => $unfollows_done,
+            'likes_done_today' => $likes_done_today,
+            'comments_done_today' => $comments_done_today,
+            'follows_done_today' => $follows_done_today,
+            'unfollows_done_today' => $unfollows_done_today,
         ]);
     }
 
