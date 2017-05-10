@@ -52,22 +52,22 @@
                         <div class="row items-push">
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> {{ $likes_done }} Like <span class="text-green">(<i class="fa fa-caret-up"></i> {{ $likes_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> {{ $likes_done }} Like <span class="text-success">(<i class="fa fa-caret-up"></i> {{ $likes_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-green">(<i class="fa fa-caret-up"></i> {{ $comments_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-success">(<i class="fa fa-caret-up"></i> {{ $comments_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow <span class="text-green">(<i class="fa fa-caret-up"></i> {{ $follows_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow <span class="text-success">(<i class="fa fa-caret-up"></i> {{ $follows_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow <span class="text-green">(<i class="fa fa-caret-up"></i> {{ $unfollows_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow <span class="text-success">(<i class="fa fa-caret-up"></i> {{ $unfollows_done_today }})</span></span>
                                 </label>
                             </div>
 <!--                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
