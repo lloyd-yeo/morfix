@@ -52,7 +52,7 @@
                         <div class="row items-push">
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> {{ $likes_done }} Like <span class="text-success">(<i class="fa fa-angle-up"></i> {{ $likes_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> {{ $likes_done }} Like <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $likes_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
