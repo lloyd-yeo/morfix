@@ -181,7 +181,7 @@
             <div class="modal-dialog modal-dialog-popin modal-lg">
                 <div class="modal-content">
                     <div class="block block-themed block-transparent remove-margin-b">
-                        <div class="block-header bg-modern-light">
+                        <div class="block-header bg-modern-dark">
                             <ul class="block-options">
                                 <li>
                                     <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
