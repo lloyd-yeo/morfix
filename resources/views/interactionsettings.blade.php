@@ -271,7 +271,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                     </div>
-                    <div class="block-content" id="my-comments-block" style="height: 330px;">
+                    <div class="block-content" id="my-comments-block" style="height: 350px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="comments-well" class="block">
@@ -298,9 +298,9 @@
                                                 </span>
                                             </div>
                                             <div class="help-block text-left">
-                                                <b>Enter Emoji</b>
+                                                <b>ENTERING EMOJI</b>
                                                 <br/>
-                                                by pressing the ":" button
+                                                To input emojis just press the ":" button while adding your comments.
                                             </div>
                                         </div>
                                     </div>
