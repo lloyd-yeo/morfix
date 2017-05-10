@@ -247,7 +247,17 @@
                                 @if ($invoice->charge_refunded == 1)
                                 <td><label class="label label-default">Refunded</label></td>
                                 @else
-                                <td><label class="label label-primary">$</label></td>
+                                
+                                    @if ($invoice->subscription_id == "0137")
+                                    <td><label class="label label-primary">$20</label></td>
+                                    @elseif ($invoice->subscription_id == "MX370")
+                                    <td><label class="label label-primary">$200</label></td>
+                                    @elseif ($invoice->subscription_id == "0297")
+                                    <td><label class="label label-primary">$50</label></td>
+                                    @elseif ($invoice->subscription_id == "MX970")
+                                    <td><label class="label label-primary">$500</label></td>
+                                    @endif
+                                
                                 @endif
                             </tr>
                             @endforeach
