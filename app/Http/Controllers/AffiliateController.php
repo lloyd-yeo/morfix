@@ -33,7 +33,7 @@ class AffiliateController extends Controller
         $user_id = Auth::user()->user_id;
         $referral_links = DB::connection('mysql_old')->select('SELECT * FROM yourls_url WHERE url LIKE "%referrer=' . $user_id . '&%";');
         $referrals = DB::connection('mysql_old')->select('SELECT u.email, u.user_tier, a.refunded_premium, a.refunded_pro, a.refunded_business, a.refunded_mastermind 
-            FROM user_affiliate a, user u WHERE a.referrer = ? AND a.referred = u.user_id;', [Auth::user()->user_id]);
+            FROM user_affiliate a, user u WHERE a.referrer = ? AND a.referred = u.user_id AND u.user_tier > 1;', [Auth::user()->user_id]);
         return view('affiliate.dashboard', [
             'active_users' => $active_users,
             'referral_links' => $referral_links,
