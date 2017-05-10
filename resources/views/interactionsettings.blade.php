@@ -297,7 +297,7 @@
                                                     <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-modern">
+                                            <div class="help-block text-left text-info">
                                                 To input emojis just press the ":" button while adding your comments.
                                             </div>
                                         </div>
@@ -338,10 +338,8 @@
                                                     <button id="add-username-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-modern">
-                                                When entering usernames make sure to exclude "@"
-                                                <br/>
-                                                & also ensure that the username is valid.
+                                            <div class="help-block text-left text-warning">
+                                                When entering usernames make sure to exclude "@" & also ensure that the username is valid.
                                             </div>
                                         </div>
                                     </div>
@@ -384,10 +382,8 @@
                                                     <button id="add-hashtag-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-modern">
-                                                When entering hashtags make sure to exclude "#"
-                                                <br/>
-                                                & also ensure that the hashtag has good traffic.
+                                            <div class="help-block text-left text-warning">
+                                                When entering hashtags make sure to exclude "#" & also ensure that the hashtag has good traffic.
                                             </div>
                                         </div>
                                     </div>
