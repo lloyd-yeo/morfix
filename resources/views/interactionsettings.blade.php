@@ -43,7 +43,7 @@
             
             <div class="col-xs-12 col-lg-4">
                 <!-- Sizes -->
-                <div class="block" style='height: 285px;'>
+                <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Stats</h3>
                     </div>
@@ -52,22 +52,22 @@
                         <div class="row items-push">
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> {{ $likes_done }} Like <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $likes_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-2x fa-heart text-danger'></i> {{ $likes_done }} Like <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $likes_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $comments_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-2x fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $comments_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $follows_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si fa-2x si-user-follow text-modern'></i> {{ $follows_done }} Follow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $follows_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $unfollows_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si fa-2x si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $unfollows_done_today }})</span></span>
                                 </label>
                             </div>
 <!--                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
@@ -91,7 +91,7 @@
             
             <div class="col-xs-12 col-lg-4">
                 <!-- Sizes -->
-                <div class="block" style='height: 285px;'>
+                <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
                     </div>
@@ -150,7 +150,7 @@
             </div>
             
             <div class="col-xs-12 col-lg-4">
-                <div class="block" style='height: 285px;'>
+                <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
                     </div>
