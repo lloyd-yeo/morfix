@@ -162,7 +162,7 @@
         </div>
 
         <div class="row font-s13">
-            <div class="block" id="affiliate-link-block">
+            <div class="block">
                 <div class="block-header">
                     <ul class="block-options">
                         <li>
@@ -170,6 +170,49 @@
                         </li>
                     </ul>
                     <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-group"></i> Referrals</h2>
+                </div>
+                <div class="block-content block-content-full">
+                    <table class="table table-bordered table-striped js-dataTable-full-pagination">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th class="hidden-xs">User Tier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($referrals as $key => $referral)
+                            @if ($key%2 == 0)
+                            <tr role="row" class="even">
+                                @else
+                            <tr role="row" class="odd">
+                                @endif
+                                <td class="font-w600">{{ $referral->email }}</td>
+                                @if ($referral->user_tier == 2)
+                                <td>Premium</td>
+                                @elseif ($referral->user_tier == 3)
+                                <td>Pro</td>
+                                @elseif ($referral->user_tier == 4)
+                                <td>Business</td>
+                                @elseif ($referral->user_tier == 5)
+                                <td>Mastermind</td>
+                                @endif
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row font-s13">
+            <div class="block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                        </li>
+                    </ul>
+                    <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-credit-card"></i> My Referral Payments</h2>
                 </div>
                 <div class="block-content block-content-full">
                     <table class="table table-bordered table-striped js-dataTable-full-pagination">
