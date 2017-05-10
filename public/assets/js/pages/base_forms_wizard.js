@@ -280,13 +280,15 @@ var BaseFormWizard = function() {
                                 jQuery('#modal-addprofile').modal('hide');
                             } else {
                                 if (data.type === 'ig_added') {
-                                    //swal('Oops...', data.response, 'error');
-                                    //$current = $current - 1;
-                                    //$success = false;
-                                    $success = true;
+                                    swal('Oops...', data.response, 'error');
+                                    $current = $current - 1;
+                                    $success = false;
                                 } else if (data.type === 'checkpoint') {
-//                                    swal('Oops...', data.response, 'error');
                                     $success = true;
+                                } else {
+                                   swal('Oops...', data.response, 'error');
+                                   $current = $current - 1;
+                                   $success = false; 
                                 }
                             }
                         }
