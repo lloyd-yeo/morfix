@@ -173,68 +173,33 @@
                 </div>
                 <div class="block-content block-content-full">
                     <table class="table table-bordered table-striped js-dataTable-full-pagination">
-                                <thead>
-                                    <tr>
-                                        <th>Email</th>
-                                        <th class="hidden-xs">User Tier</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($referrals as $key => $referral)
-                                    @if ($key%2 == 0)
-                                    <tr role="row" class="even">
-                                    @else
-                                    <tr role="row" class="odd">
-                                    @endif
-                                    <td class="font-w600">{{ $referral->email }}</td>
-                                    @if ($referral->user_tier == 2)
-                                    <td class="hidden-xs">Premium</td>
-                                    @elseif ($referral->user_tier == 3)
-                                    <td class="hidden-xs">Pro</td>
-                                    @elseif ($referral->user_tier == 4)
-                                    <td class="hidden-xs">Business</td>
-                                    @elseif ($referral->user_tier == 5)
-                                    <td class="hidden-xs">Mastermind</td>
-                                    @endif
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                    
-                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-                        <div class="row">
-                            <div class="col-sm-12"><table class="table table-bordered table-striped js-dataTable-simple dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="hidden-xs sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 479px;">Email</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 326px;">Tier</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($referrals as $key => $referral)
-                                        @if ($key%2 == 0)
-                                        <tr role="row" class="even">
-                                        @else
-                                        <tr role="row" class="odd">
-                                        @endif
-                                        <td class="font-w600">{{ $referral->email }}</td>
-                                        @if ($referral->user_tier == 2)
-                                        <td class="hidden-xs">Premium</td>
-                                        @elseif ($referral->user_tier == 3)
-                                        <td class="hidden-xs">Pro</td>
-                                        @elseif ($referral->user_tier == 4)
-                                        <td class="hidden-xs">Business</td>
-                                        @elseif ($referral->user_tier == 5)
-                                        <td class="hidden-xs">Mastermind</td>
-                                        @endif
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing <strong>1</strong>-<strong>10</strong> of <strong>40</strong></div></div><div class="col-sm-6"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_previous"><a href="#"><i class="fa fa-angle-left"></i></a></li><li class="paginate_button active" aria-controls="DataTables_Table_0" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">2</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">3</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">4</a></li><li class="paginate_button next" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_next"><a href="#"><i class="fa fa-angle-right"></i></a></li></ul></div></div></div></div>
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th class="hidden-xs">User Tier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($referrals as $key => $referral)
+                            @if ($key%2 == 0)
+                            <tr role="row" class="even">
+                                @else
+                            <tr role="row" class="odd">
+                                @endif
+                                <td class="font-w600">{{ $referral->email }}</td>
+                                @if ($referral->user_tier == 2)
+                                <td class="hidden-xs">Premium</td>
+                                @elseif ($referral->user_tier == 3)
+                                <td class="hidden-xs">Pro</td>
+                                @elseif ($referral->user_tier == 4)
+                                <td class="hidden-xs">Business</td>
+                                @elseif ($referral->user_tier == 5)
+                                <td class="hidden-xs">Mastermind</td>
+                                @endif
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
