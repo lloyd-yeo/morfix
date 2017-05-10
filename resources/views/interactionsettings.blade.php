@@ -99,7 +99,7 @@
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Status</h3>
                     </div>
                     
-                    <div class="block-content" id="auto-interaction-settings-container">
+                    <div class="block-content font-s36" id="auto-interaction-settings-container">
                         <div class="row items-push">
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
