@@ -345,7 +345,7 @@
                                                 <br/>
                                                 When entering usernames exclude "@"
                                                 <br/>
-                                                Also <i>ENSURE</i> that the username is valid.
+                                                Also ensure that the username is valid.
                                             </div>
                                         </div>
                                     </div>
@@ -393,7 +393,7 @@
                                                 <br/>
                                                 When entering hastags exclude "#"
                                                 <br/>
-                                                Also <i>ENSURE</i> that the hashtag has good traffic.
+                                                Also ensure that the hashtag has good traffic.
                                             </div>
                                         </div>
                                     </div>
