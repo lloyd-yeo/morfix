@@ -27,7 +27,8 @@ jQuery(function () {
     $(".btn-retry").on("click", function(){
         var $igUsername = jQuery('#validation-ig-username').val();
         var $igPassword = jQuery('#validation-ig-password').val();
-        
+        var $icon = jQuery('#retry-btn-spinner');
+        $icon.addClass( "fa-spin" );
         $.ajax({
                 async: false,
                 type: "POST",
@@ -51,8 +52,8 @@ jQuery(function () {
                         }
                     }
                 }
-            });
-        
+        });
+        $icon.removeClass( "fa-spin" );
     });
 });
 
