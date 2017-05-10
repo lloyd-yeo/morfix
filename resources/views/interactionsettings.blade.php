@@ -199,7 +199,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group push-30-t">
                                         <div class='col-xs-12 col-lg-10 col-lg-offset-1'>
                                             <div class="form-material">
                                                 <label class="css-input css-input switch switch-square switch-primary">
