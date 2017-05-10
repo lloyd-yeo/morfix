@@ -61,7 +61,7 @@
 
                                         <label for="greeting-template">Greeting Message Template</label>
                                     </div>
-                                    <div class="help-block text-right">
+                                    <div class="help-block text-left">
                                         <b>PLACEHOLDER</b>
                                         <br/>
                                         ${full_name} - Type this as a placeholder for the recipient's instagram full name.
@@ -102,7 +102,7 @@
                                         @endif
                                         <label for="followup-template">Follow-Up Message Template</label>
                                     </div>
-                                    <div class="help-block text-right">
+                                    <div class="help-block text-left">
                                         <b>PLACEHOLDER</b>
                                         <br/>
                                         ${full_name} - Type this as a placeholder for the recipient's instagram full name.
