@@ -362,7 +362,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-hashtag"></i> Target Hashtags</h3>
                     </div>
-                    <div class="block-content" id="my-hashtags-block" style="height: 330px;">
+                    <div class="block-content" id="my-hashtags-block" style="height: 380px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="hashtags-well" class="block">
@@ -388,8 +388,8 @@
                                                     <button id="add-hashtag-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-primary">
-                                                <b>ENTERING HASHTAGS</b>
+                                            <div class="help-block text-left" style="color:black;">
+                                                <b class="font-w600">ENTERING HASHTAGS</b>
                                                 <br/>
                                                 When entering hastags exclude "#"
                                                 <br/>
@@ -428,7 +428,7 @@
             var $myTargetedHashtagsBoxHeight = $("#my-hashtags-block").height();
             var $hashtagsWellHeight = $("#hashtags-well").height();
             var $hashtagsBoxHeight = $("#hashtags-text").height();
-            var $hashtagsBlockHeight = $myTargetedHashtagsBoxHeight - $hashtagsBoxHeight - 20 - 20 - 20;
+            var $hashtagsBlockHeight = $myTargetedHashtagsBoxHeight - $hashtagsBoxHeight - 20 - 20 - 20 -40;
             $("#hashtags-well").css("height", $hashtagsBlockHeight + "px");
         </script>
     </div>
