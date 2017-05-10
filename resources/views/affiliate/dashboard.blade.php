@@ -140,7 +140,7 @@
                 </div>
                 <div class="block-content block-content-full">
                     <form class="form-horizontal" action="base_forms_premade.html" method="post" onsubmit="return false;">
-                        <div class="form-group">
+                        <div class="form-group form-material form-material-success">
                             <label class="col-xs-12" for="lock1-password">Paypal Email</label>
                             <div class="col-xs-12">
                                 <input class="form-control" type="password" id="lock1-password" name="lock1-password" placeholder="Enter your paypal email..">
