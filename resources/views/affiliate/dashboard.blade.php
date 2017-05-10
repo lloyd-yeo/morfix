@@ -73,7 +73,7 @@
                             <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
                         </li>
                     </ul>
-                    <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-link"></i> Referral Links</h2>
+                    <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="si si-users"></i> Refer-a-Friend!</h2>
                 </div>
                 <div class="block-content block-content-full">
                     <div class="col-lg-12">
