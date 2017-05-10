@@ -228,9 +228,10 @@
                             @foreach ($invoices as $key => $invoice)
                             @if ($key%2 == 0)
                             <tr role="row" class="even">
-                                @else
+                            @else
                             <tr role="row" class="odd">
                                 <td>{{ $invoice->referrer_email }}</td>
+                                
                                 @if ($invoice->subscription_id == "0137")
                                 <td><label class="label label-info">Premium</label></td>
                                 @elseif ($invoice->subscription_id == "MX370")
@@ -240,6 +241,7 @@
                                 @elseif ($invoice->subscription_id == "MX970")
                                 <td><label class="label label-primary">Mastermind</label></td>
                                 @endif
+                                
                                 <td>{{ $invoice->start_date }}</td>
                                 @if ($charge_refunded == 1)
                                 <td><label class="label label-default">Refunded</label></td>
@@ -247,6 +249,7 @@
                                 <td><label class="label label-primary">$</label></td>
                                 @endif
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>
