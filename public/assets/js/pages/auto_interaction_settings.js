@@ -167,7 +167,6 @@ var initValidationMaterial = function(){
 
 function toggleInteraction(url, spinnerElem) {
     $spinnerElem = jQuery(spinnerElem);
-    alert($spinnerElem);
     $.ajax({
         type: "POST",
         url: url,
