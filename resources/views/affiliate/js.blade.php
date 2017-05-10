@@ -1,3 +1,5 @@
+<!-- Page JS Plugins -->
+<script src="{{ asset('assets/js/plugins/datatables/jquery.dataTables.min.js') "></script>
 <script>
 $.ajaxSetup({
     headers: {
