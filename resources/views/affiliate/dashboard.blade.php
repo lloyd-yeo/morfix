@@ -247,7 +247,7 @@
                                 <td><label class="label label-primary">Business</label></td>
                                 @endif
                                 
-                                <td>{{ $invoice->start_date }}</td>
+                                <td>{{ \Carbon\Carbon::parse($invoice->start_date)->toFormattedDateString() }}</td>
                                 @if ($invoice->charge_refunded == 1)
                                 <td><label class="label label-default">Refunded</label></td>
                                 @else
