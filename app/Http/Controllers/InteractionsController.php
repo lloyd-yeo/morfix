@@ -174,12 +174,14 @@ class InteractionsController extends Controller {
     }
 
     public function saveComment(Request $request, $id) {
-        $instagram_comment = \App\InstagramProfileComment::where("comment", $request->input('comment'))->where("ig_profile_id", $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_comment = \App\InstagramProfileComment::where("comment", $request->input('comment'))->where("insta_username", $instagram_profile->insta_username)->first();
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_comment)) {
             $new_ig_comment = new InstagramProfileComment;
             $new_ig_comment->comment = $request->input('comment');
             $new_ig_comment->ig_profile_id = $id;
+            $new_ig_comment->insta_username = $instagram_profile->insta_username;
         } else {
             $response = "This comment exists alreay!";
             return Response::json(array("success" => false, 'response' => $response));
@@ -194,12 +196,14 @@ class InteractionsController extends Controller {
     }
 
     public function saveUsername(Request $request, $id) {
-        $instagram_profile_target_username = \App\InstagramProfileTargetUsername::where("target_username", $request->input('target_username'))->where("insta_id", $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile_target_username = \App\InstagramProfileTargetUsername::where("target_username", $request->input('target_username'))->where("insta_username", $instagram_profile->insta_username)->first();
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_profile_target_username)) {
             $new_instagram_profile_target_username = new InstagramProfileTargetUsername;
             $new_instagram_profile_target_username->target_username = $request->input('target_username');
             $new_instagram_profile_target_username->ig_profile_id = $id;
+            $new_instagram_profile_target_username->insta_username = $instagram_profile->insta_username;
         } else {
             $response = "This target username exists alreay!";
             return Response::json(array("success" => false, 'response' => $response));
@@ -214,12 +218,14 @@ class InteractionsController extends Controller {
     }
 
     public function saveHashtag(Request $request, $id) {
-        $instagram_profile_target_hashtag = \App\InstagramProfileTargetHashtag::where("target_hashtag", $request->input('target_hashtag'))->where("insta_id", $id)->first();
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile_target_hashtag = \App\InstagramProfileTargetHashtag::where("target_hashtag", $request->input('target_hashtag'))->where("insta_username", $instagram_profile->insta_username)->first();
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_profile_target_hashtag)) {
             $instagram_profile_target_hashtag = new InstagramProfileTargetHashtag;
             $instagram_profile_target_hashtag->target_hashtag = $request->input('target_hashtag');
             $instagram_profile_target_hashtag->ig_profile_id = $id;
+            $instagram_profile_target_hashtag->insta_username = $instagram_profile->insta_username;
         } else {
             $response = "This target hashtag exists alreay!";
             return Response::json(array("success" => false, 'response' => $response));
