@@ -57,17 +57,17 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-success">(<i class="fa fa-caret-up"></i> {{ $comments_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $comments_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow <span class="text-success">(<i class="fa fa-caret-up"></i> {{ $follows_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $follows_done_today }})</span></span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow <span class="text-success">(<i class="fa fa-caret-up"></i> {{ $unfollows_done_today }})</span></span>
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $unfollows_done_today }})</span></span>
                                 </label>
                             </div>
 <!--                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
@@ -101,10 +101,10 @@
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_like == 1)
-                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> Like</span>
+                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-2x fa-heart text-danger'></i> Like</span>
                                     <i class="fa fa-spin fa-refresh text-modern" id="like-spinner"></i>
                                     @else
-                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> Like</span>
+                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-2x fa-heart text-danger'></i> Like</span>
                                     <i class="fa fa-refresh text-modern" id="like-spinner"></i>
                                     @endif
                                     
