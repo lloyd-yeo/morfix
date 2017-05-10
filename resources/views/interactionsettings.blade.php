@@ -70,7 +70,7 @@
                                     <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow</span>
                                 </label>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
+<!--                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-info">
                                     @if ($ig_profile->auto_interaction == 1)
                                     <input class="toggle-interaction-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> 
@@ -82,7 +82,7 @@
                                     </span>
                                     
                                 </label>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
