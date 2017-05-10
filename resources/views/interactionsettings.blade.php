@@ -43,7 +43,7 @@
             
             <div class="col-xs-12 col-lg-4">
                 <!-- Sizes -->
-                <div class="block">
+                <div class="block" style='height: 285px;'>
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
                     </div>
@@ -94,7 +94,7 @@
             
             <div class="col-xs-12 col-lg-4">
                 <!-- Sizes -->
-                <div class="block">
+                <div class="block" style='height: 285px;'>
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Status</h3>
                     </div>
@@ -128,7 +128,7 @@
             </div>
             
             <div class="col-xs-12 col-lg-4">
-                <div class="block">
+                <div class="block" style='height: 285px;'>
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
                     </div>
