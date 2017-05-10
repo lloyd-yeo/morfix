@@ -211,14 +211,14 @@
                                                 <label class="css-input css-input switch switch-square switch-primary">
                                                     @if ($ig_profile->unfollow_unfollowed == 1)
                                                     <input type="checkbox" name="recent-follower-toggle" checked><span></span> 
-                                                    <span style='font-weight: 600;'>Target Likers & Commenters of 3 most recent posts</span>
+                                                    <span style='font-weight: 600;'>Follow Likers & Commenters of 3 most recent posts</span>
                                                     <small><i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
                                                             data-placement="top" title="Target people that has engaged with your competitor's 3 most recent posts instead of their followers." type="button"></i></small>
                                                     @else
                                                     <input type="checkbox" name="recent-follower-toggle"><span></span> 
-                                                    <span style='font-weight: 600;'>Target Likers & Commenters of 3 most recent posts</span>
+                                                    <span style='font-weight: 600;'>Follow Likers & Commenters of 3 most recent posts</span>
                                                     <small><i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
-                                                            data-placement="top" title="Target people that has engaged with your competitor's 3 most recent posts instead of their followers." type="button"></i></small>
+                                                            data-placement="top" title="Engage people that has engaged with your competitor's 3 most recent posts instead of their followers." type="button"></i></small>
                                                     @endif
                                                 </label>
                                             </div>
