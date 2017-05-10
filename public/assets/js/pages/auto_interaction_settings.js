@@ -166,6 +166,8 @@ var initValidationMaterial = function(){
 
 
 function toggleInteraction(url, spinnerElem) {
+    $spinnerElem = jQuery(spinnerElem);
+    alert($spinnerElem);
     $.ajax({
         type: "POST",
         url: url,
@@ -177,9 +179,9 @@ function toggleInteraction(url, spinnerElem) {
             if (data.success === true) {
                 swal('Success', data.message, 'success');
                 if (data.status === 1) {
-                    spinnerElem.addClass("fa-spin");
+                    $spinnerElem.addClass("fa-spin");
                 } else {
-                    spinnerElem.removeClass("fa-spin");
+                    $spinnerElem.removeClass("fa-spin");
                 }
             } else {
                 swal('Oops...', data.message, 'error');
@@ -211,28 +213,28 @@ $(".toggle-like-btn").on("click", function () {
     var url = "like/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url, jQuery('#like-spinner'));
+    toggleInteraction(url, '#like-spinner');
 });
 
 $(".toggle-comment-btn").on("click", function () {
     var url = "comment/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url, jQuery('#comment-spinner'));
+    toggleInteraction(url, '#comment-spinner');
 });
 
 $(".toggle-follow-btn").on("click", function () {
     var url = "follow/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url, jQuery('#follow-spinner'));
+    toggleInteraction(url, '#follow-spinner');
 });
 
 $(".toggle-unfollow-btn").on("click", function () {
     var url = "unfollow/"; // the script where you handle the form input.
     var profile_id = $(this).attr("data-id");
     url = url + profile_id;
-    toggleInteraction(url, jQuery('#unfollow-spinner'));
+    toggleInteraction(url, '#unfollow-spinner');
 });
 
 $(".toggle-niche").on('change', function () {
