@@ -134,7 +134,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    @if ($ig_profile->auto_follow == 1)
+                                    @if ($ig_profile->auto_unfollow == 1)
                                     <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> Unfollow</span>
                                     <i class="fa fa-spin fa-refresh text-modern" id="unfollow-spinner"></i>
                                     @else
