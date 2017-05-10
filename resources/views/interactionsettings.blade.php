@@ -103,22 +103,22 @@
                         <div class="row items-push">
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-weight: 600;'><i class='fa fa-heart'></i> 22358 Like</span>
+                                    <span style='font-weight: 600;'><i class='fa fa-heart'></i> {{ $likes_done }} Like</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-weight: 600;'><i class='fa fa-comments'></i> 523853 Comment</span>
+                                    <span style='font-weight: 600;'><i class='fa fa-comments'></i> {{ $comments_done }} Comment</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-weight: 600;'><i class='si si-user-follow'></i> 23475 Follow</span>
+                                    <span style='font-weight: 600;'><i class='si si-user-follow'></i> {{ $follows_done }} Follow</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> 585657 Unfollow</span>
+                                    <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> {{ $unfollows_done }} Unfollow</span>
                                 </label>
                             </div>
                         </div>
