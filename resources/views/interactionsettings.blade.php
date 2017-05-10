@@ -139,7 +139,7 @@
                                     <i class="fa fa-spin fa-refresh text-modern" id="unfollow-spinner"></i>
                                     @else
                                     <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> Unfollow</span>
-                                    <i class="fafa-refresh text-modern" id="unfollow-spinner"></i>
+                                    <i class="fa fa-refresh text-modern" id="unfollow-spinner"></i>
                                     @endif
                                 </label>
                             </div>
