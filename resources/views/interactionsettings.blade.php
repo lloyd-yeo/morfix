@@ -274,7 +274,7 @@
                     <div class="block-content" id="my-comments-block" style="height: 370px;">
                         <div class='row'>
                             <div class='col-lg-12'>
-                                <div id="comments-well" class="block" style="height: 240px;">
+                                <div id="comments-well" class="block">
                                     <div class="block-content bg-gray-light block-content-full" style="height: 240px;">
                                         <!-- SlimScroll Container -->
                                         <div id="comments-well-inner-container" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
@@ -401,7 +401,7 @@
             var $myCommentBoxHeight = $("#my-comments-block").height();
             var $commentsWellHeight = $("#comments-well").height();
             var $commentBoxHeight = $("#comments-text").height();
-            var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20 - 20 - 20;
+            var $commentsBlockHeight = $myCommentBoxHeight - $commentBoxHeight - 20 - 20 - 20 - 30;
             $("#comments-well").css("height", $commentsBlockHeight + "px");
             $("#comments-well-inner-container").attr("data-height", ($commentsBlockHeight - 20 - 20) + "px");
 
