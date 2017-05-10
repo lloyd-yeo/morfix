@@ -231,7 +231,7 @@
                             @else
                             <tr role="row" class="odd">
                             @endif    
-                                <td>{{ $invoice->referrer_email }}</td>
+                                <td>{{ $invoice->referred_email }}</td>
                                 
                                 @if ($invoice->subscription_id == "0137")
                                 <td><label class="label label-info">Premium</label></td>
