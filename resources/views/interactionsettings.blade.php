@@ -53,36 +53,36 @@
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_like == 1)
-                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-heart'></i> Like</span>
+                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-heart text-danger'></i> Like</span>
                                     @else
-                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='fa fa-heart'></i> Like</span>
+                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='fa fa-heart text-danger'></i> Like</span>
                                     @endif
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_comment == 1)
-                                    <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-comments'></i> Comment</span>
+                                    <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-comments text-primary'></i> Comment</span>
                                     @else
-                                    <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='fa fa-comments'></i> Comment</span>
+                                    <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='fa fa-comments text-primary'></i> Comment</span>
                                     @endif
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_follow == 1)
-                                    <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si si-user-follow'></i> Follow</span>
+                                    <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si si-user-follow text-modern'></i> Follow</span>
                                     @else
-                                    <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='si si-user-follow'></i> Follow</span>
+                                    <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='si si-user-follow text-modern'></i> Follow</span>
                                     @endif
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_follow == 1)
-                                    <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> Unfollow</span>
+                                    <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> Unfollow</span>
                                     @else
-                                    <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> Unfollow</span>
+                                    <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> Unfollow</span>
                                     @endif
                                 </label>
                             </div>
@@ -108,17 +108,17 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-weight: 600;'><i class='fa fa-comments'></i> {{ $comments_done }} Comment</span>
+                                    <span style='font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-weight: 600;'><i class='si si-user-follow'></i> {{ $follows_done }} Follow</span>
+                                    <span style='font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> {{ $unfollows_done }} Unfollow</span>
+                                    <span style='font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow</span>
                                 </label>
                             </div>
                         </div>
