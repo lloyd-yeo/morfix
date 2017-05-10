@@ -172,6 +172,35 @@
                     <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-paypal"></i> Paypal Email</h2>
                 </div>
                 <div class="block-content block-content-full">
+                    <table class="table table-bordered table-striped js-dataTable-full-pagination">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th class="hidden-xs">User Tier</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($referrals as $key => $referral)
+                                    @if ($key%2 == 0)
+                                    <tr role="row" class="even">
+                                    @else
+                                    <tr role="row" class="odd">
+                                    @endif
+                                    <td class="font-w600">{{ $referral->email }}</td>
+                                    @if ($referral->user_tier == 2)
+                                    <td class="hidden-xs">Premium</td>
+                                    @elseif ($referral->user_tier == 3)
+                                    <td class="hidden-xs">Pro</td>
+                                    @elseif ($referral->user_tier == 4)
+                                    <td class="hidden-xs">Business</td>
+                                    @elseif ($referral->user_tier == 5)
+                                    <td class="hidden-xs">Mastermind</td>
+                                    @endif
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                    
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                         <div class="row">
                             <div class="col-sm-12"><table class="table table-bordered table-striped js-dataTable-simple dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
@@ -200,7 +229,7 @@
                                         @endif
                                         </tr>
                                         @endforeach
-                                        </tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
