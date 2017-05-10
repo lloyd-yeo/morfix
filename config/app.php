@@ -178,7 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         Laravel\Cashier\CashierServiceProvider::class,
-        
+        Unicodeveloper\Emoji\EmojiServiceProvider::class,
     ],
 
     /*
@@ -228,7 +228,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
-
+        'Emoji' => Unicodeveloper\Emoji\Facades\Emoji::class,
     ],
-
 ];

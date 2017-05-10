@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel {
         Commands\SnapshotFollowerAnalysis::class,
         Commands\ManualLogin::class,
         Commands\ReplicateSetting::class,
+        Commands\ConvertUnicodeEmojiToShortCode::class,
     ];
 
     /**

@@ -15,6 +15,7 @@ use App\InstagramProfileTargetUsername;
 use App\InstagramProfileCommentLog;
 use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
+use Unicodeveloper\Emoji\Emoji;
 
 class InteractionsController extends Controller {
 
@@ -179,7 +180,25 @@ class InteractionsController extends Controller {
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_comment)) {
             $new_ig_comment = new InstagramProfileComment;
-            $new_ig_comment->comment = $request->input('comment');
+            $user_comment = $request->input('comment');
+            $re = '/:(\S+):/im';
+            preg_match_all($re, $user_comment, $matches, PREG_SET_ORDER, 0);
+            
+            if (count($matches) > 0) {
+                $emoji = new Emoji();
+                try {
+                    foreach ($matches as $match) {
+                        $alias = $match[1];
+                        $unicode = $emoji->findByAlias($alias);
+                        $replaced_str = preg_replace("/$match[0]/im", $unicode, $user_comment);
+                        $user_comment = $replaced_str;
+                    }
+                } catch (\Unicodeveloper\Emoji\Exceptions\UnknownEmoji $ex) {
+                    $this->error($ex->getMessage());
+                }
+            }
+            
+            $new_ig_comment->comment = $user_comment;
             $new_ig_comment->ig_profile_id = $id;
             $new_ig_comment->insta_username = $instagram_profile->insta_username;
         } else {
