@@ -297,7 +297,7 @@
                                                     <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-black">
+                                            <div class="help-block text-left text-primary">
                                                 <b>ENTERING EMOJI</b>
                                                 <br/>
                                                 To input emojis just press the ":" button while adding your comments.
@@ -317,7 +317,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-users"></i> Target Usernames</h3>
                     </div>
-                    <div class="block-content" id="my-users-block" style="height: 330px;">
+                    <div class="block-content" id="my-users-block" style="height: 380px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="users-well" class="block">
@@ -340,7 +340,7 @@
                                                     <button id="add-username-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-black">
+                                            <div class="help-block text-left text-primary">
                                                 <b>ENTERING USERNAMES</b>
                                                 <br/>
                                                 When entering usernames exclude "@"
@@ -388,6 +388,13 @@
                                                     <button id="add-hashtag-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
+                                            <div class="help-block text-left text-primary">
+                                                <b>ENTERING HASHTAGS</b>
+                                                <br/>
+                                                When entering hastags exclude "#"
+                                                <br/>
+                                                Also <i>ENSURE</i> that the hashtag has good traffic.
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -415,7 +422,7 @@
             var $myTargetedUsernameBoxHeight = $("#my-users-block").height();
             var $usernameWellHeight = $("#users-well").height();
             var $usernameBoxHeight = $("#users-text").height();
-            var $usernameBlockHeight = $myTargetedUsernameBoxHeight - $usernameBoxHeight - 20 - 20 - 20;
+            var $usernameBlockHeight = $myTargetedUsernameBoxHeight - $usernameBoxHeight - 20 - 20 - 20 - 40;
             $("#users-well").css("height", $usernameBlockHeight + "px");
 
             var $myTargetedHashtagsBoxHeight = $("#my-hashtags-block").height();
