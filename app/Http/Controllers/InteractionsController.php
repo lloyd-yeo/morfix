@@ -12,6 +12,9 @@ use App\Niche;
 use App\InstagramProfileComment;
 use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
+use App\InstagramProfileCommentLog;
+use App\InstagramProfileFollowLog;
+use App\InstagramProfileLikeLog;
 
 class InteractionsController extends Controller {
 
@@ -38,9 +41,14 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
+       
         $ig_profile = InstagramProfile::where('id', $id)->first();
-//        $instagram_profiles = InstagramProfile::where('id', $id)
-//                ->get();
+        
+        $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
+        $comments_done = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
+        $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();
+        $unfollows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)->count();
+        
         $niches = Niche::all();
         $comments = \App\InstagramProfileComment::where("insta_username", $ig_profile->insta_username)->get();
         $target_usernames = \App\InstagramProfileTargetUsername::where("insta_username", $ig_profile->insta_username)->get();
@@ -51,6 +59,10 @@ class InteractionsController extends Controller {
             'user_ig_target_usernames' => $target_usernames,
             'user_ig_target_hashtags' => $target_hashtags,
             'niches' => $niches,
+            'likes_done' => $likes_done,
+            'comments_done' => $comments_done,
+            'follows_done' => $follows_done,
+            'unfollows_done' => $unfollows_done,
         ]);
     }
 
