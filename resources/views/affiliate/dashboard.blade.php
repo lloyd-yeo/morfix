@@ -176,6 +176,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($referrals as $key => $referral)
+                                        @if ($key%2 == 0)
+                                        <tr role="row" class="even">
+                                        @else
+                                        <tr role="row" class="odd">
+                                        @endif
+                                        <td class="font-w600">{{ $referral->email }}</td>
+                                        <td class="hidden-xs">{{ $referral->user_tier }}</td>
+                                        </tr>
+                                        @endforeach
                                         <tr role="row" class="odd">
                                             <td class="text-center sorting_1">1</td>
                                             <td class="font-w600">Ashley Welch</td>
