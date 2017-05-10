@@ -330,7 +330,7 @@
                                 </div>
                                 <form class="form-horizontal" onsubmit="return false;">
                                     <div class="form-group">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="input-group">
                                                 <input class="form-control" type="text" id="users-text" 
                                                        name="users-tag" placeholder="Enter your target username here...">
@@ -376,7 +376,7 @@
                                 </div>
                                 <form class="form-horizontal" onsubmit="return false;">
                                     <div class="form-group">
-                                        <div class="col-md-4">
+                                        <div class="col-md-8">
                                             <div class="input-group">
                                                 <input class="form-control" type="text" id="hashtags-text" 
                                                        name="hashtags-tag" placeholder="Enter your target hashtag here...">
