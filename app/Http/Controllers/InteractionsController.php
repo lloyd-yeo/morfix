@@ -42,14 +42,14 @@ class InteractionsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-       
+
         $ig_profile = InstagramProfile::where('id', $id)->first();
-        
+
         $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
         $comments_done = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
         $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();
         $unfollows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)->count();
-        
+
         $niches = Niche::all();
         $comments = \App\InstagramProfileComment::where("insta_username", $ig_profile->insta_username)->get();
         $target_usernames = \App\InstagramProfileTargetUsername::where("insta_username", $ig_profile->insta_username)->get();
@@ -183,7 +183,7 @@ class InteractionsController extends Controller {
             $user_comment = $request->input('comment');
             $re = '/:(\S+):/im';
             preg_match_all($re, $user_comment, $matches, PREG_SET_ORDER, 0);
-            
+
             if (count($matches) > 0) {
                 $emoji = new Emoji();
                 try {
@@ -197,7 +197,7 @@ class InteractionsController extends Controller {
                     $this->error($ex->getMessage());
                 }
             }
-            
+
             $new_ig_comment->comment = $user_comment;
             $new_ig_comment->ig_profile_id = $id;
             $new_ig_comment->insta_username = $instagram_profile->insta_username;
@@ -216,7 +216,8 @@ class InteractionsController extends Controller {
 
     public function saveUsername(Request $request, $id) {
         $instagram_profile = InstagramProfile::where('id', $id)->first();
-        $instagram_profile_target_username = \App\InstagramProfileTargetUsername::where("target_username", $request->input('target_username'))->where("insta_username", $instagram_profile->insta_username)->first();
+        $instagram_profile_target_username = InstagramProfileTargetUsername::where("target_username", $request->input('target_username'))->where("insta_username", $instagram_profile->insta_username)->first();
+
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_profile_target_username)) {
             $new_instagram_profile_target_username = new InstagramProfileTargetUsername;
@@ -257,7 +258,7 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => false, 'response' => $response));
         }
     }
-    
+
     public function deleteComment($id) {
         $comment = \App\InstagramProfileComment::find($id);
         if ($comment->delete()) {
@@ -268,7 +269,7 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => true, 'response' => $response));
         }
     }
-    
+
     public function deleteTargetUsername($id) {
         $username = \App\InstagramProfileTargetUsername::find($id);
         if ($username->delete()) {
@@ -279,7 +280,7 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => true, 'response' => $response));
         }
     }
-    
+
     public function deleteTargetHashtag($id) {
         $hashtag = \App\InstagramProfileTargetHashtag::find($id);
         if ($hashtag->delete()) {
@@ -290,6 +291,5 @@ class InteractionsController extends Controller {
             return Response::json(array("success" => true, 'response' => $response));
         }
     }
-    
-    
+
 }

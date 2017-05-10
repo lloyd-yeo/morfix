@@ -24,7 +24,7 @@
 //});
 
 Auth::routes();
-Route::get('/', function(){ return view("index"); });
+Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 Route::get('/interactions', 'InteractionsController@index');
 Route::get('/interactions/{id}', 'InteractionsController@edit');
