@@ -230,6 +230,7 @@
                             <tr role="row" class="even">
                             @else
                             <tr role="row" class="odd">
+                            @endif    
                                 <td>{{ $invoice->referrer_email }}</td>
                                 
                                 @if ($invoice->subscription_id == "0137")
@@ -245,11 +246,10 @@
                                 <td>{{ $invoice->start_date }}</td>
                                 @if ($charge_refunded == 1)
                                 <td><label class="label label-default">Refunded</label></td>
-                                @else 
+                                @else
                                 <td><label class="label label-primary">$</label></td>
                                 @endif
                             </tr>
-                            @endif
                             @endforeach
                         </tbody>
                     </table>
