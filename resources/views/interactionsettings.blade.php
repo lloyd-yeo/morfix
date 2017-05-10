@@ -274,7 +274,7 @@
                     <div class="block-content" id="my-comments-block" style="height: 370px;">
                         <div class='row'>
                             <div class='col-lg-12'>
-                                <div id="comments-well" class="block">
+                                <div id="comments-well" class="block" style="height: 240px;">
                                     <div class="block-content bg-gray-light block-content-full" style="height: 240px;">
                                         <!-- SlimScroll Container -->
                                         <div id="comments-well-inner-container" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
