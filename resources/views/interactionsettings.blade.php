@@ -297,7 +297,7 @@
                                                     <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left">
+                                            <div class="help-block text-left text-modern">
                                                 <b>ENTERING EMOJI</b>
                                                 <br/>
                                                 To input emojis just press the ":" button while adding your comments.
