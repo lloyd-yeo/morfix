@@ -271,7 +271,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                     </div>
-                    <div class="block-content" id="my-comments-block" style="height: 330px;">
+                    <div class="block-content" id="my-comments-block" style="height: 370px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="comments-well" class="block">
