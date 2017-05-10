@@ -144,7 +144,7 @@
                             <label class="col-xs-12" for="lock1-password">Paypal Email</label>
                             <div class="col-xs-12">
                                 <input class="form-control" type="password" id="lock1-password" name="lock1-password" placeholder="Enter your paypal email..">
-                                <div class="help-block text-right">Enter your paypal email to receive your payout!</div>
+                                <div class="help-block text-left">Enter your paypal email to receive your payout!</div>
                             </div>
                         </div>
                         <div class="form-group">
