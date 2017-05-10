@@ -13,8 +13,7 @@ var BaseTableDatatables = function() {
     var initDataTableFullPagination = function() {
         jQuery('.js-dataTable-full-pagination').dataTable({
             pagingType: "full_numbers",
-            columnDefs: [ { orderable: false, targets: [ 4 ] } ],
-            pageLength: 10,
+            pageLength: 5,
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
     };
