@@ -297,9 +297,7 @@
                                                     <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-primary">
-                                                <b>ENTERING EMOJI</b>
-                                                <br/>
+                                            <div class="help-block text-left text-modern">
                                                 To input emojis just press the ":" button while adding your comments.
                                             </div>
                                         </div>
@@ -340,12 +338,10 @@
                                                     <button id="add-username-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-primary">
-                                                <b>ENTERING USERNAMES</b>
+                                            <div class="help-block text-left text-modern">
+                                                When entering usernames make sure to exclude "@"
                                                 <br/>
-                                                When entering usernames exclude "@"
-                                                <br/>
-                                                Also ensure that the username is valid.
+                                                & also ensure that the username is valid.
                                             </div>
                                         </div>
                                     </div>
@@ -388,12 +384,10 @@
                                                     <button id="add-hashtag-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left" style="color:black;">
-                                                <b class="font-w600">ENTERING HASHTAGS</b>
+                                            <div class="help-block text-left text-modern">
+                                                When entering hashtags make sure to exclude "#"
                                                 <br/>
-                                                When entering hastags exclude "#"
-                                                <br/>
-                                                Also ensure that the hashtag has good traffic.
+                                                & also ensure that the hashtag has good traffic.
                                             </div>
                                         </div>
                                     </div>
