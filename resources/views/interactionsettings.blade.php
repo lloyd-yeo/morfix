@@ -297,7 +297,7 @@
                                                     <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-info">
+                                            <div class="help-block text-left" style="color: #70b9eb;">
                                                 To input emojis just press the ":" button while adding your comments.
                                             </div>
                                         </div>
@@ -338,7 +338,7 @@
                                                     <button id="add-username-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-warning">
+                                            <div class="help-block text-left" style="color:#d26a5c;">
                                                 When entering usernames make sure to exclude "@" & also ensure that the username is valid.
                                             </div>
                                         </div>
@@ -382,7 +382,7 @@
                                                     <button id="add-hashtag-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-warning">
+                                            <div class="help-block text-left" style="color:#d26a5c;">
                                                 When entering hashtags make sure to exclude "#" & also ensure that the hashtag has good traffic.
                                             </div>
                                         </div>
