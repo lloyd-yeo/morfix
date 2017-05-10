@@ -219,25 +219,32 @@
                         <thead>
                             <tr>
                                 <th>Email</th>
-                                <th class="hidden-xs">User Tier</th>
+                                <th>Plan</th>
+                                <th>Payment Date</th>
+                                <th>Commission Earned</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($referrals as $key => $referral)
+                            @foreach ($invoices as $key => $invoice)
                             @if ($key%2 == 0)
                             <tr role="row" class="even">
                                 @else
                             <tr role="row" class="odd">
+                                <td>{{ $invoice->referrer_email }}</td>
+                                @if ($invoice->subscription_id == "0137")
+                                <td><label class="label label-info">Premium</label></td>
+                                @elseif ($invoice->subscription_id == "MX370")
+                                <td><label class="label label-danger">Pro</label></td>
+                                @elseif ($invoice->subscription_id == "0297")
+                                <td><label class="label label-primary">Business</label></td>
+                                @elseif ($invoice->subscription_id == "MX970")
+                                <td><label class="label label-primary">Mastermind</label></td>
                                 @endif
-                                <td class="font-w600">{{ $referral->email }}</td>
-                                @if ($referral->user_tier == 2)
-                                <td>Premium</td>
-                                @elseif ($referral->user_tier == 3)
-                                <td>Pro</td>
-                                @elseif ($referral->user_tier == 4)
-                                <td>Business</td>
-                                @elseif ($referral->user_tier == 5)
-                                <td>Mastermind</td>
+                                <td>{{ $invoice->start_date }}</td>
+                                @if ($charge_refunded == 1)
+                                <td><label class="label label-default">Refunded</label></td>
+                                @else 
+                                <td><label class="label label-primary">$</label></td>
                                 @endif
                             </tr>
                             @endforeach
