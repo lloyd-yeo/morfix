@@ -244,7 +244,7 @@
                                 @endif
                                 
                                 <td>{{ $invoice->start_date }}</td>
-                                @if ($charge_refunded == 1)
+                                @if ($invoice->charge_refunded == 1)
                                 <td><label class="label label-default">Refunded</label></td>
                                 @else
                                 <td><label class="label label-primary">$</label></td>
