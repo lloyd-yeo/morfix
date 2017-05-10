@@ -45,6 +45,53 @@
                 <!-- Sizes -->
                 <div class="block" style='height: 285px;'>
                     <div class="block-header bg-primary">
+                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Stats</h3>
+                    </div>
+                    
+                    <div class="block-content" id="auto-interaction-settings-container">
+                        <div class="row items-push">
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
+                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> {{ $likes_done }} Like</span>
+                                </label>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
+                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment</span>
+                                </label>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
+                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow</span>
+                                </label>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
+                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow</span>
+                                </label>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
+                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
+                                    @if ($ig_profile->auto_interaction == 1)
+                                    <input class="toggle-interaction-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> 
+                                    @else
+                                    <input class="toggle-interaction-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> 
+                                    <span style='font-size: 15px; font-weight: 600;'>
+                                        <i class='fa fa-power-off text-danger'></i> Auto Interaction
+                                    </span>
+                                    @endif
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Sizes -->
+            </div>
+            
+            <div class="col-xs-12 col-lg-4">
+                <!-- Sizes -->
+                <div class="block" style='height: 285px;'>
+                    <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
                     </div>
 
@@ -84,41 +131,6 @@
                                     @else
                                     <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> Unfollow</span>
                                     @endif
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Sizes -->
-            </div>
-            
-            <div class="col-xs-12 col-lg-4">
-                <!-- Sizes -->
-                <div class="block" style='height: 285px;'>
-                    <div class="block-header bg-primary">
-                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Status</h3>
-                    </div>
-                    
-                    <div class="block-content" id="auto-interaction-settings-container">
-                        <div class="row items-push">
-                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
-                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-heart text-danger'></i> {{ $likes_done }} Like</span>
-                                </label>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
-                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-comments text-primary'></i> {{ $comments_done }} Comment</span>
-                                </label>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
-                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-follow text-modern'></i> {{ $follows_done }} Follow</span>
-                                </label>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
-                                <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    <span style='font-size: 15px; font-weight: 600;'><i class='si si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow</span>
                                 </label>
                             </div>
                         </div>
