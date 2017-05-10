@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+@include('affiliate.css')
+@endsection
+
 @section('sidebar')
 @include('sidebar', ['page' => 'affiliate'])
 @endsection
