@@ -63,7 +63,7 @@
 
                     <div class="block-content">
                         <div class="row items-push js-gallery-advanced">
-                            <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn">
+<!--                            <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn">
                                 <div class="img-container fx-img-rotate-r">
                                     <img class="img-responsive" src="{{ asset('assets/img/photos/photo17.jpg') }}" alt="">
                                     <div class="img-options">
@@ -80,7 +80,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
