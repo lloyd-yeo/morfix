@@ -70,19 +70,6 @@
                                     <span style='font-size: 15px; font-weight: 600;'><i class='si fa-2x si-user-unfollow text-lightred'></i> {{ $unfollows_done }} Unfollow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $unfollows_done_today }})</span></span>
                                 </label>
                             </div>
-<!--                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
-                                <label class="css-input css-input switch switch-square switch-lg switch-info">
-                                    @if ($ig_profile->auto_interaction == 1)
-                                    <input class="toggle-interaction-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> 
-                                    @else
-                                    <input class="toggle-interaction-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> 
-                                    @endif
-                                    <span style='font-size: 15px; font-weight: 600;'>
-                                        <i class='fa fa-power-off text-danger'></i> Auto Interaction
-                                    </span>
-                                    
-                                </label>
-                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -152,7 +139,7 @@
             <div class="col-xs-12 col-lg-4">
                 <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
-                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-bullseye"></i> Niche Targeting</h3>
+                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-crosshairs"></i> Niche Targeting</h3>
                     </div>
                     <div class="block-content" id="niche-targeting-container">
                         <div class="row items-push">
