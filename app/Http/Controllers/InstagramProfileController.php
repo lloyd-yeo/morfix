@@ -75,7 +75,6 @@ class InstagramProfileController extends Controller {
             $morfix_ig_profile->insta_username = $ig_username;
             $morfix_ig_profile->insta_pw = $ig_password;
             $morfix_ig_profile->proxy = $proxy->proxy;
-            $morfix_ig_profile->save();
             
             $profile_log->error_msg = "Profile successfully created.";
             $profile_log->save();
@@ -85,7 +84,8 @@ class InstagramProfileController extends Controller {
             
             $user_response = $instagram->getUserInfoByName($ig_username);
             $instagram_user = $user_response->user;
-            
+            $morfix_ig_profile->profile_pic_url = $instagram_user->profile_pic_url;
+            $morfix_ig_profile->save();
             DB::connection('mysql_old')->
                     update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
             $items = $instagram->getSelfUserFeed()->items;
