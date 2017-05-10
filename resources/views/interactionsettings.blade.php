@@ -249,7 +249,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                     </div>
-                    <div class="block-content" id="my-comments-block" style="height: 300px;">
+                    <div class="block-content" id="my-comments-block" style="height: 330px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="comments-well" class="block">
@@ -290,7 +290,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-users"></i> Target Usernames</h3>
                     </div>
-                    <div class="block-content" id="my-users-block" style="height: 300px;">
+                    <div class="block-content" id="my-users-block" style="height: 330px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="users-well" class="block">
@@ -328,7 +328,7 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-hashtag"></i> Target Hashtags</h3>
                     </div>
-                    <div class="block-content" id="my-hashtags-block" style="height: 300px;">
+                    <div class="block-content" id="my-hashtags-block" style="height: 330px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="hashtags-well" class="block">
