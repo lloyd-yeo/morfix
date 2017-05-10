@@ -76,10 +76,11 @@
                                     <input class="toggle-interaction-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> 
                                     @else
                                     <input class="toggle-interaction-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> 
+                                    @endif
                                     <span style='font-size: 15px; font-weight: 600;'>
                                         <i class='fa fa-power-off text-danger'></i> Auto Interaction
                                     </span>
-                                    @endif
+                                    
                                 </label>
                             </div>
                         </div>
