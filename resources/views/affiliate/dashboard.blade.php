@@ -241,6 +241,8 @@
                                 <td><label class="label label-primary">Business</label></td>
                                 @elseif ($invoice->subscription_id == "MX970")
                                 <td><label class="label label-primary">Mastermind</label></td>
+                                @else
+                                <td><label class="label label-primary">{{ $invoice->subscription_id }}</label></td>
                                 @endif
                                 
                                 <td>{{ $invoice->start_date }}</td>
