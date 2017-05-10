@@ -98,43 +98,27 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Status</h3>
                     </div>
-
+                    
                     <div class="block-content" id="auto-interaction-settings-container">
                         <div class="row items-push">
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    @if ($ig_profile->auto_like == 1)
-                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-heart'></i> Like</span>
-                                    @else
-                                    <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='fa fa-heart'></i> Like</span>
-                                    @endif
+                                    <span style='font-weight: 600;'><i class='fa fa-heart'></i> 22358 Like</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    @if ($ig_profile->auto_comment == 1)
-                                    <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-comments'></i> Comment</span>
-                                    @else
-                                    <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='fa fa-comments'></i> Comment</span>
-                                    @endif
+                                    <span style='font-weight: 600;'><i class='fa fa-comments'></i> 523853 Comment</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    @if ($ig_profile->auto_follow == 1)
-                                    <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si si-user-follow'></i> Follow</span>
-                                    @else
-                                    <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='si si-user-follow'></i> Follow</span>
-                                    @endif
+                                    <span style='font-weight: 600;'><i class='si si-user-follow'></i> 23475 Follow</span>
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
-                                    @if ($ig_profile->auto_follow == 1)
-                                    <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> Unfollow</span>
-                                    @else
-                                    <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> Unfollow</span>
-                                    @endif
+                                    <span style='font-weight: 600;'><i class='si si-user-unfollow'></i> 585657 Unfollow</span>
                                 </label>
                             </div>
                         </div>
