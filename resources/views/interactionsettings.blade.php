@@ -204,9 +204,9 @@
                                             <div class="form-material">
                                                 <label class="css-input css-input switch switch-square switch-primary">
                                                     @if ($ig_profile->unfollow_unfollowed == 1)
-                                                    <input type="checkbox" name="unfollow-toggle" checked><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
+                                                    <input type="checkbox" name="unfollow-toggle" checked><span></span> <span style='font-weight: 600;'>Only Unfollow users that didn't follow me back</span>
                                                     @else
-                                                    <input type="checkbox" name="unfollow-toggle"><span></span> <span style='font-weight: 600;'>Unfollow users that don't follow me</span>
+                                                    <input type="checkbox" name="unfollow-toggle"><span></span> <span style='font-weight: 600;'>Only Unfollow users that didn't follow me back</span>
                                                     @endif
                                                 </label>
                                             </div>
