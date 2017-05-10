@@ -168,7 +168,9 @@
                     <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-paypal"></i> Paypal Email</h2>
                 </div>
                 <div class="block-content block-content-full">
-                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"><div class="row"><div class="col-sm-12"><table class="table table-bordered table-striped js-dataTable-simple dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-sm-12"><table class="table table-bordered table-striped js-dataTable-simple dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
                                     <thead>
                                         <tr role="row">
                                             <th class="hidden-xs sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 479px;">Email</th>
@@ -183,141 +185,23 @@
                                         <tr role="row" class="odd">
                                         @endif
                                         <td class="font-w600">{{ $referral->email }}</td>
-                                        <td class="hidden-xs">{{ $referral->user_tier }}</td>
+                                        @if ($referral->user_tier == 2)
+                                        <td class="hidden-xs">Premium</td>
+                                        @elseif ($referral->user_tier == 3)
+                                        <td class="hidden-xs">Pro</td>
+                                        @elseif ($referral->user_tier == 4)
+                                        <td class="hidden-xs">Business</td>
+                                        @elseif ($referral->user_tier == 5)
+                                        <td class="hidden-xs">Mastermind</td>
+                                        @endif
                                         </tr>
                                         @endforeach
-                                        <tr role="row" class="odd">
-                                            <td class="text-center sorting_1">1</td>
-                                            <td class="font-w600">Ashley Welch</td>
-                                            <td class="hidden-xs">client1@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-primary">Personal</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="even">
-                                            <td class="text-center sorting_1">2</td>
-                                            <td class="font-w600">George Stone</td>
-                                            <td class="hidden-xs">client2@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-info">Business</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="odd">
-                                            <td class="text-center sorting_1">3</td>
-                                            <td class="font-w600">Lisa Gordon</td>
-                                            <td class="hidden-xs">client3@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-info">Business</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="even">
-                                            <td class="text-center sorting_1">4</td>
-                                            <td class="font-w600">Rebecca Reid</td>
-                                            <td class="hidden-xs">client4@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-info">Business</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="odd">
-                                            <td class="text-center sorting_1">5</td>
-                                            <td class="font-w600">Laura Bell</td>
-                                            <td class="hidden-xs">client5@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-danger">Disabled</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="even">
-                                            <td class="text-center sorting_1">6</td>
-                                            <td class="font-w600">Sara Holland</td>
-                                            <td class="hidden-xs">client6@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-info">Business</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="odd">
-                                            <td class="text-center sorting_1">7</td>
-                                            <td class="font-w600">Adam Hall</td>
-                                            <td class="hidden-xs">client7@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-warning">Trial</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="even">
-                                            <td class="text-center sorting_1">8</td>
-                                            <td class="font-w600">Lisa Gordon</td>
-                                            <td class="hidden-xs">client8@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-primary">Personal</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="odd">
-                                            <td class="text-center sorting_1">9</td>
-                                            <td class="font-w600">Ashley Welch</td>
-                                            <td class="hidden-xs">client9@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-danger">Disabled</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr><tr role="row" class="even">
-                                            <td class="text-center sorting_1">10</td>
-                                            <td class="font-w600">Denise Watson</td>
-                                            <td class="hidden-xs">client10@example.com</td>
-                                            <td class="hidden-xs">
-                                                <span class="label label-primary">Personal</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="" data-original-title="Remove Client"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr></tbody>
-                                </table></div></div><div class="row"><div class="col-sm-6"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing <strong>1</strong>-<strong>10</strong> of <strong>40</strong></div></div><div class="col-sm-6"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_previous"><a href="#"><i class="fa fa-angle-left"></i></a></li><li class="paginate_button active" aria-controls="DataTables_Table_0" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">2</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">3</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">4</a></li><li class="paginate_button next" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_next"><a href="#"><i class="fa fa-angle-right"></i></a></li></ul></div></div></div></div>
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing <strong>1</strong>-<strong>10</strong> of <strong>40</strong></div></div><div class="col-sm-6"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button previous disabled" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_previous"><a href="#"><i class="fa fa-angle-left"></i></a></li><li class="paginate_button active" aria-controls="DataTables_Table_0" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">2</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">3</a></li><li class="paginate_button " aria-controls="DataTables_Table_0" tabindex="0"><a href="#">4</a></li><li class="paginate_button next" aria-controls="DataTables_Table_0" tabindex="0" id="DataTables_Table_0_next"><a href="#"><i class="fa fa-angle-right"></i></a></li></ul></div></div></div></div>
                 </div>
             </div>
         </div>
