@@ -103,8 +103,7 @@ class InstagramProfileController extends Controller {
             return Response::json(array("success" => true, 'response' => "Profile added!"));
             
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-            return Response::json(array("success" => false, 'type' =>'checkpoint', 'response' => serialize($checkpt_ex)));
-            $this->error($checkpt_ex->getMessage());
+            return Response::json(array("success" => false, 'type' =>'checkpoint', 'response' => $checkpt_ex->getMessage()));
             DB::connection('mysql_old')->
                     update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
