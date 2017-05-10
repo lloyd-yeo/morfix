@@ -222,7 +222,6 @@ class InteractionsController extends Controller {
         if (is_null($instagram_profile_target_username)) {
             $new_instagram_profile_target_username = new InstagramProfileTargetUsername;
             $new_instagram_profile_target_username->target_username = $request->input('target_username');
-            $new_instagram_profile_target_username->ig_profile_id = $id;
             $new_instagram_profile_target_username->insta_username = $instagram_profile->insta_username;
         } else {
             $response = "This target username exists alreay!";
@@ -244,7 +243,6 @@ class InteractionsController extends Controller {
         if (is_null($instagram_profile_target_hashtag)) {
             $instagram_profile_target_hashtag = new InstagramProfileTargetHashtag;
             $instagram_profile_target_hashtag->target_hashtag = $request->input('target_hashtag');
-            $instagram_profile_target_hashtag->ig_profile_id = $id;
             $instagram_profile_target_hashtag->insta_username = $instagram_profile->insta_username;
         } else {
             $response = "This target hashtag exists alreay!";
