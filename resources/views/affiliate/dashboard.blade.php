@@ -209,5 +209,5 @@
 @endsection
 
 @section('js')
-@include('dashboard.js')
+@include('affiliate.js')
 @endsection
