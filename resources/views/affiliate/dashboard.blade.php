@@ -127,6 +127,35 @@
             </div>
         </div>
         
+        
+        <div class="row font-s13">
+            <div class="block" id="affiliate-link-block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                        </li>
+                    </ul>
+                    <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-paypal"></i> Paypal Email</h2>
+                </div>
+                <div class="block-content block-content-full">
+                    <form class="form-horizontal" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="lock1-password">Paypal Email</label>
+                            <div class="col-xs-12">
+                                <input class="form-control" type="password" id="lock1-password" name="lock1-password" placeholder="Enter your paypal email..">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <button class="btn btn-sm btn-success" type="submit">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </main>
 @endsection
