@@ -297,7 +297,7 @@
                                                     <button id="add-comment-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
                                             </div>
-                                            <div class="help-block text-left text-modern">
+                                            <div class="help-block text-left text-black">
                                                 <b>ENTERING EMOJI</b>
                                                 <br/>
                                                 To input emojis just press the ":" button while adding your comments.
@@ -339,6 +339,13 @@
                                                 <span class="input-group-btn">
                                                     <button id="add-username-btn" class="btn btn-default" type="button" data-id="{{ $ig_profile->id }}"><i class="fa fa-plus"></i></button>
                                                 </span>
+                                            </div>
+                                            <div class="help-block text-left text-black">
+                                                <b>ENTERING USERNAMES</b>
+                                                <br/>
+                                                When entering usernames exclude "@"
+                                                <br/>
+                                                Also <i>ENSURE</i> that the username is valid.
                                             </div>
                                         </div>
                                     </div>
