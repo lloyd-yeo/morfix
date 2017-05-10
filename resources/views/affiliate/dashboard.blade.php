@@ -241,7 +241,9 @@
                                 <td><label class="label label-primary">Business</label></td>
                                 @elseif ($invoice->subscription_id == "MX970")
                                 <td><label class="label label-primary">Mastermind</label></td>
-                                @else
+                                @elseif ($invoice->subscription_id == "0167")
+                                <td><label class="label label-primary">{{ $invoice->subscription_id }}</label></td>
+                                @elseif ($invoice->subscription_id == "0197")
                                 <td><label class="label label-primary">{{ $invoice->subscription_id }}</label></td>
                                 @endif
                                 
@@ -258,6 +260,10 @@
                                     <td><label class="label label-primary">$50</label></td>
                                     @elseif ($invoice->subscription_id == "MX970")
                                     <td><label class="label label-primary">$500</label></td>
+                                    @elseif ($invoice->subscription_id == "0167")
+                                    <td><label class="label label-primary">$50</label></td>
+                                    @elseif ($invoice->subscription_id == "0197")
+                                    <td><label class="label label-primary">$50</label></td>
                                     @endif
                                 
                                 @endif
