@@ -199,6 +199,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <div class='col-xs-12 col-lg-10 col-lg-offset-1'>
+                                            <div class="form-material">
+                                                <label class="css-input css-input switch switch-square switch-primary">
+                                                    @if ($ig_profile->unfollow_unfollowed == 1)
+                                                    <input type="checkbox" name="recent-follower-toggle" checked><span></span> <span style='font-weight: 600;'>Target Likers & Commenters of 3 most recent posts</span>
+                                                    @else
+                                                    <input type="checkbox" name="recent-follower-toggle"><span></span> <span style='font-weight: 600;'>Target Likers & Commenters of 3 most recent posts</span>
+                                                    @endif
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group push-30-t">
                                         <div class="col-xs-12 col-lg-10 col-lg-offset-1">
                                             <div class="form-material form-material-primary">
