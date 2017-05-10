@@ -45,7 +45,7 @@
                 <!-- Sizes -->
                 <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
-                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Stats</h3>
+                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-bar-chart"></i> Statistics</h3>
                     </div>
                     
                     <div class="block-content" id="auto-interaction-settings-container">
@@ -80,7 +80,7 @@
                 <!-- Sizes -->
                 <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
-                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Auto Interaction Settings</h3>
+                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Settings</h3>
                     </div>
 
                     <div class="block-content" id="auto-interaction-settings-container">
@@ -180,7 +180,7 @@
             <div class="col-lg-12">
                 <div class="block">
                     <div class="block-header bg-primary">
-                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-cogs"></i> Advanced Auto Follow/Unfollow Settings</h3>
+                        <h3 class="block-title text-white text-uppercase"><i class="fa fa-forward"></i> Advanced Auto Follow/Unfollow Settings</h3>
                     </div>
                     <div class="block-content">
                         <div class="row items-push">
