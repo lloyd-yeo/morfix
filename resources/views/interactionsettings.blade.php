@@ -298,9 +298,9 @@
                                                 </span>
                                             </div>
                                             <div class="help-block text-left">
-                                                <b>How to enter emojis</b>
+                                                <b>Enter Emoji</b>
                                                 <br/>
-                                                Press the ":" button & select from the dropdown list your desired Emoji.
+                                                by pressing the ":" button
                                             </div>
                                         </div>
                                     </div>
