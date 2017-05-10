@@ -45,7 +45,7 @@
                     <a class="block block-link-hover2 text-center" href="javascript:void(0)">
                         <div class="block-content block-content-full bg-modern">
                             <i class="fa fa-send fa-4x text-white"></i>
-                            <div class="font-w600 text-white-op push-15-t">Activate Auto Direct Message</div>
+                            <div class="font-w600 text-white-op push-15-t">Turn on Auto Direct Message</div>
                         </div>
                     </a>
                 </div>
