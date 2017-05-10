@@ -249,11 +249,11 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-comments"></i> My Comments</h3>
                     </div>
-                    <div class="block-content" id="my-comments-block" style="height: 250px;">
+                    <div class="block-content" id="my-comments-block" style="height: 300px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="comments-well" class="block">
-                                    <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
+                                    <div class="block-content bg-gray-light block-content-full" style="height: 280px;">
                                         <!-- SlimScroll Container -->
                                         <div id="comments-well-inner-container" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                             <p class="nice-copy" id="comments-well-inner">
@@ -290,11 +290,11 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-users"></i> Target Usernames</h3>
                     </div>
-                    <div class="block-content" id="my-users-block" style="height: 250px;">
+                    <div class="block-content" id="my-users-block" style="height: 300px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="users-well" class="block">
-                                    <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
+                                    <div class="block-content bg-gray-light block-content-full" style="height: 280px;">
                                         <!-- SlimScroll Container -->
                                         <div id="users-well-inner" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                             @foreach ($user_ig_target_usernames as $target_username)
@@ -328,11 +328,11 @@
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-hashtag"></i> Target Hashtags</h3>
                     </div>
-                    <div class="block-content" id="my-hashtags-block" style="height: 250px;">
+                    <div class="block-content" id="my-hashtags-block" style="height: 300px;">
                         <div class='row'>
                             <div class='col-lg-12'>
                                 <div id="hashtags-well" class="block">
-                                    <div class="block-content bg-gray-light block-content-full" style="height: 100%;">
+                                    <div class="block-content bg-gray-light block-content-full" style="height: 280px;">
                                         <!-- SlimScroll Container -->
                                         <div data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                             <p class="nice-copy" id="hashtags-well-inner">
