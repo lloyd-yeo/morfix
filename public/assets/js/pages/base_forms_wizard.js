@@ -277,6 +277,7 @@ var BaseFormWizard = function() {
                         success: function (data) {
                             if (data.success === true) {
                                 swal('Success', data.response, 'success');
+                                jQuery('#modal-addprofile').modal('hide');
                             } else {
                                 if (data.type === 'ig_added') {
                                     //swal('Oops...', data.response, 'error');

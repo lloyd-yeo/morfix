@@ -286,35 +286,7 @@
 
                                         <!-- Step 3 -->
                                         <div class="tab-pane fade fade-right push-30-t push-50" id="validation-step3">
-                                            <div class="form-group">
-                                                <div class="col-sm-8 col-sm-offset-2">
-                                                    <div class="form-material">
-                                                        <input class="form-control" type="text" id="validation-city" name="validation-city" placeholder="Where do you live?">
-                                                        <label for="validation-city">City</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-8 col-sm-offset-2">
-                                                    <div class="form-material">
-                                                        <select class="form-control" id="validation-skills" name="validation-skills" size="1">
-                                                            <option value="">Please select your best skill</option>
-                                                            <option value="1">Photoshop</option>
-                                                            <option value="2">HTML</option>
-                                                            <option value="3">CSS</option>
-                                                            <option value="4">JavaScript</option>
-                                                        </select>
-                                                        <label for="validation-skills">Skills</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-8 col-sm-offset-2">
-                                                    <label class="css-input switch switch-sm switch-primary" for="validation-terms">
-                                                        <input type="checkbox" id="validation-terms" name="validation-terms"><span></span> Agree with the <a data-toggle="modal" data-target="#modal-terms" href="#">terms</a>
-                                                    </label>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                         <!-- END Step 3 -->
                                     </div>
