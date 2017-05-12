@@ -201,7 +201,7 @@
                                 @elseif ($referral->user_tier == 5)
                                 <td>Mastermind</td>
                                 @endif
-                                <td>$referral->created_at</td>
+                                <td>{{ $referral->created_at }}</td>
                             </tr>
                             @endforeach
                             @if (Auth::user()->email == "gabriel@instaffiliates.com")
