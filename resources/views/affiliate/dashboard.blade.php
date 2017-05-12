@@ -211,14 +211,14 @@
                                 <td class="font-w600">Shawnjosiah.pd@gmail.com</td>
                                 <td>Mastermind</td>
                             </tr>
-<!--                            <tr role="row" class="even">
-                                <td class="font-w600">joel@onlinesalespro.com</td>
-                                <td>Mastermind</td>
+                            <tr role="row" class="even">
+                                <td class="font-w600">albertjames24mb@gmail.com</td>
+                                <td>Premium</td>
                             </tr>
                             <tr role="row" class="odd">
-                                <td class="font-w600">Shawnjosiah.pd@gmail.com</td>
-                                <td>Mastermind</td>
-                            </tr>-->
+                                <td class="font-w600">sl@buildsocialprofits.com</td>
+                                <td>Premium</td>
+                            </tr>
                             @endif
                         </tbody>
                     </table>
