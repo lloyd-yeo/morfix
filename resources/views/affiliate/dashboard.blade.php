@@ -202,7 +202,7 @@
                                 @endif
                             </tr>
                             @endforeach
-                            @if (Auth::user()->email = "gabriel@instaffiliates.com")
+                            @if (Auth::user()->email == "gabriel@instaffiliates.com")
                             <tr role="row" class="even">
                                 <td class="font-w600">joel@onlinesalespro.com</td>
                                 <td>Mastermind</td>
