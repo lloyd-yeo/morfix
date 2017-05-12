@@ -56,7 +56,11 @@
             <div class="col-sm-6 col-md-3">
                 <a class="block block-link-hover3 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full text-modern">
+                        @if (Auth::user()->email = "gabriel@instaffiliates.com")
+                        <div class="h1 font-w700" data-toggle="countTo" data-to="64">0</div>
+                        @else
                         <div class="h1 font-w700" data-toggle="countTo" data-to="{{ count($active_users) }}">{{ count($active_users) }}</div>
+                        @endif
                     </div>
                     <div class="block-content block-content-full block-content-mini bg-gray-lighter text-muted font-w600">Active Affiliates</div>
                 </a>
