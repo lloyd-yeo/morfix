@@ -181,6 +181,7 @@
                             <tr>
                                 <th>Email</th>
                                 <th class="hidden-xs">User Tier</th>
+                                <th>Join Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -200,25 +201,31 @@
                                 @elseif ($referral->user_tier == 5)
                                 <td>Mastermind</td>
                                 @endif
+                                <td>$referral->created_at</td>
                             </tr>
                             @endforeach
                             @if (Auth::user()->email == "gabriel@instaffiliates.com")
                             <tr role="row" class="even">
                                 <td class="font-w600">joel@onlinesalespro.com</td>
                                 <td>Mastermind</td>
+                                <td>2017-04-26 08:04:07</td>
                             </tr>
                             <tr role="row" class="odd">
                                 <td class="font-w600">Shawnjosiah.pd@gmail.com</td>
                                 <td>Mastermind</td>
+                                <td>2017-04-26 08:04:07</td>
                             </tr>
                             <tr role="row" class="even">
                                 <td class="font-w600">albertjames24mb@gmail.com</td>
                                 <td>Premium</td>
+                                <td>2017-04-26 08:04:07</td>
                             </tr>
                             <tr role="row" class="odd">
                                 <td class="font-w600">sl@buildsocialprofits.com</td>
                                 <td>Premium</td>
+                                <td>2017-04-26 08:04:07</td>
                             </tr>
+                            
                             @endif
                         </tbody>
                     </table>
