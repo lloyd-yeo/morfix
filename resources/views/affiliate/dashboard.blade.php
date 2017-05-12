@@ -203,7 +203,22 @@
                             </tr>
                             @endforeach
                             @if (Auth::user()->email = "gabriel@instaffiliates.com")
-                            
+                            <tr role="row" class="even">
+                                <td class="font-w600">joel@onlinesalespro.com</td>
+                                <td>Mastermind</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="font-w600">Shawnjosiah.pd@gmail.com</td>
+                                <td>Mastermind</td>
+                            </tr>
+<!--                            <tr role="row" class="even">
+                                <td class="font-w600">joel@onlinesalespro.com</td>
+                                <td>Mastermind</td>
+                            </tr>
+                            <tr role="row" class="odd">
+                                <td class="font-w600">Shawnjosiah.pd@gmail.com</td>
+                                <td>Mastermind</td>
+                            </tr>-->
                             @endif
                         </tbody>
                     </table>
