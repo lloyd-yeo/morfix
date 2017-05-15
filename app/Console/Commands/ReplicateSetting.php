@@ -45,7 +45,7 @@ class ReplicateSetting extends Command {
     public function handle() {
         $from = $this->argument('from');
         $to = $this->argument('to');
-        $to_id = $this->argument('to_id');
+        #$to_id = $this->argument('to_id');
         
         $comments = DB::connection("mysql_old")->select("SELECT comment FROM user_insta_profile_comment WHERE insta_username = ?;", [$from]);
         foreach ($comments as $comment) {
