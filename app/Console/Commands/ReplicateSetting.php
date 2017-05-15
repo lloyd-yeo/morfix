@@ -53,17 +53,17 @@ class ReplicateSetting extends Command {
             DB::connection("mysql_old")->insert("INSERT INTO user_insta_profile_comment (insta_username, comment) VALUES (?,?);", [$to, $comment_]);
         }
         
-        $hashtags = DB::connection("mysql_old")->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ?;", [$from]);
-        foreach ($hashtags as $hashtag) {
-            $hashtag_ = $hashtag->hashtag;
-            DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_target_hashtag (insta_username, insta_id, hashtag) VALUES (?,?,?);", [$to, $to_id, $hashtag_]);
-        }
-        
-        $usernames = DB::connection("mysql_old")->select("SELECT target_username FROM user_insta_target_username WHERE insta_username = ?;", [$from]);
-        foreach ($usernames as $username) {
-            $username_ = $username->target_username;
-            DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_target_username (insta_username, insta_id, target_username) VALUES (?,?,?);", [$to, $to_id, $username_]);
-        }
+//        $hashtags = DB::connection("mysql_old")->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ?;", [$from]);
+//        foreach ($hashtags as $hashtag) {
+//            $hashtag_ = $hashtag->hashtag;
+//            DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_target_hashtag (insta_username, insta_id, hashtag) VALUES (?,?,?);", [$to, $to_id, $hashtag_]);
+//        }
+//        
+//        $usernames = DB::connection("mysql_old")->select("SELECT target_username FROM user_insta_target_username WHERE insta_username = ?;", [$from]);
+//        foreach ($usernames as $username) {
+//            $username_ = $username->target_username;
+//            DB::connection("mysql_old")->insert("INSERT INTO insta_affiliate.user_insta_target_username (insta_username, insta_id, target_username) VALUES (?,?,?);", [$to, $to_id, $username_]);
+//        }
     }
 
 }
