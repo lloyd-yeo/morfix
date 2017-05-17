@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
@@ -13,6 +14,7 @@ use App\InstagramProfileComment;
 use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
 use App\DefaultImageGallery;
+
 
 class PostSchedulingController extends Controller
 {
@@ -62,5 +64,20 @@ class PostSchedulingController extends Controller
             'default_img_category' => $default_categories,
             'imgs' => $imgs,
         ]);
+    }
+    
+    public function add($request) {
+        
+        if ($request->file('file')->isValid()) {
+            //
+        }
+        
+        $image = $request->file('file');
+        
+        Storage::putFile('photos', new File('/path/to/photo'));
+        
+        $imageName = time().$image->getClientOriginalName();
+        $image->move(public_path('images'),$imageName);
+        return response()->json(['success'=>$imageName]);
     }
 }

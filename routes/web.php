@@ -51,6 +51,6 @@ Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/legacy/instagram-profile/add', 'LegacyInstagramProfileController@create');
 Route::get('/post-scheduling', 'PostSchedulingController@index');
 Route::get('/post-scheduling/schedule/{id}', 'PostSchedulingController@gallery');
-Route::get('/post-scheduling/add', 'PostSchedulingController@add');
+Route::post('/post-scheduling/add', 'PostSchedulingController@add');
 Route::post('stripe/webhook','WebhookController@handleWebhook');
 Route::get('/affiliate', 'AffiliateController@index');
