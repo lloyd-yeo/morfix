@@ -20,7 +20,7 @@ jQuery(function () {
     Dropzone.options.attachments = {
         url: '/post-scheduling/add',
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRFToken': $('meta[name="csrf-token"]').attr('content')
         }
     };
     
