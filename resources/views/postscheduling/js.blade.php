@@ -15,6 +15,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+
 jQuery(function () {
     // Init page helpers (Select2 + Tags Inputs plugins)
     App.initHelpers(['select2', 'tags-inputs', 'slimscroll', 'magnific-popup']);
@@ -22,6 +23,5 @@ jQuery(function () {
     initCommentsEmojiAutocomplete();
     
     initValidationMaterial();
-    
 });
 </script>

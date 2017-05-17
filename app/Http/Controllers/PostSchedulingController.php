@@ -69,15 +69,15 @@ class PostSchedulingController extends Controller
     public function add($request) {
         
         if ($request->file('file')->isValid()) {
-            //
+           $image = $request->file('file');
+        
+            Storage::putFile('uploads', new File('/upload'));
+
+            $imageName = time().$image->getClientOriginalName();
+            $image->move(public_path('uploads'),$imageName);
+            return response()->json(['success'=>$imageName]);
         }
         
-        $image = $request->file('file');
         
-        Storage::putFile('photos', new File('/path/to/photo'));
-        
-        $imageName = time().$image->getClientOriginalName();
-        $image->move(public_path('images'),$imageName);
-        return response()->json(['success'=>$imageName]);
     }
 }
