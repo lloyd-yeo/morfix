@@ -50,6 +50,7 @@ class Kernel extends ConsoleKernel {
         $schedule->command('dm:get 0 0 chuanian@hotmail.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 levelslifestyleco@gmail.com')->everyFiveMinutes();
         $schedule->command('dm:get 0 0 fabiopersonaltrainer@hotmail.com')->everyFiveMinutes();
+        $schedule->command('dm:get 0 0 ravicii55@gmail.com')->everyFiveMinutes();
         
         for ($i = 0; $i < 50; $i++) {
             $counter = $i * 20;
