@@ -23,5 +23,16 @@ jQuery(function () {
     initCommentsEmojiAutocomplete();
     
     initValidationMaterial();
+    
+    $("#img-upload").dropzone({
+        url: "/post-scheduling/add",
+        addRemoveLinks : true,
+        maxFilesize: 5,
+        dictDefaultMessage: '<span class="text-center"><span class="font-lg visible-xs-block visible-sm-block visible-lg-block"><span class="font-lg"><i class="fa fa-caret-right text-danger"></i> Drop files <span class="font-xs">to upload</span></span><span>&nbsp&nbsp<h4 class="display-inline"> (Or Click)</h4></span>',
+        dictResponseError: 'Error uploading file!',
+        headers: {
+            'X-CSRFToken': $('meta[name="token"]').attr('content')
+        }
+    });
 });
 </script>
