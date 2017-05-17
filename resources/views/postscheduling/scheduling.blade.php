@@ -48,7 +48,7 @@
                 <div class="block">
                     <div class="block-content block-content-full">
                         <!-- DropzoneJS Container -->
-                        <form id="img-upload" action="../add"></form>
+                        <form class="dropzone" action="../add"></form>
                     </div>
                 </div>
                 <!-- END DropzoneJS -->
