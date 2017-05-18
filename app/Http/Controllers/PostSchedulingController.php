@@ -77,7 +77,7 @@ class PostSchedulingController extends Controller
 
             #$imageName = time().$image->getClientOriginalName();
             #$image->move(public_path('uploads'),$imageName);
-            return response()->json(['success'=>$imageName]);
+            return response()->json(['success'=>$image->getClientOriginalName()]);
         }
         
         
