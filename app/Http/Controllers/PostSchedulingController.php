@@ -106,7 +106,9 @@ class PostSchedulingController extends Controller {
         if ($request->input('first_comment') !== null) {
             $instagram_post_schedule->first_comment = $request->input('first_comment');
         }
-        $instagram_post_schedule->save();
+        if ($instagram_post_schedule->save()) {
+            return response()->json(['success' => true]);
+        }
     }
 
 }
