@@ -65,7 +65,7 @@
                     <div class="block-content">
                         <div class="row items-push js-gallery-advanced">
                             
-                            @foreach (array_chunk($user_images->chunk(6)) as $user_imgs)
+                            @foreach (array_chunk($user_images, 6) as $user_imgs)
                             <div class='row'>
                                 @foreach ($user_imgs as $user_img)
                                 <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
