@@ -203,7 +203,7 @@
                             <div class="form-group">
                                 <label class="col-md-12 control-label" style="text-align:left;">Schedule Date</label>
                                 <br/>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="js-datetimepicker" data-show-today-button="true" data-inline="true"></div>
                                 </div>
                             </div>
