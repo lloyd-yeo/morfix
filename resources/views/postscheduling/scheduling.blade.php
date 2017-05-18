@@ -220,6 +220,17 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-8">
+                                    <div class="js-datetimepicker form-material input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true" data-side-by-side="true">
+                                        <input class="form-control" type="text" id="example-datetimepicker8" name="example-datetimepicker8" placeholder="Choose a date..">
+                                        <label for="example-datetimepicker8">Side by side</label>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-instagram push-5-r"></i> Schedule Image</button>
