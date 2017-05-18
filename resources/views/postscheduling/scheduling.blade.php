@@ -208,8 +208,8 @@
                                 </div>
                             </div>-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="example-datetimepicker4">Side by side</label>
-                                <div class="col-md-6">
+                                <label class="col-md-12 control-label" for="example-datetimepicker4">Side by side</label>
+                                <div class="col-md-12">
                                     <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true" data-side-by-side="true">
                                         <input class="form-control" type="text" id="example-datetimepicker4" name="example-datetimepicker4" placeholder="Choose a date..">
                                         <span class="input-group-addon">
