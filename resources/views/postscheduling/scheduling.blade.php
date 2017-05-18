@@ -200,13 +200,19 @@
                                 </div>
                             </div>
                             @endif
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <div class="col-md-8">
                                     <div class="form-material">
                                         <input class="js-datetimepicker form-control" type="text" 
                                                id="example-datetimepicker5" name="example-datetimepicker5" placeholder="Choose a date..">
                                         <label for="example-datetimepicker5">Schedule Date</label>
                                     </div>
+                                </div>
+                            </div>-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Inline Datepicker</label>
+                                <div class="col-md-8">
+                                    <div class="js-datepicker"></div>
                                 </div>
                             </div>
                             <div class="form-group">
