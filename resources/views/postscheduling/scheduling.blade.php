@@ -207,25 +207,12 @@
                                     <div class="js-datetimepicker" data-show-today-button="true" data-inline="true"></div>
                                 </div>
                             </div>-->
-                            <div class="form-group">
-                                <label class="col-md-12 control-label" style="text-align:left;" 
-                                       for="example-datetimepicker4">Schedule Date</label>
-                                <br/>
-                                <div class="col-md-12">
-                                    <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true" data-side-by-side="true">
-                                        <input class="form-control" type="text" id="example-datetimepicker4" name="example-datetimepicker4" placeholder="Choose a date..">
-                                        <span class="input-group-addon">
-                                            <span class="fa fa-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
                             
                             <div class="form-group">
                                 <div class="col-md-8">
                                     <div class="js-datetimepicker form-material input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true" data-side-by-side="true">
                                         <input class="form-control" type="text" id="example-datetimepicker8" name="example-datetimepicker8" placeholder="Choose a date..">
-                                        <label for="example-datetimepicker8">Side by side</label>
+                                        <label for="example-datetimepicker8">Schedule Date</label>
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>
