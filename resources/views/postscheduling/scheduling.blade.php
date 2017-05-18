@@ -64,7 +64,6 @@
 
                     <div class="block-content">
                         <div id="personal-gallery" class="row items-push js-gallery-advanced">
-                            
                             @foreach (array_chunk($user_images, 3) as $user_imgs)
                             <div class='row'>
                                 @foreach ($user_imgs as $user_img)
@@ -79,7 +78,7 @@
                                                     <i class="fa fa-search-plus"></i> View
                                                 </a>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a class="btn btn-default upload-default-photo" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                                                    <a class="btn btn-default upload-photo" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,15 +110,6 @@
                         </li>
                         @endif
                         @endforeach
-                        <!--                    <li class="active">
-                                                <a href="#btabs-alt-static-justified-home"><i class="fa fa-home"></i> Home</a>
-                                            </li>
-                                            <li>
-                                                <a href="#btabs-alt-static-justified-profile"><i class="fa fa-pencil"></i> Profile</a>
-                                            </li>
-                                            <li>
-                                                <a href="#btabs-alt-static-justified-settings"><i class="fa fa-cog"></i> Settings</a>
-                                            </li>-->
                     </ul>
 
                     <div class="block-content tab-content">
@@ -158,11 +148,27 @@
                     </div>
                     <!-- END Block Tabs Justified Default Style -->
                 </div>
-
             </div>
-
         </div>
         @endforeach
+        
+        <div class="modal fade" id="modal-addprofile" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-popin modal-lg">
+                <div class="modal-content">
+                    <div class="block block-themed block-transparent remove-margin-b">
+                        <div class="block-header bg-modern">
+                            <ul class="block-options">
+                                <li>
+                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title"><i class='fa fa-instagram'></i> SCHEDULE IMAGE</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 </main>
 @endsection
 
