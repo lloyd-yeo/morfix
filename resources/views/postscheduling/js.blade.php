@@ -27,7 +27,7 @@ jQuery(function () {
         addRemoveLinks: true,
         accept: function(file, done) {
             // TODO: Image upload validation
-            //done();
+            done();
         },
         sending: function(file, xhr, formData) {
             // Pass token. You can use the same method to pass any other values as well such as a id to associate the image with for example.
@@ -36,6 +36,7 @@ jQuery(function () {
         init: function() {
             this.on("success", function(file, response) {
                 // On successful upload do whatever :-)
+                alert(response);
             });
         }
     };
