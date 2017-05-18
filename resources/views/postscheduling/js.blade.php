@@ -63,5 +63,9 @@ jQuery(function () {
         jQuery('#modalScheduleImage').modal('show');
     });
     
+    $("#schedule-btn").on("click", function(){ 
+        
+    });
+    
 });
 </script>
