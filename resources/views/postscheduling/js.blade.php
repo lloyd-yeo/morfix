@@ -17,6 +17,9 @@ $.ajaxSetup({
 });
 
 jQuery(function () {
+    
+    Dropzone.autoDiscover = false;
+    
     // Init page helpers (Select2 + Tags Inputs plugins)
     App.initHelpers(['select2', 'tags-inputs', 'slimscroll', 'magnific-popup']);
     
