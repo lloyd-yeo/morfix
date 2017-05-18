@@ -208,6 +208,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-instagram push-5-r"></i> Schedule Image</button>
