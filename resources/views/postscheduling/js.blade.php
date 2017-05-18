@@ -37,10 +37,6 @@ jQuery(function () {
             this.on("success", function(file, response) {
                 // On successful upload do whatever :-)
                 console.log(response);
-                
-                if (response.success === true) {
-                    $("#personal-gallery").html($("#personal-gallery").html() + $imgRow);
-                }
             });
         }
     };
