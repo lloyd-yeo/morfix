@@ -82,7 +82,7 @@ jQuery(function () {
             },
             success: function (data) {
                 if (data.success === true) {
-                    swal('Success', data.response, 'error');
+                    swal('Success', data.response, 'success');
                 }
             }
         });
