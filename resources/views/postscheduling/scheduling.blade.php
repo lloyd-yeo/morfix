@@ -171,7 +171,9 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-material form-material-primary">
-                                        <textarea class="form-control" id="image-caption-txt" name="image-caption" rows="7" placeholder="Type in the image caption here..."></textarea>
+                                        <textarea class="js-maxlength form-control" id="image-caption-txt" 
+                                                  name="image-caption" rows="7" maxlength="2000"
+                                                  placeholder="Type in the image caption here..."></textarea>
                                         <label for="image-caption">Your image caption</label>
                                     </div>
                                     <div class="help-block text-left">
@@ -185,7 +187,9 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-material form-material-primary">
-                                        <textarea class="form-control" id="first-comment-txt" name="first-comment" rows="7" placeholder="Type in the first comments here..."></textarea>
+                                        <textarea class="js-maxlength form-control" id="first-comment-txt" 
+                                                  name="first-comment" rows="7" maxlength="2000"
+                                                  placeholder="Type in the first comments here..."></textarea>
                                         <label for="first-comment">Your first comments</label>
                                     </div>
                                     <div class="help-block text-left">
