@@ -54,7 +54,7 @@ jQuery(function () {
     initValidationMaterial();
     
     $(".upload-photo").on("click", function(){
-        jQuery('#modal-addprofile').modal('show');
+        jQuery('#modalScheduleImage').modal('show');
     });
     
 });

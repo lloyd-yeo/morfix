@@ -78,7 +78,7 @@
                                                     <i class="fa fa-search-plus"></i> View
                                                 </a>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a class="btn btn-default upload-photo" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                                                    <a data-toggle="modal" href="#modalScheduleImage" class="btn btn-default upload-photo" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -152,7 +152,7 @@
         </div>
         @endforeach
         
-        <div class="modal fade" id="modal-addprofile" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="modalScheduleImage" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-popin modal-lg">
                 <div class="modal-content">
                     <div class="block block-themed block-transparent remove-margin-b">
@@ -164,6 +164,9 @@
                             </ul>
                             <h3 class="block-title"><i class='fa fa-instagram'></i> SCHEDULE IMAGE</h3>
                         </div>
+                    </div>
+                    <div class="block-content">
+                        
                     </div>
                 </div>
             </div>
