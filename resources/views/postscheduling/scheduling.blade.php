@@ -48,7 +48,7 @@
                 <div class="block">
                     <div class="block-content block-content-full">
                         <!-- DropzoneJS Container -->
-                        <form class="dropzone" action="../add">
+                        <form class="dropzone" method="POST" action="../add">
                             {{ csrf_field() }}
                         </form>
                     </div>

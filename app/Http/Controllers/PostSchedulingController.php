@@ -69,7 +69,7 @@ class PostSchedulingController extends Controller
     public function add($request) {
         
         if ($request->file('file')->isValid()) {
-           $image = $request->file('file');
+            $image = $request->file('file');
         
             Storage::putFile('uploads', new File('/upload'));
 

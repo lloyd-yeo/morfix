@@ -17,13 +17,6 @@ $.ajaxSetup({
 });
 
 jQuery(function () {
-    Dropzone.options.attachments = {
-        url: '/post-scheduling/add',
-        headers: {
-            'X-CSRFToken': $('meta[name="csrf-token"]').attr('content')
-        }
-    };
-    
     // Init page helpers (Select2 + Tags Inputs plugins)
     App.initHelpers(['select2', 'tags-inputs', 'slimscroll', 'magnific-popup']);
     
