@@ -129,10 +129,10 @@
                             @else
                             <div class="tab-pane" id="cat-{{ $category->category }}">
                                 @endif
-                                @foreach ($imgs[$category->id]->chunk(6) as $default_imgs)
+                                @foreach ($imgs[$category->id]->chunk(4) as $default_imgs)
                                 <div class='row'>
                                     @foreach ($default_imgs as $default_img)
-                                    <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
+                                    <div class="col-sm-3 col-md-3 col-lg-3 animated fadeIn push-15">
                                         <div class="img-container fx-img-rotate-r">
                                             <img class="img-responsive" src="{{ asset("storage/" . $default_img->image_path) }}" alt="">
                                             <div class="img-options">
