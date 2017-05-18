@@ -16,6 +16,7 @@ use App\InstagramProfileComment;
 use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
 use App\DefaultImageGallery;
+use App\UserImages;
 
 class PostSchedulingController extends Controller {
 
@@ -74,9 +75,12 @@ class PostSchedulingController extends Controller {
             $image = $request->file('file');
             $filename = Storage::putFile('public/uploads', $image, 'public');
             $filename = substr($filename, 7);
-            DB::connection('mysql_old')->insert("INSERT INTO insta_affiliate.user_images(email, image_path) VALUES (?,?);", [Auth::user()->email, $filename]);
-            $last_insert_id = DB::getPdo()->lastInsertId();
-            return response()->json(['success' => true, 'path' => $filename, 'id' => $last_insert_id]);
+            
+            $user_img = new UserImages;
+            $user_img->email = Auth::user()->email;
+            $user_img->image_path = $filename;
+            $user_img->save();
+            return response()->json(['success' => true, 'path' => $filename, 'id' => $user_img->id]);
         }
     }
 
