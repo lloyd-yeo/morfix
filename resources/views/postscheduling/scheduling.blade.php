@@ -65,10 +65,10 @@
                     <div class="block-content">
                         <div class="row items-push js-gallery-advanced">
                             
-                            @foreach (array_chunk($user_images, 6) as $user_imgs)
+                            @foreach (array_chunk($user_images, 3) as $user_imgs)
                             <div class='row'>
                                 @foreach ($user_imgs as $user_img)
-                                <div class="col-sm-3 col-md-2 col-lg-2 animated fadeIn push-15">
+                                <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn push-15">
                                     <div class="img-container fx-img-rotate-r">
                                         <img class="img-responsive" src="{{ asset("storage/" . $user_img->image_path) }}" alt="">
                                         <div class="img-options">
