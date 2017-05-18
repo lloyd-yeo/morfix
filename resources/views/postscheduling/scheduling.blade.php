@@ -78,7 +78,7 @@
                                                     <i class="fa fa-search-plus"></i> View
                                                 </a>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a data-toggle="modal" href="#modalScheduleImage" class="btn btn-default upload-photo" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                                                    <a class="btn btn-default upload-photo" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
                                                 </div>
                                             </div>
                                         </div>
