@@ -171,8 +171,8 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-material form-material-primary">
-                                        <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7" placeholder="Type in your greeting message template here..."></textarea>
-                                        <label for="greeting-template">Your image caption</label>
+                                        <textarea class="form-control" id="image-caption-txt" name="image-caption" rows="7" placeholder="Type in the image caption here..."></textarea>
+                                        <label for="image-caption">Your image caption</label>
                                     </div>
                                     <div class="help-block text-left">
                                         <b>EMOJI</b>
@@ -181,7 +181,21 @@
                                     </div>
                                 </div>
                             </div>
-
+                            @if (Auth::user()->user_tier > 1)
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material form-material-primary">
+                                        <textarea class="form-control" id="first-comment-txt" name="first-comment" rows="7" placeholder="Type in the first comments here..."></textarea>
+                                        <label for="first-comment">Your first comments</label>
+                                    </div>
+                                    <div class="help-block text-left">
+                                        <b>EMOJI</b>
+                                        <br/>
+                                        Press ":" to bring up emojis.
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-instagram push-5-r"></i> Schedule Image</button>
