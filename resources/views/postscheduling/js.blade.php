@@ -9,6 +9,8 @@
 <script src="{{ asset('assets/js/plugins/jquery-textautocomplete/jquery.textcomplete.min.js') }}"></script>
 <script src="{{ asset('assets/js/pages/auto_interaction_settings.js') }}"></script>
 <script src="{{ asset('assets/js/plugins/magnific-popup/magnific-popup.min.js') }} "></script>
+<script src="{{ asset('assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
+<script src="{{ asset('assets/js/plugins/bootstrap-datetimepicker/moment.min.js') }}"></script>
 <script>
 $.ajaxSetup({
     headers: {
