@@ -63,10 +63,10 @@
                     </div>
 
                     <div class="block-content">
-                        <div class="row items-push js-gallery-advanced">
+                        <div id="personal-gallery" class="row items-push js-gallery-advanced">
                             
                             @foreach (array_chunk($user_images, 3) as $user_imgs)
-                            <div class='row'>
+                            <!--<div class='row'>-->
                                 @foreach ($user_imgs as $user_img)
                                 <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn push-15">
                                     <div class="img-container fx-img-rotate-r">
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                                 @endforeach
-                            </div>
+                            <!--</div>-->
                             @endforeach
                             
                         </div>
