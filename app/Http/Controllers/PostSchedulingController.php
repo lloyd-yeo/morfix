@@ -92,12 +92,12 @@ class PostSchedulingController extends Controller {
      */
     public function schedule(Request $request, $id) {
         $instagram_profiles = InstagramProfile::where('id', $id)->first();
-        $insta_username = $instagram_profiles->insta_username;
         $image_id = $request->input('img_id');
         $user_img = UserImages::find($image_id);
         
         $instagram_post_schedule = new InstagramProfilePhotoPostSchedule;
         $instagram_post_schedule->insta_id = $instagram_profiles->id;
+        $instagram_post_schedule->insta_username = $instagram_profiles->insta_username;
         if ($request->input('date_to_post') !== null) {
             $instagram_post_schedule->date_to_post = date("Y-m-d H:i:s", strtotime($request->input('date_to_post')));
         }
