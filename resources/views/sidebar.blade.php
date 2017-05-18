@@ -63,75 +63,63 @@
                     </li>
 
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">PAYMENT</span></li>
-
-
-                    <li class="">
-                        <a class="" data-toggle="nav-submenu" href="#">
-                            <i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
-                        <ul>
-                            <li>
-                                <a href="base_pages_blank.html">Blank</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_dashboard_v2.html">Dashboard v2</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_search.html">Search Results</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_invoice.html">Invoice</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_faq.html">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_inbox.html">Inbox</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_files.html">Files</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_tickets.html">Tickets</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_contacts.html">Contacts</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_coming_soon.html">Coming Soon</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_coming_soon_v2.html">Coming Soon v2</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_maintenance.html">Maintenance</a>
-                            </li>
-                        </ul>
+                    
+                    @if (Auth::user()->user_tier == 1)
+                    <li>
+                        @if ($page == 'payment')
+                        <a class="active" href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium</span></a>
+                        @else
+                        <a href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium</span></a>
+                        @endif
+                    </li>
+                    @elseif (Auth::user()->user_tier == 2)
+                    <li>
+                        @if ($page == 'payment')
+                        <a class="active" href="/upgrade/pro"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
+                        @else
+                        <a href="/upgrade/pro"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
+                        @endif
                     </li>
                     <li>
-                        <a class="" data-toggle="nav-submenu" href="#">
-                            <i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
-                        <ul>
-                            <li>
-                                <a href="base_pages_ecom_dashboard.html">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_ecom_orders.html">Orders</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_ecom_order.html">Order</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_ecom_products.html">Products</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_ecom_product_edit.html">Product Edit</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_ecom_customer.html">Customer</a>
-                            </li>
-                        </ul>
+                        @if ($page == 'payment')
+                        <a class="active" href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
+                        @else
+                        <a href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
+                        @endif
                     </li>
-
+                    @elseif (Auth::user()->user_tier == 3)
+                    <li>
+                        @if ($page == 'payment')
+                        <a class="active" href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
+                        @else
+                        <a href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
+                        @endif
+                    </li>
+                    @elseif (Auth::user()->user_tier == 4)
+                    <li>
+                        @if ($page == 'payment')
+                        <a class="active" href="/upgrade/mastermind"><i class="si si-bag"></i><span class="sidebar-mini-hide">Mastermind Upgrade</span></a>
+                        @else
+                        <a href="/upgrade/mastermind"><i class="si si-bag"></i><span class="sidebar-mini-hide">Mastermind Add-On</span></a>
+                        @endif
+                    </li>
+                    @endif
+                    
+<!--                    <li>
+                        @if ($page == 'payment')
+                        <a class="active" href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
+                        @else
+                        <a href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
+                        @endif
+                    </li>-->
+                    
+<!--                    <li>
+                        @if ($page == 'payment')
+                        <a class="active" href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
+                        @else
+                        <a href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
+                        @endif
+                    </li>-->
 
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">TRAINING VIDEOS</span></li>
                     <li>
