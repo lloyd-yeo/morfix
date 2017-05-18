@@ -53,8 +53,11 @@ jQuery(function () {
     
     initValidationMaterial();
     
+    var $imgId = 0;
     $(".upload-photo").on("click", function(){
+        $imgId = $(this).attr("data-image-id");
         jQuery('#modalScheduleImage').modal('show');
+        alert($imgId);
     });
     
 });

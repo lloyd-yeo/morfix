@@ -167,6 +167,7 @@
                     </div>
                     <div class="block-content">
                         <form class="form-horizontal push-10">
+                            <span id="meta-id"></span>
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-material form-material-primary">
