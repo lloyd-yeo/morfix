@@ -78,7 +78,7 @@
                                                     <i class="fa fa-search-plus"></i> View
                                                 </a>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a class="btn btn-default upload-photo" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
+                                                    <a class="btn btn-default upload-photo" data-profile-id="{{ $ig_profile->id }}" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Schedule</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -204,8 +204,8 @@
                             <div class="form-group">
                                 <div class="col-md-8">
                                     <div class="js-datetimepicker form-material input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true" data-side-by-side="true">
-                                        <input class="form-control" type="text" id="example-datetimepicker8" name="example-datetimepicker8" placeholder="Choose a date..">
-                                        <label for="example-datetimepicker8">Schedule Date (GMT +8)</label>
+                                        <input class="form-control" type="text" id="schedule-date" name="schedule-date" placeholder="Choose a date..">
+                                        <label for="schedule-date">Schedule Date (GMT +8)</label>
                                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                     </div>
                                 </div>

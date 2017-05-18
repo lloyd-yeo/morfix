@@ -58,12 +58,32 @@ jQuery(function () {
     initValidationMaterial();
     
     var $imgId = 0;
+    var $profileId = 0;
+    
     $(".upload-photo").on("click", function(){
         $imgId = $(this).attr("data-image-id");
+        $profileId = $(this).attr("data-profile-id");
         jQuery('#modalScheduleImage').modal('show');
     });
     
     $("#schedule-btn").on("click", function(){ 
+        var $dateToPost = $("#schedule-date").val();
+        var $caption = $("#image-caption-txt").val();
+        var $firstComment = $("#first-comment-txt").val();
+        $.ajax({
+            type: "POST",
+            url: '/post-scheduling/schedule/' + $profileId,
+            dataType: "json",
+            data: {
+                img_id: $imgId,
+                date_to_post: $dateToPost,
+                caption: $caption,
+                first_comment: $firstComment
+            },
+            success: function (data) {
+                alert(data);
+            }
+        });
         
     });
     

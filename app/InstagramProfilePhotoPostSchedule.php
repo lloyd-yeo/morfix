@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class InstagramProfilePhotoPostSchedule extends Model {
 
-    protected $table = 'morfix_instagram_profile_photo_post_schedules';
-
+    protected $table = 'user_insta_photo_post_schedule';
+    public $timestamps = false;
+    protected $connection = 'mysql_old';
 }
