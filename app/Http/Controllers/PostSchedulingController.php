@@ -75,7 +75,7 @@ class PostSchedulingController extends Controller {
             $filename = Storage::putFile('public/uploads', $image, 'public');
             $filename = substr($filename, 7); 
             $last_insert_id = 
-                    DB::connection('mysql_old')->table('user_images')->insertGetId([Auth::user()->email, $filename]);
+                    DB::connection('mysql_old')->table('user_images')->insertGetId(['email' => Auth::user()->email, 'image_path' => $filename]);
                     
 //                    DB::connection('mysql_old')->insert("INSERT INTO insta_affiliate.user_images(email, image_path) VALUES (?,?);", 
 //                            [Auth::user()->email, $filename]);
