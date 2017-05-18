@@ -66,7 +66,7 @@ class PostSchedulingController extends Controller
         ]);
     }
     
-    public function add($request) {
+    public function add(Request $request) {
         var_dump($request);
 //        if ($request->file('file')->isValid()) {
 //            $image = $request->file('file');

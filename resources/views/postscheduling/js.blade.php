@@ -43,7 +43,7 @@ jQuery(function () {
 
     // Manually init dropzone on our element.
     var myDropzone = new Dropzone("#image-upload", {
-        url: '../add'
+        url: 'post-scheduling/add'
     });
     
     // Init page helpers (Select2 + Tags Inputs plugins)
