@@ -201,9 +201,9 @@
                             </div>
                             @endif
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Schedule Date</label>
+                                <label class="col-md-12 control-label">Schedule Date</label>
                                 <br/>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="js-datetimepicker" data-show-today-button="true" data-inline="true"></div>
                                 </div>
                             </div>
