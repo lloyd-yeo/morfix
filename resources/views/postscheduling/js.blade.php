@@ -36,7 +36,7 @@ jQuery(function () {
         init: function() {
             this.on("success", function(file, response) {
                 // On successful upload do whatever :-)
-                alert(file);
+                console.log(file);
             });
         }
     };
