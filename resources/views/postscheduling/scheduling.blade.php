@@ -166,7 +166,27 @@
                         </div>
                     </div>
                     <div class="block-content">
-                        
+                        <form class="form-horizontal push-10">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material form-material-primary">
+                                        <textarea class="form-control" id="greeting-template-txt" name="greeting-template" rows="7" placeholder="Type in your greeting message template here..."></textarea>
+                                        <label for="greeting-template">Your image caption</label>
+                                    </div>
+                                    <div class="help-block text-left">
+                                        <b>EMOJI</b>
+                                        <br/>
+                                        Press ":" to bring up emojis.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-instagram push-5-r"></i> Schedule Image</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
