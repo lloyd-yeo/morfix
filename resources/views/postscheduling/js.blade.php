@@ -86,6 +86,8 @@ jQuery(function () {
                 }
             }
         });
+        
+        jQuery('#modalScheduleImage').modal('toggle');
     });
     
 });
