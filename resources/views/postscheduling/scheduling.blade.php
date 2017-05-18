@@ -177,9 +177,9 @@
                                         <label for="image-caption">Your image caption</label>
                                     </div>
                                     <div class="help-block text-left">
-                                        <b>EMOJI</b>
+<!--                                        <b>EMOJI</b>
                                         <br/>
-                                        Press ":" to bring up emojis.
+                                        Press ":" to bring up emojis.-->
                                     </div>
                                 </div>
                             </div>
@@ -193,9 +193,9 @@
                                         <label for="first-comment">Your first comments</label>
                                     </div>
                                     <div class="help-block text-left">
-                                        <b>EMOJI</b>
+<!--                                        <b>EMOJI</b>
                                         <br/>
-                                        Press ":" to bring up emojis.
+                                        Press ":" to bring up emojis.-->
                                     </div>
                                 </div>
                             </div>
@@ -203,8 +203,9 @@
                             <div class="form-group">
                                 <div class="col-md-8">
                                     <div class="form-material">
-                                        <input class="js-datetimepicker form-control" type="text" id="example-datetimepicker5" name="example-datetimepicker5" placeholder="Choose a date..">
-                                        <label for="example-datetimepicker5">Normal</label>
+                                        <input class="js-datetimepicker form-control" type="text" 
+                                               id="example-datetimepicker5" name="example-datetimepicker5" placeholder="Choose a date..">
+                                        <label for="example-datetimepicker5">Schedule Date</label>
                                     </div>
                                 </div>
                             </div>
