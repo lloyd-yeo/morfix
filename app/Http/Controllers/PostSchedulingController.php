@@ -17,6 +17,7 @@ use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
 use App\DefaultImageGallery;
 use App\UserImages;
+use App\InstagramProfilePhotoPostSchedule;
 
 class PostSchedulingController extends Controller {
 
