@@ -201,6 +201,14 @@
                             </div>
                             @endif
                             <div class="form-group">
+                                <div class="col-md-8">
+                                    <div class="form-material">
+                                        <input class="js-datetimepicker form-control" type="text" id="example-datetimepicker5" name="example-datetimepicker5" placeholder="Choose a date..">
+                                        <label for="example-datetimepicker5">Normal</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-xs-12">
                                     <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-instagram push-5-r"></i> Schedule Image</button>
                                 </div>
