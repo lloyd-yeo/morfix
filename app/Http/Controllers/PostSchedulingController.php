@@ -107,7 +107,7 @@ class PostSchedulingController extends Controller {
             $instagram_post_schedule->first_comment = $request->input('first_comment');
         }
         if ($instagram_post_schedule->save()) {
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'response' => 'Your post has been successfully scheduled for posting at ' . $instagram_post_schedule->date_to_post]);
         }
     }
 

@@ -81,7 +81,9 @@ jQuery(function () {
                 first_comment: $firstComment
             },
             success: function (data) {
-                alert(data);
+                if (data.success === true) {
+                    swal('Success', data.response, 'error');
+                }
             }
         });
     });
