@@ -72,8 +72,8 @@ class PostSchedulingController extends Controller
 //        var_dump($request);
         if ($request->file('file')->isValid()) {
             $image = $request->file('file');
-            $image->store('uploads');
-            #Storage::putFile('uploads', new File('/upload'));
+//            $image->store('uploads');
+            Storage::putFile('uploads', $image);
 
             #$imageName = time().$image->getClientOriginalName();
             #$image->move(public_path('uploads'),$imageName);
