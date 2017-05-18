@@ -67,9 +67,9 @@
                     @if (Auth::user()->user_tier == 1)
                     <li>
                         @if ($page == 'payment')
-                        <a class="active" href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium</span></a>
+                        <a class="active" href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
                         @else
-                        <a href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium</span></a>
+                        <a href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
                         @endif
                     </li>
                     @elseif (Auth::user()->user_tier == 2)
