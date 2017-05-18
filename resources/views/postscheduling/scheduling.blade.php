@@ -68,7 +68,7 @@
                             @foreach (array_chunk($user_images, 3) as $user_imgs)
                             <!--<div class='row'>-->
                                 @foreach ($user_imgs as $user_img)
-                                <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn push-15">
+                                <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn push-15" style="height: 150px;">
                                     <div class="img-container fx-img-rotate-r">
                                         <img class="img-responsive" src="{{ asset("storage/" . $user_img->image_path) }}" alt="">
                                         <div class="img-options">
