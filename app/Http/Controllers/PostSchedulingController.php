@@ -17,13 +17,12 @@ use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
 use App\DefaultImageGallery;
 
+class PostSchedulingController extends Controller {
 
-class PostSchedulingController extends Controller
-{
     public function __construct() {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +34,7 @@ class PostSchedulingController extends Controller
             'user_ig_profiles' => $instagram_profiles,
         ]);
     }
-    
+
     /**
      * Display a gallery of the resource.
      *
@@ -47,19 +46,19 @@ class PostSchedulingController extends Controller
         $default_images = DefaultImageGallery::orderBy('image_id', 'desc')->get();
         $default_categories = DB::connection('mysql_old')->select("SELECT id, category FROM insta_affiliate.default_image_category;");
         $imgs = array();
-        
+
         foreach ($default_categories as $category) { //populate categories first
             $imgs[$category->id] = array();
         }
-        
+
         foreach ($default_images as $default_image) { //populate each category with images
             $imgs[$default_image->category_id][] = $default_image;
         }
-        
+
         foreach ($default_categories as $category) { //populate categories first
             $imgs[$category->id] = collect($imgs[$category->id]);
         }
-        
+
         return view('postscheduling.scheduling', [
             'user_ig_profiles' => $instagram_profiles,
             'default_imgs' => $default_images,
@@ -67,19 +66,14 @@ class PostSchedulingController extends Controller
             'imgs' => $imgs,
         ]);
     }
-    
+
     public function add(Request $request) {
-//        var_dump($request);
         if ($request->file('file')->isValid()) {
             $image = $request->file('file');
-//            $image->store('uploads');
             $filename = Storage::putFile('uploads', $image, 'public');
             DB::connection('mysql_old')->insert("INSERT INTO insta_affiliate.user_images(email, image_path) VALUES (?,?);", [Auth::user()->email, $filename]);
-            #$imageName = time().$image->getClientOriginalName();
-            #$image->move(public_path('uploads'),$imageName);
-            return response()->json(['success'=>$filename]);
+            return response()->json(['success' => $filename]);
         }
-        
-        
     }
+
 }
