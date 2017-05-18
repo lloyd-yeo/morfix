@@ -72,7 +72,7 @@ class PostSchedulingController extends Controller {
     public function add(Request $request) {
         if ($request->file('file')->isValid()) {
             $image = $request->file('file');
-            $filename = Storage::putFile('uploads', $image, 'public');
+            $filename = Storage::putFile('public/uploads', $image, 'public');
             DB::connection('mysql_old')->insert("INSERT INTO insta_affiliate.user_images(email, image_path) VALUES (?,?);", [Auth::user()->email, $filename]);
             return response()->json(['success' => $filename]);
         }
