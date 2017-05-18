@@ -66,7 +66,7 @@ jQuery(function () {
         jQuery('#modalScheduleImage').modal('show');
     });
     
-    $("#schedule-btn").on("click", function(){ 
+    $("#schedule-btn").on("click", function(){
         var $dateToPost = $("#schedule-date").val();
         var $caption = $("#image-caption-txt").val();
         var $firstComment = $("#first-comment-txt").val();
@@ -84,7 +84,6 @@ jQuery(function () {
                 alert(data);
             }
         });
-        
     });
     
 });
