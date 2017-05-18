@@ -47,7 +47,7 @@ jQuery(function () {
     });
     
     // Init page helpers (Select2 + Tags Inputs plugins)
-    App.initHelpers(['select2', 'tags-inputs', 'slimscroll', 'magnific-popup']);
+    App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'tags-inputs', 'slimscroll', 'magnific-popup']);
     
     initCommentsEmojiAutocomplete();
     
