@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\File;
+Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -71,10 +72,11 @@ class PostSchedulingController extends Controller
 //        var_dump($request);
         if ($request->file('file')->isValid()) {
             $image = $request->file('file');
-            Storage::putFile('uploads', new File('/upload'));
+            $image->store('uploads');
+            #Storage::putFile('uploads', new File('/upload'));
 
-            $imageName = time().$image->getClientOriginalName();
-            $image->move(public_path('uploads'),$imageName);
+            #$imageName = time().$image->getClientOriginalName();
+            #$image->move(public_path('uploads'),$imageName);
             return response()->json(['success'=>$imageName]);
         }
         
