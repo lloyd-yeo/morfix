@@ -14,7 +14,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-bag"></i>  Upgrade <small> Upgrade to enjoy more of Morfix!</small>
+                    <i class="si si-bag"></i>  Upgrade <small> Upgrade NOW to enjoy more of Morfix!</small>
                 </h1>
             </div>
         </div>

@@ -63,7 +63,7 @@
                     </li>
                     
                     @if(Auth::user()->vip != 1)
-                    <li class="nav-main-heading"><span class="sidebar-mini-hide">PAYMENT</span></li>
+                    <li class="nav-main-heading"><span class="sidebar-mini-hide">UPGRADE ACCOUNT</span></li>
                         @if (Auth::user()->user_tier == 1)
                         <li>
                             @if ($page == 'payment')
