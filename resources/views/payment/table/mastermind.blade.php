@@ -16,10 +16,10 @@
                      style="font-family: 'Montserrat', sans-serif; 
                      font-style: normal; font-weight: normal; height: 200px;">
                     <span style="font-size: 30px; top: -20px; position:relative;">$</span>
-                    <span style="font-size: 60px; top: -20px; padding-left: 10px;">97/mth</span>
+                    <span style="font-size: 60px; top: -20px; padding-left: 10px;">970/yr</span>
                     <div class="push-30-t block-title h6 text-white" 
                          style="font-size: 14px; text-transform: none; font-weight: 100;
-                         font-style: italic; font-family: 'Lora', serif;">For Power Users</div>
+                         font-style: italic; font-family: 'Lora', serif;">We teach YOU how to turn your Instagram account into a 6 figure money making tool!</div>
                 </div>
             </div>
         </div>
