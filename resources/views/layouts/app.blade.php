@@ -137,10 +137,11 @@ window.Laravel = {!! json_encode([
                             <h3 class="block-title">Upgrade your account now!</h3>
                         </div>
                         <div class="block-content">
+                            
                             <div class="row text-center">
-
-                                <div class="col-lg-6 visibility-hidden" data-toggle="appear" data-offset="50" data-class="animated fadeInDown">
-                                    <!-- FREE Plan -->
+                                
+                                <div class="col-lg-6">
+                                    <!-- PREMIUM Plan -->
                                     <div class="block block-bordered block-link-hover3 text-center" href="javascript:void(0)">
                                         <div class="block-header" style='padding-top: 10px; 
                                              padding-left: 10px; padding-right: 10px; padding-bottom: 5px;
@@ -210,8 +211,9 @@ window.Laravel = {!! json_encode([
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- END FREE Plan -->
+                                    <!-- END PREMIUM Plan -->
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
