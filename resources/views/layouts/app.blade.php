@@ -145,6 +145,9 @@ window.Laravel = {!! json_encode([
                                 @elseif (Auth::user()->tier == 2)
                                 @include('payment.table.pro')
                                 @include('payment.table.business')
+                                @elseif (Auth::user()->tier == 3)
+                                @include('payment.table.business')
+                                @include('payment.table.mastermind')
                                 @endif
                             </div>
                         </div>
