@@ -4,7 +4,7 @@
         <div class="block-header" style='padding-top: 10px; 
              padding-left: 10px; padding-right: 10px; padding-bottom: 5px;
              border-bottom: none;'>
-            <div style='padding:5px; background-color:rgb(30, 115, 190); height: 274px;'>
+            <div style='padding:5px; background-color:rgb(212, 60, 60); height: 274px;'>
                 <h3 class="push-20-t block-title h1 font-w700 text-white" 
                     style="font-family: 'Montserrat', sans-serif; font-size: 25px;">Pro</h3>
                 <div class="push-10-t block-title h6 text-white" 
