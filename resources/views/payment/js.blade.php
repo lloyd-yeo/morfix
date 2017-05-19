@@ -8,6 +8,27 @@ $.ajaxSetup({
     }
 });
 
+var handler = StripeCheckout.configure({
+    key: key,
+    image: 'https://morfix.co/app/assets/img/mx-black-crop.png',
+    locale: 'auto',
+    token: function (token) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+        $.post("cron-subscribe-user-premium.php", { stripeToken: token.id, email: "<?php echo $_SESSION["user_email"]; ?>" },
+            function (data) {
+                $("#loading-div").hide();
+                if (data.success === true) {
+                    alert("You have upgraded to the Premium package. Enjoy the full suite of MorfiX's function!");
+                    window.location.href="payment.php";
+                } else {
+                    alert(data.msg);
+                }
+            },"json");
+    }
+});
+
+
 $("#premium-btn").on("click", function(){ 
     // Open Checkout with further options:
     handler.open({
