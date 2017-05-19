@@ -8,22 +8,59 @@ $.ajaxSetup({
     }
 });
 var key = "pk_live_WrvnbbOwMxU7FwZzaoTdaUpa";
-var handler = StripeCheckout.configure({
+
+var premium_handler = StripeCheckout.configure({
     key: key,
     image: 'https://morfix.co/app/assets/img/mx-black-crop.png',
     locale: 'auto',
     token: function (token) {
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
-        $.post("cron-subscribe-user-premium.php", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
+        $.post("/upgrade/premium", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
             function (data) {
-                $("#loading-div").hide();
-                if (data.success === true) {
-                    alert("You have upgraded to the Premium package. Enjoy the full suite of MorfiX's function!");
-                    window.location.href="payment.php";
-                } else {
-                    alert(data.msg);
-                }
+                
+            },"json");
+    }
+});
+
+var pro_handler = StripeCheckout.configure({
+    key: key,
+    image: 'https://morfix.co/app/assets/img/mx-black-crop.png',
+    locale: 'auto',
+    token: function (token) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+        $.post("/upgrade/pro", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
+            function (data) {
+                
+            },"json");
+    }
+});
+
+var business_handler = StripeCheckout.configure({
+    key: key,
+    image: 'https://morfix.co/app/assets/img/mx-black-crop.png',
+    locale: 'auto',
+    token: function (token) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+        $.post("/upgrade/business", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
+            function (data) {
+                
+            },"json");
+    }
+});
+
+var mastermind_handler = StripeCheckout.configure({
+    key: key,
+    image: 'https://morfix.co/app/assets/img/mx-black-crop.png',
+    locale: 'auto',
+    token: function (token) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+        $.post("/upgrade/mastermind", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
+            function (data) {
+                
             },"json");
     }
 });
@@ -31,14 +68,41 @@ var handler = StripeCheckout.configure({
 
 $("#premium-btn").on("click", function(){ 
     // Open Checkout with further options:
-    handler.open({
+    premium_handler.open({
         name: 'Morfix.co',
         description: 'Premium Package ($37 per mth)',
         panelLabel: 'Subscribe',
         email: "{{ Auth::user()->email }}"
     });
 });
-$("#pro-btn").on("click", function(){ });
-$("#business-btn").on("click", function(){ });
-$("#mastermind-btn").on("click", function(){ });
+
+$("#pro-btn").on("click", function(){ 
+    // Open Checkout with further options:
+    pro_handler.open({
+        name: 'Morfix.co',
+        description: 'Pro Package ($370 per yr)',
+        panelLabel: 'Subscribe',
+        email: "{{ Auth::user()->email }}"
+    });
+});
+
+$("#business-btn").on("click", function(){ 
+    // Open Checkout with further options:
+    business_handler.open({
+        name: 'Morfix.co',
+        description: 'Business Package ($97 per mth)',
+        panelLabel: 'Subscribe',
+        email: "{{ Auth::user()->email }}"
+    });
+});
+
+$("#mastermind-btn").on("click", function(){ 
+    // Open Checkout with further options:
+    pro_handler.open({
+        name: 'Morfix.co',
+        description: 'Mastermind Package ($970 per yr)',
+        panelLabel: 'Subscribe',
+        email: "{{ Auth::user()->email }}"
+    });
+});
 </script>
