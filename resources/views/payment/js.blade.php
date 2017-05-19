@@ -7,7 +7,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
+var key = "pk_live_WrvnbbOwMxU7FwZzaoTdaUpa";
 var handler = StripeCheckout.configure({
     key: key,
     image: 'https://morfix.co/app/assets/img/mx-black-crop.png',
