@@ -65,7 +65,7 @@
                     @if(Auth::user()->vip != 1)
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">UPGRADE ACCOUNT</span></li>
                     <li>
-                        <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
+                        <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Purchase Upgrade</span></a>
                     </li>
                     @endif
 
