@@ -100,7 +100,7 @@ class HomeController extends Controller {
                             `user_updates`.`content`,
                             `user_updates`.`type`,
                             `user_updates`.`created_at`
-                        FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ?;", [Auth::user()->email]);
+                        FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ? ORDER BY id DESC;", [Auth::user()->email]);
         
         return view('home', [
             'leaderboard_alltime' => $leaderboard_alltime,
