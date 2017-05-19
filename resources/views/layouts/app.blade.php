@@ -166,7 +166,7 @@ window.Laravel = {!! json_encode([
                                         <div class="block-content" style='padding-top: 0px;
                                              padding-left: 10px; padding-right: 10px; padding-bottom: 10px;'>
                                             <div style='background-color:#f5f5f5;'>
-                                                <div style="font-family: 'Raleway'; padding-top: 35px; font-weight: 400; 
+                                                <div style="font-family: 'Raleway'; padding-top: 35px; font-weight: 700; 
                                                      padding-bottom: 20px; padding-left: 30px; padding-right: 30px;">
                                                     <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         No Morfix.co branding
