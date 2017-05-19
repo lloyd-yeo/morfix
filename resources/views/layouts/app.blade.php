@@ -141,7 +141,7 @@ window.Laravel = {!! json_encode([
                                 <div class="col-lg-offset-2 col-lg-4 visibility-hidden" data-toggle="appear" data-offset="50" data-class="animated fadeInDown">
                                     <!-- FREE Plan -->
                                     <div class="block block-bordered block-link-hover3 text-center" href="javascript:void(0)">
-                                        <div class="block-header" style='background-color: #f5f5f5; padding-top: 10px; 
+                                        <div class="block-header" style='padding-top: 10px; 
                                              padding-left: 10px; padding-right: 10px; padding-bottom: 5px;
                                              border-bottom: none;'>
                                             <div style='padding:5px; background-color:rgb(30, 115, 190); height: 274px;'>
@@ -161,7 +161,7 @@ window.Laravel = {!! json_encode([
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="block-content" style='background-color: #f5f5f5; padding-top: 0px;
+                                        <div class="block-content" style='padding-top: 0px;
                                              padding-left: 10px; padding-right: 10px; padding-bottom: 10px;'>
                                             <div style='background-color:#f5f5f5;'>
                                                 <div style="font-family: 'Raleway'; padding-top: 35px; font-weight: 400; 
