@@ -139,7 +139,7 @@ window.Laravel = {!! json_encode([
                         <div class="block-content">
                             <div class="row text-center">
 
-                                <div class="col-lg-offset-2 col-lg-4 visibility-hidden" data-toggle="appear" data-offset="50" data-class="animated fadeInDown">
+                                <div class="col-lg-6 visibility-hidden" data-toggle="appear" data-offset="50" data-class="animated fadeInDown">
                                     <!-- FREE Plan -->
                                     <div class="block block-bordered block-link-hover3 text-center" href="javascript:void(0)">
                                         <div class="block-header" style='padding-top: 10px; 
