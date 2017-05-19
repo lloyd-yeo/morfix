@@ -54,9 +54,10 @@
         <!-- Scripts -->
         <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
         <script>
-            window.Laravel = {!! json_encode([
-                    'csrfToken' => csrf_token(),
-            ]) !!};
+window.Laravel = {!! json_encode([
+        'csrfToken' => csrf_token(),
+]) !!}
+;
         </script>
     </head>
     <body>
@@ -118,7 +119,7 @@
             </div>
         </div>
         <!-- END Apps Modal -->
-        
+
         <!-- Apps Modal -->
         <!-- Opens from the button in the header -->
         <div class="modal fade" id="upgrade-modal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -136,14 +137,81 @@
                         </div>
                         <div class="block-content">
                             <div class="row text-center">
-                                <div class="col-xs-6">
-                                    <a class="block block-rounded" href="base_pages_dashboard.html">
-                                        <div class="block-content text-white bg-default">
-                                            <i class="si si-speedometer fa-2x"></i>
-                                            <div class="font-w600 push-15-t push-15">Backend</div>
+
+                                <div class="col-sm-6 col-lg-4 visibility-hidden" data-toggle="appear" data-offset="50" data-class="animated fadeInDown">
+                                    <!-- FREE Plan -->
+                                    <div class="block block-bordered block-link-hover3 text-center" href="javascript:void(0)">
+                                        <div class="block-header" style='background-color: #292929; padding-top: 10px; 
+                                             padding-left: 10px; padding-right: 10px; padding-bottom: 5px;
+                                             border-bottom: none;'>
+                                            <div style='padding:5px; background-color:rgb(30, 115, 190); height: 274px;'>
+                                                <h3 class="push-20-t block-title h1 font-w700 text-white" 
+                                                    style="font-family: 'Montserrat', sans-serif; font-size: 25px;">PREMIUM</h3>
+                                                <div class="push-10-t block-title h6 text-white" 
+                                                     style="font-size: 14px; text-transform: none; font-weight: 100;
+                                                     font-style: italic; font-family: 'Lora', serif;">&nbsp;</div>
+                                                <div class="push-20-t text-white" 
+                                                     style="font-family: 'Montserrat', sans-serif; 
+                                                     font-style: normal; font-weight: normal; height: 200px;">
+                                                    <span style="font-size: 30px; top: -20px; position:relative;">$</span>
+                                                    <span style="font-size: 60px; top: -20px; padding-left: 10px;">37/mth</span>
+                                                    <div class="push-30-t block-title h6 text-white" 
+                                                         style="font-size: 14px; text-transform: none; font-weight: 100;
+                                                         font-style: italic; font-family: 'Lora', serif;">Free Trial Available</div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </a>
+                                        <div class="block-content" style='background-color: #292929; padding-top: 0px;
+                                             padding-left: 10px; padding-right: 10px; padding-bottom: 10px;'>
+                                            <div style='background-color:#292929;'>
+                                                <div style="font-family: 'Raleway'; padding-top: 35px; font-weight: 400; 
+                                                     padding-bottom: 20px; padding-left: 30px; padding-right: 30px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        No Morfix.co branding
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        Full Speed
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        High Priority Support
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        Instagram Affiliate Training
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        Auto Interaction (Like, Comment Follow, Unfollow)
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        Greet New Followers With Direct Message
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        Unlimited Scheduled Posts
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        First Comment Function
+                                                    </p>
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                        Private Facebook Group
+                                                    </p>
+                                                </div>
+                                                <div style='padding-top: 0px; padding-bottom: 40px;'>
+                                                    <a href='/app/register.php' class="text-white" style='
+                                                       background-color:rgb(30, 115, 190); 
+                                                       padding: 10px 50px;
+                                                       font-weight: 600; 
+                                                       font-size: 15px; 
+                                                       border: solid 1px #D3D3D3;
+                                                       text-align: center;
+                                                       text-transform: uppercase;'>
+                                                        Try Now
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END FREE Plan -->
                                 </div>
+
                                 <div class="col-xs-6">
                                     <a class="block block-rounded" href="frontend_home.html">
                                         <div class="block-content text-white bg-modern">
@@ -160,7 +228,7 @@
             </div>
         </div>
         <!-- END Apps Modal -->
-        
+
 
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
         <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
