@@ -157,7 +157,7 @@ window.Laravel = {!! json_encode([
                                                     <span style="font-size: 60px; top: -20px; padding-left: 10px;">37/mth</span>
                                                     <div class="push-30-t block-title h6 text-white" 
                                                          style="font-size: 14px; text-transform: none; font-weight: 100;
-                                                         font-style: italic; font-family: 'Lora', serif;">Free Trial Available</div>
+                                                         font-style: italic; font-family: 'Lora', serif;">Make Affiliate Commission</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -166,31 +166,31 @@ window.Laravel = {!! json_encode([
                                             <div style='background-color:#f5f5f5;'>
                                                 <div style="font-family: 'Raleway'; padding-top: 35px; font-weight: 400; 
                                                      padding-bottom: 20px; padding-left: 30px; padding-right: 30px;">
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         No Morfix.co branding
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         Full Speed
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         High Priority Support
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         Instagram Affiliate Training
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         Auto Interaction (Like, Comment Follow, Unfollow)
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         Greet New Followers With Direct Message
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         Unlimited Scheduled Posts
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         First Comment Function
                                                     </p>
-                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(255, 255, 255); text-align:center; font-size: 14px;">
+                                                    <p style="border-bottom: 1px dotted #bdbdbd; line-height: 50px; color: rgb(0, 0, 0); text-align:center; font-size: 14px;">
                                                         Private Facebook Group
                                                     </p>
                                                 </div>
