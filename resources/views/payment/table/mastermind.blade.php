@@ -12,7 +12,7 @@
                 <div class="push-10-t block-title h6 text-white" 
                      style="font-size: 14px; text-transform: none; font-weight: 100;
                      font-style: italic; font-family: 'Lora', serif;">&nbsp;</div>
-                <div class="push-20-t text-white" 
+                <div class="text-white" 
                      style="font-family: 'Montserrat', sans-serif; 
                      font-style: normal; font-weight: normal; height: 200px;">
                     <span style="font-size: 30px; top: -20px; position:relative;">$</span>

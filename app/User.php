@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Cashier\Billable as Billable;
 
 class User extends Authenticatable {
-
+    
+    use Billable;
     use Notifiable;
+    
     protected $primaryKey = 'user_id'; 
     protected $connection = 'mysql_old';
     protected $table = 'user';
