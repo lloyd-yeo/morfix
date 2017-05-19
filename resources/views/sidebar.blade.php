@@ -61,34 +61,13 @@
                         <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @endif
                     </li>
-                    
+
                     @if(Auth::user()->vip != 1)
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">UPGRADE ACCOUNT</span></li>
-                        @if (Auth::user()->user_tier == 1)
-                        <li>
-                            @if ($page == 'payment')
-                            <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
-                            @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
-                            @endif
-                        </li>
-                        @endif
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
+                    </li>
                     @endif
-<!--                    <li>
-                        @if ($page == 'payment')
-                        <a class="active" href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
-                        @else
-                        <a href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
-                        @endif
-                    </li>-->
-                    
-<!--                    <li>
-                        @if ($page == 'payment')
-                        <a class="active" href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
-                        @else
-                        <a href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
-                        @endif
-                    </li>-->
 
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">TRAINING VIDEOS</span></li>
                     <li>
