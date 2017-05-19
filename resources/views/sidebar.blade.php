@@ -61,50 +61,50 @@
                         <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @endif
                     </li>
-
+                    
+                    @if(Auth::user()->vip != 1)
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">PAYMENT</span></li>
-                    
-                    @if (Auth::user()->user_tier == 1)
-                    <li>
-                        @if ($page == 'payment')
-                        <a class="active" href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
-                        @else
-                        <a href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
+                        @if (Auth::user()->user_tier == 1)
+                        <li>
+                            @if ($page == 'payment')
+                            <a class="active" href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
+                            @else
+                            <a href="/upgrade/premium"><i class="si si-bag"></i><span class="sidebar-mini-hide">Premium Upgrade</span></a>
+                            @endif
+                        </li>
+                        @elseif (Auth::user()->user_tier == 2)
+                        <li>
+                            @if ($page == 'payment')
+                            <a class="active" href="/upgrade/pro"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
+                            @else
+                            <a href="/upgrade/pro"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
+                            @endif
+                        </li>
+                        <li>
+                            @if ($page == 'payment')
+                            <a class="active" href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
+                            @else
+                            <a href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
+                            @endif
+                        </li>
+                        @elseif (Auth::user()->user_tier == 3)
+                        <li>
+                            @if ($page == 'payment')
+                            <a class="active" href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
+                            @else
+                            <a href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
+                            @endif
+                        </li>
+                        @elseif (Auth::user()->user_tier == 4)
+                        <li>
+                            @if ($page == 'payment')
+                            <a class="active" href="/upgrade/mastermind"><i class="si si-bag"></i><span class="sidebar-mini-hide">Mastermind Upgrade</span></a>
+                            @else
+                            <a href="/upgrade/mastermind"><i class="si si-bag"></i><span class="sidebar-mini-hide">Mastermind Add-On</span></a>
+                            @endif
+                        </li>
                         @endif
-                    </li>
-                    @elseif (Auth::user()->user_tier == 2)
-                    <li>
-                        @if ($page == 'payment')
-                        <a class="active" href="/upgrade/pro"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
-                        @else
-                        <a href="/upgrade/pro"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
-                        @endif
-                    </li>
-                    <li>
-                        @if ($page == 'payment')
-                        <a class="active" href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
-                        @else
-                        <a href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
-                        @endif
-                    </li>
-                    @elseif (Auth::user()->user_tier == 3)
-                    <li>
-                        @if ($page == 'payment')
-                        <a class="active" href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Upgrade</span></a>
-                        @else
-                        <a href="/upgrade/business"><i class="si si-bag"></i><span class="sidebar-mini-hide">Business Add-On</span></a>
-                        @endif
-                    </li>
-                    @elseif (Auth::user()->user_tier == 4)
-                    <li>
-                        @if ($page == 'payment')
-                        <a class="active" href="/upgrade/mastermind"><i class="si si-bag"></i><span class="sidebar-mini-hide">Mastermind Upgrade</span></a>
-                        @else
-                        <a href="/upgrade/mastermind"><i class="si si-bag"></i><span class="sidebar-mini-hide">Mastermind Add-On</span></a>
-                        @endif
-                    </li>
                     @endif
-                    
 <!--                    <li>
                         @if ($page == 'payment')
                         <a class="active" href="/affiliate"><i class="si si-bag"></i><span class="sidebar-mini-hide">Pro Upgrade</span></a>
