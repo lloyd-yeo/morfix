@@ -138,7 +138,7 @@ window.Laravel = {!! json_encode([
                         <div class="block-content">
                             <div class="row text-center">
 
-                                <div class="col-sm-6 col-lg-4 visibility-hidden" data-toggle="appear" data-offset="50" data-class="animated fadeInDown">
+                                <div class="col-lg-offset-2 col-lg-4 visibility-hidden" data-toggle="appear" data-offset="50" data-class="animated fadeInDown">
                                     <!-- FREE Plan -->
                                     <div class="block block-bordered block-link-hover3 text-center" href="javascript:void(0)">
                                         <div class="block-header" style='background-color: #f5f5f5; padding-top: 10px; 
@@ -210,15 +210,6 @@ window.Laravel = {!! json_encode([
                                         </div>
                                     </div>
                                     <!-- END FREE Plan -->
-                                </div>
-
-                                <div class="col-xs-6">
-                                    <a class="block block-rounded" href="frontend_home.html">
-                                        <div class="block-content text-white bg-modern">
-                                            <i class="si si-rocket fa-2x"></i>
-                                            <div class="font-w600 push-15-t push-15">Frontend</div>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
                         </div>
