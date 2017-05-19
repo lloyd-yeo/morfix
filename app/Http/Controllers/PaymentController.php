@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    function upgrade() {
+    function upgrade(Request $request, $plan) {
+        
         return view('payment.index', [
         ]);
     }
