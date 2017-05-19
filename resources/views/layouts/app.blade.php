@@ -141,6 +141,7 @@ window.Laravel = {!! json_encode([
                             <div class="row text-center">
                                 @if (Auth::user()->tier == 1)
                                 @include('payment.table.premium')
+                                @include('payment.table.pro')
                                 @endif
                             </div>
                         </div>
