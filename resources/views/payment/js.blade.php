@@ -15,7 +15,7 @@ var handler = StripeCheckout.configure({
     token: function (token) {
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
-        $.post("cron-subscribe-user-premium.php", { stripeToken: token.id, email: "<?php echo $_SESSION["user_email"]; ?>" },
+        $.post("cron-subscribe-user-premium.php", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
             function (data) {
                 $("#loading-div").hide();
                 if (data.success === true) {
