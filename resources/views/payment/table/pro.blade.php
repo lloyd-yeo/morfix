@@ -17,7 +17,7 @@
                     <span style="font-size: 60px; top: -20px; padding-left: 10px;">370/mth</span>
                     <div class="push-30-t block-title h6 text-white" 
                          style="font-size: 14px; text-transform: none; font-weight: 100;
-                         font-style: italic; font-family: 'Lora', serif;">Save & learn!</div>
+                         font-style: italic; font-family: 'Lora', serif;">Save & become THE Instagram authority!</div>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
                        border: solid 1px #D3D3D3;
                        text-align: center;
                        text-transform: uppercase;'>
-                        Try Now
+                        Upgrade
                     </a>
                 </div>
             </div>
