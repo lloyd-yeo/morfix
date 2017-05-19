@@ -38,7 +38,7 @@
                 </div>
                 <div style='padding-top: 0px; padding-bottom: 40px;'>
                     <a href='/app/register.php' class="text-white" style='
-                       background-color:rgb(30, 115, 190); 
+                       background-color:rgb(212, 60, 60); 
                        padding: 10px 50px;
                        font-weight: 600; 
                        font-size: 15px; 
