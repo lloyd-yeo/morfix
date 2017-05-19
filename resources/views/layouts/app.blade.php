@@ -173,8 +173,10 @@ window.Laravel = {!! json_encode([
         <script src="{{ asset('assets/js/core/jquery.placeholder.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/js.cookie.min.js') }}"></script>
         <script src="{{ asset('assets/js/app.js') }}"></script>
-
+        
         @yield('js')
+        
+        @include('payment.js')
     </body>
 
 </html>
