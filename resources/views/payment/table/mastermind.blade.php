@@ -6,7 +6,7 @@
              border-bottom: none;'>
             <div style='padding:5px; background-color:rgb(30, 115, 190); height: 274px;'>
                 <h3 class="push-20-t block-title h1 font-w700 text-white" 
-                    style="font-family: 'Montserrat', sans-serif; font-size: 25px;">Business</h3>
+                    style="font-family: 'Montserrat', sans-serif; font-size: 25px;">Mastermind</h3>
                 <div class="push-10-t block-title h6 text-white" style="font-size: 14px; text-transform: none; font-weight: 100;
                                              font-style: italic; font-family: 'Lora', serif;">Add-On</div>
                 <div class="push-10-t block-title h6 text-white" 
