@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel {
         Commands\ManualLogin::class,
         Commands\ReplicateSetting::class,
         Commands\ConvertUnicodeEmojiToShortCode::class,
+        Commands\MakeStripeIdActive::class,
     ];
 
     /**

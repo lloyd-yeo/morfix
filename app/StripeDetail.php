@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class StripeDetail extends Model
 {
-    protected $table = "stripe_details";
-
+    public $timestamps = false;
+    protected $table = 'user_stripe_details';
+    protected $connection = 'mysql_old';
 }
