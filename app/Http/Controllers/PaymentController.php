@@ -26,7 +26,8 @@ class PaymentController extends Controller
         $response = array();
         
         \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
-        $stripe_id = Auth::user()->stripe_id;
+        $user = User::where('email', Auth::user()->email)->first();
+        $stripe_id = $user->stripe_id;
         
         $token = $request->input('stripeToken');
         
@@ -89,8 +90,6 @@ class PaymentController extends Controller
             ));
             
             $response['subscription_success'] = true;
-            
-            $user = User::find(Auth::user()->id);
             
             if ($plan == "Premium") {
                $user->tier = $user->tier + 1;
