@@ -5055,7 +5055,7 @@ a.list-group-item:focus {
   height: 60px;
   background-color: #5c90d2;
   border-radius: 100%;
-  content: '';
+  content: 'Loading...';
   z-index: 999999;
   -webkit-animation: page-loader 0.9s infinite ease-in-out;
   animation: page-loader 0.9s infinite ease-in-out;
