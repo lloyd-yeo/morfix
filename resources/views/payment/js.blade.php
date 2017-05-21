@@ -25,7 +25,7 @@ var premium_handler = StripeCheckout.configure({
                 if (data.success === true) {
                     swal('Congratulations!', "You have successfully been upgraded to Premium!", 'success');
                 } else {
-                    swal('Oops...', data.message, 'error');
+                    swal('Oops...', data.type + "<br/>" + data.message, 'error');
                 }
             },"json").always( function(){ App.loader('hide'); } );
             
