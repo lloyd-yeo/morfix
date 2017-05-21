@@ -5060,32 +5060,6 @@ a.list-group-item:focus {
   -webkit-animation: page-loader 0.9s infinite ease-in-out;
   animation: page-loader 0.9s infinite ease-in-out;
 }
-#payment-loader {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: #fff;
-  z-index: 999998;
-}
-#payment-loader:after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
-  margin-top: -30px;
-  margin-left: -30px;
-  width: 60px;
-  height: 60px;
-  background-color: #5c90d2;
-  border-radius: 100%;
-  content: '';
-  z-index: 999999;
-  -webkit-animation: page-loader 0.9s infinite ease-in-out;
-  animation: page-loader 0.9s infinite ease-in-out;
-}
-
 .ie9 #page-loader:after {
   text-align: center;
   content: 'Loading..';
