@@ -15,6 +15,7 @@ var premium_handler = StripeCheckout.configure({
     image: 'https://morfix.co/app/assets/img/mx-black-crop.png',
     locale: 'auto',
     token: function (token) {
+        $("#payment-loader").show();
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
         $.post("/upgrade/premium", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
@@ -25,6 +26,7 @@ var premium_handler = StripeCheckout.configure({
                     swal('Oops...', data.message, 'error');
                 }
             },"json");
+        $("#payment-loader").hide();
     }
 });
 
