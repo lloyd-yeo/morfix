@@ -16,6 +16,8 @@ var premium_handler = StripeCheckout.configure({
     locale: 'auto',
     token: function (token) {
         App.loader('show');
+        
+        
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
         $.post("/upgrade/premium", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
@@ -25,8 +27,8 @@ var premium_handler = StripeCheckout.configure({
                 } else {
                     swal('Oops...', data.message, 'error');
                 }
-            },"json");
-        App.loader('hide');
+            },"json").always( function(){ App.loader('hide'); } );
+            
     }
 });
 
