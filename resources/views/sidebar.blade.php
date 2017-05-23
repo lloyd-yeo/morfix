@@ -68,8 +68,19 @@
                         <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Purchase</span></a>
                     </li>
                     @endif
-
+                    
+                    
+                    
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">TRAINING VIDEOS</span></li>
+                    
+                    <li>
+                        @if ($page == 'training')
+                        <a class="active" href="/training/morfix"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
+                        @else
+                        <a href="/training/morfix"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
+                        @endif
+                    </li>
+                    
                     <li>
                         <a class="" data-toggle="nav-submenu" href="#"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
                         <ul>
