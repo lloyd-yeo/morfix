@@ -26,7 +26,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-welcome">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 1</span> - <span class="h4 text-white-op">Welcome Message</span>
+                        <span class="h4 font-w700 text-white">Part 1</span> - <span class="h4 text-white-op">Welcome Message</span>
                     </div>
                 </a>
             </div>
@@ -34,7 +34,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-comms">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 2</span> - <span class="h4 text-white-op">Commission Plan</span>
+                        <span class="h4 font-w700 text-white">Part 2</span> - <span class="h4 text-white-op">Commission Plan</span>
                     </div>
                 </a>
             </div>
@@ -42,7 +42,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-affiliatetrg">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 3</span> - <span class="h4 text-white-op">Affiliate Training</span>
+                        <span class="h4 font-w700 text-white">Part 3</span> - <span class="h4 text-white-op">Affiliate Training</span>
                     </div>
                 </a>
             </div>
@@ -52,7 +52,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-affiliatearea">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 4</span> - <span class="h4 text-white-op">Affiliate Area</span>
+                        <span class="h4 font-w700 text-white">Part 4</span> - <span class="h4 text-white-op">Affiliate Area</span>
                     </div>
                 </a>
             </div>
@@ -60,7 +60,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-optin">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 5</span> - <span class="h4 text-white-op">Opt In Page</span>
+                        <span class="h4 font-w700 text-white">Part 5</span> - <span class="h4 text-white-op">Opt In Page</span>
                     </div>
                 </a>
             </div>
@@ -68,7 +68,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-autoresponder">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 6</span> - <span class="h4 text-white-op">Auto Responder</span>
+                        <span class="h4 font-w700 text-white">Part 6</span> - <span class="h4 text-white-op">Auto Responder</span>
                     </div>
                 </a>
             </div>
