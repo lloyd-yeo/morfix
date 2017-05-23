@@ -98,7 +98,16 @@
                         @if ($page == 'training-6figureprofile')
                         <a class="active" href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @else
+                        @if ($page == 'training-affiliate')
                         <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                        @else
+                            @if (Auth::user()->tier > 1)
+                            <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                            @else
+                            <a href="#" data-toggle="modal" data-target="#upgrade-training-6figure-modal"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                            @endif
+                        @endif
+                        
                         @endif
                     </li>
                 </ul>
