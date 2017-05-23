@@ -55,7 +55,7 @@
                     
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">VIRAL ENGAGEMENT</span></li>
                     <li>
-                        @if ($page == 'postscheduling')
+                        @if ($page == 'engagement-group')
                         <a class="active" href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
                         @else
                         <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
