@@ -21,7 +21,7 @@ $.ajaxSetup({
 });
 
 jQuery(function () {
-    $("#engagement-btn").on("click", function(){ 
+    $(".engagement-btn").on("click", function(){ 
         swal({
         title: 'Send for Engagement Group',
         text: "You will use <b>1</b> engagement credit for boosting this post.",
