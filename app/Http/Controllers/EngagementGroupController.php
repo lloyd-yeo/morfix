@@ -38,6 +38,5 @@ class EngagementGroupController extends Controller
     
     public function profile(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
-        return $ig_profile->insta_username;
     }
 }
