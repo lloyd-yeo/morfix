@@ -108,11 +108,60 @@
                             </div>
                             
                             <div class='row push-10-t'>
+                                
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://lifestylemafia.aweber.com' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
                                             <i class="fa fa-envelope-open fa-2x text-white pull-left"></i>
                                             <span class="h4 font-w700 text-white">Autoresponder</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
+                                        <div class="block-content block-content-full bg-primary clearfix">
+                                            <i class="fa fa-envelope-open fa-2x text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white">Opt-In pages</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
+                                        <div class="block-content block-content-full bg-primary clearfix">
+                                            <i class="fa fa-envelope-open fa-2x text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white">Upgrade Business</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class='row push-10-t'>
+                                
+                                <div class="col-lg-4">
+                                    <a class="block block-link-hover2" href='https://morfix.co/app/Morfix-Swipe-Files.docx' target='_blank' >
+                                        <div class="block-content block-content-full bg-primary clearfix">
+                                            <i class="fa fa-cloud-download fa-2x text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white">Swipe Files</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
+                                        <div class="block-content block-content-full bg-primary clearfix">
+                                            <i class="fa fa-cloud-download fa-2x text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white">EBook Swipe</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
+                                        <div class="block-content block-content-full bg-primary clearfix">
+                                            <i class="fa fa-cloud-download fa-2x text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white">Download EBook</span>
                                         </div>
                                     </a>
                                 </div>
