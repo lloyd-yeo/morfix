@@ -42,8 +42,10 @@
                         @include('payment.table.pro')
                         @include('payment.table.mastermind')
                         @elseif (Auth::user()->tier == 22)
+                        <div class='col-lg-3'></div>
                         @include('payment.table.pro')
                         @elseif (Auth::user()->tier == 13)
+                        <div class='col-lg-3'></div>
                         @include('payment.table.mastermind')
                         @endif
                     </div>
