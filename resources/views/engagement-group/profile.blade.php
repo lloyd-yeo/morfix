@@ -58,7 +58,7 @@
                                                 <h3 class="font-w400 text-white push-5">Send for engagement!</h3>
                                                 <h4 class="h6 font-w400 text-white-op push-15">Click below</h4>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a class="btn btn-default engagement-btn" data-profile-id="{{ $ig_profile->id }}" data-image-id="{{ $media->media_id }}" href="javascript:void(0)">
+                                                    <a class="btn btn-default engagement-btn" data-profile-id="{{ $ig_profile->id }}" data-image-id="{{ $media->media_id }}">
                                                         <i class="fa fa-instagram"></i> Send for Engagement
                                                     </a>
                                                 </div>
