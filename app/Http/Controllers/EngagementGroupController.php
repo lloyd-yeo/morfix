@@ -15,6 +15,7 @@ use App\InstagramProfileTargetUsername;
 use App\InstagramProfileCommentLog;
 use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
+use App\InstagramProfileMedia;
 use Unicodeveloper\Emoji\Emoji;
 use Carbon\Carbon;
 
@@ -38,8 +39,10 @@ class EngagementGroupController extends Controller
     
     public function profile(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
+        $medias = InstagramProfileMedia::where('insta_username', $ig_profile->insta_username)->get();
         return view('engagement-group.profile', [
             'ig_profile' => $ig_profile,
+            'medias' => $medias,
         ]);
     }
 }

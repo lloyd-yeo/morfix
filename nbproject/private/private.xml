@@ -3,8 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/morfix_v2.1/app/Http/Controllers/WebhookController.php</file>
-            <file>file:/C:/xampp/htdocs/morfix_v2.1/routes/web.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/sidebar.blade.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/layouts/app.blade.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/training/affiliate.blade.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/dm/template/js.blade.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/dm/template.blade.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/engagement-group/index.blade.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/routes/web.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Http/Controllers/EngagementGroupController.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/engagement-group/profile.blade.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Http/Controllers/InteractionsController.php</file>
         </group>
     </open-files>
 </project-private>
