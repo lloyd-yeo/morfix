@@ -93,7 +93,7 @@
                         @if ($page == 'training')
                         <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Building Your 6-Figure Profile</span></a>
                         @else
-                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Building Your 6-Figure Profile</span></a>
+                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @endif
                     </li>
                     
