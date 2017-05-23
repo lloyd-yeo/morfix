@@ -54,7 +54,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 
             $follow_unfollow_delay = 5;
             if ($speed == "Fast") {
-                $follow_unfollow_delay = 2;
+                $follow_unfollow_delay = 1;
             }
             if ($speed == "Medium") {
                 $follow_unfollow_delay = 3;
