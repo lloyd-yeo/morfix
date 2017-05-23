@@ -56,9 +56,9 @@
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">VIRAL ENGAGEMENT</span></li>
                     <li>
                         @if ($page == 'engagement-group')
-                        <a class="active" href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                        <a class="active" href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group ({{ Auth::user()->engagement_quota }})</span></a>
                         @else
-                        <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                        <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group ({{ Auth::user()->engagement_quota }})</span></a>
                         @endif
                     </li>
                     
@@ -81,8 +81,6 @@
                         <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Purchase</span></a>
                     </li>
                     @endif
-                    
-                    
                     
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">TRAINING VIDEOS</span></li>
                     <li>
