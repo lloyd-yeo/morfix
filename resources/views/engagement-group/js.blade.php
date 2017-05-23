@@ -29,7 +29,7 @@ jQuery(function () {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, boot my post!'
+        confirmButtonText: 'Yes, boost my post!'
       }).then(function () {
         swal(
           'Sent!',
