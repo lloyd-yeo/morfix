@@ -24,8 +24,8 @@ jQuery(function () {
     $(".engagement-btn").on("click", function(){ 
         swal({
         title: 'Send for Engagement Group',
-        text: "You will use <b>1</b> engagement credit for boosting this post.",
-        type: 'warning',
+        text: "You will use 1 engagement credit for boosting this post.",
+        type: 'info',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
