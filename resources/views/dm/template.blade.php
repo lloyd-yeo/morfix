@@ -135,6 +135,15 @@
                 </div>
                 <!-- END Sizes -->
             </div>
+            @else
+            <div class="col-lg-12">
+                <a class="block block-link-hover2" href="javascript:void(0)">
+                    <div class="block-content block-content-full bg-primary clearfix">
+                        <i class="fa fa-unlock fa-2x text-white pull-left"></i>
+                        <span class="h4 font-w700 text-white">Unlock</span> <span class="h4 text-white-op">follow-up messaging</span>
+                    </div>
+                </a>
+            </div>
             @endif
         </div>
 
