@@ -106,7 +106,7 @@
                             <div class="embed-responsive embed-responsive-16by9">
                                 {!! $training_video_iframe !!}
                             </div>
-                            <div>
+                            <div class='push-10-t'>
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://lifestylemafia.aweber.com' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
