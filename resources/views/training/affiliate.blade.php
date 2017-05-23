@@ -23,7 +23,7 @@
     <div class="content content-boxed">
         <div class='row'>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#dashboard">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-welcome">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 1</span> - <span class="h4 text-white-op">Welcome Message</span>
@@ -31,7 +31,7 @@
                 </a>
             </div>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#profile">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-comms">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 2</span> - <span class="h4 text-white-op">Commission Plan</span>
@@ -39,7 +39,7 @@
                 </a>
             </div>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#autointeraction">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-affiliatetrg">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 3</span> - <span class="h4 text-white-op">Affiliate Training</span>
@@ -49,7 +49,7 @@
         </div>
         <div class='row'>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#directmessage">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-affiliatearea">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 4</span> - <span class="h4 text-white-op">Affiliate Area</span>
@@ -57,7 +57,7 @@
                 </a>
             </div>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#photoscheduling">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-optin">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 5</span> - <span class="h4 text-white-op">Opt In Page</span>
@@ -65,7 +65,7 @@
                 </a>
             </div>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#dmalgorithm">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-autoresponder">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 6</span> - <span class="h4 text-white-op">Auto Responder</span>
@@ -75,7 +75,7 @@
         </div>
         <div class='row'>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#directmessage">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#i-ebook">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 7</span> - <span class="h4 text-white-op">Bonus EBook</span>
