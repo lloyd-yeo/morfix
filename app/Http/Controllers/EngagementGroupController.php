@@ -45,4 +45,14 @@ class EngagementGroupController extends Controller
             'medias' => $medias,
         ]);
     }
+    
+    public function schedule(Request $request, $media_id) {
+        
+//        $ig_profile = InstagramProfile::find($id);
+//        $medias = InstagramProfileMedia::where('insta_username', $ig_profile->insta_username)->orderBy('created_at', 'desc')->get();
+//        return view('engagement-group.profile', [
+//            'ig_profile' => $ig_profile,
+//            'medias' => $medias,
+//        ]);
+    }
 }
