@@ -129,7 +129,7 @@
                 <div class="modal-content">
                     <!-- Apps Block -->
                     <div class="block block-themed block-transparent">
-                        <div class="block-header bg-primary-dark">
+                        <div class="block-header bg-modern">
                             <ul class="block-options">
                                 <li>
                                     <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
