@@ -38,5 +38,8 @@ class EngagementGroupController extends Controller
     
     public function profile(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
+        return view('engagement-group.profile', [
+            'ig_profile' => $ig_profile,
+        ]);
     }
 }
