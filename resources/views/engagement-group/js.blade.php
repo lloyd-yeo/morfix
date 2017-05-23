@@ -29,7 +29,17 @@ jQuery(function () {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, boost my post!'
+        confirmButtonText: 'Yes, boost my post!',
+        showLoaderOnConfirm: true,
+        preConfirm: function () {
+          return new Promise(function (resolve) {
+            $.get('https://api.ipify.org?format=json')
+              .done(function (data) {
+                swal.insertQueueStep(data.ip);
+                resolve();
+              });
+          });
+        }
       }).then(function () {
         swal(
           'Sent!',
@@ -37,7 +47,24 @@ jQuery(function () {
           'success'
         );
       });
-      
     });
+    
+//    $(".engagement-btn").on("click", function(){ 
+//        swal({
+//        title: 'Send for Engagement Group',
+//        text: "You will use 1 engagement credit for boosting this post.",
+//        type: 'info',
+//        showCancelButton: true,
+//        confirmButtonColor: '#3085d6',
+//        cancelButtonColor: '#d33',
+//        confirmButtonText: 'Yes, boost my post!'
+//      }).then(function () {
+//        swal(
+//          'Sent!',
+//          'Your picture will see increased engagement within the next 24 hours!',
+//          'success'
+//        );
+//      });
+//    });
 });
 </script>
