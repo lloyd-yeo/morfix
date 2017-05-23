@@ -156,7 +156,7 @@
                                 <!-- Step Tabs -->
                                 <ul class="nav nav-tabs nav-tabs-alt nav-justified">
                                     <li class="active">
-                                        <a class="inactive" href="#validation-step1" data-toggle="tab">1. Link Instagram</a>
+                                        <a class="inactive" href="#validation-step1" data-toggle="tab">1. Link Profile</a>
                                     </li>
                                     <li>
                                         <a class="inactive" href="#validation-step2" data-toggle="tab">2. Verification</a>
@@ -179,7 +179,7 @@
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material form-material-primary">
                                                         <input class="form-control" type="text" id="validation-ig-username" name="validation-ig-username" placeholder="Please enter your Instagram Username/Handle">
-                                                        <label for="validation-ig-username">Instagram Username/Handle</label>
+                                                        <label for="validation-ig-username">Profile Username/Handle</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -187,7 +187,7 @@
                                                 <div class="col-sm-8 col-sm-offset-2">
                                                     <div class="form-material form-material-primary">
                                                         <input class="form-control" type="text" id="validation-ig-password" name="validation-ig-password" placeholder="Please enter your Instagram Password">
-                                                        <label for="validation-ig-password">Instagram Password</label>
+                                                        <label for="validation-ig-password">Profile Password</label>
                                                     </div>
                                                 </div>
                                             </div>
