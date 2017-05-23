@@ -25,7 +25,7 @@ var premium_handler = StripeCheckout.configure({
                 if (data.success === true) {
                     swal('Congratulations!', "You have successfully been upgraded to Premium!", 'success');
                 } else {
-                    swal('Oops...', data.type + "<br/>" + data.message, 'error');
+                    swal('Oops...', data.message, 'error');
                 }
             },"json").always( function(){ App.loader('hide'); } );
             
@@ -41,7 +41,11 @@ var pro_handler = StripeCheckout.configure({
         // Get the token ID to your server-side code for use.
         $.post("/upgrade/pro", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
             function (data) {
-                
+                if (data.success === true) {
+                    swal('Congratulations!', "You have successfully been upgraded to Pro!", 'success');
+                } else {
+                    swal('Oops...', data.message, 'error');
+                }
             },"json");
     }
 });
@@ -55,7 +59,11 @@ var business_handler = StripeCheckout.configure({
         // Get the token ID to your server-side code for use.
         $.post("/upgrade/business", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
             function (data) {
-                
+                if (data.success === true) {
+                    swal('Congratulations!', "You have successfully been upgraded to Business!", 'success');
+                } else {
+                    swal('Oops...', data.message, 'error');
+                }
             },"json");
     }
 });
@@ -69,7 +77,11 @@ var mastermind_handler = StripeCheckout.configure({
         // Get the token ID to your server-side code for use.
         $.post("/upgrade/mastermind", { stripeToken: token.id, email: "{{ Auth::user()->email }}" },
             function (data) {
-                
+                if (data.success === true) {
+                    swal('Congratulations!', "You have successfully been upgraded to Mastermind!", 'success');
+                } else {
+                    swal('Oops...', data.message, 'error');
+                }
             },"json");
     }
 });
