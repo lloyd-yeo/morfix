@@ -63,7 +63,7 @@
                                     <div class="help-block text-left">
                                         <b>PLACEHOLDER</b>
                                         <br/>
-                                        ${full_name} - Type this as a placeholder for the recipient's instagram full name.
+                                        ${full_name} - Type this as a placeholder for the recipient's profile's full name.
                                         <br/>
                                         ${Hey|Hi|Hello} - Enclose your words in a curly bracket so the system will randomly select a word to use.
                                     </div>
