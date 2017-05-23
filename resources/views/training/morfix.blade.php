@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('css')
+@include('postscheduling.css')
+@endsection
+
 @section('sidebar')
-@include('sidebar', ['page' => $type])
+@include('sidebar', ['page' => 'training-morfix'])
 @endsection
 
 @section('content')
@@ -10,16 +14,14 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-rocket"></i> Interactions <small> Choose a Instagram account below to automate engagements for.</small>
+                    <i class="si si-rocket"></i>  How-to-use Morfix <small> Learn how to utilize Morfix to it's greatest potential!</small>
                 </h1>
             </div>
         </div>
     </div>
-
-    <div class="content content-boxed">
-        <div class="row font-s13">
-            
-        </div>
-    </div>
 </main>
+@endsection
+
+@section('js')
+@include('postscheduling.js')
 @endsection

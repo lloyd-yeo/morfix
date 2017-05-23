@@ -12,15 +12,17 @@ class TrainingVideoController extends Controller
     
     function index(Request $request, $type) {
         if ($type == "training-morfix") {
-            
+            return view('training.morfix', [
+                
+            ]);
         } else if ($type == "training-affiliate") {
-            
+            return view('training.affiliate', [
+                
+            ]);
         } else if ($type == "training-6figureprofile") {
-            
+            return view('training.6figure', [
+                
+            ]);
         }
-        
-        return view('training.index', [
-            'type' => $type,
-        ]);
     }
 }
