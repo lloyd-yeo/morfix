@@ -17,6 +17,9 @@
     </div>
 
     <div class="content content-boxed">
+        <div class='row'>
+            
+        </div>
         <div class="row font-s13">
             @foreach ($user_ig_profiles as $ig_profile)
             <div class="col-lg-4">
