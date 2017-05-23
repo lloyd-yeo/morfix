@@ -106,6 +106,16 @@
                             <div class="embed-responsive embed-responsive-16by9">
                                 {!! $training_video_iframe !!}
                             </div>
+                            <div>
+                                <div class="col-lg-4">
+                                    <a class="block block-link-hover2" href='http://lifestylemafia.aweber.com' target='_blank' >
+                                        <div class="block-content block-content-full bg-primary clearfix">
+                                            <i class="fa fa-envelope-open fa-2x text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white">Autoresponder</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                             <div class="modal-footer">
                                 <button id="closetutorial-btn" data-dismiss="modal" class="btn blue lighten-1" type="button">Close</button>
                             </div>
