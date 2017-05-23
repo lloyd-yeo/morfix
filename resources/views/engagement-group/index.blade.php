@@ -10,7 +10,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-rocket"></i> Engagement Group <small> Choose a Instagram account below to boost engagements for.</small>
+                    <i class="si si-rocket"></i> Engagement Group <small> Choose an account below to boost engagements for.</small>
                 </h1>
             </div>
         </div>
@@ -34,8 +34,8 @@
                                 <h3 class="h1 font-w300 text-white">{{ $ig_profile->profile_full_name }}</h3>
                             </div>
                             <div class="block-content block-content-full text-center">
-                                <a class="btn btn-sm btn-default" href="/interactions/{{ $ig_profile->id }}">
-                                    <i class="fa fa-fw fa-cogs"></i> Edit Interactions
+                                <a class="btn btn-sm btn-default" href="/engagement-group/{{ $ig_profile->id }}">
+                                    <i class="fa fa-fw fa-instagram"></i> View Posts
                                 </a>
                             </div>
                         </div>
