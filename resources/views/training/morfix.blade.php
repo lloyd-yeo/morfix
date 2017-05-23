@@ -93,7 +93,7 @@
                     <div class="block-content">
                         <div class='row'>
                             <div class="embed-responsive embed-responsive-16by9">
-                                {{ $training_video_iframe }}
+                                {!! $training_video_iframe !!}
                             </div>
                             <div class="modal-footer">
                                 <button id="closetutorial-btn" data-dismiss="modal" class="btn blue lighten-1" type="button">Close</button>
