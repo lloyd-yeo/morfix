@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-@include('sidebar', ['page' => 'training-6figureprofile'])
+@include('sidebar', ['page' => 'training-morfix'])
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-picture"></i>  Post Scheduling <small> Upload & schedule your posts!</small>
+                    <i class="si si-star"></i>  6 Figure Profile <small> Learn the tips & tricks to build a 6 figure profile!</small>
                 </h1>
             </div>
         </div>
