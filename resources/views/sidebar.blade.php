@@ -82,6 +82,22 @@
                     </li>
                     
                     <li>
+                        @if ($page == 'training')
+                        <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                        @else
+                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                        @endif
+                    </li>
+                    
+                    <li>
+                        @if ($page == 'training')
+                        <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Building Your 6-Figure Profile</span></a>
+                        @else
+                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Building Your 6-Figure Profile</span></a>
+                        @endif
+                    </li>
+                    
+                    <li>
                         <a class="" data-toggle="nav-submenu" href="#"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
                         <ul>
                             <li>
