@@ -81,13 +81,13 @@
                     </li>
                     <li>
                         @if ($page == 'training-affiliate')
-                            @if (Auth::user()->tier > 1)
-                            <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
-                            @elseif (Auth::user()->tier == 1)
-                            <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
-                            @endif
+                        <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
                         @else
-                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                            @if (Auth::user()->tier > 1)
+                            <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                            @else
+                            <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Purchase</span></a>
+                            @endif
                         @endif
                     </li>
                     <li>
