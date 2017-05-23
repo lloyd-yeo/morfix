@@ -140,11 +140,13 @@
                         <div class="block-content">
                             <div class='row'>
                                 <!-- Warning Alert -->
-                                <div class="alert alert-warning alert-dismissable">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <h3 class="font-w300 push-15">Free Trial</h3>
-                                    <p>You are currently on the <a class="alert-link" href="javascript:void(0)">free trial</a> version of Morfix!</p>
-                                    <p>Upgrade below to enjoy more features!</p>
+                                <div class='col-lg-12'>
+                                    <div class="alert alert-warning alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        <h3 class="font-w300 push-15">Free Trial</h3>
+                                        <p>You are currently on the <a class="alert-link" href="javascript:void(0)">free trial</a> version of Morfix!</p>
+                                        <p>Upgrade below to enjoy more features!</p>
+                                    </div>
                                 </div>
                                 <!-- END Warning Alert -->
                             </div>
