@@ -106,7 +106,8 @@
                             <div class="embed-responsive embed-responsive-16by9">
                                 {!! $training_video_iframe !!}
                             </div>
-                            <div class='push-10-t'>
+                            
+                            <div class='row push-10-t'>
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://lifestylemafia.aweber.com' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
@@ -116,6 +117,7 @@
                                     </a>
                                 </div>
                             </div>
+                            
                             <div class="modal-footer">
                                 <button id="closetutorial-btn" data-dismiss="modal" class="btn blue lighten-1" type="button">Close</button>
                             </div>
