@@ -56,7 +56,7 @@ jQuery(function () {
         $icon.removeClass( "fa-spin" );
     });
     
-    @if (Auth::user()->user_tier == 1)
+    @if (Auth::user()->tier == 1)
     jQuery('#upgrade-modal').modal('show');
     @endif
 });
