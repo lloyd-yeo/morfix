@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-    
     <div class="content content-boxed">
         <div class='row'>
             <div class="col-lg-4">
@@ -47,7 +46,6 @@
                 </a>
             </div>
         </div>
-        
         <div class='row'>
             <div class="col-lg-4">
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#directmessage">
@@ -73,9 +71,11 @@
                     </div>
                 </a>
             </div>
-        </div>
-        
+        </div>        
     </div>
+    
+    
+    
 </main>
 @endsection
 
