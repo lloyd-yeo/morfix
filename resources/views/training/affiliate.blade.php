@@ -112,8 +112,8 @@
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://lifestylemafia.aweber.com' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
-                                            <i class="fa fa-envelope-open fa-2x text-white pull-left"></i>
-                                            <span class="h4 font-w700 text-white">Autoresponder</span>
+                                            <i class="fa fa-envelope-open text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white"> Autoresponder</span>
                                         </div>
                                     </a>
                                 </div>
@@ -121,8 +121,8 @@
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
-                                            <i class="fa fa-angle-double-up fa-2x text-white pull-left"></i>
-                                            <span class="h4 font-w700 text-white">Opt-In pages</span>
+                                            <i class="fa fa-book text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white"> Opt-In pages</span>
                                         </div>
                                     </a>
                                 </div>
@@ -130,8 +130,8 @@
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
-                                            <i class="si si-bag fa-2x text-white pull-left"></i>
-                                            <span class="h4 font-w700 text-white">Upgrade Business</span>
+                                            <i class="si si-bag text-white pull-left"></i>
+                                            <span class="h4 font-w700 text-white"> Upgrade Business</span>
                                         </div>
                                     </a>
                                 </div>
@@ -142,7 +142,7 @@
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='https://morfix.co/app/Morfix-Swipe-Files.docx' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
-                                            <i class="fa fa-cloud-download fa-2x text-white pull-left"></i>
+                                            <i class="fa fa-cloud-download text-white pull-left"></i>
                                             <span class="h4 font-w700 text-white">Swipe Files</span>
                                         </div>
                                     </a>
@@ -151,7 +151,7 @@
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
-                                            <i class="fa fa-cloud-download fa-2x text-white pull-left"></i>
+                                            <i class="fa fa-cloud-download text-white pull-left"></i>
                                             <span class="h4 font-w700 text-white">EBook Swipe</span>
                                         </div>
                                     </a>
@@ -160,7 +160,7 @@
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
-                                            <i class="fa fa-cloud-download fa-2x text-white pull-left"></i>
+                                            <i class="fa fa-cloud-download text-white pull-left"></i>
                                             <span class="h4 font-w700 text-white">Download EBook</span>
                                         </div>
                                     </a>
