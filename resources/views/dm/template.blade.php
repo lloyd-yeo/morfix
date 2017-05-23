@@ -87,6 +87,7 @@
                 </div>
                 <!-- END Sizes -->
             </div>
+            
             @if (Auth::user->tier > 3)
             <div class="col-xs-12 col-lg-12">
                 <!-- Sizes -->
