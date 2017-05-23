@@ -102,7 +102,7 @@ class HomeController extends Controller {
                             `user_updates`.`created_at`
                         FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ? ORDER BY id DESC;", [Auth::user()->email]);
         
-        $remaining_quotas = DB::connection('mysql_old')->select("SELECT COUNT(email) AS email_count FROM user_insta_profile WHERE email = \"" . Auth::user()->email . "\";");
+        $remaining_quota = DB::connection('mysql_old')->select("SELECT COUNT(email) AS email_count FROM user_insta_profile WHERE email = \"" . Auth::user()->email . "\";");
         
         $user = User::where('email', Auth::user()->email)->first();
         
