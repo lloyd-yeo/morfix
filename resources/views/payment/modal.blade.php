@@ -237,8 +237,7 @@
                     </div>
                     <div class="row text-center">
                         @if (Auth::user()->tier == 1)
-                        @include('payment.table.premium')
-                        @include('payment.table.pro')
+                        @include('payment.table.premium-business')
                         @elseif (Auth::user()->tier == 2)
                         @include('payment.table.pro')
                         @include('payment.table.business')
