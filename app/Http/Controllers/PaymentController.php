@@ -38,12 +38,15 @@ class PaymentController extends Controller
                     "email" => Auth::user()->email,
                 ));
                 
-                // Add the credit card as default payment source for customer
-                $customer->source = $token;
-                $customer->save();
                 $response['customer_created'] = true;
                 $user->stripe_id = $customer->id;
                 $user->save();
+                
+                // Add the credit card as default payment source for customer
+                $customer->source = $token;
+                $customer->save();
+                
+                
             } catch(\Stripe\Error\Card $e) {
                 // Since it's a decline, \Stripe\Error\Card will be caught
                 $body = $e->getJsonBody();
