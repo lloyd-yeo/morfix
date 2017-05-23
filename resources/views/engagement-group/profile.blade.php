@@ -47,7 +47,7 @@
                     </div>
                     <div class="block-content">
                         <div id="personal-gallery" class="row items-push js-gallery-advanced">
-                            @foreach (chunk($medias, 3) as $media_row)
+                            @foreach ($medias->chunk(3) as $media_row)
                             <div class='row'>
                                 @foreach ($media_row as $media)
                                 <div class="col-sm-6 col-md-4 col-lg-4 animated fadeIn push-15">
