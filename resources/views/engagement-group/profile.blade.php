@@ -61,7 +61,7 @@
                                                     <i class="fa fa-search-plus"></i> View
                                                 </a>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a class="btn btn-default engagement-btn" data-profile-id="{{ $ig_profile->id }}" data-image-id="{{ $user_img->id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Send for Engagement</a>
+                                                    <a class="btn btn-default engagement-btn" data-profile-id="{{ $ig_profile->id }}" data-image-id="{{ $media->media_id }}" href="javascript:void(0)"><i class="fa fa-pencil"></i> Send for Engagement</a>
                                                 </div>
                                             </div>
                                         </div>
