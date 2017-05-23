@@ -14,7 +14,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-picture"></i>  Affiliate Training <small> Learn how you can start an online affiliate business!</small>
+                    <i class="fa fa-handshake-o"></i>  Affiliate Training <small> Learn how you can start an online affiliate business!</small>
                 </h1>
             </div>
         </div>

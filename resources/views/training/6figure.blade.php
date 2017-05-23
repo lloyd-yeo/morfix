@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-@include('sidebar', ['page' => 'training-morfix'])
+@include('sidebar', ['page' => 'training-6figureprofile'])
 @endsection
 
 @section('content')
