@@ -58,7 +58,11 @@
                         @if ($page == 'affiliate')
                         <a class="active" href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @else
-                        <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            @if (Auth::user()->tier > 1)
+                            <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            @else
+                            <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            @endif
                         @endif
                     </li>
 
@@ -86,7 +90,7 @@
                             @if (Auth::user()->tier > 1)
                             <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
                             @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                            <a href="#" data-toggle="modal" data-target="#upgrade-training-modal"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
                             @endif
                         @endif
                     </li>
