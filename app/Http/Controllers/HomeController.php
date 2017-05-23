@@ -50,12 +50,6 @@ class HomeController extends Controller {
         $new_follower_count = array();
 
         foreach ($instagram_profiles as $ig_profile) {
-
-//            $follower_analysis = DB::table('user_insta_follower_analysis')
-//                    ->where('insta_username', $ig_profile->insta_username)
-//                    ->orderBy('date', 'desc')
-//                    ->take(10)
-//                    ->get();
             
             $follower_analysis = DB::connection("mysql_old")->
                     select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;", [$ig_profile->insta_username]);

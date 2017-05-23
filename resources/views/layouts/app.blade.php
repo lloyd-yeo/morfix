@@ -55,10 +55,10 @@
         <!-- Scripts -->
         <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
         <script>
-window.Laravel = {!! json_encode([
-        'csrfToken' => csrf_token(),
-]) !!}
-;
+            window.Laravel = {!! json_encode([
+                    'csrfToken' => csrf_token(),
+            ]) !!}
+            ;
         </script>
     </head>
     <body>
