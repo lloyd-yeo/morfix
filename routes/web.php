@@ -56,3 +56,4 @@ Route::post('/post-scheduling/add', 'PostSchedulingController@add');
 Route::post('stripe/webhook','WebhookController@handleWebhook');
 Route::get('/affiliate', 'AffiliateController@index');
 Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
+Route::post('/training/{type}', 'TrainingVideoController@index');
