@@ -72,100 +72,28 @@
                     
                     
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">TRAINING VIDEOS</span></li>
-                    
                     <li>
-                        @if ($page == 'training')
+                        @if ($page == 'training-morfix')
                         <a class="active" href="/training/morfix"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
                         @else
                         <a href="/training/morfix"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
                         @endif
                     </li>
-                    
                     <li>
-                        @if ($page == 'training')
+                        @if ($page == 'training-affiliate')
                         <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
                         @else
                         <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
                         @endif
                     </li>
-                    
                     <li>
-                        @if ($page == 'training')
-                        <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Building Your 6-Figure Profile</span></a>
+                        @if ($page == 'training-6figureprofile')
+                        <a class="active" href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Building Your 6-Figure Profile</span></a>
                         @else
-                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                        <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @endif
                     </li>
-                    
-                    <li>
-                        <a class="" data-toggle="nav-submenu" href="#"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
-                        <ul>
-                            <li>
-                                <a href="base_pages_blank.html">Blank</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_dashboard_v2.html">Dashboard v2</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_search.html">Search Results</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_invoice.html">Invoice</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_faq.html">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_inbox.html">Inbox</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_files.html">Files</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_tickets.html">Tickets</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_contacts.html">Contacts</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_coming_soon.html">Coming Soon</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_coming_soon_v2.html">Coming Soon v2</a>
-                            </li>
-                            <li>
-                                <a href="base_pages_maintenance.html">Maintenance</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="" data-toggle="nav-submenu" href="#"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Marketing</span></a>
-
-                        <ul>
-                            <li>
-                                <a href="base_forms_premade.html">Pre-made</a>
-                            </li>
-                            <li>
-                                <a href="base_forms_elements.html">Elements</a>
-                            </li>
-                            <li>
-                                <a href="base_forms_pickers_more.html">Pickers &amp; More</a>
-                            </li>
-                            <li>
-                                <a href="base_forms_editors.html">Text Editors</a>
-                            </li>
-                            <li>
-                                <a href="base_forms_validation.html">Validation</a>
-                            </li>
-                            <li>
-                                <a href="base_forms_wizard.html">Wizard</a>
-                            </li>
-                        </ul>
-                    </li>
-
                 </ul>
-
-
             </div>
 
 
