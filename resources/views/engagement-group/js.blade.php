@@ -40,12 +40,6 @@ jQuery(function () {
               });
           });
         }
-      }).then(function () {
-        swal(
-          'Sent!',
-          'Your picture will see increased engagement within the next 24 hours!',
-          'success'
-        );
       });
     });
     
