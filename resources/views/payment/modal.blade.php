@@ -187,7 +187,7 @@
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 <h3 class="font-w300 push-15"><i class='fa fa-info-circle'></i> Build your very own 6-figure profile!</h3>
                                 <p>You are currently on the <a class="alert-link" href="javascript:void(0)">free trial</a> version of Morfix!</p>
-                                <p>Upgrade to the <a class="alert-link" href="javascript:void(0)">Pro</a> package now to build your own 6-figure social media profile!</p>
+                                <p>Upgrade to the <a class="alert-link" href="javascript:void(0)">Pro</a> package now to learn how to build your own 6-figure social media profile!</p>
                             </div>
                         </div>
                         <!-- END Warning Alert -->
