@@ -130,7 +130,7 @@
                                 <div class="col-lg-4">
                                     <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
-                                            <i class="si si-bag text-white pull-left"></i>
+                                            <i class="si si-bag fa-2x text-white pull-left"></i>
                                             <span class="h4 font-w500 text-white"> Upgrade Business</span>
                                         </div>
                                     </a>
