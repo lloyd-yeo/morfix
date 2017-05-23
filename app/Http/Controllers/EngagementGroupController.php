@@ -39,7 +39,7 @@ class EngagementGroupController extends Controller
     
     public function profile(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
-        $medias = InstagramProfileMedia::where('insta_username', $ig_profile->insta_username)->get();
+        $medias = InstagramProfileMedia::where('insta_username', $ig_profile->insta_username)->orderBy('created_at', 'desc')->get();
         return view('engagement-group.profile', [
             'ig_profile' => $ig_profile,
             'medias' => $medias,
