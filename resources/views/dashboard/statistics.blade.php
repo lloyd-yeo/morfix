@@ -3,8 +3,8 @@
     <div class="row items-push text-uppercase">
 
         <div class="col-xs-6 col-sm-6 col-lg-2">
-            <div class="font-w700 text-gray-darker animated fadeIn">My Instagram Profiles</div>
-            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>6</b> quota remaining 
+            <div class="font-w700 text-gray-darker animated fadeIn">My Profiles</div>
+            <div class="text-muted animated fadeIn"><small><i class="si si-calendar"></i> <b>{{ $remaining_quota }}</b> quota remaining 
                     <i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
                        data-placement="top" title="Remaining instagram slots you can add in Morfix" type="button"></i></small>
             </div>

@@ -102,6 +102,10 @@ class HomeController extends Controller {
                             `user_updates`.`created_at`
                         FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ? ORDER BY id DESC;", [Auth::user()->email]);
         
+        $remaining_quota = DB::connection('mysql_old')->select("SELECT COUNT(email) AS email_count FROM user_insta_profile WHERE email = ?;", [Auth::user()->email]);
+        $user = User::where('email', Auth::user()->email);
+        $remaining_quota = $user->num_acct - $remaining_quota->email_count;
+        
         return view('home', [
             'leaderboard_alltime' => $leaderboard_alltime,
             'leaderboard_weekly' => $leaderboard_weekly,
@@ -111,6 +115,7 @@ class HomeController extends Controller {
             'user_ig_analysis_label' => $new_profile_follower_analysis_label,
             'user_ig_new_follower' => $new_follower_count,
             'user_updates' => $user_updates,
+            'remaining_quota' => $remaining_quota,
         ]);
     }
 
