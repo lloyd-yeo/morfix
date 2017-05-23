@@ -83,7 +83,7 @@
                         @if ($page == 'training-affiliate')
                             @if (Auth::user()->tier > 1)
                             <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
-                            @else
+                            @elseif (Auth::user()->tier == 1)
                             <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
                             @endif
                         @else
