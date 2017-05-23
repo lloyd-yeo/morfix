@@ -10,5 +10,9 @@ $.ajaxSetup({
 });
 jQuery(function () {
     initCommentsEmojiAutocomplete();
+    
+    @if (Auth::user()->tier == 1) 
+    App.blocks('follow-up-block', 'state_loading');
+    @endif
 });
 </script>
