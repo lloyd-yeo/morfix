@@ -6,11 +6,23 @@ use Illuminate\Http\Request;
 
 class EngagementGroupController extends Controller
 {
-    function index(Request $request) {
-        
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index() {
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(11)->get();
+        return view('engagement-group.index', [
+            'user_ig_profiles' => $instagram_profiles,
+        ]);
     }
     
-    function profile(Request $request, $id) {
+    public function profile(Request $request, $id) {
         
     }
 }
