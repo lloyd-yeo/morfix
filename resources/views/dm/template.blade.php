@@ -88,7 +88,7 @@
                 <!-- END Sizes -->
             </div>
             
-            @if (Auth::user->tier > 3)
+            @if (Auth::user()->tier > 3)
             <div class="col-xs-12 col-lg-12">
                 <!-- Sizes -->
                 <div class="block" id='follow-up-block'>
