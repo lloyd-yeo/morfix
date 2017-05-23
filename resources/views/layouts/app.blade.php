@@ -122,8 +122,9 @@
         </div>
         <!-- END Apps Modal -->
         
-        @include('layouts.paymentmodal')
-
+        @include('payment.modal')
+        
+        
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
         <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/jquery.slimscroll.min.js') }}"></script>
