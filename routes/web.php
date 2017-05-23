@@ -57,3 +57,5 @@ Route::post('stripe/webhook','WebhookController@handleWebhook');
 Route::get('/affiliate', 'AffiliateController@index');
 Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
 Route::get('/training/{type}', 'TrainingVideoController@index');
+Route::get('/engagement-group', 'EngagementGroupController@index');
+Route::get('/engagement-group/{id}', 'EngagementGroupController@profile');

@@ -52,7 +52,16 @@
                         <a href="/post-scheduling"><i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span></a>
                         @endif
                     </li>
-
+                    
+                    <li class="nav-main-heading"><span class="sidebar-mini-hide">VIRAL ENGAGEMENT</span></li>
+                    <li>
+                        @if ($page == 'postscheduling')
+                        <a class="active" href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                        @else
+                        <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                        @endif
+                    </li>
+                    
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AFFILIATE AREA</span></li>
                     <li>
                         @if ($page == 'affiliate')
