@@ -139,6 +139,7 @@
                         </div>
                         <div class="block-content">
                             <div class='row'>
+                                @if (Auth::user()->tier == 1)
                                 <!-- Warning Alert -->
                                 <div class='col-lg-12'>
                                     <div class="alert alert-warning alert-dismissable">
@@ -149,6 +150,7 @@
                                     </div>
                                 </div>
                                 <!-- END Warning Alert -->
+                                @endif
                             </div>
                             <div class="row text-center">
                                 @if (Auth::user()->tier == 1)
