@@ -59,4 +59,4 @@ Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
 Route::get('/training/{type}', 'TrainingVideoController@index');
 Route::get('/engagement-group', 'EngagementGroupController@index');
 Route::get('/engagement-group/{id}', 'EngagementGroupController@profile');
-Route::post('/engagement-group/{media_id}', 'EngagementGroupController@schedule');
+Route::post('/engagement-group/schedule/{media_id}', 'EngagementGroupController@schedule');
