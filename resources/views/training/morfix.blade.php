@@ -18,6 +18,32 @@
                 </h1>
             </div>
         </div>
+        <div class='row'>
+            <div class="col-lg-4">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#upgrade-dm-modal">
+                    <div class="block-content block-content-full bg-primary clearfix">
+                        <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
+                        <span class="h4 font-w700 text-white">Part 1</span> - <span class="h4 text-white-op">Dashboard</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#upgrade-dm-modal">
+                    <div class="block-content block-content-full bg-primary clearfix">
+                        <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
+                        <span class="h4 font-w700 text-white">Part 2</span> - <span class="h4 text-white-op">Profile</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#upgrade-dm-modal">
+                    <div class="block-content block-content-full bg-primary clearfix">
+                        <i class="fa fa-play-circle fa-2x text-white pull-left"></i>
+                        <span class="h4 font-w700 text-white">Part 3</span> - <span class="h4 text-white-op">Auto Interaction</span>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </main>
 @endsection
