@@ -125,4 +125,10 @@ $("#mastermind-btn").on("click", function(){
         email: "{{ Auth::user()->email }}"
     });
 });
+
+jQuery(function () {
+    @if (Auth::user()->tier == 1)
+    jQuery('#upgrade-modal').modal('show');
+    @endif
+});
 </script>
