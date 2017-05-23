@@ -41,24 +41,6 @@
         
         <div class="row">
             <div class="col-xs-12 col-lg-12">
-                <div class="col-lg-6 col-xs-12">
-                    <a class="block block-link-hover2 text-center" href="javascript:void(0)">
-                        <div class="block-content block-content-full bg-modern">
-                            <i class="fa fa-send fa-4x text-white"></i>
-                            <div class="font-w600 text-white-op push-15-t">Turn on Auto Direct Messaging</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-6 col-xs-12">
-                    <a class="block block-link-hover2 text-center" href="javascript:void(0)">
-                        <div class="block-content block-content-full bg-city">
-                            <i class="fa fa-times fa-4x text-white"></i>
-                            <div class="font-w600 text-white-op push-15-t">Turn off Auto Direct Messaging</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-xs-12 col-lg-12">
                 <!-- Sizes -->
                 <div class="block">
                     <div class="block-header bg-primary">
@@ -87,7 +69,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <label class="css-input switch switch-sm switch-success">
+                                        <input type="checkbox" id="dm-cbx" name="auto-dm" data-id="{{ $ig_profile->id }}"><span></span> Turn on Auto Direct Message
+                                    </label>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <button class="btn btn-sm btn-primary" type="button" id="greeting-btn" data-id="{{ $ig_profile->id }}"><i class="fa fa-send push-5-r"></i> Save Template</button>
@@ -99,7 +87,7 @@
                 </div>
                 <!-- END Sizes -->
             </div>
-
+            @if (Auth::user->tier > 3)
             <div class="col-xs-12 col-lg-12">
                 <!-- Sizes -->
                 <div class="block" id='follow-up-block'>
@@ -146,6 +134,7 @@
                 </div>
                 <!-- END Sizes -->
             </div>
+            @endif
         </div>
 
     </div>
