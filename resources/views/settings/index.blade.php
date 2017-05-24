@@ -58,7 +58,7 @@
                             @endif
                             <td></td>
                             <td></td>
-                            <td>{{ $subscription->status }}</td>
+                            <td>{{ title_case($subscription->status) }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-danger" data-sub-id="{{ $subscription->id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
