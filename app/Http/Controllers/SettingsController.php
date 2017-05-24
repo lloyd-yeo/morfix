@@ -19,7 +19,7 @@ class SettingsController extends Controller
     public function index() {
         //get recent subscription
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        
+        $subscriptions_ = array();
         if (Auth::user()->stripe_id === NULL) {
             $customer = \Stripe\Customer::create(array(
                 "email" => Auth::user()->email,
@@ -37,8 +37,11 @@ class SettingsController extends Controller
             foreach ($subscriptions as $subscription) {
                 $subscription_id = $subscription->id;
                 $plan_id = $subscription->plan->id;
-                echo $plan_id . " [$subscription_id]<br/>";
             }
         }
+        
+        return view('settings.index', [
+            
+        ]);
     }
 }
