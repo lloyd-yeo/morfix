@@ -24,11 +24,11 @@
         <!-- Dynamic Table Full -->
         <div class="block">
             <div class="block-header">
-                <h3 class="block-title">Dynamic Table <small>Full</small></h3>
+                <h3 class="block-title">My Subscriptions</h3>
             </div>
             <div class="block-content">
                 <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                <table class="table table-bordered table-striped js-dataTable-full">
+                <table class="table table-bordered table-striped js-dataTable-subscription">
                     <thead>
                         <tr>
                             <th class="text-center"></th>

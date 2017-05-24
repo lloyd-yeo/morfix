@@ -208,6 +208,7 @@ var BaseTableDatatables = function() {
             initDataTableSimple();
             initDataTableFull();
             initDataTableFullPagination();
+            initDataTableSubscriptions();
         }
     };
 }();
