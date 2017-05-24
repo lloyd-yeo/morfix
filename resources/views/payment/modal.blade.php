@@ -195,6 +195,39 @@
                             </div>
                         </div>
                         <!-- END Warning Alert -->
+                        @elseif (Auth::user()->tier == 2)
+                        <!-- Warning Alert -->
+                        <div class='col-lg-12'>
+                            <div class="alert alert-warning alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h3 class="font-w300 push-15"><i class='fa fa-info-circle'></i> Build your very own 6-figure profile!</h3>
+                                <p>You are currently on the <a class="alert-link" href="javascript:void(0)">Premium</a> version of Morfix!</p>
+                                <p>Purchase the <a class="alert-link" href="javascript:void(0)">Pro</a> package now to learn how to build your own 6-figure social media profile!</p>
+                            </div>
+                        </div>
+                        <!-- END Warning Alert -->
+                        @elseif (Auth::user()->tier == 12)
+                        <!-- Warning Alert -->
+                        <div class='col-lg-12'>
+                            <div class="alert alert-warning alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h3 class="font-w300 push-15"><i class='fa fa-info-circle'></i> Build your very own 6-figure profile!</h3>
+                                <p>You are currently on the <a class="alert-link" href="javascript:void(0)">Business</a> version of Morfix!</p>
+                                <p>Purchase the <a class="alert-link" href="javascript:void(0)">Pro</a> package now to learn how to build your own 6-figure social media profile!</p>
+                            </div>
+                        </div>
+                        <!-- END Warning Alert -->
+                        @elseif (Auth::user()->tier == 22)
+                        <!-- Warning Alert -->
+                        <div class='col-lg-12'>
+                            <div class="alert alert-warning alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h3 class="font-w300 push-15"><i class='fa fa-info-circle'></i> Build your very own 6-figure profile!</h3>
+                                <p>You are currently on the <a class="alert-link" href="javascript:void(0)">Mastermind</a> version of Morfix!</p>
+                                <p>Purchase the <a class="alert-link" href="javascript:void(0)">Pro</a> package now to learn how to build your own 6-figure social media profile!</p>
+                            </div>
+                        </div>
+                        <!-- END Warning Alert -->
                         @endif
                     </div>
                     <div class="row text-center">
