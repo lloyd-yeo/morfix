@@ -57,7 +57,7 @@
                             <td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
                             @endif
                             <td class="text-center">{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_start)->diffForHumans() }}</td>
-                            <td class="text-center">{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_end)->toDateTimeString() }}</td>
+                            <td class="text-center">{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_end)->toDayDateTimeString() }}</td>
                             
                             @if ($subscription->status == "active")
                             <td class="text-center"><label class="label label-success">{{ title_case($subscription->status) }}</label></td>
