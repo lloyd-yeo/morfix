@@ -126,9 +126,9 @@
                     
                      <li>
                         @if ($page == 'faq')
-                        <a class="active" href="/faq"><i class="si si-rocket"></i><span class="sidebar-mini-hide">FAQ</span></a>
+                        <a class="active" href="/faq"><i class="fa fa-question-circle-o"></i><span class="sidebar-mini-hide">FAQ</span></a>
                         @else
-                        <a href="/faq"><i class="si si-rocket"></i><span class="sidebar-mini-hide">FAQ</span></a>
+                        <a href="/faq"><i class="fa fa-question-circle-o"></i><span class="sidebar-mini-hide">FAQ</span></a>
                         @endif
                     </li>
                 </ul>
