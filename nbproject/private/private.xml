@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/Http/Controllers/FaqController.php</file>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/Http/Controllers/InteractionsController.php</file>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/interactions.blade.php</file>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/payment/table/mastermind.blade.php</file>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/faq.blade.php</file>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/sidebar.blade.php</file>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/InstagramProfile.php</file>
-            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/CreateInstagramProfileLog.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
