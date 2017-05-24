@@ -40,11 +40,10 @@ $(".btn-cancel-subscription").on("click", function(){
 
                 },
                 success: function (data) {
-                    resolve()
                     if (data.success === true) {
-                        
+                        resolve()
                     } else {
-
+                        
                     }
                 }
             });

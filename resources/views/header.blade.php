@@ -56,7 +56,7 @@
                                                         </a>
                                                     </li>-->
                     <li>
-                        <a tabindex="-1" href="javascript:void(0)">
+                        <a tabindex="-1" href="/settings">
                             <i class="si si-settings pull-right"></i>Settings
                         </a>
                     </li>
