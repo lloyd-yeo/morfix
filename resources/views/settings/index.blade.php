@@ -31,28 +31,33 @@
                 <table class="table table-bordered table-striped js-dataTable-subscription">
                     <thead>
                         <tr>
-                            <th class="text-center"></th>
-                            <th>Name</th>
-                            <th class="hidden-xs">Email</th>
-                            <th class="hidden-xs" style="width: 15%;">Access</th>
-                            <th class="text-center" style="width: 10%;">Actions</th>
+                            <th>Subscription</th>
+                            <th class="text-center" style="width: 10%;"></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($subscriptions as $sub_id => $plan_id)
                         <tr>
-                            <td class="text-center">1</td>
-                            <td class="font-w600">Roger Hart</td>
-                            <td class="hidden-xs">client1@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-info">Business</span>
-                            </td>
+                            @if ($plan_id == "0137")
+                            <td class="text-center">Premium</td>
+                            @elseif ($plan_id == "0297")
+                            <td class="text-center">Business</td>
+                            @elseif ($plan_id == "0247")
+                            <td class="text-center">Business (additional 5 accounts)</td>
+                            @elseif ($plan_id == "MX370")
+                            <td class="text-center">Pro</td>
+                            @elseif ($plan_id == "MX970")
+                            <td class="text-center">Mastermind</td>
+                            @endif
+                            
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-xs btn-danger" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
                                 </div>
                             </td>
+                            
                         </tr>
+                        @endforeach
                         <tr>
                             <td class="text-center">2</td>
                             <td class="font-w600">Rebecca Gray</td>

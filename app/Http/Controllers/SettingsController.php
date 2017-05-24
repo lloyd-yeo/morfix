@@ -37,11 +37,12 @@ class SettingsController extends Controller
             foreach ($subscriptions as $subscription) {
                 $subscription_id = $subscription->id;
                 $plan_id = $subscription->plan->id;
+                $subscriptions_[$subscription_id] = $plan_id;
             }
         }
         
         return view('settings.index', [
-            
+            'subscriptions' => $subscriptions_,
         ]);
     }
 }
