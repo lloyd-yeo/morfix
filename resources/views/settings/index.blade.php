@@ -56,9 +56,17 @@
                             @elseif ($subscription->plan->id == "0247")
                             <td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
                             @endif
-                            <td>{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_start)->diffForHumans() }}</td>
-                            <td>{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_end)->toDateTimeString() }}</td>
-                            <td>{{ title_case($subscription->status) }}</td>
+                            <td class="text-center">{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_start)->diffForHumans() }}</td>
+                            <td class="text-center">{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_end)->toDateTimeString() }}</td>
+                            
+                            @if ($subscription->status == "active")
+                            <td class="text-center"><label class="label label-success">{{ title_case($subscription->status) }}</label></td>
+                            @elseif ($subscription->status == "trialing")
+                            <td class="text-center"><label class="label label-success">{{ title_case($subscription->status) }}</label></td>
+                            @elseif ($subscription->status == "cancelled")
+                            <td class="text-center"><label class="label label-danger">{{ title_case($subscription->status) }}</label></td>
+                            @endif
+                            
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-danger" data-sub-id="{{ $subscription->id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
