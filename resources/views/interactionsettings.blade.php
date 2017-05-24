@@ -55,11 +55,19 @@
                                     <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-2x fa-heart text-danger'></i> {{ $likes_done }} Like <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $likes_done_today }})</span></span>
                                 </label>
                             </div>
+                            @if (Auth::user()->tier > 1)
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-2x fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $comments_done_today }})</span></span>
                                 </label>
                             </div>
+                            @else
+                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
+                                <label class="css-input css-input css-input-disabled switch switch-square switch-lg switch-primary">
+                                    <span style='font-size: 15px; font-weight: 600;'><i class='fa fa-2x fa-comments text-primary'></i> {{ $comments_done }} Comment <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $comments_done_today }})</span></span>
+                                </label>
+                            </div>
+                            @endif
                             <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-2">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     <span style='font-size: 15px; font-weight: 600;'><i class='si fa-2x si-user-follow text-modern'></i> {{ $follows_done }} Follow <span class="text-success">(<i class="fa fa-arrow-up"></i> {{ $follows_done_today }})</span></span>
