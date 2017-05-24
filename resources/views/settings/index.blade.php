@@ -31,7 +31,7 @@
                 <table class="table table-bordered table-striped js-dataTable-subscription">
                     <thead>
                         <tr>
-                            <th>Subscription</th>
+                            <th class="text-center">Subscription</th>
                             <th class="text-center" style="width: 10%;"></th>
                         </tr>
                     </thead>
@@ -39,15 +39,19 @@
                         @foreach ($subscriptions as $sub_id => $plan_id)
                         <tr>
                             @if ($plan_id == "0137")
-                            <td class="text-center">Premium</td>
-                            @elseif ($plan_id == "0297")
-                            <td class="text-center">Business</td>
-                            @elseif ($plan_id == "0247")
-                            <td class="text-center">Business (additional 5 accounts)</td>
+                            <td class="text-center"><label class="label label-info">Premium</label></td>
                             @elseif ($plan_id == "MX370")
-                            <td class="text-center">Pro</td>
+                            <td class="text-center"><label class="label label-danger">Pro</label></td>
+                            @elseif ($plan_id == "0297")
+                            <td class="text-center"><label class="label label-primary">Business</label></td>
                             @elseif ($plan_id == "MX970")
-                            <td class="text-center">Mastermind</td>
+                            <td class="text-center"><label class="label label-primary">Mastermind</label></td>
+                            @elseif ($plan_id == "0167")
+                            <td class="text-center"><label class="label label-primary">Business</label></td>
+                            @elseif ($plan_id == "0197")
+                            <td class="text-center"><label class="label label-primary">Business</label></td>
+                            @elseif ($plan_id == "0247")
+                            <td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
                             @endif
                             
                             <td class="text-center">
@@ -58,132 +62,6 @@
                             
                         </tr>
                         @endforeach
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td class="font-w600">Rebecca Gray</td>
-                            <td class="hidden-xs">client2@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-primary">Personal</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">3</td>
-                            <td class="font-w600">Evelyn Willis</td>
-                            <td class="hidden-xs">client3@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-danger">Disabled</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">4</td>
-                            <td class="font-w600">Laura Bell</td>
-                            <td class="hidden-xs">client4@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-info">Business</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">5</td>
-                            <td class="font-w600">Jack Greene</td>
-                            <td class="hidden-xs">client5@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-warning">Trial</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">6</td>
-                            <td class="font-w600">John Parker</td>
-                            <td class="hidden-xs">client6@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-warning">Trial</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">7</td>
-                            <td class="font-w600">Judy Alvarez</td>
-                            <td class="hidden-xs">client7@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-success">VIP</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">8</td>
-                            <td class="font-w600">Scott Ruiz</td>
-                            <td class="hidden-xs">client8@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-success">VIP</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">9</td>
-                            <td class="font-w600">Tiffany Kim</td>
-                            <td class="hidden-xs">client9@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-info">Business</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">10</td>
-                            <td class="font-w600">Joshua Munoz</td>
-                            <td class="hidden-xs">client10@example.com</td>
-                            <td class="hidden-xs">
-                                <span class="label label-info">Business</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Edit Client"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Remove Client"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
