@@ -74,7 +74,7 @@
                             @if (Auth::user()->tier > 1)
                             <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                             @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            <a href="#" data-toggle="modal" data-target="#upgrade-engagement-group-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                             @endif
                         @endif
                     </li>
