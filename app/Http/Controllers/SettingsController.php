@@ -35,8 +35,9 @@ class SettingsController extends Controller
             $subscriptions_listings = \Stripe\Subscription::all(array('customer'=>Auth::user()->stripe_id));
             $subscriptions = $subscriptions_listings->data;
             foreach ($subscriptions as $subscription) {
+                $subscription_id = $subscription->id;
                 $plan_id = $subscription->plan->id;
-                echo $plan_id . "<br/>";
+                echo $plan_id . " [$subscription_id]<br/>";
             }
         }
     }
