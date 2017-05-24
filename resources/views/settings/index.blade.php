@@ -69,7 +69,7 @@
                             
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <button class="btn btn-xs btn-danger" data-sub-id="{{ $subscription->id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-xs btn-danger btn-cancel-subscription" data-sub-id="{{ $subscription->id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
                                 </div>
                             </td>
                             

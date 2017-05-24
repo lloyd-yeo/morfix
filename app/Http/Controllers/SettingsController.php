@@ -30,19 +30,19 @@ class SettingsController extends Controller
             $user->save();
             
         } else {
-            #\Stripe\Customer::retrieve(Auth::user()->stripe_id);
-            #$user = User::where('email', Auth::user()->email)->first();
             $subscriptions_listings = \Stripe\Subscription::all(array('customer'=>Auth::user()->stripe_id));
             $subscriptions = $subscriptions_listings->data;
-//            foreach ($subscriptions as $subscription) {
-//                $subscription_id = $subscription->id;
-//                $plan_id = $subscription->plan->id;
-//                $subscriptions_[$subscription_id] = $plan_id;
-//            }
         }
         
         return view('settings.index', [
             'subscriptions' => $subscriptions,
         ]);
+    }
+    
+    public function cancelSubscription($sub_id) {
+        #\Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        #$subscription = \Stripe\Subscription::retrieve($sub_id);
+        #$subscription->cancel();
+        return Response::json(array("success" => true, 'message' => "Your subscription has been cancelled."));
     }
 }
