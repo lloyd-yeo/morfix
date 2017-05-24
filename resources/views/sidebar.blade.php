@@ -58,7 +58,7 @@
                         @if ($page == 'engagement-group')
                         <a class="active" href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
                         @else
-                            @if (Auth::tier > 3)
+                            @if (Auth::user()->tier > 3)
                             <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
                             @else
                             <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Dashboard</span></a>
