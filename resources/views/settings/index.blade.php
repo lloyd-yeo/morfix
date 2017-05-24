@@ -32,6 +32,8 @@
                     <thead>
                         <tr>
                             <th class="text-center">Subscription</th>
+                            <th class="text-center"><i class="fa fa-clock-o"></i> Subscription Start</th>
+                            <th class="text-center"><i class="fa fa-clock-o"></i> Subscription End</th>
                             <th class="text-center" style="width: 10%;"></th>
                         </tr>
                     </thead>
