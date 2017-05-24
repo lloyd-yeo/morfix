@@ -34,6 +34,7 @@
                             <th class="text-center">Subscription</th>
                             <th class="text-center"><i class="fa fa-clock-o"></i> Subscription Start</th>
                             <th class="text-center"><i class="fa fa-clock-o"></i> Subscription End</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center" style="width: 10%;"></th>
                         </tr>
                     </thead>
@@ -55,7 +56,9 @@
                             @elseif ($subscription->plan->id == "0247")
                             <td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
                             @endif
-                            
+                            <td></td>
+                            <td></td>
+                            <td>{{ $subscription->status }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-danger" data-sub-id="{{ $subscription->id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
