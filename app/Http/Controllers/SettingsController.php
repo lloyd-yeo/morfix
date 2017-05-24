@@ -34,15 +34,15 @@ class SettingsController extends Controller
             #$user = User::where('email', Auth::user()->email)->first();
             $subscriptions_listings = \Stripe\Subscription::all(array('customer'=>Auth::user()->stripe_id));
             $subscriptions = $subscriptions_listings->data;
-            foreach ($subscriptions as $subscription) {
-                $subscription_id = $subscription->id;
-                $plan_id = $subscription->plan->id;
-                $subscriptions_[$subscription_id] = $plan_id;
-            }
+//            foreach ($subscriptions as $subscription) {
+//                $subscription_id = $subscription->id;
+//                $plan_id = $subscription->plan->id;
+//                $subscriptions_[$subscription_id] = $plan_id;
+//            }
         }
         
         return view('settings.index', [
-            'subscriptions' => $subscriptions_,
+            'subscriptions' => $subscriptions,
         ]);
     }
 }

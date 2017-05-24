@@ -36,27 +36,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($subscriptions as $sub_id => $plan_id)
+                        @foreach ($subscriptions as $subscription)
                         <tr>
-                            @if ($plan_id == "0137")
+                            @if ($subscription->plan->id == "0137")
                             <td class="text-center"><label class="label label-info">Premium</label></td>
-                            @elseif ($plan_id == "MX370")
+                            @elseif ($subscription->plan->id == "MX370")
                             <td class="text-center"><label class="label label-danger">Pro</label></td>
-                            @elseif ($plan_id == "0297")
+                            @elseif ($subscription->plan->id == "0297")
                             <td class="text-center"><label class="label label-primary">Business</label></td>
-                            @elseif ($plan_id == "MX970")
+                            @elseif ($subscription->plan->id == "MX970")
                             <td class="text-center"><label class="label label-primary">Mastermind</label></td>
-                            @elseif ($plan_id == "0167")
+                            @elseif ($subscription->plan->id == "0167")
                             <td class="text-center"><label class="label label-primary">Business</label></td>
-                            @elseif ($plan_id == "0197")
+                            @elseif ($subscription->plan->id == "0197")
                             <td class="text-center"><label class="label label-primary">Business</label></td>
-                            @elseif ($plan_id == "0247")
+                            @elseif ($subscription->plan->id == "0247")
                             <td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
                             @endif
                             
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <button class="btn btn-xs btn-danger" data-sub-id="{{ $sub_id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-xs btn-danger" data-sub-id="{{ $subscription->id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
                                 </div>
                             </td>
                             
