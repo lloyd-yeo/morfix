@@ -42,7 +42,7 @@ class SettingsController extends Controller
     public function cancelSubscription($sub_id) {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $subscription = \Stripe\Subscription::retrieve($sub_id);
-        $subscription->cancel();
+        $subscription->cancel(array('at_period_end' => true));
         return Response::json(array("success" => true, 'message' => "Your subscription has been cancelled."));
     }
 }
