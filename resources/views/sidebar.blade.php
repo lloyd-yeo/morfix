@@ -122,7 +122,7 @@
                         @endif
                     </li>
                     
-                    <li class="nav-main-heading"><span class="sidebar-mini-hide">AUTOMATION TOOLS</span></li>
+                    <li class="nav-main-heading"><span class="sidebar-mini-hide">Support</span></li>
                     
                      <li>
                         @if ($page == 'faq')
