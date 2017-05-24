@@ -58,7 +58,11 @@
                         @if ($page == 'engagement-group')
                         <a class="active" href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
                         @else
-                        <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                            @if (Auth::user()->tier > 3)
+                            <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                            @else
+                            <a href="#" data-toggle="modal" data-target="#upgrade-engagement-group-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            @endif
                         @endif
                     </li>
                     
@@ -108,7 +112,7 @@
                         @if ($page == 'training-affiliate')
                         <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @else
-                            @if (Auth::user()->tier > 1)
+                            @if ((Auth::user()->tier % 10) == 3)
                             <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                             @else
                             <a href="#" data-toggle="modal" data-target="#upgrade-training-6figure-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>

@@ -18,7 +18,11 @@
 
     <div class="content content-boxed">
         <div class='row'>
-            
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h3 class="font-w300 push-15">Engagement Quota</h3>
+                <p>You have <a class="alert-link" href="javascript:void(0)">{{ Auth::user()->engagement_quota }}</a> quota left!</p>
+            </div>
         </div>
         <div class="row font-s13">
             @foreach ($user_ig_profiles as $ig_profile)

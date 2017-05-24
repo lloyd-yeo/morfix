@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
 use App\User;
-use App\InstagramProfile;
 use App\Niche;
+use App\EngagementGroupJob;
+use App\InstagramProfile;
 use App\InstagramProfileComment;
 use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
@@ -44,5 +45,15 @@ class EngagementGroupController extends Controller
             'ig_profile' => $ig_profile,
             'medias' => $medias,
         ]);
+    }
+    
+    public function schedule(Request $request, $media_id) {
+        $engagement_group_job = new EngagementGroupJob;
+        $engagement_group_job->media_id = $media_id;
+        $engagement_group_job->engaged = 0;
+//        if ($engagement_group_job->save()) {
+//            DB::connection('mysql_old')->table('user')->decrement('engagement_quota', 1, ['email' => Auth::user()->email]);
+//        }
+        return Response::json(array("success" => true, 'message' => "Your photo has been sent for engagement group. Expect a increase in engagement."));
     }
 }

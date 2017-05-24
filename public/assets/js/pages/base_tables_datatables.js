@@ -13,6 +13,15 @@ var BaseTableDatatables = function() {
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
     };
+    
+    // Init full DataTable, for more examples you can check out https://www.datatables.net/
+    var initDataTableSubscriptions = function() {
+        jQuery('.js-dataTable-subscription').dataTable({
+            columnDefs: [ { orderable: false, targets: [ 4 ] } ],
+            pageLength: 10,
+            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
+        });
+    };
 
     // Init full extra DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableFullPagination = function() {
@@ -199,6 +208,7 @@ var BaseTableDatatables = function() {
             initDataTableSimple();
             initDataTableFull();
             initDataTableFullPagination();
+            initDataTableSubscriptions();
         }
     };
 }();
