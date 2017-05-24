@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/sidebar.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/layouts/app.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/training/affiliate.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/dm/template/js.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/dm/template.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/engagement-group/index.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/routes/web.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/app/Http/Controllers/EngagementGroupController.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/engagement-group/profile.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/app/Http/Controllers/InteractionsController.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/Http/Controllers/FaqController.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/Http/Controllers/InteractionsController.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/interactions.blade.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/payment/table/mastermind.blade.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/faq.blade.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/resources/views/sidebar.blade.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/InstagramProfile.php</file>
+            <file>file:/C:/Users/rongr/Documents/NetBeansProjects/morfix_v2/app/CreateInstagramProfileLog.php</file>
         </group>
     </open-files>
 </project-private>
