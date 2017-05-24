@@ -56,8 +56,8 @@
                             @elseif ($subscription->plan->id == "0247")
                             <td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
                             @endif
-                            <td>{{ Carbon::create($subscription->current_period_start)->toDateTimeString() }}</td>
-                            <td>{{ Carbon::create($subscription->current_period_end)->toDateTimeString() }}</td>
+                            <td>{{ \Carbon::create($subscription->current_period_start)->toDateTimeString() }}</td>
+                            <td>{{ \Carbon::create($subscription->current_period_end)->toDateTimeString() }}</td>
                             <td>{{ title_case($subscription->status) }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
