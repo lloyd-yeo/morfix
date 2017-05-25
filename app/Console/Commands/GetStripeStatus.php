@@ -76,7 +76,7 @@ class GetStripeStatus extends Command {
 
             if ($refunded == 1) {
                 $invalid = true;
-            } else if ($paid == 0) {
+            } else if ($invoice->paid == 0) {
                 $invalid = true;
             }
 
