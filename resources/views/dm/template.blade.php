@@ -82,7 +82,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
                 <!-- END Sizes -->
