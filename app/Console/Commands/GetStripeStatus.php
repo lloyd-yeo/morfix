@@ -65,6 +65,7 @@ class GetStripeStatus extends Command {
         foreach ($rows as $row) {
             $invalid = 0;
             $eligible = 0;
+
             $invoice = \Stripe\Invoice::retrieve($row->invoice_id);
             $charge = \Stripe\Charge::retrieve($invoice->charge);
             $refunded = 0;
@@ -83,6 +84,14 @@ class GetStripeStatus extends Command {
             if (!$invalid) {
                 if ($row->referrer_vip == 1) {
                     $eligible = 1;
+                } else if ($row->referrer_email == "maychengmt@yahoo.com") {
+                    if ($row->subscription_id == "0137") {
+                        $eligible = 1;
+                        break;
+                    } else if ($row->subscription_id == "0297") {
+                        $eligible = 1;
+                        break;
+                    }
                 } else {
                     $subscription_status_rows = DB::connection('mysql_old')->select('SELECT email, subscription_id, status FROM insta_affiliate.get_user_subscription_status WHERE email = ?', [$row->referrer_email]);
                     foreach ($subscription_status_rows as $subscription_status_row) {
@@ -94,6 +103,11 @@ class GetStripeStatus extends Command {
                             if ($row->subscription_id == $subscription_status_row->subscription_id) {
                                 $eligible = 1;
                                 break;
+                            } else if ($subscription_status_row->subscription_id == "0137") {
+                                if ($row->subscription_id == "0137") {
+                                    $eligible = 1;
+                                    break;
+                                }
                             } else if ($subscription_status_row->subscription_id == "MX370") {
                                 if ($row->subscription_id == "0137") {
                                     $eligible = 1;
@@ -122,10 +136,9 @@ class GetStripeStatus extends Command {
                     }
                 }
             }
-            
-            fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded . "," . $eligible . "\n");
-            $this->line($row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded. "," . $eligible);
 
+            fwrite($file, $row->referred_email . "," . $row->referrer_email . "," .  $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded . "," . $eligible . "\n");
+            $this->line($row->referred_email . "," . $row->referrer_email . "," .  $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded . "," . $eligible);
         }
 
         fclose($file);
@@ -135,7 +148,7 @@ class GetStripeStatus extends Command {
 //            $referrer_active_subscription = array();
 //            $referrer_referred_rows = DB::connection('mysql_old')->select("SELECT referrer, referred FROM get_referral_for_user ORDER BY referrer;");
 //            $referrer_stripe_id_rows = DB::connection('mysql_old')->select("SELECT email, stripe_id FROM user_stripe_details;");
-            //init referrer & their stripe_id array
+        //init referrer & their stripe_id array
 //            foreach ($referrer_stripe_id_rows as $referrer_stripe_id_row) {
 //                if (array_key_exists($referrer_stripe_id_row->email, $referrer_stripe_ids)) {
 //                    $referrer_stripe_ids[$referrer_stripe_id_row->email] = array();
@@ -143,11 +156,11 @@ class GetStripeStatus extends Command {
 //                }
 //                $referrer_stripe_ids[$referrer_stripe_id_row->email][] = $referrer_stripe_id_row->stripe_id;
 //            }
-            //init commission array
+        //init commission array
 //            foreach ($referrer_referred_rows as $referrer_referred_row) {
 //                $referrers[$referrer_referred_row->referrer] = 0;
 //            }
-            //init referrers with their subscription tier &status
+        //init referrers with their subscription tier &status
 //            foreach ($referrer_stripe_ids as $referrer_email => $referrer_stripe_ids) {
 //                foreach ($referrer_stripe_ids as $referrer_stripe_id) {
 //
