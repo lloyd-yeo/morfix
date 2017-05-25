@@ -10,7 +10,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="fa-question-circle-o"></i> FAQ <small> Frequently asked questions.</small>
+                    <i class="fa fa-question-circle-o"></i> FAQ <small> Frequently asked questions.</small>
                 </h1>
             </div>
         </div>
