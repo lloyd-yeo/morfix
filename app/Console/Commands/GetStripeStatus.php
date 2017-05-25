@@ -99,7 +99,7 @@ class GetStripeStatus extends Command {
                     if ($referrer_stripe_id === NULL || $referrer_stripe_id == "") {
                         continue;
                     }
-                    echo $referrer_email . "\n";
+                    echo $referrer_email . " " . $referrer_stripe_id . "\n";
                     $customer = \Stripe\Customer::retrieve($referrer_stripe_id);
                     $subscriptions = $customer->subscriptions;
                     foreach ($subscriptions->data as $subscription) {
