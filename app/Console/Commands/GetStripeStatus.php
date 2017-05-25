@@ -105,8 +105,13 @@ class GetStripeStatus extends Command {
                     foreach ($subscriptions->data as $subscription) {
                         $subscription_id = $subscription->id;
                         $subscription_obj = \Stripe\Subscription::retrieve($subscription_id);
-                        $subscription_plan_id = $subscription_obj->plan->id;
-                        echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
+                        #$subscription_plan_id = $subscription_obj->plan->id;
+                        #echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
+                        $subscription_items = $subscription_obj->items->data;
+                        foreach ($subscription_items as $subscription_item) {
+                            $subscription_plan_id = $subscription_item->plan->id;
+                            echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
+                        }
                     }
                 }
             }
