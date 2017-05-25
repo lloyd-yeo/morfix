@@ -117,7 +117,7 @@ class GetStripeStatus extends Command {
                 $referred_email = $referrer_referred_row->referred;
             }
         } catch (\Exception $ex) {
-            echo $ex->getMessage();
+            echo $ex->getMessage() . "\n" . $ex->getLine();
         }
     }
 
