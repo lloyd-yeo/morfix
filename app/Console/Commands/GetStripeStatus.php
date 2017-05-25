@@ -106,7 +106,7 @@ class GetStripeStatus extends Command {
                         continue;
                     }
 
-                    echo $referrer_email . " " . $referrer_stripe_id . "\n";
+                    #echo $referrer_email . " " . $referrer_stripe_id . "\n";
 
                     $customer = \Stripe\Customer::retrieve($referrer_stripe_id);
                     $subscriptions = $customer->subscriptions;
