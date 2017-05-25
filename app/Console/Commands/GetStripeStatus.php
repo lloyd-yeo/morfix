@@ -22,8 +22,8 @@ use App\InstagramProfilePhotoPostSchedule;
 use App\StripeDetail;
 use Stripe\Stripe as Stripe;
 
-class GetStripeStatus extends Command
-{
+class GetStripeStatus extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -43,8 +43,7 @@ class GetStripeStatus extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -53,8 +52,7 @@ class GetStripeStatus extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
 //        $rows = DB::connection('mysql_old')->select("SELECT referred_email, referrer_email, subscription_id, charge_id, invoice_id
 //                            FROM insta_affiliate.get_referral_charges_of_user 
@@ -79,45 +77,48 @@ class GetStripeStatus extends Command
 //        }
 //        
 //        fclose($file);
-        
-        $referrers_commission = array();
-        $referrer_stripe_ids = array();
-        $referrer_active_subscription = array();
-        $referrer_referred_rows = DB::connection('mysql_old')->select("SELECT referrer, referred FROM get_referral_for_user ORDER BY referrer;");
-        $referrer_stripe_id_rows = DB::connection('mysql_old')->select("SELECT email, stripe_id FROM user_stripe_details;");
-        
-        //init referrer & their stripe_id array
-        foreach ($referrer_stripe_id_rows as $referrer_stripe_id_row) {
-            if (array_key_exists($referrer_stripe_id_row->email, $referrer_stripe_ids)) {
-                $referrer_stripe_ids[$referrer_stripe_id_row->email] = array();
-                $referrer_active_subscription[$referrer_stripe_id_row->email] = array();
+        try {
+            $referrers_commission = array();
+            $referrer_stripe_ids = array();
+            $referrer_active_subscription = array();
+            $referrer_referred_rows = DB::connection('mysql_old')->select("SELECT referrer, referred FROM get_referral_for_user ORDER BY referrer;");
+            $referrer_stripe_id_rows = DB::connection('mysql_old')->select("SELECT email, stripe_id FROM user_stripe_details;");
+
+            //init referrer & their stripe_id array
+            foreach ($referrer_stripe_id_rows as $referrer_stripe_id_row) {
+                if (array_key_exists($referrer_stripe_id_row->email, $referrer_stripe_ids)) {
+                    $referrer_stripe_ids[$referrer_stripe_id_row->email] = array();
+                    $referrer_active_subscription[$referrer_stripe_id_row->email] = array();
+                }
+                $referrer_stripe_ids[$referrer_stripe_id_row->email][] = $referrer_stripe_id_row->stripe_id;
             }
-            $referrer_stripe_ids[$referrer_stripe_id_row->email][] = $referrer_stripe_id_row->stripe_id;
-        }
-        
-        
-        foreach ($referrer_stripe_ids as $referrer_email => $referrer_stripe_ids) {
-            foreach ($referrer_stripe_ids as $referrer_stripe_id) {
-                $customer = \Stripe\Customer::retrieve($referrer_stripe_id);
-                $subscriptions = $customer->subscriptions;
-                foreach ($subscriptions->data as $subscription) {
-                    $subscription_id = $subscription->id;
-                    $subscription_obj = \Stripe\Subscription::retrieve($subscription_id);
-                    $subscription_plan_id = $subscription_obj->plan->id;
-                    echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
+
+
+            foreach ($referrer_stripe_ids as $referrer_email => $referrer_stripe_ids) {
+                foreach ($referrer_stripe_ids as $referrer_stripe_id) {
+                    $customer = \Stripe\Customer::retrieve($referrer_stripe_id);
+                    $subscriptions = $customer->subscriptions;
+                    foreach ($subscriptions->data as $subscription) {
+                        $subscription_id = $subscription->id;
+                        $subscription_obj = \Stripe\Subscription::retrieve($subscription_id);
+                        $subscription_plan_id = $subscription_obj->plan->id;
+                        echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
+                    }
                 }
             }
-        }
-        
-        //init commission array
-        foreach ($referrer_referred_rows as $referrer_referred_row) {
-            $referrers[$referrer_referred_row->referrer] = 0;
-        }
-        
-        foreach ($referrer_referred_rows as $referrer_referred_row) {
-            $referrer_email = $referrer_referred_row->referrer;
-            $referred_email = $referrer_referred_row->referred;
-            
+
+            //init commission array
+            foreach ($referrer_referred_rows as $referrer_referred_row) {
+                $referrers[$referrer_referred_row->referrer] = 0;
+            }
+
+            foreach ($referrer_referred_rows as $referrer_referred_row) {
+                $referrer_email = $referrer_referred_row->referrer;
+                $referred_email = $referrer_referred_row->referred;
+            }
+        } catch (\Exception $ex) {
+            echo $ex->getMessage();
         }
     }
+
 }
