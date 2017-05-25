@@ -76,7 +76,7 @@ class GetStripeStatus extends Command
             } else {
                 $refunded = 1;
             }
-            fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded);
+            fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded . "\n");
             $this->line($row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded);
         }
         
