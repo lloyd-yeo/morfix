@@ -70,8 +70,14 @@ class GetStripeStatus extends Command
         foreach ($rows as $row) {
             $invoice = \Stripe\Invoice::retrieve($row->invoice_id);
             $charge = \Stripe\Charge::retrieve($invoice->charge);
-            fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $charge->refunded);
-            $this->line($row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $charge->refunded);
+            $refunded = 0;
+            if ($charge->refunded != 1) {
+                $refunded = 0;
+            } else {
+                $refunded = 1;
+            }
+            fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded);
+            $this->line($row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded);
         }
         
         fclose($file);
