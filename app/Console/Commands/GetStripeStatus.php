@@ -63,8 +63,8 @@ class GetStripeStatus extends Command {
         $file = fopen('export.csv', 'w');
 
         foreach ($rows as $row) {
-            $invalid = false;
-            $eligible = false;
+            $invalid = 0;
+            $eligible = 0;
             $invoice = \Stripe\Invoice::retrieve($row->invoice_id);
             $charge = \Stripe\Charge::retrieve($invoice->charge);
             $refunded = 0;
@@ -75,14 +75,14 @@ class GetStripeStatus extends Command {
             }
 
             if ($refunded == 1) {
-                $invalid = true;
+                $invalid = 1;
             } else if ($invoice->paid == 0) {
-                $invalid = true;
+                $invalid = 1;
             }
 
             if (!$invalid) {
                 if ($row->referrer_vip == 1) {
-                    $eligible = true;
+                    $eligible = 1;
                 } else {
                     $subscription_status_rows = DB::connection('mysql_old')->select('SELECT email, subscription_id, status FROM insta_affiliate.get_user_subscription_status WHERE email = ?', [$row->referrer_email]);
                     foreach ($subscription_status_rows as $subscription_status_row) {
@@ -90,32 +90,33 @@ class GetStripeStatus extends Command {
                         if ($subscription_status_row->status == "active" || $subscription_status_row->status == "trailing") {
                             $subscription_is_active = true;
                         }
-                        
-                        if ($row->subscription_id == $subscription_status_row->subscription_id) {
-                            $eligible = true;
-                            break;
-                        } else if ($subscription_status_row->subscription_id == "MX370") {
-                            if ($row->subscription_id == "0137") {
-                                $eligible = true;
+                        if ($subscription_is_active) {
+                            if ($row->subscription_id == $subscription_status_row->subscription_id) {
+                                $eligible = 1;
                                 break;
-                            }
-                        } else if ($subscription_status_row->subscription_id == "MX970") {
-                            if ($row->subscription_id == "0297") {
-                                $eligible = true;
-                                break;
-                            }
-                        } else if ($subscription_status_row->subscription_id == "0167") {
-                            if ($row->subscription_id == "0137") {
-                                $eligible = true;
-                                break;
-                            } else if ($row->subscription_id == "0297") {
-                                $eligible = true;
-                                break;
-                            }
-                        } else if ($subscription_status_row->subscription_id == "0297" && $row->referrer_email == "Yongshaokoko@gmail.com") {
-                            if ($row->subscription_id == "0137") {
-                                $eligible = true;
-                                break;
+                            } else if ($subscription_status_row->subscription_id == "MX370") {
+                                if ($row->subscription_id == "0137") {
+                                    $eligible = 1;
+                                    break;
+                                }
+                            } else if ($subscription_status_row->subscription_id == "MX970") {
+                                if ($row->subscription_id == "0297") {
+                                    $eligible = 1;
+                                    break;
+                                }
+                            } else if ($subscription_status_row->subscription_id == "0167") {
+                                if ($row->subscription_id == "0137") {
+                                    $eligible = 1;
+                                    break;
+                                } else if ($row->subscription_id == "0297") {
+                                    $eligible = 1;
+                                    break;
+                                }
+                            } else if ($subscription_status_row->subscription_id == "0297" && $row->referrer_email == "Yongshaokoko@gmail.com") {
+                                if ($row->subscription_id == "0137") {
+                                    $eligible = 1;
+                                    break;
+                                }
                             }
                         }
                     }
