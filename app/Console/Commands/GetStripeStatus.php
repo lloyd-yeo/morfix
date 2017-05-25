@@ -120,7 +120,7 @@ class GetStripeStatus extends Command {
                         
                         #$subscription_plan_id = $subscription_obj->plan->id;
                         #echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
-//                        $subscription_items = $subscription_obj->items->data;
+                        $subscription_items = $subscription_obj->items->data;
                         foreach ($subscription_items as $subscription_item) {
                             $subscription_plan_id = $subscription_item->plan->id;
                             DB::connection('mysql_old')->insert('INSERT INTO insta_affiliate.user_stripe_active_subscription (stripe_id, subscription_id, status)
