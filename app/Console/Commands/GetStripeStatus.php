@@ -114,12 +114,17 @@ class GetStripeStatus extends Command {
                     foreach ($subscriptions->data as $subscription) {
                         $subscription_id = $subscription->id;
                         $subscription_obj = \Stripe\Subscription::retrieve($subscription_id);
+                        
+                        
+                        
+                        
                         #$subscription_plan_id = $subscription_obj->plan->id;
                         #echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
-                        $subscription_items = $subscription_obj->items->data;
+//                        $subscription_items = $subscription_obj->items->data;
                         foreach ($subscription_items as $subscription_item) {
                             $subscription_plan_id = $subscription_item->plan->id;
-                            $referrer_active_subscription[$referrer_email][] = array($subscription_plan_id, $subscription_obj->status);
+                            DB::connection('mysql_old')->insert('INSERT INTO insta_affiliate.user_stripe_active_subscription (stripe_id, subscription_id, status)
+                                                                VALUES (?,?,?);', [$referrer_stripe_id, $subscription_plan_id, $subscription_obj->status]);
                             #echo $subscription_plan_id . "\t" . $subscription_obj->status . "\n";
                         }
                     }
@@ -128,33 +133,34 @@ class GetStripeStatus extends Command {
 
 
 
-            foreach ($referrer_referred_rows as $referrer_referred_row) {
-                $referrer_email = $referrer_referred_row->referrer;
-                $referred_email = $referrer_referred_row->referred;
-
-                foreach ($referrer_stripe_ids[$referred_email] as $stripe_ids) {
-                    foreach ($stripe_ids as $stripe_id) {
-                        $referred_invoices = \Stripe\Invoice::all(array("customer" => $stripe_id));
-                        foreach ($referred_invoices->data as $referred_invoice) {
-                            $charge = \Stripe\Charge::retrieve($referred_invoice->charge);
-                            $date = \Carbon\Carbon::createFromTimestamp($charge->date)->toDateTimeString();
-                            foreach ($referred_invoice->lines->data as $referred_invoice_data) {
-                                $plan_id = $referred_invoice_data->plan->id;
-                                $refunded = 0;
-
-                                if ($charge->refunded != 1) {
-                                    $refunded = 0;
-                                } else {
-                                    $refunded = 1;
-                                }
-
-                                #fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded . "\n");
-                                $this->line($referrer_email . "," . $referred_email . "," . $plan_id . "," . $referred_invoice->id . "," . $referred_invoice->paid . ',' . $refunded . "," . $date . "," . serialize($referrer_active_subscription[$referrer_email] . "\n"));
-                            }
-                        }
-                    }
-                }
-            }
+//            foreach ($referrer_referred_rows as $referrer_referred_row) {
+//                $referrer_email = $referrer_referred_row->referrer;
+//                $referred_email = $referrer_referred_row->referred;
+//
+//                foreach ($referrer_stripe_ids[$referred_email] as $stripe_ids) {
+//                    foreach ($stripe_ids as $stripe_id) {
+//                        $referred_invoices = \Stripe\Invoice::all(array("customer" => $stripe_id));
+//                        foreach ($referred_invoices->data as $referred_invoice) {
+//                            $charge = \Stripe\Charge::retrieve($referred_invoice->charge);
+//                            $date = \Carbon\Carbon::createFromTimestamp($charge->date)->toDateTimeString();
+//                            foreach ($referred_invoice->lines->data as $referred_invoice_data) {
+//                                $plan_id = $referred_invoice_data->plan->id;
+//                                $refunded = 0;
+//
+//                                if ($charge->refunded != 1) {
+//                                    $refunded = 0;
+//                                } else {
+//                                    $refunded = 1;
+//                                }
+//
+//                                #fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $refunded . "\n");
+//                                $this->line($referrer_email . "," . $referred_email . "," . $plan_id . "," . $referred_invoice->id . "," . $referred_invoice->paid . ',' . $refunded . "," . $date . "," . serialize($referrer_active_subscription[$referrer_email] . "\n"));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            
         } catch (\Exception $ex) {
             echo $ex->getMessage() . "\n" . $ex->getLine() . "\n" . $ex->getTraceAsString();
         }
