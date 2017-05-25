@@ -70,4 +70,20 @@ class DirectMessageTemplatesController extends Controller
             return Response::json(array("success" => false, 'message' => $response));
         }
     }
+    
+    public function toggleAutoDm($id) {
+        $instagram_profile = InstagramProfile::where('id', $id)->first();
+        $instagram_profile->auto_dm_new_follower = ($instagram_profile->auto_dm_new_follower + 1) % 2;
+        $response = "There has been an error with the server. Please contact live support.";
+        if ($instagram_profile->save()) {
+            if ($instagram_profile->auto_dm_new_follower == 1) {
+                $response = "You have turned <b>ON</b> auto direct messaging.";
+            } else {
+                $response = "You have turned <b>OFF</b> auto direct messaging.";
+            }
+            return Response::json(array("success" => true, 'message' => $response));
+        } else {
+            return Response::json(array("success" => false, 'message' => $response));
+        }
+    }
 }

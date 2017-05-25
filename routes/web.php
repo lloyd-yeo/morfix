@@ -47,6 +47,7 @@ Route::get('/dm/templates/{id}', 'DirectMessageTemplatesController@index');
 Route::post('/dm/templates/save/greeting/{id}', 'DirectMessageTemplatesController@saveGreetingTemplate');
 Route::post('/dm/templates/save/followup/{id}', 'DirectMessageTemplatesController@saveFollowupTemplate');
 Route::post('/dm/templates/save/followupdelay/{id}', 'DirectMessageTemplatesController@toggleAutoDmDelay');
+Route::post('/dm/templates/save/autodm/{id}', 'DirectMessageTemplatesController@toggleAutoDm');
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/legacy/instagram-profile/add', 'LegacyInstagramProfileController@create');
 Route::get('/post-scheduling', 'PostSchedulingController@index');

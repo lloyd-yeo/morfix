@@ -106,6 +106,13 @@ $("#followup-delay-cbx").on("click", function(){
     toggleDelay(url);
 });
 
+$("#dm-cbx").on("click", function(){ 
+    var url = "save/autodm/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    toggleDelay(url);
+});
+
 function toggleDelay(url) {
     $.ajax({
         type: "POST",

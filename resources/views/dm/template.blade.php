@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <label class="css-input switch switch-sm switch-success">
-                                        <input type="checkbox" id="dm-cbx" name="auto-dm" data-id="{{ $ig_profile->id }}"><span></span> Turn on Auto Direct Message
+                                        <input type="checkbox" id="dm-cbx" name="auto-dm" data-id="{{ $ig_profile->id }}"><span></span> Turn on Auto Direct Message?
                                     </label>
                                 </div>
                             </div>
