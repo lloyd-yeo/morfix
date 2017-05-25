@@ -62,11 +62,18 @@ class GetStripeStatus extends Command
                             AND charge_created <= \"2017-04-31 23:59:59\"
                             ORDER BY referrer_email ASC 
                             LIMIT 10000;");
+        $file = fopen('export.csv', 'w');
+
+        
+
         
         foreach ($rows as $row) {
             $invoice = \Stripe\Invoice::retrieve($row->invoice_id);
             $charge = \Stripe\Charge::retrieve($invoice->charge);
+            fwrite($file, $row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $charge->refunded);
             $this->line($row->referrer_email . "," . $row->referred_email . "," . $row->subscription_id . "," . $invoice->id . "," . $invoice->paid . ',' . $charge->refunded);
         }
+        
+        fclose($file);
     }
 }
