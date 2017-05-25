@@ -54,7 +54,7 @@ class GetStripeStatus extends Command {
      */
     public function handle() {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        $rows = DB::connection('mysql_old')->select("SELECT vip, referred_email, referrer_email, subscription_id, charge_id, invoice_id
+        $rows = DB::connection('mysql_old')->select("SELECT referrer_vip, referred_email, referrer_email, subscription_id, charge_id, invoice_id
                             FROM insta_affiliate.get_referral_charges_of_user 
                             WHERE charge_created >= \"2017-04-01 00:00:00\"
                             AND charge_created <= \"2017-04-31 23:59:59\"
@@ -81,7 +81,7 @@ class GetStripeStatus extends Command {
             }
 
             if (!$invalid) {
-                if ($row->vip == 1) {
+                if ($row->referrer_vip == 1) {
                     $eligible = true;
                 } else {
                     $subscription_status_rows = DB::connection('mysql_old')->select('SELECT email, subscription_id, status FROM insta_affiliate.get_user_subscription_status WHERE email = ?', [$row->referrer_email]);
