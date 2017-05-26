@@ -48,7 +48,6 @@ class EngagementGroupController extends Controller
     }
     
     public function schedule(Request $request, $media_id) {
-        
         $user = User::where('email', Auth::user()->email)->first();
         if ($user->engagement_quota > 0) {
             $engagement_group_job = new EngagementGroupJob;
