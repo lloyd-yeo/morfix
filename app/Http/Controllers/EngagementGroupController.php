@@ -48,12 +48,19 @@ class EngagementGroupController extends Controller
     }
     
     public function schedule(Request $request, $media_id) {
-        $engagement_group_job = new EngagementGroupJob;
-        $engagement_group_job->media_id = $media_id;
-        $engagement_group_job->engaged = 0;
-//        if ($engagement_group_job->save()) {
-//            DB::connection('mysql_old')->table('user')->decrement('engagement_quota', 1, ['email' => Auth::user()->email]);
-//        }
-        return Response::json(array("success" => true, 'message' => "Your photo has been sent for engagement group. Expect a increase in engagement."));
+        
+        $user = User::where('email', Auth::user()->email)->first();
+        if ($user->engagement_quota > 0) {
+            $engagement_group_job = new EngagementGroupJob;
+            $engagement_group_job->media_id = $media_id;
+            $engagement_group_job->engaged = 0;
+            if ($engagement_group_job->save()) {
+                DB::connection('mysql_old')->table('user')->decrement('engagement_quota', 1, ['email' => Auth::user()->email]);
+            }
+            return Response::json(array("success" => true, 'message' => "Your photo has been sent for engagement group. Expect a increase in engagement."));
+        } else {
+            return Response::json(array("success" => fail, 'message' => "You've ran out of engagement credits. Do try again tomorrow."));
+        }
+        
     }
 }
