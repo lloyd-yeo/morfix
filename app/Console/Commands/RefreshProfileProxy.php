@@ -43,18 +43,29 @@ class RefreshProfileProxy extends Command {
      * @return mixed
      */
     public function handle() {
-        $user_insta_profiles = DB::connection('mysql_old')->select("SELECT * FROM user_insta_profile WHERE error_msg LIKE \"%cURL%\";");
+        
+        $ig_profiles = InstagramProfile::where('error_msg', 'LIKE', '%cURL%')->get();
         foreach ($user_insta_profiles as $ig_profile) {
             $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-            $ig_username = $ig_profile->insta_username;
-            $ig_password = $ig_profile->insta_pw;
-            
-            $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
-            foreach ($proxies as $proxy) {
-                $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-                $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
-            }
+            $proxy = Proxy::inRandomOrder()->first();
+            $ig_profile->proxy = $proxy->proxy;
+            $ig_profile->save();
+            $proxy->assigned = $proxy->assigned + 1;
+            $proxy->save();
         }
+        
+//        $user_insta_profiles = DB::connection('mysql_old')->select("SELECT * FROM user_insta_profile WHERE error_msg LIKE \"%cURL%\";");
+//        foreach ($user_insta_profiles as $ig_profile) {
+//            $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+//            $ig_username = $ig_profile->insta_username;
+//            $ig_password = $ig_profile->insta_pw;
+//            
+//            $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
+//            foreach ($proxies as $proxy) {
+//                $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
+//                $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
+//            }
+//        }
     }
 
 }
