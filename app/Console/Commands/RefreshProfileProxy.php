@@ -43,7 +43,7 @@ class RefreshProfileProxy extends Command {
      * @return mixed
      */
     public function handle() {
-        $user_insta_profiles = DB::connection('mysql_old')->select("SELECT * FROM user_insta_profile WHERE proxy IS NULL;");
+        $user_insta_profiles = DB::connection('mysql_old')->select("SELECT * FROM user_insta_profile WHERE error_msg LIKE \"%cURL%\";");
         foreach ($user_insta_profiles as $ig_profile) {
             $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
             $ig_username = $ig_profile->insta_username;
