@@ -52,7 +52,6 @@ class RefreshProfileProxy extends Command {
             $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
             foreach ($proxies as $proxy) {
                 $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-                $instagram->setProxy($proxy->proxy);
                 $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
             }
         }
