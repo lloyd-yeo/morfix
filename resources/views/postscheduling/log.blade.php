@@ -50,14 +50,14 @@
                                     <label class="label label-default">Failed</label>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @if ($schedule->log == NULL)
                                     Your post is pending posting.
                                     @else
                                     {{ $schedule->log }}
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs btn-default">
                                             <i class="fa fa-fw fa-eye"></i>
