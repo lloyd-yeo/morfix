@@ -19,7 +19,8 @@ class SettingsController extends Controller
     public function index() {
         //get recent subscription
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        $subscriptions_ = array();
+        $subscriptions = array();
+        
         if (Auth::user()->stripe_id === NULL) {
             $customer = \Stripe\Customer::create(array(
                 "email" => Auth::user()->email,
