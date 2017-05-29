@@ -57,6 +57,16 @@
                                     {{ $schedule->log }}
                                     @endif
                                 </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-default">
+                                            <i class="fa fa-fw fa-eye"></i> View Details
+                                        </button>
+                                        <button class="btn btn-xs btn-danger btn-cancel-schedule" 
+                                                data-schedule-id="{{ $schedule->schedule_id }}" type="button" data-toggle="tooltip" title="Cancel scheduling"><i class="fa fa-times"></i></button>
+                                    
+                                    </div>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
