@@ -76,7 +76,7 @@ class PostSchedulingController extends Controller {
             $image = $request->file('file');
             $filename = Storage::putFile('public/uploads', $image, 'public');
             $filename = substr($filename, 7);
-            
+
             $user_img = new UserImages;
             $user_img->email = Auth::user()->email;
             $user_img->image_path = $filename;
@@ -84,30 +84,62 @@ class PostSchedulingController extends Controller {
             return response()->json(['success' => true, 'path' => $filename, 'id' => $user_img->id]);
         }
     }
-    
+
     /**
      * Schedule a photo for posting
      *
      * @return \Illuminate\Http\Response
      */
     public function schedule(Request $request, $id) {
-        $instagram_profiles = InstagramProfile::where('id', $id)->first();
-        $image_id = $request->input('img_id');
-        $user_img = UserImages::find($image_id);
-        
-        $instagram_post_schedule = new InstagramProfilePhotoPostSchedule;
-        $instagram_post_schedule->insta_id = $instagram_profiles->id;
-        $instagram_post_schedule->insta_username = $instagram_profiles->insta_username;
-        if ($request->input('date_to_post') !== null) {
-            $instagram_post_schedule->date_to_post = date("Y-m-d H:i:s", strtotime($request->input('date_to_post')));
-        }
-        $instagram_post_schedule->image_path = $user_img->image_path;
-        $instagram_post_schedule->caption = $request->input('caption');
-        if ($request->input('first_comment') !== null) {
-            $instagram_post_schedule->first_comment = $request->input('first_comment');
-        }
-        if ($instagram_post_schedule->save()) {
-            return response()->json(['success' => true, 'response' => 'Your post has been successfully scheduled for posting at ' . $instagram_post_schedule->date_to_post]);
+        if ($request->input('img_source') == 'user') {
+            $instagram_profiles = InstagramProfile::where('id', $id)->first();
+            $image_id = $request->input('img_id');
+            $user_img = UserImages::find($image_id);
+
+            $instagram_post_schedule = new InstagramProfilePhotoPostSchedule;
+            $instagram_post_schedule->insta_id = $instagram_profiles->id;
+            $instagram_post_schedule->insta_username = $instagram_profiles->insta_username;
+            
+            if ($request->input('date_to_post') !== null) {
+                $instagram_post_schedule->date_to_post = date("Y-m-d H:i:s", strtotime($request->input('date_to_post')));
+            }
+            
+            $instagram_post_schedule->image_path = $user_img->image_path;
+            $instagram_post_schedule->caption = $request->input('caption');
+            
+            if ($request->input('first_comment') !== null) {
+                $instagram_post_schedule->first_comment = $request->input('first_comment');
+            }
+            
+            if ($instagram_post_schedule->save()) {
+                return response()->json(['success' => true, 'response' => 'Your post has been successfully scheduled for posting at ' . $instagram_post_schedule->date_to_post]);
+            }
+            
+        } else if ($request->input('img_source') == 'gallery') {
+            
+            $instagram_profiles = InstagramProfile::where('id', $id)->first();
+            $image_id = $request->input('img_id');
+            
+            $default_img = DefaultImageGallery::find($image_id);
+            
+            $instagram_post_schedule = new InstagramProfilePhotoPostSchedule;
+            $instagram_post_schedule->insta_id = $instagram_profiles->id;
+            $instagram_post_schedule->insta_username = $instagram_profiles->insta_username;
+            
+            if ($request->input('date_to_post') !== null) {
+                $instagram_post_schedule->date_to_post = date("Y-m-d H:i:s", strtotime($request->input('date_to_post')));
+            }
+            
+            $instagram_post_schedule->image_path = $default_img->image_path;
+            $instagram_post_schedule->caption = $request->input('caption');
+            
+            if ($request->input('first_comment') !== null) {
+                $instagram_post_schedule->first_comment = $request->input('first_comment');
+            }
+            
+            if ($instagram_post_schedule->save()) {
+                return response()->json(['success' => true, 'response' => 'Your post has been successfully scheduled for posting at ' . $instagram_post_schedule->date_to_post]);
+            }
         }
     }
 

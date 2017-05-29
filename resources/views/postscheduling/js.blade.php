@@ -66,6 +66,12 @@ jQuery(function () {
         jQuery('#modalScheduleImage').modal('show');
     });
     
+    $(".upload-default-photo").on("click", function(){ 
+        $imgId = $(this).attr("data-image-id");
+        $profileId = $(this).attr("data-profile-id");
+        jQuery('#modalScheduleGalleryImage').modal('show');
+    });
+    
     $("#schedule-btn").on("click", function(){
         var $dateToPost = $("#schedule-date").val();
         var $caption = $("#image-caption-txt").val();
@@ -78,7 +84,8 @@ jQuery(function () {
                 img_id: $imgId,
                 date_to_post: $dateToPost,
                 caption: $caption,
-                first_comment: $firstComment
+                first_comment: $firstComment,
+                img_source: 'user'
             },
             success: function (data) {
                 if (data.success === true) {
@@ -90,5 +97,30 @@ jQuery(function () {
         jQuery('#modalScheduleImage').modal('toggle');
     });
     
+    $("#schedule-gallery-btn").on("click", function(){
+        var $dateToPost = $("#gallery-schedule-date").val();
+        var $caption = $("#gallery-image-caption-txt").val();
+        var $firstComment = $("#gallery-first-comment-txt").val();
+        
+        $.ajax({
+            type: "POST",
+            url: '/post-scheduling/schedule/' + $profileId,
+            dataType: "json",
+            data: {
+                img_id: $imgId,
+                date_to_post: $dateToPost,
+                caption: $caption,
+                first_comment: $firstComment,
+                img_source: 'user'
+            },
+            success: function (data) {
+                if (data.success === true) {
+                    swal('Success', data.response, 'success');
+                }
+            }
+        });
+        
+        jQuery('#modalScheduleGalleryImage').modal('toggle');
+    });
 });
 </script>
