@@ -171,6 +171,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                                         insertNewFollowLogEntry($insta_username, $user->username, $user->pk, NULL, $servername, $username, $password, $dbname);
                                     } catch (Exception $ex) {
                                         echo "[" . $insta_username . "] " . $ex->getMessage() . "..\n";
+                                        continue;
                                     }
                                 }
                             } else {
