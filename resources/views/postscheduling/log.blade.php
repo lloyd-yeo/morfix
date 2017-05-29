@@ -40,7 +40,7 @@
                         <tbody>
                             @foreach ($schedules as $schedule)
                             <tr>
-                                <td>{{ Carbon\Carbon::createFromTimestamp($schedule->date_to_post)->toDayDateTimeString() }}</td>
+                                <td>{{ Carbon\Carbon::parse($schedule->date_to_post)->toDayDateTimeString() }}</td>
                                 <td class="text-center">
                                     @if ($schedule->posted == 0)
                                     <label class="label label-primary">Pending</label>
