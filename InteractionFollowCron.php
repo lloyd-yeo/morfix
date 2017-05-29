@@ -161,17 +161,21 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 
                         if (count($users_to_unfollow) == 0) {
                             echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
-                            
+
                             #forced unfollow
-                             if ($auto_unfollow == 1 && $auto_follow == 0) {
+                            if ($auto_unfollow == 1 && $auto_follow == 0) {
                                 echo "[" . $insta_username . "] adding new unfollows..\n";
                                 $followings = $instagram->getSelfUsersFollowing();
                                 foreach ($followings->users as $user) {
-                                    insertNewFollowLogEntry($insta_username, $user->username, $user->pk, NULL, $servername, $username, $password, $dbname);
+                                    try {
+                                        insertNewFollowLogEntry($insta_username, $user->username, $user->pk, NULL, $servername, $username, $password, $dbname);
+                                    } catch (Exception $ex) {
+                                        echo "[" . $insta_username . "] " . $ex->getMessage() . "..\n";
+                                    }
                                 }
-                             } else {
+                            } else {
                                 switchFollowCycle($insta_id, $insta_username, $servername, $username, $password, $dbname);
-                             }
+                            }
                         } else {
                             foreach ($users_to_unfollow as $user_to_unfollow) {
                                 echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow["follower_username"] . "\n";
@@ -678,8 +682,8 @@ function insertNewFollowLogEntry($insta_username, $follower_username, $follower_
     $conn_insert_follow = getConnection($servername, $username, $password, $dbname);
 
     $stmt_update_follow_log = $conn_insert_follow->prepare("INSERT INTO `insta_affiliate`.`user_insta_profile_follow_log`
-                            (`insta_username`, `follower_username`, `follower_id`, `log`, `follow_success`) 
-                            VALUES (?,?,?,?,?);");
+                                (`insta_username`, `follower_username`, `follower_id`, `log`, `follow_success`) 
+                                VALUES (?,?,?,?,?);");
     $follow_success = 1;
     $stmt_update_follow_log->bind_param("ssssi", $insta_username, $follower_username, $follower_id, $resp, $follow_success);
     $stmt_update_follow_log->execute();
