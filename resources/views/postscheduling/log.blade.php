@@ -59,7 +59,7 @@
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <button class="btn btn-sm btn-default">
+                                        <button class="btn btn-xs btn-primary">
                                             <i class="fa fa-fw fa-eye"></i> View Details
                                         </button>
                                         <button class="btn btn-xs btn-danger btn-cancel-schedule" 
