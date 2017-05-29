@@ -52,9 +52,10 @@
                                 </td>
                                 <td>
                                     @if ($schedule->log == NULL)
-                                    
+                                    Your post is pending posting.
                                     @else
                                     {{ $schedule->log }}
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
