@@ -28,7 +28,7 @@
                 </div>
                 
                 <div class="block-content">
-                    <table class="table table-bordered table-striped js-dataTable-subscription">
+                    <table class="table table-bordered table-striped js-dataTable-schedule">
                         <thead>
                             <tr>
                                 <th class="text-center"><i class="fa fa-clock-o"></i> Date To Post (GMT+8)</th>
