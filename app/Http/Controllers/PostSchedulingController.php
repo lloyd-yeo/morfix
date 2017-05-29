@@ -84,7 +84,16 @@ class PostSchedulingController extends Controller {
             return response()->json(['success' => true, 'path' => $filename, 'id' => $user_img->id]);
         }
     }
-
+    
+    public function log(Request $request, $id) {
+        $insta_username = InstagramProfile::find($id)->insta_username;
+        $schedules = InstagramProfilePhotoPostSchedule::where('insta_username', $insta_username)->orderBy('schedule_id', 'desc')->get();
+        
+        return view('postscheduling.log', [
+            'schedules' => $schedules
+        ]);
+    }
+    
     /**
      * Schedule a photo for posting
      *
