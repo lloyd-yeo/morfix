@@ -45,7 +45,7 @@ class RefreshProfileProxy extends Command {
     public function handle() {
         
         $ig_profiles = InstagramProfile::where('error_msg', 'LIKE', '%cURL%')->get();
-        foreach ($user_insta_profiles as $ig_profile) {
+        foreach ($ig_profiles as $ig_profile) {
             $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
