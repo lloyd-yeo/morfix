@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel {
         Commands\ConvertUnicodeEmojiToShortCode::class,
         Commands\MakeStripeIdActive::class,
         Commands\GetStripeStatus::class,
+        Commands\RefreshProfileProxy::class,
     ];
 
     /**
