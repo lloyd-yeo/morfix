@@ -49,6 +49,7 @@ class RefreshProfileProxy extends Command {
             $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
+            $ig_profile->error_msg = NULL;
             $ig_profile->save();
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
