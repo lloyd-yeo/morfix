@@ -59,8 +59,8 @@
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <button class="btn btn-xs btn-primary">
-                                            <i class="fa fa-fw fa-eye"></i> View Details
+                                        <button class="btn btn-xs btn-default">
+                                            <i class="fa fa-fw fa-eye"></i>
                                         </button>
                                         <button class="btn btn-xs btn-danger btn-cancel-schedule" 
                                                 data-schedule-id="{{ $schedule->schedule_id }}" type="button" data-toggle="tooltip" title="Cancel scheduling"><i class="fa fa-times"></i></button>
