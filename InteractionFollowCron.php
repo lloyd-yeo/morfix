@@ -127,6 +127,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
                     if (is_null($proxy)) {
+                        echo "[" . $insta_username . "] has no proxies assigned to it.\n";
                         continue;
                     } else {
                         $instagram->setProxy($proxy);
@@ -160,7 +161,17 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 
                         if (count($users_to_unfollow) == 0) {
                             echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
-                            switchFollowCycle($insta_id, $insta_username, $servername, $username, $password, $dbname);
+                            
+                            #forced unfollow
+                             if ($auto_unfollow == 1 && $auto_follow == 0) {
+                                echo "[" . $insta_username . "] adding new unfollows..\n";
+                                $followings = $instagram->getSelfUsersFollowing();
+                                foreach ($followings->users as $user) {
+                                    insertNewFollowLogEntry($insta_username, $user->username, $user->pk, NULL, $servername, $username, $password, $dbname);
+                                }
+                             } else {
+                                switchFollowCycle($insta_id, $insta_username, $servername, $username, $password, $dbname);
+                             }
                         } else {
                             foreach ($users_to_unfollow as $user_to_unfollow) {
                                 echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow["follower_username"] . "\n";
