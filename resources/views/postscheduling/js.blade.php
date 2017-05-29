@@ -111,7 +111,7 @@ jQuery(function () {
                 date_to_post: $dateToPost,
                 caption: $caption,
                 first_comment: $firstComment,
-                img_source: 'user'
+                img_source: 'gallery'
             },
             success: function (data) {
                 if (data.success === true) {
