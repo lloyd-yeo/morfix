@@ -65,7 +65,7 @@
         <div id="page-loader"></div>
         <!--<div id="payment-loader" style='display:none;'></div>-->
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
-            @include('side_overlay')
+            
 
             @yield('sidebar')
 
