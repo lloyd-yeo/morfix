@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\YourlsUrl;
 use App\User;
+use Response;
 
 class AffiliateController extends Controller {
 
