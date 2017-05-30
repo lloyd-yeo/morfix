@@ -124,9 +124,15 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
+                                    @if ($ig_profile->auto_dm_delay == 0)
                                     <label class="css-input switch switch-sm switch-success">
                                         <input type="checkbox" id="followup-delay-cbx" name="follow-up-delay" data-id="{{ $ig_profile->id }}"><span></span> Send follow-up messages a day after greeting message?
                                     </label>
+                                    @else
+                                    <label class="css-input switch switch-sm switch-success">
+                                        <input type="checkbox" id="followup-delay-cbx" name="follow-up-delay" data-id="{{ $ig_profile->id }}" checked><span></span> Send follow-up messages a day after greeting message?
+                                    </label>
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group">
