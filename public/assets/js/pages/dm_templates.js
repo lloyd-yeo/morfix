@@ -137,7 +137,6 @@ function saveTemplate(url, message) {
         url: url,
         dataType: "json",
         data: {
-            action: "toggle",
             message: message
         },
         success: function (data) {
