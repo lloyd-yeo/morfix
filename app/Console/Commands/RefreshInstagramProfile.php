@@ -11,6 +11,7 @@ use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\User;
 
 class RefreshInstagramProfile extends Command {
 
@@ -48,14 +49,29 @@ class RefreshInstagramProfile extends Command {
         $limit = $this->argument('limit');
 
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $users = User::where('email', $this->argument("email"))->get();
+//            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+            $users = User::where(DB::raw('email IN (SELECT email FROM user_insta_profile)'))
+                    ->orderBy('user_id', 'desc')
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->get();
+            #$users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
 
         foreach ($users as $user) {
             $this->line($user->email);
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_user_id, insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? AND checkpoint_required = 0 AND incorrect_pw = 0 AND invalid_user = 0;", [$user->user_id]);
+//            $instagram_profiles = DB::connection('mysql_old')
+//                    ->select("SELECT id, insta_user_id, insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? "
+//                            . "AND checkpoint_required = 0 AND incorrect_pw = 0 AND invalid_user = 0;", []);
+            
+            $instagram_profiles = InstagramProfile::where('checkpoint_required', 0)
+                    ->where('incorrect_pw', 0)
+                    ->where('invalid_user', 0)
+                    ->where('user_id', $user->user_id)
+                    ->get();
+            
             $config = array();
             $config["storage"] = "mysql";
             $config["dbusername"] = "root";
@@ -72,25 +88,27 @@ class RefreshInstagramProfile extends Command {
                 $ig_password = $ig_profile->insta_pw;
 
                 if ($ig_profile->proxy === NULL) {
-                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
-                    foreach ($proxies as $proxy) {
-                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-                        $instagram->setProxy($proxy->proxy);
-                        $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
-                    }
-                } else {
-                    $instagram->setProxy($ig_profile->proxy);
+                    $proxy = Proxy::inRandomOrder()->first();
+                    $ig_profile->proxy = $proxy->proxy;
+                    $ig_profile->error_msg = NULL;
+                    $ig_profile->save();
+                    $proxy->assigned = $proxy->assigned + 1;
+                    $proxy->save();
                 }
+
+                $instagram->setProxy($ig_profile->proxy);
 
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $instagram->setProxy($ig_profile->proxy);
-                    $explorer_response = $instagram->login();
+                    $login_response = $instagram->login();
                     $user_response = $instagram->getUserInfoByName($ig_username);
                     $instagram_user = $user_response->user;
 
                     DB::connection('mysql_old')->
-                            update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url,$ig_username]);
+                            update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
+                                    [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
+                    
                     $items = $instagram->timeline->getSelfUserFeed()->items;
 //                    $this->info(serialize($items));
                     foreach ($items as $item) {
