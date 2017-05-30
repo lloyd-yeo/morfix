@@ -43,6 +43,7 @@ Route::post('/interactions/save/advancedfollowsettings/{id}', 'InteractionsContr
 Route::post('/instagram-profile/add', 'InstagramProfileController@store');
 Route::post('/profile/ig/add', 'InstagramProfileController@create');
 Route::get('/dm', 'DirectMessageController@index');
+Route::get('/dm/logs/{id}', 'DirectMessageController@log');
 Route::get('/dm/templates/{id}', 'DirectMessageTemplatesController@index');
 Route::post('/dm/templates/save/greeting/{id}', 'DirectMessageTemplatesController@saveGreetingTemplate');
 Route::post('/dm/templates/save/followup/{id}', 'DirectMessageTemplatesController@saveFollowupTemplate');

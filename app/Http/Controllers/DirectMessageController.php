@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\InstagramProfile;
+use App\DmJob;
 
 class DirectMessageController extends Controller
 {
@@ -18,10 +19,17 @@ class DirectMessageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        
         $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(10)->get();
         return view('dm', [
             'user_ig_profiles' => $instagram_profiles,
+        ]);
+    }
+    
+    public function log(Request $request, $id) {
+        $instagram_profiles = InstagramProfile::find('id', $id);
+        $dm_jobs = DmJob::where('insta_username', $instagram_profiles->insta_username)->orderBy('job_id', 'asc')->take(10)->get();
+        return view('dm.log', [
+            'dm_job' => $dm_jobs,
         ]);
     }
     

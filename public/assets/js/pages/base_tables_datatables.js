@@ -32,6 +32,15 @@ var BaseTableDatatables = function() {
         });
     };
     
+    // Init full DataTable, for more examples you can check out https://www.datatables.net/
+    var initDataTableDirectMessageJob = function() {
+        jQuery('.js-dataTable-dmJob').dataTable({
+            columnDefs: [ { orderable: false, targets: [ 5 ] } ],
+            pageLength: 10,
+            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
+        });
+    };
+    
     // Init full extra DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableFullPagination = function() {
         jQuery('.js-dataTable-full-pagination').dataTable({
@@ -219,6 +228,7 @@ var BaseTableDatatables = function() {
             initDataTableFullPagination();
             initDataTableSubscriptions();
             initDataTableSchedule();
+            initDataTableDirectMessageJob();
         }
     };
 }();
