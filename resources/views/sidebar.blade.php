@@ -83,9 +83,9 @@
                         <a class="active"  href="javascript:void(0)"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
                         @else
                             @if (Auth::user()->tier > 1)
-                            <a  href="javascript:void(0)"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
+                            <a href="javascript:void(0)"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
                             @else
-                            <a  href="javascript:void(0)" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
+                            <a href="javascript:void(0)" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
                             @endif
                         @endif
                     </li>
@@ -120,7 +120,7 @@
                         @if ($page == 'training-6figureprofile')
                         <a class="active" href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @else
-                        @if ($page == 'training-affiliate')
+                        @if ($page == 'training-6figureprofile')
                         <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @else
                             @if ((Auth::user()->tier % 10) == 3)
@@ -129,7 +129,21 @@
                             <a href="#" data-toggle="modal" data-target="#upgrade-training-6figure-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                             @endif
                         @endif
-                        
+                        @endif
+                    </li>
+                    <li>
+                        @if ($page == 'training-fbads')
+                        <a class="active" href="javascript:void(0)" ><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
+                        @else
+                        @if ($page == 'training-fbads')
+                        <a href="javascript:void(0)" ><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
+                        @else
+                            @if ((Auth::user()->tier % 10) == 3)
+                            <a href="javascript:void(0)" ><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
+                            @else
+                            <a href="#" data-toggle="modal" data-target="#upgrade-training-video-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
+                            @endif
+                        @endif
                         @endif
                     </li>
                     
