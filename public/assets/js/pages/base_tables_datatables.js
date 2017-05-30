@@ -42,7 +42,7 @@ var BaseTableDatatables = function() {
     };
     
     // Init full DataTable, for more examples you can check out https://www.datatables.net/
-    var initDataTableDirectMessageJob = function() {
+    var initDataTableSentDirectMessageJob = function() {
         jQuery('.js-dataTable-sentDmJob').dataTable({
             columnDefs: [ { orderable: false, targets: [ 5 ] } ],
             pageLength: 10,

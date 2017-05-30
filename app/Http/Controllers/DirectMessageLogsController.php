@@ -25,4 +25,12 @@ class DirectMessageLogsController extends Controller
             'pending_dm_jobs' => $pending_dm_jobs,
         ]);
     }
+    
+    public function cancel(Request $request, $id) {
+        if (DmJob::destroy($id)) {
+            return Response::json(array("success" => true, 'message' => "Your pending DM has been cancelled."));
+        } else { 
+            return Response::json(array("success" => false, 'message' => "We've encountered an error please try again later."));
+        }
+    }
 }

@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                             @foreach ($pending_dm_jobs as $dm_job)
-                            <tr>
+                            <tr id='dm-{{ $dm_job }}'>
                                 <td>{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
                                 <td class="text-center">
                                     @if ($dm_job->fulfilled == 0)
@@ -67,7 +67,6 @@
                                     <div class="btn-group">
                                         <button class="btn btn-xs btn-danger btn-cancel-job" 
                                                 data-job-id="{{ $dm_job->job_id }}" type="button" data-toggle="tooltip" title="Cancel Job"><i class="fa fa-times"></i></button>
-                                    
                                     </div>
                                 </td>
                             </tr>
