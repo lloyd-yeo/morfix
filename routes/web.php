@@ -43,13 +43,11 @@ Route::post('/interactions/save/advancedfollowsettings/{id}', 'InteractionsContr
 Route::post('/instagram-profile/add', 'InstagramProfileController@store');
 Route::post('/profile/ig/add', 'InstagramProfileController@create');
 Route::get('/dm', 'DirectMessageController@index');
-Route::get('/dm/logs/{id}', 'DirectMessageController@log');
 Route::get('/dm/templates/{id}', 'DirectMessageTemplatesController@index');
 Route::post('/dm/templates/save/greeting/{id}', 'DirectMessageTemplatesController@saveGreetingTemplate');
 Route::post('/dm/templates/save/followup/{id}', 'DirectMessageTemplatesController@saveFollowupTemplate');
 Route::post('/dm/templates/save/followupdelay/{id}', 'DirectMessageTemplatesController@toggleAutoDmDelay');
 Route::post('/dm/templates/save/autodm/{id}', 'DirectMessageTemplatesController@toggleAutoDm');
-Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/legacy/instagram-profile/add', 'LegacyInstagramProfileController@create');
 Route::get('/post-scheduling', 'PostSchedulingController@index');
 Route::get('/post-scheduling/schedule/{id}', 'PostSchedulingController@gallery');
@@ -66,3 +64,4 @@ Route::get('/settings', 'SettingsController@index');
 Route::post('/settings/subscription/cancel/{subscription_id}', 'SettingsController@cancelSubscription');
 Route::get('/faq', 'FaqController@index');
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
+Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
