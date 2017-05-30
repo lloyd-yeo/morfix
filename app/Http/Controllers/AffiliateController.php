@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\YourlsUrl;
+use App\StripeDetail;
 use App\User;
 use Response;
 
@@ -50,12 +51,12 @@ class AffiliateController extends Controller {
 
             $active = false;
 
-            $stripe_details = \App\StripeDetail::where('email', $referral->email)->get();
+            $stripe_details = StripeDetail::where('email', $referral->email)->get();
             
             foreach ($stripe_details as $stripe_detail) {
                 $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
                 foreach ($subscriptions->data as $subscription) {
-                    if ($subscription->status == "past_due" || $subscription->status == "unpaid") {
+                    if ($subscription->status == "trialing" || $subscription->status == "active") {
                         $active = true;
                         break;
                     }
