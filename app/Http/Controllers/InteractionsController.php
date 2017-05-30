@@ -248,7 +248,7 @@ class InteractionsController extends Controller {
 
         if ($new_instagram_profile_target_username->save()) {
             $response = "Successfully added username!";
-            return Response::json(array("success" => true, 'response' => $response, 'id' => $new_instagram_profile_target_username->id));
+            return Response::json(array("success" => true, 'response' => $response, 'id' => $new_instagram_profile_target_username->target_id));
         } else {
             return Response::json(array("success" => false, 'response' => $response));
         }
