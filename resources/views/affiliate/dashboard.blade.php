@@ -151,7 +151,11 @@
                         <div class="form-group">
                             <label class="col-xs-12" for="paypal-email">Paypal Email</label>
                             <div class="col-xs-12 form-material form-material-success">
+                                @if (Auth::user()->paypal_email === NULL || Auth::user()->paypal_email == "")
                                 <input class="form-control" type="email" id="paypal-email" name="paypal-email" placeholder="Enter your paypal email..">
+                                @else
+                                <input class="form-control" value="{{ Auth::user()->paypal_email }}" type="email" id="paypal-email" name="paypal-email" placeholder="Enter your paypal email..">
+                                @endif
                                 <div class="help-block text-left">Enter your paypal email to receive your payout!</div>
                             </div>
                         </div>
