@@ -211,7 +211,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-4">
-                                    <a class="block block-link-hover2"  href="#" data-toggle="modal" data-target="#upgrade-video-training-modal">
+                                    <a class="block block-link-hover2"  href="#" data-toggle="modal" data-target="#upgrade-training-video-modal">
                                         <div class="block-content block-content-full bg-primary clearfix">
                                             <i class="si si-bag fa-2x text-white pull-left"></i>
                                             <span class="h4 font-w500 text-white"> Upgrade Business</span>
