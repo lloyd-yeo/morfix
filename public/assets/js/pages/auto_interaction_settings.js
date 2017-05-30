@@ -377,7 +377,7 @@ $("body").on("click", ".remove-hashtag-btn", function(e){
         data: {},
         success: function (data) {
             if (data.success === true) {
-                jQuery("#hashtag-"id).remove();
+                jQuery("#hashtag-" + id).remove();
 //                e.remove();
             } else {
                 swal('Oops...', data.response, 'error');
