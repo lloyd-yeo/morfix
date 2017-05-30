@@ -66,6 +66,7 @@ class AffiliateController extends Controller {
                 $referrals_[] = $referral;
             }
         }
+        
         $referrals = $referrals_;
         
         #$referral_links = DB::connection('mysql_old')->select('SELECT * FROM yourls_url WHERE url LIKE "%referrer=' . $user_id . '&%";');
