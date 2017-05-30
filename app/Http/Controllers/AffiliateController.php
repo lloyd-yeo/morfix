@@ -31,6 +31,7 @@ class AffiliateController extends Controller {
 
         $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id%")->get();
         
+        $referrals_ = array();
         $referrals = DB::connection('mysql_old')->table('user')
                 ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
                 ->where('user_affiliate.referrer', Auth::user()->user_id)
@@ -59,6 +60,10 @@ class AffiliateController extends Controller {
                         break;
                     }
                 }
+            }
+            
+            if ($active) {
+                $referrals_[] = $referral;
             }
         }
         
