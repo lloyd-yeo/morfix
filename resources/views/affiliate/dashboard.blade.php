@@ -129,7 +129,7 @@
                     </ul>
                     <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-handshake-o"></i> Affiliate Payment Terms</h2>
                 </div>
-                <div class="block-content block-content-full">
+                <div class="block-content block-content-full push-20">
                     @include('affiliate.terms')
                 </div>
             </div>
