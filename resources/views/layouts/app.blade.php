@@ -47,7 +47,7 @@
         <!-- Bootstrap and OneUI CSS framework -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/oneui.css') }}">
-        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/app.css') }}">
+        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/app.css') }}">    
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!--<link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/modern.min.css') }}">--> 
         <!-- END Stylesheets -->
@@ -81,7 +81,7 @@
         @include('layouts.modal')
         @include('payment.modal')
         
-        
+        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
         <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/jquery.slimscroll.min.js') }}"></script>
