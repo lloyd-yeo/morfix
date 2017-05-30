@@ -32,6 +32,13 @@ class EngagementGroupController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        
+        $exit_code = Artisan::call('ig:refresh', [
+            'offset' => 0,
+            'limit' => 0,
+            'email' => Auth::user()->email,
+        ]);
+        
         $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(11)->get();
         return view('engagement-group.index', [
             'user_ig_profiles' => $instagram_profiles,
