@@ -256,11 +256,14 @@ class InteractionsController extends Controller {
 
     public function saveHashtag(Request $request, $id) {
         $instagram_profile = InstagramProfile::where('id', $id)->first();
-        $instagram_profile_target_hashtag = \App\InstagramProfileTargetHashtag::where("hashtag", $request->input('target_hashtag'))->where("insta_username", $instagram_profile->insta_username)->first();
+        $instagram_profile_target_hashtag = \App\InstagramProfileTargetHashtag::where("hashtag", $request->input('target_hashtag'))
+                ->where("insta_username", $instagram_profile->insta_username)
+                ->first();
+        
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_profile_target_hashtag)) {
             $instagram_profile_target_hashtag = new InstagramProfileTargetHashtag;
-            $instagram_profile_target_hashtag->target_hashtag = $request->input('target_hashtag');
+            $instagram_profile_target_hashtag->hashtag = $request->input('target_hashtag');
             $instagram_profile_target_hashtag->insta_username = $instagram_profile->insta_username;
         } else {
             $response = "This target hashtag exists alreay!";
