@@ -17,7 +17,7 @@ $(".btn-save-paypal-email").on("click", function(){
     savePaypalEmail(url);
 });
 
-function toggleDelay(url) {
+function savePaypalEmail(url) {
     $.ajax({
         type: "POST",
         url: url,
