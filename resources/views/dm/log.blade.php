@@ -44,7 +44,7 @@
                         <tbody>
                             @foreach ($pending_dm_jobs as $dm_job)
                             <tr id='dm-{{ $dm_job->job_id }}'>
-                                <td>{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
+                                <td class="text-center">{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
                                 <td class="text-center">
                                     @if ($dm_job->fulfilled == 0)
                                     <label class="label label-primary">Pending</label>
@@ -95,7 +95,7 @@
                         <tbody>
                             @foreach ($sent_dm_jobs as $dm_job)
                             <tr>
-                                <td>{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
+                                <td class="text-center">{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
                                 <td class="text-center">
                                     @if ($dm_job->fulfilled == 0)
                                     <label class="label label-primary">Pending</label>
