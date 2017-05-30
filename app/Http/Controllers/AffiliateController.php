@@ -28,7 +28,8 @@ class AffiliateController extends Controller {
         $user_id = Auth::user()->user_id;
 
         $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id%")->get();
-
+        
+        $referrals_ = array();
         $referrals = DB::connection('mysql_old')->table('user')
                 ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
                 ->where('user_affiliate.referrer', Auth::user()->user_id)
@@ -37,7 +38,7 @@ class AffiliateController extends Controller {
                 ->get();
 
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-
+        
         foreach ($referrals as $referral) {
             if ($referral->email == "maychengmt@yahoo.com" 
                     || $referral->email == "michaeltang90@hotmail.com" 
@@ -55,13 +56,16 @@ class AffiliateController extends Controller {
                     if ($subscription->status == "past_due" || $subscription->status == "unpaid") {
                         $active = true;
                         break;
-                    } else {
-                        $active = false;
                     }
                 }
             }
+            
+            if ($active) {
+                $referrals_[] = $referral;
+            }
         }
-
+        $referrals = $referrals_;
+        
         #$referral_links = DB::connection('mysql_old')->select('SELECT * FROM yourls_url WHERE url LIKE "%referrer=' . $user_id . '&%";');
         #$referrals = DB::connection('mysql_old')->select('SELECT u.email, u.user_tier, u.created_at, a.refunded_premium, a.refunded_pro, a.refunded_business, a.refunded_mastermind 
         #    FROM user_affiliate a, user u WHERE a.referrer = ? AND a.referred = u.user_id AND u.user_tier > 1 ORDER BY u.created_at DESC;', [Auth::user()->user_id]);
