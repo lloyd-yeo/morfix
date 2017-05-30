@@ -35,6 +35,7 @@ $(".btn-cancel-job").on("click", function(){
                 },
                 success: function (data) {
                     if (data.success === true) {
+                        $("#dm-" + $job_id).remove();
                         resolve()
                     } else {
                         
