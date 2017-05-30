@@ -55,6 +55,10 @@ jQuery(function () {
         });
         $icon.removeClass( "fa-spin" );
     });
+    
+    @if (Auth::user()->close_dashboard_tut == 1)
+    jQuery('#dashboard-tutorial-modal').modal('show');    
+    @endif
 });
 
 $(".remove-profile-btn").on("click");
