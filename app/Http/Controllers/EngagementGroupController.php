@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Response;
+use Illuminate\Support\Facades\Artisan;
+use InstagramAPI\Instagram as Instagram;
+use InstagramAPI\SettingsAdapter as SettingsAdapter;
+use InstagramAPI\InstagramException as InstagramException;
 use App\User;
 use App\Niche;
 use App\EngagementGroupJob;
@@ -19,7 +22,8 @@ use App\InstagramProfileLikeLog;
 use App\InstagramProfileMedia;
 use Unicodeveloper\Emoji\Emoji;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Artisan;
+
+use Response;
 
 class EngagementGroupController extends Controller
 {
