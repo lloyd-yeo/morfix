@@ -50,22 +50,16 @@ class RefreshInstagramProfile extends Command {
 
         if (NULL !== $this->argument("email")) {
             $users = User::where('email', $this->argument("email"))->get();
-//            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
             $users = User::where(DB::raw('email IN (SELECT email FROM user_insta_profile)'))
                     ->orderBy('user_id', 'desc')
                     ->offset($offset)
                     ->limit($limit)
                     ->get();
-            #$users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email IN (SELECT email FROM user_insta_profile) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
 
         foreach ($users as $user) {
             $this->line($user->email);
-//            $instagram_profiles = DB::connection('mysql_old')
-//                    ->select("SELECT id, insta_user_id, insta_username, insta_pw, proxy FROM user_insta_profile WHERE user_id = ? "
-//                            . "AND checkpoint_required = 0 AND incorrect_pw = 0 AND invalid_user = 0;", []);
-            
             $instagram_profiles = InstagramProfile::where('checkpoint_required', 0)
                     ->where('incorrect_pw', 0)
                     ->where('invalid_user', 0)
