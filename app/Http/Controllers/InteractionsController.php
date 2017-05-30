@@ -220,7 +220,7 @@ class InteractionsController extends Controller {
             $new_ig_comment->ig_profile_id = $id;
             $new_ig_comment->insta_username = $instagram_profile->insta_username;
         } else {
-            $response = "This comment exists alreay!";
+            $response = "This comment exists already!";
             return Response::json(array("success" => false, 'response' => $response));
         }
 
