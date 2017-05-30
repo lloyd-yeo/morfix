@@ -11,7 +11,7 @@ $paypal_email = "";
 
 $(".btn-save-paypal-email").on("click", function(){ 
     var url = "save/paypal/"; // the script where you handle the form input.
-    var profile_id = $(this).attr("data-id");
+    var profile_id = $("#paypal-email").attr("data-id");
     url = url + profile_id;
     $paypal_email = $("#paypal-email").val();
     savePaypalEmail(url);
