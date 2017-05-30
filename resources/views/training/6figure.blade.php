@@ -78,7 +78,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-content3">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Finding Great Content (Part 3)</span>
+                        <span class="h4 font-w700 text-white">Part 7</span> - <span class="h4 text-white-op">Finding Great Content (Part 3)</span>
                     </div>
                 </a>
             </div>
@@ -86,7 +86,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-createcontent">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Creating Instagram Content</span>
+                        <span class="h4 font-w700 text-white">Part 8</span> - <span class="h4 text-white-op">Creating Instagram Content</span>
                     </div>
                 </a>
             </div>
@@ -94,7 +94,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-posttiming">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Timing to Post</span>
+                        <span class="h4 font-w700 text-white">Part 9</span> - <span class="h4 text-white-op">Timing to Post</span>
                     </div>
                 </a>
             </div>
@@ -104,7 +104,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-repost">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">How to Repost</span>
+                        <span class="h4 font-w700 text-white">Part 10</span> - <span class="h4 text-white-op">How to Repost</span>
                     </div>
                 </a>
             </div>
@@ -112,7 +112,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-whotofollow">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Who to Follow</span>
+                        <span class="h4 font-w700 text-white">Part 11</span> - <span class="h4 text-white-op">Who to Follow</span>
                     </div>
                 </a>
             </div>
@@ -120,7 +120,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-hashtag">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Finding Hashtags</span>
+                        <span class="h4 font-w700 text-white">Part 12</span> - <span class="h4 text-white-op">Finding Hashtags</span>
                     </div>
                 </a>
             </div>
@@ -130,7 +130,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-engagementgroup">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Engagement Group</span>
+                        <span class="h4 font-w700 text-white">Part 13</span> - <span class="h4 text-white-op">Engagement Group</span>
                     </div>
                 </a>
             </div>
@@ -138,7 +138,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-analytics">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Instagram Analytics</span>
+                        <span class="h4 font-w700 text-white">Part 14</span> - <span class="h4 text-white-op">Instagram Analytics</span>
                     </div>
                 </a>
             </div>
@@ -146,7 +146,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-shoutout">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Shoutout</span>
+                        <span class="h4 font-w700 text-white">Part 15</span> - <span class="h4 text-white-op">Shoutout</span>
                     </div>
                 </a>
             </div>
@@ -156,7 +156,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-influencer">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Reaching Out to Influencers</span>
+                        <span class="h4 font-w700 text-white">Part 16</span> - <span class="h4 text-white-op">Reaching Out to Influencers</span>
                     </div>
                 </a>
             </div>
@@ -164,7 +164,7 @@
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-rates">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w500 text-white">Part 7</span> - <span class="h4 text-white-op">Negotiate Rates</span>
+                        <span class="h4 font-w700 text-white">Part 17</span> - <span class="h4 text-white-op">Negotiate Rates</span>
                     </div>
                 </a>
             </div>
