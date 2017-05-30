@@ -46,11 +46,11 @@
                             <tr>
                                 <td>{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
                                 <td class="text-center">
-                                    @if ($schedule->posted == 0)
+                                    @if ($dm_job->fulfilled == 0)
                                     <label class="label label-primary">Pending</label>
-                                    @elseif ($schedule->posted == 1)
-                                    <label class="label label-success">Posted Successfully!</label>
-                                    @elseif ($schedule->posted == 2)
+                                    @elseif ($dm_job->fulfilled == 1)
+                                    <label class="label label-success">Sent!</label>
+                                    @elseif ($dm_job->fulfilled == 2)
                                     <label class="label label-default">Failed</label>
                                     @endif
                                 </td>

@@ -18,8 +18,8 @@ class DirectMessageLogsController extends Controller
     
     
     public function index(Request $request, $id) {
-        $instagram_profiles = InstagramProfile::find('id', $id);
-        $dm_jobs = DmJob::where('insta_username', $instagram_profiles->insta_username)->orderBy('job_id', 'asc')->take(10)->get();
+        $ig_profile = InstagramProfile::find('id', $id);
+        $dm_jobs = DmJob::where('insta_username', $ig_profile->insta_username)->orderBy('job_id', 'asc')->take(10)->get();
         return view('dm.log', [
             'dm_job' => $dm_jobs,
         ]);
