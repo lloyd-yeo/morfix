@@ -78,6 +78,17 @@
                             @endif
                         @endif
                     </li>
+                    <li>
+                        @if ($page == 'affiliate')
+                        <a class="active" href="#"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Opt-In Page Builder [coming soon!]</span></a>
+                        @else
+                            @if (Auth::user()->tier > 1)
+                            <a href="#"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Opt-In Page Builder [coming soon!]</span></a>
+                            @else
+                            <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Opt-In Page Builder [coming soon!]</span></a>
+                            @endif
+                        @endif
+                    </li>
 
                     @if(Auth::user()->vip != 1)
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">UPGRADE ACCOUNT</span></li>
