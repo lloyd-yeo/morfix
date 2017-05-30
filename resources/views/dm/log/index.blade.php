@@ -15,7 +15,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-picture"></i>  Direct Message Logs<small> View your pending direct messages!</small>
+                    <i class="si si-envelope"></i>  Direct Message Logs<small> View your pending direct messages!</small>
                 </h1>
             </div>
         </div>
