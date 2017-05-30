@@ -63,18 +63,6 @@ class InteractionsController extends Controller {
         $unfollows_done_today = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)
                 ->whereDate('date_unfollowed', '=', Carbon::today()->toDateString())
                 ->count();
-//        $likes_done_today = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
-//                ->whereDay('date_liked', '=', date('d'))
-//                ->whereMonth('date_liked', '=', date('m'))->count();
-//        $comments_done_today = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
-//                ->whereDay('date_commented', '=', date('d'))
-//                ->whereMonth('date_commented', '=', date('m'))->count();
-//        $follows_done_today = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)
-//                ->whereDay('date_inserted', '=', date('d'))
-//                ->whereMonth('date_inserted', '=', date('m'))->count();
-//        $unfollows_done_today = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)
-//                ->whereDay('date_unfollowed', '=', date('d'))
-//                ->whereMonth('date_unfollowed', '=', date('m'))->count();
         
         $niches = Niche::all();
         $comments = \App\InstagramProfileComment::where("insta_username", $ig_profile->insta_username)->get();
