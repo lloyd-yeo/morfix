@@ -20,7 +20,7 @@
                         </div>
                         <div class='col-xs-12'>
                             <label class="css-input css-checkbox css-checkbox-sm css-checkbox-primary">
-                                <input type="checkbox" checked=""><span></span> Small
+                                <input type="checkbox"><span></span> Don't show me this again
                             </label>
                         </div>
                         <div class="modal-footer">
