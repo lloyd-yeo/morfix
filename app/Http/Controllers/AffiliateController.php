@@ -89,5 +89,17 @@ class AffiliateController extends Controller {
             'invoices' => $invoices,
         ]);
     }
-
+    
+    public function savePaypalEmail(Request $request, $id) {
+        $response = "We have encountered an error. Please try again later.";
+        $user = User::find($id);
+        $user->paypal_email = $request->input('paypal_email');
+        if ($user->save()) {
+            $response = "Your paypal email has been saved.";
+            return Response::json(array("success" => true, 'message' => $response));
+        } else {
+            return Response::json(array("success" => false, 'message' => $response));
+        }
+    }
+    
 }

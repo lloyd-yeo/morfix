@@ -7,6 +7,34 @@ $.ajaxSetup({
     }
 });
 
+$paypal_email = "";
+
+$("#btn-save-paypal-email").on("click", function(){ 
+    var url = "save/paypal/"; // the script where you handle the form input.
+    var profile_id = $(this).attr("data-id");
+    url = url + profile_id;
+    $paypal_email = $("#paypal-email").val();
+    savePaypalEmail(url);
+});
+
+function toggleDelay(url) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {
+            paypal_email: $paypal_email
+        },
+        success: function (data) {
+            if (data.success === true) {
+                swal('Success', data.message, 'success');
+            } else {
+                swal('Oops...', data.message, 'error');
+            }
+        }
+    });
+};
+
 var BaseTableDatatables = function() {
     
     // Init full extra DataTable, for more examples you can check out https://www.datatables.net/
