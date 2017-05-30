@@ -32,7 +32,7 @@ class AffiliateController extends Controller {
         
         $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id%")->get();
         
-        $referrals = DB::table('user')
+        $referrals = DB::connection('mysql_old')->table('user')
                         ->join('user_affiliate', 'users.id', '=', 'referral.user_id')
                         ->where('referrer', Auth::user()->id)
                         ->select('user.email', 'user.user_tier', 'user.created_at')
