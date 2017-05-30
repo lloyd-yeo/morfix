@@ -186,24 +186,27 @@
                         </thead>
                         <tbody>
                             @foreach ($referrals as $key => $referral)
-                            @if ($key%2 == 0)
-                            <tr role="row" class="even">
-                                @else
-                            <tr role="row" class="odd">
-                                @endif
-                                <td class="font-w600">{{ $referral->email }}</td>
-                                @if ($referral->user_tier == 2)
-                                <td>Premium</td>
-                                @elseif ($referral->user_tier == 3)
-                                <td>Pro</td>
-                                @elseif ($referral->user_tier == 4)
-                                <td>Business</td>
-                                @elseif ($referral->user_tier == 5)
-                                <td>Mastermind</td>
-                                @endif
-                                <td>{{ $referral->created_at }}</td>
-                            </tr>
+                            @if ($referral->user_tier > 1)
+                                @if ($key%2 == 0)
+                                <tr role="row" class="even">
+                                    @else
+                                <tr role="row" class="odd">
+                                    @endif
+                                    <td class="font-w600">{{ $referral->email }}</td>
+                                    @if ($referral->user_tier == 2)
+                                    <td>Premium</td>
+                                    @elseif ($referral->user_tier == 3)
+                                    <td>Pro</td>
+                                    @elseif ($referral->user_tier == 4)
+                                    <td>Business</td>
+                                    @elseif ($referral->user_tier == 5)
+                                    <td>Mastermind</td>
+                                    @endif
+                                    <td>{{ $referral->created_at }}</td>
+                                </tr>
+                            @endif
                             @endforeach
+                            
                             @if (Auth::user()->email == "gabriel@instaffiliates.com")
                             <tr role="row" class="even">
                                 <td class="font-w600">joel@onlinesalespro.com</td>
