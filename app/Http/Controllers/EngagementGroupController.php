@@ -19,7 +19,7 @@ use App\InstagramProfileLikeLog;
 use App\InstagramProfileMedia;
 use Unicodeveloper\Emoji\Emoji;
 use Carbon\Carbon;
-use Artisan;
+use Illuminate\Support\Facades\Artisan;
 
 class EngagementGroupController extends Controller
 {
