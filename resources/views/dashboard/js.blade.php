@@ -56,7 +56,7 @@ jQuery(function () {
         $icon.removeClass( "fa-spin" );
     });
     
-    @if (Auth::user()->close_dashboard_tut == 1)
+    @if (Auth::user()->close_dashboard_tut == 0)
     jQuery('#dashboard-tutorial-modal').modal('show');    
     @endif
 });
