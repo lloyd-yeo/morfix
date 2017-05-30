@@ -330,7 +330,7 @@ $("body").on("click", ".remove-username-btn",  function(e){
         data: {},
         success: function (data) {
             if (data.success === true) {
-                e.remove();
+                jQuery("#un-" + id).remove();
             } else {
                 swal('Oops...', data.response, 'error');
             }
@@ -378,7 +378,6 @@ $("body").on("click", ".remove-hashtag-btn", function(e){
         success: function (data) {
             if (data.success === true) {
                 jQuery("#hashtag-" + id).remove();
-//                e.remove();
             } else {
                 swal('Oops...', data.response, 'error');
             }
