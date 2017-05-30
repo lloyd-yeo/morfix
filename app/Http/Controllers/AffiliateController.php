@@ -42,7 +42,7 @@ class AffiliateController extends Controller {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         
         foreach ($referrals as $referral) {
-            echo $referral;
+            var_dump($referral);
             if ($referral->email == "maychengmt@yahoo.com" 
                     || $referral->email == "michaeltang90@hotmail.com" 
                     || $referral->email == "kingkew18@gmail.com") {
