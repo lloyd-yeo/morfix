@@ -11,10 +11,6 @@ $.ajaxSetup({
     }
 });
 
-jQuery(function () {
-    
-});
-
 $(".btn-cancel-subscription").on("click", function(){ 
     var $sub_id = $(this).attr("data-sub-id");
     

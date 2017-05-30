@@ -66,7 +66,7 @@
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <button class="btn btn-xs btn-danger btn-cancel-job" 
-                                                data-job-id="{{ $dm_job->job_id }}" type="button" data-toggle="tooltip" title="Cancel job"><i class="fa fa-times"></i></button>
+                                                data-job-id="{{ $dm_job->job_id }}" type="button" data-toggle="tooltip" title="Cancel Job"><i class="fa fa-times"></i></button>
                                     
                                     </div>
                                 </td>
@@ -83,7 +83,7 @@
                 </div>
                 
                 <div class="block-content">
-                    <table class="table table-bordered table-striped js-dataTable-dmJob">
+                    <table class="table table-bordered table-striped js-dataTable-sentDmJob">
                         <thead>
                             <tr>
                                 <th class="text-center"><i class="fa fa-clock-o"></i> Date To Post (GMT+8)</th>
@@ -91,7 +91,6 @@
                                 <th class="text-center">Recipient</th>
                                 <th class="text-center">Recipient Full Name</th>
                                 <th class="text-center">Message</th>
-                                <th class="text-center" style="width: 10%;"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,13 +114,6 @@
                                 </td>
                                 <td class="text-center">
                                     {{ $dm_job->message }}
-                                </td>
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs btn-danger btn-cancel-job" 
-                                                data-job-id="{{ $dm_job->job_id }}" type="button" data-toggle="tooltip" title="Cancel job"><i class="fa fa-times"></i></button>
-                                    
-                                    </div>
                                 </td>
                             </tr>
                             @endforeach
