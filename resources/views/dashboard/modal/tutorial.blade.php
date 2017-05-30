@@ -15,8 +15,13 @@
                 </div>
                 <div class="block-content">
                     <div class='row'>
-                        <div class="embed-responsive embed-responsive-16by9">
+                        <div class="col-xs-12 embed-responsive embed-responsive-16by9">
                             <iframe src="https://player.vimeo.com/video/192896299" width="640" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        </div>
+                        <div class='col-xs-12'>
+                            <label class="css-input css-checkbox css-checkbox-sm css-checkbox-primary">
+                                <input type="checkbox" checked=""><span></span> Small
+                            </label>
                         </div>
                         <div class="modal-footer">
                             <button id="closetutorial-btn" data-dismiss="modal" class="btn blue lighten-1" type="button">Close</button>
