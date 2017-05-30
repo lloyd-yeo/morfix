@@ -31,7 +31,6 @@ class AffiliateController extends Controller {
 
         $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id%")->get();
         
-        $referrals_ = array();
         $referrals = DB::connection('mysql_old')->table('user')
                 ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
                 ->where('user_affiliate.referrer', Auth::user()->user_id)
@@ -50,7 +49,7 @@ class AffiliateController extends Controller {
 
             $active = false;
 
-            $stripe_details = \App\StripeDetail::where('email', $referral->email);
+            $stripe_details = \App\StripeDetail::where('email', $referral->email)->get();
             
             foreach ($stripe_details as $stripe_detail) {
                 $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
@@ -61,13 +60,7 @@ class AffiliateController extends Controller {
                     }
                 }
             }
-            
-            if ($active) {
-                $referrals_[] = $referral;
-            }
         }
-        
-        $referrals = $referrals_;
         
         #$referral_links = DB::connection('mysql_old')->select('SELECT * FROM yourls_url WHERE url LIKE "%referrer=' . $user_id . '&%";');
         #$referrals = DB::connection('mysql_old')->select('SELECT u.email, u.user_tier, u.created_at, a.refunded_premium, a.refunded_pro, a.refunded_business, a.refunded_mastermind 
@@ -86,7 +79,6 @@ class AffiliateController extends Controller {
                                                         AND r.email = ?
                                                         ORDER BY invoice_date DESC;', [Auth::user()->email]);
         
-        var_dump($referrals);
         return view('affiliate.dashboard', [
             'active_users' => $active_users,
             'referral_links' => $referral_links,
