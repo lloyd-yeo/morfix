@@ -7,8 +7,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-var key = "pk_test_9AIw34u0sCHRPJIjOyFh19LN";
-//var key = "pk_live_WrvnbbOwMxU7FwZzaoTdaUpa";
+var key = "pk_live_WrvnbbOwMxU7FwZzaoTdaUpa";
 
 var premium_handler = StripeCheckout.configure({
     key: key,

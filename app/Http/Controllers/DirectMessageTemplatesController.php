@@ -34,11 +34,42 @@ class DirectMessageTemplatesController extends Controller
         
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
+            
+            $dm_jobs = DmJob::where('insta_username', $instagram_profile->insta_username)
+                        ->where('fulfilled', 0)
+                        ->where('follow_up_order', 0)->get();
+            
+            foreach ($dm_jobs as $dm_job) {
+                $new_follower_template = $instagram_profile->insta_new_follower_template;
+                $message = str_replace("\${full_name}", $dm_job->recipient_fullname, $new_follower_template);
+                preg_match_all('/{([^}]+)}/', $message, $m);
+                $new_message = $message;
+                for ($j = 0; $j < count($m[1]); $j++) {
+                $selected_opt = "";
+                $string_to_replace = $m[1][$j];
+                if (strpos($string_to_replace, '|') !== false) {
+                        $string_opts = explode("|", $string_to_replace);
+                        $max = count($string_opts);
+                        $max--;
+                        $index = rand(0, $max);
+                        $selected_opt = $string_opts[$index];
+                    } else {
+                        $selected_opt = $string_to_replace;
+                    }
+                    $new_message = str_replace("\${" . $string_to_replace . "}", $selected_opt, $new_message);
+                }
+                $new_message = mb_convert_encoding($new_message, "UTF8");
+                $dm_job->message = $new_message;
+                $dm_job->save();
+            }
+            
             $response = "Your new follower greetings template has been saved!";
             return Response::json(array("success" => true, 'message' => $response));
         } else {
             return Response::json(array("success" => false, 'message' => $response));
         }
+        
+        
     }
     
     public function saveFollowupTemplate($id, Request $request) {
@@ -48,6 +79,35 @@ class DirectMessageTemplatesController extends Controller
         
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
+            $dm_jobs = DmJob::where('insta_username', $instagram_profile->insta_username)
+                        ->where('fulfilled', 0)
+                        ->where('follow_up_order', 1)->get();
+            
+            foreach ($dm_jobs as $dm_job) {
+                $new_follower_template = $instagram_profile->follow_up_message;
+                $message = str_replace("\${full_name}", $dm_job->recipient_fullname, $new_follower_template);
+                preg_match_all('/{([^}]+)}/', $message, $m);
+                $new_message = $message;
+                for ($j = 0; $j < count($m[1]); $j++) {
+                $selected_opt = "";
+                $string_to_replace = $m[1][$j];
+                if (strpos($string_to_replace, '|') !== false) {
+                        $string_opts = explode("|", $string_to_replace);
+                        $max = count($string_opts);
+                        $max--;
+                        $index = rand(0, $max);
+                        $selected_opt = $string_opts[$index];
+                    } else {
+                        $selected_opt = $string_to_replace;
+                    }
+                    $new_message = str_replace("\${" . $string_to_replace . "}", $selected_opt, $new_message);
+                }
+                
+                $new_message = mb_convert_encoding($new_message, "UTF8");
+                $dm_job->message = $new_message;
+                $dm_job->save();
+            }
+            
             $response = "Your follow-up template has been saved!";
             return Response::json(array("success" => true, 'message' => $response));
         } else {
