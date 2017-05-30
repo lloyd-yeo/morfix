@@ -83,7 +83,7 @@
                         <a class="active" href="#"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
                         @else
                             @if (Auth::user()->tier > 1)
-                            <a href="#"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
+                            <a href="#"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
                             @else
                             <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
                             @endif
