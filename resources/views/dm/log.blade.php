@@ -33,7 +33,7 @@
                     <table class="table table-bordered table-striped js-dataTable-dmJob">
                         <thead>
                             <tr>
-                                <th class="text-center"><i class="fa fa-clock-o"></i> Date To Post (GMT+8)</th>
+                                <th class="text-center"><i class="fa fa-clock-o"></i> Date To Send (GMT+8)</th>
                                 <th class="text-center">Fulfilled</th>
                                 <th class="text-center">Recipient</th>
                                 <th class="text-center">Recipient Full Name</th>
