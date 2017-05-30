@@ -79,7 +79,7 @@
                         @endif
                     </li>
                     <li>
-                        @if ($page == 'affiliate')
+                        @if ($page == 'affiliate-builder')
                         <a class="active" href="#"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Opt-In Page Builder <small>[coming soon!]</small></span></a>
                         @else
                             @if (Auth::user()->tier > 1)
