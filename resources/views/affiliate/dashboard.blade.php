@@ -59,7 +59,7 @@
                         @if (Auth::user()->email == "gabriel@instaffiliates.com")
                         <div class="h1 font-w700" data-toggle="countTo" data-to="64">64</div>
                         @else
-                        <div class="h1 font-w700" data-toggle="countTo" data-to="{{ count($active_users) }}">{{ count($referrals) }}</div>
+                        <div class="h1 font-w700" data-toggle="countTo" data-to="{{ count($referrals) }}">{{ count($referrals) }}</div>
                         @endif
                     </div>
                     <div class="block-content block-content-full block-content-mini bg-gray-lighter text-muted font-w600">Active Affiliates</div>
