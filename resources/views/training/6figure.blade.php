@@ -211,7 +211,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-4">
-                                    <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
+                                    <a class="block block-link-hover2"  href="#" data-toggle="modal" data-target="#upgrade-dm-modal">
                                         <div class="block-content block-content-full bg-primary clearfix">
                                             <i class="si si-bag fa-2x text-white pull-left"></i>
                                             <span class="h4 font-w500 text-white"> Upgrade Business</span>
@@ -222,7 +222,7 @@
                             
                             <div class='row push-10-t'>
                                 <div class="col-lg-4">
-                                    <a class="block block-link-hover2" href='https://morfix.co/app/Morfix-Swipe-Files.docx' target='_blank' >
+                                    <a class="block block-link-hover2" href='https://app.morfix.co/app/Morfix-Swipe-Files.docx' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
                                             <i class="fa fa-2x fa-cloud-download text-white pull-left"></i>
                                             <span class="h4 font-w500 text-white">Swipe Files</span>
