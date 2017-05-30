@@ -226,7 +226,7 @@ class InteractionsController extends Controller {
 
         if ($new_ig_comment->save()) {
             $response = "Successfully added comment!";
-            return Response::json(array("success" => true, 'response' => $response, 'id' => $new_ig_comment->id));
+            return Response::json(array("success" => true, 'response' => $response, 'id' => $new_ig_comment->comment_id));
         } else {
             return Response::json(array("success" => false, 'response' => $response));
         }
