@@ -264,7 +264,8 @@ $("#add-comment-btn").on("click", function() {
             if (data.success === true) {
                 var preview = emojione.toImage(source);
                 var commentsWell = $("#comments-well-inner");
-                commentsWell.html(commentsWell.html() + "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" data-id=\"" + data.id + "\"  type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
+                commentsWell.html(commentsWell.html() + 
+                        "<button class=\"btn btn-primary btn-sm btn-rounded remove-comment-btn push-5-r push-10\" data-id=\"" + data.id + "\"  type=\"button\">" + preview + " <i class=\"fa fa-times\"></i> </button>");
             } else {
                 swal('Oops...', data.response, 'error');
             }
@@ -323,6 +324,7 @@ $("body").on("click", ".remove-username-btn",  function(e){
     var id = $(this).attr("data-id");
     url = url + id;
     var remove = 0;
+    var $username = $(this);
     $.ajax({
         type: "POST",
         url: url,
@@ -330,7 +332,8 @@ $("body").on("click", ".remove-username-btn",  function(e){
         data: {},
         success: function (data) {
             if (data.success === true) {
-                jQuery("#un-" + id).remove();
+//                jQuery("#un-" + id).remove();
+                $username.fadeOut().remove();
             } else {
                 swal('Oops...', data.response, 'error');
             }
@@ -369,7 +372,7 @@ $("body").on("click", ".remove-hashtag-btn", function(e){
     var url = "delete/hashtag/"; // the script where you handle the form input.
     var id = $(this).attr("data-id");
     url = url + id;
-    var remove = 0;
+    var $hashtag = $(this);
     $.ajax({
         type: "POST",
         url: url,
@@ -377,7 +380,7 @@ $("body").on("click", ".remove-hashtag-btn", function(e){
         data: {},
         success: function (data) {
             if (data.success === true) {
-                jQuery("#hashtag-" + id).remove();
+               $hashtag.remove();
             } else {
                 swal('Oops...', data.response, 'error');
             }
