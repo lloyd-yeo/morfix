@@ -19,15 +19,6 @@ class AffiliateController extends Controller {
      */
     public function index(Request $request) {
 
-        $active_users = DB::connection('mysql_old')->select('SELECT * 
-                                FROM insta_affiliate.get_referral_charges_of_user 
-                                WHERE referrer_email = ?
-                                AND charge_paid = 1
-                                AND invoice_paid = 1
-                                AND charge_refunded = 0
-                                AND NOW() >= start_date
-                                AND NOW() <= expiry_date;', [Auth::user()->email]);
-
         $user_id = Auth::user()->user_id;
 
         $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id%")->get();
@@ -89,7 +80,6 @@ class AffiliateController extends Controller {
                                                         ORDER BY invoice_date DESC;', [Auth::user()->email]);
         
         return view('affiliate.dashboard', [
-            'active_users' => $active_users,
             'referral_links' => $referral_links,
             'referrals' => $referrals,
             'invoices' => $invoices,
