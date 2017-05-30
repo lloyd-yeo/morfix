@@ -137,7 +137,7 @@
 
 
         <div class="row font-s13">
-            <div class="block" id="affiliate-link-block">
+            <div class="block" id="affiliate-link-block" style="overflow-y: auto;">
                 <div class="block-header">
                     <ul class="block-options">
                         <li>
