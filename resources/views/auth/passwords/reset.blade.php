@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-                                        <button class="btn btn-sm btn-block btn-success" type="submit">Create Account</button>
+                                        <button class="btn btn-sm btn-block btn-success" type="submit">Reset Password</button>
                                     </div>
                                 </div>
                             </form>
