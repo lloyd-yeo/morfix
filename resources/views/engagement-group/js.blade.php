@@ -39,7 +39,7 @@ jQuery(function () {
                         if (data.success === true) {
                            resolve()
                         } else {
-                           reject('We failed to send your post for engagement.')
+                           reject(data.message)
                         }
                     },"json");
               });
