@@ -70,7 +70,7 @@
                             <!-- Register Form -->
                             <!-- jQuery Validation (.js-validation-register class is initialized in js/pages/base_pages_register.js) -->
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                            <form class="js-validation-register form-horizontal push-50-t push-50" action="{{ route('password.request') }}" method="post">
+                            <form class="js-validation-register form-horizontal push-50-t push-50" method="POST" action="{{ url('/password/reset') }}">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="token" value="{{ $token }}">
                                 <div class="form-group">
@@ -78,7 +78,13 @@
                                         <div class="form-material form-material-primary">
                                             <input class="form-control" type="password" id="register-password" placeholder="Choose a strong password.." name="password" required>
                                             <label for="register-password">Password</label>
+                                            @if ($errors->has('password'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('password') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -86,6 +92,11 @@
                                         <div class="form-material form-material-primary">
                                             <input class="form-control" type="password" id="register-password2" placeholder="..and confirm it" name="password_confirmation" required>
                                             <label for="register-password2">Confirm Password</label>
+                                            @if ($errors->has('password_confirmation'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
