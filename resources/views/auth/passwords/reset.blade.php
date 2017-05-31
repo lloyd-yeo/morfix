@@ -62,7 +62,7 @@
                         <div class="push-30-t push-20 animated fadeIn">
                             <!-- Register Title -->
                             <div class="text-center">
-                                <img class="text-primary" style="width: 56px; height: 56px;" src="{{ asset('assets/img/logo/mx-black-crop.png'); }}" alt="Morfix Logo"/>
+                                <img class="text-primary" style="width: 56px; height: 56px;" src="{{ asset('assets/img/logo/mx-black-crop.png') }}" alt="Morfix Logo"/>
                                 <h1 class="h3 push-10-t">Reset Password</h1>
                             </div>
                             <!-- END Register Title -->
