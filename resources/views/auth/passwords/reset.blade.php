@@ -39,12 +39,19 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
 
         <!-- Bootstrap and OneUI CSS framework -->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" id="css-main" href="../assets/css/oneui.css">
-
-        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/oneui.css') }}">
+        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/app.css') }}">
         <!-- END Stylesheets -->
+        
+        <!-- Scripts -->
+        <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
+        <script>
+            window.Laravel = {!! json_encode([
+                    'csrfToken' => csrf_token(),
+            ]) !!}
+            ;
+        </script>
     </head>
     <body>
         <!-- Register Content -->
@@ -156,5 +163,6 @@
 
         <!-- Page JS Code -->
         <script src="assets/js/pages/base_pages_register.js"></script>
+        
     </body>
 </html>
