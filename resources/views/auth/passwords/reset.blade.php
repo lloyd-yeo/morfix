@@ -77,7 +77,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-primary">
-                                            <input class="form-control" id="email" type="email" name="email" value="{{ $email or old('email') }}" required>
+                                            <input class="form-control" placeholder="Enter your email here..." id="email" type="email" name="email" value="{{ $email or old('email') }}" required>
                                             <label for="email">Email Address</label>
                                             @if ($errors->has('email'))
                                                 <span class="help-block">
