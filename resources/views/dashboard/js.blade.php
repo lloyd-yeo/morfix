@@ -25,10 +25,11 @@ jQuery(function () {
     App.initHelpers(['slick', 'appear', 'appear-countTo']);
     
     $(".btn-retry").on("click", function(){
+        App.loader('show');
         var $igUsername = jQuery('#validation-ig-username').val();
         var $igPassword = jQuery('#validation-ig-password').val();
         var $icon = jQuery('#retry-btn-spinner');
-        $icon.addClass( "fa-spin" );
+        $icon.addClass("fa-spin");
         $.ajax({
                 async: false,
                 type: "POST",
@@ -51,9 +52,10 @@ jQuery(function () {
                            swal('Oops...', data.response, 'error');
                         }
                     }
+                    App.loader('hide');
                 }
         });
-        $icon.removeClass( "fa-spin" );
+        $icon.removeClass("fa-spin");
     });
     
     @if (Auth::user()->close_dashboard_tut == 0)

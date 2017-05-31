@@ -40,13 +40,6 @@
 
             @include('dashboard.leaderboard')
 
-            <script type="text/javascript">
-                //var $leaderboardHeight = $("#leaderboard-container").height();
-                //var $affiliateChartHeaderHeight = $("#affiliate-chart-header").height();
-                //var $affiliateChartFooterHeight = $("#affiliate-chart-footer").height();
-                //var $affiliateChartHeight = $leaderboardHeight - $affiliateChartHeaderHeight - $affiliateChartFooterHeight - 20 - 20 - 20 - 15 - 15;
-                //$("#affiliate-chart").css("height", $affiliateChartHeight + "px");
-            </script>
         </div>
         <div class="row">
             @foreach ($user_ig_profiles as $ig_profile)
