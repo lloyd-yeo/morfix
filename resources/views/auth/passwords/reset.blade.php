@@ -151,21 +151,22 @@
         <!-- END Terms Modal -->
 
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-        <script src="assets/js/core/jquery.min.js"></script>
-        <script src="assets/js/core/bootstrap.min.js"></script>
-        <script src="assets/js/core/jquery.slimscroll.min.js"></script>
-        <script src="assets/js/core/jquery.scrollLock.min.js"></script>
-        <script src="assets/js/core/jquery.appear.min.js"></script>
-        <script src="assets/js/core/jquery.countTo.min.js"></script>
-        <script src="assets/js/core/jquery.placeholder.min.js"></script>
-        <script src="assets/js/core/js.cookie.min.js"></script>
-        <script src="assets/js/app.js"></script>
+        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+        <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+        <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/core/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('assets/js/core/jquery.scrollLock.min.js') }}"></script>
+        <script src="{{ asset('assets/js/core/jquery.appear.min.js') }}"></script>
+        <script src="{{ asset('assets/js/core/jquery.countTo.min.js') }}"></script>
+        <script src="{{ asset('assets/js/core/jquery.placeholder.min.js') }}"></script>
+        <script src="{{ asset('assets/js/core/js.cookie.min.js') }}"></script>
+        <script src="{{ asset('assets/js/app.js') }}"></script>
 
         <!-- Page JS Plugins -->
-        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+        <script src="{{ asset('assets/js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 
         <!-- Page JS Code -->
-        <script src="assets/js/pages/base_pages_register.js"></script>
+        <script src="{{ asset('assets/js/pages/base_pages_register.js') }}"></script>
         
     </body>
 </html>
