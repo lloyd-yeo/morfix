@@ -66,7 +66,6 @@
         <!--<div id="payment-loader" style='display:none;'></div>-->
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
             
-
             @yield('sidebar')
 
             @include('header')
