@@ -8,6 +8,7 @@
         "php": ">=5.6.4",
         "aweber/aweber": "^1.1",
         "emojione/emojione": "^2.2",
+        "guzzlehttp/guzzle": "^6.2",
         "intervention/image": "^2.3",
         "laravel/cashier": "^7.0",
         "laravel/framework": "5.4.*",
