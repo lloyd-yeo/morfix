@@ -76,14 +76,6 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-primary">
-                                            <input class="form-control" type="email" id="register-email" name="email" value="{{ $email or old('email') }}" placeholder="Please provide your email" required autofocus>
-                                            <label for="register-email">Email</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <div class="form-material form-material-primary">
                                             <input class="form-control" type="password" id="register-password" placeholder="Choose a strong password.." name="password" required>
                                             <label for="register-password">Password</label>
                                         </div>
