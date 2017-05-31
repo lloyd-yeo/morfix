@@ -36,7 +36,7 @@
 
         <!-- Stylesheets -->
         <!-- Web fonts -->
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
 
         <!-- Bootstrap and OneUI CSS framework -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
