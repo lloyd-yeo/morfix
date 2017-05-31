@@ -71,7 +71,7 @@ class EngagementGroupController extends Controller
             }
             return Response::json(array("success" => true, 'message' => "Your photo has been sent for engagement group. Expect a increase in engagement."));
         } else {
-            return Response::json(array("success" => fail, 'message' => "You've ran out of engagement credits. Do try again tomorrow."));
+            return Response::json(array("success" => false, 'message' => "You've ran out of engagement credits. Do try again tomorrow."));
         }
         
     }
