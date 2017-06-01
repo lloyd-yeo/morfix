@@ -62,11 +62,14 @@ class InstagramProfileController extends Controller {
         try {
 
             if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
+                $profile_log->error_msg = "This instagram username has already been added!";
+                $profile_log->save();
                 return Response::json(array("success" => false, 'type' =>'ig_added', 'response' => "This instagram username has already been added!"));
             }
 
             $instagram->setProxy($proxy->proxy);
             $instagram->setUser($ig_username, $ig_password);
+            
             $explorer_response = $instagram->login();
 
             $morfix_ig_profile = new InstagramProfile();
@@ -86,10 +89,12 @@ class InstagramProfileController extends Controller {
             $instagram_user = $user_response->user;
             $morfix_ig_profile->profile_pic_url = $instagram_user->profile_pic_url;
             $morfix_ig_profile->save();
+            
             DB::connection('mysql_old')->
                     update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
             $items = $instagram->getSelfUserFeed()->items;
             $this->info(serialize($items));
+            
             foreach ($items as $item) {
                 try {
                     DB::connection('mysql_old')->
