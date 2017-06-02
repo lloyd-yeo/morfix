@@ -92,7 +92,7 @@ jQuery(function () {
     @if ($request->session()->has('status'))
         swal({
             title: 'Success', 
-            text: {{ session('status'); }}, 
+            text: {{ session('status') }}, 
             type: 'success'
         });
     @endif
