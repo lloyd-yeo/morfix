@@ -44,9 +44,6 @@ class InteractionComment extends Command {
      * @return mixed
      */
     public function handle() {
-        $offset = $this->argument('offset');
-        $limit = $this->argument('limit');
-
         if (NULL !== $this->argument("email")) {
             $users = User::where("email", $this->argument("email"));
         } else {
