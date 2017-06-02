@@ -44,13 +44,24 @@ jQuery(function () {
                 },
                 success: function (data) {
                     if (data.success === true) {
-                        swal({
-                            title: 'Success', 
-                            text: data.response, 
-                            type: 'success'
-                        }, function(){ 
-                            location.reload(true);
-                        });
+//                        swal({
+//                            title: 'Success', 
+//                            text: data.response, 
+//                            type: 'success'
+//                        }, function(){ 
+//                            location.reload(true);
+//                        });
+                        
+                        setTimeout(function() {
+                            swal({
+                                title: 'Success', 
+                                text: data.response, 
+                                type: 'success'
+                            }, function() {
+                                location.reload(true);
+                            });
+                        }, 1000);
+                        
                         jQuery('#modal-addprofile').modal('hide');
                     } else {
                         if (data.type === 'ig_added') {
