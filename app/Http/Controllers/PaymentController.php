@@ -25,7 +25,7 @@ class PaymentController extends Controller
     function upgrade(Request $request, $plan) {
         $response = array();
         
-        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
+        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $user = User::where('email', Auth::user()->email)->first();
         $stripe_id = $user->stripe_id;
         
