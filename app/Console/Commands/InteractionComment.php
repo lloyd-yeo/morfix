@@ -50,12 +50,14 @@ class InteractionComment extends Command {
         if (NULL !== $this->argument("email")) {
             $users = User::where("email", $this->argument("email"));
         } else {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u "
-                    . "WHERE u.email IN (SELECT email FROM user_insta_profile) AND u.user_id IN (SELECT user_id FROM user_insta_profile)  "
-                    . "ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+            foreach (User::where(DB::raw('email IN (SELECT email FROM user_insta_profile) AND user_id IN (SELECT user_id FROM user_insta_profile)'))
+                    ->cursor() as $user) {
+                $this->line($user->user_id);
+            }
         }
 
         foreach ($users as $user) {
+            continue;
             $this->line($user->user_id);
 
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, "
