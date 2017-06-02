@@ -43,6 +43,7 @@ jQuery(function () {
                     if (data.success === true) {
                         swal('Success', data.response, 'success');
                         jQuery('#modal-addprofile').modal('hide');
+                        location.reload(true);
                     } else {
                         if (data.type === 'ig_added') {
                             swal('Oops...', data.response, 'error');
@@ -71,10 +72,10 @@ jQuery(function () {
                 success: function (data) {
                     if (data.success === true) {
                         swal('Success', data.response, 'success');
+                        location.reload(true);
                     } else {
                         swal('Failed', data.response, 'fail');
                     }
-                    App.loader('hide');
                 }
         });
     });
