@@ -81,11 +81,11 @@ jQuery(function () {
                 },
                 success: function (data) {
                     if (data.success === true) {
-                        swal(
+                        swal({
                             title: 'Success', 
                             text: data.response, 
                             type: 'success'
-                        ).onClose(
+                        }).onClose(
                             function(){ 
                                 location.reload(true);
                             }
