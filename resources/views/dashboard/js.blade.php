@@ -87,7 +87,6 @@ jQuery(function () {
                         }, function(){ 
                             location.reload(true);
                         });
-                        location.reload(true);
                     } else {
                         swal('Failed', data.response, 'fail');
                     }
