@@ -81,7 +81,15 @@ jQuery(function () {
                 },
                 success: function (data) {
                     if (data.success === true) {
-                        swal('Success', data.response, 'success');
+                        swal(
+                            title: 'Success', 
+                            text: data.response, 
+                            type: 'success'
+                        ).onClose(
+                            function(){ 
+                                location.reload(true);
+                            }
+                        );
                         location.reload(true);
                     } else {
                         swal('Failed', data.response, 'fail');
