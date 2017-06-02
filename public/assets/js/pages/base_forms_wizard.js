@@ -278,15 +278,14 @@ var BaseFormWizard = function() {
                             App.loader("hide");
                             if (data.success === true) {
                                 
-                                setTimeout(function() {
-                                    swal({
-                                        title: 'Success', 
-                                        text: data.response, 
-                                        type: 'success'
-                                    }, function() {
-                                        location.reload(true);
-                                    });
-                                }, 1000);
+                                swal({
+                                    title: 'Success', 
+                                    text: data.response, 
+                                    type: 'success',
+                                    timer: 3000
+                                }, function() {
+                                    location.reload(true);
+                                });
                                 
                             } else {
                                 if (data.type === 'ig_added') {

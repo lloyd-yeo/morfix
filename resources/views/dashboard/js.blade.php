@@ -43,18 +43,18 @@ jQuery(function () {
                     'ig-password': $igPassword
                 },
                 success: function (data) {
+                    jQuery('#modal-addprofile').modal('hide');
                     if (data.success === true) {
                         
-                        setTimeout(function() {
-                            swal({
-                                title: 'Success', 
-                                text: data.response, 
-                                type: 'success'
-                            }, function() {
-                                location.reload(true);
-                            });
-                        }, 1000);
-                        jQuery('#modal-addprofile').modal('hide');
+                        swal({
+                            title: 'Success', 
+                            text: data.response, 
+                            type: 'success',
+                            timer: 3000
+                        }, function() {
+                            location.reload(true);
+                        });
+                        
                     } else {
                         if (data.type === 'ig_added') {
                             swal('Oops...', data.response, 'error');
@@ -85,15 +85,14 @@ jQuery(function () {
                 success: function (data) {
                     if (data.success === true) {
                         
-                        setTimeout(function() {
-                            swal({
-                                title: 'Success', 
-                                text: data.response, 
-                                type: 'success'
-                            }, function() {
-                                location.reload(true);
-                            });
-                        }, 1000);
+                        swal({
+                            title: 'Success', 
+                            text: data.response, 
+                            type: 'success',
+                            timer: 3000
+                        }, function() {
+                            location.reload(true);
+                        });
                         
                     } else {
                         swal('Failed', data.response, 'fail');
