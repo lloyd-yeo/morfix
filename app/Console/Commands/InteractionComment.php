@@ -269,23 +269,23 @@ function executeCommenting($instagram_profiles) {
                 echo($comment . "\n");
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-            $this->error("checkpt1 " . $checkpt_ex->getMessage());
+            echo("checkpt1 " . $checkpt_ex->getMessage() . "\n");
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-            $this->error("incorrectpw1 " . $incorrectpw_ex->getMessage());
+            echo("incorrectpw1 " . $incorrectpw_ex->getMessage() . "\n");
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-            $this->error("endpt1 " . $endpoint_ex->getMessage());
+            echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-            $this->error("network1 " . $network_ex->getMessage());
+            echo("network1 " . $network_ex->getMessage() . "\n");
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-            $this->error("acctdisabled1 " . $acctdisabled_ex->getMessage());
+            echo("acctdisabled1 " . $acctdisabled_ex->getMessage() . "\n");
             $ig_profile->account_disabled = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-            $this->error("request1 " . $request_ex->getMessage());
+            echo("request1 " . $request_ex->getMessage() . "\n");
             $ig_profile->error_msg = $request_ex->getMessage();
             $ig_profile->save();
         }
