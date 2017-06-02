@@ -293,6 +293,7 @@ var BaseFormWizard = function() {
                                    $success = false; 
                                 }
                             }
+                            App.loader("hide");
                         }
                     });
                 }
