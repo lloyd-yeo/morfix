@@ -226,7 +226,7 @@ class InteractionComment extends Command {
 function executeCommenting($instagram_profiles) {
     foreach ($instagram_profiles as $ig_profile) {
 
-        $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+        echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
 
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
@@ -266,7 +266,7 @@ function executeCommenting($instagram_profiles) {
             if ($comment === NULL) {
                 continue;
             } else {
-                $this->line($comment);
+                echo($comment . "\n");
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
             $this->error("checkpt1 " . $checkpt_ex->getMessage());
