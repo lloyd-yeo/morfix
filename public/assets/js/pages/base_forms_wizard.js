@@ -276,9 +276,16 @@ var BaseFormWizard = function() {
                         },
                         success: function (data) {
                             if (data.success === true) {
-                                swal('Success', data.response, 'success');
-                                jQuery('#modal-addprofile').modal('hide');
-                                location.reload(true);
+                                setTimeout(function() {
+                                    swal({
+                                        title: 'Success', 
+                                        text: data.response, 
+                                        type: 'success'
+                                    }, function() {
+                                        location.reload(true);
+                                    });
+                                }, 1000);
+                                
                             } else {
                                 if (data.type === 'ig_added') {
                                     swal('Oops...', data.response, 'error');
