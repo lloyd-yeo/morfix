@@ -276,13 +276,8 @@ var BaseFormWizard = function() {
                         },
                         success: function (data) {
                             if (data.success === true) {
-                                
-                                swal({
-                                    title: 'Success', 
-                                    text: data.response, 
-                                    type: 'success'
-                                });
-                                
+                                localStorage.setItem("status", data.response);
+                                location.reload(true);
                             } else {
                                 if (data.type === 'ig_added') {
                                     swal('Oops...', data.response, 'error');

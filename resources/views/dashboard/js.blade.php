@@ -96,6 +96,7 @@ jQuery(function () {
             text: localStorage.status, 
             type: 'success'
         });
+        localStorage.removeItem("status");
     }
     
     @if (Auth::user()->close_dashboard_tut == 0)
