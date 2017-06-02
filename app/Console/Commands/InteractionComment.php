@@ -20,7 +20,7 @@ class InteractionComment extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:comment {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'interaction:comment {email?}';
 
     /**
      * The console command description.
@@ -44,6 +44,7 @@ class InteractionComment extends Command {
      * @return mixed
      */
     public function handle() {
+        
         if (NULL !== $this->argument("email")) {
             $users = User::where("email", $this->argument("email"));
         } else {
