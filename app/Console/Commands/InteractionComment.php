@@ -59,9 +59,12 @@ class InteractionComment extends Command {
                 }
                 
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
-                        ->where('auto_comment', true)->get();
+                        ->where('auto_comment', true)
+                        ->where('email', $user->email)
+                        ->get();
                 
                 foreach ($instagram_profiles as $ig_profile) {
+                    
                     $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                     
                     $ig_username = $ig_profile->insta_username;
@@ -102,7 +105,7 @@ class InteractionComment extends Command {
                         if ($comment === NULL) {
                             continue;
                         } else {
-                            echo $comment;
+                            $this->line($comment);
                         }
                         
                         
