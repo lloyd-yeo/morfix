@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel {
         Commands\MakeStripeIdActive::class,
         Commands\GetStripeStatus::class,
         Commands\RefreshProfileProxy::class,
+        Commands\DeleteInvalidImages::class,
     ];
 
     /**
