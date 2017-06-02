@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
+use App\User;
 use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
@@ -46,10 +47,8 @@ class InteractionComment extends Command {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
 
-//        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
-
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $users = User::where("email", $this->argument("email"));
         } else {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u "
                     . "WHERE u.email IN (SELECT email FROM user_insta_profile) AND u.user_id IN (SELECT user_id FROM user_insta_profile)  "
