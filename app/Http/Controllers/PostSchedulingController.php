@@ -31,7 +31,7 @@ class PostSchedulingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(10)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(20)->get();
         return view('postscheduling', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
