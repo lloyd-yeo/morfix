@@ -51,7 +51,6 @@ jQuery(function () {
                         }, function(){ 
                             location.reload(true);
                         });
-                        
                         jQuery('#modal-addprofile').modal('hide');
                     } else {
                         if (data.type === 'ig_added') {
@@ -63,6 +62,7 @@ jQuery(function () {
                         }
                     }
                     App.loader('hide');
+                    
                 }
         });
         
