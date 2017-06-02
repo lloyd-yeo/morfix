@@ -53,7 +53,7 @@ class InteractionComment extends Command {
                 $this->line($user->user_id);
             }
         }
-
+        exit();
         foreach ($users as $user) {
             continue;
             $this->line($user->user_id);
