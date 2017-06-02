@@ -81,6 +81,7 @@ jQuery(function () {
                 },
                 success: function (data) {
                     if (data.success === true) {
+                        localStorage.setItem("status", data.response);
                         location.reload(true);
                     } else {
                         swal('Failed', data.response, 'fail');
@@ -88,6 +89,14 @@ jQuery(function () {
                 }
         });
     });
+    
+    if (localStorage.status) {
+        swal({
+            title: 'Success', 
+            text: localStorage.status, 
+            type: 'success'
+        });
+    }
     
     @if (Auth::user()->close_dashboard_tut == 0)
         jQuery('#dashboard-tutorial-modal').modal('show');    
