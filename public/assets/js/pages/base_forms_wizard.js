@@ -275,9 +275,9 @@ var BaseFormWizard = function() {
                             'ig-password': $igPassword
                         },
                         success: function (data) {
-                            
+                            App.loader("hide");
                             if (data.success === true) {
-                                App.loader("hide");
+                                
                                 setTimeout(function() {
                                     swal({
                                         title: 'Success', 
