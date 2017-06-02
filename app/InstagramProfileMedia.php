@@ -8,4 +8,5 @@ class InstagramProfileMedia extends Model
 {
     protected $table = "user_insta_profile_media";
     protected $connection = "mysql_old";
+    protected $primaryKey = "media_id";
 }
