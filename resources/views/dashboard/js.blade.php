@@ -44,14 +44,15 @@ jQuery(function () {
                 },
                 success: function (data) {
                     if (data.success === true) {
-                        swal(
-                                title: 'Success', 
-                                text: data.response, 
-                                type: 'success',
-                                onClose: function(){ 
-                                    location.reload(true);
-                                }
-                            );
+                        swal({
+                            title: 'Success', 
+                            text: data.response, 
+                            type: 'success'
+                        }).onClose(
+                            function(){ 
+                                location.reload(true);
+                            }
+                        );
                         jQuery('#modal-addprofile').modal('hide');
                     } else {
                         if (data.type === 'ig_added') {
