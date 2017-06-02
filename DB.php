@@ -43,8 +43,7 @@ if (!function_exists('getFollowProfiles')) {
                 unfollow_quota,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
-                AND email = ?
+                WHERE email = ?
                 AND (NOW() >= next_follow_time OR next_follow_time IS NULL)
                 AND auto_follow_ban = 0
                 AND (auto_follow = 1 OR auto_unfollow = 1) 
@@ -100,8 +99,7 @@ if (!function_exists('getCommentProfiles')) {
                 speed,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
-                AND email = ?
+                WHERE email = ?
                 AND (($tier > 1 AND auto_comment = 1) OR ($tier = 1 AND insta_username IN (SELECT insta_username FROM engagement_job_queue WHERE fulfilled = 0)))
                 AND ((comment_feedback_required = 0 OR auto_comment_ban = 0) OR (auto_comment_ban = 1 AND NOW() >= auto_comment_ban_time))
                 AND (NOW() >= next_comment_time OR next_comment_time IS NULL)
@@ -200,8 +198,7 @@ $get_follow_profile_sql = "SELECT DISTINCT(insta_username),
                 unfollow_quota,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
-                AND email = ?
+                WHERE email = ?
                 AND (NOW() >= next_follow_time OR next_follow_time IS NULL)
                 AND auto_follow_ban = 0
                 AND (auto_follow = 1 OR auto_unfollow = 1) 
@@ -214,8 +211,7 @@ $get_like_profile_sql = "SELECT DISTINCT(insta_username),
                 niche,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
-                AND email = ?
+                WHERE email = ?
                 AND auto_like = 1
                 AND auto_like_ban = 0
                 AND like_quota > 0
@@ -245,8 +241,7 @@ $get_comment_profile_sql = "SELECT DISTINCT(insta_username),
                 unfollow_quota,
                 proxy
                 FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
-                AND email = ?
+                WHERE email = ?
                 AND auto_comment = 1
                 AND ((comment_feedback_required = 0 AND auto_comment_ban = 0) OR (comment_feedback_required = 1 AND auto_comment_ban = 1 AND NOW() >= auto_comment_ban_time))
                 AND (NOW() >= next_comment_time OR next_comment_time IS NULL)
