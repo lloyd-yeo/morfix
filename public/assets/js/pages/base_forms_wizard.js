@@ -264,7 +264,7 @@ var BaseFormWizard = function() {
                 if ($index === 1) {
                     var $igUsername = jQuery('#validation-ig-username').val();
                     var $igPassword = jQuery('#validation-ig-password').val();
-                    
+                    App.loader("show");
                     $.ajax({
                         async: false,
                         type: "POST",
@@ -275,7 +275,9 @@ var BaseFormWizard = function() {
                             'ig-password': $igPassword
                         },
                         success: function (data) {
+                            
                             if (data.success === true) {
+                                App.loader("hide");
                                 setTimeout(function() {
                                     swal({
                                         title: 'Success', 
