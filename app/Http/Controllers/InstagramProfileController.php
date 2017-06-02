@@ -93,14 +93,12 @@ class InstagramProfileController extends Controller {
             DB::connection('mysql_old')->
                     update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username]);
             $items = $instagram->timeline->getSelfUserFeed()->items;
-            $this->info(serialize($items));
             
             foreach ($items as $item) {
                 try {
                     DB::connection('mysql_old')->
                             insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
                 } catch (\ErrorException $e) {
-                    $this->error("ERROR: " . $e->getMessage());
                     break;
                 }
             }
