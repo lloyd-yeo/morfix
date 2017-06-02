@@ -13,9 +13,8 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 
+class DeleteInvalidImages extends Command {
 
-class DeleteInvalidImages extends Command
-{
     /**
      * The name and signature of the console command.
      *
@@ -35,8 +34,7 @@ class DeleteInvalidImages extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -45,17 +43,18 @@ class DeleteInvalidImages extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-        $medias = InstagramProfileMedia::all();
-        foreach ($medias as $media) {
-            $file = $media->image_url;
-            $file_headers = @get_headers($file);
-            var_dump($file_headers);
-            $this->line("\n");
-            if ($file_headers[0] == 'HTTP/1.1 404 Not Found') {
-                $media->delete();
+    public function handle() {
+        InstagramProfileMedia::chunk(200, function($medias) {
+            foreach ($medias as $media) {
+                $file = $media->image_url;
+                $file_headers = @get_headers($file);
+                var_dump($file_headers);
+                $this->line("\n");
+                if ($file_headers[0] == 'HTTP/1.1 404 Not Found') {
+                    $media->delete();
+                }
             }
-        }
+        });
     }
+
 }
