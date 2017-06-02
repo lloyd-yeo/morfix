@@ -45,98 +45,37 @@ class InteractionComment extends Command {
      * @return mixed
      */
     public function handle() {
-        
+
         $users = array();
-        
+
         if (NULL !== $this->argument("email")) {
-            $users = User::where("email", $this->argument("email"))->get();
+            $user = User::where("email", $this->argument("email"))->first();
+            
+            $instagram_profiles = InstagramProfile::where('auto_interaction', true)
+                    ->where('auto_comment', true)
+                    ->where('email', $user->email)
+                    ->get();
+            
+            executeCommenting($instagram_profiles);
+            
         } else {
             foreach (User::cursor() as $user) {
                 $this->line($user->user_id);
-                
+
                 if ($user->tier < 2) {
                     continue;
                 }
-                
+
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                         ->where('auto_comment', true)
                         ->where('email', $user->email)
                         ->get();
                 
-                foreach ($instagram_profiles as $ig_profile) {
-                    
-                    $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-                    
-                    $ig_username = $ig_profile->insta_username;
-                    $ig_password = $ig_profile->insta_pw;
-
-                    $config = array();
-                    $config["storage"] = "mysql";
-                    $config["dbusername"] = "root";
-                    $config["dbpassword"] = "inst@ffiliates123";
-                    $config["dbhost"] = "52.221.60.235:3306";
-                    $config["dbname"] = "morfix";
-                    $config["dbtablename"] = "instagram_sessions";
-                    
-                    $debug = false;
-                    $truncatedDebug = false;
-                    $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                    
-                    if ($ig_profile->proxy === NULL) {
-                        $proxy = Proxy::inRandomOrder()->first();
-                        $ig_profile->proxy = $proxy->proxy;
-                        $ig_profile->save();
-                        $proxy->assigned = $proxy->assigned + 1;
-                        $proxy->save();
-                    }
-                    
-                    $instagram->setProxy($ig_profile->proxy);
-                    
-                    try {
-                        
-                        $instagram->setUser($ig_username, $ig_password);
-                        $explorer_response = $instagram->login();
-                        
-                        $comment = DB::table('user_insta_profile_comment')
-                                    ->where('insta_username', $ig_username)
-                                    ->inRandomOrder()
-                                    ->first();
-                        
-                        if ($comment === NULL) {
-                            continue;
-                        } else {
-                            $this->line($comment);
-                        }
-                        
-                        
-                    } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-                        $this->error("checkpt1 " . $checkpt_ex->getMessage());
-                        $ig_profile->checkpoint_required = 1;
-                        $ig_profile->save();
-                    } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                        $this->error("incorrectpw1 " . $incorrectpw_ex->getMessage());
-                        $ig_profile->incorrect_pw = 1;
-                        $ig_profile->save();
-                    } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                        $this->error("endpt1 " . $endpoint_ex->getMessage());
-                    } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                        $this->error("network1 " . $network_ex->getMessage());
-                    } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-                        $this->error("acctdisabled1 " . $acctdisabled_ex->getMessage());
-                        $ig_profile->account_disabled = 1;
-                        $ig_profile->save();
-                    } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                        $this->error("request1 " . $request_ex->getMessage());
-                        $ig_profile->error_msg = $request_ex->getMessage();
-                        $ig_profile->save();
-                    }
-                }
-                
+                executeCommenting($instagram_profiles);
             }
         }
-        
         exit();
-        
+
         foreach ($users as $user) {
             continue;
             $this->line($user->user_id);
@@ -192,7 +131,7 @@ class InteractionComment extends Command {
 
                             try {
                                 DB::connection('mysql_old')
-                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
+                                        ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                                 $comment_response = $instagram->comment($media_id, $comment->comment);
                                 $commented = 1;
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
@@ -238,7 +177,7 @@ class InteractionComment extends Command {
                         AND follower_username NOT IN (SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = ?) ORDER BY date_inserted DESC LIMIT 1;", [$ig_profile->insta_username, $ig_profile->insta_username]);
 
                     foreach ($new_followers as $new_follower) {
-                        
+
                         foreach ($comments as $comment) {
                             $comment = $comment->comment;
                             $target_username_posts = $instagram->getUserFeed($new_follower->follower_id);
@@ -282,4 +221,73 @@ class InteractionComment extends Command {
         }
     }
 
+}
+
+function executeCommenting($instagram_profiles) {
+    foreach ($instagram_profiles as $ig_profile) {
+
+        $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+
+        $ig_username = $ig_profile->insta_username;
+        $ig_password = $ig_profile->insta_pw;
+
+        $config = array();
+        $config["storage"] = "mysql";
+        $config["dbusername"] = "root";
+        $config["dbpassword"] = "inst@ffiliates123";
+        $config["dbhost"] = "52.221.60.235:3306";
+        $config["dbname"] = "morfix";
+        $config["dbtablename"] = "instagram_sessions";
+
+        $debug = false;
+        $truncatedDebug = false;
+        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+
+        if ($ig_profile->proxy === NULL) {
+            $proxy = Proxy::inRandomOrder()->first();
+            $ig_profile->proxy = $proxy->proxy;
+            $ig_profile->save();
+            $proxy->assigned = $proxy->assigned + 1;
+            $proxy->save();
+        }
+
+        $instagram->setProxy($ig_profile->proxy);
+
+        try {
+
+            $instagram->setUser($ig_username, $ig_password);
+            $explorer_response = $instagram->login();
+
+            $comment = DB::table('user_insta_profile_comment')
+                    ->where('insta_username', $ig_username)
+                    ->inRandomOrder()
+                    ->first();
+
+            if ($comment === NULL) {
+                continue;
+            } else {
+                $this->line($comment);
+            }
+        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+            $this->error("checkpt1 " . $checkpt_ex->getMessage());
+            $ig_profile->checkpoint_required = 1;
+            $ig_profile->save();
+        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+            $this->error("incorrectpw1 " . $incorrectpw_ex->getMessage());
+            $ig_profile->incorrect_pw = 1;
+            $ig_profile->save();
+        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+            $this->error("endpt1 " . $endpoint_ex->getMessage());
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+            $this->error("network1 " . $network_ex->getMessage());
+        } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+            $this->error("acctdisabled1 " . $acctdisabled_ex->getMessage());
+            $ig_profile->account_disabled = 1;
+            $ig_profile->save();
+        } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+            $this->error("request1 " . $request_ex->getMessage());
+            $ig_profile->error_msg = $request_ex->getMessage();
+            $ig_profile->save();
+        }
+    }
 }
