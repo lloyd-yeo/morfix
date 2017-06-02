@@ -58,6 +58,27 @@ jQuery(function () {
         $icon.removeClass("fa-spin");
     });
     
+    $(".remove-profile-btn").on("click", function(){ 
+        var $igId = $(this).attr("data-id");
+        $.ajax({
+                async: false,
+                type: "POST",
+                url: "profile/ig/remove/" + $igId,
+                dataType: "json",
+                data: {
+                    
+                },
+                success: function (data) {
+                    if (data.success === true) {
+                        swal('Success', data.response, 'success');
+                    } else {
+                        swal('Failed', data.response, 'fail');
+                    }
+                    App.loader('hide');
+                }
+        });
+    });
+    
     @if (Auth::user()->close_dashboard_tut == 0)
     jQuery('#dashboard-tutorial-modal').modal('show');    
     @endif
