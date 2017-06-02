@@ -45,15 +45,19 @@ class InteractionComment extends Command {
      */
     public function handle() {
         
+        $users = array();
+        
         if (NULL !== $this->argument("email")) {
-            $users = User::where("email", $this->argument("email"));
+            $users = User::where("email", $this->argument("email"))->get();
         } else {
             foreach (User::where(DB::raw('email IN (SELECT email FROM user_insta_profile) AND user_id IN (SELECT user_id FROM user_insta_profile)'))
                     ->cursor() as $user) {
                 $this->line($user->user_id);
             }
         }
+        
         exit();
+        
         foreach ($users as $user) {
             continue;
             $this->line($user->user_id);
