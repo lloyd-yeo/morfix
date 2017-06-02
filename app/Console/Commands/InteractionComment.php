@@ -93,7 +93,18 @@ class InteractionComment extends Command {
                         
                         $instagram->setUser($ig_username, $ig_password);
                         $explorer_response = $instagram->login();
-                        var_dump($explorer_response);
+                        
+                        $comment = DB::table('user_insta_profile_comment')
+                                    ->where('insta_username', $ig_username)
+                                    ->inRandomOrder()
+                                    ->first();
+                        
+                        if ($comment === NULL) {
+                            continue;
+                        } else {
+                            echo $comment;
+                        }
+                        
                         
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
                         $this->error("checkpt1 " . $checkpt_ex->getMessage());
