@@ -266,7 +266,7 @@ function executeCommenting($instagram_profiles) {
             if ($comment === NULL) {
                 continue;
             } else {
-                echo($comment . "\n");
+                echo($comment->comment . "\n");
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
             echo("checkpt1 " . $checkpt_ex->getMessage() . "\n");
@@ -289,5 +289,6 @@ function executeCommenting($instagram_profiles) {
             $ig_profile->error_msg = $request_ex->getMessage();
             $ig_profile->save();
         }
+        
     }
 }
