@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
@@ -51,7 +51,7 @@ class InteractionComment extends Command {
         if (NULL !== $this->argument("email")) {
             $users = User::where("email", $this->argument("email"))->get();
         } else {
-            foreach (User::all()->cursor() as $user) {
+            foreach (User::cursor() as $user) {
                 $this->line($user->user_id);
             }
         }
