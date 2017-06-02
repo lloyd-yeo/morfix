@@ -102,7 +102,7 @@ class InstagramProfileController extends Controller {
                     break;
                 }
             }
-            
+            $request->session()->flash('status', 'Profile added!');
             return Response::json(array("success" => true, 'response' => "Profile added!"));
             
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {

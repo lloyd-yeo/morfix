@@ -275,16 +275,12 @@ var BaseFormWizard = function() {
                             'ig-password': $igPassword
                         },
                         success: function (data) {
-                            App.loader("hide");
                             if (data.success === true) {
                                 
                                 swal({
                                     title: 'Success', 
                                     text: data.response, 
-                                    type: 'success',
-                                    timer: 3000
-                                }, function() {
-                                    location.reload(true);
+                                    type: 'success'
                                 });
                                 
                             } else {

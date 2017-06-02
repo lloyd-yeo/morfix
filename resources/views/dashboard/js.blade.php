@@ -49,10 +49,7 @@ jQuery(function () {
                         swal({
                             title: 'Success', 
                             text: data.response, 
-                            type: 'success',
-                            timer: 3000
-                        }, function() {
-                            location.reload(true);
+                            type: 'success'
                         });
                         
                     } else {
@@ -84,16 +81,7 @@ jQuery(function () {
                 },
                 success: function (data) {
                     if (data.success === true) {
-                        
-                        swal({
-                            title: 'Success', 
-                            text: data.response, 
-                            type: 'success',
-                            timer: 3000
-                        }, function() {
-                            location.reload(true);
-                        });
-                        
+                        location.reload(true);
                     } else {
                         swal('Failed', data.response, 'fail');
                     }
@@ -101,8 +89,16 @@ jQuery(function () {
         });
     });
     
+    @if ($request->session()->has('status')) {
+        swal({
+            title: 'Success', 
+            text: {{ session('status'); }}, 
+            type: 'success'
+        });
+    @endif
+    
     @if (Auth::user()->close_dashboard_tut == 0)
-    jQuery('#dashboard-tutorial-modal').modal('show');    
+        jQuery('#dashboard-tutorial-modal').modal('show');    
     @endif
 });
 
