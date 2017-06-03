@@ -20,7 +20,7 @@ class DeleteInvalidImages extends Command {
      *
      * @var string
      */
-    protected $signature = 'ig:invalidateimage';
+    protected $signature = 'ig:invalidateimage {?profile}';
 
     /**
      * The console command description.
@@ -44,7 +44,20 @@ class DeleteInvalidImages extends Command {
      * @return mixed
      */
     public function handle() {
-        InstagramProfileMedia::chunk(200, function($medias) {
+        if ($this->argument('profile') === NULL) {
+            InstagramProfileMedia::chunk(200, function($medias) {
+                foreach ($medias as $media) {
+                    $file = $media->image_url;
+                    $file_headers = @get_headers($file);
+                    var_dump($file_headers);
+                    $this->line("\n");
+                    if ($file_headers[0] == 'HTTP/1.1 404 Not Found') {
+                        $media->delete();
+                    }
+                }
+            });
+        } else {
+            $medias = InstagramProfileMedia::where('insta_username', $this->argument('profile'))->get();
             foreach ($medias as $media) {
                 $file = $media->image_url;
                 $file_headers = @get_headers($file);
@@ -54,7 +67,7 @@ class DeleteInvalidImages extends Command {
                     $media->delete();
                 }
             }
-        });
+        }
     }
 
 }
