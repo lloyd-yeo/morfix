@@ -232,11 +232,7 @@ function executeCommenting($instagram_profiles) {
         $ig_password = $ig_profile->insta_pw;
 
         $config = array();
-        $config["storage"] = "mysql";
-        $config["dbusername"] = "root";
-        $config["dbpassword"] = "inst@ffiliates123";
-        $config["dbhost"] = "52.221.60.235:3306";
-        $config["dbname"] = "morfix";
+        $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
 
         $debug = false;

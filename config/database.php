@@ -66,6 +66,20 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+        
+        'mysql_igsession' => [
+            'driver' => 'mysql',
+            'host' => '52.221.60.235',
+            'port' => '3306',
+            'database' => 'morfix',
+            'username' => 'root',
+            'password' => 'inst@ffiliates123',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
