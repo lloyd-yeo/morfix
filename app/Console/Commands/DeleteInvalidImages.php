@@ -20,14 +20,14 @@ class DeleteInvalidImages extends Command {
      *
      * @var string
      */
-    protected $signature = 'ig:invalidateimage {?profile}';
+    protected $signature = 'ig:invalidateimage {profile?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Invalid all invalid images.';
+    protected $description = 'Delete all invalid images.';
 
     /**
      * Create a new command instance.
