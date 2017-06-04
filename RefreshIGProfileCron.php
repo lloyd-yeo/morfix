@@ -102,9 +102,10 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $items = $instagram->timeline->getSelfUserFeed()->items;
                     foreach ($items as $item) {
                         try {
+                            $img_url = str_replace('http://', 'https://', $item->image_versions2->candidates[0]->url);
                             $conn = getConnection($servername, $username, $password, $dbname);
                             $insert_stmt = $conn->prepare("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);");
-                            $insert_stmt->bind_param("sss", $ig_username, $item->id, $item->image_versions2->candidates[0]->url);
+                            $insert_stmt->bind_param("sss", $ig_username, $item->id, $img_url);
                             $insert_stmt->execute();
                             $insert_stmt->close();
                             $conn->close();
