@@ -264,6 +264,7 @@ function executeCommenting($instagram_profiles) {
             } else {
                 echo($comment->comment . "\n");
             }
+            
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
             echo("checkpt1 " . $checkpt_ex->getMessage() . "\n");
             $ig_profile->checkpoint_required = 1;

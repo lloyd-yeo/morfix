@@ -99,7 +99,7 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $update_stmt->close();
                     $conn->close();
                     
-                    $items = $instagram->getSelfUserFeed()->items;
+                    $items = $instagram->timeline->getSelfUserFeed()->items;
                     foreach ($items as $item) {
                         try {
                             $conn = getConnection($servername, $username, $password, $dbname);
