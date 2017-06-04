@@ -108,15 +108,15 @@ class InstagramProfileController extends Controller {
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
             $profile_log->error_msg = $checkpt_ex->getMessage();
             $profile_log->save();
-            return Response::json(array("success" => false, 'type' =>'checkpoint', 'response' => $checkpt_ex->getMessage()));
+            return Response::json(array("success" => false, 'type' =>'checkpoint', 'response' => "Verification Required"));
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             $profile_log->error_msg = $incorrectpw_ex->getMessage();
             $profile_log->save();
-            return Response::json(array("success" => false, 'response' => serialize($incorrectpw_ex)));
+            return Response::json(array("success" => false, 'type' => 'incorrect_password', 'response' => "Incorrect Password!"));
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             $profile_log->error_msg = $endpoint_ex->getMessage();
             $profile_log->save();
-            return Response::json(array("success" => false, 'response' => serialize($endpoint_ex)));
+            return Response::json(array("success" => false, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage()));
         }
     }
 
