@@ -106,19 +106,17 @@ class InstagramProfileController extends Controller {
             return Response::json(array("success" => true, 'response' => "Profile added!"));
             
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+            $profile_log->error_msg = $checkpt_ex->getMessage();
+            $profile_log->save();
             return Response::json(array("success" => false, 'type' =>'checkpoint', 'response' => $checkpt_ex->getMessage()));
-            DB::connection('mysql_old')->
-                    update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$checkpt_ex->getMessage(), $db_log_id]);
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+            $profile_log->error_msg = $incorrectpw_ex->getMessage();
+            $profile_log->save();
             return Response::json(array("success" => false, 'response' => serialize($incorrectpw_ex)));
-            $this->error($incorrectpw_ex->getMessage());
-            DB::connection('mysql_old')->
-                    update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$incorrectpw_ex->getMessage(), $db_log_id]);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+            $profile_log->error_msg = $endpoint_ex->getMessage();
+            $profile_log->save();
             return Response::json(array("success" => false, 'response' => serialize($endpoint_ex)));
-            $this->error($endpoint_ex->getMessage());
-            DB::connection('mysql_old')->
-                    update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [$endpoint_ex->getMessage(), $db_log_id]);
         }
     }
 
