@@ -25,7 +25,12 @@ class HomeController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        echo Auth::user()->email;
+        
+        $current_user = User::find(Auth::user()->user_id);
+        if ($current_user->user_tier == 2) {
+            $current_user->tier = 2;
+        }
+        
         $leaderboard_alltime = DB::connection("mysql_old")
                 ->select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
                         GROUP BY email, name
