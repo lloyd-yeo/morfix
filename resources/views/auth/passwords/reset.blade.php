@@ -70,7 +70,7 @@
                             <!-- Register Form -->
                             <!-- jQuery Validation (.js-validation-register class is initialized in js/pages/base_pages_register.js) -->
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                            <form class="js-validation-register form-horizontal push-50-t push-50" method="POST" action="{{ url('/password/change') }}">
+                            <form class="js-validation-register form-horizontal push-50-t push-50" method="POST" action="{{ url('/password/reset') }}">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="token" value="{{ $token }}">
                                 
