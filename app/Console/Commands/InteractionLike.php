@@ -61,8 +61,7 @@ class InteractionLike extends Command {
                 id, 
                 niche,
                 insta_pw, proxy
-                FROM insta_affiliate.user_insta_profile WHERE auto_interaction = 1
-                AND user_id = ?
+                FROM insta_affiliate.user_insta_profile WHERE user_id = ?
                 AND auto_like = 1
                 AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->user_id]);
             try {
