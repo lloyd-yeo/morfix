@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
+use App\User;
 use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
@@ -47,7 +48,7 @@ class InteractionLike extends Command {
         $limit = $this->argument('limit');
 
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $users = User::where('email', $this->argument("email"))->get();
         } else {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u "
                     . "WHERE u.user_id IN (SELECT user_id FROM user_insta_profile) "
@@ -109,9 +110,11 @@ class InteractionLike extends Command {
                             $job_id = $engagement_job->job_id;
                             $like_response = NULL;
                             try {
+                                
                                 DB::connection('mysql_old')
                                     ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                                 $like_response = $instagram->like($media_id);
+                                
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                                 DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
@@ -201,7 +204,7 @@ class InteractionLike extends Command {
                                             continue;
                                         }
 
-                                        $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                        $user_feed_response = $instagram->timeline->getUserFeed($user_to_follow->pk);
                                     } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                         $this->error($endpt_ex->getMessage());
                                         continue;
