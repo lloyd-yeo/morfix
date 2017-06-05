@@ -23,7 +23,7 @@
     <div class="content content-narrow">
 
         <div class="row">
-            <div class="col-sm-12 col-lg-12">
+            <div class="col-xs-12 col-lg-12">
                 <!-- Crystal on Background Color -->
                 <div class="block">
                     <div class="bg-image" style="background-image: url('{{ $ig_profile->profile_pic_url }}');">
