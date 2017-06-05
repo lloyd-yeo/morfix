@@ -199,7 +199,7 @@ class InteractionLike extends Command {
                                     
                                     //Blacklisted username.
                                     $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
-                                    if ($blacklisted_username === NULL) {
+                                    if ($blacklisted_username !== NULL) {
                                         continue;
                                     }
                                     
