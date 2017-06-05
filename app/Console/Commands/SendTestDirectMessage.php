@@ -25,7 +25,7 @@ class SendTestDirectMessage extends Command
      *
      * @var string
      */
-    protected $signature = 'test:senddm {insta_username?} {insta_pw?} {message?} {recipient_id?}';
+    protected $signature = 'test:senddm {insta_username?} {recipient_username?} {message?} ';
 
     /**
      * The console command description.
@@ -60,7 +60,12 @@ class SendTestDirectMessage extends Command
         $truncatedDebug = false;
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         
-        $ig_username = $insta_username;
-        $ig_password = $insta_pw;
+        $sender = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
+        $recipient = InstagramProfile::where('insta_username', $this->argument('recipient_username')->first());
+        $text = $this->argument('message');
+        
+        $instagram->setUser($sender->insta_username, $sender->insta_pw);
+        $response = $instagram->direct->sendText([$recipient->insta_user_id], $text);
+        var_dump($response);
     }
 }
