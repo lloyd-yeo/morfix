@@ -11,6 +11,7 @@ use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\EngagementGroupJob;
 
 class EngagementGroup extends Command {
 
@@ -26,7 +27,7 @@ class EngagementGroup extends Command {
      *
      * @var string
      */
-    protected $description = 'Start liking using the engagemnt group.';
+    protected $description = 'Start liking using the engagement group.';
 
     /**
      * Create a new command instance.
@@ -43,14 +44,18 @@ class EngagementGroup extends Command {
      * @return mixed
      */
     public function handle() {
-        $outstanding_engagements = DB::connection('mysql_old')
-                ->select("SELECT media_id FROM insta_affiliate.engagement_group_job WHERE engaged = 0 ORDER BY date_logged DESC;");
+        $outstanding_engagements = EngagementGroupJob::where('engaged', false)->get();
+//        $outstanding_engagements = DB::connection('mysql_old')
+//                ->select("SELECT media_id FROM insta_affiliate.engagement_group_job WHERE engaged = 0 ORDER BY date_logged DESC;");
+        
         foreach ($outstanding_engagements as $outstanding_engagement) {
             $media_id = $outstanding_engagement->media_id;
             $comment_count = 100;
 
-            DB::connection('mysql_old')
-                    ->update("UPDATE engagement_group_job SET engaged = 1, date_worked_on = NOW() WHERE media_id = ?;", [$media_id]);
+            if (DB::connection('mysql_old')
+                    ->update("UPDATE engagement_group_job SET engaged = 1, date_worked_on = NOW() WHERE media_id = ?;", [$media_id])) {
+                $this->line("UPDATED [$media_id]\n\n");
+            }
 
             $engagement_group_users = DB::connection('mysql_old')
                     ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id, u.user_tier
