@@ -61,11 +61,13 @@ class SendTestDirectMessage extends Command
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         
         $sender = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
-        $recipient = InstagramProfile::where('insta_username', $this->argument('recipient_username')->first());
+        $recipient = InstagramProfile::where('insta_username', $this->argument('recipient_username'))->first();
         $text = $this->argument('message');
         
         $instagram->setUser($sender->insta_username, $sender->insta_pw);
-        $response = $instagram->direct->sendText([$recipient->insta_user_id], $text);
+        $recipients = array();
+        $recipients["users"] = [$recipient->insta_user_id]; 
+        $response = $instagram->direct->sendText($recipients, $text);
         var_dump($response);
     }
 }

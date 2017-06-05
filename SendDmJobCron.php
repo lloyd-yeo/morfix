@@ -115,7 +115,9 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 
                     try {
                         $delay = rand(35, 45);
-                        $instagram->direct->sendText([$dm_job["recipient_insta_id"]], $dm_job["message"]);
+                        $recipients = array();
+                        $recipients["users"] = [$dm_job["recipient_insta_id"]]; 
+                        $direct_msg_resp = $instagram->direct->sendText($recipients, $dm_job["message"]);
                         #$direct_msg_resp = $instagram->directMessage($dm_job["recipient_insta_id"], $dm_job["message"]);
                         var_dump($direct_msg_resp);
 
