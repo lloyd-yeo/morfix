@@ -196,14 +196,15 @@ class InteractionLike extends Command {
 
                                 //Foreach follower of the target.
                                 foreach ($target_user_followings as $user_to_like) {
-                                    
+
                                     if ($like_quota > 0) {
+
                                         //Blacklisted username.
                                         $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
                                         if ($blacklisted_username !== NULL) {
                                             continue;
                                         }
-                                        
+
                                         $this->line($user_to_like->username);
 
                                         //Check for duplicates.
@@ -226,9 +227,9 @@ class InteractionLike extends Command {
                                             }
                                             $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
                                         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
-                                            
+
                                             $this->error("Endpoint ex: " . $endpt_ex->getMessage());
-                                            
+
                                             if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
                                                 $blacklist_username = new BlacklistedUsername;
                                                 $blacklist_username->username = $user_to_like->username;
@@ -309,6 +310,7 @@ class InteractionLike extends Command {
                                         }
 
                                         if ($like_quota > 0) {
+
                                             $like_response = $instagram->media->like($item->id);
 
                                             if ($like_response->status == "ok") {
@@ -334,73 +336,101 @@ class InteractionLike extends Command {
                             break;
                         }
 
+                        /**
+                         * Next is to get targets by niche
+                         */
                         if ($like_quota > 0) {
+                            $niche = Niche::find($ig_profile->niche);
+                            $niche_targets = $niche->targetUsernames();
 
-                            $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
+                            foreach ($niche_targets as $target_username) {
+                                
+                                if ($like_quota > 0) {
 
-                            foreach ($niche_targets as $niche_target) {
-                                $this->info("niche target:\t" . $niche_target->target_username);
-                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($niche_target->target_username)));
-
-                                $target_user_followings = $user_follower_response->users;
-
-                                foreach ($target_user_followings as $user_to_like) {
+                                    //Get followers of the target.
+                                    $this->line("Target Username: " . $target_username->target_username . "\n");
+                                    $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                                    $target_user_followings = $user_follower_response->users;
                                     $duplicate = 0;
-                                    $followed_users = DB::connection('mysql_old')
-                                            ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_like->username]);
 
-                                    foreach ($followed_users as $followed_user) {
-                                        $duplicate = 1;
-                                        $this->info("duplicate log found:\t" . $followed_user->log_id);
-                                        break;
-                                    }
+                                    //Foreach follower of the target.
+                                    foreach ($target_user_followings as $user_to_like) {
 
-                                    if ($duplicate == 1) {
-                                        continue;
-                                    }
+                                        if ($like_quota > 0) {
 
-                                    if ($like_quota > 0) {
-
-                                        $user_feed_response = NULL;
-
-                                        if (is_null($user_to_like)) {
-                                            $this->error("null user");
-                                            continue;
-                                        }
-
-                                        try {
-                                            $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
-                                        } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
-                                            $this->error($endpt_ex->getMessage());
-                                            continue;
-                                        } catch (\Exception $ex) {
-                                            $this->error($ex->getMessage());
-                                            continue;
-                                        }
-
-                                        $user_items = $user_feed_response->items;
-
-                                        foreach ($user_items as $item) {
-                                            if ($like_quota == 0) {
-                                                break;
+                                            //Blacklisted username.
+                                            $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
+                                            if ($blacklisted_username !== NULL) {
+                                                continue;
                                             }
 
-                                            $like_response = $instagram->media->like($item->id);
+                                            $this->line($user_to_like->username);
 
-                                            $this->info("liked " . serialize($like_response));
+                                            //Check for duplicates.
+                                            $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
+                                                    ->where('target_username', $user_to_like->username)
+                                                    ->get();
 
-                                            DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
-                                                    . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_like->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
-                                            $like_quota--;
+                                            //Duplicate = liked before.
+                                            if (count($liked_users) > 0) {
+                                                $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                                continue;
+                                            }
+
+                                            //Get the feed of the user to like.
+                                            $user_feed_response = NULL;
+                                            try {
+                                                if (is_null($user_to_like)) {
+                                                    $this->error("Null user - target username");
+                                                    continue;
+                                                }
+                                                $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
+                                            } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
+
+                                                $this->error("Endpoint ex: " . $endpt_ex->getMessage());
+
+                                                if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
+                                                    $blacklist_username = new BlacklistedUsername;
+                                                    $blacklist_username->username = $user_to_like->username;
+                                                    $blacklist_username->save();
+                                                    $this->line("Blacklisted: " . $user_to_like->username);
+                                                }
+
+                                                continue;
+                                            } catch (\Exception $ex) {
+
+                                                $this->error("Exception: " . $ex->getMessage());
+                                                continue;
+                                            }
+
+                                            //Get the media posted by the user.
+                                            $user_items = $user_feed_response->items;
+                                            //Foreach media posted by the user.
+                                            foreach ($user_items as $item) {
+
+                                                if ($like_quota > 0) {
+
+                                                    $like_response = $instagram->media->like($item->id);
+
+                                                    if ($like_response->status == "ok") {
+                                                        $this->info("[$ig_username] Liked " . serialize($like_response));
+                                                        $like_log = new InstagramProfileLikeLog;
+                                                        $like_log->insta_username = $ig_username;
+                                                        $like_log->target_username = $user_to_like->username;
+                                                        $like_log->target_media = $item->id;
+                                                        $like_log->target_media_code = $item->getItemUrl();
+                                                        $like_log->log = serialize($like_response);
+                                                        $like_log->save();
+                                                        $like_quota--;
+                                                    }
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                        } else {
+                                            break;
                                         }
                                     }
-
-                                    if ($like_quota == 0) {
-                                        break;
-                                    }
-                                }
-                                if ($like_quota == 0) {
-                                    break;
                                 }
                             }
                         }
