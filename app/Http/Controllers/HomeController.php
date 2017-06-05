@@ -38,7 +38,7 @@ class HomeController extends Controller {
                         GROUP BY email, name
                         ORDER BY total_comms DESC LIMIT 10;");
 
-        $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take($current_user->num_acct)->get();
+        $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take(10)->get();
         
         $leaderboard_alltime_ranking = "UNRANKED";
 
@@ -50,7 +50,7 @@ class HomeController extends Controller {
             $ranking++;
         }
 
-        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(20)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take($current_user->num_acct)->get();
         
         $new_profile_follower_analysis = array();
         $new_profile_follower_analysis_label = array();
