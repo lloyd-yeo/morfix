@@ -32,6 +32,7 @@ class HomeController extends Controller {
         } else if ($current_user->user_tier == 3) {
             $current_user->tier = 3;
         }
+        $current_user->save();
         
         $leaderboard_alltime = DB::connection("mysql_old")
                 ->select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
