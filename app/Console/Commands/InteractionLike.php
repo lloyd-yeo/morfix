@@ -114,7 +114,7 @@ class InteractionLike extends Command {
                                 
                                 DB::connection('mysql_old')
                                     ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
-                                $like_response = $instagram->like($media_id);
+                                $like_response = $instagram->media->like($media_id);
                                 
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
