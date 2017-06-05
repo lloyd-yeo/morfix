@@ -337,9 +337,10 @@ class InteractionLike extends Command {
                         }
 
                         /**
-                         * Next is to get targets by niche
+                         * Next is to get target usernames by niche
                          */
                         if ($like_quota > 0) {
+                            
                             $niche = Niche::find($ig_profile->niche);
                             $niche_targets = $niche->targetUsernames();
 
@@ -434,12 +435,15 @@ class InteractionLike extends Command {
                                 }
                             }
                         }
-
+                        
+                        /**
+                         * Next is to get target hashtags by niche
+                         */
                         if ($like_quota > 0) {
-
-                            $target_hashtags = DB::connection('mysql_old')
-                                    ->select("SELECT hashtag FROM insta_affiliate.niche_targets_hashtags WHERE niche_id = ?;", [$ig_profile->niche]);
-
+                            
+                            $niche = Niche::find($ig_profile->niche);
+                            $target_hashtags = $niche->targetHashtags();
+                            
                             foreach ($target_hashtags as $target_hashtag) {
 
                                 $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
