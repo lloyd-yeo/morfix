@@ -70,7 +70,7 @@ class InteractionComment extends Command {
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                         ->where('auto_comment', true)
                         ->where('email', $user->email)
-                        ->where(DB::raw('NOW() >= next_comment_time'))
+                        ->whereRaw('NOW() >= next_comment_time')
                         ->get();
                 
                 if (count($instagram_profiles) > 0) {
