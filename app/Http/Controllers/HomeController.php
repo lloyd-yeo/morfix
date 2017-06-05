@@ -29,6 +29,8 @@ class HomeController extends Controller {
         $current_user = User::find(Auth::user()->user_id);
         if ($current_user->user_tier == 2) {
             $current_user->tier = 2;
+        } else if ($current_user->user_tier == 3) {
+            $current_user->tier = 12;
         }
         
         $leaderboard_alltime = DB::connection("mysql_old")

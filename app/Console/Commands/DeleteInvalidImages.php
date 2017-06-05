@@ -51,7 +51,7 @@ class DeleteInvalidImages extends Command {
                     $file_headers = @get_headers($file);
                     var_dump($file_headers);
                     $this->line("\n");
-                    if ($file_headers[0] == 'HTTP/1.1 404 Not Found') {
+                    if ($file_headers[0] == 'HTTP/1.0 404 Not Found' || $file_headers[0] == 'HTTP/1.0 404 Key Not Found') {
                         $media->delete();
                     }
                 }
