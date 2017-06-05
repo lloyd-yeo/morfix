@@ -17,8 +17,7 @@
                     @elseif (Auth::user()->tier == 2)
                     <span class='label label-danger'><i class="fa fa-star" style='bottom: 0px;'></i> Premium Account</span>
                     @elseif (Auth::user()->tier == 3)
-                    <span class='label label-danger'><i class="fa fa-star" style='bottom: 0px;'></i> Premium Account</span>
-                    <span class='label label-primary'><i class="fa fa-briefcase" style='bottom: 0px;'></i> Business Account</span>
+                    <span class='label label-danger'><i class="fa fa-star" style='bottom: 0px;'></i> Pro Account</span>
                     @elseif (Auth::user()->tier == 4)
                     <span class='label label-danger'><i class="fa fa-star" style='bottom: 0px;'></i> Premium Account</span>
                     <span class='label label-primary'><i class="fa fa-briefcase" style='bottom: 0px;'></i> Business Account</span>
