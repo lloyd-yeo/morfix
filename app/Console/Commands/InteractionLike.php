@@ -109,72 +109,64 @@ class InteractionLike extends Command {
                          */
                         foreach ($engagement_jobs as $engagement_job) {
                             if ($like_quota > 0) {
-                                
+
                                 $media_id = $engagement_job->media_id;
                                 $job_id = $engagement_job->job_id;
                                 $like_response = NULL;
-                                
+
                                 try {
-                                    
+
                                     $engagement_job->fulfilled = 1;
                                     $engagement_job->save();
                                     $like_response = $instagram->media->like($media_id);
-                                    
                                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                                    
+
                                     $this->error("checkpt\t" . $checkpoint_ex->getMessage());
                                     $ig_profile->checkpoint_required = 1;
                                     $ig_profile->save();
                                     continue;
-                                    
                                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                                    
+
                                     $this->error("network\t" . $network_ex->getMessage());
                                     $ig_profile->error_msg = $network_ex->getMessage();
                                     $ig_profile->save();
                                     continue;
-                                    
                                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                                    
+
                                     DB::connection('mysql_old')
                                             ->update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;", [$media_id]);
-                                    
+
                                     $this->error("endpt\t" . $endpoint_ex->getMessage());
                                     $ig_profile->error_msg = $endpoint_ex->getMessage();
                                     $ig_profile->save();
                                     continue;
-                                    
                                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                                    
+
                                     $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
                                     $ig_profile->incorrect_pw = 1;
                                     $ig_profile->error_msg = $incorrectpw_ex->getMessage();
                                     $ig_profile->save();
                                     continue;
-                                    
                                 } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
-                                    
+
                                     $this->error("feedback\t" . $feedback_ex->getMessage());
                                     $ig_profile->invalid_proxy = 1;
                                     $ig_profile->error_msg = $feedback_ex->getMessage();
                                     $ig_profile->save();
                                     continue;
-                                    
                                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-                                    
+
                                     $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
                                     $ig_profile->invalid_user = 1;
                                     $ig_profile->error_msg = $acctdisabled_ex->getMessage();
                                     $ig_profile->save();
                                     continue;
-                                    
                                 } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                                     continue;
                                 }
-                                
+
                                 $this->info("Liked Engagement Job: \t" . serialize($like_response));
                                 $like_quota--;
-                                
                             } else {
                                 break;
                             }
@@ -228,29 +220,26 @@ class InteractionLike extends Command {
                                             $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
                                         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                             $this->error("Endpoint ex: " . $endpt_ex->getMessage());
-                                            
+
                                             if ($endpt_ex == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
                                                 $blacklist_username = new BlacklistedUsername;
                                                 $blacklist_username->username = $user_to_like->username;
-                                                if ($blacklist_username->save()) {
-                                                    $this->line("Blacklisted: " . $user_to_like->username);
-                                                }
+                                                $blacklist_username->save();
+                                                $this->line("Blacklisted: " . $user_to_like->username);
                                             }
-                                            
+
                                             continue;
-                                            
                                         } catch (\Exception $ex) {
-                                            
+
                                             $this->error("Exception: " . $ex->getMessage());
                                             continue;
-                                            
                                         }
 
                                         //Get the media posted by the user.
                                         $user_items = $user_feed_response->items;
                                         //Foreach media posted by the user.
                                         foreach ($user_items as $item) {
-                                            
+
                                             if ($like_quota > 0) {
 
                                                 $like_response = $instagram->media->like($item->id);
