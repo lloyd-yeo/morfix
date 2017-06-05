@@ -61,17 +61,21 @@ class InteractionComment extends Command {
         } else {
             foreach (User::cursor() as $user) {
 
-                $this->line($user->user_id);
+                
 
                 if ($user->tier < 2) {
                     continue;
                 }
-
+                
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                         ->where('auto_comment', true)
                         ->where('email', $user->email)
                         ->get();
-
+                
+                if (count($instagram_profiles) > 0) {
+                    $this->line($user->user_id);
+                }
+                
                 executeCommenting($instagram_profiles);
             }
         }
