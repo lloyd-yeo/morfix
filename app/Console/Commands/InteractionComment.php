@@ -132,7 +132,7 @@ function executeCommenting($instagram_profiles) {
                                                     ->get();
             
             foreach ($unengaged_followings as $unengaged_following) {
-                $this->line("[$ig_username] \t" . $unengaged_following->follower_username);
+                echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
             }
             
             #$instagram->setUser($ig_username, $ig_password);
