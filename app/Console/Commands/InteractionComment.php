@@ -143,6 +143,10 @@ function executeCommenting($instagram_profiles) {
                 foreach ($unengaged_likings as $unengaged_liking) {
                     echo("[$ig_username] \t" . $unengaged_liking->target_username . "\n");
                 }
+            } else {
+               foreach ($unengaged_followings as $unengaged_following) {
+                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
+                }
             }
             
 //            if (count($unengaged_followings) > 0) {
