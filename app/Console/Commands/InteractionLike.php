@@ -196,6 +196,13 @@ class InteractionLike extends Command {
 
                                 //Foreach follower of the target.
                                 foreach ($target_user_followings as $user_to_like) {
+                                    
+                                    //Blacklisted username.
+                                    $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
+                                    if ($blacklisted_username === NULL) {
+                                        continue;
+                                    }
+                                    
                                     if ($like_quota > 0) {
                                         $this->line($user_to_like->username);
 
@@ -219,6 +226,7 @@ class InteractionLike extends Command {
                                             }
                                             $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
                                         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
+                                            
                                             $this->error("Endpoint ex: " . $endpt_ex->getMessage());
                                             
                                             if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
