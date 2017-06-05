@@ -38,7 +38,7 @@ class HomeController extends Controller {
                         GROUP BY email, name
                         ORDER BY total_comms DESC LIMIT 10;");
 
-        $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take(10)->get();
+        $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take($current_user->num_acct)->get();
         
         $leaderboard_alltime_ranking = "UNRANKED";
 
