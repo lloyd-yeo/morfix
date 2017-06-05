@@ -11,6 +11,7 @@ use InstagramAPI\InstagramException as InstagramException;
 use App\User;
 use App\InstagramProfile;
 use App\InstagramProfileComment;
+use App\InstagramProfileFollowLog;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
@@ -123,6 +124,16 @@ function executeCommenting($instagram_profiles) {
             }
             
             echo($comment->comment . "\n");
+            
+            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
+                                                    ->whereRaw("follower_username NOT IN "
+                                                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+                                                    ->orderBy('date_inserted', 'desc')
+                                                    ->get();
+            
+            foreach ($unengaged_followings as $unengaged_following) {
+                $this->line("[$ig_username] \t" . $unengaged_following->follower_username);
+            }
             
             #$instagram->setUser($ig_username, $ig_password);
             #$login_resp = $instagram->login();
