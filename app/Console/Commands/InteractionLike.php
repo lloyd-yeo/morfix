@@ -86,6 +86,8 @@ class InteractionLike extends Command {
                     $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
                     if ($ig_profile->proxy === NULL) {
+                        $proxy = Proxy::inRandomOrder()->first();
+                        
                         $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
                         foreach ($proxies as $proxy) {
                             $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
@@ -221,7 +223,7 @@ class InteractionLike extends Command {
                                             break;
                                         }
 
-                                        $like_response = $instagram->like($item->id);
+                                        $like_response = $instagram->media->like($item->id);
 
                                         $this->info("liked " . serialize($like_response));
 
@@ -282,7 +284,7 @@ class InteractionLike extends Command {
                                             break;
                                         }
 
-                                        $like_response = $instagram->like($item->id);
+                                        $like_response = $instagram->media->like($item->id);
 
                                         $this->info("liked " . serialize($like_response));
 
@@ -336,7 +338,7 @@ class InteractionLike extends Command {
                                         }
 
                                         try {
-                                            $user_feed_response = $instagram->getUserFeed($user_to_follow->pk);
+                                            $user_feed_response = $instagram->timeline->getUserFeed($user_to_follow->pk);
                                         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                             $this->error($endpt_ex->getMessage());
                                             continue;
@@ -352,7 +354,7 @@ class InteractionLike extends Command {
                                                 break;
                                             }
 
-                                            $like_response = $instagram->like($item->id);
+                                            $like_response = $instagram->media->like($item->id);
 
                                             $this->info("liked " . serialize($like_response));
 
@@ -413,7 +415,7 @@ class InteractionLike extends Command {
                                             break;
                                         }
 
-                                        $like_response = $instagram->like($item->id);
+                                        $like_response = $instagram->media->like($item->id);
 
                                         $this->info("liked " . serialize($like_response));
 
