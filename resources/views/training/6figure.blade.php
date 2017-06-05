@@ -230,7 +230,7 @@
                                     </a>
                                 </div>
                                 <div class="col-lg-4">
-                                    <a class="block block-link-hover2" href='http://Lifestylemafia.OnlineSalesPro.com/demo' target='_blank' >
+                                    <a class="block block-link-hover2" href='https://morfix.co/app/ebook-swipe.docx' target='_blank' >
                                         <div class="block-content block-content-full bg-primary clearfix">
                                             <i class="fa fa-2x fa-cloud-download text-white pull-left"></i>
                                             <span class="h4 font-w500 text-white">EBook Swipe</span>

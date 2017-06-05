@@ -234,6 +234,7 @@ function executeCommenting($instagram_profiles) {
         $config = array();
         $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
+        $config["storage"] = "mysql";
 
         $debug = false;
         $truncatedDebug = false;

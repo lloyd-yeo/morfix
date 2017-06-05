@@ -115,7 +115,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
 
                     try {
                         $delay = rand(35, 45);
-                        $direct_msg_resp = $instagram->directMessage($dm_job["recipient_insta_id"], $dm_job["message"]);
+                        $instagram->direct->sendText([$dm_job["recipient_insta_id"]], $dm_job["message"]);
+                        #$direct_msg_resp = $instagram->directMessage($dm_job["recipient_insta_id"], $dm_job["message"]);
                         var_dump($direct_msg_resp);
 
                         updateDmJobFulfilled($dm_job["job_id"], $auto_dm_delay, $ig_username, $dm_job["recipient_insta_id"], $servername, $username, $password, $dbname);
