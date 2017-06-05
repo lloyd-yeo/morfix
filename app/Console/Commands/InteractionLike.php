@@ -166,7 +166,7 @@ class InteractionLike extends Command {
 //                        $target_usernames = DB::connection('mysql_old')
 //                                ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
                         
-                        $target_usernames::where('insta_username', $ig_username)->inRandomOrder()->get();
+                        $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
                         
                         $liked = 0;
 
