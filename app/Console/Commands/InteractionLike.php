@@ -11,6 +11,7 @@ use App\User;
 use App\InstagramProfile;
 use App\InstagramProfileTargetUsername;
 use App\EngagementJob;
+use App\InstagramProfileLikeLog;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
@@ -175,7 +176,7 @@ class InteractionLike extends Command {
 
                             $this->line("target username: " . $target_username->target_username . "\n\n");
 
-                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                            $user_follower_response = $instagram->ggetUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
 
                             $users_to_follow = $user_follower_response->users;
 
@@ -184,17 +185,14 @@ class InteractionLike extends Command {
 
                                 $this->line($user_to_follow->username . "\n\n");
                                 $duplicate = 0;
-
-                                $followed_users = DB::connection('mysql_old')
-                                        ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_follow->username]);
-
-                                foreach ($followed_users as $followed_user) {
+                                
+                                $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
+                                                                        ->where('target_username', $user_to_follow->username)
+                                                                        ->get();
+                                
+                                if (count($liked_users) > 0) {
                                     $duplicate = 1;
-                                    $this->info("duplicate log found:\t" . $followed_user->log_id);
-                                    break;
-                                }
-
-                                if ($duplicate == 1) {
+                                    $this->info("duplicate log found:\t[$ig_username] [" . $user_to_follow->username . "]");
                                     continue;
                                 }
 
