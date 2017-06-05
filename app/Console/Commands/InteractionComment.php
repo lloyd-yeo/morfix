@@ -126,32 +126,32 @@ function executeCommenting($instagram_profiles) {
             
             echo($comment->comment . "\n");
             
-            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
-                                                    ->whereRaw("follower_username NOT IN "
-                                                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
-                                                    ->orderBy('date_inserted', 'desc')
-                                                    ->take(5)
-                                                    ->get();
-            if (count($unengaged_followings) > 0) {
-                continue;
-                
-                foreach ($unengaged_followings as $unengaged_following) {
-                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
-                }
-            } else {
-                
-                $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
+//            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
+//                                                    ->whereRaw("follower_username NOT IN "
+//                                                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+//                                                    ->orderBy('date_inserted', 'desc')
+//                                                    ->take(5)
+//                                                    ->get();
+            
+            $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                                                             ->whereRaw("target_username NOT IN "
                                                             . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                                                             ->orderBy('date_liked', 'desc')
-                                                            ->take(5)
                                                             ->get();
                 
-                foreach ($unengaged_likings as $unengaged_liking) {
-                    echo("[$ig_username] \t" . $unengaged_liking->target_username . "\n");
-                }
-                
+            foreach ($unengaged_likings as $unengaged_liking) {
+                echo("[$ig_username] \t" . $unengaged_liking->target_username . "\n");
             }
+            
+//            if (count($unengaged_followings) > 0) {
+//                continue;
+//                foreach ($unengaged_followings as $unengaged_following) {
+//                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
+//                }
+//            } else {
+//                
+//                
+//            }
             
             #$instagram->setUser($ig_username, $ig_password);
             #$login_resp = $instagram->login();
