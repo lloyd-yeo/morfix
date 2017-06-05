@@ -209,10 +209,10 @@ class InteractionLike extends Command {
                                             }
                                             $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
                                         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
-                                            $this->error($endpt_ex->getMessage());
+                                            $this->error("Endpoint ex: " . $endpt_ex->getMessage());
                                             continue;
                                         } catch (\Exception $ex) {
-                                            $this->error($ex->getMessage());
+                                            $this->error("Exception: " . $ex->getMessage());
                                             continue;
                                         }
 
