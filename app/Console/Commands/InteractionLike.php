@@ -197,13 +197,13 @@ class InteractionLike extends Command {
                                 //Foreach follower of the target.
                                 foreach ($target_user_followings as $user_to_like) {
                                     
-                                    //Blacklisted username.
-                                    $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
-                                    if ($blacklisted_username !== NULL) {
-                                        continue;
-                                    }
-                                    
                                     if ($like_quota > 0) {
+                                        //Blacklisted username.
+                                        $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
+                                        if ($blacklisted_username !== NULL) {
+                                            continue;
+                                        }
+                                        
                                         $this->line($user_to_like->username);
 
                                         //Check for duplicates.
