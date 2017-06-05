@@ -12,6 +12,7 @@ use App\User;
 use App\InstagramProfile;
 use App\InstagramProfileComment;
 use App\InstagramProfileFollowLog;
+use App\InstagramProfileLikeLog;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
@@ -129,10 +130,27 @@ function executeCommenting($instagram_profiles) {
                                                     ->whereRaw("follower_username NOT IN "
                                                             . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                                                     ->orderBy('date_inserted', 'desc')
+                                                    ->take(5)
                                                     ->get();
-            
-            foreach ($unengaged_followings as $unengaged_following) {
-                echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
+            if (count($unengaged_followings) > 0) {
+                continue;
+                
+                foreach ($unengaged_followings as $unengaged_following) {
+                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
+                }
+            } else {
+                
+                $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
+                                                            ->whereRaw("target_username NOT IN "
+                                                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+                                                            ->orderBy('date_inserted', 'desc')
+                                                            ->take(5)
+                                                            ->get();
+                
+                foreach ($unengaged_likings as $unengaged_liking) {
+                    echo("[$ig_username] \t" . $unengaged_liking->target_username . "\n");
+                }
+                
             }
             
             #$instagram->setUser($ig_username, $ig_password);
