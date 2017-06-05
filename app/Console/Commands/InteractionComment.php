@@ -137,6 +137,7 @@ function executeCommenting($instagram_profiles) {
                                                             ->whereRaw("target_username NOT IN "
                                                             . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                                                             ->orderBy('date_liked', 'desc')
+                                                            ->take(10)
                                                             ->get();
                 
             foreach ($unengaged_likings as $unengaged_liking) {
