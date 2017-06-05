@@ -147,7 +147,7 @@
                 <!-- END Sizes -->
             </div>
             @else
-            <div class="col-lg-12">
+            <div class="col-xs-12 col-lg-12">
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#upgrade-dm-modal">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-unlock fa-2x text-white pull-left"></i>
