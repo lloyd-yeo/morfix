@@ -214,14 +214,14 @@ class InteractionLike extends Command {
                                         $user_feed_response = NULL;
                                         try {
                                             if (is_null($user_to_like)) {
-                                                $this->error("null user - target username");
+                                                $this->error("Null user - target username");
                                                 continue;
                                             }
                                             $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
                                         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
                                             $this->error("Endpoint ex: " . $endpt_ex->getMessage());
-
-                                            if ($endpt_ex == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
+                                            
+                                            if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
                                                 $blacklist_username = new BlacklistedUsername;
                                                 $blacklist_username->username = $user_to_like->username;
                                                 $blacklist_username->save();
