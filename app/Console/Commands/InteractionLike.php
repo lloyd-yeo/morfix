@@ -50,9 +50,10 @@ class InteractionLike extends Command {
         if (NULL !== $this->argument("email")) {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u "
-                    . "WHERE u.user_id IN (SELECT user_id FROM user_insta_profile) "
-                    . "ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+            $users = DB::table('user')->skip($offset)->take($limit)->get();
+            #$users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u "
+            #        . "WHERE u.user_id IN (SELECT user_id FROM user_insta_profile) "
+            #        . "ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
 
         foreach ($users as $user) {
