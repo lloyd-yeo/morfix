@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetStripeStatus::class,
         Commands\RefreshProfileProxy::class,
         Commands\DeleteInvalidImages::class,
+        Commands\SendTestDirectMessage::class,
     ];
 
     /**
