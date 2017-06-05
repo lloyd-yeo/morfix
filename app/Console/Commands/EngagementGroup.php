@@ -45,18 +45,16 @@ class EngagementGroup extends Command {
      */
     public function handle() {
         $outstanding_engagements = EngagementGroupJob::where('engaged', false)->get();
-//        $outstanding_engagements = DB::connection('mysql_old')
-//                ->select("SELECT media_id FROM insta_affiliate.engagement_group_job WHERE engaged = 0 ORDER BY date_logged DESC;");
         
         foreach ($outstanding_engagements as $outstanding_engagement) {
             $media_id = $outstanding_engagement->media_id;
             $comment_count = 100;
 
-            if (DB::connection('mysql_old')
-                    ->update("UPDATE engagement_group_job SET engaged = 1, date_worked_on = NOW() WHERE media_id = ?;", [$media_id])) {
-                $this->line("UPDATED [$media_id]\n\n");
-            }
-
+            $outstanding_engagement->engaged = 1;
+            $outstanding_engagement->save();
+            
+            $this->line("UPDATED [$media_id]\n\n");
+            
             $engagement_group_users = DB::connection('mysql_old')
                     ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id, u.user_tier
                                 FROM user_insta_profile p, user u
@@ -75,16 +73,25 @@ class EngagementGroup extends Command {
             foreach ($engagement_group_users as $ig_profile) {
                 $ig_username = $ig_profile->insta_username;
                 try {
-                    DB::connection('mysql_old')
-                            ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 0]);
                     
-                    if ($ig_profile->auto_comment == 1 && $comment_count > 0) {
-                        DB::connection('mysql_old')
-                                ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 1]);
-                        $comment_count = $comment_count - 1;
-                    } else if ($ig_profile->user_tier == 1) {
-                        DB::connection('mysql_old')
-                                ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 1]);
+                    $engagement_job = new EngagementGroupJob;
+                    $engagement_job->media_id = $media_id;
+                    $engagement_job->insta_username = $ig_username;
+                    $engagement_job->action = 0;
+                    $engagement_job->save();
+                    
+//                    DB::connection('mysql_old')
+//                            ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 0]);
+                    
+                    if (($ig_profile->auto_comment == 1 && $comment_count > 0) || $ig_profile->user_tier == 1) {
+                        
+                        $engagement_job = new EngagementGroupJob;
+                        $engagement_job->media_id = $media_id;
+                        $engagement_job->insta_username = $ig_username;
+                        $engagement_job->action = 1;
+                        $engagement_job->save();
+//                        DB::connection('mysql_old')
+//                                ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 1]);
                         $comment_count = $comment_count - 1;
                     }
                 } catch (\PDOException $pdo_ex) {
