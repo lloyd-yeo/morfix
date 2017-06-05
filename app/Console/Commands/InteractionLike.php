@@ -179,7 +179,7 @@ class InteractionLike extends Command {
                             if ($like_quota > 0) {
 
                                 //Get followers of the target.
-                                $this->line("Target Username: " . $target_username->target_username . "\n\n");
+                                $this->line("Target Username: " . $target_username->target_username . "\n");
                                 $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
                                 $target_user_followings = $user_follower_response->users;
                                 $duplicate = 0;
@@ -187,7 +187,7 @@ class InteractionLike extends Command {
                                 //Foreach follower of the target.
                                 foreach ($target_user_followings as $user_to_like) {
                                     if ($like_quota > 0) {
-                                        $this->line($user_to_like->username . "\n\n");
+                                        $this->line($user_to_like->username);
 
                                         //Check for duplicates.
                                         $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
