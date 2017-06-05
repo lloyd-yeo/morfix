@@ -9,6 +9,8 @@ use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
 use App\User;
 use App\InstagramProfile;
+use App\InstagramProfileTargetUsername;
+use App\EngagementJob;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
@@ -72,10 +74,7 @@ class InteractionLike extends Command {
 
                     $config = array();
                     $config["storage"] = "mysql";
-                    $config["dbusername"] = "root";
-                    $config["dbpassword"] = "inst@ffiliates123";
-                    $config["dbhost"] = "52.221.60.235:3306";
-                    $config["dbname"] = "morfix";
+                    $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
                     $config["dbtablename"] = "instagram_sessions";
 
                     $debug = false;
@@ -84,16 +83,13 @@ class InteractionLike extends Command {
 
                     if ($ig_profile->proxy === NULL) {
                         $proxy = Proxy::inRandomOrder()->first();
-                        
-                        $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
-                        foreach ($proxies as $proxy) {
-                            $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-                            $instagram->setProxy($proxy->proxy);
-                            $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
-                        }
-                    } else {
-                        $instagram->setProxy($ig_profile->proxy);
+                        $ig_profile->proxy = $proxy->proxy;
+                        $ig_profile->save();
+                        $proxy->assigned = $proxy->assigned + 1;
+                        $proxy->save();
                     }
+                    
+                    $instagram->setProxy($ig_profile->proxy);
 
                     try {
                         $like_quota = rand(1, 3);
@@ -102,36 +98,43 @@ class InteractionLike extends Command {
 
                         $this->line("Logged in \t quota: " . $like_quota);
 
-                        $engagement_jobs = DB::connection('mysql_old')
-                                ->select("SELECT job_id, media_id, action FROM insta_affiliate.engagement_job_queue WHERE action = 0 AND fulfilled = 0 AND insta_username = ?;", [$ig_username]);
+                        $engagement_jobs = EngagementJob::where('action', 0)
+                                                        ->where('fulfilled', 0)
+                                                        ->where('insta_username', $ig_username)
+                                                        ->get();
                         
                         foreach ($engagement_jobs as $engagement_job) {
                             $media_id = $engagement_job->media_id;
                             $job_id = $engagement_job->job_id;
                             $like_response = NULL;
                             try {
+                                $engagement_job->fulfilled = 1;
+                                $engagement_job->save();
                                 
-                                DB::connection('mysql_old')
-                                    ->update("UPDATE engagement_job_queue SET fulfilled = 1 WHERE job_id = ?;", [$job_id]);
                                 $like_response = $instagram->media->like($media_id);
                                 
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                                 $this->error("checkpt\t" . $checkpoint_ex->getMessage());
-                                DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
+                                $ig_profile->checkpoint_required = 1;
+                                $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                                 $this->error("network\t" . $network_ex->getMessage());
-                                DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
+                                $ig_profile->error_msg = $network_ex->getMessage();
+                                $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                                 DB::connection('mysql_old')
                                     ->update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;", [$media_id]);
                                 $this->error("endpt\t" . $endpoint_ex->getMessage());
-                                DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                                $ig_profile->error_msg = $endpoint_ex->getMessage();
+                                $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                                 $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
-                                DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
+                                $ig_profile->incorrect_pw = 1;
+                                $ig_profile->error_msg = $incorrectpw_ex->getMessage();
+                                $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
                                 $this->error("feedback\t" . $feedback_ex->getMessage());
@@ -141,7 +144,9 @@ class InteractionLike extends Command {
                                 continue;
                             } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
                                 $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
-                                DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
+                                $ig_profile->invalid_user = 1;
+                                $ig_profile->error_msg = $acctdisabled_ex->getMessage();
+                                $ig_profile->save();
                                 continue;
                             }
                             
@@ -158,9 +163,11 @@ class InteractionLike extends Command {
                             continue;
                         }
                         
-                        $target_usernames = DB::connection('mysql_old')
-                                ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
-
+//                        $target_usernames = DB::connection('mysql_old')
+//                                ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
+                        
+                        $target_usernames::where('insta_username', $ig_username)->inRandomOrder()->get();
+                        
                         $liked = 0;
 
                         if ($like_quota == 0) {
