@@ -30,7 +30,7 @@ class HomeController extends Controller {
         if ($current_user->user_tier == 2) {
             $current_user->tier = 2;
         } else if ($current_user->user_tier == 3) {
-            $current_user->tier = 12;
+            $current_user->tier = 3;
         }
         
         $leaderboard_alltime = DB::connection("mysql_old")
