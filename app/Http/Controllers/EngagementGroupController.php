@@ -43,7 +43,7 @@ class EngagementGroupController extends Controller {
             'email' => Auth::user()->email,
         ]);
 
-        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(11)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(Auth::user()->num_acct)->get();
         return view('engagement-group.index', [
             'user_ig_profiles' => $instagram_profiles,
         ]);

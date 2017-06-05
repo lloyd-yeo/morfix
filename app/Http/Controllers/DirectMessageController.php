@@ -19,7 +19,7 @@ class DirectMessageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(20)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(Auth::user()->num_acct)->get();
         return view('dm', [
             'user_ig_profiles' => $instagram_profiles,
         ]);

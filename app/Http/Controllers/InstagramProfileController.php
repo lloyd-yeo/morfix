@@ -267,7 +267,6 @@ class InstagramProfileController extends Controller {
         }
     }
     
-    
     public function delete(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
         if ($ig_profile->delete()) {

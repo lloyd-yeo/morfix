@@ -63,7 +63,11 @@
                             <td class="text-center"><label class="label label-success">{{ title_case($subscription->status) }}</label></td>
                             @elseif ($subscription->status == "trialing")
                             <td class="text-center"><label class="label label-success">{{ title_case($subscription->status) }}</label></td>
-                            @elseif ($subscription->status == "cancelled")
+                            @elseif ($subscription->status == "canceled")
+                            <td class="text-center"><label class="label label-danger">{{ title_case($subscription->status) }}</label></td>
+                            @elseif ($subscription->status == "past_due")
+                            <td class="text-center"><label class="label label-danger">{{ title_case($subscription->status) }}</label></td>
+                            @elseif ($subscription->status == "unpaid")
                             <td class="text-center"><label class="label label-danger">{{ title_case($subscription->status) }}</label></td>
                             @endif
                             
