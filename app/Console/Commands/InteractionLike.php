@@ -51,21 +51,18 @@ class InteractionLike extends Command {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
             $users = DB::table('user')->skip($offset)->take($limit)->get();
-            #$users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, u.user_tier, u.trial_activation FROM insta_affiliate.user u "
-            #        . "WHERE u.user_id IN (SELECT user_id FROM user_insta_profile) "
-            #        . "ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
         }
 
         foreach ($users as $user) {
             $this->line($user->user_id);
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT DISTINCT(insta_username),
-                insta_user_id, 
-                id, 
-                niche,
-                insta_pw, proxy
-                FROM insta_affiliate.user_insta_profile WHERE user_id = ?
-                AND auto_like = 1
-                AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->user_id]);
+            $instagram_profiles = InstagramProfile::where('auto_like', true)
+                                                    ->where('checkpoint_required', false)
+                                                    ->where('account_disabled', false)
+                                                    ->where('invalid_user', false)
+                                                    ->where('incorrect_pw', false)
+                                                    ->where('user_id', $user->user_id)
+                                                    ->get();
+            
             try {
                 foreach ($instagram_profiles as $ig_profile) {
 
