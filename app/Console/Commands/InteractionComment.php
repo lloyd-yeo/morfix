@@ -149,6 +149,10 @@ function executeCommenting($instagram_profiles) {
                 }
             }
             
+            
+            
+            
+            
 //            if (count($unengaged_followings) > 0) {
 //                continue;
 //                foreach ($unengaged_followings as $unengaged_following) {

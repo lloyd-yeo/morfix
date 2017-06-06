@@ -43,6 +43,7 @@ class PaymentController extends Controller
                 $user->save();
                 
                 // Add the credit card as default payment source for customer
+                $customer = \Stripe\Customer::retrieve($customer->id);
                 $customer->source = $token;
                 $customer->save();
                 
