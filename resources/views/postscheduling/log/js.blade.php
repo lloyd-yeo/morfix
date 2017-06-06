@@ -50,7 +50,7 @@ jQuery(function () {
                 if (data.success === true) {
                     $("#schedule-img").attr('src', data.image);
                     $("#schedule-caption").val(data.caption);
-                    $("#schedule-date").innerHtml(data.date);
+                    $("#schedule-date").html(data.date);
                     $("#modalViewSchedule").modal('show');
                 } else {
                     swal('Oops...', data.response, 'fail');
