@@ -189,7 +189,7 @@ class InteractionLike extends Command {
                             if ($like_quota > 0) {
 
                                 //Get followers of the target.
-                                $this->line("Target Username: " . $target_username->target_username . "\n");
+                                $this->line("[$ig_username] Target Username: " . $target_username->target_username . "\n");
                                 $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
                                 $target_user_followings = $user_follower_response->users;
                                 $duplicate = 0;
@@ -205,8 +205,8 @@ class InteractionLike extends Command {
                                             continue;
                                         }
 
-                                        $this->line($user_to_like->username);
-
+                                        $this->line($user_to_like->username . "\t" . $user_to_like->id);
+                                        
                                         //Check for duplicates.
                                         $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
                                                 ->where('target_username', $user_to_like->username)
@@ -222,7 +222,7 @@ class InteractionLike extends Command {
                                         $user_feed_response = NULL;
                                         try {
                                             if (is_null($user_to_like)) {
-                                                $this->error("Null user - target username");
+                                                $this->error("Null User - Target Username");
                                                 continue;
                                             }
                                             $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
@@ -236,7 +236,6 @@ class InteractionLike extends Command {
                                                 $blacklist_username->save();
                                                 $this->line("Blacklisted: " . $user_to_like->username);
                                             }
-
                                             continue;
                                         } catch (\Exception $ex) {
 
