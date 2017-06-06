@@ -20,7 +20,7 @@
                             <div class="form-material form-material-primary">
                                 <label for="image-caption">Scheduled Image</label>
                                 <br/>
-                                <img src='' id='schedule-img'>
+                                <img src='' id='schedule-img' class='img-responsive'>
                             </div>
                         </div>
                     </div>
