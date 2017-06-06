@@ -68,6 +68,7 @@ Route::post('/post-scheduling/schedule/{id}', 'PostSchedulingController@schedule
 
 Route::post('/post-scheduling/add', 'PostSchedulingController@add');
 Route::post('/post-scheduling/delete', 'PostSchedulingController@delete');
+Route::post('/post-scheduling/get/{id}', 'PostSchedulingController@get');
 
 Route::post('stripe/webhook','WebhookController@handleWebhook');
 Route::get('/affiliate', 'AffiliateController@index');

@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="form-material form-material-primary">
-                                <textarea class="js-maxlength form-control" id="gallery-first-comment-txt" 
+                                <textarea class="js-maxlength form-control"
                                           id="schedule-caption" rows="7" maxlength="2000"
                                           placeholder="Type in the first comments here..."></textarea>
                                 <label for="schedule-caption">Captions</label>
