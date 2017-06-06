@@ -95,7 +95,6 @@ class PostSchedulingController extends Controller {
     }
     
     public function delete(Request $request) {
-        echo $request->input('schedule_id');
         $schedule = InstagramProfilePhotoPostSchedule::find($request->input('schedule_id'));
         
         if ($schedule->delete()) {
