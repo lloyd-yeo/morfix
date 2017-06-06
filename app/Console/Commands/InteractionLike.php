@@ -206,9 +206,20 @@ class InteractionLike extends Command {
                                         }
 
                                         $this->line($user_to_like->username . "\t" . $user_to_like->id);
-                                        
+
                                         //Check for duplicates.
                                         $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
+                                                ->where('target_username', $user_to_like->username)
+                                                ->get();
+
+                                        //Duplicate = liked before.
+                                        if (count($liked_users) > 0) {
+                                            $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                            continue;
+                                        }
+
+                                        //Check for duplicates.
+                                        $liked_users = LikeLogsArchive::where('insta_username', $ig_username)
                                                 ->where('target_username', $user_to_like->username)
                                                 ->get();
 
@@ -309,6 +320,17 @@ class InteractionLike extends Command {
                                             continue;
                                         }
 
+                                        //Check for duplicates.
+                                        $liked_users = LikeLogsArchive::where('insta_username', $ig_username)
+                                                ->where('target_username', $user_to_like->username)
+                                                ->get();
+
+                                        //Duplicate = liked before.
+                                        if (count($liked_users) > 0) {
+                                            $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                            continue;
+                                        }
+
                                         if ($like_quota > 0) {
 
                                             $like_response = $instagram->media->like($item->id);
@@ -340,12 +362,12 @@ class InteractionLike extends Command {
                          * Next is to get target usernames by niche
                          */
                         if ($like_quota > 0) {
-                            
+
                             $niche = Niche::find($ig_profile->niche);
                             $niche_targets = $niche->targetUsernames();
 
                             foreach ($niche_targets as $target_username) {
-                                
+
                                 if ($like_quota > 0) {
 
                                     //Get followers of the target.
@@ -369,6 +391,17 @@ class InteractionLike extends Command {
 
                                             //Check for duplicates.
                                             $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
+                                                    ->where('target_username', $user_to_like->username)
+                                                    ->get();
+
+                                            //Duplicate = liked before.
+                                            if (count($liked_users) > 0) {
+                                                $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                                continue;
+                                            }
+
+                                            //Check for duplicates.
+                                            $liked_users = LikeLogsArchive::where('insta_username', $ig_username)
                                                     ->where('target_username', $user_to_like->username)
                                                     ->get();
 
@@ -435,15 +468,15 @@ class InteractionLike extends Command {
                                 }
                             }
                         }
-                        
+
                         /**
                          * Next is to get target hashtags by niche
                          */
                         if ($like_quota > 0) {
-                            
+
                             $niche = Niche::find($ig_profile->niche);
                             $target_hashtags = $niche->targetHashtags();
-                            
+
                             foreach ($target_hashtags as $target_hashtag) {
 
                                 $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");

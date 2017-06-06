@@ -64,6 +64,7 @@ class ArchiveLikeLogs extends Command
             $archive->date_liked = $like_log->date_liked;
             $archive->save();
             
+            $like_log->delete();
         }
         
     }
