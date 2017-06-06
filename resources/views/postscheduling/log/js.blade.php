@@ -40,7 +40,7 @@ jQuery(function () {
         
         $scheduleId = $(this).attr("data-schedule-id");
         
-        $("#modalViewSchedule").modal('toggle');
+        $("#modalViewSchedule").modal('show');
         
     });
     
