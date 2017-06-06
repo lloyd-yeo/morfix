@@ -89,6 +89,7 @@ class PaymentController extends Controller
         $response['plan'] = $plan;
         
         try {
+            
             \Stripe\Subscription::create(array(
                 "customer" => $customer->id,
                 "plan" => $plan_id,
@@ -126,16 +127,55 @@ class PaymentController extends Controller
 
         } catch (\Stripe\Error\InvalidRequest $e) {
             // Invalid parameters were supplied to Stripe's API
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+
+            return response()->json([
+                "success" => false, 
+                "status" => $e->getHttpStatus(), 
+                "type" => $err['type'], 
+                "code" => $err['code'], 
+                "message" => $err['message']]);
         } catch (\Stripe\Error\Authentication $e) {
             // Authentication with Stripe's API failed
             // (maybe you changed API keys recently)
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+
+            return response()->json([
+                "success" => false, 
+                "status" => $e->getHttpStatus(), 
+                "type" => $err['type'], 
+                "code" => $err['code'], 
+                "message" => $err['message']]);
         } catch (\Stripe\Error\ApiConnection $e) {
             // Network communication with Stripe failed
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+
+            return response()->json([
+                "success" => false, 
+                "status" => $e->getHttpStatus(), 
+                "type" => $err['type'], 
+                "code" => $err['code'], 
+                "message" => $err['message']]);
         } catch (\Stripe\Error\Base $e) {
             // Display a very generic error to the user, and maybe send
             // yourself an email
+            $body = $e->getJsonBody();
+            $err  = $body['error'];
+
+            return response()->json([
+                "success" => false, 
+                "status" => $e->getHttpStatus(), 
+                "type" => $err['type'], 
+                "code" => $err['code'], 
+                "message" => $err['message']]);
         } catch (Exception $e) {
             // Something else happened, completely unrelated to Stripe
+            return response()->json([
+                "success" => false,
+                "message" => $e->getMessage()]);
         }
         
         return response()->json($response);
