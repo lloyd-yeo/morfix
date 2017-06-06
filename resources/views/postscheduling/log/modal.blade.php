@@ -36,9 +36,8 @@
 
                     <div class="form-group">
                         <div class="col-md-8">
-                            <div class="js-datetimepicker form-material input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true" data-side-by-side="true">
-                                <label id="schedule-date"><i class="fa fa-calendar"></i> Schedule Date (GMT +8)</label>
-                            </div>
+                            <span id="schedule-date-label"><i class="fa fa-calendar"></i> Scheduled Date (GMT +8)</span>
+                            <span id="schedule-date">2017-01-01 00:00:00</span>
                         </div>
                     </div>
                 </form>
