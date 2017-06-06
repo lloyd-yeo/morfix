@@ -41,7 +41,7 @@ class PostSchedulingController extends Controller {
         $schedule = InstagramProfilePhotoPostSchedule::find($id);
         return response()->json([
             'success' => true, 
-            'image' => $schedule->image_path, 
+            'image' => url('storage/' . $schedule->image_path), 
             'caption' => $schedule->caption,
             'date' => $schedule->date_to_post,
         ]);
