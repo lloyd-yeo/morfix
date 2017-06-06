@@ -12,13 +12,6 @@ $.ajaxSetup({
 
 jQuery(function () {
     
-    // Init page helpers (Select2 + Tags Inputs plugins)
-    App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'tags-inputs', 'slimscroll', 'magnific-popup']);
-    
-    initCommentsEmojiAutocomplete();
-    
-    initValidationMaterial();
-    
     var $scheduleId;
     
     $(".btn-cancel-schedule").on("click", function(){ 
