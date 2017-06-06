@@ -21,7 +21,7 @@
                                 <label for="image-caption">Scheduled Image</label>
                                 <br/>
                                 <center>
-                                    <img src='' id='schedule-img' style='width: 100%;'>
+                                    <img src='' id='schedule-img' style='width: 60%;'>
                                 </center>
                             </div>
                         </div>
