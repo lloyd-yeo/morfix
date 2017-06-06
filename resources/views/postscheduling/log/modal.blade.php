@@ -17,10 +17,12 @@
                     
                     <div class="form-group">
                         <div class="col-xs-12">
-                            <div class="form-material form-material-primary" style='margin-left: auto; margin-right: auto;'>
+                            <div class="form-material form-material-primary" >
                                 <label for="image-caption">Scheduled Image</label>
                                 <br/>
-                                <img src='' id='schedule-img' style='width: 70%;'>
+                                <div class='col-xs-12 col-lg-6' style='margin-left: auto; margin-right: auto;'>
+                                    <img src='' id='schedule-img' style='width: 100%;'>
+                                </div>
                             </div>
                         </div>
                     </div>
