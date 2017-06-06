@@ -48,7 +48,7 @@ jQuery(function () {
             },
             success: function (data) {
                 if (data.success === true) {
-                    $("#schedule-img").attr('src') = data.image;
+                    $("#schedule-img").attr('src', data.image);
                     $("#schedule-caption").val(data.caption);
                     $("#schedule-date").innerHtml(data.date);
                     $("#modalViewSchedule").modal('show');
