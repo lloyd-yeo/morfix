@@ -51,6 +51,10 @@ class ArchiveLikeLogs extends Command
      */
     public function handle()
     {
+//        foreach (InstagramProfileLikeLog::where('date_liked', '>=', '2017-04-26 20:42:12')
+//                ->where('date_liked', '<', '2017-05-07 00:00:00')
+//                ->cursor() as $like_log) {
+        
         foreach (InstagramProfileLikeLog::where('date_liked', '>=', '2017-04-26 20:42:12')
                 ->where('date_liked', '<', '2017-05-07 00:00:00')
                 ->cursor() as $like_log) {
