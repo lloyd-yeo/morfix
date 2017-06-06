@@ -19,6 +19,8 @@
                         <div class="col-xs-12">
                             <div class="form-material form-material-primary">
                                 <label for="image-caption">Scheduled Image</label>
+                                <br/>
+                                <img src='' id='schedule-img'>
                             </div>
                         </div>
                     </div>
@@ -36,8 +38,9 @@
 
                     <div class="form-group">
                         <div class="col-md-8">
-                            <span id="schedule-date-label"><i class="fa fa-calendar"></i> Scheduled Date (GMT +8)</span>
-                            <span id="schedule-date">2017-01-01 00:00:00</span>
+                            <span id="schedule-date-label"><i class="fa fa-calendar"></i> This Post is Scheduled At (GMT +8)</span>
+                            <br/>
+                            <span id="schedule-date" style='font-weight:bold;'>2017-01-01 00:00:00</span>
                         </div>
                     </div>
                 </form>
