@@ -83,7 +83,7 @@ Route::post('/settings/subscription/cancel/{subscription_id}', 'SettingsControll
 Route::get('/faq', 'FaqController@index');
 
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
-Route::get('/post-scheduling/schedule/delete', 'PostSchedulingController@delete');
+Route::post('/post-scheduling/schedule/delete', 'PostSchedulingController@delete');
 
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/dm/logs/cancel/{id}', 'DirectMessageLogsController@cancel');
