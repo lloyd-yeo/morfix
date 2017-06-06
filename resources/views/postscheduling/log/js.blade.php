@@ -35,6 +35,7 @@ jQuery(function () {
             success: function (data) {
                 if (data.success === true) {
                     swal('Success', data.response, 'success');
+                    $("#schedule-" + $scheduleId).remove();
                 } else {
                     swal('Oops...', data.response, 'fail');
                 }

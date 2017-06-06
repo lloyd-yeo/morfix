@@ -39,7 +39,7 @@
                         </thead>
                         <tbody>
                             @foreach ($schedules as $schedule)
-                            <tr>
+                            <tr id="schedule-{{ $schedule->schedule_id }}">
                                 <td>{{ Carbon\Carbon::parse($schedule->date_to_post)->toDayDateTimeString() }}</td>
                                 <td class="text-center">
                                     @if ($schedule->posted == 0)
