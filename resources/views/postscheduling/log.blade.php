@@ -76,7 +76,7 @@
         </div>
     </div>
     
-    @include('log.modal')
+    @include('postscheduling.log.modal')
     
 </main>
 @endsection
