@@ -67,6 +67,7 @@ Route::get('/post-scheduling/schedule/{id}', 'PostSchedulingController@gallery')
 Route::post('/post-scheduling/schedule/{id}', 'PostSchedulingController@schedule');
 
 Route::post('/post-scheduling/add', 'PostSchedulingController@add');
+Route::post('/post-scheduling/delete', 'PostSchedulingController@delete');
 
 Route::post('stripe/webhook','WebhookController@handleWebhook');
 Route::get('/affiliate', 'AffiliateController@index');
@@ -83,7 +84,7 @@ Route::post('/settings/subscription/cancel/{subscription_id}', 'SettingsControll
 Route::get('/faq', 'FaqController@index');
 
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
-Route::post('/post-scheduling/schedule/delete', 'PostSchedulingController@delete');
+
 
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/dm/logs/cancel/{id}', 'DirectMessageLogsController@cancel');
