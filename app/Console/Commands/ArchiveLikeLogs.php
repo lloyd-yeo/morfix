@@ -13,6 +13,7 @@ use App\InstagramProfile;
 use App\InstagramProfileComment;
 use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
+use App\LikeLogsArchive;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
