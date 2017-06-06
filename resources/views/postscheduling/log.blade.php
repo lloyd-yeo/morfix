@@ -62,9 +62,10 @@
                                         <button class="btn btn-xs btn-default btn-view-schedule" data-schedule-id="{{ $schedule->schedule_id }}">
                                             <i class="fa fa-fw fa-eye"></i>
                                         </button>
+                                        @if ($schedule->posted == 0)
                                         <button class="btn btn-xs btn-danger btn-cancel-schedule" 
                                                 data-schedule-id="{{ $schedule->schedule_id }}" type="button" data-toggle="tooltip" title="Cancel scheduling"><i class="fa fa-times"></i></button>
-                                    
+                                        @endif        
                                     </div>
                                 </td>
                             </tr>
