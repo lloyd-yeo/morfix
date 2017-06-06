@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel {
         Commands\RefreshProfileProxy::class,
         Commands\DeleteInvalidImages::class,
         Commands\SendTestDirectMessage::class,
+        Commands\ArchiveLikeLogs::class,
     ];
 
     /**
