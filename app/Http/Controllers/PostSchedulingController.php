@@ -94,6 +94,16 @@ class PostSchedulingController extends Controller {
         ]);
     }
     
+    public function delete(Request $request) {
+        $schedule = InstagramProfilePhotoPostSchedule::find($request->input('schedule_id'));
+        
+        if ($schedule->delete()) {
+            return response()->json(['success' => true, 'response' => 'The scheduled post has been removed!']);
+        } else {
+            return response()->json(['success' => false, 'response' => 'There is an error with our server please try again later!']);
+        }
+    }
+    
     /**
      * Schedule a photo for posting
      *

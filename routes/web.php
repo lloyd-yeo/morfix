@@ -76,9 +76,14 @@ Route::get('/training/{type}', 'TrainingVideoController@index');
 Route::get('/engagement-group', 'EngagementGroupController@index');
 Route::get('/engagement-group/{id}', 'EngagementGroupController@profile');
 Route::post('engagement-group/schedule/{media_id}', 'EngagementGroupController@schedule');
+
 Route::get('/settings', 'SettingsController@index');
 Route::post('/settings/subscription/cancel/{subscription_id}', 'SettingsController@cancelSubscription');
+
 Route::get('/faq', 'FaqController@index');
+
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
+Route::get('/post-scheduling/schedule/delete', 'PostSchedulingController@delete');
+
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/dm/logs/cancel/{id}', 'DirectMessageLogsController@cancel');
