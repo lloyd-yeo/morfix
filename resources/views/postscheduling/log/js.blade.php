@@ -36,7 +36,7 @@ jQuery(function () {
         });
     });
     
-    $(".btn-cancel-schedule").on("click", function(){ 
+    $(".btn-view-schedule").on("click", function(){ 
         
         $scheduleId = $(this).attr("data-schedule-id");
         
