@@ -59,7 +59,7 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button class="btn btn-xs btn-default">
+                                        <button class="btn btn-xs btn-default btn-view-schedule" data-schedule-id="{{ $schedule->schedule_id }}">
                                             <i class="fa fa-fw fa-eye"></i>
                                         </button>
                                         <button class="btn btn-xs btn-danger btn-cancel-schedule" 
@@ -73,9 +73,11 @@
                     </table>
                 </div>
             </div>
-            
         </div>
     </div>
+    
+    @include('log.modal')
+    
 </main>
 @endsection
 

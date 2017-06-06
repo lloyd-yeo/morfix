@@ -34,6 +34,13 @@ jQuery(function () {
                 }
             }
         });
+    });
+    
+    $(".btn-cancel-schedule").on("click", function(){ 
+        
+        $scheduleId = $(this).attr("data-schedule-id");
+        
+        $("#modalViewSchedule").modal('toggle');
         
     });
     
