@@ -18,35 +18,26 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="form-material form-material-primary">
-                                <label for="image-caption">Your image caption</label>
+                                <label for="image-caption">Scheduled Image</label>
                             </div>
                         </div>
                     </div>
                     
-                    @if (Auth::user()->user_tier > 1)
                     <div class="form-group">
                         <div class="col-xs-12">
                             <div class="form-material form-material-primary">
                                 <textarea class="js-maxlength form-control" id="gallery-first-comment-txt" 
-                                          name="first-comment" rows="7" maxlength="2000"
+                                          id="schedule-caption" rows="7" maxlength="2000"
                                           placeholder="Type in the first comments here..."></textarea>
-                                <label for="first-comment">Your first comments</label>
-                            </div>
-                            <div class="help-block text-left">
-                                <!--                                        <b>EMOJI</b>
-                                                                        <br/>
-                                                                        Press ":" to bring up emojis.-->
+                                <label for="schedule-caption">Captions</label>
                             </div>
                         </div>
                     </div>
-                    @endif
 
                     <div class="form-group">
                         <div class="col-md-8">
                             <div class="js-datetimepicker form-material input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true" data-side-by-side="true">
-                                <input class="form-control" type="text" id="gallery-schedule-date" name="schedule-date" placeholder="Choose a date..">
-                                <label for="schedule-date">Schedule Date (GMT +8)</label>
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <label id="schedule-date"><i class="fa fa-calendar"></i> Schedule Date (GMT +8)</label>
                             </div>
                         </div>
                     </div>
