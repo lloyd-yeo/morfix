@@ -20,7 +20,7 @@ jQuery(function () {
         
         $.ajax({
             type: "POST",
-            url: '/post-scheduling/schedule/delete',
+            url: '/post-scheduling/delete',
             dataType: "json",
             data: {
                 schedule_id: $scheduleId
