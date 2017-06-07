@@ -56,7 +56,7 @@ class ArchiveLikeLogs extends Command
                 target_media, target_media_code, log, date_liked) 
                 SELECT insta_username, target_username, target_media, target_media_code, log, date_liked 
                 FROM user_insta_profile_like_log 
-                WHERE log_id <= ?;'. [$size]);
+                WHERE log_id <= ?;', [$size]);
         echo "Archiving success!\n";
         #DB::table('user_insta_profile_like_log')->where('date_liked', '<=', $date)->delete();
     }
