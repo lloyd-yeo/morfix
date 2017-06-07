@@ -63,9 +63,8 @@ class ArchiveLikeLogs extends Command
         
         InstagramProfileLikeLog::where('log_id', '<=', $size)->chunk(200, function ($like_logs) {
             foreach ($like_logs as $like_log) {
-                if($like_log->delete()) {
-                    echo "Removed: " . $like_log->log_id . "\n";
-                }
+                echo "Removing: " . $like_log->log_id . "\n";
+                $like_log->delete();
             }
         });
         
