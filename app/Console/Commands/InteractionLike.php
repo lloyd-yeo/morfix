@@ -260,7 +260,19 @@ class InteractionLike extends Command {
                                         foreach ($user_items as $item) {
 
                                             if ($like_quota > 0) {
+                                                
+                                                //Check for duplicates.
+                                                $liked_logs = LikeLogsArchive::where('insta_username', $ig_username)
+                                                        ->where('target_media', $item->id)
+                                                        ->get();
 
+                                                //Duplicate = liked media before.
+                                                if (count($liked_users) > 0) {
+                                                    $this->info("Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->id . "]");
+                                                    continue;
+                                                }
+                                                
+                                                
                                                 $like_response = $instagram->media->like($item->id);
 
                                                 if ($like_response->status == "ok") {
