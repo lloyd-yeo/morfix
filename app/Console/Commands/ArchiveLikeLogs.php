@@ -51,7 +51,7 @@ class ArchiveLikeLogs extends Command
     public function handle()
     {
         $size = $this->argument('size');
-        echo "Archiving results earlier than $size...\n";
+        echo "Archiving results with log_id <= $size...\n";
         DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, 
                 target_media, target_media_code, log, date_liked) 
                 SELECT insta_username, target_username, target_media, target_media_code, log, date_liked 
