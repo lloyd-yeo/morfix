@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel {
 //        $schedule->command('dm:get 0 0 ravicii55@gmail.com')->everyFiveMinutes();
         
         
-        $schedule->command('interaction:like 0 100000')->everyMinute();
+        $schedule->command('interaction:like')->everyFiveMinutes();
         
         $schedule->command("engagement:add")->hourly();
         $schedule->command("analysis:follower")->daily("00:00");
