@@ -50,25 +50,7 @@ class ArchiveLikeLogs extends Command
      */
     public function handle()
     {
-//        foreach (InstagramProfileLikeLog::where('date_liked', '>=', '2017-04-26 20:42:12')
-//                ->where('date_liked', '<', '2017-05-07 00:00:00')
-//                ->cursor() as $like_log) {
-        
-//        foreach (InstagramProfileLikeLog::where('date_liked', '>=', '2017-04-26 20:42:12')
-//                ->where('date_liked', '<', '2017-05-07 00:00:00')
-//                ->cursor() as $like_log) {
-//            
-//            $archive = new LikeLogsArchive;
-//            $archive->insta_username = $like_log->insta_username;
-//            $archive->target_username = $like_log->target_username;
-//            $archive->target_media = $like_log->target_media;
-//            $archive->target_media_code = $like_log->target_media_code;
-//            $archive->log = $like_log->log;
-//            $archive->date_liked = $like_log->date_liked;
-//            $archive->save();
-//            
-//            $like_log->delete();
-//        }
-        DB::insert('INSERT INTO user_insta_profile_like_log SELECT * FROM user_insta_profile_like_log_archive WHERE log_id < 300000;');
+        DB::insert('INSERT INTO user_insta_profile_like_log_archive SELECT * FROM user_insta_profile_like_log WHERE log_id < 1000000;');
+        DB::table('user_insta_profile_like_log')->where('log_id', '<', 1000000)->delete();
     }
 }
