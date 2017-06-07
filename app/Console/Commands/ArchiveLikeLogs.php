@@ -53,7 +53,7 @@ class ArchiveLikeLogs extends Command
         $size = $this->argument('size');
         echo "Arciving $size results...\n";
         DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, target_media, target_media_code, log, date_liked)'
-                . ' SELECT insta_username, target_username, target_media, target_media_code, log, date_liked FROM user_insta_profile_like_log WHERE log_id < ' . $size . ';');
+                . ' SELECT insta_username, target_username, target_media, target_media_code, log, date_liked FROM user_insta_profile_like_log WHERE date_liked < "2017-05-15 00:00:00" LIMIT ' . $size . ';');
         #DB::table('user_insta_profile_like_log')->where('log_id', '<', $size)->delete();
     }
 }
