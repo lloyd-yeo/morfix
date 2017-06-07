@@ -51,7 +51,8 @@ class ArchiveLikeLogs extends Command
     public function handle()
     {
         $size = $this->argument('size');
-        DB::insert('INSERT INTO user_insta_profile_like_log_archive SELECT * FROM user_insta_profile_like_log WHERE log_id < ' . $size . ';');
+        DB::insert('INSERT INTO user_insta_profile_like_log_archive (insta_username, target_username, target_media, target_media_code, log, date_liked)'
+                . 'SELECT insta_username, target_username, target_media, target_media_code, log, date_liked FROM user_insta_profile_like_log WHERE log_id < ' . $size . ';');
         DB::table('user_insta_profile_like_log')->where('log_id', '<', $size)->delete();
     }
 }
