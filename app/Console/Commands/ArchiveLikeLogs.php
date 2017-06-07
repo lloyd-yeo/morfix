@@ -65,7 +65,6 @@ class ArchiveLikeLogs extends Command {
             echo "Deleting from current table...\n";
             InstagramProfileLikeLog::where('log_id', '<=', $size)->chunk(200, function ($like_logs) {
 
-
                 foreach ($like_logs as $like_log) {
 //                $archive = new LikeLogsArchive;
 //                $archive->insta_username = $like_log->insta_username;

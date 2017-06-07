@@ -13,6 +13,7 @@ use App\InstagramProfileTargetHashtag;
 use App\EngagementJob;
 use App\BlacklistedUsername;
 use App\InstagramProfileLikeLog;
+use App\LikeLogsArchive;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
