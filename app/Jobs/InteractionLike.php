@@ -49,7 +49,7 @@ class InteractionLike implements ShouldQueue {
      */
     public function handle() {
         
-        $this->line($this->user->user_id);
+        echo($this->user->user_id);
         $instagram_profiles = InstagramProfile::where('auto_like', true)
                 ->where('checkpoint_required', false)
                 ->where('account_disabled', false)
@@ -61,7 +61,7 @@ class InteractionLike implements ShouldQueue {
         try {
             foreach ($instagram_profiles as $ig_profile) {
 
-                $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
 
@@ -88,7 +88,7 @@ class InteractionLike implements ShouldQueue {
                     $like_quota = rand(1, 3);
                     $instagram->setUser($ig_username, $ig_password);
                     $explorer_response = $instagram->login();
-                    $this->line("Logged in \t quota: " . $like_quota);
+                    echo("Logged in \t quota: " . $like_quota);
                     $engagement_jobs = EngagementJob::where('action', 0)
                             ->where('fulfilled', 0)
                             ->where('insta_username', $ig_username)
@@ -111,13 +111,13 @@ class InteractionLike implements ShouldQueue {
                                 $like_response = $instagram->media->like($media_id);
                             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
 
-                                $this->error("checkpt\t" . $checkpoint_ex->getMessage());
+                                echo("checkpt\t" . $checkpoint_ex->getMessage());
                                 $ig_profile->checkpoint_required = 1;
                                 $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
 
-                                $this->error("network\t" . $network_ex->getMessage());
+                                echo("network\t" . $network_ex->getMessage());
                                 $ig_profile->error_msg = $network_ex->getMessage();
                                 $ig_profile->save();
                                 continue;
@@ -126,28 +126,28 @@ class InteractionLike implements ShouldQueue {
                                 DB::connection('mysql_old')
                                         ->update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;", [$media_id]);
 
-                                $this->error("endpt engagement\t" . $endpoint_ex->getMessage());
+                                echo("endpt engagement\t" . $endpoint_ex->getMessage());
 
                                 $ig_profile->error_msg = $endpoint_ex->getMessage();
                                 $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
 
-                                $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
+                                echo("incorrectpw\t" . $incorrectpw_ex->getMessage());
                                 $ig_profile->incorrect_pw = 1;
                                 $ig_profile->error_msg = $incorrectpw_ex->getMessage();
                                 $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
 
-                                $this->error("feedback\t" . $feedback_ex->getMessage());
+                                echo("feedback\t" . $feedback_ex->getMessage());
                                 $ig_profile->invalid_proxy = 1;
                                 $ig_profile->error_msg = $feedback_ex->getMessage();
                                 $ig_profile->save();
                                 continue;
                             } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
 
-                                $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
+                                echo("acctdisabled\t" . $acctdisabled_ex->getMessage());
                                 $ig_profile->invalid_user = 1;
                                 $ig_profile->error_msg = $acctdisabled_ex->getMessage();
                                 $ig_profile->save();
@@ -156,7 +156,7 @@ class InteractionLike implements ShouldQueue {
                                 continue;
                             }
 
-                            $this->info("Liked Engagement Job: \t" . serialize($like_response));
+                            echo("Liked Engagement Job: \t" . serialize($like_response));
                             $like_quota--;
                         } else {
                             break;
@@ -180,7 +180,7 @@ class InteractionLike implements ShouldQueue {
                         if ($like_quota > 0) {
 
                             //Get followers of the target.
-                            $this->line("[$ig_username] Target Username: " . $target_username->target_username . "\n");
+                            echo("[$ig_username] Target Username: " . $target_username->target_username . "\n");
                             $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
                             $target_user_followings = $user_follower_response->users;
                             $duplicate = 0;
@@ -196,7 +196,7 @@ class InteractionLike implements ShouldQueue {
                                         continue;
                                     }
 
-                                    $this->line($user_to_like->username . "\t" . $user_to_like->id);
+                                    echo($user_to_like->username . "\t" . $user_to_like->id);
 
                                     //Check for duplicates.
                                     $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
@@ -205,7 +205,7 @@ class InteractionLike implements ShouldQueue {
 
                                     //Duplicate = liked before.
                                     if (count($liked_users) > 0) {
-                                        $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                        echo("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
                                         continue;
                                     }
 
@@ -216,7 +216,7 @@ class InteractionLike implements ShouldQueue {
 
                                     //Duplicate = liked before.
                                     if (count($liked_users) > 0) {
-                                        $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                        echo("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
                                         continue;
                                     }
 
@@ -224,24 +224,24 @@ class InteractionLike implements ShouldQueue {
                                     $user_feed_response = NULL;
                                     try {
                                         if (is_null($user_to_like)) {
-                                            $this->error("Null User - Target Username");
+                                            echo("Null User - Target Username");
                                             continue;
                                         }
                                         $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
                                     } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
 
-                                        $this->error("Endpoint ex: " . $endpt_ex->getMessage());
+                                        echo("Endpoint ex: " . $endpt_ex->getMessage());
 
                                         if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
                                             $blacklist_username = new BlacklistedUsername;
                                             $blacklist_username->username = $user_to_like->username;
                                             $blacklist_username->save();
-                                            $this->line("Blacklisted: " . $user_to_like->username);
+                                            echo("Blacklisted: " . $user_to_like->username);
                                         }
                                         continue;
                                     } catch (\Exception $ex) {
 
-                                        $this->error("Exception: " . $ex->getMessage());
+                                        echo("Exception: " . $ex->getMessage());
                                         continue;
                                     }
 
@@ -259,7 +259,7 @@ class InteractionLike implements ShouldQueue {
 
                                             //Duplicate = liked media before.
                                             if (count($liked_users) > 0) {
-                                                $this->info("Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->id . "]");
+                                                echo("Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->id . "]");
                                                 continue;
                                             }
 
@@ -267,7 +267,7 @@ class InteractionLike implements ShouldQueue {
                                             $like_response = $instagram->media->like($item->id);
 
                                             if ($like_response->status == "ok") {
-                                                $this->info("[$ig_username] Liked " . serialize($like_response));
+                                                echo("[$ig_username] Liked " . serialize($like_response));
                                                 $like_log = new InstagramProfileLikeLog;
                                                 $like_log->insta_username = $ig_username;
                                                 $like_log->target_username = $user_to_like->username;
@@ -299,7 +299,7 @@ class InteractionLike implements ShouldQueue {
                         //Foreach targeted hashtags
                         foreach ($target_hashtags as $target_hashtag) {
                             if ($like_quota > 0) {
-                                $this->info("[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
+                                echo("[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
                                 //Get the feed from the targeted hashtag.
                                 $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
                                 //Foreach post under this target hashtag
@@ -308,7 +308,7 @@ class InteractionLike implements ShouldQueue {
                                     $user_to_like = $item->user;
                                     //Weird error, null user. Check to be safe.
                                     if (is_null($user_to_like)) {
-                                        $this->error("null user");
+                                        echo("null user");
                                         continue;
                                     }
 
@@ -319,7 +319,7 @@ class InteractionLike implements ShouldQueue {
 
                                     //Duplicate = liked before.
                                     if (count($liked_users) > 0) {
-                                        $this->info("duplicate log found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                        echo("duplicate log found:\t[$ig_username] [" . $user_to_like->username . "]");
                                         continue;
                                     }
 
@@ -330,7 +330,7 @@ class InteractionLike implements ShouldQueue {
 
                                     //Duplicate = liked before.
                                     if (count($liked_users) > 0) {
-                                        $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                        echo("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
                                         continue;
                                     }
 
@@ -339,7 +339,7 @@ class InteractionLike implements ShouldQueue {
                                         $like_response = $instagram->media->like($item->id);
 
                                         if ($like_response->status == "ok") {
-                                            $this->info("[$ig_username] Liked " . serialize($like_response));
+                                            echo("[$ig_username] Liked " . serialize($like_response));
                                             $like_log = new InstagramProfileLikeLog;
                                             $like_log->insta_username = $ig_username;
                                             $like_log->target_username = $user_to_like->username;
@@ -374,7 +374,7 @@ class InteractionLike implements ShouldQueue {
                             if ($like_quota > 0) {
 
                                 //Get followers of the target.
-                                $this->line("Target Username: " . $target_username->target_username . "\n");
+                                echo("Target Username: " . $target_username->target_username . "\n");
                                 $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
                                 $target_user_followings = $user_follower_response->users;
                                 $duplicate = 0;
@@ -390,7 +390,7 @@ class InteractionLike implements ShouldQueue {
                                             continue;
                                         }
 
-                                        $this->line($user_to_like->username);
+                                        echo($user_to_like->username);
 
                                         //Check for duplicates.
                                         $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
@@ -399,7 +399,7 @@ class InteractionLike implements ShouldQueue {
 
                                         //Duplicate = liked before.
                                         if (count($liked_users) > 0) {
-                                            $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                            echo("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
                                             continue;
                                         }
 
@@ -410,7 +410,7 @@ class InteractionLike implements ShouldQueue {
 
                                         //Duplicate = liked before.
                                         if (count($liked_users) > 0) {
-                                            $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                            echo("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
                                             continue;
                                         }
 
@@ -418,25 +418,25 @@ class InteractionLike implements ShouldQueue {
                                         $user_feed_response = NULL;
                                         try {
                                             if (is_null($user_to_like)) {
-                                                $this->error("Null user - target username");
+                                                echo("Null user - target username");
                                                 continue;
                                             }
                                             $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
                                         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
 
-                                            $this->error("Endpoint ex: " . $endpt_ex->getMessage());
+                                            echo("Endpoint ex: " . $endpt_ex->getMessage());
 
                                             if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
                                                 $blacklist_username = new BlacklistedUsername;
                                                 $blacklist_username->username = $user_to_like->username;
                                                 $blacklist_username->save();
-                                                $this->line("Blacklisted: " . $user_to_like->username);
+                                                echo("Blacklisted: " . $user_to_like->username);
                                             }
 
                                             continue;
                                         } catch (\Exception $ex) {
 
-                                            $this->error("Exception: " . $ex->getMessage());
+                                            echo("Exception: " . $ex->getMessage());
                                             continue;
                                         }
 
@@ -450,7 +450,7 @@ class InteractionLike implements ShouldQueue {
                                                 $like_response = $instagram->media->like($item->id);
 
                                                 if ($like_response->status == "ok") {
-                                                    $this->info("[$ig_username] Liked " . serialize($like_response));
+                                                    echo("[$ig_username] Liked " . serialize($like_response));
                                                     $like_log = new InstagramProfileLikeLog;
                                                     $like_log->insta_username = $ig_username;
                                                     $like_log->target_username = $user_to_like->username;
@@ -482,7 +482,7 @@ class InteractionLike implements ShouldQueue {
 
                         foreach ($target_hashtags as $target_hashtag) {
 
-                            $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
+                            echo("target hashtag: " . $target_hashtag->hashtag . "\n\n");
 
                             $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
 
@@ -493,7 +493,7 @@ class InteractionLike implements ShouldQueue {
                                 $user_to_like = $item->user;
 
                                 if (is_null($user_to_like)) {
-                                    $this->error("null user");
+                                    echo("null user");
                                     continue;
                                 }
 
@@ -502,7 +502,7 @@ class InteractionLike implements ShouldQueue {
 
                                 foreach ($followed_users as $followed_user) {
                                     $duplicate = 1;
-                                    $this->info("duplicate log found:\t" . $followed_user->log_id);
+                                    echo("duplicate log found:\t" . $followed_user->log_id);
                                     break;
                                 }
 
@@ -518,7 +518,7 @@ class InteractionLike implements ShouldQueue {
 
                                     $like_response = $instagram->media->like($item->id);
 
-                                    $this->info("liked " . serialize($like_response));
+                                    echo("liked " . serialize($like_response));
 
                                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
                                             . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_like->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
@@ -535,37 +535,37 @@ class InteractionLike implements ShouldQueue {
                         }
                     }
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                    $this->error("checkpt\t" . $checkpoint_ex->getMessage());
+                    echo("checkpt\t" . $checkpoint_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
                     continue;
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                    $this->error("network\t" . $network_ex->getMessage());
+                    echo("network\t" . $network_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                     continue;
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                    $this->error("endpt\t" . $endpoint_ex->getMessage());
+                    echo("endpt\t" . $endpoint_ex->getMessage());
                     if ($endpoint_ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                         DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                     }
                     continue;
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                    $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
+                    echo("incorrectpw\t" . $incorrectpw_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
                     continue;
                 } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
-                    $this->error("feedback\t" . $feedback_ex->getMessage());
+                    echo("feedback\t" . $feedback_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
                     continue;
                 } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
                     continue;
                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-                    $this->error("acctdisabled\t" . $acctdisabled_ex->getMessage());
+                    echo("acctdisabled\t" . $acctdisabled_ex->getMessage());
                     DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                     continue;
                 }
             } //end loop for ig profile
         } catch (\Exception $ex) {
-            $this->error($ex->getLine() . "\t" . $ex->getMessage());
+            echo($ex->getLine() . "\t" . $ex->getMessage());
         }
     }
 
