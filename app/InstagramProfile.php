@@ -9,7 +9,6 @@ class InstagramProfile extends Model
 //    protected $table = "morfix_instagram_profiles";
     protected $primaryKey = 'id'; 
     protected $table = "user_insta_profile";
-    protected $connection = 'mysql_old';
     
     /**
      * The attributes that are mass assignable.

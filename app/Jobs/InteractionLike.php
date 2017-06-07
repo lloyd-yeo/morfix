@@ -49,7 +49,7 @@ class InteractionLike implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        
+        DB::reconnect();
         echo("\n" . $this->user->user_id);
         $instagram_profiles = InstagramProfile::where('auto_like', true)
                 ->where('checkpoint_required', false)

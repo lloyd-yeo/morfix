@@ -10,5 +10,4 @@ class Proxy extends Model {
     public $timestamps = false;
     protected $primaryKey = 'proxy';
     protected $table = 'proxy';
-    protected $connection = 'mysql_old';
 }
