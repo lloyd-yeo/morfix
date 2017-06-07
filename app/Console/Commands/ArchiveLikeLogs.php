@@ -58,6 +58,19 @@ class ArchiveLikeLogs extends Command
                 FROM user_insta_profile_like_log 
                 WHERE log_id <= ?;', [$size]);
         echo "Archiving success!\n";
+        
+        echo "Deleting from current table...\n";
+        
+        InstagramProfileLikeLog::chunk(200, function ($like_logs) {
+            foreach ($like_logs as $like_log) {
+                if($like_log->delete()) {
+                    echo "Removed: " . $like_log->id . "\n";
+                }
+            }
+        });
+        
+        echo "Deleting complete!\n";
+        
         #DB::table('user_insta_profile_like_log')->where('date_liked', '<=', $date)->delete();
     }
 }
