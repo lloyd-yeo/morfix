@@ -51,8 +51,8 @@ class ArchiveLikeLogs extends Command {
     public function handle() {
         $size = $this->argument('size');
 
-        while ($size < 8038619) {
-            $size = $size + 10000;
+//        while ($size < 8038619) {
+//            $size = $size + 10000;
             
             echo "Archiving results with log_id <= $size...\n";
             DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, 
@@ -82,7 +82,7 @@ class ArchiveLikeLogs extends Command {
                 }
             });
             echo "Deleting complete!\n";
-        }
+//        }
     }
 
 }
