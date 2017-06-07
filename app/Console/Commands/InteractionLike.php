@@ -68,7 +68,7 @@ class InteractionLike extends Command {
         }
 
         foreach ($users as $user) {
-            $this->dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)));
+            dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)));
             continue;
             
             $this->line($user->user_id);
