@@ -19,6 +19,7 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\Niche;
+use App\Jobs\InteractionLike;
 
 class InteractionLike extends Command {
     
@@ -68,7 +69,7 @@ class InteractionLike extends Command {
         }
 
         foreach ($users as $user) {
-            $this->dispatch(new App\Jobs\InteractionLike($user));
+            $this->dispatch(new \App\Jobs\InteractionLike($user));
             continue;
             
             $this->line($user->user_id);
