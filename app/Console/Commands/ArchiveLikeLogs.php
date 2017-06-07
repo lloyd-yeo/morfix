@@ -24,7 +24,7 @@ class ArchiveLikeLogs extends Command
      *
      * @var string
      */
-    protected $signature = 'archive:like {date}';
+    protected $signature = 'archive:like {size}';
 
     /**
      * The console command description.
@@ -50,11 +50,14 @@ class ArchiveLikeLogs extends Command
      */
     public function handle()
     {
-        $date = $this->argument('date');
-        echo "Archiving results earlier than $date...\n";
-        DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, target_media, target_media_code, log, date_liked)'
-                . ' SELECT insta_username, target_username, target_media, target_media_code, log, date_liked FROM user_insta_profile_like_log WHERE date_liked <= "' . $date . '";');
-        
-        DB::table('user_insta_profile_like_log')->where('date_liked', '<=', $date)->delete();
+        $size = $this->argument('size');
+        echo "Archiving results earlier than $size...\n";
+        DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, 
+                target_media, target_media_code, log, date_liked) 
+                SELECT insta_username, target_username, target_media, target_media_code, log, date_liked 
+                FROM user_insta_profile_like_log 
+                WHERE log_id <= ?;'. [$size]);
+        echo "Archiving success!\n";
+        #DB::table('user_insta_profile_like_log')->where('date_liked', '<=', $date)->delete();
     }
 }
