@@ -24,7 +24,7 @@ class ArchiveLikeLogs extends Command
      *
      * @var string
      */
-    protected $signature = 'archive:like';
+    protected $signature = 'archive:like {size}';
 
     /**
      * The console command description.
@@ -50,7 +50,8 @@ class ArchiveLikeLogs extends Command
      */
     public function handle()
     {
-        DB::insert('INSERT INTO user_insta_profile_like_log_archive SELECT * FROM user_insta_profile_like_log WHERE log_id < 1000000;');
-        DB::table('user_insta_profile_like_log')->where('log_id', '<', 1000000)->delete();
+        $size = $this->argument('size');
+        DB::insert('INSERT INTO user_insta_profile_like_log_archive SELECT * FROM user_insta_profile_like_log WHERE log_id < ' . $size . ';');
+        DB::table('user_insta_profile_like_log')->where('log_id', '<', $size)->delete();
     }
 }
