@@ -72,7 +72,6 @@ class InteractionLike extends Command {
                 continue;
             }
 
-
             $this->line($user->user_id);
             $instagram_profiles = InstagramProfile::where('auto_like', true)
                     ->where('checkpoint_required', false)
