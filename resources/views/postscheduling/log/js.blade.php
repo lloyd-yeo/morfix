@@ -14,7 +14,7 @@ jQuery(function () {
     
     var $scheduleId;
     
-    $(".btn-cancel-schedule").on("click", function(){ 
+    $('body').on("click", ".btn-cancel-schedule", function(){ 
         
         $scheduleId = $(this).attr("data-schedule-id");
         
@@ -35,29 +35,6 @@ jQuery(function () {
             }
         });
     });
-    
-//    $(".btn-view-schedule").on("click", function(){
-//        
-//        $scheduleId = $(this).attr("data-schedule-id");
-//        
-//        $.ajax({
-//            type: "POST",
-//            url: '/post-scheduling/get/' + $scheduleId,
-//            dataType: "json",
-//            data: {
-//            },
-//            success: function (data) {
-//                if (data.success === true) {
-//                    $("#schedule-img").attr('src', data.image);
-//                    $("#schedule-caption").val(data.caption);
-//                    $("#schedule-date").html(data.date);
-//                    $("#modalViewSchedule").modal('show');
-//                } else {
-//                    swal('Oops...', data.response, 'fail');
-//                }
-//            }
-//        });
-//    });
     
     $('body').on('click', '.btn-view-schedule', function(){
         
