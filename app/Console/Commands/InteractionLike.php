@@ -60,6 +60,7 @@ class InteractionLike extends Command {
                     ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->skip($offset)
                     ->take($limit)
+                    ->orderBy('user_id', 'asc')
                     ->get();
         }
 
