@@ -122,6 +122,19 @@ class TrainingVideoController extends Controller {
                 'morfix_training_video' => $morfix_training_video,
                 'morfix_training_video_header' => $morfix_training_video_header,
             ]);
+        } else if ($type == "fbadsbasic") {
+
+            $iframe_dashboard = "<iframe src=\"https://player.vimeo.com/video/192896299\" width=\"640\" height=\"400\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
+            $iframe_profile = "<iframe src=\"https://player.vimeo.com/video/192896315\" width=\"640\" height=\"400\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
+            
+            $morfix_training_video = array("dashboard" => $iframe_dashboard, "profile" => $iframe_profile);
+
+            $morfix_training_video_header = array("dashboard" => "Part 1 - Dashboard", "profile" => "Part 2 - Profile");
+
+            return view('training.morfix', [
+                'morfix_training_video' => $morfix_training_video,
+                'morfix_training_video_header' => $morfix_training_video_header,
+            ]);
         }
     }
 
