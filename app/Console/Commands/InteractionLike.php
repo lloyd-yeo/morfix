@@ -30,7 +30,7 @@ class InteractionLike extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:like {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'interaction:like {email?}';
 
     /**
      * The console command description.
@@ -54,16 +54,12 @@ class InteractionLike extends Command {
      * @return mixed
      */
     public function handle() {
-        $offset = $this->argument('offset');
-        $limit = $this->argument('limit');
-
+        
         if (NULL !== $this->argument("email")) {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
             $users = DB::table('user')
                     ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
-                    ->skip($offset)
-                    ->take($limit)
                     ->orderBy('user_id', 'asc')
                     ->get();
         }

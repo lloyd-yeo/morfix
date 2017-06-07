@@ -61,20 +61,6 @@ class Kernel extends ConsoleKernel {
         
         $schedule->command('interaction:like 0 100000')->everyFiveMinutes();
         
-//        for ($i = 0; $i < 60; $i++) {
-//            $counter = $i * 20;
-//            $schedule->command('interaction:like ' . $counter . ' 20')->everyFiveMinutes();
-//        }
-//        
-//        $schedule->command('interaction:like 0 0 xtremewealth@gmail.com')->everyFiveMinutes();
-//        $schedule->command('interaction:like 0 0 Shawnjosiah.pd@gmail.com')->everyFiveMinutes();
-//        $schedule->command('interaction:like 0 0 nicolasmaton@gmail.com')->everyFiveMinutes();
-//        $schedule->command('interaction:like 0 0 raultraining@yahoo.com')->everyFiveMinutes();
-//        $schedule->command('interaction:like 0 0 peizhisim@gmail.com')->everyFiveMinutes();
-//        $schedule->command('interaction:like 0 0 julian.kussin@gmail.com')->everyFiveMinutes();
-//        $schedule->command('interaction:like 0 0 chuanian@hotmail.com')->everyFiveMinutes();
-//        $schedule->command('interaction:like 0 0 fabiopersonaltrainer@hotmail.com')->everyFiveMinutes();
-        
         $schedule->command("engagement:add")->hourly();
         $schedule->command("analysis:follower")->daily("00:00");
     }
