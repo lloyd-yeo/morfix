@@ -72,6 +72,7 @@ class InteractionLike extends Command {
             
             if (NULL === $this->argument("email")) {
                 dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)));
+                $this->line("queued email: " . $user->email);
                 continue;
             }
 
