@@ -17,6 +17,7 @@ use App\LikeLogsArchive;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\Niche;
 
 class InteractionLike extends Command {
 
@@ -558,7 +559,9 @@ class InteractionLike extends Command {
                         continue;
                     } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                         $this->error("endpt\t" . $endpoint_ex->getMessage());
-                        DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                        if ($endpoint_ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
+                            DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                        }
                         continue;
                     } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                         $this->error("incorrectpw\t" . $incorrectpw_ex->getMessage());
