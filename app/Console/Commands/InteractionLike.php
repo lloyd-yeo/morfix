@@ -19,7 +19,6 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\Niche;
-use App\Jobs\InteractionLike;
 
 class InteractionLike extends Command {
     
