@@ -3,6 +3,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
@@ -20,7 +21,9 @@ use App\DmJob;
 use App\Niche;
 
 class InteractionLike extends Command {
-
+    
+    use DispatchesJobs;
+    
     /**
      * The name and signature of the console command.
      *
@@ -65,6 +68,9 @@ class InteractionLike extends Command {
         }
 
         foreach ($users as $user) {
+            $this->dispatch(new App\Jobs\InteractionLike($user));
+            continue;
+            
             $this->line($user->user_id);
             $instagram_profiles = InstagramProfile::where('auto_like', true)
                     ->where('checkpoint_required', false)
