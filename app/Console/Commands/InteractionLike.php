@@ -55,7 +55,11 @@ class InteractionLike extends Command {
         if (NULL !== $this->argument("email")) {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
-            $users = DB::table('user')->skip($offset)->take($limit)->get();
+            $users = DB::table('user')
+                    ->whereRaw('email IS IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                    ->skip($offset)
+                    ->take($limit)
+                    ->get();
         }
 
         foreach ($users as $user) {
