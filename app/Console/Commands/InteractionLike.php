@@ -140,7 +140,8 @@ class InteractionLike extends Command {
                                     DB::connection('mysql_old')
                                             ->update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE media_id = ?;", [$media_id]);
 
-                                    $this->error("endpt\t" . $endpoint_ex->getMessage());
+                                    $this->error("endpt engagement\t" . $endpoint_ex->getMessage());
+                                    
                                     $ig_profile->error_msg = $endpoint_ex->getMessage();
                                     $ig_profile->save();
                                     continue;
