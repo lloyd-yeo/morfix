@@ -56,7 +56,7 @@ class InteractionLike extends Command {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
             $users = DB::table('user')
-                    ->whereRaw('email IS IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->skip($offset)
                     ->take($limit)
                     ->get();
