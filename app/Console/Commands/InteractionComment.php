@@ -126,6 +126,12 @@ function executeCommenting($instagram_profiles) {
             $instagram->login();
             
             var_dump($network_ex);
+        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+            $ig_profile->incorrect_pw = 1;
+            $ig_profile->save();
+            
+            var_dump($incorrectpw_ex);
+            continue;
         }
 
         try {
