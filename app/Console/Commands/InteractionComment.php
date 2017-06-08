@@ -63,8 +63,6 @@ class InteractionComment extends Command {
         } else {
             foreach (User::cursor() as $user) {
 
-                
-
                 if ($user->tier < 2) {
                     continue;
                 }
@@ -141,11 +139,11 @@ function executeCommenting($instagram_profiles) {
                                                                 ->get();
 
                 foreach ($unengaged_likings as $unengaged_liking) {
-                    echo("[$ig_username] \t" . $unengaged_liking->target_username . "\n");
+                    echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
                 }
             } else {
                foreach ($unengaged_followings as $unengaged_following) {
-                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
+                    echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
                 }
             }
             
