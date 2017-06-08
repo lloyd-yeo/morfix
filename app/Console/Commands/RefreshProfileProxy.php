@@ -19,7 +19,7 @@ class RefreshProfileProxy extends Command {
      *
      * @var string
      */
-    protected $signature = 'ig:proxy';
+    protected $signature = 'ig:proxy {username}';
 
     /**
      * The console command description.
@@ -44,16 +44,19 @@ class RefreshProfileProxy extends Command {
      */
     public function handle() {
         
-        $ig_profiles = InstagramProfile::where('error_msg', 'LIKE', '%cURL%')->get();
-        foreach ($ig_profiles as $ig_profile) {
-            $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-            $proxy = Proxy::inRandomOrder()->first();
-            $ig_profile->proxy = $proxy->proxy;
-            $ig_profile->error_msg = NULL;
-            $ig_profile->save();
-            $proxy->assigned = $proxy->assigned + 1;
-            $proxy->save();
-        }
+//        $ig_profiles = InstagramProfile::where('error_msg', 'LIKE', '%cURL%')->get();
+//        foreach ($ig_profiles as $ig_profile) {
+//            
+//        }
+        
+        $ig_profile = InstagramProfile::where('insta_username', $this->argument('username'))->first();
+        $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+        $proxy = Proxy::inRandomOrder()->first();
+        $ig_profile->proxy = $proxy->proxy;
+        $ig_profile->error_msg = NULL;
+        $ig_profile->save();
+        $proxy->assigned = $proxy->assigned + 1;
+        $proxy->save();
         
 //        $user_insta_profiles = DB::connection('mysql_old')->select("SELECT * FROM user_insta_profile WHERE error_msg LIKE \"%cURL%\";");
 //        foreach ($user_insta_profiles as $ig_profile) {

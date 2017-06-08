@@ -11,6 +11,7 @@ use InstagramAPI\InstagramException as InstagramException;
 use App\User;
 use App\InstagramProfile;
 use App\InstagramProfileComment;
+use App\InstagramProfileCommentLog;
 use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
 use App\CreateInstagramProfileLog;
@@ -63,9 +64,9 @@ class InteractionComment extends Command {
         } else {
             foreach (User::cursor() as $user) {
 
-                if ($user->tier < 2) {
-                    continue;
-                }
+//                if ($user->tier < 2) {
+//                    continue;
+//                }
                 
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                         ->where('auto_comment', true)
@@ -123,6 +124,8 @@ function executeCommenting($instagram_profiles) {
             }
             
             echo($comment->comment . "\n");
+            $commentText = $comment->comment;
+            
             
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                                                     ->whereRaw("follower_username NOT IN "
@@ -130,6 +133,7 @@ function executeCommenting($instagram_profiles) {
                                                     ->orderBy('date_inserted', 'desc')
                                                     ->take(5)
                                                     ->get();
+            
             if (count($unengaged_followings) < 1) {
                 $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                                                                 ->whereRaw("target_username NOT IN "
@@ -140,10 +144,48 @@ function executeCommenting($instagram_profiles) {
 
                 foreach ($unengaged_likings as $unengaged_liking) {
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
+                    $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
+                    $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
+                    $user_feed_items = $user_feed->items;
+                    
+                    if (count($user_feed_items) > 0) {
+                        foreach ($user_feed_items as $item) {
+                            
+                            $comment_log = new InstagramProfileCommentLog;
+                            $comment_log->insta_username = $ig_username;
+                            $comment_log->target_username = $unengaged_liking->target_username;
+                            $comment_log->target_insta_id = $user_instagram_id;
+                            $comment_log->target_media = $item->id;
+                            $comment_log->save();
+                            
+                            $comment_resp = $instagram->media->comment($item->id, $commentText);
+                            $comment_log->log = serialize($comment_resp);
+                            $comment_log->save();
+                        }
+                    }
                 }
             } else {
                foreach ($unengaged_followings as $unengaged_following) {
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
+                    $user_instagram_id = $instagram->getUsernameId($unengaged_following->target_username);
+                    $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
+                    $user_feed_items = $user_feed->items;
+                    
+                    if (count($user_feed_items) > 0) {
+                        foreach ($user_feed_items as $item) {
+                            
+                            $comment_log = new InstagramProfileCommentLog;
+                            $comment_log->insta_username = $ig_username;
+                            $comment_log->target_username = $unengaged_following->target_username;
+                            $comment_log->target_insta_id = $user_instagram_id;
+                            $comment_log->target_media = $item->id;
+                            $comment_log->save();
+                            
+                            $comment_resp = $instagram->media->comment($item->id, $commentText);
+                            $comment_log->log = serialize($comment_resp);
+                            $comment_log->save();
+                        }
+                    }
                 }
             }
             
