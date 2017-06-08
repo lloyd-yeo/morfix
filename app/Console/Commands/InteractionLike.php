@@ -73,6 +73,7 @@ class InteractionLike extends Command {
             }
 
             $this->line($user->user_id);
+            
             $instagram_profiles = InstagramProfile::where('auto_like', true)
                     ->where('checkpoint_required', false)
                     ->where('account_disabled', false)
@@ -85,6 +86,7 @@ class InteractionLike extends Command {
                 foreach ($instagram_profiles as $ig_profile) {
 
                     $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                    
                     $ig_username = $ig_profile->insta_username;
                     $ig_password = $ig_profile->insta_pw;
 
@@ -112,11 +114,14 @@ class InteractionLike extends Command {
                         $instagram->setUser($ig_username, $ig_password);
                         $explorer_response = $instagram->login();
                         $this->line("Logged in \t quota: " . $like_quota);
+                        
                         $engagement_jobs = EngagementJob::where('action', 0)
                                 ->where('fulfilled', 0)
                                 ->where('insta_username', $ig_username)
                                 ->get();
-
+                        
+                        $this->line(count($engagement_jobs) . " engagement jobs left.");
+                        
                         /**
                          * Start of engagement jobs.
                          */
@@ -181,6 +186,7 @@ class InteractionLike extends Command {
 
                                 $this->info("Liked Engagement Job: \t" . serialize($like_response));
                                 $like_quota--;
+                                
                             } else {
                                 break;
                             }
@@ -191,7 +197,8 @@ class InteractionLike extends Command {
                         /*
                          * If user is free tier & not on trial / run out of quota then break.
                          */
-                        if ((!($user->user_tier > 1 || $user->trial_activation == 1)) || !($like_quota > 0)) {
+                        if ((!($user->tier > 1 || $user->trial_activation == 1)) || !($like_quota > 0)) {
+                            $this->line("");
                             continue;
                         }
 

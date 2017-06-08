@@ -196,9 +196,19 @@ function executeCommenting($instagram_profiles) {
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_following->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                        
+                        if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
+                            $comment_log = new InstagramProfileCommentLog;
+                            $comment_log->insta_username = $ig_username;
+                            $comment_log->target_username = $unengaged_following->target_username;
+                            $comment_log->log = $request_ex->getMessage();
+                            $comment_log->save();
+                        }
+                        
                         echo("request1 " . $request_ex->getMessage() . "\n");
-                        $ig_profile->error_msg = $request_ex->getMessage();
-                        $ig_profile->save();
+                        
+//                        $ig_profile->error_msg = $request_ex->getMessage();
+//                        $ig_profile->save();
                     }
                     
                     if ($user_instagram_id === NULL) {
