@@ -315,6 +315,7 @@ function executeCommenting($instagram_profiles) {
                     if ($full_response->spam === true) {
                         $ig_profile->auto_comment_ban = 1;
                         $ig_profile->auto_comment_ban_time = \Carbon\Carbon::now()->addHours(6);
+                        $ig_profile->next_comment_time = \Carbon\Carbon::now()->addHours(6);
                         if ($ig_profile->save()) {
                             $this->line("[" . $ig_profile->username . "] commenting has been banned till " . $ig_profile->auto_comment_ban_time);
                         }
