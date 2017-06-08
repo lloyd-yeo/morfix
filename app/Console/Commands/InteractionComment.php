@@ -186,7 +186,7 @@ function executeCommenting($instagram_profiles) {
                             $comment_log->log = serialize($comment_resp);
                             $comment_log->save();
 
-                            $commented = true;
+                            break;
                         }
                     }
 
@@ -235,6 +235,8 @@ function executeCommenting($instagram_profiles) {
                             $comment_log->save();
 
                             $commented = true;
+                            
+                            break;
                         }
                     }
 
@@ -281,10 +283,21 @@ function executeCommenting($instagram_profiles) {
             $ig_profile->account_disabled = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-//            if ($request_ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
-//                
-//            }
-            if ($request_ex->hasResponse()) {
+            
+            if ($request_ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
+                if ($request_ex->hasResponse()) {
+                    $full_response = $request_ex->getResponse()->fullResponse;
+                    
+                    if ($full_response->spam === true) {
+                        $ig_profile->auto_comment_ban = 1;
+                        $ig_profile->auto_comment_ban_time = \Carbon\Carbon::now()->addHours(6);
+                        if ($ig_profile->save()) {
+                            $this->line("[" . $ig_profile->username . "] commenting has been banned till " . $ig_profile->auto_comment_ban_time);
+                        }
+                    }
+                }
+            } else {
+                echo("[ENDING] Request Exception: " . $request_ex->getMessage() . "\n");
                 var_dump($request_ex->getResponse());
             }
 
