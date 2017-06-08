@@ -6,7 +6,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\DB;
+use InstagramAPI\Instagram as Instagram;
+use InstagramAPI\SettingsAdapter as SettingsAdapter;
+use InstagramAPI\InstagramException as InstagramException;
 use App\User;
 use App\InstagramProfile;
 use App\InstagramProfileTargetUsername;
@@ -48,7 +53,7 @@ class InteractionComment implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct(InstagramProfile $profile) {
+    public function __construct(\App\InstagramProfile $profile) {
         $this->profile = $profile;
     }
 
