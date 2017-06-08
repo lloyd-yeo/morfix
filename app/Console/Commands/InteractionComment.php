@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Database\Query\Builder;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
@@ -19,7 +20,9 @@ use App\Proxy;
 use App\DmJob;
 
 class InteractionComment extends Command {
-
+    
+    use DispatchesJobs;
+    
     /**
      * The name and signature of the console command.
      *
@@ -61,7 +64,7 @@ class InteractionComment extends Command {
                     ->where('incorrect_pw', false)
                     ->get();
 
-            executeCommenting($instagram_profiles);
+            #executeCommenting($instagram_profiles);
         } else {
             foreach (User::cursor() as $user) {
 
@@ -70,13 +73,21 @@ class InteractionComment extends Command {
                         ->where('email', $user->email)
                         ->where('incorrect_pw', false)
                         ->whereRaw('NOW() >= next_comment_time')
+                        ->skip(0)
+                        ->take(100)
                         ->get();
 
                 if (count($instagram_profiles) > 0) {
                     $this->line($user->user_id);
+                } else {
+                    foreach ($instagram_profiles as $ig_profile) {
+                        dispatch(new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)));
+                        $this->line("queued profile: " . $ig_profile->insta_username);
+                        continue;
+                    }
                 }
 
-                executeCommenting($instagram_profiles);
+                #executeCommenting($instagram_profiles);
             }
         }
     }
