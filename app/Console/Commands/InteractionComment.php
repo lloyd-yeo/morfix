@@ -64,10 +64,6 @@ class InteractionComment extends Command {
         } else {
             foreach (User::cursor() as $user) {
 
-//                if ($user->tier < 2) {
-//                    continue;
-//                }
-
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                         ->where('auto_comment', true)
                         ->where('email', $user->email)
@@ -193,7 +189,7 @@ function executeCommenting($instagram_profiles) {
 
                     if (count($user_feed_items) > 0) {
                         foreach ($user_feed_items as $item) {
-
+                            
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
                             $comment_log->target_username = $unengaged_liking->follower_username;
@@ -208,7 +204,8 @@ function executeCommenting($instagram_profiles) {
                             }
 
                             $commented = true;
-                            
+                            $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+                            $ig_profile->save();
                             break;
                         }
                     }
