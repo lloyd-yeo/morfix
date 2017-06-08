@@ -79,8 +79,6 @@ class InteractionComment extends Command {
                         ->where('email', $user->email)
                         ->where('incorrect_pw', false)
                         ->whereRaw('NOW() >= next_comment_time')
-                        ->skip(0)
-                        ->take(100)
                         ->get();
 
                 if (count($instagram_profiles) > 0) {
