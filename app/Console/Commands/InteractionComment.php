@@ -78,8 +78,6 @@ class InteractionComment extends Command {
                         ->get();
 
                 if (count($instagram_profiles) > 0) {
-                    $this->line($user->user_id);
-                } else {
                     foreach ($instagram_profiles as $ig_profile) {
                         dispatch(new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)));
                         $this->line("queued profile: " . $ig_profile->insta_username);
