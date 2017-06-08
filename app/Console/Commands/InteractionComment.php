@@ -154,9 +154,15 @@ function executeCommenting($instagram_profiles) {
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                        echo("request1 " . $request_ex->getMessage() . "\n");
-                        $ig_profile->error_msg = $request_ex->getMessage();
-                        $ig_profile->save();
+                        
+                        if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
+                            $comment_log = new InstagramProfileCommentLog;
+                            $comment_log->insta_username = $ig_username;
+                            $comment_log->target_username = $unengaged_liking->target_username;
+                            $comment_log->log = $request_ex->getMessage();
+                            $comment_log->save();
+                        }
+                        echo("[$ig_username] #Followings Failed to get username id: " . $request_ex->getMessage() . "\n");
                     }
                     
                     if ($user_instagram_id === NULL) {
@@ -194,21 +200,17 @@ function executeCommenting($instagram_profiles) {
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
                     
                     try {
-                        $user_instagram_id = $instagram->getUsernameId($unengaged_following->target_username);
+                        $user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
-                            $comment_log->target_username = $unengaged_following->target_username;
+                            $comment_log->target_username = $unengaged_following->follower_username;
                             $comment_log->log = $request_ex->getMessage();
                             $comment_log->save();
                         }
-                        
-                        echo("request1 " . $request_ex->getMessage() . "\n");
-                        
-//                        $ig_profile->error_msg = $request_ex->getMessage();
-//                        $ig_profile->save();
+                        echo("[$ig_username] #Followings Failed to get username id: " . $request_ex->getMessage() . "\n");
                     }
                     
                     if ($user_instagram_id === NULL) {
@@ -223,7 +225,7 @@ function executeCommenting($instagram_profiles) {
                             
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
-                            $comment_log->target_username = $unengaged_following->target_username;
+                            $comment_log->target_username = $unengaged_following->follower_username;
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
