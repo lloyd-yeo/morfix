@@ -126,6 +126,7 @@ function executeCommenting($instagram_profiles) {
             echo($comment->comment . "\n");
             $commentText = $comment->comment;
             
+            $commented = false;
             
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                                                     ->whereRaw("follower_username NOT IN "
@@ -141,9 +142,11 @@ function executeCommenting($instagram_profiles) {
                                                                 ->orderBy('date_liked', 'desc')
                                                                 ->take(10)
                                                                 ->get();
-
+                
                 foreach ($unengaged_likings as $unengaged_liking) {
+                    
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
+                    
                     $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
                     $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
                     $user_feed_items = $user_feed->items;
@@ -161,12 +164,20 @@ function executeCommenting($instagram_profiles) {
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
                             $comment_log->save();
+                            
+                            $commented = true;
                         }
+                    }
+                    
+                    if ($commented) {
+                        break;
                     }
                 }
             } else {
                foreach ($unengaged_followings as $unengaged_following) {
+                   
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
+                    
                     $user_instagram_id = $instagram->getUsernameId($unengaged_following->target_username);
                     $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
                     $user_feed_items = $user_feed->items;
@@ -184,7 +195,13 @@ function executeCommenting($instagram_profiles) {
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
                             $comment_log->save();
+                            
+                            $commented = true;
                         }
+                    }
+                    
+                    if ($commented) {
+                        break;
                     }
                 }
             }
