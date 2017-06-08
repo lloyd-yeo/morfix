@@ -112,6 +112,7 @@ function executeCommenting($instagram_profiles) {
         }
 
         $instagram->setProxy($ig_profile->proxy);
+        $instagram->setUser($ig_username, $ig_password);
         $instagram->login();
         
         try {
