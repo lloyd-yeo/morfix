@@ -185,7 +185,7 @@ function executeCommenting($instagram_profiles) {
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
                             if ($comment_log->save()) {
-                                $this->line("[$ig_username] has commented on [" . $item->getItemUrl() . "]");
+                                echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
                             }
 
                             $commented = true;
