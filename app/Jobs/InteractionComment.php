@@ -14,16 +14,13 @@ use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
 use App\User;
 use App\InstagramProfile;
-use App\InstagramProfileTargetUsername;
-use App\InstagramProfileTargetHashtag;
-use App\EngagementJob;
-use App\BlacklistedUsername;
+use App\InstagramProfileComment;
+use App\InstagramProfileCommentLog;
+use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
-use App\LikeLogsArchive;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
-use App\Niche;
 
 class InteractionComment implements ShouldQueue {
 
