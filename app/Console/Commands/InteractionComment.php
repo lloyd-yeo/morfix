@@ -58,6 +58,7 @@ class InteractionComment extends Command {
             $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                     ->where('auto_comment', true)
                     ->where('email', $user->email)
+                    ->where('incorrect_pw', false)
                     ->get();
 
             executeCommenting($instagram_profiles);
@@ -248,7 +249,6 @@ function executeCommenting($instagram_profiles) {
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
-
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
                             if ($comment_log->save()) {
@@ -256,7 +256,8 @@ function executeCommenting($instagram_profiles) {
                             }
 
                             $commented = true;
-                            
+                            $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+                            $ig_profile->save();
                             break;
                         }
                     }
