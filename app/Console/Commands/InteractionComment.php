@@ -193,7 +193,18 @@ function executeCommenting($instagram_profiles) {
                    
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
                     
-                    $user_instagram_id = $instagram->getUsernameId($unengaged_following->target_username);
+                    try {
+                        $user_instagram_id = $instagram->getUsernameId($unengaged_following->target_username);
+                    } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                        echo("request1 " . $request_ex->getMessage() . "\n");
+                        $ig_profile->error_msg = $request_ex->getMessage();
+                        $ig_profile->save();
+                    }
+                    
+                    if ($user_instagram_id === NULL) {
+                        continue;
+                    }
+                    
                     $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
                     $user_feed_items = $user_feed->items;
                     
