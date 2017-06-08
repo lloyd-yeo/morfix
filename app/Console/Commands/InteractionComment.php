@@ -112,7 +112,8 @@ function executeCommenting($instagram_profiles) {
         }
 
         $instagram->setProxy($ig_profile->proxy);
-
+        $instagram->login();
+        
         try {
 
             $comment = InstagramProfileComment::where('insta_username', $ig_username)
