@@ -130,6 +130,8 @@ function executeCommenting($instagram_profiles) {
             
             $commented = false;
             
+            $user_instagram_id = NULL;
+            
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                                                     ->whereRaw("follower_username NOT IN "
                                                             . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
@@ -149,7 +151,18 @@ function executeCommenting($instagram_profiles) {
                     
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
                     
-                    $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
+                    try {
+                        $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
+                    } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                        echo("request1 " . $request_ex->getMessage() . "\n");
+                        $ig_profile->error_msg = $request_ex->getMessage();
+                        $ig_profile->save();
+                    }
+                    
+                    if ($user_instagram_id === NULL) {
+                        continue;
+                    }
+                    
                     $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
                     $user_feed_items = $user_feed->items;
                     
@@ -234,6 +247,11 @@ function executeCommenting($instagram_profiles) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+            
+            if ($endpoint_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
+                
+            }
+            
             echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             echo("network1 " . $network_ex->getMessage() . "\n");
