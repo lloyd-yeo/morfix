@@ -67,17 +67,17 @@ class InteractionComment extends Command {
 //                if ($user->tier < 2) {
 //                    continue;
 //                }
-                
+
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                         ->where('auto_comment', true)
                         ->where('email', $user->email)
                         ->whereRaw('NOW() >= next_comment_time')
                         ->get();
-                
+
                 if (count($instagram_profiles) > 0) {
                     $this->line($user->user_id);
                 }
-                
+
                 executeCommenting($instagram_profiles);
             }
         }
@@ -114,7 +114,7 @@ function executeCommenting($instagram_profiles) {
         $instagram->setProxy($ig_profile->proxy);
         $instagram->setUser($ig_username, $ig_password);
         $instagram->login();
-        
+
         try {
 
             $comment = InstagramProfileComment::where('insta_username', $ig_username)
@@ -124,37 +124,37 @@ function executeCommenting($instagram_profiles) {
             if ($comment === NULL) {
                 continue;
             }
-            
+
             echo($comment->comment . "\n");
             $commentText = $comment->comment;
-            
+
             $commented = false;
-            
+
             $user_instagram_id = NULL;
-            
+
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
-                                                    ->whereRaw("follower_username NOT IN "
-                                                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
-                                                    ->orderBy('date_inserted', 'desc')
-                                                    ->take(5)
-                                                    ->get();
-            
+                    ->whereRaw("follower_username NOT IN "
+                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+                    ->orderBy('date_inserted', 'desc')
+                    ->take(5)
+                    ->get();
+
             if (count($unengaged_followings) < 1) {
                 $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
-                                                                ->whereRaw("target_username NOT IN "
-                                                                . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
-                                                                ->orderBy('date_liked', 'desc')
-                                                                ->take(10)
-                                                                ->get();
-                
+                        ->whereRaw("target_username NOT IN "
+                                . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+                        ->orderBy('date_liked', 'desc')
+                        ->take(10)
+                        ->get();
+
                 foreach ($unengaged_likings as $unengaged_liking) {
-                    
+
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
-                    
+
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                        
+
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
@@ -164,45 +164,45 @@ function executeCommenting($instagram_profiles) {
                         }
                         echo("[$ig_username] #Followings Failed to get username id: " . $request_ex->getMessage() . "\n");
                     }
-                    
+
                     if ($user_instagram_id === NULL) {
                         continue;
                     }
-                    
+
                     $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
                     $user_feed_items = $user_feed->items;
-                    
+
                     if (count($user_feed_items) > 0) {
                         foreach ($user_feed_items as $item) {
-                            
+
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
                             $comment_log->target_username = $unengaged_liking->target_username;
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
-                            
+
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
                             $comment_log->save();
-                            
+
                             $commented = true;
                         }
                     }
-                    
+
                     if ($commented) {
                         break;
                     }
                 }
             } else {
-               foreach ($unengaged_followings as $unengaged_following) {
-                   
+                foreach ($unengaged_followings as $unengaged_following) {
+
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
-                    
+
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                        
+
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
@@ -212,42 +212,42 @@ function executeCommenting($instagram_profiles) {
                         }
                         echo("[$ig_username] #Followings Failed to get username id: " . $request_ex->getMessage() . "\n");
                     }
-                    
+
                     if ($user_instagram_id === NULL) {
                         continue;
                     }
-                    
+
                     $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
                     $user_feed_items = $user_feed->items;
-                    
+
                     if (count($user_feed_items) > 0) {
                         foreach ($user_feed_items as $item) {
-                            
+
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
                             $comment_log->target_username = $unengaged_following->follower_username;
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
-                            
+
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
                             $comment_log->save();
-                            
+
                             $commented = true;
                         }
                     }
-                    
+
                     if ($commented) {
                         break;
                     }
                 }
             }
-            
-            
-            
-            
-            
+
+
+
+
+
 //            if (count($unengaged_followings) > 0) {
 //                continue;
 //                foreach ($unengaged_followings as $unengaged_following) {
@@ -257,10 +257,8 @@ function executeCommenting($instagram_profiles) {
 //                
 //                
 //            }
-            
             #$instagram->setUser($ig_username, $ig_password);
             #$login_resp = $instagram->login();
-            
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
             echo("checkpt1 " . $checkpt_ex->getMessage() . "\n");
             $ig_profile->checkpoint_required = 1;
@@ -270,11 +268,11 @@ function executeCommenting($instagram_profiles) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-            
+
             if ($endpoint_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                 
             }
-            
+
             echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             echo("network1 " . $network_ex->getMessage() . "\n");
@@ -283,9 +281,16 @@ function executeCommenting($instagram_profiles) {
             $ig_profile->account_disabled = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-            echo("request1 " . $request_ex->getMessage() . "\n");
-            $ig_profile->error_msg = $request_ex->getMessage();
-            $ig_profile->save();
+//            if ($request_ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
+//                
+//            }
+            if ($request_ex->hasResponse()) {
+                var_dump($request_ex->getResponse());
+            }
+
+//            echo("request1 " . $request_ex->getMessage() . "\n");
+//            $ig_profile->error_msg = $request_ex->getMessage();
+//            $ig_profile->save();
         }
     }
 }
