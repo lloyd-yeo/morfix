@@ -113,7 +113,20 @@ function executeCommenting($instagram_profiles) {
 
         $instagram->setProxy($ig_profile->proxy);
         $instagram->setUser($ig_username, $ig_password);
-        $instagram->login();
+        try {
+            $instagram->login();
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+            
+            $proxy = Proxy::inRandomOrder()->first();
+            $ig_profile->proxy = $proxy->proxy;
+            $ig_profile->save();
+            $proxy->assigned = $proxy->assigned + 1;
+            $proxy->save();
+            $instagram->setProxy($ig_profile->proxy);
+            $instagram->login();
+            
+            var_dump($network_ex);
+        }
 
         try {
 
