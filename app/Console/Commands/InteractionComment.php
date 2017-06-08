@@ -177,15 +177,19 @@ function executeCommenting($instagram_profiles) {
 
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
-                            $comment_log->target_username = $unengaged_liking->target_username;
+                            $comment_log->target_username = $unengaged_liking->follower_username;
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
 
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
-                            $comment_log->save();
+                            if ($comment_log->save()) {
+                                $this->line("[$ig_username] has commented on [" . $item->getItemUrl() . "]");
+                            }
 
+                            $commented = true;
+                            
                             break;
                         }
                     }
@@ -202,7 +206,6 @@ function executeCommenting($instagram_profiles) {
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
@@ -232,7 +235,9 @@ function executeCommenting($instagram_profiles) {
 
                             $comment_resp = $instagram->media->comment($item->id, $commentText);
                             $comment_log->log = serialize($comment_resp);
-                            $comment_log->save();
+                            if ($comment_log->save()) {
+                                $this->line("[$ig_username] has commented on [" . $item->getItemUrl() . "]");
+                            }
 
                             $commented = true;
                             
