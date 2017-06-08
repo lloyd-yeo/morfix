@@ -300,6 +300,7 @@ function executeCommenting($instagram_profiles) {
             }
 
             echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
+            
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             echo("network1 " . $network_ex->getMessage() . "\n");
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
