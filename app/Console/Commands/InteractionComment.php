@@ -71,6 +71,7 @@ class InteractionComment extends Command {
                 $instagram_profiles = InstagramProfile::where('auto_interaction', true)
                         ->where('auto_comment', true)
                         ->where('email', $user->email)
+                        ->where('incorrect_pw', false)
                         ->whereRaw('NOW() >= next_comment_time')
                         ->get();
 
@@ -126,11 +127,10 @@ function executeCommenting($instagram_profiles) {
             $instagram->login();
             
             var_dump($network_ex);
+            
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
-            
-            var_dump($incorrectpw_ex);
             continue;
         }
 
