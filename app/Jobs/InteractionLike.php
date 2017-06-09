@@ -31,7 +31,22 @@ class InteractionLike implements ShouldQueue {
         InteractsWithQueue,
         Queueable,
         SerializesModels;
-
+    
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 1;
+    
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 60;
+    
+    
     protected $profile;
 
     /**
