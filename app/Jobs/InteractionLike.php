@@ -174,7 +174,7 @@ class InteractionLike implements ShouldQueue {
              * If user is free tier & not on trial / run out of quota then break.
              */
             if ((!($this->user->user_tier > 1 || $this->user->trial_activation == 1)) || !($like_quota > 0)) {
-                continue;
+                exit();
             }
 
             /*
@@ -542,31 +542,24 @@ class InteractionLike implements ShouldQueue {
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             echo("\n" . "checkpt\t" . $checkpoint_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
-            continue;
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             echo("\n" . "network\t" . $network_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
-            continue;
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             echo("\n" . "endpt\t" . $endpoint_ex->getMessage());
             if ($endpoint_ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
             }
-            continue;
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             echo("\n" . "incorrectpw\t" . $incorrectpw_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
-            continue;
         } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
             echo("\n" . "feedback\t" . $feedback_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
-            continue;
         } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
-            continue;
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
             echo("\n" . "acctdisabled\t" . $acctdisabled_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
-            continue;
         }
     }
 }
