@@ -555,6 +555,9 @@ class InteractionLike implements ShouldQueue {
             echo("\n" . "endpt\t" . $endpoint_ex->getMessage());
             if ($endpoint_ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+            } else if ($endpoint_ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
+                $ig_profile->invalid_user = 1;
+                $ig_profile->save();
             }
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             echo("\n" . "incorrectpw\t" . $incorrectpw_ex->getMessage());
