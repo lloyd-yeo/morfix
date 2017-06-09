@@ -69,6 +69,7 @@ class InteractionLike implements ShouldQueue {
         $ig_profile = $this->profile;
         
         echo("\n" . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+        
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
 
@@ -176,6 +177,7 @@ class InteractionLike implements ShouldQueue {
              * If user is free tier & not on trial / run out of quota then break.
              */
             if ((!($this->user->user_tier > 1 || $this->user->trial_activation == 1)) || !($like_quota > 0)) {
+                echo ("User is not free tier & not on free trial.\n");
                 exit();
             }
 
