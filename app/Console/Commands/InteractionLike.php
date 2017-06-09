@@ -67,8 +67,21 @@ class InteractionLike extends Command {
         foreach ($users as $user) {
             
             if (NULL === $this->argument("email")) {
-                dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)))->onQueue('like');
-                $this->line("queued email: " . $user->email);
+                #dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)))->onQueue('like');
+                
+                $instagram_profiles = InstagramProfile::where('auto_like', true)
+                    ->where('checkpoint_required', false)
+                    ->where('account_disabled', false)
+                    ->where('invalid_user', false)
+                    ->where('incorrect_pw', false)
+                    ->where('user_id', $user->user_id)
+                    ->get();
+                
+                foreach ($instagram_profiles as $ig_profile) {
+                    dispatch(new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id)))
+                            ->onQueue('like');
+                    $this->line("queued profile: " . $ig_profile->insta_username);
+                }
                 continue;
             }
 
