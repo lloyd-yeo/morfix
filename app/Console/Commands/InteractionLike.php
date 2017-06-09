@@ -78,8 +78,9 @@ class InteractionLike extends Command {
                     ->get();
                 
                 foreach ($instagram_profiles as $ig_profile) {
-                    dispatch(new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id)))
-                            ->onQueue('likes');
+                    $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('likes');
+                    dispatch($job);
                     $this->line("queued profile: " . $ig_profile->insta_username);
                 }
                 continue;
