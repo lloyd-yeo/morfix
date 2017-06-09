@@ -58,7 +58,6 @@ class Kernel extends ConsoleKernel {
 //        $schedule->command('dm:get 0 0 fabiopersonaltrainer@hotmail.com')->everyFiveMinutes();
 //        $schedule->command('dm:get 0 0 ravicii55@gmail.com')->everyFiveMinutes();
         
-        
         $schedule->command('interaction:like')->cron('*/3 * * * * *');
         $schedule->command('interaction:comment')->everyFiveMinutes();
         
