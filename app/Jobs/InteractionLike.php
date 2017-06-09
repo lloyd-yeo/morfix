@@ -363,7 +363,7 @@ class InteractionLike implements ShouldQueue {
                     }
                 }
             } else {
-                break;
+                exit();
             }
 
             /**
@@ -475,6 +475,8 @@ class InteractionLike implements ShouldQueue {
                         }
                     }
                 }
+            } else {
+                exit();
             }
 
             /**
