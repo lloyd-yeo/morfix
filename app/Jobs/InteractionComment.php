@@ -104,7 +104,9 @@ class InteractionComment implements ShouldQueue {
             $ig_profile->save();
             exit();
         }
-
+        
+        $engaged_user = NULL;
+        
         try {
 
             $comment = InstagramProfileComment::where('insta_username', $ig_username)
@@ -140,7 +142,7 @@ class InteractionComment implements ShouldQueue {
                 foreach ($unengaged_likings as $unengaged_liking) {
 
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
-
+                    $engaged_user = $unengaged_liking->target_username;
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
@@ -193,7 +195,7 @@ class InteractionComment implements ShouldQueue {
                 foreach ($unengaged_followings as $unengaged_following) {
 
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
-
+                    $engaged_user = $unengaged_following->target_username;
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
@@ -232,6 +234,7 @@ class InteractionComment implements ShouldQueue {
                             $commented = true;
                             $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
                             $ig_profile->save();
+                            
                             break;
                         }
                     }
@@ -252,7 +255,15 @@ class InteractionComment implements ShouldQueue {
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
 
             if ($endpoint_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
-                
+                $comment_log = new InstagramProfileCommentLog;
+                $comment_log->insta_username = $ig_username;
+                $comment_log->target_username = $engaged_user;
+                $comment_log->save();
+            } else if ($endpoint_ex->getMessage() === "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
+                $comment_log = new InstagramProfileCommentLog;
+                $comment_log->insta_username = $ig_username;
+                $comment_log->target_username = $engaged_user;
+                $comment_log->save();
             }
 
             echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
