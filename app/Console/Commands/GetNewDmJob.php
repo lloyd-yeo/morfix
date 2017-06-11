@@ -19,7 +19,7 @@ class GetNewDmJob extends Command {
      *
      * @var string
      */
-    protected $signature = 'dm:get {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'dm:gett {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
 
     /**
      * The console command description.
