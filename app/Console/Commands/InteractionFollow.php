@@ -46,6 +46,7 @@ class InteractionFollow extends Command {
     public function handle() {
 
         if (NULL !== $this->argument("email")) {
+            $this->line('email: ' . $this->argument("email"));
             $users = User::where('email', $this->argument("email"))->get();
         } else {
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
