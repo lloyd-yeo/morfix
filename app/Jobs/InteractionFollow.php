@@ -430,7 +430,7 @@ class InteractionFollow implements ShouldQueue {
                                             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
                                             
                                             if ($ig_profile->save()) {
-                                                echo "[$insta_username] added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
+                                                echo "[$insta_username] HASHTAG added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
                                             }
 
                                             $new_follow_log = new InstagramProfileFollowLog;
@@ -545,7 +545,7 @@ class InteractionFollow implements ShouldQueue {
                                             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
 
                                             if ($ig_profile->save()) {
-                                                echo "[$insta_username] added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
+                                                echo "[$insta_username] TARGET USERNAME added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
                                             }
 
                                             $new_follow_log = new InstagramProfileFollowLog;
@@ -665,7 +665,7 @@ class InteractionFollow implements ShouldQueue {
                                                 $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
                                                 $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
                                                 if ($ig_profile->save()) {
-                                                    echo "[$insta_username] added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
+                                                    echo "[$insta_username] NICHE added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
                                                 }
 
                                                 $new_follow_log = new InstagramProfileFollowLog;
