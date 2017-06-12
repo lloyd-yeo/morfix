@@ -163,7 +163,7 @@ function executeCommenting($instagram_profiles) {
 
             $user_instagram_id = NULL;
 
-            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
+            $unengaged_followings = InstagramProfil\eFollowLog::where('insta_username', $ig_username)
                     ->whereRaw("follower_username NOT IN "
                             . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                     ->orderBy('date_inserted', 'desc')
@@ -173,9 +173,10 @@ function executeCommenting($instagram_profiles) {
             echo "[$ig_username] Number of unengaged followings " . count($unengaged_followings) . "\n";
             
             if (count($unengaged_followings) < 1) {
+                
                 $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                         ->whereRaw("target_username NOT IN "
-                                . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+                                . "(SELECT DISTINCT(target_username) FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                         ->orderBy('date_liked', 'desc')
                         ->take(10)
                         ->get();

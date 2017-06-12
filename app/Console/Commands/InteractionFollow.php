@@ -8,6 +8,7 @@ use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
 use App\InstagramProfile;
+use App\User;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
@@ -19,7 +20,7 @@ class InteractionFollow extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:follow {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'interaction:follow {email?}';
 
     /**
      * The console command description.
@@ -44,9 +45,6 @@ class InteractionFollow extends Command {
      */
     public function handle() {
 
-        $offset = $this->argument('offset');
-        $limit = $this->argument('limit');
-
 //        $execute_script = 1;
 //        $execute_flags = DB::connection('mysql_old')->select("SELECT * FROM morfix_settings WHERE setting = 'interaction' AND value = ?;", [$offset]);
 //        foreach ($execute_flags as $execute_flag) {
@@ -59,14 +57,34 @@ class InteractionFollow extends Command {
 //        }
 
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $users = User::where('email', $this->argument("email"))->get();
         } else {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+            $users = DB::table('user')
+                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                    ->orderBy('user_id', 'asc')
+                    ->get();
         }
 
 
         foreach ($users as $user) {
+            
             $this->line($user->user_id);
+            
+            $instagram_profiles = InstagramProfile::whereRaw('auto_follow = 1 OR auto_unfollow = 1')
+                    ->where('checkpoint_required', false)
+                    ->where('account_disabled', false)
+                    ->where('invalid_user', false)
+                    ->where('incorrect_pw', false)
+                    ->where('user_id', $user->user_id)
+                    ->whereRaw('NOW() >= next_follow_time OR next_follow_time IS NULL')
+                    ->get();
+            
+            foreach ($instagram_profiles as $ig_profile) {
+                
+            }
+            
+            continue;
+            
 
             $instagram_profiles = DB::connection('mysql_old')->select("SELECT DISTINCT(insta_username),
                 insta_user_id, 
