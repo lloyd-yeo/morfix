@@ -341,6 +341,7 @@ class InteractionFollow implements ShouldQueue {
                 exit();
             }
             //[End LOGIN]
+            
             //start with targeted usernames/hashtags
             $use_hashtags = rand(0, 1);
             echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
