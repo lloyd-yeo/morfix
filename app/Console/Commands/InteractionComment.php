@@ -124,8 +124,10 @@ function executeCommenting($instagram_profiles) {
 
         $instagram->setProxy($ig_profile->proxy);
         $instagram->setUser($ig_username, $ig_password);
+        
         try {
             $instagram->login();
+            echo "[$ig_username] logged in.\n";
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             
             $proxy = Proxy::inRandomOrder()->first();
@@ -167,7 +169,9 @@ function executeCommenting($instagram_profiles) {
                     ->orderBy('date_inserted', 'desc')
                     ->take(5)
                     ->get();
-
+            
+            echo "[$ig_username] Number of unengaged followings " . count($unengaged_followings) . "\n";
+            
             if (count($unengaged_followings) < 1) {
                 $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                         ->whereRaw("target_username NOT IN "
@@ -177,7 +181,7 @@ function executeCommenting($instagram_profiles) {
                         ->get();
 
                 foreach ($unengaged_likings as $unengaged_liking) {
-
+                    
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
 
                     try {
