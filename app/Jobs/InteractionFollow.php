@@ -436,7 +436,7 @@ class InteractionFollow implements ShouldQueue {
                                             $new_follow_log->insta_username = $insta_username;
                                             $new_follow_log->follower_username = $follower_username;
                                             $new_follow_log->follower_id = $follower_id;
-                                            $new_follow_log->log = $resp;
+                                            $new_follow_log->log = serialize($follow_resp);
                                             $new_follow_log->follow_success = 1;
                                             $new_follow_log->save();
 
