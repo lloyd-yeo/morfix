@@ -435,7 +435,7 @@ class InteractionFollow implements ShouldQueue {
 
                                             $new_follow_log = new InstagramProfileFollowLog;
                                             $new_follow_log->insta_username = $insta_username;
-                                            $new_follow_log->follower_username = $follower_username;
+                                            $new_follow_log->follower_username = $user_to_follow->username;
                                             $new_follow_log->follower_id = $user_to_follow->pk;
                                             $new_follow_log->log = serialize($follow_resp);
                                             $new_follow_log->follow_success = 1;
@@ -550,7 +550,7 @@ class InteractionFollow implements ShouldQueue {
 
                                             $new_follow_log = new InstagramProfileFollowLog;
                                             $new_follow_log->insta_username = $insta_username;
-                                            $new_follow_log->follower_username = $follower_username;
+                                            $new_follow_log->follower_username = $user_to_follow->username;
                                             $new_follow_log->follower_id = $user_to_follow->pk;
                                             $new_follow_log->log = serialize($follow_resp);
                                             $new_follow_log->follow_success = 1;
@@ -670,7 +670,7 @@ class InteractionFollow implements ShouldQueue {
 
                                                 $new_follow_log = new InstagramProfileFollowLog;
                                                 $new_follow_log->insta_username = $insta_username;
-                                                $new_follow_log->follower_username = $follower_username;
+                                                $new_follow_log->follower_username = $user_to_follow->username;
                                                 $new_follow_log->follower_id = $user_to_follow->pk;
                                                 $new_follow_log->log = serialize($follow_resp);
                                                 $new_follow_log->follow_success = 1;
