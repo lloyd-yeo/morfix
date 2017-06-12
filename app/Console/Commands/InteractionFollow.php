@@ -48,8 +48,7 @@ class InteractionFollow extends Command {
         if (NULL !== $this->argument("email")) {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
-            $users = DB::table('user')
-                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
                     ->get();
         }
