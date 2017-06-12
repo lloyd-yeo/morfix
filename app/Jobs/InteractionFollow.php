@@ -538,7 +538,7 @@ class InteractionFollow implements ShouldQueue {
 
                                             $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
                                             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
-                                            
+
                                             if ($ig_profile->save()) {
                                                 echo "[$insta_username] added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
                                             }
@@ -589,6 +589,9 @@ class InteractionFollow implements ShouldQueue {
                                             $followed = 1;
                                             break;
                                         }
+                                        continue;
+                                    } catch (Exception $ex) {
+                                        echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
                                         continue;
                                     }
                                 }
@@ -704,6 +707,9 @@ class InteractionFollow implements ShouldQueue {
                                                 $followed = 1;
                                                 break;
                                             }
+                                            continue;
+                                        } catch (Exception $ex) {
+                                            echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
                                             continue;
                                         }
                                     }
