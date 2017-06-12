@@ -59,11 +59,11 @@ class InteractionFollow extends Command {
             $this->line($user->user_id);
 
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
-                    . 'AND checkpoint_required = 0'
-                    . 'AND account_disabled = 0'
-                    . 'AND invalid_user = 0'
-                    . 'AND incorrect_pw = 0'
-                    . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL)'
+                    . 'AND checkpoint_required = 0 '
+                    . 'AND account_disabled = 0 '
+                    . 'AND invalid_user = 0 '
+                    . 'AND incorrect_pw = 0 '
+                    . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
                     . 'AND user_id = ' . $user->user_id)
 //                    ->where('checkpoint_required', false)
 //                    ->where('account_disabled', false)
