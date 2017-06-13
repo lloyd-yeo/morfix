@@ -12,7 +12,6 @@ class User extends Authenticatable {
     use Notifiable;
     
     protected $primaryKey = 'user_id'; 
-    protected $connection = 'mysql_old';
     protected $table = 'user';
     
     /**

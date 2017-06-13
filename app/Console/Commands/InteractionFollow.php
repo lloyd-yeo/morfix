@@ -8,6 +8,7 @@ use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
 use App\InstagramProfile;
+use App\User;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
@@ -19,7 +20,7 @@ class InteractionFollow extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:follow {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'interaction:follow {email?}';
 
     /**
      * The console command description.
@@ -44,372 +45,40 @@ class InteractionFollow extends Command {
      */
     public function handle() {
 
-        $offset = $this->argument('offset');
-        $limit = $this->argument('limit');
-
-//        $execute_script = 1;
-//        $execute_flags = DB::connection('mysql_old')->select("SELECT * FROM morfix_settings WHERE setting = 'interaction' AND value = ?;", [$offset]);
-//        foreach ($execute_flags as $execute_flag) {
-//            $execute_script = 0;
-//        }
-//        if ($execute_script == 1) {
-//            DB::connection('mysql_old')->insert("INSERT INTO morfix_settings (setting, value) VALUES (?,?);", ['interaction', $offset]);
-//        } else {
-//            exit();
-//        }
-
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $this->line('email: ' . $this->argument("email"));
+            $users = User::where('email', $this->argument("email"))->get();
         } else {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email FROM insta_affiliate.user u WHERE (u.user_tier > 1 OR u.trial_activation = 1) ORDER BY u.user_id ASC LIMIT ?,?;", [$offset, $limit]);
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                    ->orderBy('user_id', 'asc')
+                    ->get();
         }
-
 
         foreach ($users as $user) {
+
             $this->line($user->user_id);
 
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT DISTINCT(insta_username),
-                insta_user_id, 
-                id, 
-                insta_pw,
-                niche, 
-                next_follow_time, 
-                niche_target_counter, 
-                unfollow, 
-                auto_interaction_ban, 
-                auto_interaction_ban_time,
-                follow_cycle,
-                auto_unfollow,
-                auto_follow,
-                auto_follow_ban,
-                auto_follow_ban_time,
-                follow_unfollow_delay,
-                speed,
-                follow_min_followers,
-                follow_max_followers,
-                unfollow_unfollowed,
-                daily_follow_quota,
-                daily_unfollow_quota,
-                proxy
-                FROM insta_affiliate.user_insta_profile 
-                WHERE auto_interaction = 1
-                AND email = ?
-                AND (auto_follow = 1 OR auto_unfollow = 1) 
-                AND (NOW() >= next_follow_time OR next_follow_time IS NULL) 
-                AND checkpoint_required = 0 AND account_disabled = 0 AND invalid_user = 0 AND incorrect_pw = 0;", [$user->email]);
+            $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
+                    . 'AND checkpoint_required = 0 '
+                    . 'AND account_disabled = 0 '
+                    . 'AND invalid_user = 0 '
+                    . 'AND incorrect_pw = 0 '
+                    . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
+                    . 'AND user_id = ' . $user->user_id)
+//                    ->where('checkpoint_required', false)
+//                    ->where('account_disabled', false)
+//                    ->where('invalid_user', false)
+//                    ->where('incorrect_pw', false)
+//                    ->where('user_id', $user->user_id)
+//                    ->whereRaw('NOW() >= next_follow_time OR next_follow_time IS NULL')
+                    ->get();
 
             foreach ($instagram_profiles as $ig_profile) {
-
-                $follow_unfollow_delay = 0;
-
-                $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-                $ig_username = $ig_profile->insta_username;
-                $ig_password = $ig_profile->insta_pw;
-
-                if ($ig_profile->auto_follow_ban == 1) {
-                    continue;
-                }
-
-                if ($ig_profile->speed == "Fast") {
-                    $follow_unfollow_delay = rand(1, 2);
-                }
-                if ($ig_profile->speed == "Medium") {
-                    $follow_unfollow_delay = rand(3, 4);
-                }
-                if ($ig_profile->speed == "Slow") {
-                    $follow_unfollow_delay = rand(5, 6);
-                }
-                if ($ig_profile->speed == "Ultra Fast") {
-                    $follow_unfollow_delay = 0;
-                }
-
-                $config = array();
-                $config["storage"] = "mysql";
-                $config["dbusername"] = "root";
-                $config["dbpassword"] = "inst@ffiliates123";
-                $config["dbhost"] = "52.221.60.235:3306";
-                $config["dbname"] = "morfix";
-                $config["dbtablename"] = "instagram_sessions";
-
-                $debug = true;
-                $truncatedDebug = false;
-                $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-                if ($ig_profile->proxy === NULL) {
-                    $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
-                    foreach ($proxies as $proxy) {
-                        $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
-                        $instagram->setProxy($proxy->proxy);
-                        $rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [$proxy->proxy]);
-                    }
-                } else {
-                    $instagram->setProxy($ig_profile->proxy);
-                }
-
-                try {
-                    $instagram->setUser($ig_username, $ig_password);
-                    $explorer_response = $instagram->login();
-
-                    $num_followers = 0;
-                    $num_followed = DB::connection('mysql_old')
-                            ->select(DB::raw("SELECT COUNT(log_id) as num_follows 
-                        FROM user_insta_profile_follow_log 
-                        WHERE follow = 1 AND unfollowed = 0 AND insta_username = \"" . $ig_username . "\"; "));
-                    foreach ($num_followed as $num_followed_row) {
-                        $num_followers = $num_followed_row->num_follows;
-                        $this->line($ig_username . " follows:\t" . $num_followed_row->num_follows);
-                    }
-
-                    $on_unfollow_cycle = $ig_profile->unfollow;
-
-                    if ($num_followers == 0) {
-                        if ($ig_profile->auto_follow == 1 && $ig_profile->auto_unfollow == 1) {
-                            DB::connection('mysql_old')
-                                    ->update("UPDATE user_insta_profile SET unfollow = 0 WHERE insta_username = ?;", [$ig_username]);
-                        }
-                    } else if ($num_followers >= $ig_profile->follow_cycle && $ig_profile->auto_unfollow == 1) {
-                        if ($ig_profile->auto_unfollow == 1) {
-                            $on_unfollow_cycle = 1;
-                            DB::connection('mysql_old')
-                                    ->update("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;", [$ig_username]);
-                        }
-                    }
-                    
-                    if ($ig_profile->auto_follow == 0 && $ig_profile->auto_unfollow == 1) {
-                        $this->line("only switched on auto unfollow");
-                        $on_unfollow_cycle = 1;
-                        DB::connection('mysql_old')
-                                    ->update("UPDATE user_insta_profile SET unfollow = 1 WHERE insta_username = ?;", [$ig_username]);
-                    }
-                    
-                    if ($on_unfollow_cycle == 1) {
-                        $users_to_unfollow = DB::connection('mysql_old')->select("SELECT log_id, insta_username, follower_username, follower_id 
-                            FROM user_insta_profile_follow_log
-                            WHERE insta_username = ? AND follow = 1 AND unfollowed = 0 
-                            ORDER BY log_id ASC LIMIT 10;", [$ig_profile->insta_username]);
-
-                        foreach ($users_to_unfollow as $user_to_unfollow) {
-                            
-                            try {
-                                $instagram->getUsernameId($user_to_unfollow->follower_username);
-                            } catch (\InstagramAPI\Exception\EndpointException $ex) {
-                                DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = NULL WHERE log_id = ?;", 
-                                        [$user_to_unfollow->log_id]);
-                                $this->error($ex->getMessage());
-                                continue;
-                            } catch (\InstagramAPI\Exception\RequestException $req_ex) {
-                                DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = NULL WHERE log_id = ?;", 
-                                        [$user_to_unfollow->log_id]);
-                                $this->error($req_ex->getMessage());
-                                continue;
-                            }
-                            
-                            $unfollow_response = $instagram->unfollow($user_to_unfollow->follower_id);
-                            DB::connection('mysql_old')->update("UPDATE user_insta_profile_follow_log SET unfollowed = 1, date_unfollowed = NOW(), unfollow_log = ? WHERE log_id = ?;", 
-                                    [serialize($unfollow_response), $user_to_unfollow->log_id]);
-                            
-                            break;
-                        }
-                        continue;
-                    }
-                    
-                    $target_usernames = DB::connection('mysql_old')
-                            ->select("SELECT target_username FROM insta_affiliate.user_insta_target_username WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
-
-                    $followed = 0;
-
-                    foreach ($target_usernames as $target_username) {
-
-                        $this->info("target username: " . $target_username->target_username . "\n\n");
-
-                        $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($target_username->target_username));
-
-                        $users_to_follow = $user_follower_response->users;
-
-                        $duplicate = 0;
-                        foreach ($users_to_follow as $user_to_follow) {
-                            $duplicate = 0;
-                            $followed_users = DB::connection('mysql_old')
-                                    ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
-
-                            foreach ($followed_users as $followed_user) {
-                                $duplicate = 1;
-                                $this->info("Duplicate user found: \n\n\n");
-                                break;
-                            }
-
-                            if ($duplicate == 1) {
-                                continue;
-                            }
-
-                            if ($followed == 0) {
-                                
-                                if ($user_to_follow->has_anonymous_profile_picture == 1) {
-                                    continue;
-                                }
-                                
-                                $response = $instagram->follow($user_to_follow->pk);
-                                $this->info("targeted username following " . $response->friendship_status->following . "\n\n");
-                                if ($response->friendship_status->is_private) {
-                                    $this->info("targetedusername private user: " . $user_to_follow->pk);
-                                    continue;
-                                }
-                                if ($response->friendship_status->following == 1) {
-                                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
-                                    $followed = 1;
-                                    $this->info("targeted username Breaking.");
-                                    break;
-                                } else {
-                                    continue;
-                                }
-                                $followed = 1;
-                            }
-
-                            if ($followed == 1) {
-                                break;
-                            }
-                        }
-
-                        if ($followed == 1) {
-                            break;
-                        }
-                    }
-
-                    if ($followed == 0) {
-
-                        $target_hashtags = DB::connection('mysql_old')
-                                ->select("SELECT hashtag FROM insta_affiliate.user_insta_target_hashtag WHERE insta_username = ? ORDER BY RAND();", [$ig_username]);
-
-                        foreach ($target_hashtags as $target_hashtag) {
-                            $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
-                            $hashtag_feed = $instagram->getHashtagFeed($target_hashtag->hashtag);
-                            foreach ($hashtag_feed->items as $item) {
-                                $duplicate = 0;
-                                $user_to_follow = $item->user;
-                                $followed_users = DB::connection('mysql_old')
-                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
-
-                                foreach ($followed_users as $followed_user) {
-                                    $duplicate = 1;
-                                    $this->info("Duplicate user found: \n\n\n");
-                                    break;
-                                }
-
-                                if ($duplicate == 1) {
-                                    continue;
-                                }
-
-                                if ($followed == 0) {
-                                    $response = $instagram->follow($user_to_follow->pk);
-                                    $this->info("targeted hashtag following " . $response->friendship_status->following . "\n\n");
-                                    if ($response->status == "ok") {
-                                        if ($response->friendship_status->is_private) {
-                                            $this->info("targetedhashtag user is pvt" . $user_to_follow->pk . "\n\n");
-                                            continue;
-                                        }
-                                        if ($response->friendship_status->following) {
-                                            DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
-                                            $followed = 1;
-                                            $this->info("targetedhashtag Breaking.");
-                                            break;
-                                        } else {
-                                            continue;
-                                        }
-                                        $followed = 1;
-                                    }
-                                }
-                                if ($followed == 1) {
-                                    break;
-                                }
-                            }
-                            if ($followed == 1) {
-                                break;
-                            }
-                        }
-                    }
-
-                    if ($followed == 0) {
-                        $tries = 10;
-                        $niche_targets = DB::connection("mysql_old")->select("SELECT target_username FROM insta_affiliate.niche_targets WHERE niche_id = ? ORDER BY RAND();", [$ig_profile->niche]);
-                        foreach ($niche_targets as $niche_target) {
-
-                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId($niche_target->target_username));
-
-                            $users_to_follow = $user_follower_response->users;
-
-                            foreach ($users_to_follow as $user_to_follow) {
-                                $duplicate = 0;
-                                $followed_users = DB::connection('mysql_old')
-                                        ->select("SELECT log_id FROM user_insta_profile_follow_log WHERE insta_username = ? AND follower_id = ?;", [$ig_username, $user_to_follow->pk]);
-
-                                foreach ($followed_users as $followed_user) {
-                                    $duplicate = 1;
-                                    $this->info("Duplicate user found: \n\n\n");
-                                    break;
-                                }
-
-                                if ($duplicate == 1) {
-                                    continue;
-                                }
-
-                                if ($followed == 0) {
-                                    $response = $instagram->follow($user_to_follow->pk);
-                                    
-                                    $this->info("nichetarget following " . $response->friendship_status->following . "\n\n");
-                                    if ($response->friendship_status->is_private) {
-                                        $this->info("nichetarget private user: " . $user_to_follow->pk);
-                                        continue;
-                                    }
-                                    
-                                    if ($response->friendship_status->following) {
-                                        DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_follow_log (insta_username, follower_username, follower_id, log, date_inserted) VALUES (?,?,?,?,NOW());", [$ig_profile->insta_username, $user_to_follow->username, $user_to_follow->pk, serialize($response->friendship_status)]);
-                                        $followed = 1;
-                                        $this->info("nichetarget Breaking.");
-                                        break;
-                                    } else {
-                                        $tries = $tries - 1;
-                                        if ($tries == 0) {
-                                            break;
-                                        }
-                                        continue;
-                                    }
-                                    
-                                    $followed = 1;
-                                }
-                                if ($followed == 1) {
-                                    break;
-                                }
-                            }
-                            if ($followed == 1) {
-                                break;
-                            }
-                        }
-                    }
-                } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                    $this->error($checkpoint_ex->getMessage());
-                    DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
-                } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                    $this->error($network_ex->getMessage());
-                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
-                } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                    $this->error($endpoint_ex->getMessage());
-                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
-                } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                    $this->error($incorrectpw_ex->getMessage());
-                    DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
-                } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
-                    $this->error($feedback_ex->getMessage());
-                    DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
-                } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
-                    continue;
-                } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
-                    $this->error($throttled_ex->getMessage());
-                    DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$throttled_ex->getMessage(), $ig_profile->id]);
-                }
+                dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))->onQueue('follows'));
+                $this->line("queued profile: " . $ig_profile->insta_username);
+                continue;
             }
         }
-
-//        DB::connection('mysql_old')->delete("DELETE FROM morfix_settings WHERE setting = 'interaction' AND value = ?;", [$offset]);
     }
 
 }

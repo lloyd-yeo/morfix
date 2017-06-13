@@ -11,6 +11,7 @@ use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\EngagementJob;
 use App\EngagementGroupJob;
 
 class EngagementGroup extends Command {
@@ -74,7 +75,7 @@ class EngagementGroup extends Command {
                 $ig_username = $ig_profile->insta_username;
                 try {
                     
-                    $engagement_job = new EngagementGroupJob;
+                    $engagement_job = new EngagementJob;
                     $engagement_job->media_id = $media_id;
                     $engagement_job->insta_username = $ig_username;
                     $engagement_job->action = 0;
@@ -85,7 +86,7 @@ class EngagementGroup extends Command {
                     
                     if (($ig_profile->auto_comment == 1 && $comment_count > 0) || $ig_profile->user_tier == 1) {
                         
-                        $engagement_job = new EngagementGroupJob;
+                        $engagement_job = new EngagementJob;
                         $engagement_job->media_id = $media_id;
                         $engagement_job->insta_username = $ig_username;
                         $engagement_job->action = 1;
