@@ -82,6 +82,8 @@ Route::post('engagement-group/schedule/{media_id}', 'EngagementGroupController@s
 Route::get('/settings', 'SettingsController@index');
 Route::post('/settings/subscription/cancel/{subscription_id}', 'SettingsController@cancelSubscription');
 
+Route::post('/settings/cards/update', 'SettingsController@updateCreditCard');
+
 Route::get('/faq', 'FaqController@index');
 
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');

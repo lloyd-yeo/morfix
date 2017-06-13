@@ -32,6 +32,7 @@ class FaqController extends Controller {
             $faq_qnas = FaqQna::where('topic_id', $topic_id)->get();
             $question_and_answers[$topic_name] = $faq_qnas;
         }
+        
         return view('faq', [
             'question_and_answers' => $question_and_answers,
         ]);
