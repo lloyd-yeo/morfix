@@ -94,6 +94,7 @@
                             <tr>
                                 <th class="" style="width: 65%;"><i class="fa fa-filter"></i> Funnel</th>
                                 <th class="" style="width: 35%;"><i class="fa fa-link"></i> Referral Link</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -101,6 +102,8 @@
                             <tr>
                                 <td>{{ $referral_link->title }}</td>
                                 <td><a href="http://morfix.co/r/{{ $referral_link->keyword }}">http://morfix.co/r/{{ $referral_link->keyword }}</a></td>
+                                <td><button class="btn btn-sm btn-info" 
+                                            type="submit" id="advanced-follow-settings-btn"><i class="fa fa-check push-5-r"></i> Add Pixel</button></td>
                             </tr>
                             @endforeach
                         </tbody>
