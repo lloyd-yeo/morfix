@@ -103,6 +103,9 @@
                         data-email="{{ Auth::user()->email }}">
                     </script>
                 </form>
+                <div style="height: 30px;">
+                    
+                </div>
             </div>
         </div>
     </div>
