@@ -163,7 +163,7 @@ function executeCommenting($instagram_profiles) {
 
             $user_instagram_id = NULL;
 
-            $unengaged_followings = InstagramProfil\eFollowLog::where('insta_username', $ig_username)
+            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                     ->whereRaw("follower_username NOT IN "
                             . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                     ->orderBy('date_inserted', 'desc')
