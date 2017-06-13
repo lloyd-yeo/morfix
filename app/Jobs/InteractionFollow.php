@@ -651,7 +651,15 @@ class InteractionFollow implements ShouldQueue {
 
                         foreach ($target_usernames as $target_username) {
                             echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
-                            $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                            $user_follower_response = NULL;
+                            
+                            try {
+                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                                $target_username->delete();
+                                continue;
+                            }
+                            
                             $users_to_follow = $user_follower_response->users;
 
                             foreach ($users_to_follow as $user_to_follow) {
