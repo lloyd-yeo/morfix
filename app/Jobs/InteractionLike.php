@@ -31,22 +31,20 @@ class InteractionLike implements ShouldQueue {
         InteractsWithQueue,
         Queueable,
         SerializesModels;
-    
+
     /**
      * The number of times the job may be attempted.
      *
      * @var int
      */
     public $tries = 1;
-    
+
     /**
      * The number of seconds the job can run before timing out.
      *
      * @var int
      */
     public $timeout = 60;
-    
-    
     protected $profile;
 
     /**
@@ -65,11 +63,11 @@ class InteractionLike implements ShouldQueue {
      */
     public function handle() {
         DB::reconnect();
-        
+
         $ig_profile = $this->profile;
-        
+
         echo("\n" . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-        
+
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
 
@@ -95,7 +93,16 @@ class InteractionLike implements ShouldQueue {
         try {
             $like_quota = rand(1, 3);
             $instagram->setUser($ig_username, $ig_password);
-            $explorer_response = $instagram->login();
+            try {
+                $explorer_response = $instagram->login();
+            } catch (\InstagramAPI\Exception\SentryBlockException $sentry_block_ex) {
+                $proxy = Proxy::inRandomOrder()->first();
+                $ig_profile->proxy = $proxy->proxy;
+                $ig_profile->save();
+                $proxy->assigned = $proxy->assigned + 1;
+                $proxy->save();
+                exit();
+            }
             echo("\n" . "Logged in \t quota: " . $like_quota);
             $engagement_jobs = EngagementJob::where('action', 0)
                     ->where('fulfilled', 0)
@@ -453,13 +460,20 @@ class InteractionLike implements ShouldQueue {
                                 $user_items = $user_feed_response->items;
                                 //Foreach media posted by the user.
                                 foreach ($user_items as $item) {
-
+                                    
+                                    if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
+                                        #duplicate. Liked before this photo with this id.
+                                        continue;
+                                    }
+                                    
                                     if ($like_quota > 0) {
 
                                         $like_response = $instagram->media->like($item->id);
 
                                         if ($like_response->status == "ok") {
                                             echo("\n" . "[$ig_username] Liked " . serialize($like_response));
+
+
                                             $like_log = new InstagramProfileLikeLog;
                                             $like_log->insta_username = $ig_username;
                                             $like_log->target_username = $user_to_like->username;
@@ -566,9 +580,11 @@ class InteractionLike implements ShouldQueue {
             echo("\n" . "feedback\t" . $feedback_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
         } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+            
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
             echo("\n" . "acctdisabled\t" . $acctdisabled_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
         }
     }
+
 }

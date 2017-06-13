@@ -337,6 +337,17 @@ class InteractionFollow implements ShouldQueue {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
                 exit();
+            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                $ig_profile->checkpoint_required = 1;
+                $ig_profile->save();
+                exit();
+            } catch (\InstagramAPI\Exception\SentryBlockException $sentry_block_ex) {
+                $proxy = Proxy::inRandomOrder()->first();
+                $ig_profile->proxy = $proxy->proxy;
+                $ig_profile->save();
+                $proxy->assigned = $proxy->assigned + 1;
+                $proxy->save();
+                exit();
             }
             //[End LOGIN]
             
