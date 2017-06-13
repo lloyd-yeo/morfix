@@ -326,7 +326,6 @@ class InteractionFollow implements ShouldQueue {
                 $instagram->login();
                 echo "[$ig_username] logged in.\n";
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-
                 $proxy = Proxy::inRandomOrder()->first();
                 $ig_profile->proxy = $proxy->proxy;
                 $ig_profile->save();
@@ -334,8 +333,6 @@ class InteractionFollow implements ShouldQueue {
                 $proxy->save();
                 $instagram->setProxy($ig_profile->proxy);
                 $instagram->login();
-
-//                var_dump($network_ex);
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
