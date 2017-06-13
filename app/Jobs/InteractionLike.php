@@ -102,6 +102,10 @@ class InteractionLike implements ShouldQueue {
                 $proxy->assigned = $proxy->assigned + 1;
                 $proxy->save();
                 exit();
+            } catch (\InstagramAPI\Exception\ForcedPasswordResetException $forced_password_reset_ex) {
+                $ig_profile->incorrect_pw = 1;
+                $ig_profile->save();
+                exit();
             }
             echo("\n" . "Logged in \t quota: " . $like_quota);
             $engagement_jobs = EngagementJob::where('action', 0)
