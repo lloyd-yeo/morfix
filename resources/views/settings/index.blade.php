@@ -98,7 +98,7 @@
                     data-name="Morfix.co"   
                     data-panel-label="Update Card Details"
                     data-label="Update Card Details"
-                    data-allow-remember-me=true
+                    data-allow-remember-me="true"
                     data-locale="auto"
                     data-email="{{ Auth:user()->email }}">                           
                 </script>
