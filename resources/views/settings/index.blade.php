@@ -100,7 +100,7 @@
                     data-label="Update Card Details"
                     data-allow-remember-me="true"
                     data-locale="auto"
-                    data-email="{{ Auth:user()->email }}">                           
+                    data-email="{{ Auth::user()->email }}">                           
                 </script>
             </form>
         </div>
