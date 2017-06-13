@@ -84,27 +84,29 @@
             </div>
         </div>
         <!-- END Dynamic Table Full -->
-    </div>
-    <div class="block">
-        <div class="block-header">
-            <h3 class="block-title">Update My Card Details</h3>
+
+        <div class="block">
+            <div class="block-header">
+                <h3 class="block-title">Update My Card Details</h3>
+            </div>
+            <div class="block-content">
+                <form action="/settings/cards/update" method="POST">
+                    <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_live_WrvnbbOwMxU7FwZzaoTdaUpa"
+                        data-image="https://morfix.co/app/assets/img/logo/mx-black-crop.png"
+                        data-name="Morfix.co"   
+                        data-panel-label="Update Card Details"
+                        data-label="Update Card Details"
+                        data-allow-remember-me="true"
+                        data-locale="auto"
+                        data-email="{{ Auth::user()->email }}">
+                    </script>
+                </form>
+            </div>
         </div>
-        <div class="block-content">
-            <form action="/settings/cards/update" method="POST">
-                <script
-                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                    data-key="pk_live_WrvnbbOwMxU7FwZzaoTdaUpa"
-                    data-image="https://morfix.co/app/assets/img/logo/mx-black-crop.png"
-                    data-name="Morfix.co"   
-                    data-panel-label="Update Card Details"
-                    data-label="Update Card Details"
-                    data-allow-remember-me="true"
-                    data-locale="auto"
-                    data-email="{{ Auth::user()->email }}">                           
-                </script>
-            </form>
-        </div>
     </div>
+
 </main>
 @endsection
 
