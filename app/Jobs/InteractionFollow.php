@@ -137,7 +137,7 @@ class InteractionFollow implements ShouldQueue {
             $config["dbtablename"] = "instagram_sessions";
             $config["storage"] = "mysql";
 
-            $debug = true;
+            $debug = false;
             $truncatedDebug = false;
             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
@@ -302,7 +302,7 @@ class InteractionFollow implements ShouldQueue {
             $config["dbtablename"] = "instagram_sessions";
             $config["storage"] = "mysql";
 
-            $debug = true;
+            $debug = false;
             $truncatedDebug = false;
             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
