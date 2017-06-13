@@ -127,11 +127,12 @@ class InteractionComment implements ShouldQueue {
 
             $user_instagram_id = NULL;
 
-            $unengaged_followings = InstagramProfileFollowLog::whereRaw("insta_username = \"$ig_username\" AND follower_username NOT IN "
-                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
-                    ->orderBy('date_inserted', 'desc')
-                    ->take(5)
-                    ->get();
+            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
+                                                ->whereRaw("follower_username NOT IN "
+                                                        . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+                                                ->orderBy('date_inserted', 'desc')
+                                                ->take(5)
+                                                ->get();
 
             if (count($unengaged_followings) < 1) {
                 
