@@ -601,7 +601,13 @@ class InteractionFollow implements ShouldQueue {
                                             $ig_profile->feedback_required = 1;
                                             $ig_profile->save();
                                             $followed = 1;
-                                            break;
+                                            exit();
+                                        }
+                                        if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
+                                            $ig_profile->feedback_required = 1;
+                                            $ig_profile->save();
+                                            $followed = 1;
+                                            exit();
                                         }
                                         continue;
                                     } catch (Exception $ex) {
