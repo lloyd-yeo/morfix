@@ -235,7 +235,7 @@ class InteractionFollow implements ShouldQueue {
 
                         $resp = $instagram->unfollow($user_to_unfollow->follower_id);
                         echo "[" . $insta_username . "] ";
-                        var_dump($resp);
+//                        var_dump($resp);
 
                         if ($resp->friendship_status->following === false) {
                             $user_to_unfollow->unfollowed = 1;
@@ -334,7 +334,7 @@ class InteractionFollow implements ShouldQueue {
                 $instagram->setProxy($ig_profile->proxy);
                 $instagram->login();
 
-                var_dump($network_ex);
+//                var_dump($network_ex);
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
