@@ -467,12 +467,21 @@ class InteractionFollow implements ShouldQueue {
                                         }
                                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                         echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                                        
                                         if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
                                             $ig_profile->feedback_required = 1;
                                             $ig_profile->save();
                                             $followed = 1;
                                             break;
                                         }
+                                        
+                                        if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
+                                            $ig_profile->feedback_required = 1;
+                                            $ig_profile->save();
+                                            $followed = 1;
+                                            break;
+                                        }
+                                        
                                         if (stripos(trim($request_ex->getMessage()), "Sorry, you're following the max limit of accounts. You'll need to unfollow some accounts to start following more.") !== false) {
                                             $followed = 1;
                                             break;
