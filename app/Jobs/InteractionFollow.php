@@ -198,6 +198,9 @@ class InteractionFollow implements ShouldQueue {
                         foreach ($followings->users as $user) {
 
                             try {
+                                if (InstagramProfileFollowLog::where('insta_username', $insta_username)->where('follower_id', $user->pk)->count() > 0) {
+                                    continue;
+                                }
                                 $follow_log = new InstagramProfileFollowLog;
                                 $follow_log->insta_username = $insta_username;
                                 $follow_log->follower_username = $user->username;
