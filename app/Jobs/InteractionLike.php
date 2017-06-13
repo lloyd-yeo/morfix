@@ -269,7 +269,12 @@ class InteractionLike implements ShouldQueue {
                             $user_items = $user_feed_response->items;
                             //Foreach media posted by the user.
                             foreach ($user_items as $item) {
-
+                                
+                                if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
+                                    #duplicate. Liked before this photo with this id.
+                                    continue;
+                                }
+                                
                                 if ($like_quota > 0) {
 
                                     //Check for duplicates.
@@ -282,8 +287,7 @@ class InteractionLike implements ShouldQueue {
                                         echo("\n" . "Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->id . "]");
                                         continue;
                                     }
-
-
+                                    
                                     $like_response = $instagram->media->like($item->id);
 
                                     if ($like_response->status == "ok") {
@@ -516,7 +520,12 @@ class InteractionLike implements ShouldQueue {
                     $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
 
                     foreach ($hashtag_feed->items as $item) {
-
+                        
+                        if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
+                            #duplicate. Liked before this photo with this id.
+                            continue;
+                        }
+                        
                         $duplicate = 0;
 
                         $user_to_like = $item->user;
