@@ -10,6 +10,7 @@ $.ajaxSetup({
 });
 
 $paypal_email = "";
+$keyword = "";
 
 $(".btn-save-paypal-email").on("click", function(){ 
     var url = "affiliate/save/paypal/"; // the script where you handle the form input.
@@ -19,9 +20,12 @@ $(".btn-save-paypal-email").on("click", function(){
     savePaypalEmail(url);
 });
 
-$("#add-pixel-btn").on("click", function(){ 
+$(".add-pixel-btn").on("click", function(){ 
+    
+    $keyword = $(this).attr('data-keyword');
+    
     swal({
-        title: 'Enter your Facebook Pixel Code Below',
+        title: 'Enter your Facebook Pixel Below',
         input: 'textarea',
         showCancelButton: true,
         confirmButtonText: 'Submit',
@@ -29,20 +33,33 @@ $("#add-pixel-btn").on("click", function(){
         preConfirm: function (pixelCode) {
           return new Promise(function (resolve, reject) {
             setTimeout(function() {
-              if (pixelCode === 'taken@example.com') {
-                reject('This email is already taken.')
-              } else {
-                resolve()
-              }
+                
+              $.ajax({
+                    type: "POST",
+                    url: 'affiliate/save/pixel',
+                    dataType: "json",
+                    data: {
+                        keyword: $keyword,
+                        pixel: pixelCode
+                    },
+                    success: function (data) {
+                        if (data.success === true) {
+                            resolve();
+                        } else {
+                            reject('There has been an issue with saving your pixel code, please try again later.');
+                        }
+                    }
+              });
+              
             }, 2000);
           });
         },
         allowOutsideClick: false
-      }).then(function (email) {
+      }).then(function (pixelCode) {
         swal({
           type: 'success',
-          title: 'Ajax request finished!',
-          html: 'Submitted email: ' + email
+          title: 'Pixel Code Submitted!',
+          html: 'Your Pixel has been submitted, we will put it under review & have it approved in 48 hours.';
         });
       });
 });
