@@ -98,4 +98,21 @@ class AffiliateController extends Controller {
         }
     }
     
+    public function savePixel(Request $request) {
+        $response = "We have encountered an error. Please try again later.";
+        
+        $pixel = $request->input('pixel');
+        $keyword = $request->input('keyword');
+        
+        $url = YourlsUrl::where('keyword', $keyword)->first();
+        $url->pixel = $pixel;
+        
+        if ($url->save()) {
+            $response = "Your pixel code has been saved & submitted for review.";
+            return Response::json(array("success" => true, 'message' => $response));
+        } else {
+            return Response::json(array("success" => false, 'message' => $response));
+        }
+    }
+    
 }

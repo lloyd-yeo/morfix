@@ -47,7 +47,7 @@ class SettingsController extends Controller {
     }
 
     public function updateCreditCard(Request $request) {
-        $stripeToken = $request->input['stripeToken'];
+        $stripeToken = $request->input('stripeToken');
         $user = Auth::user()->stripe_id;
         $cu = \Stripe\Customer::retrieve($user); // stored in your application
         $cu->source = $stripeToken; // obtained with Checkout
