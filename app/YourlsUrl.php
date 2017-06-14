@@ -8,4 +8,5 @@ class YourlsUrl extends Model {
     protected $table = 'yourls_url';
     public $timestamps = false;
     protected $primaryKey = "keyword";
+    public $incrementing = false;
 }
