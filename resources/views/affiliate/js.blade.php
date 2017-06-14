@@ -59,7 +59,7 @@ $(".add-pixel-btn").on("click", function(){
         swal({
           type: 'success',
           title: 'Pixel Code Submitted!',
-          html: 'Your Pixel has been submitted, we will put it under review & have it approved in 48 hours.';
+          html: 'Your Pixel has been submitted, we will put it under review & have it approved in 48 hours.'
         });
       });
 });
