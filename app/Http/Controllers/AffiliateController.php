@@ -66,7 +66,7 @@ class AffiliateController extends Controller {
         #$referrals = DB::connection('mysql_old')->select('SELECT u.email, u.user_tier, u.created_at, a.refunded_premium, a.refunded_pro, a.refunded_business, a.refunded_mastermind 
         #    FROM user_affiliate a, user u WHERE a.referrer = ? AND a.referred = u.user_id AND u.user_tier > 1 ORDER BY u.created_at DESC;', [Auth::user()->user_id]);
 
-        $invoices = DB::connection('mysql_old')->select('SELECT r.vip AS referrer_vip, r.user_tier AS referrer_user_tier, r.email AS referrer_email, c.charge_id, 
+        $invoices = DB::select('SELECT r.vip AS referrer_vip, r.user_tier AS referrer_user_tier, r.email AS referrer_email, c.charge_id, 
                                                                 i.invoice_id, i.subscription_id, i.start_date, i.expiry_date, u.email AS referred_email,
                                                                 c.paid AS charge_paid, i.paid AS invoice_paid, c.refunded AS charge_refunded
                                                         FROM user u, user_stripe_details sd, user_stripe_invoice i, user_stripe_charges c, 
