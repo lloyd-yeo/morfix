@@ -21,15 +21,15 @@ $(".btn-save-paypal-email").on("click", function(){
 
 $("#add-pixel-btn").on("click", function(){ 
     swal({
-        title: '',
-        input: 'email',
+        title: 'Enter your Facebook Pixel Code Below',
+        input: 'textarea',
         showCancelButton: true,
         confirmButtonText: 'Submit',
         showLoaderOnConfirm: true,
-        preConfirm: function (email) {
+        preConfirm: function (pixelCode) {
           return new Promise(function (resolve, reject) {
             setTimeout(function() {
-              if (email === 'taken@example.com') {
+              if (pixelCode === 'taken@example.com') {
                 reject('This email is already taken.')
               } else {
                 resolve()
