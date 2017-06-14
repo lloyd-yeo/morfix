@@ -14,7 +14,6 @@ $.ajaxSetup({
 $(".btn-cancel-subscription").on("click", function(){ 
     var $sub_id = $(this).attr("data-sub-id");
     
-    
     swal({
         title: 'Cancel Subscription',
         text: "Are you sure you wish to cancel your subscription? \n\

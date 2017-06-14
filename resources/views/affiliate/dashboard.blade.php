@@ -103,7 +103,7 @@
                                 <td>{{ $referral_link->title }}</td>
                                 <td><a href="http://morfix.co/r/{{ $referral_link->keyword }}">http://morfix.co/r/{{ $referral_link->keyword }}</a></td>
                                 <td><button class="btn btn-sm btn-info" 
-                                            type="submit" id="advanced-follow-settings-btn"><i class="fa fa-check push-5-r"></i> Add Pixel</button></td>
+                                            type="submit" id="add-pixel-btn">Add Pixel</button></td>
                             </tr>
                             @endforeach
                         </tbody>

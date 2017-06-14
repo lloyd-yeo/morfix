@@ -19,6 +19,34 @@ $(".btn-save-paypal-email").on("click", function(){
     savePaypalEmail(url);
 });
 
+$("#add-pixel-btn").on("click", function(){ 
+    swal({
+        title: '',
+        input: 'email',
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        showLoaderOnConfirm: true,
+        preConfirm: function (email) {
+          return new Promise(function (resolve, reject) {
+            setTimeout(function() {
+              if (email === 'taken@example.com') {
+                reject('This email is already taken.')
+              } else {
+                resolve()
+              }
+            }, 2000);
+          });
+        },
+        allowOutsideClick: false
+      }).then(function (email) {
+        swal({
+          type: 'success',
+          title: 'Ajax request finished!',
+          html: 'Submitted email: ' + email
+        });
+      });
+});
+
 function savePaypalEmail(url) {
     $.ajax({
         type: "POST",
