@@ -47,6 +47,7 @@ class SettingsController extends Controller {
     }
 
     public function updateCreditCard(Request $request) {
+        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $stripeToken = $request->input('stripeToken');
         $user = Auth::user()->stripe_id;
         $cu = \Stripe\Customer::retrieve($user); // stored in your application
