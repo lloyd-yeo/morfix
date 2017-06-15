@@ -217,7 +217,7 @@
                                         <div class='col-xs-12 col-lg-10 col-lg-offset-1'>
                                             <div class="form-material">
                                                 <label class="css-input css-input switch switch-square switch-primary">
-                                                    @if ($ig_profile->unfollow_unfollowed == 1)
+                                                    @if ($ig_profile->follow_recent_engaged == 1)
                                                     <input type="checkbox" name="recent-follower-toggle" checked><span></span> 
                                                     <span style='font-weight: 600;'>Follow Likers & Commenters of 3 most recent posts</span>
                                                     <small><i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
