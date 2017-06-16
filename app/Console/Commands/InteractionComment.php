@@ -168,8 +168,7 @@ function executeCommenting($instagram_profiles) {
             
             if (count($unengaged_followings) < 1) {
                 
-                $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
-                        ->whereRaw("target_username NOT IN "
+                $unengaged_likings = InstagramProfileLikeLog::whereRaw("insta_username = \"$ig_username\" AND target_username NOT IN "
                                 . "(SELECT DISTINCT(target_username) FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                         ->orderBy('date_liked', 'desc')
                         ->take(10)
