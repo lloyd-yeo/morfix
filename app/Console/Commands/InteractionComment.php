@@ -157,14 +157,18 @@ function executeCommenting($instagram_profiles) {
             $commented = false;
 
             $user_instagram_id = NULL;
-            
+            $unengaged_followings = array();
             $last_twenty_follows = InstagramProfileFollowLog::where('insta_username', $ig_username)
                                         ->orderBy('date_inserted', 'desc')
                                         ->take(20)
                                         ->get();
             
             foreach ($last_twenty_follows as $follows) {
-                
+                if (InstagramProfileCommentLog::where('insta_username', $follows->insta_username)
+                        ->where('target_username', $follows->follower_username)
+                        ->count() < 1) {
+                    $unengaged_followings[] = $follows;
+                }
             }
             
 //            $unengaged_followings = InstagramProfileFollowLog::whereRaw("insta_username = \"$ig_username\" AND follower_username NOT IN "
