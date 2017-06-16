@@ -158,20 +158,10 @@ function executeCommenting($instagram_profiles) {
 
             $user_instagram_id = NULL;
             
-            $unengaged_followings = array();
-            
-            $last_twenty_follows = InstagramProfileFollowLog::where('insta_username', $ig_username)
+            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                                         ->orderBy('date_inserted', 'desc')
                                         ->take(20)
                                         ->get();
-            
-            foreach ($last_twenty_follows as $follows) {
-                if (InstagramProfileCommentLog::where('insta_username', $follows->insta_username)
-                        ->where('target_username', $follows->follower_username)
-                        ->count() == 0) {
-                    $unengaged_followings[] = $follows;
-                }
-            }
             
 //            $unengaged_followings = InstagramProfileFollowLog::whereRaw("insta_username = \"$ig_username\" AND follower_username NOT IN "
 //                            . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
@@ -246,6 +236,13 @@ function executeCommenting($instagram_profiles) {
             } else {
                 foreach ($unengaged_followings as $unengaged_following) {
 
+                    if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
+                            ->where('target_username', $unengaged_following->follower_username)
+                            ->count() > 0) {
+                        echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
+                        break;
+                    }
+                    
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
 
                     try {
