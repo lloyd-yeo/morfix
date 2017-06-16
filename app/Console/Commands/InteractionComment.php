@@ -64,13 +64,8 @@ class InteractionComment extends Command {
                     ->where('incorrect_pw', false)
                     ->get();
             
-//            foreach ($instagram_profiles as $ig_profile) {
-//                dispatch(new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)));
-//                $this->line("queued profile: " . $ig_profile->insta_username);
-//                continue;
-//            }
-            
             executeCommenting($instagram_profiles);
+            
         } else {
             foreach (User::cursor() as $user) {
 
@@ -163,8 +158,7 @@ function executeCommenting($instagram_profiles) {
 
             $user_instagram_id = NULL;
 
-            $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
-                    ->whereRaw("follower_username NOT IN "
+            $unengaged_followings = InstagramProfileFollowLog::whereRaw("insta_username = \"$ig_username\" follower_username NOT IN "
                             . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                     ->orderBy('date_inserted', 'desc')
                     ->take(5)
@@ -180,7 +174,9 @@ function executeCommenting($instagram_profiles) {
                         ->orderBy('date_liked', 'desc')
                         ->take(10)
                         ->get();
-
+                
+                echo "[$ig_username] Number of unengaged likes " . count($unengaged_likings) . "\n";
+                
                 foreach ($unengaged_likings as $unengaged_liking) {
                     
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
