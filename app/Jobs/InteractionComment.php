@@ -128,11 +128,11 @@ class InteractionComment implements ShouldQueue {
             $user_instagram_id = NULL;
 
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
-                                                ->whereRaw("follower_username NOT IN "
-                                                        . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
-                                                ->orderBy('date_inserted', 'desc')
-                                                ->take(5)
-                                                ->get();
+                                        ->orderBy('date_inserted', 'desc')
+                                        ->take(20)
+                                        ->get();
+            
+            echo "[$ig_username] Number of unengaged followings " . count($unengaged_followings) . "\n";
 
             if (count($unengaged_followings) < 1) {
                 
@@ -197,7 +197,14 @@ class InteractionComment implements ShouldQueue {
                 }
             } else {
                 foreach ($unengaged_followings as $unengaged_following) {
-
+                    
+                    if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
+                            ->where('target_username', $unengaged_following->follower_username)
+                            ->count() > 0) {
+                        echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
+                        break;
+                    }
+                    
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
                     $engaged_user = $unengaged_following->target_username;
                     try {
