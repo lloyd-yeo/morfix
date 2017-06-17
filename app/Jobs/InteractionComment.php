@@ -30,21 +30,21 @@ class InteractionComment implements ShouldQueue {
         SerializesModels;
 
     protected $profile;
-    
+
     /**
      * The number of times the job may be attempted.
      *
      * @var int
      */
     public $tries = 1;
-    
+
     /**
      * The number of seconds the job can run before timing out.
      *
      * @var int
      */
     public $timeout = 120;
-    
+
     /**
      * Create a new job instance.
      *
@@ -61,7 +61,7 @@ class InteractionComment implements ShouldQueue {
      */
     public function handle() {
         DB::reconnect();
-        
+
         $ig_profile = $this->profile;
 
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
@@ -107,9 +107,9 @@ class InteractionComment implements ShouldQueue {
             $ig_profile->save();
             exit();
         }
-        
+
         $engaged_user = NULL;
-        
+
         try {
 
             $comment = InstagramProfileComment::where('insta_username', $ig_username)
@@ -126,7 +126,7 @@ class InteractionComment implements ShouldQueue {
             $commented = false;
 
             $user_instagram_id = NULL;
-            
+
             $engagement_jobs = EngagementJob::where('action', 1)
                     ->where('fulfilled', 0)
                     ->where('insta_username', $ig_username)
@@ -146,24 +146,41 @@ class InteractionComment implements ShouldQueue {
                 $comment_resp = $instagram->media->comment($media_id, $commentText);
                 exit();
             }
-            
+
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
-                                        ->orderBy('date_inserted', 'desc')
-                                        ->take(20)
-                                        ->get();
-            
+                    ->orderBy('date_inserted', 'desc')
+                    ->take(20)
+                    ->get();
+
             echo "[$ig_username] Number of unengaged followings " . count($unengaged_followings) . "\n";
 
-            if (count($unengaged_followings) < 1) {
-                
+            $real_unengaged_followings_count = 0;
+
+            foreach ($unengaged_followings as $unengaged_following) {
+                if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
+                                ->where('target_username', $unengaged_following->follower_username)
+                                ->count() > 0) {
+                    echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
+                    break;
+                }
+                $real_unengaged_followings_count++;
+            }
+
+            if (count($unengaged_followings) < 1 && $real_unengaged_followings_count == 0) {
+
                 $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
-                        ->whereRaw("target_username NOT IN "
-                                . "(SELECT target_username FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
                         ->orderBy('date_liked', 'desc')
-                        ->take(10)
+                        ->take(20)
                         ->get();
 
                 foreach ($unengaged_likings as $unengaged_liking) {
+
+                    if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
+                                    ->where('target_username', $unengaged_liking->target_username)
+                                    ->count() > 0) {
+                        echo("[$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
+                        break;
+                    }
 
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
                     $engaged_user = $unengaged_liking->target_username;
@@ -217,14 +234,14 @@ class InteractionComment implements ShouldQueue {
                 }
             } else {
                 foreach ($unengaged_followings as $unengaged_following) {
-                    
+
                     if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
-                            ->where('target_username', $unengaged_following->follower_username)
-                            ->count() > 0) {
+                                    ->where('target_username', $unengaged_following->follower_username)
+                                    ->count() > 0) {
                         echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
                         break;
                     }
-                    
+
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
                     $engaged_user = $unengaged_following->target_username;
                     try {
@@ -265,7 +282,7 @@ class InteractionComment implements ShouldQueue {
                             $commented = true;
                             $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
                             $ig_profile->save();
-                            
+
                             break;
                         }
                     }
@@ -298,18 +315,15 @@ class InteractionComment implements ShouldQueue {
             }
 
             echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
-            
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-            
+
             echo("network1 " . $network_ex->getMessage() . "\n");
-            
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-            
+
             echo("acctdisabled1 " . $acctdisabled_ex->getMessage() . "\n");
-            
+
             $ig_profile->account_disabled = 1;
             $ig_profile->save();
-            
         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
 
             if ($request_ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
