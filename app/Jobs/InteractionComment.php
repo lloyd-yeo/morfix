@@ -130,6 +130,7 @@ class InteractionComment implements ShouldQueue {
             $engagement_jobs = EngagementJob::where('action', 1)
                     ->where('fulfilled', 0)
                     ->where('insta_username', $ig_username)
+                    ->take(3)
                     ->get();
 
             /**
