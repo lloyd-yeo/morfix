@@ -141,6 +141,7 @@ class InteractionComment implements ShouldQueue {
                 $engagement_job->fulfilled = 1;
                 $engagement_job->save();
                 $comment_resp = $instagram->media->comment($media_id, $commentText);
+                exit();
             }
             
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
