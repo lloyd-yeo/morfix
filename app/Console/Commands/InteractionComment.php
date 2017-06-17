@@ -20,9 +20,9 @@ use App\Proxy;
 use App\DmJob;
 
 class InteractionComment extends Command {
-    
+
     use DispatchesJobs;
-    
+
     /**
      * The name and signature of the console command.
      *
@@ -63,9 +63,8 @@ class InteractionComment extends Command {
                     ->where('email', $user->email)
                     ->where('incorrect_pw', false)
                     ->get();
-            
+
             executeCommenting($instagram_profiles);
-            
         } else {
             foreach (User::cursor() as $user) {
 
@@ -119,12 +118,12 @@ function executeCommenting($instagram_profiles) {
 
         $instagram->setProxy($ig_profile->proxy);
         $instagram->setUser($ig_username, $ig_password);
-        
+
         try {
             $instagram->login();
             echo "[$ig_username] logged in.\n";
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-            
+
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
             $ig_profile->save();
@@ -132,9 +131,8 @@ function executeCommenting($instagram_profiles) {
             $proxy->save();
             $instagram->setProxy($ig_profile->proxy);
             $instagram->login();
-            
+
             var_dump($network_ex);
-            
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
@@ -157,7 +155,7 @@ function executeCommenting($instagram_profiles) {
             $commented = false;
 
             $user_instagram_id = NULL;
-            
+
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                     ->orderBy('date_inserted', 'desc')
                     ->take(20)
@@ -176,21 +174,25 @@ function executeCommenting($instagram_profiles) {
                 }
                 $real_unengaged_followings_count++;
             }
-            
-            echo "[$ig_username] real unengaged followings count = $real_unengaged_followings_count \n"; 
-            
+
+            echo "[$ig_username] real unengaged followings count = $real_unengaged_followings_count \n";
+
             if (count($unengaged_followings) < 1 || $real_unengaged_followings_count == 0) {
-                
-                $unengaged_likings = InstagramProfileLikeLog::whereRaw("insta_username = \"$ig_username\" AND target_username NOT IN "
-                                . "(SELECT DISTINCT(target_username) FROM user_insta_profile_comment_log WHERE insta_username = \"$ig_username\")")
+
+                $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                         ->orderBy('date_liked', 'desc')
-                        ->take(10)
+                        ->take(20)
                         ->get();
-                
-                echo "[$ig_username] Number of unengaged likes " . count($unengaged_likings) . "\n";
-                
+
                 foreach ($unengaged_likings as $unengaged_liking) {
-                    
+
+                    if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
+                                    ->where('target_username', $unengaged_liking->target_username)
+                                    ->count() > 0) {
+                        echo("[$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
+                        break;
+                    }
+
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
 
                     try {
@@ -216,7 +218,7 @@ function executeCommenting($instagram_profiles) {
 
                     if (count($user_feed_items) > 0) {
                         foreach ($user_feed_items as $item) {
-                            
+
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
                             $comment_log->target_username = $unengaged_liking->follower_username;
@@ -245,12 +247,12 @@ function executeCommenting($instagram_profiles) {
                 foreach ($unengaged_followings as $unengaged_following) {
 
                     if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
-                            ->where('target_username', $unengaged_following->follower_username)
-                            ->count() > 0) {
+                                    ->where('target_username', $unengaged_following->follower_username)
+                                    ->count() > 0) {
                         echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
                         break;
                     }
-                    
+
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
 
                     try {
@@ -331,7 +333,6 @@ function executeCommenting($instagram_profiles) {
             }
 
             echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
-            
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             echo("network1 " . $network_ex->getMessage() . "\n");
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
@@ -339,11 +340,11 @@ function executeCommenting($instagram_profiles) {
             $ig_profile->account_disabled = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-            
+
             if ($request_ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
                 if ($request_ex->hasResponse()) {
                     $full_response = $request_ex->getResponse()->fullResponse;
-                    
+
                     if ($full_response->spam === true) {
                         $ig_profile->auto_comment_ban = 1;
                         $ig_profile->auto_comment_ban_time = \Carbon\Carbon::now()->addHours(6);
