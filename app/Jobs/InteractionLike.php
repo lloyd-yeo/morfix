@@ -124,7 +124,6 @@ class InteractionLike implements ShouldQueue {
                     $like_response = NULL;
 
                     try {
-
                         $engagement_job->fulfilled = 1;
                         $engagement_job->save();
                         $like_response = $instagram->media->like($media_id);

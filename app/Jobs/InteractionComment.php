@@ -126,7 +126,23 @@ class InteractionComment implements ShouldQueue {
             $commented = false;
 
             $user_instagram_id = NULL;
+            
+            $engagement_jobs = EngagementJob::where('action', 1)
+                    ->where('fulfilled', 0)
+                    ->where('insta_username', $ig_username)
+                    ->get();
 
+            /**
+             * Start of engagement jobs.
+             */
+            foreach ($engagement_jobs as $engagement_job) {
+                $media_id = $engagement_job->media_id;
+                $job_id = $engagement_job->job_id;
+                $engagement_job->fulfilled = 1;
+                $engagement_job->save();
+                $comment_resp = $instagram->media->comment($media_id, $commentText);
+            }
+            
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                                         ->orderBy('date_inserted', 'desc')
                                         ->take(20)
