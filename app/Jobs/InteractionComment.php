@@ -166,7 +166,7 @@ class InteractionComment implements ShouldQueue {
                 $real_unengaged_followings_count++;
             }
 
-            if (count($unengaged_followings) < 1 && $real_unengaged_followings_count == 0) {
+            if (count($unengaged_followings) < 1 || $real_unengaged_followings_count == 0) {
 
                 $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                         ->orderBy('date_liked', 'desc')
