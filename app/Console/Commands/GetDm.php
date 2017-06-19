@@ -12,7 +12,7 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 
-class GetDmJob extends Command
+class GetDm extends Command
 {
     /**
      * The name and signature of the console command.
