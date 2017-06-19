@@ -55,7 +55,7 @@ class GetDm implements ShouldQueue {
     public function handle() {
         
         $ig_profile = $this->profile;
-        $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+        #$this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
         $user = $ig_profile->owner();
@@ -96,10 +96,10 @@ class GetDm implements ShouldQueue {
                     $new_follower_template = $ig_profile->insta_new_follower_template;
                     $follow_up_template = $ig_profile->follow_up_message;
 
-                    $this->line($story->args->text);
-                    $this->line($story->type);
-                    $this->line($story->args->profile_id);
-                    $this->line($story->args->timestamp);
+                    #$this->line($story->args->text);
+                    #$this->line($story->type);
+                    #$this->line($story->args->profile_id);
+                    #$this->line($story->args->timestamp);
 
                     $existing_dm_jobs = DB::select("SELECT job_id
                                 FROM `insta_affiliate`.`dm_job`
@@ -108,7 +108,7 @@ class GetDm implements ShouldQueue {
 
                     $job_exists = 0;
                     foreach ($existing_dm_jobs as $existing_dm_job) {
-                        $this->line("dm job exists!");
+                        #$this->line("dm job exists!");
                         $job_exists = 1;
                         break;
                     }
@@ -123,10 +123,10 @@ class GetDm implements ShouldQueue {
 
                     if (floatval($ig_profile->recent_activity_timestamp) < floatval($story->args->timestamp)) {
 
-                        $this->line("queue as new dm");
+                        #$this->line("queue as new dm");
                         $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
                         $new_follower = $user_info_response->user;
-                        $this->line($new_follower->full_name);
+                        #$this->line($new_follower->full_name);
 
                         if ($new_follower->full_name) {
                             $message = str_replace("\${full_name}", $new_follower->full_name, $new_follower_template);
@@ -137,7 +137,7 @@ class GetDm implements ShouldQueue {
                         preg_match_all('/{([^}]+)}/', $message, $m);
 
                         $string_replacement = $message;
-                        $this->line(serialize($m) . "\n\n");
+                        #$this->line(serialize($m) . "\n\n");
                         for ($j = 0; $j < count($m[1]); $j++) {
                             # Matched text = $result[0][$i];
 
@@ -230,16 +230,16 @@ class GetDm implements ShouldQueue {
                         break;
                     }
 
-                    $this->line("\n");
+                    #$this->line("\n");
                 }
             }
 
             //limit to 1 acct, testing.
 //                    break;
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-            $this->line($checkpoint_ex->getMessage());
+            #$this->line($checkpoint_ex->getMessage());
         } catch (\Symfony\Component\Debug\Exception\FatalThrowableError $fatalthrowable_ex) {
-            $this->line($fatalthrowable_ex->getTraceAsString());
+            #$this->line($fatalthrowable_ex->getTraceAsString());
         }
     }
 

@@ -67,6 +67,17 @@ class GetDm extends Command
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
                     ->orderBy('user_id', 'desc')
                     ->get();
+            
+            foreach ($users as $user) {
+                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                                                        ->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('getdm');
+                    dispatch($job);
+                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                }
+            }
         }
     }
 }
