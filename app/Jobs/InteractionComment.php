@@ -145,12 +145,13 @@ class InteractionComment implements ShouldQueue {
                 $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
                 $ig_profile->save();
                 
-                $comment_resp = $instagram->media->comment($media_id, $commentText);
                 $comment_log = new InstagramProfileCommentLog;
                 $comment_log->insta_username = $ig_username;
                 $comment_log->target_media = $media_id;
-                $comment_log->log = $comment_resp;
+                $comment_log->log = "Engagement Job.";
                 $comment_log->save();
+                
+                $comment_resp = $instagram->media->comment($media_id, $commentText);
                 exit();
             }
 
