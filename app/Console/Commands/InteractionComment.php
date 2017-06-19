@@ -167,7 +167,7 @@ function executeCommenting($instagram_profiles) {
                 if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
                                 ->where('target_username', $unengaged_following->follower_username)
                                 ->count() > 0) {
-                    echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
+                    echo("[Initial Check][$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
                     continue;
                 }
                 $real_unengaged_followings_count++;
@@ -187,7 +187,7 @@ function executeCommenting($instagram_profiles) {
                     if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
                                     ->where('target_username', $unengaged_liking->target_username)
                                     ->count() > 0) {
-                        echo("[$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
+                        echo("[Like][$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
                         break;
                     }
 
@@ -247,7 +247,7 @@ function executeCommenting($instagram_profiles) {
                     if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
                                     ->where('target_username', $unengaged_following->follower_username)
                                     ->count() > 0) {
-                        echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
+                        echo("[Follow][$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
                         continue;
                     }
 
