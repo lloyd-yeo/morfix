@@ -54,7 +54,7 @@ class GetDm implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        
+        DB::reconnect();
         $ig_profile = $this->profile;
         #echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
         $ig_username = $ig_profile->insta_username;
