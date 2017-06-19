@@ -12,7 +12,7 @@
 <main id="main-container">
     <div class="content bg-gray-lighter">
         <div class="row items-push">
-            <div class="col-sm-7">
+            <div class="col-sm-12">
                 <h1 class="page-heading">
                     <i class="si si-star"></i>  Facebook Ads <small> Learn how to market effectively using Facebook Ads in this training series!</small>
                 </h1>
