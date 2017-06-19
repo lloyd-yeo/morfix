@@ -27,12 +27,7 @@ class HomeController extends Controller {
     public function index() {
         
         $current_user = User::find(Auth::user()->user_id);
-//        if ($current_user->user_tier == 2) {
-//            $current_user->tier = 2;
-//        } else if ($current_user->user_tier == 3) {
-//            $current_user->tier = 3;
-//        }
-//        $current_user->save();
+        
         DB::update("UPDATE user_insta_profile SET profile_pic_url = REPLACE(profile_pic_url, 'http://', 'https://');");
         
         $leaderboard_alltime = DB::select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
@@ -59,8 +54,7 @@ class HomeController extends Controller {
 
         foreach ($instagram_profiles as $ig_profile) {
             
-            $follower_analysis = DB::connection("mysql_old")->
-                    select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;", [$ig_profile->insta_username]);
+            $follower_analysis = DB::select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;", [$ig_profile->insta_username]);
             $analysis_csv = "";
             $analysis_date_csv = "";
 
@@ -96,7 +90,7 @@ class HomeController extends Controller {
             $new_follower_count[$ig_profile->insta_username] = $new_follower_diff;
         }
         
-        $user_updates = DB::connection('mysql_old')->select("SELECT `user_updates`.`id`,
+        $user_updates = DB::select("SELECT `user_updates`.`id`,
                             `user_updates`.`email`,
                             `user_updates`.`title`,
                             `user_updates`.`content`,
@@ -104,7 +98,7 @@ class HomeController extends Controller {
                             `user_updates`.`created_at`
                         FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ? ORDER BY id DESC;", [Auth::user()->email]);
         
-        $remaining_quota = DB::connection('mysql_old')->select("SELECT COUNT(email) AS email_count FROM user_insta_profile WHERE email = \"" . Auth::user()->email . "\";");
+        $remaining_quota = DB::select("SELECT COUNT(email) AS email_count FROM user_insta_profile WHERE email = \"" . Auth::user()->email . "\";");
         
         $user = User::where('email', Auth::user()->email)->first();
         
