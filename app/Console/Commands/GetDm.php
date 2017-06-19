@@ -47,7 +47,9 @@ class GetDm extends Command
     {
         $users = array();
         if (NULL !== $this->argument("email")) {
-            $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, user_tier FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
+            $users = User::where('email', $this->argument("email"))
+                    ->orderBy('user_id', 'desc')
+                    ->get();
         } else {
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
                     ->orderBy('user_id', 'desc')
