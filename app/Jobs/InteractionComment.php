@@ -141,8 +141,10 @@ class InteractionComment implements ShouldQueue {
                 $media_id = $engagement_job->media_id;
                 $engagement_job->fulfilled = 1;
                 $engagement_job->save();
+                
                 $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
                 $ig_profile->save();
+                
                 $comment_resp = $instagram->media->comment($media_id, $commentText);
                 $comment_log = new InstagramProfileCommentLog;
                 $comment_log->insta_username = $ig_username;
@@ -173,7 +175,7 @@ class InteractionComment implements ShouldQueue {
 
             echo "[$ig_username] real unengaged followings count = $real_unengaged_followings_count \n";
 
-            if (count($unengaged_followings) < 1 || $real_unengaged_followings_count == 0) {
+            if ($real_unengaged_followings_count == 0) {
 
                 $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                         ->orderBy('date_liked', 'desc')
@@ -190,6 +192,7 @@ class InteractionComment implements ShouldQueue {
                     }
 
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
+                    
                     $engaged_user = $unengaged_liking->target_username;
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
