@@ -30,14 +30,14 @@
                     </div>
                 </a>
             </div>
-<!--            <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-bio">
+            <div class="col-lg-4">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#overview">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
-                        <span class="h4 font-w700 text-white">Part 2</span> - <span class="h4 text-white-op">Bio & Link in Bio</span>
+                        <span class="h4 font-w700 text-white">Part 2</span> - <span class="h4 text-white-op">Overview</span>
                     </div>
                 </a>
-            </div>-->
+            </div>
         </div>
     </div>
 
