@@ -51,10 +51,6 @@ class GetDm extends Command
             $users = User::where('email', $this->argument("email"))
                     ->orderBy('user_id', 'desc')
                     ->get();
-        } else {
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
-                    ->orderBy('user_id', 'desc')
-                    ->get();
             
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
@@ -66,6 +62,11 @@ class GetDm extends Command
                     $this->line("Queued Profile: " . $ig_profile->insta_username);
                 }
             }
+            
+        } else {
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
+                    ->orderBy('user_id', 'desc')
+                    ->get();
         }
     }
 }
