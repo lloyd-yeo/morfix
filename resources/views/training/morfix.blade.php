@@ -12,7 +12,7 @@
 <main id="main-container">
     <div class="content bg-gray-lighter">
         <div class="row items-push">
-            <div class="col-sm-7">
+            <div class="col-sm-12">
                 <h1 class="page-heading">
                     <i class="si si-rocket"></i>  How-to-use Morfix <small> Learn how to utilize Morfix to it's greatest potential!</small>
                 </h1>
@@ -111,5 +111,4 @@
 @endsection
 
 @section('js')
-@include('postscheduling.js')
 @endsection
