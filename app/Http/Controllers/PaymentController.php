@@ -19,11 +19,17 @@ use App\DefaultImageGallery;
 use App\UserImages;
 use App\InstagramProfilePhotoPostSchedule;
 use App\StripeDetail;
+use App\PaymentLog;
 
 class PaymentController extends Controller
 {
     function upgrade(Request $request, $plan) {
         $response = array();
+        
+        $payment_log = new PaymentLog;
+        $payment_log->email = Auth::user()->email;
+        $payment_log->plan = $plan;
+        $payment_log->save();
         
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $user = User::where('email', Auth::user()->email)->first();
@@ -50,6 +56,8 @@ class PaymentController extends Controller
                 
             } catch(\Stripe\Error\Card $e) {
                 // Since it's a decline, \Stripe\Error\Card will be caught
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
                 $body = $e->getJsonBody();
                 $err  = $body['error'];
                 
@@ -62,16 +70,26 @@ class PaymentController extends Controller
                 
             } catch (\Stripe\Error\InvalidRequest $e) {
                 // Invalid parameters were supplied to Stripe's API
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
             } catch (\Stripe\Error\Authentication $e) {
                 // Authentication with Stripe's API failed
                 // (maybe you changed API keys recently)
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
             } catch (\Stripe\Error\ApiConnection $e) {
                 // Network communication with Stripe failed
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
             } catch (\Stripe\Error\Base $e) {
                 // Display a very generic error to the user, and maybe send
                 // yourself an email
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
             } catch (Exception $e) {
                 // Something else happened, completely unrelated to Stripe
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
             }
         }
         
@@ -117,6 +135,8 @@ class PaymentController extends Controller
             
         } catch(\Stripe\Error\Card $e) {
             // Since it's a decline, \Stripe\Error\Card will be caught
+            $payment_log->log = $e->getMessage();
+            $payment_log->save();
             $body = $e->getJsonBody();
             $err  = $body['error'];
 
@@ -129,6 +149,8 @@ class PaymentController extends Controller
 
         } catch (\Stripe\Error\InvalidRequest $e) {
             // Invalid parameters were supplied to Stripe's API
+            $payment_log->log = $e->getMessage();
+            $payment_log->save();
             $body = $e->getJsonBody();
             $err  = $body['error'];
 
@@ -141,6 +163,8 @@ class PaymentController extends Controller
         } catch (\Stripe\Error\Authentication $e) {
             // Authentication with Stripe's API failed
             // (maybe you changed API keys recently)
+            $payment_log->log = $e->getMessage();
+            $payment_log->save();
             $body = $e->getJsonBody();
             $err  = $body['error'];
 
@@ -152,6 +176,8 @@ class PaymentController extends Controller
                 "message" => $err['message']]);
         } catch (\Stripe\Error\ApiConnection $e) {
             // Network communication with Stripe failed
+            $payment_log->log = $e->getMessage();
+            $payment_log->save();
             $body = $e->getJsonBody();
             $err  = $body['error'];
 
@@ -164,6 +190,8 @@ class PaymentController extends Controller
         } catch (\Stripe\Error\Base $e) {
             // Display a very generic error to the user, and maybe send
             // yourself an email
+            $payment_log->log = $e->getMessage();
+            $payment_log->save();
             $body = $e->getJsonBody();
             $err  = $body['error'];
 
@@ -175,6 +203,8 @@ class PaymentController extends Controller
                 "message" => $err['message']]);
         } catch (Exception $e) {
             // Something else happened, completely unrelated to Stripe
+            $payment_log->log = $e->getMessage();
+            $payment_log->save();
             return response()->json([
                 "success" => false,
                 "message" => $e->getMessage()]);
