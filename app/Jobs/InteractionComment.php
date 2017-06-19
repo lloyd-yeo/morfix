@@ -21,6 +21,7 @@ use App\InstagramProfileLikeLog;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\EngagementJob;
 
 class InteractionComment implements ShouldQueue {
 
