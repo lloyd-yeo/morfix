@@ -152,6 +152,7 @@ class InteractionComment implements ShouldQueue {
                 $comment_log->save();
                 
                 $comment_resp = $instagram->media->comment($media_id, $commentText);
+                
                 exit();
             }
 

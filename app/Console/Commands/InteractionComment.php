@@ -58,8 +58,7 @@ class InteractionComment extends Command {
         if (NULL !== $this->argument("email")) {
             $user = User::where("email", $this->argument("email"))->first();
 
-            $instagram_profiles = InstagramProfile::where('auto_interaction', true)
-                    ->where('auto_comment', true)
+            $instagram_profiles = InstagramProfile::where('auto_comment', true)
                     ->where('email', $user->email)
                     ->where('incorrect_pw', false)
                     ->get();
@@ -68,8 +67,7 @@ class InteractionComment extends Command {
         } else {
             foreach (User::cursor() as $user) {
 
-                $instagram_profiles = InstagramProfile::where('auto_interaction', true)
-                        ->where('auto_comment', true)
+                $instagram_profiles = InstagramProfile::where('auto_comment', true)
                         ->where('email', $user->email)
                         ->where('incorrect_pw', false)
                         ->whereRaw('NOW() >= next_comment_time')
