@@ -93,7 +93,7 @@
 
                     <div class="block-content" id="auto-interaction-settings-container">
                         <div class="row items-push">
-                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-3">
+                            <div class="col-xs-12 col-sm-12 col-lg-12">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_like == 1)
                                     <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-2x fa-heart text-danger'></i> Like</span>
@@ -105,7 +105,7 @@
                                     
                                 </label>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-3">
+                            <div class="col-xs-12 col-sm-12 col-lg-12">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_comment == 1)
                                     <input class="toggle-comment-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='fa fa-2x fa-comments text-primary'></i> Comment</span>
@@ -116,7 +116,7 @@
                                     @endif
                                 </label>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-3">
+                            <div class="col-xs-12 col-sm-12 col-lg-12">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_follow == 1)
                                     <input class="toggle-follow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si fa-2x si-user-follow text-modern'></i> Follow</span>
@@ -127,7 +127,7 @@
                                     @endif
                                 </label>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-lg-9 col-lg-offset-3">
+                            <div class="col-xs-12 col-sm-12 col-lg-12">
                                 <label class="css-input css-input switch switch-square switch-lg switch-primary">
                                     @if ($ig_profile->auto_unfollow == 1)
                                     <input class="toggle-unfollow-btn" data-id="{{ $ig_profile->id }}" type="checkbox" checked><span></span> <span style='font-weight: 600;'><i class='si fa-2x si-user-unfollow text-lightred'></i> Unfollow</span>
