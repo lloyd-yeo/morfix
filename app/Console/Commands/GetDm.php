@@ -11,6 +11,7 @@ use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\User;
 
 class GetDm extends Command
 {
