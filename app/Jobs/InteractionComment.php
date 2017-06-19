@@ -131,7 +131,7 @@ class InteractionComment implements ShouldQueue {
             $engagement_jobs = EngagementJob::where('action', 1)
                     ->where('fulfilled', 0)
                     ->where('insta_username', $ig_username)
-                    ->take(3)
+                    ->take(1)
                     ->get();
 
             /**
@@ -189,7 +189,6 @@ class InteractionComment implements ShouldQueue {
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
@@ -212,7 +211,7 @@ class InteractionComment implements ShouldQueue {
 
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
-                            $comment_log->target_username = $unengaged_liking->follower_username;
+                            $comment_log->target_username = $unengaged_liking->target_username;
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
