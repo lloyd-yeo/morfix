@@ -168,7 +168,7 @@ function executeCommenting($instagram_profiles) {
                                 ->where('target_username', $unengaged_following->follower_username)
                                 ->count() > 0) {
                     echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
-                    break;
+                    continue;
                 }
                 $real_unengaged_followings_count++;
             }
