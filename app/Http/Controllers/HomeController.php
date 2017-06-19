@@ -33,9 +33,9 @@ class HomeController extends Controller {
 //            $current_user->tier = 3;
 //        }
 //        $current_user->save();
+        DB::update("UPDATE user_insta_profile SET profile_pic_url = REPLACE(profile_pic_url, 'http://', 'https://');");
         
-        $leaderboard_alltime = DB::connection("mysql_old")
-                ->select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
+        $leaderboard_alltime = DB::select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
                         GROUP BY email, name
                         ORDER BY total_comms DESC LIMIT 10;");
 
