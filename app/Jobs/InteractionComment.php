@@ -255,6 +255,7 @@ class InteractionComment implements ShouldQueue {
 
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
                     $engaged_user = $unengaged_following->target_username;
+                    
                     try {
                         $user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
