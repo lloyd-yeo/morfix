@@ -54,7 +54,6 @@ class SettingsController extends Controller {
         $cu->source = $stripeToken; // obtained with Checkout
         $cu->save();
 
-
         return view('settings.index', [
             'updateCreditCardMessage' => "Your card has been updated",
         ]);
