@@ -29,6 +29,7 @@ class PaymentController extends Controller
         $payment_log = new PaymentLog;
         $payment_log->email = Auth::user()->email;
         $payment_log->plan = $plan;
+        $payment_log->source = "Upgrade Page";
         $payment_log->save();
         
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
