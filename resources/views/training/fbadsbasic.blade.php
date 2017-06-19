@@ -14,7 +14,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-star"></i>  FB Ads <small> Learn how to market effectively using Facebook Ads in this training series!</small>
+                    <i class="si si-star"></i>  Facebook Ads <small> Learn how to market effectively using Facebook Ads in this training series!</small>
                 </h1>
             </div>
         </div>
@@ -23,7 +23,7 @@
     <div class="content content-boxed">
         <div class='row'>
             <div class="col-lg-4">
-                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-setup">
+                <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#introduction">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 1</span> - <span class="h4 text-white-op">Introduction</span>
@@ -134,5 +134,4 @@
 @endsection
 
 @section('js')
-@include('postscheduling.js')
 @endsection
