@@ -120,26 +120,26 @@
                         @if ($page == 'training-6figureprofile')
                         <a class="active" href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @else
-                        @if ($page == 'training-6figureprofile')
-                        <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
-                        @else
-                            @if ((Auth::user()->tier % 10) == 3)
+                            @if ($page == 'training-6figureprofile')
                             <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                             @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-training-6figure-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                                @if ((Auth::user()->tier % 10) == 3)
+                                <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                                @else
+                                <a href="#" data-toggle="modal" data-target="#upgrade-training-6figure-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                                @endif
                             @endif
-                        @endif
                         @endif
                     </li>
                     <li>
                         @if ($page == 'training-fbads')
-                        <a class="active" href="javascript:void(0)" ><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
+                        <a class="active" href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
                         @else
                         @if ($page == 'training-fbads')
-                        <a href="javascript:void(0)" ><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
+                        <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
                         @else
-                            @if ((Auth::user()->tier % 10) == 3)
-                            <a href="javascript:void(0)" ><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
+                            @if (Auth::user()->tier > 3)
+                            <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
                             @else
                             <a href="#" data-toggle="modal" data-target="#upgrade-training-video-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Facebook Ads <small>[coming soon!]</small></span></a>
                             @endif

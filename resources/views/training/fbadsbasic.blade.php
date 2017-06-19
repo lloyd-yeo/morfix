@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-@include('sidebar', ['page' => 'training-6figureprofile'])
+@include('sidebar', ['page' => 'training-fbads'])
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="si si-star"></i>  6 Figure Profile <small> Learn the tips & tricks to build a 6 figure profile!</small>
+                    <i class="si si-star"></i>  FB Ads <small> Learn how to market effectively using Facebook Ads in this training series!</small>
                 </h1>
             </div>
         </div>
@@ -30,14 +30,14 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-4">
+<!--            <div class="col-lg-4">
                 <a class="block block-link-hover2" href="#" data-toggle="modal" data-target="#ig-bio">
                     <div class="block-content block-content-full bg-primary clearfix">
                         <i class="fa fa-2x fa-play-circle fa-2x text-white pull-left"></i>
                         <span class="h4 font-w700 text-white">Part 2</span> - <span class="h4 text-white-op">Bio & Link in Bio</span>
                     </div>
                 </a>
-            </div>
+            </div>-->
         </div>
     </div>
 
