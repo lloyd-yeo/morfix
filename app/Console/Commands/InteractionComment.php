@@ -188,7 +188,7 @@ function executeCommenting($instagram_profiles) {
                                     ->where('target_username', $unengaged_liking->target_username)
                                     ->count() > 0) {
                         echo("[Like][$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
-                        break;
+                        continue;
                     }
 
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
