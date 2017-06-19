@@ -48,6 +48,11 @@ class PaymentController extends Controller
                 $user->stripe_id = $customer->id;
                 $user->save();
                 
+                $stripe_details = new StripeDetail;
+                $stripe_details->email = Auth::user()->email;
+                $stripe_details->stripe_id = $customer->id;
+                $stripe_details->save();
+                
                 // Add the credit card as default payment source for customer
                 $customer = \Stripe\Customer::retrieve($customer->id);
                 $customer->source = $token;
