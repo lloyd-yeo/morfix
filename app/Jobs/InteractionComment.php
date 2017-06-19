@@ -169,8 +169,8 @@ class InteractionComment implements ShouldQueue {
                 if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
                                 ->where('target_username', $unengaged_following->follower_username)
                                 ->count() > 0) {
-                    echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
-                    break;
+                    echo("[Initial Check][$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
+                    continue;
                 }
                 $real_unengaged_followings_count++;
             }
@@ -189,8 +189,8 @@ class InteractionComment implements ShouldQueue {
                     if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
                                     ->where('target_username', $unengaged_liking->target_username)
                                     ->count() > 0) {
-                        echo("[$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
-                        break;
+                        echo("[Like][$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
+                        continue;
                     }
 
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
@@ -249,7 +249,7 @@ class InteractionComment implements ShouldQueue {
                     if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
                                     ->where('target_username', $unengaged_following->follower_username)
                                     ->count() > 0) {
-                        echo("[$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
+                        echo("[Follow][$ig_username] has engaged before " . $unengaged_following->follower_username . "\n");
                         continue;
                     }
 
