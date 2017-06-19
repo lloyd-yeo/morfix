@@ -53,15 +53,18 @@ class GetDm implements ShouldQueue {
      * @return void
      */
     public function handle() {
+        
         $ig_profile = $this->profile;
         $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
-
+        $user = $ig_profile->owner();
+        
         $config = array();
         $config["storage"] = "mysql";
         $config["pdo"] = DB::connection('mysql_igsessions')->getPdo();
-
+        $config["dbtablename"] = "instagram_sessions";
+        
         $debug = true;
         $truncatedDebug = false;
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
@@ -87,7 +90,7 @@ class GetDm implements ShouldQueue {
                     if ($newest_timestamp == 0) {
                         $newest_timestamp = $story->args->timestamp;
                         //update instagram profile's timestamp here.
-                        DB::connection('mysql_old')->update("UPDATE user_insta_profile SET recent_activity_timestamp = ? WHERE id = ?;", [$newest_timestamp, $ig_profile->id]);
+                        DB::update("UPDATE user_insta_profile SET recent_activity_timestamp = ? WHERE id = ?;", [$newest_timestamp, $ig_profile->id]);
                     }
 
                     $new_follower_template = $ig_profile->insta_new_follower_template;
@@ -98,7 +101,7 @@ class GetDm implements ShouldQueue {
                     $this->line($story->args->profile_id);
                     $this->line($story->args->timestamp);
 
-                    $existing_dm_jobs = DB::connection('mysql_old')->select("SELECT job_id
+                    $existing_dm_jobs = DB::select("SELECT job_id
                                 FROM `insta_affiliate`.`dm_job`
                                 WHERE insta_username = ?
                                 AND recipient_insta_id = ?;", [$ig_username, $story->args->profile_id]);

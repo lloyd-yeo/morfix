@@ -45,6 +45,7 @@ class GetDmJob extends Command
      */
     public function handle()
     {
+        $users = array();
         if (NULL !== $this->argument("email")) {
             $users = DB::connection('mysql_old')->select("SELECT u.user_id, u.email, user_tier FROM insta_affiliate.user u WHERE u.email = ?;", [$this->argument("email")]);
         } else {
@@ -55,12 +56,13 @@ class GetDmJob extends Command
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                                                         ->get();
-                
                 foreach ($instagram_profiles as $ig_profile) {
-                    
+                    $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('getdm');
+                    dispatch($job);
+                    $this->line("Queued Profile: " . $ig_profile->insta_username);
                 }
             }
-            
         }
     }
 }
