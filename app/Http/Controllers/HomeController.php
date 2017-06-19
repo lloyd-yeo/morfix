@@ -27,12 +27,12 @@ class HomeController extends Controller {
     public function index() {
         
         $current_user = User::find(Auth::user()->user_id);
-        if ($current_user->user_tier == 2) {
-            $current_user->tier = 2;
-        } else if ($current_user->user_tier == 3) {
-            $current_user->tier = 3;
-        }
-        $current_user->save();
+//        if ($current_user->user_tier == 2) {
+//            $current_user->tier = 2;
+//        } else if ($current_user->user_tier == 3) {
+//            $current_user->tier = 3;
+//        }
+//        $current_user->save();
         
         $leaderboard_alltime = DB::connection("mysql_old")
                 ->select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
