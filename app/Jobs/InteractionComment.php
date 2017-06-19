@@ -139,7 +139,6 @@ class InteractionComment implements ShouldQueue {
              */
             foreach ($engagement_jobs as $engagement_job) {
                 $media_id = $engagement_job->media_id;
-                $job_id = $engagement_job->job_id;
                 $engagement_job->fulfilled = 1;
                 $engagement_job->save();
                 $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
