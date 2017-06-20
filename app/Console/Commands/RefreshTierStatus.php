@@ -68,6 +68,8 @@ class RefreshTierStatus extends Command
         
         $users = User::where('stripe_id', '>', '\'\'')->where('vip', false)->where('admin', false)->get();
         
+        $num_active_paying_user = 0;
+        
         foreach ($users as $user) {
             $user_tier = 1;
             foreach ($user->stripeDetails() as $stripe_detail) {
@@ -103,6 +105,7 @@ class RefreshTierStatus extends Command
             }
             
             if ($user->save()) {
+                $num_active_paying_user++;
                 echo $user->email . " [$user_tier] saved!\n";
             }
         }
