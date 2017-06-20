@@ -98,8 +98,12 @@ class RefreshTierStatus extends Command
             }
             
             $user->tier = $user_tier;
+            if ($user_tier == 1) {
+                continue;
+            }
+            
             if ($user->save()) {
-                echo $user->email . " [$user_tier] saved!\n"
+                echo $user->email . " [$user_tier] saved!\n";
             }
         }
         
