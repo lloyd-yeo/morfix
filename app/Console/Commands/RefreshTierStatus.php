@@ -67,10 +67,19 @@ class RefreshTierStatus extends Command
 //        }
         
         $users = User::where('stripe_id', '>', '\'\'')->where('vip', false)->where('admin', false)->get();
+        
         foreach ($users as $user) {
+            $user_tier = 1;
+            
             foreach ($user->stripeDetails() as $stripe_detail) {
                 $stripe_id = $stripe_detail->stripe_id;
                 echo $user->email . "\t" . $stripe_id . "\n";
+                
+                $user_active_subscriptions = StripeActiveSubscription::where('stripe_id', $stripe_id)->whereRaw('(active = \'active\' OR active=\'trialing\')')->get();
+                foreach ($user_active_subscriptions as $active_sub) {
+                    echo $user->email . "\t" . $active_sub->subscription_id . "\n";
+                }
+                
             }
         }
         
