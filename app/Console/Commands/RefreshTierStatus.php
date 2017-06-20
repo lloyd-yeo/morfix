@@ -41,9 +41,17 @@ class RefreshTierStatus extends Command
      */
     public function handle()
     {
-        $users = User::where('stripe_id', '>', '\'\'')->get();
-        foreach ($users as $user) {
-            echo $user->stripe_id . "\n";
+//        $users = User::where('stripe_id', '>', '\'\'')->get();
+//        foreach ($users as $user) {
+//            
+//        }
+        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        
+        $subscriptions = \Stripe\Subscription::all();
+        foreach ($subscriptions->data as $subscription) {
+            $plan = $subscription->plan;
+            $stripe_id = $subscription->customer;
+            echo $plan . " " . $stripe_id . "\n";
         }
     }
 }
