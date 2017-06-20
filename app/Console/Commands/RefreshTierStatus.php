@@ -110,5 +110,6 @@ class RefreshTierStatus extends Command
             }
         }
         
+        echo "Total number of paying users: $num_active_paying_user";
     }
 }
