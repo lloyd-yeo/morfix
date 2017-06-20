@@ -70,14 +70,30 @@ class RefreshTierStatus extends Command
         
         foreach ($users as $user) {
             $user_tier = 1;
-            
             foreach ($user->stripeDetails() as $stripe_detail) {
                 $stripe_id = $stripe_detail->stripe_id;
-                echo $user->email . "\t" . $stripe_id . "\n";
+//                echo $user->email . "\t" . $stripe_id . "\n";
                 
                 $user_active_subscriptions = StripeActiveSubscription::where('stripe_id', $stripe_id)->whereRaw('(status = \'active\' OR status=\'trialing\')')->get();
                 foreach ($user_active_subscriptions as $active_sub) {
-                    echo $user->email . "\t" . $active_sub->subscription_id . "\n";
+                    
+                    $plan = $active_sub->subscription_id;
+                    
+                    if ($plan == "0137") {
+                        $user_tier = $user_tier + 1;
+                    } else if ($plan == "0297") {
+                        $user_tier = $user_tier + 10;
+                    } else if ($plan == "MX370") {
+                        $user_tier = $user_tier + 2;
+                    } else if ($plan == "MX970") {
+                        $user_tier = $user_tier + 20;
+                    } else if ($plan == "0167") {
+                        $user_tier = $user_tier + 2;
+                    } else if ($plan == "0197") {
+                        $user_tier = $user_tier + 3;
+                    }
+                    
+                    echo $user->email . " ($user_tier)\t" . $active_sub->subscription_id . "\t" . $active_sub->status . "\n";
                 }
                 
             }
