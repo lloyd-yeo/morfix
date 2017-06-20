@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class StripeActiveSubscription extends Model {
 
-    protected $table = 'stripe_active_subscriptions';
+    protected $table = 'user_stripe_active_subscription';
 
 }

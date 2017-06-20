@@ -7,6 +7,7 @@ use App\User;
 use App\InstagramProfilePhotoPostSchedule;
 use App\StripeDetail;
 use Stripe\Stripe as Stripe;
+use App\StripeActiveSubscription;
 
 class RefreshTierStatus extends Command
 {
@@ -53,6 +54,12 @@ class RefreshTierStatus extends Command
             $plan = $subscription->plan;
             $stripe_id = $subscription->customer;
             echo $plan->id . " " . $stripe_id . "\n";
+            
+            $active_subscription = new StripeActiveSubscription;
+            $active_subscription->stripe_id = $stripe_id;
+            $active_subscription->subscription_id = $plan;
+            $active_subscription->status = $subscription->status;
+            $active_subscription->save();
         }
     }
 }
