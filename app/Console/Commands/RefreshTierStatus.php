@@ -47,7 +47,7 @@ class RefreshTierStatus extends Command
 //        }
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         
-        $subscriptions = \Stripe\Subscription::all(array('limit'=>3));
+        $subscriptions = \Stripe\Subscription::all(array('limit'=>100));
         
         foreach ($subscriptions->data as $subscription) {
             $plan = $subscription->plan;
