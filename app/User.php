@@ -31,5 +31,9 @@ class User extends Authenticatable {
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
+    public function stripeDetails() {
+        return StripeDetail::where('email', $this->email)->get();
+    }
 
 }

@@ -68,10 +68,9 @@ class RefreshTierStatus extends Command
         
         $users = User::where('stripe_id', '>', '\'\'')->where('vip', false)->where('admin', false)->get();
         foreach ($users as $user) {
-            $stripe_details = StripeDetail::where('email', $user->email);
-            foreach ($stripe_details as $stripe_detail) {
+            foreach ($user->stripeDetails() as $stripe_detail) {
                 $stripe_id = $stripe_detail->stripe_id;
-                echo $user->email . "\t" . $stripe_detail->stripe_id . "\n";
+                echo $user->email . "\t" . $stripe_id . "\n";
             }
         }
         
