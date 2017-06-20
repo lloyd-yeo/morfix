@@ -59,7 +59,8 @@ class RefreshTierStatus extends Command
             $active_subscription->stripe_id = $stripe_id;
             $active_subscription->subscription_id = $plan;
             $active_subscription->status = $subscription->status;
-            
+            $active_subscription->start_date = Carbon::createFromTimestamp($subscription->current_period_start);
+            $active_subscription->end_date = Carbon::createFromTimestamp($subscription->current_period_end);
             $active_subscription->save();
         }
     }
