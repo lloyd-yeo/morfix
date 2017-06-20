@@ -95,8 +95,9 @@ class RefreshTierStatus extends Command
                     
                     echo $user->email . " ($user_tier)\t" . $active_sub->subscription_id . "\t" . $active_sub->status . "\n";
                 }
-                
             }
+            $user->tier = $user_tier;
+            $user->save();
         }
         
     }
