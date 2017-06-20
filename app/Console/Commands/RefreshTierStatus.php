@@ -59,6 +59,7 @@ class RefreshTierStatus extends Command
             $active_subscription->stripe_id = $stripe_id;
             $active_subscription->subscription_id = $plan;
             $active_subscription->status = $subscription->status;
+            
             $active_subscription->save();
         }
     }
