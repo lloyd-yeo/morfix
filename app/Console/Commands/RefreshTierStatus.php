@@ -51,7 +51,7 @@ class RefreshTierStatus extends Command
         foreach ($subscriptions->data as $subscription) {
             $plan = $subscription->plan;
             $stripe_id = $subscription->customer;
-            echo $plan . " " . $stripe_id . "\n";
+            echo $plan->id . " " . $stripe_id . "\n";
         }
     }
 }
