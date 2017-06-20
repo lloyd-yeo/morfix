@@ -52,7 +52,6 @@ class RefreshTierStatus extends Command
         
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
             $stripe_id = $subscription->customer;
-            echo $plan->id . " " . $stripe_id . "\n";
             $items = $subscription->items->data;
             foreach ($items as $item) {
                 $plan = $item->plan;
