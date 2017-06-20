@@ -51,6 +51,7 @@ class RefreshTierStatus extends Command
         $subscriptions = \Stripe\Subscription::all(array('limit'=>100));
         
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
+            echo $subscription . "\n\n\n\n";
             $stripe_id = $subscription->customer;
             $items = $subscription->items->data;
             foreach ($items as $item) {
@@ -59,7 +60,7 @@ class RefreshTierStatus extends Command
                 
                 $active_subscription = new StripeActiveSubscription;
                 $active_subscription->stripe_id = $stripe_id;
-                $active_subscription->subscription_id = $plan->id;
+                $active_subscription->subscription_id = $plan_id;
                 $active_subscription->status = $subscription->status;
                 $active_subscription->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start);
                 $active_subscription->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
@@ -67,7 +68,6 @@ class RefreshTierStatus extends Command
                     echo $stripe_id . "\t" . $plan_id . "\n";
                 }
             }
-            
         }
     }
 }
