@@ -75,7 +75,7 @@ class RefreshTierStatus extends Command
                 $stripe_id = $stripe_detail->stripe_id;
                 echo $user->email . "\t" . $stripe_id . "\n";
                 
-                $user_active_subscriptions = StripeActiveSubscription::where('stripe_id', $stripe_id)->whereRaw('(active = \'active\' OR active=\'trialing\')')->get();
+                $user_active_subscriptions = StripeActiveSubscription::where('stripe_id', $stripe_id)->whereRaw('(status = \'active\' OR status=\'trialing\')')->get();
                 foreach ($user_active_subscriptions as $active_sub) {
                     echo $user->email . "\t" . $active_sub->subscription_id . "\n";
                 }
