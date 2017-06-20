@@ -54,12 +54,14 @@ class GetStripeStatus extends Command {
      */
     public function handle() {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        
         $rows = DB::connection('mysql_old')->select("SELECT referrer_vip, referred_email, referrer_email, subscription_id, charge_id, invoice_id
                             FROM insta_affiliate.get_referral_charges_of_user 
                             WHERE charge_created >= \"2017-04-01 00:00:00\"
                             AND charge_created <= \"2017-04-31 23:59:59\"
                             ORDER BY referrer_email ASC 
                             LIMIT 10000;");
+        
         $file = fopen('export.csv', 'w');
 
         foreach ($rows as $row) {

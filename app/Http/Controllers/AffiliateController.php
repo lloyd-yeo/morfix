@@ -37,7 +37,7 @@ class AffiliateController extends Controller {
             if ($referral->email == "maychengmt@yahoo.com" 
                     || $referral->email == "michaeltang90@hotmail.com" 
                     || $referral->email == "kingkew18@gmail.com") {
-                continue;
+                continue; 
                 $referrals_[] = $referral;
             }
 
