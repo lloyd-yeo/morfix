@@ -63,7 +63,6 @@ class GetDm implements ShouldQueue {
         
         $config = array();
         $config["storage"] = "mysql";
-        DB::connection("mysql_igsession")->reconnect();
         $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
         
