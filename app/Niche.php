@@ -12,10 +12,18 @@ class Niche extends Model {
     protected $table = "niches";
     
     public function targetUsernames() {
-        return NicheTarget::where('niche_id', $this->niche_id)->inRandomOrder()->get();
+        if ($this->niche_id > 0) {
+            return NicheTarget::where('niche_id', $this->niche_id)->inRandomOrder()->get();
+        } else {
+            return array();
+        }
     }
     
     public function targetHashtags() {
-        return NicheTargetHashtag::where('niche_id', $this->niche_id)->inRandomOrder()->get();
+        if ($this->niche_id > 0) {
+            return NicheTargetHashtag::where('niche_id', $this->niche_id)->inRandomOrder()->get();
+        } else {
+            return array();
+        }
     }
 }
