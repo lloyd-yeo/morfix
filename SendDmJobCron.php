@@ -112,7 +112,6 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $instagram->setProxy($proxy);
                     $instagram->setUser($ig_username, $ig_password);
                     $instagram->login();
-
                     try {
                         $delay = rand(35, 45);
                         $recipients = array();

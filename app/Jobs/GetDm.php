@@ -55,6 +55,7 @@ class GetDm implements ShouldQueue {
      */
     public function handle() {
         DB::reconnect();
+        
         $ig_profile = $this->profile;
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
@@ -62,6 +63,7 @@ class GetDm implements ShouldQueue {
         
         $config = array();
         $config["storage"] = "mysql";
+        DB::connection("mysql_igsession")->reconnect();
         $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
         
