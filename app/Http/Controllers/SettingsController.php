@@ -16,6 +16,10 @@ use Stripe\Stripe as Stripe;
 
 class SettingsController extends Controller {
 
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function index() {
         //get recent subscription
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");

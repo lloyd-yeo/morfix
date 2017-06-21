@@ -42,29 +42,29 @@ class RefreshTierStatus extends Command
      */
     public function handle()
     {
-//        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-//        
-//        $subscriptions = \Stripe\Subscription::all(array('limit'=>100));
-//        
-//        foreach ($subscriptions->autoPagingIterator() as $subscription) {
-//            echo $subscription . "\n\n\n\n";
-//            $stripe_id = $subscription->customer;
-//            $items = $subscription->items->data;
-//            foreach ($items as $item) {
-//                $plan = $item->plan;
-//                $plan_id = $plan->id;
-//                
-//                $active_subscription = new StripeActiveSubscription;
-//                $active_subscription->stripe_id = $stripe_id;
-//                $active_subscription->subscription_id = $plan_id;
-//                $active_subscription->status = $subscription->status;
-//                $active_subscription->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start);
-//                $active_subscription->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
-//                if ($active_subscription->save()) {
-//                    echo $stripe_id . "\t" . $plan_id . "\n";
-//                }
-//            }
-//        }
+        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        
+        $subscriptions = \Stripe\Subscription::all(array('limit'=>100));
+        
+        foreach ($subscriptions->autoPagingIterator() as $subscription) {
+            echo $subscription . "\n\n\n\n";
+            $stripe_id = $subscription->customer;
+            $items = $subscription->items->data;
+            foreach ($items as $item) {
+                $plan = $item->plan;
+                $plan_id = $plan->id;
+                
+                $active_subscription = new StripeActiveSubscription;
+                $active_subscription->stripe_id = $stripe_id;
+                $active_subscription->subscription_id = $plan_id;
+                $active_subscription->status = $subscription->status;
+                $active_subscription->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start);
+                $active_subscription->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
+                if ($active_subscription->save()) {
+                    echo $stripe_id . "\t" . $plan_id . "\n";
+                }
+            }
+        }
         
         $users = User::where('stripe_id', '>', '\'\'')->where('vip', false)->where('admin', false)->get();
         
@@ -72,9 +72,9 @@ class RefreshTierStatus extends Command
         
         foreach ($users as $user) {
             $user_tier = 1;
+            
             foreach ($user->stripeDetails() as $stripe_detail) {
                 $stripe_id = $stripe_detail->stripe_id;
-//                echo $user->email . "\t" . $stripe_id . "\n";
                 
                 $user_active_subscriptions = StripeActiveSubscription::where('stripe_id', $stripe_id)->whereRaw('(status = \'active\' OR status=\'trialing\')')->get();
                 foreach ($user_active_subscriptions as $active_sub) {
@@ -94,8 +94,6 @@ class RefreshTierStatus extends Command
                     } else if ($plan == "0197") {
                         $user_tier = $user_tier + 3;
                     }
-                    
-                    #echo $user->email . " ($user_tier)\t" . $active_sub->subscription_id . "\t" . $active_sub->status . "\n";
                 }
             }
             
