@@ -39,13 +39,11 @@ class User extends Authenticatable {
     
     public function deleteStripeSubscriptions() {
         //Remove al active subscription
-        $saved_subscriptions = StripeActiveSubscription::where('stripe_id', Auth::user()->stripe_id)->get();
-        foreach ($saved_subscriptions as $sub) {
-            $sub->delete();
-        }
+        $deleted_subscriptions = StripeActiveSubscription::where('stripe_id', Auth::user()->stripe_id)->delete();
     }
     
     public function updateStripeSubscriptions() {
+        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $subscriptions_listings = \Stripe\Subscription::all(array('customer' => Auth::user()->stripe_id));
         $subscriptions = $subscriptions_listings->data;
 
