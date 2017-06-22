@@ -12,6 +12,7 @@ use App\Niche;
 use App\InstagramProfileComment;
 use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
+use App\StripeActiveSubscription;
 use Stripe\Stripe as Stripe;
 
 class SettingsController extends Controller {
