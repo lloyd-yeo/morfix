@@ -53,4 +53,27 @@ $(".btn-cancel-subscription").on("click", function(){
         });
     });
 });
+
+$(".btn-pay-invoice").on("click", function(){ 
+    var $sub_id = $(this).attr("data-sub-id");
+    var $invoice_id = $(this).attr("data-invoice-id");
+    
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/settings/invoice/pay/" + $invoice_id,
+        dataType: "json",
+        data: {
+
+        },
+        success: function (data) {
+            if (data.success === true) {
+                swal('Success', data.message, 'success');
+            } else {
+                swal('Oops...', data.message, 'error');
+            }
+        }
+    });
+    
+});
 </script>

@@ -127,7 +127,6 @@ class SettingsController extends Controller {
     }
 
     public function attemptInvoice($invoice_id) {
-
         try {
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
             $payment_log = new PaymentLog;
