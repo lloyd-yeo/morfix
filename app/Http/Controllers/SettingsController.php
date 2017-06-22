@@ -154,34 +154,39 @@ class SettingsController extends Controller {
             $body = $e->getJsonBody();
             $err = $body['error'];
 
-            return response()->json([
-                        "success" => false,
-                        "status" => $e->getHttpStatus(),
-                        "type" => $err['type'],
-                        "code" => $err['code'],
-                        "message" => $err['message']]);
+            return Response::json(array("success" => false, 'message' => $e->getMessage()));
+            
         } catch (\Stripe\Error\InvalidRequest $e) {
             // Invalid parameters were supplied to Stripe's API
             $payment_log->log = $e->getMessage();
             $payment_log->save();
+            return Response::json(array("success" => false, 'message' => $e->getMessage()));
+            
         } catch (\Stripe\Error\Authentication $e) {
             // Authentication with Stripe's API failed
             // (maybe you changed API keys recently)
             $payment_log->log = $e->getMessage();
             $payment_log->save();
+            return Response::json(array("success" => false, 'message' => $e->getMessage()));
+            
         } catch (\Stripe\Error\ApiConnection $e) {
             // Network communication with Stripe failed
             $payment_log->log = $e->getMessage();
             $payment_log->save();
+            return Response::json(array("success" => false, 'message' => $e->getMessage()));
+            
         } catch (\Stripe\Error\Base $e) {
             // Display a very generic error to the user, and maybe send
             // yourself an email
             $payment_log->log = $e->getMessage();
             $payment_log->save();
+            return Response::json(array("success" => false, 'message' => $e->getMessage()));
+            
         } catch (Exception $e) {
             // Something else happened, completely unrelated to Stripe
             $payment_log->log = $e->getMessage();
             $payment_log->save();
+            return Response::json(array("success" => false, 'message' => $e->getMessage()));
         }
         
     }
