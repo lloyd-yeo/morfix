@@ -39,7 +39,7 @@ class SettingsController extends Controller {
             $subscriptions = $subscriptions_listings->data;
             
             //Remove al active subscription
-            $saved_subscriptions = StripeActiveSubscription::where('stripe_id', Auth::user()->stripe_id);
+            $saved_subscriptions = StripeActiveSubscription::where('stripe_id', Auth::user()->stripe_id)->get();
             foreach ($saved_subscriptions as $sub) {
                 $sub->delete();
             }
