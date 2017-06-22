@@ -21,59 +21,66 @@ use App\InstagramProfilePhotoPostSchedule;
 use App\StripeDetail;
 use App\PaymentLog;
 
-class PaymentController extends Controller
-{
+class PaymentController extends Controller {
+
     function upgrade(Request $request, $plan) {
         $response = array();
-        
+
         $payment_log = new PaymentLog;
         $payment_log->email = Auth::user()->email;
         $payment_log->plan = $plan;
         $payment_log->source = "Upgrade Page";
         $payment_log->save();
-        
+
+        $plan_id = "0137";
+        if ($plan == "Premium") {
+            $plan_id = "0137";
+        } else if ($plan == "Pro") {
+            $plan_id = "MX370";
+        } else if ($plan == "Business") {
+            $plan_id = "0297";
+        } else if ($plan == "Mastermind") {
+            $plan_id = "MX970";
+        }
+
+        $response['plan'] = $plan;
+
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $user = User::where('email', Auth::user()->email)->first();
         $stripe_id = $user->stripe_id;
-        
+
         $token = $request->input('stripeToken');
-        
+
         if ($stripe_id === NULL) {
             try {
+
                 // Create the customer first for record purposes.
                 $customer = \Stripe\Customer::create(array(
-                    "email" => Auth::user()->email,
+                            "email" => Auth::user()->email,
+                            "source" => $token,
+                            'plan' => $plan_id
                 ));
-                
-                $response['customer_created'] = true;
+
                 $user->stripe_id = $customer->id;
                 $user->save();
-                
+
                 $stripe_details = new StripeDetail;
                 $stripe_details->email = Auth::user()->email;
                 $stripe_details->stripe_id = $customer->id;
                 $stripe_details->save();
-                
-                // Add the credit card as default payment source for customer
-                $customer = \Stripe\Customer::retrieve($customer->id);
-                $customer->source = $token;
-                $customer->save();
-                
-                
-            } catch(\Stripe\Error\Card $e) {
+            } catch (\Stripe\Error\Card $e) {
                 // Since it's a decline, \Stripe\Error\Card will be caught
                 $payment_log->log = $e->getMessage();
                 $payment_log->save();
                 $body = $e->getJsonBody();
-                $err  = $body['error'];
-                
+                $err = $body['error'];
+
                 return response()->json([
-                    "success" => false, 
-                    "status" => $e->getHttpStatus(), 
-                    "type" => $err['type'], 
-                    "code" => $err['code'], 
-                    "message" => $err['message']]);
-                
+                            "success" => false,
+                            "status" => $e->getHttpStatus(),
+                            "type" => $err['type'],
+                            "code" => $err['code'],
+                            "message" => $err['message']]);
             } catch (\Stripe\Error\InvalidRequest $e) {
                 // Invalid parameters were supplied to Stripe's API
                 $payment_log->log = $e->getMessage();
@@ -97,125 +104,109 @@ class PaymentController extends Controller
                 $payment_log->log = $e->getMessage();
                 $payment_log->save();
             }
-        }
-        
-        $plan_id = "0137";
-        if ($plan == "Premium") {
-            $plan_id = "0137";
-        } else if ($plan == "Pro") {
-            $plan_id = "MX370";
-        } else if ($plan == "Business") {
-            $plan_id = "0297";
-        } else if ($plan == "Mastermind") {
-            $plan_id = "MX970";
-        }
-        
-        $response['plan'] = $plan;
-        
-        try {
-            
-            \Stripe\Subscription::create(array(
-                "customer" => $customer->id,
-                "plan" => $plan_id,
-            ));
-            
-            $response['subscription_success'] = true;
-            
-            if ($plan == "Premium") {
-               $user->tier = $user->tier + 1;
-            } else if ($plan == "Pro") {
-               $user->tier = $user->tier + 2;
-            } else if ($plan == "Business") {
-                $user->tier = $user->tier + 10;
-                if ($user->tier < 10) {
-                    $user->num_acct = $user->num_acct + 5;
+        } else {
+
+            try {
+                \Stripe\Subscription::create(array(
+                    "customer" => $customer->id,
+                    "plan" => $plan_id,
+                ));
+
+                $response['subscription_success'] = true;
+
+                if ($plan == "Premium") {
+                    $user->tier = $user->tier + 1;
+                } else if ($plan == "Pro") {
+                    $user->tier = $user->tier + 2;
+                } else if ($plan == "Business") {
+                    $user->tier = $user->tier + 10;
+                    if ($user->tier < 10) {
+                        $user->num_acct = $user->num_acct + 5;
+                    }
+                } else if ($plan == "Mastermind") {
+                    $user->tier = $user->tier + 20;
+                    if ($user->tier < 10) {
+                        $user->num_acct = $user->num_acct + 5;
+                    }
                 }
-            } else if ($plan == "Mastermind") {
-                $user->tier = $user->tier + 20;
-                if ($user->tier < 10) {
-                    $user->num_acct = $user->num_acct + 5;
-                }
+
+                $user->save();
+            } catch (\Stripe\Error\Card $e) {
+                // Since it's a decline, \Stripe\Error\Card will be caught
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
+                $body = $e->getJsonBody();
+                $err = $body['error'];
+
+                return response()->json([
+                            "success" => false,
+                            "status" => $e->getHttpStatus(),
+                            "type" => $err['type'],
+                            "code" => $err['code'],
+                            "message" => $err['message']]);
+            } catch (\Stripe\Error\InvalidRequest $e) {
+                // Invalid parameters were supplied to Stripe's API
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
+                $body = $e->getJsonBody();
+                $err = $body['error'];
+
+                return response()->json([
+                            "success" => false,
+                            "status" => $e->getHttpStatus(),
+                            "type" => $err['type'],
+                            "code" => $err['code'],
+                            "message" => $err['message']]);
+            } catch (\Stripe\Error\Authentication $e) {
+                // Authentication with Stripe's API failed
+                // (maybe you changed API keys recently)
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
+                $body = $e->getJsonBody();
+                $err = $body['error'];
+
+                return response()->json([
+                            "success" => false,
+                            "status" => $e->getHttpStatus(),
+                            "type" => $err['type'],
+                            "code" => $err['code'],
+                            "message" => $err['message']]);
+            } catch (\Stripe\Error\ApiConnection $e) {
+                // Network communication with Stripe failed
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
+                $body = $e->getJsonBody();
+                $err = $body['error'];
+
+                return response()->json([
+                            "success" => false,
+                            "status" => $e->getHttpStatus(),
+                            "type" => $err['type'],
+                            "code" => $err['code'],
+                            "message" => $err['message']]);
+            } catch (\Stripe\Error\Base $e) {
+                // Display a very generic error to the user, and maybe send
+                // yourself an email
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
+                $body = $e->getJsonBody();
+                $err = $body['error'];
+
+                return response()->json([
+                            "success" => false,
+                            "status" => $e->getHttpStatus(),
+                            "type" => $err['type'],
+                            "code" => $err['code'],
+                            "message" => $err['message']]);
+            } catch (Exception $e) {
+                // Something else happened, completely unrelated to Stripe
+                $payment_log->log = $e->getMessage();
+                $payment_log->save();
+                return response()->json([
+                            "success" => false,
+                            "message" => $e->getMessage()]);
             }
-            
-            $user->save();
-            
-        } catch(\Stripe\Error\Card $e) {
-            // Since it's a decline, \Stripe\Error\Card will be caught
-            $payment_log->log = $e->getMessage();
-            $payment_log->save();
-            $body = $e->getJsonBody();
-            $err  = $body['error'];
-
-            return response()->json([
-                "success" => false, 
-                "status" => $e->getHttpStatus(), 
-                "type" => $err['type'], 
-                "code" => $err['code'], 
-                "message" => $err['message']]);
-
-        } catch (\Stripe\Error\InvalidRequest $e) {
-            // Invalid parameters were supplied to Stripe's API
-            $payment_log->log = $e->getMessage();
-            $payment_log->save();
-            $body = $e->getJsonBody();
-            $err  = $body['error'];
-
-            return response()->json([
-                "success" => false, 
-                "status" => $e->getHttpStatus(), 
-                "type" => $err['type'], 
-                "code" => $err['code'], 
-                "message" => $err['message']]);
-        } catch (\Stripe\Error\Authentication $e) {
-            // Authentication with Stripe's API failed
-            // (maybe you changed API keys recently)
-            $payment_log->log = $e->getMessage();
-            $payment_log->save();
-            $body = $e->getJsonBody();
-            $err  = $body['error'];
-
-            return response()->json([
-                "success" => false, 
-                "status" => $e->getHttpStatus(), 
-                "type" => $err['type'], 
-                "code" => $err['code'], 
-                "message" => $err['message']]);
-        } catch (\Stripe\Error\ApiConnection $e) {
-            // Network communication with Stripe failed
-            $payment_log->log = $e->getMessage();
-            $payment_log->save();
-            $body = $e->getJsonBody();
-            $err  = $body['error'];
-
-            return response()->json([
-                "success" => false, 
-                "status" => $e->getHttpStatus(), 
-                "type" => $err['type'], 
-                "code" => $err['code'], 
-                "message" => $err['message']]);
-        } catch (\Stripe\Error\Base $e) {
-            // Display a very generic error to the user, and maybe send
-            // yourself an email
-            $payment_log->log = $e->getMessage();
-            $payment_log->save();
-            $body = $e->getJsonBody();
-            $err  = $body['error'];
-
-            return response()->json([
-                "success" => false, 
-                "status" => $e->getHttpStatus(), 
-                "type" => $err['type'], 
-                "code" => $err['code'], 
-                "message" => $err['message']]);
-        } catch (Exception $e) {
-            // Something else happened, completely unrelated to Stripe
-            $payment_log->log = $e->getMessage();
-            $payment_log->save();
-            return response()->json([
-                "success" => false,
-                "message" => $e->getMessage()]);
         }
-        
         return response()->json($response);
     }
 }
