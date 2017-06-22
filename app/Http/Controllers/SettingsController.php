@@ -127,14 +127,14 @@ class SettingsController extends Controller {
     }
 
     public function attemptInvoice($invoice_id) {
+        $payment_log = new PaymentLog;
+        $payment_log->email = Auth::user()->email;
+        $payment_log->plan = $invoice_id;
+        $payment_log->source = "Settings Page - Pay Invoice";
+        $payment_log->save();
+        
         try {
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-            $payment_log = new PaymentLog;
-            $payment_log->email = Auth::user()->email;
-            $payment_log->plan = $invoice_id;
-            $payment_log->source = "Settings Page - Pay Invoice";
-            $payment_log->save();
-            
             $invoice = \Stripe\Invoice::retrieve($invoice_id);
             
             if ($invoice->pay()->paid == true) {
@@ -150,10 +150,6 @@ class SettingsController extends Controller {
             // Since it's a decline, \Stripe\Error\Card will be caught
             $payment_log->log = $e->getMessage();
             $payment_log->save();
-            
-            $body = $e->getJsonBody();
-            $err = $body['error'];
-
             return Response::json(array("success" => false, 'message' => $e->getMessage()));
             
         } catch (\Stripe\Error\InvalidRequest $e) {
