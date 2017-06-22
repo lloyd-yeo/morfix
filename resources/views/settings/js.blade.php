@@ -76,4 +76,9 @@ $(".btn-pay-invoice").on("click", function(){
     });
     
 });
+
+
+@if ($update_credit_card_response !== NULL)
+    swal('Credit Card Changed!', {{ $update_credit_card_response }}, 'success');
+@endif
 </script>
