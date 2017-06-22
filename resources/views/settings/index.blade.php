@@ -72,9 +72,15 @@
                             @endif
 
                             <td class="text-center">
+                                @if ($subscription->status == "unpaid" || $subscription->status == "past_due")
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-success btn-pay-invoice" data-sub-id="{{ $subscription->id }}" data-invoice-id="{{ $subscription->invoice }}" type="button" data-toggle="tooltip" title="Pay Subscription"><i class="fa fa-credit-card"></i></button>
+                                </div>
+                                @else
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-danger btn-cancel-subscription" data-sub-id="{{ $subscription->id }}" type="button" data-toggle="tooltip" title="Cancel Subscription"><i class="fa fa-times"></i></button>
                                 </div>
+                                @endif
                             </td>
 
                         </tr>

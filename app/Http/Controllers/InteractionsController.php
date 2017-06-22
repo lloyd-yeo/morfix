@@ -220,7 +220,7 @@ class InteractionsController extends Controller {
                         $user_comment = $replaced_str;
                     }
                 } catch (\Unicodeveloper\Emoji\Exceptions\UnknownEmoji $ex) {
-                    $this->error($ex->getMessage());
+                    //$this->error($ex->getMessage());
                 }
             }
 
