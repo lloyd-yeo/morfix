@@ -44,29 +44,35 @@ class SettingsController extends Controller {
                 $sub->delete();
             }
             
+            $invoices = array();
+            
             foreach ($subscriptions as $subscription) {
+                //The Invoices under this subscription
+                $invoice_listings = \Stripe\Invoice::all(array("subscription" => $subscription->id));
                 $stripe_id = $subscription->customer;
+                
+                $invoices[$subscription->id] = $invoice_listings->data[0];
+                
                 $items = $subscription->items->data;
                 foreach ($items as $item) {
                     $plan = $item->plan;
                     $plan_id = $plan->id;
-
                     $active_subscription = new StripeActiveSubscription;
                     $active_subscription->stripe_id = $stripe_id;
                     $active_subscription->subscription_id = $plan_id;
                     $active_subscription->status = $subscription->status;
                     $active_subscription->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start);
                     $active_subscription->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
+                    $active_subscription->stripe_subscription_id = $subscription->id;
                     if ($active_subscription->save()) {
                     }
                 }
             }
-            
-            
         }
 
         return view('settings.index', [
             'subscriptions' => $subscriptions,
+            'invoices' => $invoices,
         ]);
     }
 
