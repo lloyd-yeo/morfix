@@ -40,7 +40,7 @@ class SettingsController extends Controller {
             $subscriptions_listings = \Stripe\Subscription::all(array('customer' => Auth::user()->stripe_id));
             $subscriptions = $subscriptions_listings->data;
 
-            //Remove al active subscription
+            //Remove all active subscription
             Auth::user()->deleteStripeSubscriptions();
             
             foreach ($subscriptions as $subscription) {

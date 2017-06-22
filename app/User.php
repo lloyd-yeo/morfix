@@ -42,7 +42,37 @@ class User extends Authenticatable {
         $deleted_subscriptions = StripeActiveSubscription::where('stripe_id', $this->stripe_id)->delete();
     }
     
+    public function refreshStripeSubscriptions() {
+        if ($this->stripe_id !== NULL) {
+            \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+            $subscriptions_listings = \Stripe\Subscription::all(array('customer' => Auth::user()->stripe_id));
+            $subscriptions = $subscriptions_listings->data;
+
+            //Remove all active subscription
+            Auth::user()->deleteStripeSubscriptions();
+            
+            foreach ($subscriptions as $subscription) {
+                //The Invoices under this subscription
+                $stripe_id = $subscription->customer;
+                $items = $subscription->items->data;
+                foreach ($items as $item) {
+                    $plan = $item->plan;
+                    $plan_id = $plan->id;
+                    $active_subscription = new StripeActiveSubscription;
+                    $active_subscription->stripe_id = $stripe_id;
+                    $active_subscription->subscription_id = $plan_id;
+                    $active_subscription->status = $subscription->status;
+                    $active_subscription->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start);
+                    $active_subscription->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
+                    $active_subscription->stripe_subscription_id = $subscription->id;
+                    $active_subscription->save();
+                }
+            }
+        }
+    }
+    
     public function updateUserTier() {
+        $this->refreshStripeSubscriptions();
         $user_tier = 1;
         foreach ($this->stripeDetails() as $stripe_detail) {
             $stripe_id = $stripe_detail->stripe_id;
