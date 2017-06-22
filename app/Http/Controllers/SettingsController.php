@@ -36,6 +36,32 @@ class SettingsController extends Controller {
         } else {
             $subscriptions_listings = \Stripe\Subscription::all(array('customer' => Auth::user()->stripe_id));
             $subscriptions = $subscriptions_listings->data;
+            
+            //Remove al active subscription
+            $saved_subscriptions = StripeActiveSubscription::where('stripe_id', Auth::user()->stripe_id);
+            foreach ($saved_subscriptions as $sub) {
+                $sub->delete();
+            }
+            
+            foreach ($subscriptions as $subscription) {
+                $stripe_id = $subscription->customer;
+                $items = $subscription->items->data;
+                foreach ($items as $item) {
+                    $plan = $item->plan;
+                    $plan_id = $plan->id;
+
+                    $active_subscription = new StripeActiveSubscription;
+                    $active_subscription->stripe_id = $stripe_id;
+                    $active_subscription->subscription_id = $plan_id;
+                    $active_subscription->status = $subscription->status;
+                    $active_subscription->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start);
+                    $active_subscription->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
+                    if ($active_subscription->save()) {
+                    }
+                }
+            }
+            
+            
         }
 
         return view('settings.index', [
