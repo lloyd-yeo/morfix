@@ -23,7 +23,13 @@ use App\PaymentLog;
 
 class PaymentController extends Controller {
 
-    function upgrade(Request $request, $plan) {
+    public function index(Request $request) {
+        return view('payment.index', [
+            
+        ]);
+    }
+    
+    public function upgrade(Request $request, $plan) {
         $response = array();
 
         $payment_log = new PaymentLog;
