@@ -35,7 +35,6 @@ class Kernel extends ConsoleKernel {
         Commands\DeleteInvalidImages::class,
         Commands\SendTestDirectMessage::class,
         Commands\ArchiveLikeLogs::class,
-        
     ];
 
     /**

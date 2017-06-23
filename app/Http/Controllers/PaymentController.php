@@ -129,8 +129,8 @@ class PaymentController extends Controller {
                         $user->num_acct = $user->num_acct + 5;
                     }
                 }
-
                 $user->save();
+                
             } catch (\Stripe\Error\Card $e) {
                 // Since it's a decline, \Stripe\Error\Card will be caught
                 $payment_log->log = $e->getMessage();
