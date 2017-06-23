@@ -203,7 +203,7 @@ class InteractionsController extends Controller {
     public function saveComment(Request $request, $id) {
         $instagram_profile = InstagramProfile::where('id', $id)->first();
         #$instagram_comment = \App\InstagramProfileComment::where("comment", $request->input('comment'))->where("insta_username", $instagram_profile->insta_username)->first();
-        $instagram_comment = \App\InstagramProfileComment::whereRaw("comment LIKE \"" . $request->input('comment')  . "\"  COLLATE utf8_unicode_ci")->where("insta_username", $instagram_profile->insta_username)->first();
+        $instagram_comment = \App\InstagramProfileComment::whereRaw("comment LIKE \"" . $request->input('comment')  . "\"  COLLATE utf8_unicode_ci AND insta_username = \"" . $instagram_profile->insta_username . "\"")->first();
         $response = "There has been an error with the server. Please contact live support.";
         if (is_null($instagram_comment)) {
             $new_ig_comment = new InstagramProfileComment;
