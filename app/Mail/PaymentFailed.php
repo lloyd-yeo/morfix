@@ -28,6 +28,6 @@ class PaymentFailed extends Mailable
      */
     public function build()
     {
-        return $this->subject("UH-OH! Your Morfix Payment Failed")->text('payment.email.failed');
+        return $this->subject("UH-OH! Your Morfix Payment Failed")->view('payment.email.failed');
     }
 }
