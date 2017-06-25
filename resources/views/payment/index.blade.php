@@ -24,6 +24,7 @@
             @elseif (Auth::user()->tier == 2)
             @include('payment.table.pro')
             @include('payment.table.business')
+            @include('payment.table.mastermind')
             @elseif (Auth::user()->tier == 3)
             @include('payment.table.business')
             @include('payment.table.mastermind')
