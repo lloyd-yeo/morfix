@@ -1,5 +1,9 @@
 <!-- PREMIUM Plan -->
+@if(!empty($unit))
+<div class="col-lg-{{ $unit }}">
+@else
 <div class="col-lg-6">
+@endif
     <div class="block block-bordered block-link-hover3 text-center" href="javascript:void(0)">
         <div class="block-header" style='padding-top: 10px; 
              padding-left: 10px; padding-right: 10px; padding-bottom: 5px;
