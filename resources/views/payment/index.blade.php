@@ -19,12 +19,12 @@
     <div class="content content-boxed">
         <div class="row font-s13">
             @if (Auth::user()->tier == 1)
-            @include('payment.table.premium')
+            @include('payment.table.premium)
             @include('payment.table.pro')
             @elseif (Auth::user()->tier == 2)
-            @include('payment.table.pro')
-            @include('payment.table.business')
-            @include('payment.table.mastermind')
+            @include('payment.table.pro', ['unit' => 4])
+            @include('payment.table.business', ['unit' => 4])
+            @include('payment.table.mastermind', ['unit' => 4])
             @elseif (Auth::user()->tier == 3)
             @include('payment.table.business')
             @include('payment.table.mastermind')
