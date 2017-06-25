@@ -135,6 +135,18 @@ class TrainingVideoController extends Controller {
                 'morfix_training_video' => $morfix_training_video,
                 'morfix_training_video_header' => $morfix_training_video_header,
             ]);
+        } else if ($type == "bootcamp") {
+            $iframe_innerwealth_1 = "<iframe src=\"https://player.vimeo.com/video/221130015\" width=\"640\" height=\"400\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
+            $iframe_innerwealth_2 = "<iframe src=\"https://player.vimeo.com/video/222468317\" width=\"640\" height=\"400\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";
+            
+            $morfix_training_video = array("inner-wealth-1" => $iframe_innerwealth_1, "inner-wealth-2" => $iframe_innerwealth_2);
+
+            $morfix_training_video_header = array("inner-wealth-1" => "Inner Wealth (Part 1)", "inner-wealth-2" => "Inner Wealth (Part 2)");
+
+            return view('training.fbadsbasic', [
+                'morfix_training_video' => $morfix_training_video,
+                'morfix_training_video_header' => $morfix_training_video_header,
+            ]);
         }
     }
 

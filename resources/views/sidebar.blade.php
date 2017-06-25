@@ -105,6 +105,19 @@
                         <a href="/training/morfix"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
                         @endif
                     </li>
+                    
+                    <li>
+                        @if ($page == 'training-bootcamp')
+                        <a class="active" href="/training/bootcamp"><i class="si si-layers"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
+                        @else
+                            @if (Auth::user()->tier > 1)
+                            <a href="/training/bootcamp"><i class="si si-layers"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
+                            @else
+                            <a href="#" data-toggle="modal" data-target="#upgrade-training-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
+                            @endif
+                        @endif
+                    </li>
+                    
                     <li>
                         @if ($page == 'training-affiliate')
                         <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
@@ -116,6 +129,7 @@
                             @endif
                         @endif
                     </li>
+                    
                     <li>
                         @if ($page == 'training-6figureprofile')
                         <a class="active" href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
@@ -131,6 +145,7 @@
                             @endif
                         @endif
                     </li>
+                    
                     <li>
                         @if ($page == 'training-fbads')
                         <a class="active" href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads</span></a>
