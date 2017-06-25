@@ -18,6 +18,25 @@
 
     <div class="content content-boxed">
         <div class="row font-s13">
+            @if (Auth::user()->tier == 1)
+            @include('payment.table.premium')
+            @include('payment.table.pro')
+            @elseif (Auth::user()->tier == 2)
+            @include('payment.table.pro')
+            @include('payment.table.business')
+            @elseif (Auth::user()->tier == 3)
+            @include('payment.table.business')
+            @include('payment.table.mastermind')
+            @elseif (Auth::user()->tier == 12)
+            @include('payment.table.pro')
+            @include('payment.table.mastermind')
+            @elseif (Auth::user()->tier == 22)
+            <div class='col-lg-3'></div>
+            @include('payment.table.pro')
+            @elseif (Auth::user()->tier == 13)
+            <div class='col-lg-3'></div>
+            @include('payment.table.mastermind')
+            @endif
         </div>
     </div>
 </main>
