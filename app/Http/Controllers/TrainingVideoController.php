@@ -143,7 +143,7 @@ class TrainingVideoController extends Controller {
 
             $morfix_training_video_header = array("inner-wealth-1" => "Inner Wealth (Part 1)", "inner-wealth-2" => "Inner Wealth (Part 2)");
 
-            return view('training.fbadsbasic', [
+            return view('training.bootcamp', [
                 'morfix_training_video' => $morfix_training_video,
                 'morfix_training_video_header' => $morfix_training_video_header,
             ]);
