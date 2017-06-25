@@ -36,6 +36,11 @@ class Kernel extends ConsoleKernel {
         Commands\SendTestDirectMessage::class,
         Commands\ArchiveLikeLogs::class,
         Commands\SendFailedPaymentEmail::class,
+        Commands\UpdatePendingCommissionPayable::class,
+        Commands\GetUserWithOutstandingPayable::class,
+        Commands\VerifyInvoicePaid::class,
+        Commands\GetCommissionEligibility::class,
+        Commands\GetTotalPendingPayable::class,
     ];
 
     /**

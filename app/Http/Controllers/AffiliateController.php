@@ -11,7 +11,11 @@ use App\User;
 use Response;
 
 class AffiliateController extends Controller {
-
+    
+    public function __construct() {
+        $this->middleware('auth');
+    }
+    
     /**
      * @param Request $request
      * @param null $user_id
