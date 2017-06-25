@@ -1,4 +1,5 @@
-We tried to charge your card but it failed &#128542;
+Hey there!
+<p>We tried to charge your card but it failed &#128542;<p>
 
 <p>Don't worry, your interactions will still be running until the next charge in 3 days.</p>
 
