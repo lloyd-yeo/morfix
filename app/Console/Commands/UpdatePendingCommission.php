@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\User;
+
 class UpdatePendingCommission extends Command
 {
     /**
@@ -65,7 +66,7 @@ class UpdatePendingCommission extends Command
                         $current_comms = $current_comms + 50;
                     }
                     
-                    echo $referral_charge->referrer_email . "\t" . $referral_charge->referred_email . "\t"  . $referral_charge->subscription_id . " [$current_comms]\n";
+                    echo $referral_charge->referrer_email . "\t" . $referral_charge->referred_email . "\t"  . $referral_charge->subscription_id . " [$current_comms] \n";
                 }
             }
             
