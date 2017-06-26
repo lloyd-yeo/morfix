@@ -72,7 +72,7 @@ class AffiliateController extends Controller {
 
         $invoices = DB::connection('mysql')->select('SELECT r.vip AS referrer_vip, r.user_tier AS referrer_user_tier, r.email AS referrer_email, c.charge_id, 
                                                                 i.invoice_id, i.subscription_id, i.start_date, i.expiry_date, u.email AS referred_email,
-                                                                c.paid AS charge_paid, i.paid AS invoice_paid, c.refunded AS charge_refunded
+                                                                c.paid AS charge_paid, i.paid AS invoice_paid, c.refunded AS charge_refunded, c.charge_created AS charge_created
                                                         FROM user u, user_stripe_details sd, user_stripe_invoice i, user_stripe_charges c, 
                                                         user r, user_affiliate ua
                                                         WHERE u.email = sd.email
