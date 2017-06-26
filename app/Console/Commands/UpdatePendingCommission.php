@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use Illuminate\Support\Facades\DB;
+use App\User;
 class UpdatePendingCommission extends Command
 {
     /**
@@ -39,18 +40,32 @@ class UpdatePendingCommission extends Command
     {
         $path = storage_path('app/may-payout-final.csv');
         $file = fopen($path, "r");
+        
+        $current_email = "";
+        $current_comms = 0;
+        
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             
             if ($data[4] == "Yes") {
-                $pending_comms = $data[2];
-                $user = User::where('email', $data[0])->first();
-                if ($user !== NULL) {
-                    $user->pending_commission_payable = $pending_comms;
-                    if ($user->save()) {
-                        echo "Updated [" . $user->email . "] pending comms to " . $pending_comms . "\n";
+                
+                if ($current_email != $data[0]) {
+                    $current_email = $data[0];
+                    $current_comms = 0;
+                }
+                
+                $referral_charges = DB::select('SELECT * FROM get_referral_charges_of_user WHERE referrer_email = ? AND '
+                        . 'charge_created >= "2017-06-01 00:00:00" AND charge_created <= "2017-06-31 23:59:59" AND charge_refunded = 0 '
+                        . 'ORDER BY charge_created DESC;', [$data[0]]);
+                
+                foreach ($referral_charges as $referral_charge) {
+                    
+                    if ($referral_charge->subscription_id == "0137") {
+                        $current_comms = $current_comms + 20;
+                    } else if ($referral_charge->subscription_id == "0297") {
+                        $current_comms = $current_comms + 50;
                     }
-                } else {
-                    echo "Can't find user: " . $data[0] . "\n";
+                    
+                    echo $referral_charge->referrer_email . "\t" . $referral_charge->referred_email . "\t"  . $referral_charge->subscription_id . " [$current_comms]\n";
                 }
             }
             
