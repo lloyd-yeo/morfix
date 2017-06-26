@@ -50,6 +50,17 @@ class UpdatePendingCommission extends Command
             if ($data[4] == "Yes") {
                 
                 if ($current_email != $data[0]) {
+                    
+                    if ($current_email != "") {
+                        $user = User::where('email', $current_email)->first();
+                        if ($user !== NULL) {
+                            $user->pending_commission = $current_comms;
+                            if($user->save()) {
+                                echo "Updated [$current_email] pending comms to [$current_comms]\n";
+                            }
+                        }
+                    }
+                    
                     $current_email = $data[0];
                     $current_comms = 0;
                 }
