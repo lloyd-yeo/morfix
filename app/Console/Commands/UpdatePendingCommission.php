@@ -3,23 +3,22 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\User;
 
-class UpdateUserCommissionPayable extends Command
+class UpdatePendingCommission extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'update:payablecsv';
+    protected $signature = 'commission:updatepending';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update a user\'s payable commission from a csv.';
+    protected $description = 'Update pending commission of users.';
 
     /**
      * Create a new command instance.
@@ -41,10 +40,8 @@ class UpdateUserCommissionPayable extends Command
         $path = storage_path('app/may-payout-final.csv');
         $file = fopen($path, "r");
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
-//            if ($data[0] != "l-ywz@hotmail.com") {
-//                continue;
-//            }
-            if ($data[4] == "No") {
+            
+            if ($data[4] == "Yes") {
                 $pending_comms = $data[2];
                 $user = User::where('email', $data[0])->first();
                 if ($user !== NULL) {
@@ -56,6 +53,7 @@ class UpdateUserCommissionPayable extends Command
                     echo "Can't find user: " . $data[0] . "\n";
                 }
             }
+            
         }
     }
 }

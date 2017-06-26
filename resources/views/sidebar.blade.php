@@ -148,15 +148,15 @@
                     
                     <li>
                         @if ($page == 'training-fbads')
-                        <a class="active" href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads</span></a>
+                        <a class="active" href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
                         @else
                         @if ($page == 'training-fbads')
-                        <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads</span></a>
+                        <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
                         @else
                             @if (Auth::user()->tier > 3)
-                            <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads</span></a>
+                            <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
                             @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-training-video-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Facebook Ads</span></a>
+                            <a href="#" data-toggle="modal" data-target="#upgrade-training-video-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
                             @endif
                         @endif
                         @endif

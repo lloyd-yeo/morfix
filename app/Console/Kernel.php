@@ -41,6 +41,8 @@ class Kernel extends ConsoleKernel {
         Commands\VerifyInvoicePaid::class,
         Commands\GetCommissionEligibility::class,
         Commands\GetTotalPendingPayable::class,
+        Commands\UpdateUserCommissionPayable::class,
+        Commands\UpdatePendingCommission::class,
     ];
 
     /**
