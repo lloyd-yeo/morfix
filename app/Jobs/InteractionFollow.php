@@ -68,19 +68,6 @@ class InteractionFollow implements ShouldQueue {
 
         $ig_profile = $this->profile;
         
-        $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-                                                    ->where('follow', 1)
-                                                    ->where('unfollowed', 0)
-                                                    ->get();
-        $followed_count = count($followed_logs);
-        
-        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
-
-        if ($followed_count >= $ig_profile->follow_cycle) {
-            $ig_profile->unfollow = 1;
-            $ig_profile->save();
-        }
-        
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
 
         $ig_username = $ig_profile->insta_username;
@@ -106,7 +93,21 @@ class InteractionFollow implements ShouldQueue {
         $follow_quota = $ig_profile->follow_quota;
         $unfollow_quota = $ig_profile->unfollow_quota;
         $proxy = $ig_profile->proxy;
+        
+        $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                                                    ->where('follow', 1)
+                                                    ->where('unfollowed', 0)
+                                                    ->get();
+        $followed_count = count($followed_logs);
+        
+        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
 
+        if ($followed_count >= $ig_profile->follow_cycle) {
+            $ig_profile->unfollow = 1;
+            $unfollow = 1;
+            $ig_profile->save();
+        }
+        
         $target_username = "";
         $target_follow_username = "";
         $target_follow_id = "";
