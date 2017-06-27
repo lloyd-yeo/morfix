@@ -1,5 +1,6 @@
 <!-- Header -->
 <header id="header-navbar" class="content-mini content-mini-full">
+    
     <!-- Header Navigation Right -->
     <ul class="nav-header pull-right">
         <li>
@@ -75,6 +76,12 @@
             <!--Layout API, functionality initialized in App() -> uiLayoutApi()--> 
             <button class="btn btn-default" data-toggle="layout" data-action="sidebar_mini_toggle" type="button">
                 <i class="fa fa-ellipsis-v"></i>
+            </button>
+        </li>
+        <li class="hidden-xs hidden-sm">
+            <!--Layout API, functionality initialized in App() -> uiLayoutApi()--> 
+            <button class="btn btn-default" type="button">
+                <i class="fa fa-question"></i> FAQ
             </button>
         </li>
     </ul>
