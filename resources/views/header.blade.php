@@ -80,7 +80,7 @@
         </li>
         <li class="hidden-xs hidden-sm">
             <!--Layout API, functionality initialized in App() -> uiLayoutApi()--> 
-            <button class="btn btn-rounded btn-primary" style='color:white;' type="button" onclick="javascript:location.href='faq'">
+            <button class="btn btn-rounded bg-info" style='color:white;' type="button" onclick="javascript:location.href='faq'">
                 <i class="fa fa-question-circle-o"></i> FAQ
             </button>
         </li>
