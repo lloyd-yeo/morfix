@@ -54,7 +54,7 @@ class Kernel extends ConsoleKernel {
     protected function schedule(Schedule $schedule) {
         $schedule->command('interaction:like')->cron('*/3 * * * * *');
         $schedule->command('interaction:comment')->everyFiveMinutes();
-        #$schedule->command('interaction:follow')->cron('*/3 * * * * *');
+        $schedule->command('interaction:follow')->cron('*/3 * * * * *');
         $schedule->command('dm:get')->everyThirtyMinutes();
         
         $schedule->command("engagement:add")->hourly();
