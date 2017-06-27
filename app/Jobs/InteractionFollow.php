@@ -73,6 +73,7 @@ class InteractionFollow implements ShouldQueue {
                                                     ->where('unfollowed', 0)
                                                     ->get();
         $followed_count = count($followed_logs);
+        
         echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
 
         if ($followed_count >= $ig_profile->follow_cycle) {
