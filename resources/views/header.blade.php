@@ -80,8 +80,8 @@
         </li>
         <li class="hidden-xs hidden-sm">
             <!--Layout API, functionality initialized in App() -> uiLayoutApi()--> 
-            <button class="btn btn-default" type="button">
-                <i class="fa fa-question"></i> FAQ
+            <button class="btn btn-rounded btn-modern" type="button">
+                <i class="fa fa-question-circle"></i> FAQ
             </button>
         </li>
     </ul>
