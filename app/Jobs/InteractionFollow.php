@@ -106,6 +106,7 @@ class InteractionFollow implements ShouldQueue {
             $ig_profile->unfollow = 1;
             $unfollow = 1;
             $ig_profile->save();
+            $ig_profile = InstagramProfile::find($ig_profile->id);
         }
         
         $target_username = "";
@@ -196,7 +197,7 @@ class InteractionFollow implements ShouldQueue {
                 //[get users to UNFOLLOW]
                 $users_to_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_username)
                         ->where('unfollowed', false)
-                        ->where('follow', false)
+                        ->where('follow', true)
                         ->orderBy('date_inserted', 'asc')
                         ->take(2)
                         ->get();
