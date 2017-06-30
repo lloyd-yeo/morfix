@@ -56,7 +56,8 @@ class PaymentController extends Controller {
         $stripe_id = $user->stripe_id;
 
         $token = $request->input('stripeToken');
-
+        $customer = NULL;
+        
         if ($stripe_id === NULL) {
             try {
 
@@ -74,6 +75,7 @@ class PaymentController extends Controller {
                 $stripe_details->email = Auth::user()->email;
                 $stripe_details->stripe_id = $customer->id;
                 $stripe_details->save();
+                
             } catch (\Stripe\Error\Card $e) {
                 // Since it's a decline, \Stripe\Error\Card will be caught
                 $payment_log->log = $e->getMessage();
@@ -114,7 +116,8 @@ class PaymentController extends Controller {
 
             try {
                 \Stripe\Subscription::create(array(
-                    "customer" => $customer->id,
+                    "customer" => $stripe_id,
+                    "source" => $token,
                     "plan" => $plan_id,
                 ));
 
