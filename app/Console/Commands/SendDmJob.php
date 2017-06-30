@@ -19,7 +19,7 @@ class SendDmJob extends Command
      *
      * @var string
      */
-    protected $signature = 'dm:send {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'dm:send {email?}';
 
     /**
      * The console command description.
@@ -44,6 +44,43 @@ class SendDmJob extends Command
      * @return mixed
      */
     public function handle() {
+        
+        $users = array();
+        if (NULL !== $this->argument("email")) {
+            $users = User::where('email', $this->argument("email"))
+                    ->orderBy('user_id', 'desc')
+                    ->get();
+            
+            foreach ($users as $user) {
+                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                                                        ->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('senddm');
+                    dispatch($job);
+                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                }
+            }
+            
+        } else {
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
+                    ->orderBy('user_id', 'desc')
+                    ->get();
+            
+            foreach ($users as $user) {
+                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                                                        ->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('senddm');
+                    dispatch($job);
+                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                }
+            }
+        }
+        exit();
+        
+        
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
         

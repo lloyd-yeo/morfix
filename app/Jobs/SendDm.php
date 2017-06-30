@@ -74,8 +74,6 @@ class SendDm implements ShouldQueue {
                 ->orderBy('job_id', 'ASC')
                 ->first();
 
-
-
         if (is_null($dm_job)) {
             exit;
         }
