@@ -68,39 +68,14 @@ class SendDm implements ShouldQueue {
         $proxy = $ig_profile->proxy;
         echo "[$insta_username] retrieved...\n";
 
-        $dm_job = getDmJobsByIgUsername($insta_username, $servername, $username, $password, $dbname);
-        
-        $dm_job = NULL;
-        $conn = getConnection($servername, $username, $password, $dbname);
-        //$users = DB::table('users')
-        //             ->select(DB::raw('count(*) as user_count, status'))
-          //           ->where('status', '<>', 1)
-            //         ->groupBy('status')
-              //       ->get();
-        $stmt_get_dm_job = DB::dm_job('jobs')
-                            ->select(DB::raw)
-        $stmt_get_dm_job = $conn->prepare("SELECT job_id, recipient_username, recipient_insta_id, recipient_fullname, message "
-                . "FROM insta_affiliate.dm_job "
-                . "WHERE insta_username = ? AND fulfilled = 0 AND NOW() > time_to_send ORDER BY job_id ASC LIMIT 1;");
-        $stmt_get_dm_job->bind_param("s", $insta_username);
-        $stmt_get_dm_job->execute();
-        $stmt_get_dm_job->store_result();
-        $stmt_get_dm_job->bind_result($job_id, $recipient_username, $recipient_insta_id, $recipient_fullname, $message);
-        while ($stmt_get_dm_job->fetch()) {
-            $dm_job = array(
-                "job_id" => $job_id,
-                "recipient_username" => $recipient_username,
-                "recipient_insta_id" => $recipient_insta_id,
-                "recipient_fullname" => $recipient_fullname,
-                "message" => $message
-            );
-        }
-        $stmt_get_dm_job->free_result();
-        $stmt_get_dm_job->close();
-        $conn->close();
-        return $dm_job;
-        
-        
+        $dm_job = App\DmJob::where('insta_username', $insta_username)
+                ->where('fulfilled', 0)
+                ->whereRaw('NOW() > time_to_send')
+                ->orderBy('job_id', 'ASC')
+                ->first();
+
+
+
         if (is_null($dm_job)) {
             exit;
         }
@@ -108,10 +83,7 @@ class SendDm implements ShouldQueue {
         try {
             $config = array();
             $config["storage"] = "mysql";
-            $config["dbusername"] = "root";
-            $config["dbpassword"] = "inst@ffiliates123";
-            $config["dbhost"] = "52.221.60.235:3306";
-            $config["dbname"] = "morfix";
+            $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
             $config["dbtablename"] = "instagram_sessions";
             $debug = false;
             $truncatedDebug = false;
@@ -119,38 +91,62 @@ class SendDm implements ShouldQueue {
             $ig_username = $insta_username;
             $ig_password = $insta_pw;
 
-            if (is_null($proxy)) {
-                continue;
-            } else {
-                $instagram->setProxy($proxy);
-                $instagram->setUser($ig_username, $ig_password);
-                $instagram->login();
-                try {
-                    $delay = rand(35, 45);
-                    $recipients = array();
-                    $recipients["users"] = [$dm_job["recipient_insta_id"]];
-                    $direct_msg_resp = $instagram->direct->sendText($recipients, $dm_job["message"]);
-                    echo "[$insta_username] " . $dm_job["job_id"] . "\n";
-                    #$direct_msg_resp = $instagram->directMessage($dm_job["recipient_insta_id"], $dm_job["message"]);
-                    var_dump($direct_msg_resp);
 
-                    updateDmJobFulfilled($dm_job["job_id"], $auto_dm_delay, $ig_username, $dm_job["recipient_insta_id"], $servername, $username, $password, $dbname);
+            if ($ig_profile->proxy === NULL) {
+                $proxy = Proxy::inRandomOrder()->first();
+                $ig_profile->proxy = $proxy->proxy;
+                $ig_profile->save();
+                $proxy->assigned = $proxy->assigned + 1;
+                $proxy->save();
+            }
 
-                    if (!is_null($temporary_ban)) {
-                        updateUserNextSendTime($insta_username, $delay, "banned", $servername, $username, $password, $dbname);
-                    } else {
-                        updateUserNextSendTime($insta_username, $delay, "normal", $servername, $username, $password, $dbname);
-                    }
-                } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                    echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
-                    if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
-                        updateUserFeedbackRequired($insta_username, $dm_job["job_id"], $request_ex->getMessage(), $servername, $username, $password, $dbname);
-                        continue;
-                    }
-                    if (stripos(trim($request_ex->getMessage()), "checkpoint_required") !== false) {
-                        updateUserCheckpointRequired($insta_username, $servername, $username, $password, $dbname);
-                        continue;
-                    }
+            $instagram->setProxy($ig_profile->proxy);
+            $instagram->setUser($ig_username, $ig_password);
+            $instagram->login();
+
+            try {
+                $delay = rand(35, 45);
+                $recipients = array();
+                $recipients["users"] = [$dm_job->recipent_insta_id];
+                $direct_msg_resp = $instagram->direct->sendText($recipients, $dm_job->message);
+                echo "[$insta_username] " . $dm_job->job_id . "\n";
+                var_dump($direct_msg_resp);
+
+                echo "[$insta_username] auto-delay: " . $auto_dm_delay . "\n";
+                $dm_job->fulfilled = 1;
+                $dm_job->updated_at = \Carbon\Carbon::now();
+                $dm_job->save();
+
+                if ($ig_profile->auto_dm_delay == 1) {
+                    DmJob::where('insta_username', $insta_username)
+                            ->where('fulfilled', 0)
+                            ->where('recipent_insta_id', $dm_job->reciepent_insta_id)
+                            ->update(['time_to_send' => \Carbon\Carbon::tomorrow()]);
+                }
+
+
+                if (!is_null($temporary_ban)) {
+                    $ig_profile->last_sent_dm = \Carbon\Carbon::tomorrow();
+                    $ig_profile->temporary_ban = NULL;
+                    $ig_profile->dm_probation = 1;
+                    $ig_profile->save();
+                } else {
+                    $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addMinutes($delay);
+                    $ig_profile->dm_probation = 0;
+                    $ig_profile->save();
+                }
+            } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+                if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                    $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
+                    $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
+                    $ig_profile->save();
+                    $dm_job->error_msg = $request_ex->getMessage();
+                    $dm_job->save();
+                }
+                if (stripos(trim($request_ex->getMessage()), "checkpoint_required") !== false) {
+                    $ig_profile->checkpoint_required = 1;
+                    $ig_profile->save();
                 }
             }
         } catch (Exception $ex) {
