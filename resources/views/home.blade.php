@@ -73,9 +73,11 @@
                             </a>-->
                             @if ($ig_profile->checkpoint_required == 1)
                             <a class="text-default" href="javascript:void(0)">
-                                Verification Required
+                                <i class="fa fa-2x fa-fw fa-unlink"></i>
                             </a>
-                            @elseif ($ig_profile->incorrect_pw == 1)
+                            @else
+                            @endif
+                            @if ($ig_profile->incorrect_pw == 1)
                             <a class="text-default" href="javascript:void(0)">
                                 Incorrect Password
                             </a>
