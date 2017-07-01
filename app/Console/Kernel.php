@@ -43,6 +43,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetTotalPendingPayable::class,
         Commands\UpdateUserCommissionPayable::class,
         Commands\UpdatePendingCommission::class,
+        Commands\AddUserUpdate::class,
     ];
 
     /**

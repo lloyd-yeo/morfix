@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\User;
+use App\UserUpdate;
 
 class AddUserUpdate extends Command
 {
@@ -11,14 +13,14 @@ class AddUserUpdate extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'system:update {type} {title} {message}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Make a global wide announcement on the update board';
 
     /**
      * Create a new command instance.
@@ -37,6 +39,18 @@ class AddUserUpdate extends Command
      */
     public function handle()
     {
-        //
+        $type = $this->argument('type');
+        $title = $this->argument('title');
+        $message = $this->argument('message');
+        
+        $users = User::all();
+        foreach ($users as $user) {
+            $update = new UserUpdate;
+            $update->email = $user->email;
+            $update->title = $title;
+            $update->type = $type;
+            $update->message = $message;
+            $update->save();
+        }
     }
 }
