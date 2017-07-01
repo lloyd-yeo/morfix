@@ -71,22 +71,30 @@
 <!--                            <a class="text-danger" href="javascript:void(0)">
                                 <i class="fa fa-2x fa-fw fa-youtube-square"></i>
                             </a>-->
+
                             @if ($ig_profile->checkpoint_required == 1)
-                            <a class="text-default" href="javascript:void(0)">
+                            <a class="text-danger" href="javascript:void(0)">
                                 <i class="fa fa-2x fa-fw fa-unlink"></i>
                             </a>
                             @else
                             @endif
+                            
                             @if ($ig_profile->incorrect_pw == 1)
-                            <a class="text-default" href="javascript:void(0)">
+                            <a class="text-danger" href="javascript:void(0)">
                                 Incorrect Password
                             </a>
-                            @elseif ($ig_profile->invalid_user == 1)
-                            <a class="text-default" href="javascript:void(0)">
+                            @else
+                            @endif
+                            
+                            @if ($ig_profile->invalid_user == 1)
+                            <a class="text-danger" href="javascript:void(0)">
                                 Invalid Username
                             </a>
+                            @else
+                            @endif
+                            
                             @elseif ($ig_profile->account_disabled == 1)
-                            <a class="text-default" href="javascript:void(0)">
+                            <a class="text-danger" href="javascript:void(0)">
                                 Account Disabled
                             </a>
                             @endif
