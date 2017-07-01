@@ -43,6 +43,72 @@
         </div>
         <div class="row">
             @foreach ($user_ig_profiles as $ig_profile)
+            @if (Auth::user()->email = "l-ywz@hotmail.com")
+            <div class="col-lg-4 insta-profile" data-id="{{ $ig_profile->id }}">
+                <div class="block block-rounded">
+                    <div class="block-header">
+                        <ul class="block-options">
+                            <li>
+                                <button type="button remove-profile-btn" data-id="{{ $ig_profile->id }}" data-user-id="{{ Auth::user()->id }}" class="remove-profile-btn">
+                                    <i class="si si-close"></i>
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="block-title">{{ $ig_profile->profile_full_name }}</div>
+                    </div>
+                    <div class="block-content block-content-full bg-primary text-center">
+                        <img class="img-avatar img-avatar-thumb" src="{{ $ig_profile->profile_pic_url }}" alt="">
+                        <div class="font-s13 push-10-t"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</div>
+                    </div>
+                    <div class="block-content">
+                        <div class="text-center push">
+<!--                            <a class="text-default" href="javascript:void(0)">
+                                <i class="fa fa-2x fa-fw fa-facebook-square"></i>
+                            </a>-->
+<!--                            <a class="text-info" href="javascript:void(0)">
+                                <i class="fa fa-2x fa-fw fa-twitter-square"></i>
+                            </a>-->
+<!--                            <a class="text-danger" href="javascript:void(0)">
+                                <i class="fa fa-2x fa-fw fa-youtube-square"></i>
+                            </a>-->
+                            @if ($ig_profile->checkpoint_required == 1)
+                            <a class="text-default" href="javascript:void(0)">
+                                Verification Required
+                            </a>
+                            @elseif ($ig_profile->incorrect_pw == 1)
+                            <a class="text-default" href="javascript:void(0)">
+                                Incorrect Password
+                            </a>
+                            @elseif ($ig_profile->invalid_user == 1)
+                            <a class="text-default" href="javascript:void(0)">
+                                Invalid Username
+                            </a>
+                            @elseif ($ig_profile->account_disabled == 1)
+                            <a class="text-default" href="javascript:void(0)">
+                                Account Disabled
+                            </a>
+                            @endif
+                        </div>
+                        <table class="table table-borderless table-striped font-s13">
+                            <tbody>
+                                <tr>
+                                    <td class="font-w600" style="width: 30%;">Category</td>
+                                    <td>Family</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-w600">Phone</td>
+                                    <td>+ 00 37237854</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-w600">Email</td>
+                                    <td>user1@one.ui</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @endif
 
             <div class="col-lg-4 insta-profile" data-id="{{ $ig_profile->id }}">
                 <!-- Content Grid -->
@@ -139,11 +205,11 @@
         </script>
     </div>
     <!-- END Page Content -->
-    
+
     @if (Auth::user()->close_dashboard_tut == 0)
     @include('dashboard.modal.tutorial')
     @endif
-    
+
 </main>
 @endsection
 
