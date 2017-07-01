@@ -56,7 +56,7 @@
                         </ul>
                         <div class="block-title">{{ $ig_profile->profile_full_name }}</div>
                     </div>
-                    <div class="block-content block-content-full bg-primary text-center">
+                    <div class="block-content block-content-full bg-primary text-center bg-image" style="background-image: url('assets/img/photos/photo2.jpg');">
                         <img class="img-avatar img-avatar-thumb" src="{{ $ig_profile->profile_pic_url }}" alt="">
                         <div class="font-s13 push-10-t"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</div>
                     </div>
