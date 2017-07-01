@@ -20,7 +20,7 @@
                             <!-- Steps Content -->
                             <div class="block-content">
                                 <!-- Step 2 -->
-                                <div class="push-50">
+                                <div class="push-30-t push-50">
                                     <div class="form-group">
                                         <div class="col-sm-8 col-sm-offset-2">
                                             <div class="form-material">
