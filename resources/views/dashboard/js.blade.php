@@ -32,6 +32,29 @@ jQuery(function () {
         jQuery('#modal-checkpoint').modal('show');
     });
     
+    $(".btn-retry-checkpt").on("click", function(){ 
+        App.loader('show');
+        var $icon = jQuery('#retry-btn-spinner');
+        $icon.addClass("fa-spin");
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: "profile/ig/checkpoint",
+            dataType: "json",
+            data: {
+                'profile-id': $checkpointProfileId
+            },
+            success: function (data) {
+                if (data.success === 'true') {
+                    swal('Oops...', data.response, 'success');
+                } else {
+                    swal('Oops...', data.response, 'error');
+                }
+                App.loader('hide');
+            }
+        });
+    });
+    
     $(".btn-retry").on("click", function(){
         App.loader('show');
         

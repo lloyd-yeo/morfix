@@ -49,6 +49,7 @@ Route::post('/instagram-profile/add', 'InstagramProfileController@store');
 
 Route::post('/profile/ig/add', 'InstagramProfileController@create');
 Route::post('/profile/ig/remove/{id}', 'InstagramProfileController@delete');
+Route::post('/profile/ig/checkpoint', 'InstagramProfileController@clearCheckpoint');
 
 Route::get('/dm', 'DirectMessageController@index');
 

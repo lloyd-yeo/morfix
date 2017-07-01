@@ -47,10 +47,7 @@ class InstagramProfileController extends Controller {
 
         $config = array();
         $config["storage"] = "mysql";
-        $config["dbusername"] = "root";
-        $config["dbpassword"] = "inst@ffiliates123";
-        $config["dbhost"] = "52.221.60.235:3306";
-        $config["dbname"] = "morfix";
+        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
 
         $debug = false;
@@ -60,7 +57,7 @@ class InstagramProfileController extends Controller {
         $proxy = Proxy::inRandomOrder()->first();
 
         try {
-
+            
             if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
                 $profile_log->error_msg = "This instagram username has already been added!";
                 $profile_log->save();
@@ -256,6 +253,7 @@ class InstagramProfileController extends Controller {
                 $new_profile->save();
 
                 return Response::json(array("success" => true, 'response' => serialize($explorer_response), 'user' => serialize($user_response), 'proxy' => $proxy));
+                
             } catch (InstagramException $ig_ex) {
                 $log = CreateInstagramProfileLog::find($last_inserted_log_id);
                 $log->error_msg = $ig_ex->getTraceAsString();
@@ -264,6 +262,30 @@ class InstagramProfileController extends Controller {
                 $array = explode(':', $message);
                 return Response::json(array("success" => false, 'response' => trim($array[1]), "log" => $last_inserted_log_id));
             }
+        }
+    }
+    
+    public function clearCheckpoint(Request $request) {
+        $ig_profile = InstagramProfile::find($request->input('profile-id'));
+        $config = array();
+        $config["storage"] = "mysql";
+        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
+        $config["dbtablename"] = "instagram_sessions";
+
+        $debug = false;
+        $truncatedDebug = false;
+        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+        
+        $instagram->setProxy($ig_profile->proxy);
+        $instagram->setUser($ig_profile->insta_username, $ig_profile->insta_pw);
+        
+        try {
+            $explorer_response = $instagram->login();
+            $ig_profile->checkpoint_required = 0;
+            $ig_profile->save();
+            return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));
+        } catch (InstagramAPI\Exception\InstagramException $ig_ex) {
+            return Response::json(array("success" => false, 'response' => 'Unable to connect to your profile, please retry.'));
         }
     }
     

@@ -31,7 +31,7 @@
                                         </p>
                                         <center><h4 class='push'>2. Retry adding</h4></center>
                                         <div>
-                                            <center><button class="btn btn-primary btn-retry" type="button"><i id="retry-btn-spinner" class="fa fa-refresh"></i> Retry</button></center>
+                                            <center><button class="btn btn-primary btn-retry-checkpt" type="button"><i id="retry-btn-spinner" class="fa fa-refresh"></i> Retry</button></center>
                                         </div>
                                         <br/>
                                         <p class='text-danger text-center'>
@@ -49,7 +49,7 @@
                                         </p>
                                         <center><h4 class='push'>4. Retry adding</h4></center>
                                         <div>
-                                            <center><button class="btn btn-primary btn-retry" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
+                                            <center><button class="btn btn-primary btn-retry-checkpt" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
                                         </div>
                                         <p>
                                             Depending on whether your account gets added or not.<br/>
