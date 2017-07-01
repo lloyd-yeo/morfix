@@ -46,7 +46,8 @@ jQuery(function () {
             },
             success: function (data) {
                 if (data.success === 'true') {
-                    swal('Oops...', data.response, 'success');
+                    localStorage.setItem("status", data.response);
+                    location.reload(true);
                 } else {
                     swal('Oops...', data.response, 'error');
                 }
