@@ -86,28 +86,28 @@
                             </a>-->
 
                             @if ($ig_profile->checkpoint_required == 1)
-                            <a class="text-danger" href="javascript:void(0)">
+                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Verification Required" data-content="Your account requires verification on Instagram.">
                                 <i class="fa fa-2x fa-fw fa-unlink"></i>
                             </a>
                             @else
                             @endif
                             
                             @if ($ig_profile->incorrect_pw == 1)
-                            <a class="text-danger" href="javascript:void(0)">
+                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Incorrect Password">
                                 <i class="fa fa-2x fa-fw fa-asterisk"></i>
                             </a>
                             @else
                             @endif
                             
                             @if ($ig_profile->invalid_user == 1)
-                            <a class="text-danger" href="javascript:void(0)">
-                                <i class="fa fa-2x fa-fw fa-username"></i>
+                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Invalid Username">
+                                <i class="fa fa-2x fa-fw fa-user"></i>
                             </a>
                             @else
                             @endif
                             
                             @if ($ig_profile->account_disabled == 1)
-                            <a class="text-danger" href="javascript:void(0)">
+                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Account Disabled">
                                 <i class="fa fa-2x fa-fw fa-user-times"></i>
                             </a>
                             @endif
