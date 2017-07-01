@@ -38,7 +38,7 @@ class ReconcileStripeCharges extends Command
      */
     public function handle()
     {
-        $wrong_charges = StripeCharge::where('stripe_id', '')->get();
+        $wrong_charges = StripeCharge::whereNull('invoice_id')->get();
         foreach ($wrong_charges as $wrong_charge) {
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
             $charge = \Stripe\Charge::retrieve($wrong_charge->charge_id);
