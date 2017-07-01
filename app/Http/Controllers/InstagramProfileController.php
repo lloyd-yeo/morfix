@@ -284,7 +284,7 @@ class InstagramProfileController extends Controller {
             $ig_profile->checkpoint_required = 0;
             $ig_profile->save();
             return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));
-        } catch (InstagramAPI\Exception\RequestException $ig_ex) {
+        } catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
             return Response::json(array("success" => false, 'response' => 'Unable to connect to your profile, please retry. ' . $ig_ex->getMessage()));
         }
     }
