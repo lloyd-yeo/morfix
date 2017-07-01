@@ -75,15 +75,6 @@
                         </div>
 
                         <div class="text-center push">
-                            <!--                            <a class="text-default" href="javascript:void(0)">
-                                                            <i class="fa fa-2x fa-fw fa-facebook-square"></i>
-                                                        </a>-->
-                            <!--                            <a class="text-info" href="javascript:void(0)">
-                                                            <i class="fa fa-2x fa-fw fa-twitter-square"></i>
-                                                        </a>-->
-                            <!--                            <a class="text-danger" href="javascript:void(0)">
-                                                            <i class="fa fa-2x fa-fw fa-youtube-square"></i>
-                                                        </a>-->
 
                             @if ($ig_profile->checkpoint_required == 1)
                             <a class="text-danger checkpoint-btn" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Verification Required" data-content="Morfix needs you to click on 'It was me' when prompted by Instagram to restore connectivity. Click to resolve.">
@@ -117,12 +108,18 @@
                                 <tr>
                                     <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope text-primary-light"></i> DM Status</td>
                                     @if ($ig_profile->auto_dm_new_follower == 1)
-                                        @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
-                                        <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
-                                        @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
-                                        <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
-                                        @elseif ($ig_profile->temporary_ban != NULL)
-                                        <td class='text-danger'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                            {{-- If error is there, show suspension --}}
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
+                                        @else
+                                            {{-- If error isnt there, proceed as usual --}}
+                                            @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
+                                            <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                            @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
+                                            @elseif ($ig_profile->temporary_ban != NULL)
+                                            <td class='text-danger'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
+                                            @endif
                                         @endif
                                     @else
                                     <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
@@ -131,7 +128,15 @@
                                 <tr>
                                     <td class="font-w600"><i class='fa fa-heart text-danger'></i> Likes</td>
                                     @if ($ig_profile->auto_like == 1)
-                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                    
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                            {{-- If error is there, show suspension --}}
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
+                                        @else
+                                            {{-- If error isnt there, proceed as usual --}}
+                                            <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                        @endif
+                                    
                                     @else
                                     <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
                                     @endif
@@ -140,7 +145,15 @@
                                 <tr>
                                     <td class="font-w600"><i class='fa fa-comments text-primary'></i> Comment</td>
                                     @if ($ig_profile->auto_comment == 1)
-                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                    
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                            {{-- If error is there, show suspension --}}
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
+                                        @else
+                                            {{-- If error isnt there, proceed as usual --}}
+                                            <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                        @endif
+                                    
                                     @else
                                     <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
                                     @endif
@@ -149,7 +162,13 @@
                                 <tr>
                                     <td class="font-w600"><i class='si si-user-follow text-modern'></i> Follow</td>
                                     @if ($ig_profile->auto_follow == 1)
-                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                            {{-- If error is there, show suspension --}}
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
+                                        @else
+                                            {{-- If error isnt there, proceed as usual --}}
+                                            <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                        @endif
                                     @else
                                     <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
                                     @endif
@@ -158,11 +177,19 @@
                                 <tr>
                                     <td class="font-w600"><i class='si si-user-follow text-lightred'></i> Unfollow</td>
                                     @if ($ig_profile->auto_unfollow == 1)
-                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                            {{-- If error is there, show suspension --}}
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
+                                        @else
+                                            {{-- If error isnt there, proceed as usual --}}
+                                            <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                        @endif
                                     @else
                                     <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
                                     @endif
                                 </tr>
+                                
+                                
                             </tbody>
                         </table>
                     </div>
