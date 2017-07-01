@@ -116,12 +116,16 @@
                             <tbody>
                                 <tr>
                                     <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope text-primary-light"></i> DM Status</td>
-                                    @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
-                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
-                                    @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
-                                    <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
-                                    @elseif ($ig_profile->temporary_ban != NULL)
-                                    <td class='text-danger'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
+                                    @if ($ig_profile->auto_dm_new_follower == 1)
+                                        @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
+                                        <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                        @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
+                                        <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
+                                        @elseif ($ig_profile->temporary_ban != NULL)
+                                        <td class='text-danger'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
+                                        @endif
+                                    @else
+                                    <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
                                     @endif
                                 </tr>
                                 <tr>
