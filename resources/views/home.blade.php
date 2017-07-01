@@ -61,7 +61,7 @@
                         <div class="font-s13 push-10-t"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</div>
                     </div>
                     <div class="block-content">
-                        <div class="block-content text-primary">
+                        <div class="block-content">
                             <div class="row items-push text-center font-w700">
                                 <div class="col-xs-6">
                                     <div class="push-5"><i class="si si-camera fa-2x"></i></div>
@@ -115,8 +115,13 @@
                         <table class="table table-borderless table-striped font-s13">
                             <tbody>
                                 <tr>
-                                    <td class="font-w600" style="width: 30%;">Connectivity</td>
-                                    <td>Family</td>
+                                    <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope"></i> DM Status:</td>
+                                    @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
+                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                    @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
+                                    <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
+                                    @elseif ($ig_profile->temporary_ban != NULL)
+                                    <td class='text-warning'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
                                 </tr>
                                 <tr>
                                     <td class="font-w600">Phone</td>
