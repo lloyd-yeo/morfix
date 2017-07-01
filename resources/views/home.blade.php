@@ -122,6 +122,7 @@
                                     <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
                                     @elseif ($ig_profile->temporary_ban != NULL)
                                     <td class='text-warning'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
+                                    @endif
                                 </tr>
                                 <tr>
                                     <td class="font-w600">Phone</td>
