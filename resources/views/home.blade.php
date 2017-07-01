@@ -115,7 +115,7 @@
                         <table class="table table-borderless table-striped font-s13">
                             <tbody>
                                 <tr>
-                                    <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope text-primary-lighter"></i> DM Status</td>
+                                    <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope text-primary-light"></i> DM Status</td>
                                     @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
                                     <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
                                     @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
@@ -152,17 +152,12 @@
                                 </tr>
                                 
                                 <tr>
-                                    <td class="font-w600"><i class='si si-user-follow text-modern'></i> Unfollow</td>
+                                    <td class="font-w600"><i class='si si-user-follow text-lightred'></i> Unfollow</td>
                                     @if ($ig_profile->auto_unfollow == 1)
                                     <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
                                     @else
                                     <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
                                     @endif
-                                </tr>
-                                
-                                <tr>
-                                    <td class="font-w600">Email</td>
-                                    <td>user1@one.ui</td>
                                 </tr>
                             </tbody>
                         </table>
