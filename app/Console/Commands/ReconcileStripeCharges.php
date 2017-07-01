@@ -42,7 +42,9 @@ class ReconcileStripeCharges extends Command
         foreach ($wrong_charges as $wrong_charge) {
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
             $charge = \Stripe\Charge::retrieve($wrong_charge->charge_id);
-            echo $charge . "\n";
+            $customer_id = $charge->customer;
+            $wrong_charge->stripe_id = $customer_id;
+            echo $charge->id . "\t" . $charge->customer . "\n";
             exit;
         }
     }
