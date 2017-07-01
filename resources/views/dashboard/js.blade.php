@@ -46,7 +46,7 @@ jQuery(function () {
                 $.ajax({
                     async: true,
                     type: "POST",
-                    url: "profile/ig/checkpoint",
+                    url: "profile/ig/changepassword",
                     dataType: "json",
                     data: {
                         'profile-id': $incorrectPwProfileId,
