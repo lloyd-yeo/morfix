@@ -24,6 +24,14 @@ jQuery(function () {
     // Init page helpers (Slick Slider plugin, Appear, CountTo)
     App.initHelpers(['slick', 'appear', 'appear-countTo']);
     
+    var $checkpointProfileId;
+    var $incorrectPwProfileId;
+    
+    $(".checkpoint-btn").on("click", function() { 
+        $checkpointProfileId = $(this).attr("data-profile-id");
+        jQuery('#checkpoint-modal').modal('show');
+    });
+    
     $(".btn-retry").on("click", function(){
         App.loader('show');
         

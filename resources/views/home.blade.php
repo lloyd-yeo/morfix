@@ -86,28 +86,28 @@
                                                         </a>-->
 
                             @if ($ig_profile->checkpoint_required == 1)
-                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Verification Required" data-content="Morfix needs you to click on 'It was me' when prompted by Instagram to restore connectivity.">
+                            <a class="text-danger checkpoint-btn" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Verification Required" data-content="Morfix needs you to click on 'It was me' when prompted by Instagram to restore connectivity. Click to resolve.">
                                 <i class="fa fa-2x fa-fw fa-unlink"></i>
                             </a>
                             @else
                             @endif
 
                             @if ($ig_profile->incorrect_pw == 1)
-                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Incorrect Password" data-content="The password on your account currently is different from the one you supplied us.">
+                            <a class="text-danger incorrect-pw-btn" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Incorrect Password" data-content="The password on your account currently is different from the one you supplied us. Click to resolve.">
                                 <i class="fa fa-2x fa-fw fa-asterisk"></i>
                             </a>
                             @else
                             @endif
 
                             @if ($ig_profile->invalid_user == 1)
-                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Invalid Username" data-content="The username on this profile is invalid.">
+                            <a class="text-danger" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Invalid Username" data-content="The username on this profile is invalid. To resolve, please remove this profile & add a valid one.">
                                 <i class="fa fa-2x fa-fw fa-user"></i>
                             </a>
                             @else
                             @endif
 
                             @if ($ig_profile->account_disabled == 1)
-                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Account Disabled" data-content="This account has been disabled by Instagram.">
+                            <a class="text-danger" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Account Disabled" data-content="This account has been disabled by Instagram. Do contact Instagram to see if they can enable your account again.">
                                 <i class="fa fa-2x fa-fw fa-user-times"></i>
                             </a>
                             @endif
