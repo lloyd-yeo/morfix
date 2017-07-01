@@ -61,6 +61,16 @@
                         <div class="font-s13 push-10-t"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</div>
                     </div>
                     <div class="block-content">
+                        <div class="row items-push text-center font-w700">
+                            <div class="col-xs-6">
+                                <div class="push-5"><i class="si si-camera fa-2x"></i></div>
+                                <div class="h5 font-w300">21 Posts</div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="push-5"><i class="si si-users fa-2x"></i></div>
+                                <div class="h5 font-w300">9656 Followers</div>
+                            </div>
+                        </div>
                         <div class="text-center push">
 <!--                            <a class="text-default" href="javascript:void(0)">
                                 <i class="fa fa-2x fa-fw fa-facebook-square"></i>
@@ -102,7 +112,7 @@
                         <table class="table table-borderless table-striped font-s13">
                             <tbody>
                                 <tr>
-                                    <td class="font-w600" style="width: 30%;">Category</td>
+                                    <td class="font-w600" style="width: 30%;">Connectivity</td>
                                     <td>Family</td>
                                 </tr>
                                 <tr>
