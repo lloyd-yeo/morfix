@@ -73,17 +73,17 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="text-center push">
-<!--                            <a class="text-default" href="javascript:void(0)">
-                                <i class="fa fa-2x fa-fw fa-facebook-square"></i>
-                            </a>-->
-<!--                            <a class="text-info" href="javascript:void(0)">
-                                <i class="fa fa-2x fa-fw fa-twitter-square"></i>
-                            </a>-->
-<!--                            <a class="text-danger" href="javascript:void(0)">
-                                <i class="fa fa-2x fa-fw fa-youtube-square"></i>
-                            </a>-->
+                            <!--                            <a class="text-default" href="javascript:void(0)">
+                                                            <i class="fa fa-2x fa-fw fa-facebook-square"></i>
+                                                        </a>-->
+                            <!--                            <a class="text-info" href="javascript:void(0)">
+                                                            <i class="fa fa-2x fa-fw fa-twitter-square"></i>
+                                                        </a>-->
+                            <!--                            <a class="text-danger" href="javascript:void(0)">
+                                                            <i class="fa fa-2x fa-fw fa-youtube-square"></i>
+                                                        </a>-->
 
                             @if ($ig_profile->checkpoint_required == 1)
                             <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Verification Required" data-content="Morfix needs you to click on 'It was me' when prompted by Instagram to restore connectivity.">
@@ -91,21 +91,21 @@
                             </a>
                             @else
                             @endif
-                            
+
                             @if ($ig_profile->incorrect_pw == 1)
                             <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Incorrect Password" data-content="The password on your account currently is different from the one you supplied us.">
                                 <i class="fa fa-2x fa-fw fa-asterisk"></i>
                             </a>
                             @else
                             @endif
-                            
+
                             @if ($ig_profile->invalid_user == 1)
                             <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Invalid Username" data-content="The username on this profile is invalid.">
                                 <i class="fa fa-2x fa-fw fa-user"></i>
                             </a>
                             @else
                             @endif
-                            
+
                             @if ($ig_profile->account_disabled == 1)
                             <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Account Disabled" data-content="This account has been disabled by Instagram.">
                                 <i class="fa fa-2x fa-fw fa-user-times"></i>
@@ -115,19 +115,51 @@
                         <table class="table table-borderless table-striped font-s13">
                             <tbody>
                                 <tr>
-                                    <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope"></i> DM Status:</td>
+                                    <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope text-primary-lighter"></i> DM Status</td>
                                     @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
                                     <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
                                     @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
                                     <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
                                     @elseif ($ig_profile->temporary_ban != NULL)
-                                    <td class='text-warning'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
+                                    <td class='text-danger'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
                                     @endif
                                 </tr>
                                 <tr>
-                                    <td class="font-w600">Phone</td>
-                                    <td>+ 00 37237854</td>
+                                    <td class="font-w600"><i class='fa fa-heart text-danger'></i> Likes</td>
+                                    @if ($ig_profile->auto_like == 1)
+                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                    @else
+                                    <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
+                                    @endif
                                 </tr>
+                                
+                                <tr>
+                                    <td class="font-w600"><i class='fa fa-comments text-primary'></i> Comment</td>
+                                    @if ($ig_profile->auto_comment == 1)
+                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                    @else
+                                    <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
+                                    @endif
+                                </tr>
+                                
+                                <tr>
+                                    <td class="font-w600"><i class='si si-user-follow text-modern'></i> Follow</td>
+                                    @if ($ig_profile->auto_follow == 1)
+                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                    @else
+                                    <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
+                                    @endif
+                                </tr>
+                                
+                                <tr>
+                                    <td class="font-w600"><i class='si si-user-follow text-modern'></i> Unfollow</td>
+                                    @if ($ig_profile->auto_unfollow == 1)
+                                    <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
+                                    @else
+                                    <td class='text-modern'><i class="fa fa-fw fa-toggle-off"></i> Turned Off</td>
+                                    @endif
+                                </tr>
+                                
                                 <tr>
                                     <td class="font-w600">Email</td>
                                     <td>user1@one.ui</td>
