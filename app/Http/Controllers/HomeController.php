@@ -104,7 +104,7 @@ class HomeController extends Controller {
             $new_follower_count[$ig_profile->insta_username] = $new_follower_diff;
         }
         
-        $user_updates = UserUpdate::where('email', Auth::user()->email)->orderBy('id', 'desc')->take(5);
+        $user_updates = UserUpdate::where('email', Auth::user()->email)->orderBy('id', 'desc')->take(5)->get();
         
 //        $user_updates = DB::select("SELECT `user_updates`.`id`,
 //                            `user_updates`.`email`,
