@@ -61,16 +61,19 @@
                         <div class="font-s13 push-10-t"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}</div>
                     </div>
                     <div class="block-content">
-                        <div class="row items-push text-center font-w700">
-                            <div class="col-xs-6">
-                                <div class="push-5"><i class="si si-camera fa-2x"></i></div>
-                                <div class="h5 font-w300">21 Posts</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="push-5"><i class="si si-users fa-2x"></i></div>
-                                <div class="h5 font-w300">9656 Followers</div>
+                        <div class="block-content text-primary">
+                            <div class="row items-push text-center font-w700">
+                                <div class="col-xs-6">
+                                    <div class="push-5"><i class="si si-camera fa-2x"></i></div>
+                                    <div class="h5 font-w300">{{ $ig_profile->num_posts }} Posts</div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="push-5"><i class="si si-users fa-2x"></i></div>
+                                    <div class="h5 font-w300">{{ $ig_profile->follower_count }} Followers</div>
+                                </div>
                             </div>
                         </div>
+                        
                         <div class="text-center push">
 <!--                            <a class="text-default" href="javascript:void(0)">
                                 <i class="fa fa-2x fa-fw fa-facebook-square"></i>
@@ -91,21 +94,21 @@
                             
                             @if ($ig_profile->incorrect_pw == 1)
                             <a class="text-danger" href="javascript:void(0)">
-                                Incorrect Password
+                                <i class="fa fa-2x fa-fw fa-asterisk"></i>
                             </a>
                             @else
                             @endif
                             
                             @if ($ig_profile->invalid_user == 1)
                             <a class="text-danger" href="javascript:void(0)">
-                                Invalid Username
+                                <i class="fa fa-2x fa-fw fa-username"></i>
                             </a>
                             @else
                             @endif
                             
                             @if ($ig_profile->account_disabled == 1)
                             <a class="text-danger" href="javascript:void(0)">
-                                Account Disabled
+                                <i class="fa fa-2x fa-fw fa-user-times"></i>
                             </a>
                             @endif
                         </div>
