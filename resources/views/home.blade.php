@@ -93,7 +93,7 @@
                             @else
                             @endif
                             
-                            @elseif ($ig_profile->account_disabled == 1)
+                            @if ($ig_profile->account_disabled == 1)
                             <a class="text-danger" href="javascript:void(0)">
                                 Account Disabled
                             </a>
