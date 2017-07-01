@@ -44,7 +44,8 @@ class ReconcileStripeCharges extends Command
             $charge = \Stripe\Charge::retrieve($wrong_charge->charge_id);
             $customer_id = $charge->customer;
             $wrong_charge->stripe_id = $customer_id;
-            echo $charge->id . "\t" . $charge->customer . "\n";
+            echo $charge;
+//            echo $charge->id . "\t" . $charge->customer . "\n";
             exit;
         }
     }
