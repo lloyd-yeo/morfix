@@ -4,7 +4,7 @@
     
     @if ($update->type == "NEW_REFERRAL")
     <i class="fa fa-thumbs-o-up list-timeline-icon bg-info"></i>
-    @elseif ($update->type == "SYSTEM_UPDATE")
+    @elseif ($update->type == "SYSTEM_UPGRADE")
     <i class="fa fa-cog list-timeline-icon bg-danger"></i>
     @else
     <i class="fa fa-coffee list-timeline-icon bg-info"></i>
