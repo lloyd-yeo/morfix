@@ -289,6 +289,34 @@ class InstagramProfileController extends Controller {
         }
     }
     
+    public function changePassword(Request $request) {
+        $ig_profile = InstagramProfile::find($request->input('profile-id'));
+        $password = $request->input('password');
+        $ig_profile->insta_pw = $password;
+        $ig_profile->save();
+        
+        $config = array();
+        $config["storage"] = "mysql";
+        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
+        $config["dbtablename"] = "instagram_sessions";
+
+        $debug = false;
+        $truncatedDebug = false;
+        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+        
+        $instagram->setProxy($ig_profile->proxy);
+        $instagram->setUser($ig_profile->insta_username, $password);
+        
+        try {
+            $explorer_response = $instagram->login();
+            $ig_profile->checkpoint_required = 0;
+            $ig_profile->save();
+            return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));
+        } catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
+            return Response::json(array("success" => false, 'response' => 'Unable to connect to your profile, please retry.'));
+        }
+    }
+    
     public function delete(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
         if ($ig_profile->delete()) {

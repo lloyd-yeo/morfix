@@ -32,6 +32,46 @@ jQuery(function () {
         jQuery('#modal-checkpoint').modal('show');
     });
     
+    $(".incorrect-pw-btn").on("click", function(){ 
+        $incorrectPwProfileId = $(this).attr("data-profile-id");
+        swal({
+            title: 'Enter the correct password for this profile',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            showLoaderOnConfirm: true,
+            preConfirm: function (password) {
+               App.loader('show');
+              return new Promise(function (resolve, reject) {
+                $.ajax({
+                    async: true,
+                    type: "POST",
+                    url: "profile/ig/checkpoint",
+                    dataType: "json",
+                    data: {
+                        'profile-id': $incorrectPwProfileId,
+                        'password': password
+                    },
+                    success: function (data) {
+                        if (data.success === true) {
+                            localStorage.setItem("status", data.response);
+                            location.reload(true);
+                        } else {
+                            reject('This password is incorrect.');
+                        }
+                    }
+                });
+              });
+            },
+            allowOutsideClick: false
+          }).then(function (email) {
+            swal({
+              type: 'success',
+              title: 'Password successfully changed!'
+            });
+          });
+    });
+    
     $(".btn-retry-checkpt").on("click", function(){ 
         App.loader('show');
         var $icon = jQuery('#retry-btn-spinner');
