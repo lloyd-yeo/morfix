@@ -268,7 +268,7 @@
     @if (Auth::user()->close_dashboard_tut == 0)
     @include('dashboard.modal.tutorial')
     @endif
-
+    @include('dashboard.modal.checkpoint')
 </main>
 @endsection
 
