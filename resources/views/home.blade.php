@@ -165,8 +165,9 @@
                 </div>
             </div>
             @endif
-
-            <div class="col-lg-4 insta-profile" data-id="{{ $ig_profile->id }}">
+            
+            @if (Auth::user()->email != "l-ywz@hotmail.com")
+            <div class="col-lg-4 insta-profile" data-id="{{ $ig_profile->id }}" >
                 <!-- Content Grid -->
                 <div class="content-grid">
                     <div class="row">
@@ -233,6 +234,8 @@
                 </div>
                 <!-- END Content Grid -->
             </div>
+            @endif
+            
             <div class="col-lg-8 follower-chart">
                 <div class="block">
                     <div id="follower-chart-header-{{ $ig_profile->id }}" class="block-header bg-primary">
