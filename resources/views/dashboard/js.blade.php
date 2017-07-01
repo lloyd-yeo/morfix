@@ -45,7 +45,7 @@ jQuery(function () {
                 'profile-id': $checkpointProfileId
             },
             success: function (data) {
-                if (data.success === 'true') {
+                if (data.success === true) {
                     localStorage.setItem("status", data.response);
                     location.reload(true);
                 } else {
