@@ -13,7 +13,7 @@ class AddUserUpdate extends Command
      *
      * @var string
      */
-    protected $signature = 'system:update {type} {title} {message}';
+    protected $signature = 'system:update {type} {title} {content}';
 
     /**
      * The console command description.
@@ -41,7 +41,7 @@ class AddUserUpdate extends Command
     {
         $type = $this->argument('type');
         $title = $this->argument('title');
-        $message = $this->argument('message');
+        $content = $this->argument('content');
         
         $users = User::all();
         foreach ($users as $user) {
@@ -49,7 +49,7 @@ class AddUserUpdate extends Command
             $update->email = $user->email;
             $update->title = $title;
             $update->type = $type;
-            $update->message = $message;
+            $update->content = $content;
             $update->save();
         }
     }
