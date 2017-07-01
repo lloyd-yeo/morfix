@@ -29,7 +29,7 @@ jQuery(function () {
     
     $(".checkpoint-btn").on("click", function() { 
         $checkpointProfileId = $(this).attr("data-profile-id");
-        jQuery('#checkpoint-modal').modal('show');
+        jQuery('#modal-checkpoint').modal('show');
     });
     
     $(".btn-retry").on("click", function(){
