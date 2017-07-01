@@ -309,7 +309,7 @@ class InstagramProfileController extends Controller {
         
         try {
             $explorer_response = $instagram->login();
-            $ig_profile->checkpoint_required = 0;
+            $ig_profile->incorrect_pw = 0;
             $ig_profile->save();
             return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));
         } catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
