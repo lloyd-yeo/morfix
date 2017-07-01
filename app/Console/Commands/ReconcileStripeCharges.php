@@ -40,7 +40,10 @@ class ReconcileStripeCharges extends Command
     {
         $wrong_charges = StripeCharge::where('stripe_id', '')->get();
         foreach ($wrong_charges as $wrong_charge) {
-            echo $wrong_charge->charge_id . "\n";
+            \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+            $charge = \Stripe\Charge::retrieve($wrong_charge->charge_id);
+            echo $charge . "\n";
+            exit;
         }
     }
 }
