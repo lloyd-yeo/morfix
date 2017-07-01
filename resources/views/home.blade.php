@@ -86,7 +86,7 @@
                             </a>-->
 
                             @if ($ig_profile->checkpoint_required == 1)
-                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Verification Required" data-content="Morfix needs you to click on \"It was me.\" when prompted by Instagram to restore connectivity.">
+                            <a class="text-danger" href="javascript:void(0)" data-toggle="popover" data-original-title="Verification Required" data-content="Morfix needs you to click on 'It was me' when prompted by Instagram to restore connectivity.">
                                 <i class="fa fa-2x fa-fw fa-unlink"></i>
                             </a>
                             @else
