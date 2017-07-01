@@ -69,17 +69,17 @@
                             <!-- END Steps Content -->
 
                             <!-- Steps Navigation -->
-<!--                            <div class="block-content block-content-mini block-content-full border-t">
+                            <div class="block-content block-content-mini block-content-full border-t">
                                 <div class="row">
-                                    <div class="col-xs-6">
+<!--                                    <div class="col-xs-6">
                                         <button class="wizard-prev btn btn-modern" type="button"><i class="fa fa-arrow-circle-o-left"></i> Previous</button>
                                     </div>
                                     <div class="col-xs-6 text-right">
                                         <button class="wizard-next btn btn-primary" type="button">Next <i class="fa fa-arrow-circle-o-right"></i></button>
                                         <button class="wizard-finish btn btn-primary" type="submit"><i class="fa fa-check-circle-o"></i> Submit</button>
-                                    </div>
+                                    </div>-->
                                 </div>
-                            </div>-->
+                            </div>
                             <!-- END Steps Navigation -->
                     </div>
                     <!-- END Validation Wizard Wizard -->
