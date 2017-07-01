@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\InstagramProfile;
+use App\UserUpdate;
 
 class HomeController extends Controller {
 
@@ -103,13 +104,15 @@ class HomeController extends Controller {
             $new_follower_count[$ig_profile->insta_username] = $new_follower_diff;
         }
         
-        $user_updates = DB::select("SELECT `user_updates`.`id`,
-                            `user_updates`.`email`,
-                            `user_updates`.`title`,
-                            `user_updates`.`content`,
-                            `user_updates`.`type`,
-                            `user_updates`.`created_at`
-                        FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ? ORDER BY id DESC;", [Auth::user()->email]);
+        $user_updates = UserUpdate::where('email', Auth::user()->email)->orderBy('id', 'desc')->take(5);
+        
+//        $user_updates = DB::select("SELECT `user_updates`.`id`,
+//                            `user_updates`.`email`,
+//                            `user_updates`.`title`,
+//                            `user_updates`.`content`,
+//                            `user_updates`.`type`,
+//                            `user_updates`.`created_at`
+//                        FROM `insta_affiliate`.`user_updates` WHERE `user_updates`.`email` = ? ORDER BY id DESC;", [Auth::user()->email]);
         
         $remaining_quota = DB::select("SELECT COUNT(email) AS email_count FROM user_insta_profile WHERE email = \"" . Auth::user()->email . "\";");
         
