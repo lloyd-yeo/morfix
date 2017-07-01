@@ -50,7 +50,9 @@ class AddUserUpdate extends Command
             $update->title = $title;
             $update->type = $type;
             $update->content = $content;
-            $update->save();
+            if ($update->save()) {
+                $this->line("Added announcement/update for [" . $user->email . "]");
+            }
         }
     }
 }
