@@ -52,10 +52,11 @@ class UpdatePendingCommissionPayable extends Command {
             foreach ($referrals as $referral) {
                 $this->line($referral->charge_id . "\t" . $referral->invoice_id);
                 $charge = StripeCharge::where('charge_id', $referral->charge_id)->where('charge_created', '<', $current_month)->first();
-                $charge->commission_paid = 1;
-                if ($charge->save()) {
-                    $this->line("Updated [" . $charge->charge_id . "] for [" . $user->email . "]");
-                }
+                echo $charge;
+                #$charge->commission_paid = 1;
+                #if ($charge->save()) {
+                #    $this->line("Updated [" . $charge->charge_id . "] for [" . $user->email . "]");
+                #}
             }
             
 //            $user->pending_commission_payable = 0;
