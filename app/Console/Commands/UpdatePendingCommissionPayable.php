@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use App\User;
 
 class UpdatePendingCommissionPayable extends Command {
@@ -41,10 +42,18 @@ class UpdatePendingCommissionPayable extends Command {
         $all_data = array();
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             echo $data[0] . "\n";
-            $user = User::where('paypal_email', trim($data[0]))->first();
-            echo $user->user_id . "\t" . $user->name . "\n";
-            $user->pending_commission_payable = 0;
-            $user->save();
+            $user = User::where('email', trim($data[0]))->first();
+            $current_month = \Carbon\Carbon::now()->startOfMonth();
+            echo $user->user_id . "\t" . $user->name . "\t$current_month\n";
+            
+            $referrals = DB::select('SELECT * FROM insta_affiliate.get_referral_charges_of_user WHERE referrer_email = ?', [$user->email]);
+            
+            foreach ($referrals as $referral) {
+                $this->line($referral->charge_id . "\t" . $referral->invoice_id);
+            }
+            
+//            $user->pending_commission_payable = 0;
+//            $user->save();
         }
     }
 
