@@ -55,6 +55,7 @@ class PostSchedulingController extends Controller {
     public function gallery($id) {
         $instagram_profiles = InstagramProfile::where('id', $id)
                 ->get();
+        
         $default_images = DefaultImageGallery::orderBy('image_id', 'desc')->get();
         $default_categories = DB::connection('mysql_old')->select("SELECT id, category FROM insta_affiliate.default_image_category;");
         $user_images = DB::connection('mysql_old')->select("SELECT * FROM insta_affiliate.user_images WHERE email = ?;", [Auth::user()->email]);

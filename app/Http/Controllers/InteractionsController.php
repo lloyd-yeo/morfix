@@ -45,7 +45,11 @@ class InteractionsController extends Controller {
     public function edit($id) {
 
         $ig_profile = InstagramProfile::where('id', $id)->first();
-
+        
+        if ($ig_profile->email != Auth::user()->email) {
+             return redirect('home');
+        }
+        
         $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
         $comments_done = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
         $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();
