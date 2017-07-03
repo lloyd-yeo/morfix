@@ -23,6 +23,7 @@
                 <a class="block block-link-hover2 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full border-b" style="overflow-y:auto;">
                         <span class="pull-left"><i class="si si-direction text-info" style="font-size:10em;"></i></span>
+                        <p>General Queries</p>
                     </div>
                 </a>
             </div>
