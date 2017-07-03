@@ -42,9 +42,11 @@ class PaypalController extends Controller {
     public function paypalRedirect() {
         // Create new agreement
         $agreement = new Agreement();
+        $dt = \Carbon\Carbon::now();
+        $dt->timezone = new DateTimeZone('UTC');
         $agreement->setName('Morfix Monthly Premium Subscription (Test)')
                 ->setDescription('Morfix Monthly Premium Subscription (Test)')
-                ->setStartDate(\Carbon\Carbon::now()->addMinutes(5)->toIso8601String());
+                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
 
         // Set plan id
         $plan = new Plan();
