@@ -43,16 +43,15 @@ class ManualLogin extends Command {
      * @return mixed
      */
     public function handle() {
+        DB::reconnect();
         $ig_username = $this->argument("ig_username");
         $ig_password = $this->argument("ig_password");
+        
         $this->line($ig_username . " " . $ig_password);
         
         $config = array();
         $config["storage"] = "mysql";
-        $config["dbusername"] = "root";
-        $config["dbpassword"] = "inst@ffiliates123";
-        $config["dbhost"] = "52.221.60.235:3306";
-        $config["dbname"] = "morfix";
+        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
 
         $debug = true;
@@ -66,6 +65,11 @@ class ManualLogin extends Command {
             $instagram->setProxy($proxy->proxy);
             $explorer_response = $instagram->login();
             $this->line(serialize($explorer_response));
+            
+            $ig_profile = InstagramProfile::where('insta_username', $ig_username)->first();
+            if ($ig_profile !== NULL) {
+                echo $instagram->getCurrentUser()->user->hd_profile_pic_versions;
+            }
             break;
         }
     }
