@@ -22,7 +22,7 @@
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full border-b" style="overflow-y:auto;">
-                        <span class="pull-left"><i class="si si-direction fa-5x text-info"></i></span>
+                        <span class="pull-left"><i class="si si-direction fa-500px text-info"></i></span>
                     </div>
                 </a>
             </div>
