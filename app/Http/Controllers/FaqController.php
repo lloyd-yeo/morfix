@@ -9,7 +9,6 @@ use Response;
 use App\User;
 use App\FaqQna;
 use App\FaqTopic;
-use Unicodeveloper\Emoji\Emoji;
 
 class FaqController extends Controller {
 
@@ -35,6 +34,11 @@ class FaqController extends Controller {
         
         return view('faq', [
             'question_and_answers' => $question_and_answers,
+        ]);
+    }
+    
+    public function topic() {
+        return view('faq.topic', [
         ]);
     }
 
