@@ -68,7 +68,7 @@ class ManualLogin extends Command {
             
             $ig_profile = InstagramProfile::where('insta_username', $ig_username)->first();
             if ($ig_profile !== NULL) {
-                echo $instagram->getCurrentUser()->user->hd_profile_pic_versions[0]["url"];
+                echo $instagram->getCurrentUser()->user->hd_profile_pic_versions[0]->url;
             }
             break;
         }
