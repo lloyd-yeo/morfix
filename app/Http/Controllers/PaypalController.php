@@ -18,6 +18,7 @@ use PayPal\Api\Agreement;
 use PayPal\Api\Payer;
 use \DateTimeZone;
 use App\User;
+use App\MorfixPlan;
 
 class PaypalController extends Controller {
 
@@ -41,19 +42,22 @@ class PaypalController extends Controller {
         $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
         $this->apiContext->setConfig(config('paypal.settings'));
     }
-
-    public function paypalRedirect() {
+    
+    public function paypalRedirectPremium() {
+        
+        $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
+        
+        // Instantiate Plan
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        
         // Create new agreement
         $agreement = new Agreement();
-        $dt = \Carbon\Carbon::now();
-        $dt->timezone = new DateTimeZone('UTC');
-        $agreement->setName('Morfix Monthly Premium Subscription (Test)')
-                ->setDescription('Morfix Monthly Premium Subscription (Test)')
+        $agreement->setName('Morfix Monthly Premium Subscription (37/month)')
+                ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD/mth.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
-
+        
         // Set plan id
-        $plan = new Plan();
-        $plan->setId("P-18H64176W28665839BHWBX7Y");
         $agreement->setPlan($plan);
 
         // Add payer type
@@ -62,7 +66,124 @@ class PaypalController extends Controller {
         $agreement->setPayer($payer);
 
         try {
-            // Create agreement
+            // Create agreement on Paypal
+            $agreement = $agreement->create($this->apiContext);
+
+            // Extract approval URL to redirect user
+            $approvalUrl = $agreement->getApprovalLink();
+
+            return redirect($approvalUrl);
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+    
+    public function paypalRedirectBusiness() {
+        
+        $paypal_plan_id = MorfixPlan::where('name', 'Business')->first()->paypal_id;
+        
+        // Instantiate Plan
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        
+        // Create new agreement
+        $agreement = new Agreement();
+        $agreement->setName('Morfix Monthly Business Subscription (97/month)')
+                ->setDescription('This subscription is for the Business add-on package of Morfix, amounting to $97USD/mth.')
+                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+        
+        // Set plan id
+        $agreement->setPlan($plan);
+
+        // Add payer type
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+        $agreement->setPayer($payer);
+
+        try {
+            // Create agreement on Paypal
+            $agreement = $agreement->create($this->apiContext);
+
+            // Extract approval URL to redirect user
+            $approvalUrl = $agreement->getApprovalLink();
+
+            return redirect($approvalUrl);
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+    
+    public function paypalRedirectPro() {
+        
+        $paypal_plan_id = MorfixPlan::where('name', 'Pro')->first()->paypal_id;
+        
+        // Instantiate Plan
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        
+        // Create new agreement
+        $agreement = new Agreement();
+        $agreement->setName('Morfix Yearly Pro Subscription (370/yr)')
+                ->setDescription('This subscription is for the annual Pro package of Morfix, amounting to $370USD/yr.')
+                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+        
+        // Set plan id
+        $agreement->setPlan($plan);
+
+        // Add payer type
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+        $agreement->setPayer($payer);
+
+        try {
+            // Create agreement on Paypal
+            $agreement = $agreement->create($this->apiContext);
+
+            // Extract approval URL to redirect user
+            $approvalUrl = $agreement->getApprovalLink();
+
+            return redirect($approvalUrl);
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+    
+    public function paypalRedirectMastermind() {
+        
+        $paypal_plan_id = MorfixPlan::where('name', 'Mastermind')->first()->paypal_id;
+        
+        // Instantiate Plan
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        
+        // Create new agreement
+        $agreement = new Agreement();
+        $agreement->setName('Morfix Yearly Mastermind Subscription (970/yr)')
+                ->setDescription('This subscription is for the annual Mastermind package of Morfix, amounting to $970USD/yr.')
+                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+        
+        // Set plan id
+        $agreement->setPlan($plan);
+
+        // Add payer type
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+        $agreement->setPayer($payer);
+
+        try {
+            // Create agreement on Paypal
             $agreement = $agreement->create($this->apiContext);
 
             // Extract approval URL to redirect user
@@ -78,14 +199,10 @@ class PaypalController extends Controller {
         }
     }
 
-    public function paypalReturn(Request $request) {
 
+    public function paypalReturn(Request $request) {
         $token = $request->token;
         $agreement = new \PayPal\Api\Agreement();
-        $agreement->setName('Morfix Monthly Premium Subscription (Test)')
-                ->setDescription('Morfix Monthly Premium Subscription (Test)')
-                ->setStartDate(\Carbon\Carbon::now()->addMinutes(5)->toIso8601String());
-        
         // Set plan id
         $plan = new Plan();
         $plan->setId("P-18H64176W28665839BHWBX7Y");
@@ -93,16 +210,9 @@ class PaypalController extends Controller {
         try {
             // Execute agreement
             $result = $agreement->execute($token, $this->apiContext);
-//            $user = Auth::user();
-//            $user->role = 'subscriber';
-//            $user->paypal = 1;
-//            ,;
-//            $user->save();
-            
             $user = Auth::user();
             $user->user_tier = 200000;
             $user->save();
-
             echo 'New Subscriber Created and Billed';
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             var_dump($ex->getData());
@@ -112,237 +222,4 @@ class PaypalController extends Controller {
             echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
         }
     }
-
-    public function create_plan_premium() {
-        // Create a new billing plan
-        $plan = new Plan();
-        $plan->setName('Premium Morfix Subscription')
-                ->setDescription('Monthly Subscription to Morfix (Premium)')
-                ->setType('infinite');
-
-        // Set billing plan definitions
-        $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Morfix Premium Subscription (37/mth)')
-                ->setType('REGULAR')
-                ->setFrequency('MONTH')
-                ->setFrequencyInterval('1')
-                ->setCycles('0')
-                ->setAmount(new Currency(array('value' => 37, 'currency' => 'USD')));
-
-        // Set merchant preferences
-        $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://app.morfix.co/subscribe/paypal/return/premium')
-                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
-                ->setAutoBillAmount('yes')
-                ->setInitialFailAmountAction('CONTINUE')
-                ->setMaxFailAttempts('0');
-
-        $plan->setPaymentDefinitions(array($paymentDefinition));
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        //create the plan
-        try {
-            $createdPlan = $plan->create($this->apiContext);
-            try {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
-                $patch->setOp('replace')
-                        ->setPath('/')
-                        ->setValue($value);
-                $patchRequest = new PatchRequest();
-                $patchRequest->addPatch($patch);
-                $createdPlan->update($patchRequest, $this->apiContext);
-                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
-                // Output plan id
-                echo 'Plan ID:' . $plan->getId();
-            } catch (PayPal\Exception\PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
-            } catch (Exception $ex) {
-                die($ex);
-            }
-        } catch (PayPal\Exception\PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        } catch (Exception $ex) {
-            die($ex);
-        }
-    }
-    
-    public function create_plan_business() {
-        // Create a new billing plan
-        $plan = new Plan();
-        $plan->setName('Business Morfix Subscription')
-                ->setDescription('Monthly Subscription to Morfix (Business)')
-                ->setType('infinite');
-
-        // Set billing plan definitions
-        $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Morfix Business Subscription (97/mth)')
-                ->setType('REGULAR')
-                ->setFrequency('MONTH')
-                ->setFrequencyInterval('1')
-                ->setCycles('0')
-                ->setAmount(new Currency(array('value' => 97, 'currency' => 'USD')));
-
-        // Set merchant preferences
-        $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://app.morfix.co/subscribe/paypal/return/business')
-                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
-                ->setAutoBillAmount('yes')
-                ->setInitialFailAmountAction('CONTINUE')
-                ->setMaxFailAttempts('0');
-
-        $plan->setPaymentDefinitions(array($paymentDefinition));
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        //create the plan
-        try {
-            $createdPlan = $plan->create($this->apiContext);
-            try {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
-                $patch->setOp('replace')
-                        ->setPath('/')
-                        ->setValue($value);
-                $patchRequest = new PatchRequest();
-                $patchRequest->addPatch($patch);
-                $createdPlan->update($patchRequest, $this->apiContext);
-                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
-                // Output plan id
-                echo 'Plan ID:' . $plan->getId();
-            } catch (PayPal\Exception\PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
-            } catch (Exception $ex) {
-                die($ex);
-            }
-        } catch (PayPal\Exception\PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        } catch (Exception $ex) {
-            die($ex);
-        }
-    }
-    
-    public function create_plan_pro() {
-        // Create a new billing plan
-        $plan = new Plan();
-        $plan->setName('Pro Morfix Subscription')
-                ->setDescription('Yearly Subscription to Morfix (Pro)')
-                ->setType('infinite');
-
-        // Set billing plan definitions
-        $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Morfix Pro Subscription (370/yr)')
-                ->setType('REGULAR')
-                ->setFrequency('YEAR')
-                ->setFrequencyInterval('1')
-                ->setCycles('0')
-                ->setAmount(new Currency(array('value' => 370, 'currency' => 'USD')));
-
-        // Set merchant preferences
-        $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://app.morfix.co/subscribe/paypal/return/pro')
-                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
-                ->setAutoBillAmount('yes')
-                ->setInitialFailAmountAction('CONTINUE')
-                ->setMaxFailAttempts('0');
-
-        $plan->setPaymentDefinitions(array($paymentDefinition));
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        //create the plan
-        try {
-            $createdPlan = $plan->create($this->apiContext);
-            try {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
-                $patch->setOp('replace')
-                        ->setPath('/')
-                        ->setValue($value);
-                $patchRequest = new PatchRequest();
-                $patchRequest->addPatch($patch);
-                $createdPlan->update($patchRequest, $this->apiContext);
-                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
-                // Output plan id
-                echo 'Plan ID:' . $plan->getId();
-            } catch (PayPal\Exception\PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
-            } catch (Exception $ex) {
-                die($ex);
-            }
-        } catch (PayPal\Exception\PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        } catch (Exception $ex) {
-            die($ex);
-        }
-    }
-    
-    public function create_plan_mastermind() {
-        // Create a new billing plan
-        $plan = new Plan();
-        $plan->setName('Mastermind Morfix Subscription')
-                ->setDescription('Yearly Subscription to Morfix (Mastermind)')
-                ->setType('infinite');
-
-        // Set billing plan definitions
-        $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Morfix Mastermind Subscription (970/yr)')
-                ->setType('REGULAR')
-                ->setFrequency('YEAR')
-                ->setFrequencyInterval('1')
-                ->setCycles('0')
-                ->setAmount(new Currency(array('value' => 970, 'currency' => 'USD')));
-
-        // Set merchant preferences
-        $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://app.morfix.co/subscribe/paypal/return/mastermind')
-                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
-                ->setAutoBillAmount('yes')
-                ->setInitialFailAmountAction('CONTINUE')
-                ->setMaxFailAttempts('0');
-
-        $plan->setPaymentDefinitions(array($paymentDefinition));
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        //create the plan
-        try {
-            $createdPlan = $plan->create($this->apiContext);
-            try {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
-                $patch->setOp('replace')
-                        ->setPath('/')
-                        ->setValue($value);
-                $patchRequest = new PatchRequest();
-                $patchRequest->addPatch($patch);
-                $createdPlan->update($patchRequest, $this->apiContext);
-                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
-                // Output plan id
-                echo 'Plan ID:' . $plan->getId();
-            } catch (PayPal\Exception\PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
-            } catch (Exception $ex) {
-                die($ex);
-            }
-        } catch (PayPal\Exception\PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        } catch (Exception $ex) {
-            die($ex);
-        }
-    }
-    
 }
