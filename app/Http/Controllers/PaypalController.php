@@ -77,6 +77,7 @@ class PaypalController extends Controller {
 
         $token = $request->token;
         $agreement = new \PayPal\Api\Agreement();
+        
         try {
             // Execute agreement
             $result = $agreement->execute($token, $this->apiContext);
@@ -94,6 +95,7 @@ class PaypalController extends Controller {
 
             echo 'New Subscriber Created and Billed';
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getTraceAsString() . "\n";
             echo $ex->getMessage() . "\n";
             echo 'You have either cancelled the request or your session has expired';
         }
