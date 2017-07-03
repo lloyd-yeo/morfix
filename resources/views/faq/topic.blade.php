@@ -22,12 +22,14 @@
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full border-b" style="overflow-y:auto;">
-                        <span class="pull-left push-20-l"><i class="si si-direction text-info" style="font-size:10em;"></i></span>
-                        <div style="float:left;">
+                        <div class="col-lg-3 col-sm-3">
+                            <span class="pull-left push-20-l"><i class="si si-direction text-info" style="font-size:10em;"></i></span>
+                        </div>
+                        <div class="col-lg-9" style="float:left;">
                             <p class="pull-left font-s36 font-w600 push-20-l">General Queries</p>
                         </div>
                         <br/><br/>
-                        <div style="float:left;">
+                        <div class="col-lg-9" style="float:left;">
                             <p class="pull-left push-20-l">Some general things about general queries that are really general.</p>
                         </div>
                     </div>
