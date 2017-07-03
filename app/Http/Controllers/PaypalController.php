@@ -46,7 +46,7 @@ class PaypalController extends Controller {
 
         // Set plan id
         $plan = new Plan();
-        $plan->setId("0137");
+        $plan->setId("P-5YG98778GW042180HBHLJGJY");
         $agreement->setPlan($plan);
 
         // Add payer type
