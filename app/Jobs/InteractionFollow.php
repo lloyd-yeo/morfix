@@ -366,6 +366,11 @@ class InteractionFollow implements ShouldQueue {
                 $proxy->assigned = $proxy->assigned + 1;
                 $proxy->save();
                 exit();
+            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                if (strpos($endpoint_ex->getMessage(), 'The username you entered doesn\'t appear to belong to an account.') !== false) {
+                    $ig_profile->invalid_user = 1;
+                    $ig_profile->save();
+                }
             }
             //[End LOGIN]
             
