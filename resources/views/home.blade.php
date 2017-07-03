@@ -197,7 +197,7 @@
             
             <div class="col-lg-8 follower-chart">
                 <div class="block">
-                    <div id="follower-chart-header-{{ $ig_profile->id }}" class="block-header bg-primary">
+                    <div id="follower-chart-header-{{ $ig_profile->id }}" class="block-header">
                         <h3 class="block-title"><i class="fa fa-instagram"></i> {{ $ig_profile->insta_username }}'s DAILY FOLLOWER TRENDS</h3>
                     </div>
 
