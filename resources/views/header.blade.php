@@ -79,7 +79,7 @@
         </li>
         <li class="hidden-xs hidden-sm">
             <!--Layout API, functionality initialized in App() -> uiLayoutApi()--> 
-            <button class="btn text-black" type="button" onclick="javascript:location.href = 'faq'">
+            <button class="btn btn-default text-black" type="button" onclick="javascript:location.href = 'faq'">
                 <i class="fa fa-question-circle-o"></i> FAQ
             </button>
         </li>
