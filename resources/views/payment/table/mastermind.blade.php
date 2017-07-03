@@ -71,7 +71,7 @@
                 <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
                 </form>-->
                 <!-- PayPal Logo -->
-                <a href="{{ url('subscribe/paypal') }}">
+                <a href="{{ url('subscribe/paypal/mastermind') }}">
                     <img src="https://www.paypalobjects.com/webstatic/en_AU/i/buttons/btn_paywith_primary_s.png" alt="Pay with PayPal" />
                 </a>
                 <!-- PayPal Logo -->
