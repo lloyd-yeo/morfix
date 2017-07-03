@@ -97,3 +97,5 @@ Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
 
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/dm/logs/cancel/{id}', 'DirectMessageLogsController@cancel');
+
+Route::post('/webhooks/paypal', 'PaypalWebhookController@listen');

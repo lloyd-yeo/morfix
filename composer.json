@@ -15,6 +15,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "mgp25/instagram-php": "dev-master",
+        "paypal/rest-api-sdk-php": "*",
         "unicodeveloper/laravel-emoji": "^1.0",
         "webpatser/laravel-uuid": "2.*"
     },
