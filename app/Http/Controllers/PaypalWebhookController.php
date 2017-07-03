@@ -10,13 +10,8 @@ use App\PaypalWebhookLog;
 class PaypalWebhookController extends Controller
 {
     public function listen(Request $request) {
-        
         $log = new PaypalWebhookLog;
-        $log->message = "NEW WEBHOOK HERE!";
-        $log->save();
-        
-        $log = new PaypalWebhookLog;
-        $log->message = serialize($request);
+        $log->message = $request->input('id');
         $log->save();
     }
 }
