@@ -80,6 +80,10 @@ class PaypalController extends Controller {
         $agreement->setName('Morfix Monthly Premium Subscription (Test)')
                 ->setDescription('Morfix Monthly Premium Subscription (Test)')
                 ->setStartDate(\Carbon\Carbon::now()->addMinutes(5)->toIso8601String());
+        
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId("P-18H64176W28665839BHWBX7Y");
         $agreement->setPlan($plan);
         try {
             // Execute agreement
