@@ -42,8 +42,8 @@ class PaypalController extends Controller {
     public function paypalRedirect() {
         // Create new agreement
         $agreement = new Agreement();
-        $agreement->setName('App Name Monthly Subscription Agreement')
-                ->setDescription('Basic Subscription')
+        $agreement->setName('Morfix Monthly Premium Subscription (Test)')
+                ->setDescription('Morfix Monthly Premium Subscription (Test)')
                 ->setStartDate(\Carbon\Carbon::now()->addMinutes(5)->toIso8601String());
 
         // Set plan id
@@ -77,7 +77,6 @@ class PaypalController extends Controller {
 
         $token = $request->token;
         $agreement = new \PayPal\Api\Agreement();
-
         try {
             // Execute agreement
             $result = $agreement->execute($token, $this->apiContext);
@@ -88,6 +87,7 @@ class PaypalController extends Controller {
 //                $user->paypal_agreement_id = $result->id;
 //            }
 //            $user->save();
+            
             $user = Auth::user();
             $user->user_tier = 200000;
             $user->save();
@@ -110,14 +110,14 @@ class PaypalController extends Controller {
         $paymentDefinition = new PaymentDefinition();
         $paymentDefinition->setName('Monthly Payments')
                 ->setType('REGULAR')
-                ->setFrequency('Month')
+                ->setFrequency('MONTH')
                 ->setFrequencyInterval('1')
                 ->setCycles('0')
                 ->setAmount(new Currency(array('value' => 0.01, 'currency' => 'SGD')));
 
         // Set merchant preferences
         $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://website.dev/subscribe/paypal/return')
+        $merchantPreferences->setReturnUrl('https://app.morfix.co/subscribe/paypal/return')
                 ->setCancelUrl('https://website.dev/subscribe/paypal/return')
                 ->setAutoBillAmount('yes')
                 ->setInitialFailAmountAction('CONTINUE')
