@@ -28,19 +28,22 @@ class HomeController extends Controller {
     public function index() {
         
         $current_user = User::find(Auth::user()->user_id);
-        if ($current_user->user_tier == 2) {
-            $current_user->tier = 2;
-            $current_user->save();
-            $current_user = User::find(Auth::user()->user_id);
-        } else if ($current_user->user_tier == 3) {
-            $current_user->tier = 3;
-            $current_user->save();
-            $current_user = User::find(Auth::user()->user_id);
-        } else if ($current_user->user_tier == 4) {
-            $current_user->tier = 4;
-            $current_user->save();
-            $current_user = User::find(Auth::user()->user_id);
-        }
+        
+//        if ($current_user->user_tier == 4 )
+        
+//        if ($current_user->user_tier == 2) {
+//            $current_user->tier = 2;
+//            $current_user->save();
+//            $current_user = User::find(Auth::user()->user_id);
+//        } else if ($current_user->user_tier == 3) {
+//            $current_user->tier = 3;
+//            $current_user->save();
+//            $current_user = User::find(Auth::user()->user_id);
+//        } else if ($current_user->user_tier == 4) {
+//            $current_user->tier = 4;
+//            $current_user->save();
+//            $current_user = User::find(Auth::user()->user_id);
+//        }
         
         DB::update("UPDATE user_insta_profile SET profile_pic_url = REPLACE(profile_pic_url, 'http://', 'https://');");
         
