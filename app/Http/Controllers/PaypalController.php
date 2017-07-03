@@ -3,19 +3,98 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use PayPal\Api\Amount;
-use PayPal\Api\Details;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Transaction;
+use PayPal\Api\ChargeModel;
+use PayPal\Api\Currency;
+use PayPal\Api\MerchantPreferences;
+use PayPal\Api\PaymentDefinition;
+use PayPal\Api\Plan;
+use PayPal\Api\Patch;
+use PayPal\Api\PatchRequest;
+use PayPal\Common\PayPalModel;
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
 
-class PaypalController extends Controller
-{
-    public function payment(Request $request) {
-        $payer = new Payer();
-        $payer->setPaymentMethod("paypal");
+class PaypalController extends Controller {
+
+    private $apiContext;
+    private $mode;
+    private $client_id;
+    private $secret;
+
+    // Create a new instance with our paypal credentials
+    public function __construct() {
+        // Detect if we are running in live mode or sandbox
+        if (config('paypal.settings.mode') == 'live') {
+            $this->client_id = config('paypal.live_client_id');
+            $this->secret = config('paypal.live_secret');
+        } else {
+            $this->client_id = config('paypal.sandbox_client_id');
+            $this->secret = config('paypal.sandbox_secret');
+        }
+
+        // Set the Paypal API Context/Credentials
+        $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
+        $this->apiContext->setConfig(config('paypal.settings'));
     }
+
+    public function paypalRedirect() {
+        // Create new agreement
+        $agreement = new Agreement();
+        $agreement->setName('App Name Monthly Subscription Agreement')
+                ->setDescription('Basic Subscription')
+                ->setStartDate(\Carbon\Carbon::now()->addMinutes(5)->toIso8601String());
+
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId("0137");
+        $agreement->setPlan($plan);
+
+        // Add payer type
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+        $agreement->setPayer($payer);
+
+        try {
+            // Create agreement
+            $agreement = $agreement->create($this->apiContext);
+
+            // Extract approval URL to redirect user
+            $approvalUrl = $agreement->getApprovalLink();
+
+            return redirect($approvalUrl);
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+
+    public function paypalReturn(Request $request) {
+
+        $token = $request->token;
+        $agreement = new \PayPal\Api\Agreement();
+
+        try {
+            // Execute agreement
+            $result = $agreement->execute($token, $this->apiContext);
+//            $user = Auth::user();
+//            $user->role = 'subscriber';
+//            $user->paypal = 1;
+//            if (isset($result->id)) {
+//                $user->paypal_agreement_id = $result->id;
+//            }
+//            $user->save();
+            $user = Auth::user();
+            $user->user_tier = 200000;
+            $user->save();
+
+            echo 'New Subscriber Created and Billed';
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            echo 'You have either cancelled the request or your session has expired';
+        }
+    }
+
+    
 }
