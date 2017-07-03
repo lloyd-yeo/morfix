@@ -101,5 +101,23 @@ Route::post('/dm/logs/cancel/{id}', 'DirectMessageLogsController@cancel');
 Route::post('/webhooks/paypal', 'PaypalWebhookController@listen');
 
 Route::get('/subscribe/paypal', 'PaypalController@paypalRedirect')->name('paypal.redirect');
+Route::get('/subscribe/paypal/premium', 'PaypalController@paypalRedirectPremium')->name('paypal.redirect');
+Route::get('/subscribe/paypal/pro', 'PaypalController@paypalRedirectPro')->name('paypal.redirect');
+Route::get('/subscribe/paypal/business', 'PaypalController@paypalRedirectBusiness')->name('paypal.redirect');
+Route::get('/subscribe/paypal/mastermind', 'PaypalController@paypalRedirectMastermind')->name('paypal.redirect');
+
+
 Route::get('/subscribe/paypal/return', 'PaypalController@paypalReturn')->name('paypal.return');
-Route::get('/paypal/create_paypal_plan', 'PaypalController@create_plan');
+Route::get('/subscribe/paypal/return/premium', 'PaypalController@paypalReturnPremium')->name('paypal.return');
+Route::get('/subscribe/paypal/return/pro', 'PaypalController@paypalReturnPro')->name('paypal.return');
+Route::get('/subscribe/paypal/return/business', 'PaypalController@paypalReturnBusiness')->name('paypal.return');
+Route::get('/subscribe/paypal/return/mastermind', 'PaypalController@paypalReturnMastermind')->name('paypal.return');
+
+
+/**
+ * Routes for creation of Paypal Subscription plans.
+ */
+Route::get('/paypal/plan/create/premium', 'PaypalController@create_plan_premium');
+Route::get('/paypal/plan/create/pro', 'PaypalController@create_plan_pro');
+Route::get('/paypal/plan/create/business', 'PaypalController@create_plan_business');
+Route::get('/paypal/plan/create/mastermind', 'PaypalController@create_plan_mastermind');
