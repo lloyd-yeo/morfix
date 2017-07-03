@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PayPal\Api\ChargeModel;
 use PayPal\Api\Currency;
 use PayPal\Api\MerchantPreferences;
@@ -16,6 +17,7 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Agreement;
 use PayPal\Api\Payer;
 use \DateTimeZone;
+use App\User;
 
 class PaypalController extends Controller {
 
