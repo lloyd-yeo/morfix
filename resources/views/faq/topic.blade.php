@@ -22,7 +22,7 @@
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full border-b" style="overflow-y:auto;">
-                        <span class="pull-left"><i class="si si-direction text-info" style="font-size:10em;"></i></span>
+                        <span class="pull-left push-20-l"><i class="si si-direction text-info" style="font-size:10em;"></i></span>
                         <div>
                             <p class="pull-left font-s36 font-w600 push-20-l">General Queries</p>
                         </div>
