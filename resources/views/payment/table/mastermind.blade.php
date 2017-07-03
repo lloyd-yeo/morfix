@@ -45,7 +45,7 @@
                         Instagram Explore Algorithm Function
                     </p>
                 </div>
-                <div style='padding-top: 0px; padding-bottom: 40px;'>
+                <div style='padding-top: 0px; padding-bottom: 20px;'>
                     <a id="mastermind-btn" href='#' class="text-white" style='
                        background-color:rgb(30, 115, 190); 
                        padding: 10px 50px;

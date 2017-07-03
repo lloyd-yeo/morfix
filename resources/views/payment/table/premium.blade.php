@@ -54,7 +54,7 @@
                         Private Facebook Group
                     </p>
                 </div>
-                <div style='padding-top: 0px; padding-bottom: 40px;'>
+                <div style='padding-top: 0px; padding-bottom: 20px;'>
                     <a id="premium-btn" href='#' class="text-white" style='
                        background-color:rgb(212, 60, 60); 
                        padding: 10px 50px;
