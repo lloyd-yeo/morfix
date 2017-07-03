@@ -11,7 +11,7 @@ class PaypalWebhookController extends Controller
 {
     public function listen(Request $request) {
         $log = new PaypalWebhookLog;
-        $log->message = $request->input('id');
+        $log->message = $request->json();
         $log->save();
     }
 }
