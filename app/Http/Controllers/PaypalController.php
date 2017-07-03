@@ -260,6 +260,7 @@ class PaypalController extends Controller {
     public function listPlans() {
         $params = array('page_size' => '2');
         $planList = Plan::all($params, $this->apiContext);
+        var_dump($planList);
     }
     
 }
