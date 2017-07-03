@@ -77,7 +77,10 @@ class PaypalController extends Controller {
 
         $token = $request->token;
         $agreement = new \PayPal\Api\Agreement();
-        
+        $agreement->setName('Morfix Monthly Premium Subscription (Test)')
+                ->setDescription('Morfix Monthly Premium Subscription (Test)')
+                ->setStartDate(\Carbon\Carbon::now()->addMinutes(5)->toIso8601String());
+        $agreement->setPlan($plan);
         try {
             // Execute agreement
             $result = $agreement->execute($token, $this->apiContext);
