@@ -95,6 +95,7 @@ class PaypalController extends Controller {
 
             echo 'New Subscriber Created and Billed';
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            var_dump($ex->getData());
             echo $ex->getTraceAsString() . "\n";
             echo $ex->getMessage() . "\n";
             echo 'You have either cancelled the request or your session has expired';
