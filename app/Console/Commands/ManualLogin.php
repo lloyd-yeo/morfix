@@ -70,7 +70,8 @@ class ManualLogin extends Command {
             if ($ig_profile !== NULL) {
                 $profile_pics = $instagram->getCurrentUser()->user->hd_profile_pic_versions;
                 foreach ($profile_pics as $profile_pic) {
-                    var_dump($profile_pic);
+                    $ig_profile->profile_pic_url = $profile_pic->url;
+                    $ig_profile->save();
                 }
             }
             break;
