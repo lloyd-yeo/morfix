@@ -27,7 +27,7 @@
                             <p class="pull-left font-s36 font-w600 push-20-l">General Queries</p>
                         </div>
                         <div>
-                            <p>Some general things about general queries that are really general.</p>
+                            <p class="pull-left push-20-l">Some general things about general queries that are really general.</p>
                         </div>
                     </div>
                 </a>
