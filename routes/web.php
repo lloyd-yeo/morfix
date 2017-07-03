@@ -121,3 +121,4 @@ Route::get('/subscribe/paypal/return/mastermind', 'PaypalController@paypalReturn
 #Route::get('/paypal/plan/create/pro', 'PaypalController@create_plan_pro');
 #Route::get('/paypal/plan/create/business', 'PaypalController@create_plan_business');
 #Route::get('/paypal/plan/create/mastermind', 'PaypalController@create_plan_mastermind');
+Route::get('/paypal/plan/list', 'PaypalController@listPlans');

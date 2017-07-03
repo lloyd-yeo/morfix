@@ -222,4 +222,44 @@ class PaypalController extends Controller {
             echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
         }
     }
+    
+     public function paypalRedirect() {
+        // Create new agreement
+        $agreement = new Agreement();
+        $agreement->setName('Morfix Monthly Test Subscription (TestR)')
+                ->setDescription('Morfix Monthly TestPremium Subscription (TestR)')
+                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId("P-18H64176W28665839BHWBX7Y");
+        $agreement->setPlan($plan);
+
+        // Add payer type
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+        $agreement->setPayer($payer);
+
+        try {
+            // Create agreement
+            $agreement = $agreement->create($this->apiContext);
+
+            // Extract approval URL to redirect user
+            $approvalUrl = $agreement->getApprovalLink();
+
+            return redirect($approvalUrl);
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+    
+    public function listPlans() {
+        $params = array('page_size' => '2');
+        $planList = Plan::all($params, $this->apiContext);
+    }
+    
 }
