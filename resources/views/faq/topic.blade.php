@@ -26,7 +26,7 @@
                             <span class="pull-left push-20-l"><i class="si si-direction text-info" style="font-size:10em;"></i></span>
                         </div>
                         <div class="col-lg-9" style="float:left;">
-                            <a class="pull-left font-w600 push-20-l" style="font-size: 26px;">General Queries</a>
+                            <p class="pull-left font-w600 push-20-l" style="font-size: 26px; color: #5c90d2;">General Queries</p>
                         </div>
                         <br/><br/>
                         <div class="col-lg-9" style="float:left;">
