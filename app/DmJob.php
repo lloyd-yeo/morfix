@@ -9,5 +9,4 @@ class DmJob extends Model
     protected $table ='dm_job';
     protected $primaryKey = 'job_id'; 
     public $timestamps = false;
-    
 }
