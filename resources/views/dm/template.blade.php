@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-    @foreach ($user_ig_profiles as $ig_profile)
     <div class="content content-narrow">
 
         <div class="row">
@@ -38,7 +37,7 @@
                 <!-- END Crystal on Background Color -->
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-xs-12 col-lg-12">
                 <!-- Sizes -->
@@ -92,7 +91,7 @@
                 </div>
                 <!-- END Sizes -->
             </div>
-            
+
             @if (Auth::user()->tier > 3)
             <div class="col-xs-12 col-lg-12">
                 <!-- Sizes -->
@@ -157,9 +156,7 @@
             </div>
             @endif
         </div>
-
     </div>
-    @endforeach
 </main>
 @endsection
 

@@ -22,10 +22,21 @@ class DirectMessageTemplatesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($id) {
-        $instagram_profiles = InstagramProfile::where('id', $id)->take(1)->get();
+        
+        $ig_profile = InstagramProfile::where('id', $id)->first();
+        
+        if ($ig_profile === NULL) {
+            return redirect('home');
+        }
+        
+        if ($ig_profile->email != Auth::user()->email) {
+             return redirect('home');
+        }
+        
         return view('dm.template', [
-            'user_ig_profiles' => $instagram_profiles,
+            'ig_profile' => $ig_profile,
         ]);
+        
     }
     
     public function saveGreetingTemplate($id, Request $request) {
