@@ -108,6 +108,7 @@ class PaypalController extends Controller {
             echo $ex->getTraceAsString() . "\n";
             echo $ex->getMessage() . "\n";
             echo 'You have either cancelled the request or your session has expired';
+            echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
         }
     }
 
