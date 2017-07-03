@@ -13,6 +13,10 @@ use PayPal\Api\PatchRequest;
 use PayPal\Common\PayPalModel;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Agreement;
+use PayPal\Api\Payer;
+use PayPal\Api\Plan;
+use PayPal\Api\ShippingAddress;
 
 class PaypalController extends Controller {
 
