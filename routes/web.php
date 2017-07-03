@@ -102,3 +102,4 @@ Route::post('/webhooks/paypal', 'PaypalWebhookController@listen');
 
 Route::get('/subscribe/paypal', 'PaypalController@paypalRedirect')->name('paypal.redirect');
 Route::get('/subscribe/paypal/return', 'PaypalController@paypalReturn')->name('paypal.return');
+Route::get('/paypal/create_paypal_plan', 'PaypalController@create_plan');
