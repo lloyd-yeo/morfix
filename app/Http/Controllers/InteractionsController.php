@@ -45,9 +45,11 @@ class InteractionsController extends Controller {
     public function edit($id) {
 
         $ig_profile = InstagramProfile::where('id', $id)->first();
+        
         if ($ig_profile == NULL) {
             return redirect('home');
         }
+        
         if ($ig_profile->email != Auth::user()->email) {
              return redirect('home');
         }

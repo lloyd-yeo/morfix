@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-    @foreach ($user_ig_profiles as $ig_profile)
     <div class="content content-narrow">
 
         <div class="row">
@@ -87,7 +86,7 @@
                                 @endforeach
                             </div>
                             @endforeach
-                            
+
                         </div>
                     </div>
                 </div>
@@ -150,11 +149,10 @@
                 </div>
             </div>
         </div>
-        @endforeach
-        
+
         @include('postscheduling.modal.personal');
         @include('postscheduling.modal.gallery');
-        
+
 </main>
 @endsection
 

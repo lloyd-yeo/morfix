@@ -53,8 +53,16 @@ class PostSchedulingController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function gallery($id) {
-        $instagram_profiles = InstagramProfile::where('id', $id)
-                ->get();
+        $ig_profile = InstagramProfile::where('id', $id)
+                ->first();
+        
+        if ($ig_profile == NULL) {
+            return redirect('home');
+        }
+        
+        if ($ig_profile->email != Auth::user()->email) {
+             return redirect('home');
+        }
         
         $default_images = DefaultImageGallery::orderBy('image_id', 'desc')->get();
         $default_categories = DB::connection('mysql_old')->select("SELECT id, category FROM insta_affiliate.default_image_category;");
@@ -74,7 +82,7 @@ class PostSchedulingController extends Controller {
         }
 
         return view('postscheduling.scheduling', [
-            'user_ig_profiles' => $instagram_profiles,
+            'ig_profile' => $ig_profile,
             'default_imgs' => $default_images,
             'default_img_category' => $default_categories,
             'user_images' => $user_images,
