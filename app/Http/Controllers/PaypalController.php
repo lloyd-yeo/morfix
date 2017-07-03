@@ -19,6 +19,7 @@ use PayPal\Api\Payer;
 use \DateTimeZone;
 use App\User;
 use App\MorfixPlan;
+use App\PaypalAgreement;
 
 class PaypalController extends Controller {
 
@@ -198,7 +199,142 @@ class PaypalController extends Controller {
             die($ex);
         }
     }
-
+    
+    public function paypalReturnPremium(Request $request) {
+        $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
+        $token = $request->token;
+        $agreement = new \PayPal\Api\Agreement();
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        $agreement->setPlan($plan);
+        try {
+            // Execute agreement
+            $result = $agreement->execute($token, $this->apiContext);
+            $user = Auth::user();
+            $user->tier = 2;
+            $user->paypal = 1;
+            if(isset($result->id)){
+                $_agreement = new PaypalAgreement;
+                $_agreement->agreement_id = $result->id;
+                $_agreement->email = Auth::user()->email;
+                $_agreement->save();
+            }
+            $user->save();
+            
+            //redirect to Success page.
+            return view('payment', [
+                "upgrade_message" => "You have been successfully upgraded to Premium!"
+            ]);
+            
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            //redirect to fail page
+            
+//            var_dump($ex->getData());
+//            echo $ex->getTraceAsString() . "\n";
+//            echo $ex->getMessage() . "\n";
+//            echo 'You have either cancelled the request or your session has expired';
+//            echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
+        }
+    }
+    
+    public function paypalReturnPro(Request $request) {
+        $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
+        $token = $request->token;
+        $agreement = new \PayPal\Api\Agreement();
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        $agreement->setPlan($plan);
+        try {
+            // Execute agreement
+            $result = $agreement->execute($token, $this->apiContext);
+            $user = Auth::user();
+            $user->tier = 3;
+            $user->paypal = 1;
+            if(isset($result->id)){
+                $_agreement = new PaypalAgreement;
+                $_agreement->agreement_id = $result->id;
+                $_agreement->email = Auth::user()->email;
+                $_agreement->save();
+            }
+            $user->save();
+            
+            //redirect to Success page.
+            return view('payment', [
+                "upgrade_message" => "You have been successfully upgraded to Pro!"
+            ]);
+            
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            //redirect to fail page
+        }
+    }
+    
+    public function paypalReturnBusiness(Request $request) {
+        $paypal_plan_id = MorfixPlan::where('name', 'Business')->first()->paypal_id;
+        $token = $request->token;
+        $agreement = new \PayPal\Api\Agreement();
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        $agreement->setPlan($plan);
+        try {
+            // Execute agreement
+            $result = $agreement->execute($token, $this->apiContext);
+            $user = Auth::user();
+            $user->tier = $user->tier + 10;
+            $user->paypal = 1;
+            if(isset($result->id)){
+                $_agreement = new PaypalAgreement;
+                $_agreement->agreement_id = $result->id;
+                $_agreement->email = Auth::user()->email;
+                $_agreement->save();
+            }
+            $user->save();
+            
+            //redirect to Success page.
+            return view('payment', [
+                "upgrade_message" => "You have been successfully upgraded to Business!"
+            ]);
+            
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            //redirect to fail page
+        }
+    }
+    
+    public function paypalReturnMastermind(Request $request) {
+        $paypal_plan_id = MorfixPlan::where('name', 'Mastermind')->first()->paypal_id;
+        $token = $request->token;
+        $agreement = new \PayPal\Api\Agreement();
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        $agreement->setPlan($plan);
+        try {
+            // Execute agreement
+            $result = $agreement->execute($token, $this->apiContext);
+            $user = Auth::user();
+            $user->tier = $user->tier + 20;
+            $user->paypal = 1;
+            if(isset($result->id)){
+                $_agreement = new PaypalAgreement;
+                $_agreement->agreement_id = $result->id;
+                $_agreement->email = Auth::user()->email;
+                $_agreement->save();
+            }
+            $user->save();
+            
+            //redirect to Success page.
+            return view('payment', [
+                "upgrade_message" => "You have been successfully upgraded to Mastermind!"
+            ]);
+            
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            //redirect to fail page
+        }
+    }
+    
+    
 
     public function paypalReturn(Request $request) {
         $token = $request->token;
@@ -227,7 +363,7 @@ class PaypalController extends Controller {
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Monthly Test Subscription (TestR)')
-                ->setDescription('Morfix Monthly TestPremium Subscription (TestR)')
+                ->setDescription('Morfix Monthly TestPremium Subscription (TestR)') //this is the one that shows.
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
 
         // Set plan id
