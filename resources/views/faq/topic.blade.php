@@ -23,9 +23,12 @@
                 <a class="block block-link-hover2 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full border-b" style="overflow-y:auto;">
                         <span class="pull-left"><i class="si si-direction text-info" style="font-size:10em;"></i></span>
-                        <p class="pull-left font-s36 font-w600 push-20-l">General Queries</p>
-                        </br>
-                        <p>Some general things about general queries that are really general.</p>
+                        <div>
+                            <p class="pull-left font-s36 font-w600 push-20-l">General Queries</p>
+                        </div>
+                        <div>
+                            <p>Some general things about general queries that are really general.</p>
+                        </div>
                     </div>
                 </a>
             </div>
