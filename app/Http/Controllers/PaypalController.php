@@ -258,11 +258,13 @@ class PaypalController extends Controller {
     }
     
     public function listPlans() {
-        $params = array();
-        $planList = Plan::all($params, $this->apiContext);
-        $plans = $planList->getPlans();
-        var_dump($planList);
-        var_dump($plans);
+        #$params = array();
+//        $planList = Plan::all($params, $this->apiContext);
+//        $plans = $planList->getPlans();
+//        var_dump($planList);
+//        var_dump($plans);
+        $plan = Plan::get("P-18H64176W28665839BHWBX7Y");
+        var_dump($plan);
     }
     
 }
