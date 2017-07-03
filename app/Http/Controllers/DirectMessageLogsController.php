@@ -18,6 +18,7 @@ class DirectMessageLogsController extends Controller
     
     public function index(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
+        
         if ($ig_profile == NULL) {
             return redirect('home');
         }
@@ -25,6 +26,7 @@ class DirectMessageLogsController extends Controller
         if ($ig_profile->email != Auth::user()->email) {
              return redirect('home');
         }
+        
         $sent_dm_jobs = DmJob::where('insta_username', $ig_profile->insta_username)->where('fulfilled', true)->orderBy('job_id', 'desc')->take(10)->get();
         $pending_dm_jobs = DmJob::where('insta_username', $ig_profile->insta_username)->where('fulfilled', false)->orderBy('job_id', 'asc')->take(10)->get();
         
