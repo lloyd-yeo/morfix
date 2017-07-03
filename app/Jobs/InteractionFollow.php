@@ -146,7 +146,7 @@ class InteractionFollow implements ShouldQueue {
             }
 
             echo "[" . $insta_username . "] beginning unfollowing sequence.\n";
-
+            DB::reconnect();
             $config = array();
             $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
             $config["dbtablename"] = "instagram_sessions";
@@ -315,7 +315,7 @@ class InteractionFollow implements ShouldQueue {
             }
 
             echo "[" . $insta_username . "] beginning following sequence.\n";
-
+            DB::reconnect();
             $config = array();
             $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
             $config["dbtablename"] = "instagram_sessions";
