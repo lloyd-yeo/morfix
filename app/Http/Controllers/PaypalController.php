@@ -119,23 +119,23 @@ class PaypalController extends Controller {
 
         // Create a new billing plan
         $plan = new Plan();
-        $plan->setName('Test Morfix Subscription')
-                ->setDescription('Monthly Subscription to Morfix (Test)')
+        $plan->setName('Premium Morfix Subscription')
+                ->setDescription('Monthly Subscription to Morfix (Premium)')
                 ->setType('infinite');
 
         // Set billing plan definitions
         $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Monthly Payments')
+        $paymentDefinition->setName('Morfix Monthly Payments')
                 ->setType('REGULAR')
                 ->setFrequency('MONTH')
                 ->setFrequencyInterval('1')
                 ->setCycles('0')
-                ->setAmount(new Currency(array('value' => 0.01, 'currency' => 'SGD')));
+                ->setAmount(new Currency(array('value' => 37, 'currency' => 'SGD')));
 
         // Set merchant preferences
         $merchantPreferences = new MerchantPreferences();
         $merchantPreferences->setReturnUrl('https://app.morfix.co/subscribe/paypal/return')
-                ->setCancelUrl('https://website.dev/subscribe/paypal/return')
+                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
                 ->setAutoBillAmount('yes')
                 ->setInitialFailAmountAction('CONTINUE')
                 ->setMaxFailAttempts('0');
