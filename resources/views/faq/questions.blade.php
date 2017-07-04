@@ -18,22 +18,24 @@
 
     <!-- Page Content -->
     <div class="content content-boxed">
-        
+        @foreach ($qnas as $qna)
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover3" href="javascript:void(0)">
                     <div class="block-content">
                         <div class="push">
                             <em class="pull-right">12 min</em>
-                            <span class="text-primary font-w600">Judy Alvarez</span> on July 6, 2015
+                            <span class="text-primary font-w600">Morfix Team</span> posted this  {{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}
                         </div>
+                        
+                        <!--July 6, 2015-->
                         <h4 class="push-10">Travel &amp; Work</h4>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida...</p>
                     </div>
                 </a>
             </div>
         </div>
-        
+        @endforeach 
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/affiliate">
