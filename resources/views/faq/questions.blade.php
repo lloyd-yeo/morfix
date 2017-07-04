@@ -24,13 +24,13 @@
                 <a class="block block-link-hover3" href="javascript:void(0)">
                     <div class="block-content">
                         <div class="push">
-                            <em class="pull-right">12 min</em>
-                            <span class="text-primary font-w600">Morfix Team</span> posted this  {{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}
+                            <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
+                            <span class="text-primary font-w600">Morfix Team</span> last updated this on {{ $qna->written_at }}
                         </div>
                         
                         <!--July 6, 2015-->
-                        <h4 class="push-10">Travel &amp; Work</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida...</p>
+                        <h4 class="push-10">{{ $qna->question }}</h4>
+                        <p>{{ Str::limit($qna->answer, 30) }}...</p>
                     </div>
                 </a>
             </div>
