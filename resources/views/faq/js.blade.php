@@ -8,8 +8,10 @@ $.ajaxSetup({
 jQuery(function () {
     
     $(".question-link").on("click", function() { 
+        alert('clicked here!');
         $question_id = $(this).attr("data-q");
         jQuery('#question-modal').modal('show');
+        
     });
     
 });
