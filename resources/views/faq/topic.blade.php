@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/general">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-direction text-gray" style="font-size:8em;"></i></span>
                         </div>
@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/affiliate">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-users text-gray" style="font-size:8em;"></i></span>
                         </div>
@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/interaction">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-rocket text-gray" style="font-size:8em;"></i></span>
                         </div>
@@ -85,7 +85,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/dm">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-envelope text-gray" style="font-size:8em;"></i></span>
                         </div>
@@ -106,7 +106,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/account">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-settings text-gray" style="font-size:8em;"></i></span>
                         </div>
@@ -127,7 +127,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/billing">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-wallet text-gray" style="font-size:8em;"></i></span>
                         </div>
@@ -148,7 +148,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/postscheduling">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-picture text-gray" style="font-size:8em;"></i></span>
                         </div>
@@ -169,7 +169,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover2 text-center" href="/faq/engagementgroup">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 60px;">
+                    <div class="block-content block-content-full border-b" style="overflow-y:auto; padding-bottom: 40px; padding-top: 40px;">
                         <div class="col-lg-2 col-sm-3">
                             <span class="pull-left push-20-l"><i class="si si-like text-gray" style="font-size:8em;"></i></span>
                         </div>
