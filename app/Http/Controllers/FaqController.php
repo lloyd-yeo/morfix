@@ -43,7 +43,7 @@ class FaqController extends Controller {
     }
     
     public function listQuestions(Request $request, $topic) {
-        $topics = FaqTopic::where('topic', $topic);
+        $topics = FaqTopic::where('topic_id', $topic);
         
     }
 
