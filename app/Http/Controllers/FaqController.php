@@ -41,5 +41,10 @@ class FaqController extends Controller {
         return view('faq.topic', [
         ]);
     }
+    
+    public function listQuestions(Request $request, $topic) {
+        $topics = FaqTopic::where('topic', $topic);
+        
+    }
 
 }
