@@ -1,5 +1,4 @@
-<!-- Add Instagram Profile Modal -->
-<div class="modal fade" id="modal-question" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="question-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-popin modal-lg">
         <div class="modal-content">
             <div class="block block-themed block-transparent remove-margin-b">
@@ -40,4 +39,3 @@
         </div>
     </div>
 </div>
-<!-- END Add Instagram Profile Modal -->

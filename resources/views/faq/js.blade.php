@@ -22,6 +22,10 @@ jQuery(function () {
     
     initValidationMaterial();
     
+    $(".question-link").on("click", function() { 
+        $question_id = $(this).attr("data-q");
+        jQuery('#question-modal').modal('show');
+    });
     
 });
 </script>
