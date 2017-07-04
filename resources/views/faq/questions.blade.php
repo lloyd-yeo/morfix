@@ -21,7 +21,7 @@
         @foreach ($qnas as $qna)
         <div class="row">
             <div class="col-sm-12">
-                <a class="block block-link-hover3 question-link" href="javascript:void(0)" data-q='{{ $qna->id }}'>
+                <a class="block block-link-hover3 question-link" data-toggle="modal" data-target="#question-modal" data-q='{{ $qna->id }}'>
                     <div class="block-content" style='padding-bottom: 40px;'>
                         <div class="push">
                             <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
