@@ -72,9 +72,15 @@
                                 </div>
                             </div>
                         </div>
-
+                        
+                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                        <div class="text-center text-danger push">
+                            <span>We've encountered issues with your account. Find out more below:</span>
+                        </div>
+                        @endif
+                        
                         <div class="text-center push">
-
+                            
                             @if ($ig_profile->checkpoint_required == 1)
                             <a class="text-danger checkpoint-btn" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Verification Required" data-content="Morfix needs you to click on 'It was me' when prompted by Instagram to restore connectivity. Click to resolve.">
                                 <i class="fa fa-2x fa-fw fa-unlink"></i>
