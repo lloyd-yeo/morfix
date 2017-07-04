@@ -43,8 +43,12 @@ class FaqController extends Controller {
     }
     
     public function listQuestions(Request $request, $topic) {
-        $topics = FaqTopic::where('topic_id', $topic);
+        $topic = FaqTopic::where('topic_id', $topic)->first();
+        $faq_qnas = FaqQna::where('topic_id', $topic->id)->get();
         
+        return view('faq.questions', [
+            'qnas' => $faq_qnas,
+        ]);
     }
 
 }
