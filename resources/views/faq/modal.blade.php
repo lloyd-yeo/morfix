@@ -8,7 +8,7 @@
                             <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
                         </li>
                     </ul>
-                    <h3 class="block-title"><i class='fa fa-instagram'></i> RETRY VERIFICATION</h3>
+                    <h3 class="block-title"><i class='fa fa-info'></i> FAQ</h3>
                 </div>
                 <div class="block-content">
                     <!-- Form -->
