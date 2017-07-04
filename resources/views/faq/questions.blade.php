@@ -25,7 +25,7 @@
                     <div class="block-content" style='padding-bottom: 40px;'>
                         <div class="push">
                             <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
-                            <span class="text-primary font-w600">Morfix Team</span> last updated this on {{ $qna->written_at }}
+                            <span class="text-primary font-w600">{{ $qna->author }}</span> last updated this on {{ $qna->written_at }}
                         </div>
                         
                         <!--July 6, 2015-->
