@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <a class="block block-link-hover3" href="javascript:void(0)">
-                    <div class="block-content">
+                    <div class="block-content" style='padding-bottom: 40px;'>
                         <div class="push">
                             <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
                             <span class="text-primary font-w600">Morfix Team</span> last updated this on {{ $qna->written_at }}
