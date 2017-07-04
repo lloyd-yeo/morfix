@@ -68,11 +68,9 @@ class RefreshInstagramProfile extends Command {
             
             $config = array();
             $config["storage"] = "mysql";
-            $config["dbusername"] = "root";
-            $config["dbpassword"] = "inst@ffiliates123";
-            $config["dbhost"] = "52.221.60.235:3306";
-            $config["dbname"] = "morfix";
+            $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
             $config["dbtablename"] = "instagram_sessions";
+            
             $debug = false;
             $truncatedDebug = false;
             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
@@ -94,13 +92,11 @@ class RefreshInstagramProfile extends Command {
 
                 try {
                     $instagram->setUser($ig_username, $ig_password);
-                    $instagram->setProxy($ig_profile->proxy);
                     $login_response = $instagram->login();
                     $user_response = $instagram->getUserInfoByName($ig_username);
                     $instagram_user = $user_response->user;
-
-                    DB::connection('mysql_old')->
-                            update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
+                    
+                    DB::update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
                                     [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
                     
                     $items = $instagram->timeline->getSelfUserFeed()->items;
