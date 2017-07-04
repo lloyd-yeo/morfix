@@ -85,6 +85,7 @@
                             @if ($ig_profile->incorrect_pw == 1)
                             <a class="text-danger incorrect-pw-btn" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Incorrect Password" data-content="The password on your account currently is different from the one you supplied us. Click to resolve.">
                                 <i class="fa fa-2x fa-fw fa-asterisk"></i>
+                                <strong> Mouse over the cross to find out more.</strongp>
                             </a>
                             @else
                             @endif

@@ -5,8 +5,10 @@
         <group>
             <file>file:/Users/rong/NetBeansProjects/morfix_v2/resources/views/settings/index.blade.php</file>
             <file>file:/Users/rong/NetBeansProjects/morfix_v2/SendDmJobCron.php</file>
+            <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/DmJob.php</file>
             <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/Http/Controllers/SettingsController.php</file>
             <file>file:/Users/rong/NetBeansProjects/morfix_v2/routes/web.php</file>
+            <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/Jobs/GetDm.php</file>
             <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/Jobs/SendDm.php</file>
         </group>
     </open-files>
