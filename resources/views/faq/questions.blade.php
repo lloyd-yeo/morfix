@@ -10,7 +10,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="fa fa-question-circle-o"></i> FAQ <small> Frequently asked questions.</small>
+                    <i class="si si-direction"></i> {{ $topic->topic }} Enquiries <small> </small>
                 </h1>
             </div>
         </div>
@@ -21,20 +21,14 @@
         
         <div class="row">
             <div class="col-sm-12">
-                <a class="block block-link-hover2 text-center" href="/faq/general">
-                    <div class="block-content block-content-full border-b" style="overflow-y:auto;">
-                        <div class="col-lg-2 col-sm-3">
-                            <span class="pull-left push-20-l"><i class="si si-direction text-gray" style="font-size:8em;"></i></span>
+                <a class="block block-link-hover3" href="javascript:void(0)">
+                    <div class="block-content">
+                        <div class="push">
+                            <em class="pull-right">12 min</em>
+                            <span class="text-primary font-w600">Judy Alvarez</span> on July 6, 2015
                         </div>
-                        <div class="col-lg-9" style="float:left;">
-                            <p class="pull-left font-w600 push-20-l" style="font-size: 26px; color: #5c90d2;">General Queries</p>
-                        </div>
-                        <br/><br/>
-                        <div class="col-lg-9" style="float:left;">
-                            <p class="pull-left push-20-l text-left">
-                                All general enquiries answered in this section! (What is Morfix and what are its functions?)
-                            </p>
-                        </div>
+                        <h4 class="push-10">Travel &amp; Work</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices, justo vel imperdiet gravida...</p>
                     </div>
                 </a>
             </div>
