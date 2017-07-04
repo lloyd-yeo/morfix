@@ -32,7 +32,7 @@
                         <br/><br/>
                         <div class="col-lg-9" style="float:left;">
                             <p class="pull-left push-20-l text-left">
-                                All general enquiries answered in this section! (e.g. What is Morfix and what are its functions?)
+                                All general enquiries answered in this section! (What is Morfix and what are its functions?)
                             </p>
                         </div>
                     </div>
