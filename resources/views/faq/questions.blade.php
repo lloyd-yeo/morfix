@@ -21,14 +21,13 @@
         @foreach ($qnas as $qna)
         <div class="row">
             <div class="col-sm-12">
-                <a class="block block-link-hover3" href="javascript:void(0)">
+                <a class="block block-link-hover3" href="javascript:void(0)" data-q='{{ $qna->id }}'>
                     <div class="block-content" style='padding-bottom: 40px;'>
                         <div class="push">
                             <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
-                            <span class="text-primary font-w600">{{ $qna->author }}</span> last updated this on {{ $qna->written_at }}
+                            <span class="text-primary font-w600">{{ $qna->author }}</span> last updated this on {{ \Carbon\Carbon::parse($qna->written_at)->toFormattedDateString() }}
                         </div>
                         
-                        <!--July 6, 2015-->
                         <h4 class="push-10">{{ $qna->question }}</h4>
                         <p>{{ str_limit($qna->answer, 100, '...') }}...</p>
                     </div>
@@ -38,5 +37,13 @@
         @endforeach
     </div>
     <!-- END Page Content -->
+    
+    @include('faq.modal')
+    
 </main>
+@endsection
+
+
+@section('js')
+@include('dashboard.js')
 @endsection
