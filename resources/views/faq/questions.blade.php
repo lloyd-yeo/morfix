@@ -30,7 +30,7 @@
                         
                         <!--July 6, 2015-->
                         <h4 class="push-10">{{ $qna->question }}</h4>
-                        <p>{{ str_limit($qna->answer, 30, '...') }}...</p>
+                        <p>{{ str_limit($qna->answer, 60, '...') }}...</p>
                     </div>
                 </a>
             </div>
