@@ -31,9 +31,7 @@
                         <br/><br/>
                         <div class="col-lg-9" style="float:left;">
                             <p class="pull-left push-20-l text-left">
-                                Have some questions about how Morfix can help you improve your advertising & put your marketing on overdrive?
-                                Or you simply want to know just how many accounts you can use with Morfix?
-                                All general enquiries (& tips) inside here! Also, Free Trial users you are definitely not left out! Find out more about the functions that are available to you.
+                                All general enquiries answered in this section! (e.g. What is Morfix and what are its functions?)
                             </p>
                         </div>
                     </div>
