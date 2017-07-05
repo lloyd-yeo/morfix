@@ -75,7 +75,7 @@
                         
                         @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
                         <div class="text-center text-danger push">
-                            <span>We've encountered issues with your account. Find out more below:</span>
+                            <span>We've encountered issues with your account. Mouse-over the icons below to find out more:</span>
                         </div>
                         @endif
                         
