@@ -44,6 +44,7 @@
                 <!-- DropzoneJS -->
                 <!-- For more info and examples you can check out http://www.dropzonejs.com/#usage -->
                 <h2 class="content-heading">Upload your photos here!</h2>
+                <p>Note: Instagram only accepts photos with a maximum resolution up to 1080x1350, and aspect ratios between 0.80 and 1.91.</p>
                 <div class="block">
                     <div class="block-content block-content-full">
                         <!-- DropzoneJS Container -->

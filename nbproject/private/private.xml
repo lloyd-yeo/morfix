@@ -3,13 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/rong/NetBeansProjects/morfix_v2/resources/views/settings/index.blade.php</file>
-            <file>file:/Users/rong/NetBeansProjects/morfix_v2/SendDmJobCron.php</file>
-            <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/DmJob.php</file>
-            <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/Http/Controllers/SettingsController.php</file>
-            <file>file:/Users/rong/NetBeansProjects/morfix_v2/routes/web.php</file>
-            <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/Jobs/GetDm.php</file>
-            <file>file:/Users/rong/NetBeansProjects/morfix_v2/app/Jobs/SendDm.php</file>
+            <file>file:/Users/rong/NetBeansProjects/morfix_v2/resources/views/home.blade.php</file>
         </group>
     </open-files>
 </project-private>
