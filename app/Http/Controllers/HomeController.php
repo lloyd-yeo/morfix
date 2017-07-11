@@ -28,7 +28,7 @@ class HomeController extends Controller {
      */
     public function index() {
 
-        $current_user = User::find(Auth::user()->user_id);
+        $current_user = Auth::user();
         
         if ($current_user->vip == 0 && $current_user->admin == 0 && $current_user->stripe_id !== NULL) {
             $tier = 1;
@@ -36,7 +36,6 @@ class HomeController extends Controller {
             $stripe_id = $current_user->stripe_id;
             $subscriptions = \Stripe\Subscription::all(array("customer" => $stripe_id));
             foreach ($subscriptions->autoPagingIterator() as $subscription) {
-//                echo $subscription . "\n\n\n\n";
                 $stripe_id = $subscription->customer;
                 $items = $subscription->items->data;
                 foreach ($items as $item) {
