@@ -36,7 +36,7 @@ class HomeController extends Controller {
             $stripe_id = $current_user->stripe_id;
             $subscriptions = \Stripe\Subscription::all(array("customer" => $stripe_id));
             foreach ($subscriptions->autoPagingIterator() as $subscription) {
-                echo $subscription . "\n\n\n\n";
+//                echo $subscription . "\n\n\n\n";
                 $stripe_id = $subscription->customer;
                 $items = $subscription->items->data;
                 foreach ($items as $item) {
