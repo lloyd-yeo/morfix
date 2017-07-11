@@ -15,7 +15,6 @@ use App\InstagramProfile;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
-use Illuminate\Support\Facades\DB;
 
 class SendDm implements ShouldQueue {
 
