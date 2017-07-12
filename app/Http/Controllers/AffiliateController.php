@@ -31,8 +31,8 @@ class AffiliateController extends Controller {
         $referrals = DB::connection('mysql_old')->table('user')
                 ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
                 ->where('user_affiliate.referrer', Auth::user()->user_id)
-                ->where('user.user_tier', '>', 1)
-                ->select('user.email', 'user.user_tier', 'user.created_at')
+                ->where('user.tier', '>', 1)
+                ->select('user.email', 'user.tier', 'user.created_at')
                 ->get();
 
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
