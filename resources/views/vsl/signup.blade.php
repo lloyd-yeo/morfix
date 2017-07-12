@@ -61,7 +61,7 @@
                 background-color: #E55F53;
                 color:white;
             }    
-            
+
             /* Large desktops and laptops */
             @media (min-width: 1200px) {
                 #landing-txt { font-size: 52px; }
@@ -118,7 +118,7 @@
                 #logo-img { width: 120px; height: 120px; }
                 #signup-btn-text { font-size: 15px; font-weight: bold; }
             }
-            
+
             /*Filter styles*/
             .saturate {-webkit-filter: saturate(3); filter: saturate(3);}
             .grayscale {-webkit-filter: grayscale(100%); filter: grayscale(100%);}
@@ -129,7 +129,7 @@
             .sepia {-webkit-filter: sepia(100%); filter: sepia(100%);}
             .huerotate {-webkit-filter: hue-rotate(180deg); filter: hue-rotate(180deg);}
             .rss.opacity {-webkit-filter: opacity(50%); filter: opacity(50%);}
-            
+
         </style>
         <!-- Scripts -->
         <script>
@@ -220,7 +220,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <div class='col-lg-12 push-50-t' style="padding-left: 0px; padding-right: 0px;">
                 <div class='center-block' style='background-color:black;'>
                     <p class="text-center font-s48 text-white" style='font-weight:900; padding-top: 60px; padding-bottom: 60px;'>
@@ -228,8 +228,8 @@
                     </p>
                 </div>
             </div>
-            
-            <div class='col-lg-10 col-lg-offset-1' style='font-size: 26px; text-align:center; color:white; font-weight: 700;'>
+
+            <div class='col-lg-10 col-lg-offset-1 push-50-t' style='font-size: 26px; text-align:center; color:white; font-weight: 700;'>
                 <div class='col-lg-4 mt'>
                     <img src='../assets/img/promo/vsl-feature-1.png' class="invert" style='width: 50px;'/>
                     <br/>
@@ -244,6 +244,24 @@
                     <img src='../assets/img/promo/vsl-feature-3.png' class='invert' style='width: 50px;'/>
                     <br/>
                     <span class='mt'>Scheduled Post +<br/>Content created for you!</span>
+                </div>
+            </div>
+
+            <div class='col-lg-10 col-lg-offset-1 push-50-t' style='font-size: 26px; text-align:center; color:white; font-weight: 700;'>
+                <div class='col-lg-4 mt'>
+                    <img src='../assets/img/promo/vsl-feature-4.svg' class='invert' style='width: 50px;'/>
+                    <br/>
+                    <span class='mt'>Access to<br/>secret group community</span>
+                </div>
+                <div class='col-lg-4 mt'>
+                    <img src='../assets/img/promo/vsl-feature-5.png' class='invert' style='width: 50px;'/>
+                    <br/>
+                    <span class='mt'>Instagram<br/>Trainings</span>
+                </div>
+                <div class='col-lg-4 mt'>
+                    <img src='../assets/img/promo/vsl-feature-6.png' class='invert' style='width: 50px;'/>
+                    <br/>
+                    <span class='mt'>Sales & Affiliate<br/>Marketing Training</span>
                 </div>
             </div>
         </main>
@@ -261,51 +279,51 @@
     <script src="../assets/js/app.js"></script>
     <script src="../assets/js/plugins/jquery-vide/jquery.vide.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script>
-    
+
     <!-- Page Plugins -->
     <script src="../assets/js/plugins/slick/slick.min.js"></script>
-    
+
     <!-- Page JS Code -->
     <script>
-        jQuery(function () {
-            
-            App.initHelpers('slick');
-            
-            var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
-                    // The element that is fluid width
-                    //                $fluidEl = $("body");
-                    $fluidEl = $("#vid-container");
+            jQuery(function () {
 
-            // Figure out and save aspect ratio for each video
-            $allVideos.each(function () {
-                console.log("aspectRatio " + (this.height / this.width));
-                $(this).data('aspectRatio', this.height / this.width)
+                App.initHelpers('slick');
 
-                        // and remove the hard coded width/height
-                        .removeAttr('height')
-                        .removeAttr('width');
+                var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
+                        // The element that is fluid width
+                        //                $fluidEl = $("body");
+                        $fluidEl = $("#vid-container");
 
-            });
-
-            // When the window is resized
-            $(window).resize(function () {
-
-                var newWidth = $fluidEl.width();
-
-                // Resize all videos according to their own aspect ratio
+                // Figure out and save aspect ratio for each video
                 $allVideos.each(function () {
+                    console.log("aspectRatio " + (this.height / this.width));
+                    $(this).data('aspectRatio', this.height / this.width)
 
-                    var $el = $(this);
-                    $el
-                            .width(newWidth)
-                            .height(newWidth * $el.data('aspectRatio'));
+                            // and remove the hard coded width/height
+                            .removeAttr('height')
+                            .removeAttr('width');
 
                 });
 
-                // Kick off one resize to fix all videos on page load
-            }).resize();
+                // When the window is resized
+                $(window).resize(function () {
 
-        });
+                    var newWidth = $fluidEl.width();
+
+                    // Resize all videos according to their own aspect ratio
+                    $allVideos.each(function () {
+
+                        var $el = $(this);
+                        $el
+                                .width(newWidth)
+                                .height(newWidth * $el.data('aspectRatio'));
+
+                    });
+
+                    // Kick off one resize to fix all videos on page load
+                }).resize();
+
+            });
     </script>
 
 </html>
