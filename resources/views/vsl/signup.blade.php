@@ -69,13 +69,12 @@
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                     </h1>
                 </div>
-                
-                <div class='col-lg-10 col-lg-offset-1'>
-                    <div id='vid-container' class='center-block' style='max-width:910px;'>
-                        <iframe src="https://player.vimeo.com/video/198823397" 
-                                width="640" height="400" frameborder="0" 
-                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                    </div>
+            </div>
+            <div class='col-lg-10 col-lg-offset-1 push-30-t'>
+                <div id='vid-container' class='center-block' style='max-width:910px;'>
+                    <iframe src="https://player.vimeo.com/video/198823397" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
             </div>
         </main>
