@@ -162,7 +162,7 @@
             <div class='col-lg-10 col-lg-offset-1 push-50-t'>
                 <div class='center-block'>
                     <!-- Multiple Avatars -->
-                    <div class="block">
+                    <div class="block" style='background-color: transparent;'>
                         <div class="block-header">
                             <h3 class="center-block text-center font-w700 push text-white" style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3);'>Swipe left to see more happy users!</h3>
                         </div>
