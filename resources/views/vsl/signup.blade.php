@@ -154,9 +154,56 @@
             </div>
             <div class='col-lg-12 push-50-t' style="padding-left: 0px; padding-right: 0px;">
                 <div class='center-block' style='background-color:black;'>
-                    <p class="text-center font-s48 text-white" style='font-weight:900; padding-top: 80px; padding-bottom: 80px;'>
+                    <p class="text-center font-s48 text-white" style='font-weight:900; padding-top: 60px; padding-bottom: 60px;'>
                         Spy on what our users think!
                     </p>
+                </div>
+            </div>
+            <div class='col-lg-10 col-lg-offset-1 push-50-t'>
+                <div class='center-block' style='max-width:910px;'>
+                    <!-- Multiple Avatars -->
+                    <div class="block">
+                        <div class="block-header">
+                            <h3 class="block-title">Multiple Avatars</h3>
+                        </div>
+                        <div class="block-content">
+                            <!-- Slider with Multiple Slides/Avatars -->
+                            <div class="js-slider text-center" data-slider-autoplay="true" data-slider-dots="true" data-slider-arrows="true" data-slider-num="3">
+                                <div>
+                                    <img class="img-avatar" src="assets/img/avatars/avatar1.jpg" alt="">
+                                    <div class="push-10-t font-w600">Rebecca Gray</div>
+                                    <div class="font-s13 text-muted">Web Designer</div>
+                                </div>
+                                <div>
+                                    <img class="img-avatar" src="assets/img/avatars/avatar2.jpg" alt="">
+                                    <div class="push-10-t font-w600">Sara Holland</div>
+                                    <div class="font-s13 text-muted">Font Designer</div>
+                                </div>
+                                <div>
+                                    <img class="img-avatar" src="assets/img/avatars/avatar3.jpg" alt="">
+                                    <div class="push-10-t font-w600">Megan Dean</div>
+                                    <div class="font-s13 text-muted">Artist</div>
+                                </div>
+                                <div>
+                                    <img class="img-avatar" src="assets/img/avatars/avatar4.jpg" alt="">
+                                    <div class="push-10-t font-w600">Ashley Welch</div>
+                                    <div class="font-s13 text-muted">Graphic Designer</div>
+                                </div>
+                                <div>
+                                    <img class="img-avatar" src="assets/img/avatars/avatar5.jpg" alt="">
+                                    <div class="push-10-t font-w600">Amanda Powell</div>
+                                    <div class="font-s13 text-muted">Photographer</div>
+                                </div>
+                                <div>
+                                    <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
+                                    <div class="push-10-t font-w600">Tiffany Kim</div>
+                                    <div class="font-s13 text-muted">Web Developer</div>
+                                </div>
+                            </div>
+                            <!-- END Slider with Multiple Slides/Avatars -->
+                        </div>
+                    </div>
+                    <!-- END Multiple Avatars -->
                 </div>
             </div>
         </main>
