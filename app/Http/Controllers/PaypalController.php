@@ -55,7 +55,7 @@ class PaypalController extends Controller {
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Monthly Premium Subscription (37/month)')
-                ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD/mth.')
+                ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD per month.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
         
         // Set plan id
@@ -94,7 +94,7 @@ class PaypalController extends Controller {
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Monthly Business Subscription (97/month)')
-                ->setDescription('This subscription is for the Business add-on package of Morfix, amounting to $97USD/mth.')
+                ->setDescription('This subscription is for the Business add-on package of Morfix, amounting to $97USD per month.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
         
         // Set plan id
@@ -133,7 +133,7 @@ class PaypalController extends Controller {
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Yearly Pro Subscription (370/yr)')
-                ->setDescription('This subscription is for the annual Pro package of Morfix, amounting to $370USD/yr.')
+                ->setDescription('This subscription is for the annual Pro package of Morfix, amounting to $370USD per year.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
         
         // Set plan id
@@ -172,7 +172,7 @@ class PaypalController extends Controller {
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Yearly Mastermind Subscription (970/yr)')
-                ->setDescription('This subscription is for the annual Mastermind package of Morfix, amounting to $970USD/yr.')
+                ->setDescription('This subscription is for the annual Mastermind package of Morfix, amounting to $970USD per year.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
         
         // Set plan id
@@ -283,6 +283,7 @@ class PaypalController extends Controller {
             $result = $agreement->execute($token, $this->apiContext);
             $user = Auth::user();
             $user->tier = $user->tier + 10;
+            $user->num_acct = $user->num_acct + 5;
             $user->paypal = 1;
             if(isset($result->id)){
                 $_agreement = new PaypalAgreement;
@@ -315,6 +316,7 @@ class PaypalController extends Controller {
             $result = $agreement->execute($token, $this->apiContext);
             $user = Auth::user();
             $user->tier = $user->tier + 20;
+            $user->num_acct = $user->num_acct + 5;
             $user->paypal = 1;
             if(isset($result->id)){
                 $_agreement = new PaypalAgreement;
