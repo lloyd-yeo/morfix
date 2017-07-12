@@ -76,6 +76,8 @@ class SendDm implements ShouldQueue {
 
         if (is_null($dm_job)) {
             exit;
+        } else {
+            echo "[$insta_username] retrieved job...\n";
         }
 
         try {
