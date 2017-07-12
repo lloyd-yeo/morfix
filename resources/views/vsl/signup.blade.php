@@ -57,8 +57,16 @@
         </script>
     </head>
     <body>
-        <main id="main-container" style='min-height: 100%; background-image: url(vsl-background.jpg); background-color: rgba(0,0,0,1); background-size:cover;'>
-            
+        <main id="main-container" style='min-height: 100%; background-image: url(assets/img/promo/vsl-bg.jpg); background-color: rgba(0,0,0,1); background-size:cover;'>
+            <div class='col-lg-12'>
+                <div class='col-lg-10 col-lg-offset-1'>
+                    <p>
+                        <a>
+                            <img class='center-block' id="logo-img" src="url(assets/img/promo/vsl-instaffiliates-logo.png);">
+                        </a>
+                    </p>
+                </div>
+            </div>
         </main>
     </body>
 
