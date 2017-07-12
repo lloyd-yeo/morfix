@@ -221,9 +221,16 @@
     <script src="../assets/js/app.js"></script>
     <script src="../assets/js/plugins/jquery-vide/jquery.vide.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script>
+    
+    <!-- Page Plugins -->
+    <script src="../assets/js/plugins/slick/slick.min.js"></script>
+    
     <!-- Page JS Code -->
     <script>
         jQuery(function () {
+            
+            App.initHelpers('slick');
+            
             var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
                     // The element that is fluid width
                     //                $fluidEl = $("body");
