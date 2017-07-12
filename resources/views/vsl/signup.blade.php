@@ -170,32 +170,32 @@
                             <!-- Slider with Multiple Slides/Avatars -->
                             <div class="js-slider text-center" data-slider-autoplay="true" data-slider-dots="true" data-slider-arrows="true" data-slider-num="3">
                                 <div>
-                                    <img class="img-avatar" src="https://morfix.co/app/testimonials/IMG_1830.PNG?v=1" alt="">
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1830.PNG?v=1" alt="">
                                     <div class="push-10-t font-w600">Rebecca Gray</div>
                                     <div class="font-s13 text-muted">Web Designer</div>
                                 </div>
                                 <div>
-                                    <img class="img-avatar" src="https://morfix.co/app/testimonials/IMG_1828.PNG?v=1" alt="">
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1828.PNG?v=1" alt="">
                                     <div class="push-10-t font-w600">Sara Holland</div>
                                     <div class="font-s13 text-muted">Font Designer</div>
                                 </div>
                                 <div>
-                                    <img class="img-avatar" src="https://morfix.co/app/testimonials/IMG_1823.PNG?v=1" alt="">
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1823.PNG?v=1" alt="">
                                     <div class="push-10-t font-w600">Megan Dean</div>
                                     <div class="font-s13 text-muted">Artist</div>
                                 </div>
                                 <div>
-                                    <img class="img-avatar" src="https://morfix.co/app/testimonials/IMG_1825.PNG?v=1" alt="">
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1825.PNG?v=1" alt="">
                                     <div class="push-10-t font-w600">Ashley Welch</div>
                                     <div class="font-s13 text-muted">Graphic Designer</div>
                                 </div>
                                 <div>
-                                    <img class="img-avatar" src="assets/img/avatars/avatar5.jpg" alt="">
+                                    <img class="img-responsive" src="assets/img/avatars/avatar5.jpg" alt="">
                                     <div class="push-10-t font-w600">Amanda Powell</div>
                                     <div class="font-s13 text-muted">Photographer</div>
                                 </div>
                                 <div>
-                                    <img class="img-avatar" src="assets/img/avatars/avatar6.jpg" alt="">
+                                    <img class="img-responsive" src="assets/img/avatars/avatar6.jpg" alt="">
                                     <div class="push-10-t font-w600">Tiffany Kim</div>
                                     <div class="font-s13 text-muted">Web Developer</div>
                                 </div>
