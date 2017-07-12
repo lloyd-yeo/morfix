@@ -209,6 +209,15 @@
                     </button>
                 </div>
             </div>
+            <div class='col-lg-10 col-lg-offset-1'>
+                <div class='col-lg-12 push-50-t' style="padding-left: 0px; padding-right: 0px;">
+                    <div class='center-block' style='background-color:black;'>
+                        <p class="text-center font-s48 text-white" style='font-weight:900; padding-top: 60px; padding-bottom: 60px;'>
+                            Spy on what our users think!
+                        </p>
+                    </div>
+                </div>
+            </div>
         </main>
     </body>
 
