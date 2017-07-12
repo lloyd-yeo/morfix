@@ -108,13 +108,12 @@ class SendDm implements ShouldQueue {
             try {
                 $delay = rand(35, 45);
                 $recipients = array();
-                $recipients["users"] = $dm_job->recipient_insta_id;
+                $recipients["users"] = array();
+                $recipients["users"][] = $dm_job->recipient_insta_id;
                 $direct_msg_resp = $instagram->direct->sendText($recipients, $dm_job->message);
                 echo $dm_job->recipient_insta_id . "\n";
-                
                 echo "[$insta_username] " . $dm_job->job_id . "\n";
                 var_dump($direct_msg_resp);
-
                 echo "[$insta_username] auto-delay: " . $auto_dm_delay . "\n";
                 $dm_job->fulfilled = 1;
                 $dm_job->updated_at = \Carbon\Carbon::now();
