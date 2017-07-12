@@ -75,6 +75,7 @@ class SendDm implements ShouldQueue {
                 ->first();
 
         if (is_null($dm_job)) {
+            echo "[$insta_username] failed to retrieved job...\n";
             exit;
         } else {
             echo "[$insta_username] retrieved job...\n";
