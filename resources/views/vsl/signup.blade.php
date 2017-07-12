@@ -152,7 +152,7 @@
                     </button>
                 </div>
             </div>
-            <div class='col-lg-10 col-lg-offset-1 push-50-t'>
+            <div class='col-lg-12 push-50-t'>
                 <div class='center-block' style='min-height: 200px; background-color:black;'>
                     <p class="text-center font-s48 text-white" style='font-weight:900;'>
                         Spy on what our users think!
