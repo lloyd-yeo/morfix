@@ -62,7 +62,7 @@
                 <div class='col-lg-10 col-lg-offset-1'>
                     <p>
                         <a>
-                            <img class='center-block' id="logo-img" src="url('assets/img/promo/vsl-instaffiliates-logo.png');">
+                            <img class='center-block' src="assets/img/promo/vsl-instaffiliates-logo.png">
                         </a>
                     </p>
                 </div>
