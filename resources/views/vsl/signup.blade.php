@@ -264,6 +264,13 @@
                     <span class='mt'>Sales & Affiliate<br/>Marketing Training</span>
                 </div>
             </div>
+            <div class='col-lg-10 col-lg-offset-1 push-50-t'>
+                <div class='center-block' style='max-width:910px;'>
+                    <button class="signup-btn start-stop-btn btn btn-block btn-lg" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+                        <span id="signup-btn-text">GET INSTANT ACCESS</span>
+                    </button>
+                </div>
+            </div>
         </main>
     </body>
 
