@@ -68,9 +68,66 @@
                     <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                     </h1>
+
+                    <iframe src="https://player.vimeo.com/video/198823397" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
                 </div>
             </div>
         </main>
     </body>
+
+    <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+    <script src="assets/js/core/jquery.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="assets/js/core/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/core/jquery.scrollLock.min.js"></script>
+    <script src="assets/js/core/jquery.appear.min.js"></script>
+    <script src="assets/js/core/jquery.countTo.min.js"></script>
+    <script src="assets/js/core/jquery.placeholder.min.js"></script>
+    <script src="assets/js/core/js.cookie.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/plugins/jquery-vide/jquery.vide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.4/typed.min.js"></script>
+    <!-- Page JS Code -->
+    <script>
+        jQuery(function () {
+            var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
+                    // The element that is fluid width
+                    //                $fluidEl = $("body");
+                    $fluidEl = $("#vid-container");
+
+            // Figure out and save aspect ratio for each video
+            $allVideos.each(function () {
+                console.log("aspectRatio " + (this.height / this.width));
+                $(this).data('aspectRatio', this.height / this.width)
+
+                        // and remove the hard coded width/height
+                        .removeAttr('height')
+                        .removeAttr('width');
+
+            });
+
+            // When the window is resized
+            $(window).resize(function () {
+
+                var newWidth = $fluidEl.width();
+
+                // Resize all videos according to their own aspect ratio
+                $allVideos.each(function () {
+
+                    var $el = $(this);
+                    $el
+                            .width(newWidth)
+                            .height(newWidth * $el.data('aspectRatio'));
+
+                });
+
+                // Kick off one resize to fix all videos on page load
+            }).resize();
+
+        });
+    </script>
 
 </html>
