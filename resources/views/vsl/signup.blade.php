@@ -56,13 +56,13 @@
         <script>
         </script>
     </head>
-    <body>
+    <body style='margin:0px;'>
         <main id="main-container" style='min-height: 100%; background-image: url("../assets/img/promo/vsl-bg.jpg"); background-color: rgba(0,0,0,1); background-size:cover;'>
             <div class='col-lg-12'>
                 <div class='col-lg-10 col-lg-offset-1'>
                     <p>
                         <a>
-                            <img class='center-block' src="../assets/img/promo/vsl-instaffiliates-logo.png">
+                            <img class='center-block' src="../assets/img/promo/vsl-instaffiliates-logo.png" style='width:180px; height:180px;'>
                         </a>
                     </p>
                 </div>
