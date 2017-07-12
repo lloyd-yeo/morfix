@@ -65,7 +65,7 @@
                             <img class='center-block' src="../assets/img/promo/vsl-instaffiliates-logo.png" style='width:180px; height:180px;'>
                         </a>
                     </p>
-                    <h1 class='text-center font-w700 push text-white font-s64' style='max-width:1199px;'>
+                    <h1 class='text-center font-w700 push text-white font-s64' style='line-height: 1.1; max-width:1199px;'>
                         DISCOVER HOW TO CREATE HUGE AUTOMATED INCOME ON INSTAGRAM EVEN IF YOU HAVE NO EXPERIENCE
                     </h1>
                 </div>
