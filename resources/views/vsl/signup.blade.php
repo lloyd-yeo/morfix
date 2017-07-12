@@ -51,7 +51,75 @@
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="../assets/css/themes/flat.min.css"> -->
         <!-- END Stylesheets -->
+        <style>
+            .start-stop-btn {
+                background-color: #FF6A5C; 
+                color: white;
+                /*border: 1px solid #0C5F94;*/
+            }
+            .start-stop-btn:hover {
+                background-color: #E55F53;
+                color:white;
+            }    
+            
+            /* Large desktops and laptops */
+            @media (min-width: 1200px) {
+                #landing-txt { font-size: 52px; }
+                #signup-btn { height: 60px; }
+                #form-signup { max-width: 90%; margin-top: 0px; }
+                #review-container { max-width: 100%; margin-top: 0px; }
+                #logo-container { margin-top: 50px; }
+                #logo-img { width:180px; height: 180px; }
+                #signup-btn-text { font-size: 20px; font-weight: bold; }
+            }
 
+            /* Landscape tablets and medium desktops */
+            @media (min-width: 992px) and (max-width: 1199px) {
+                #landing-txt { font-size: 52px; }
+                #signup-btn { height: 60px; }
+                #form-signup { max-width: 90%; margin-top: 0px; }
+                #review-container { max-width: 100%; margin-top: 0px; }
+                #logo-container { margin-top: 50px; }
+                #logo-img { width:180px; height: 180px; }
+                #signup-btn-text { font-size: 20px; font-weight: bold; }
+            }
+
+            /* Portrait tablets and small desktops */
+            @media (min-width: 768px) and (max-width: 991px) {
+                #landing-txt { font-size: 52px; }
+                #signup-btn { height: 40px; }
+                #form-signup { max-width: 90%; margin-top: 0px; }
+                #review-container { max-width: 100%; margin-top: 0px; }
+                #logo-container { margin-top: 50px; }
+                #logo-img { width:180px; height: 180px; }
+                #signup-btn-text { font-size: 20px; font-weight: bold; }
+            }
+
+            /* Landscape phones and portrait tablets */
+            @media (max-width: 767px) {
+                #landing-txt { font-size: 32px; }
+                #signup-btn { height: 38px; }
+                #form-signup { max-width: 100%; margin-top: 0px; }
+                #review-container { max-width: 100%; margin-top: 0px; }
+                #vid-container { padding: 15px 7px 10px 7px; }
+                #logo-container { margin-top: 30px; }
+                #logo-img { width:120px; height: 120px; }
+                #signup-btn-text { font-size: 15px; font-weight: bold; }
+            }
+
+            /* Portrait phones and smaller */
+            @media (max-width: 480px) {
+                #landing-txt { font-size: 32px; }
+                #signup-btn { height: 38px; }
+                #form-signup { max-width: 100%; margin-top: 0px; }
+                #review-container { max-width: 100%; margin-top: 0px; }
+                #vid-container { padding: 15px 7px 10px 7px; }
+                #logo-container { margin-top: 30px; }
+                #logo-img { width: 120px; height: 120px; }
+                #signup-btn-text { font-size: 15px; font-weight: bold; }
+            }
+            
+        </style>
         <!-- Scripts -->
         <script>
         </script>
@@ -75,6 +143,13 @@
                     <iframe src="https://player.vimeo.com/video/198823397" 
                             width="640" height="400" frameborder="0" 
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class='col-lg-10 col-lg-offset-1 push-50-t'>
+                <div class='center-block' style='max-width:910px;'>
+                    <button class="signup-btn start-stop-btn btn btn-block btn-lg" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+                        <span id="signup-btn-text">GET INSTANT ACCESS</span>
+                    </button>
                 </div>
             </div>
         </main>
