@@ -69,7 +69,8 @@
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                     </h1>
                 </div>
-                <div class='col-lg-12'>
+                
+                <div class='col-lg-12' id='vid-container'>
                     <iframe class='center-block' src="https://player.vimeo.com/video/198823397" 
                             width="640" height="400" frameborder="0" 
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
