@@ -119,6 +119,17 @@
                 #signup-btn-text { font-size: 15px; font-weight: bold; }
             }
             
+            /*Filter styles*/
+            .saturate {-webkit-filter: saturate(3); filter: saturate(3);}
+            .grayscale {-webkit-filter: grayscale(100%); filter: grayscale(100%);}
+            .contrast {-webkit-filter: contrast(160%); filter: contrast(160%);}
+            .brightness {-webkit-filter: brightness(0.25); filter: brightness(0.25);}
+            .blur {-webkit-filter: blur(3px); filter: blur(3px);}
+            .invert {-webkit-filter: invert(100%); filter: invert(100%);}
+            .sepia {-webkit-filter: sepia(100%); filter: sepia(100%);}
+            .huerotate {-webkit-filter: hue-rotate(180deg); filter: hue-rotate(180deg);}
+            .rss.opacity {-webkit-filter: opacity(50%); filter: opacity(50%);}
+            
         </style>
         <!-- Scripts -->
         <script>
@@ -213,8 +224,26 @@
             <div class='col-lg-12 push-50-t' style="padding-left: 0px; padding-right: 0px;">
                 <div class='center-block' style='background-color:black;'>
                     <p class="text-center font-s48 text-white" style='font-weight:900; padding-top: 60px; padding-bottom: 60px;'>
-                        Spy on what our users think!
+                        When you sign up, you'll get...
                     </p>
+                </div>
+            </div>
+            
+            <div class='col-lg-10 col-lg-offset-1'>
+                <div class='col-lg-4 mt'>
+                    <img src='../assets/img/promo/vsl-feature-1.png' class="invert" style='width: 50px;'/>
+                    <br/>
+                    <span class='mt'>Automated<br/>Follower's Growth</span>
+                </div>
+                <div class='col-lg-4 mt'>
+                    <img src='../assets/img/promo/vsl-feature-2.png' class='invert' style='width: 50px;'/>
+                    <br/>
+                    <span class='mt'>Automated<br/>Direct Messages</span>
+                </div>
+                <div class='col-lg-4 mt'>
+                    <img src='../assets/img/promo/vsl-feature-3.png' class='invert' style='width: 50px;'/>
+                    <br/>
+                    <span class='mt'>Scheduled Post +<br/>Content created for you!</span>
                 </div>
             </div>
         </main>
