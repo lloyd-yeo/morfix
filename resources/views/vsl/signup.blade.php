@@ -70,7 +70,7 @@
                     </h1>
                 </div>
                 
-                <div class='col-lg-10' id='vid-container'>
+                <div class='col-lg-10 col-lg-offset-1' id='vid-container'>
                     <iframe class='center-block' src="https://player.vimeo.com/video/198823397" 
                             width="640" height="400" frameborder="0" 
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
