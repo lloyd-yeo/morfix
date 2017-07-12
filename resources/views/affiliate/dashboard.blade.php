@@ -193,20 +193,22 @@
                         </thead>
                         <tbody>
                             @foreach ($referrals as $key => $referral)
-                            @if ($referral->user_tier > 1)
+                            @if ($referral->tier > 1)
                                 @if ($key%2 == 0)
                                 <tr role="row" class="even">
                                     @else
                                 <tr role="row" class="odd">
                                     @endif
                                     <td class="font-w600">{{ $referral->email }}</td>
-                                    @if ($referral->user_tier == 2)
+                                    @if ($referral->tier == 2)
                                     <td>Premium</td>
-                                    @elseif ($referral->user_tier == 3)
+                                    @elseif ($referral->tier == 3)
                                     <td>Pro</td>
-                                    @elseif ($referral->user_tier == 4)
+                                    @elseif ($referral->tier == 12)
                                     <td>Business</td>
-                                    @elseif ($referral->user_tier == 5)
+                                    @elseif ($referral->user_tier == 22)
+                                    <td>Mastermind</td>
+                                    @elseif ($referral->user_tier == 23)
                                     <td>Mastermind</td>
                                     @endif
                                     <td>{{ $referral->created_at }}</td>
