@@ -229,7 +229,7 @@
                 </div>
             </div>
             
-            <div class='col-lg-10 col-lg-offset-1'>
+            <div class='col-lg-10 col-lg-offset-1' style='font-size: 26px; text-align:center; color:white; font-weight: 700;'>
                 <div class='col-lg-4 mt'>
                     <img src='../assets/img/promo/vsl-feature-1.png' class="invert" style='width: 50px;'/>
                     <br/>
