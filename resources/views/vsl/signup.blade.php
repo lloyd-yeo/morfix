@@ -154,7 +154,7 @@
             </div>
             <div class='col-lg-12 push-50-t' style="padding-left: 0px; padding-right: 0px;">
                 <div class='center-block' style='min-height: 200px; background-color:black;'>
-                    <p class="text-center font-s48 text-white" style='position: absolute; top:50%; font-weight:900;'>
+                    <p class="text-center font-s48 text-white" style='font-weight:900;'>
                         Spy on what our users think!
                     </p>
                 </div>
