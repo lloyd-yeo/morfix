@@ -171,49 +171,31 @@
                             <div class="js-slider text-center" data-slider-autoplay="true" data-slider-dots="true" data-slider-arrows="true" 
                                  data-slider-num="4">
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1830.PNG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Rebecca Gray</div>
-                                    <div class="font-s13 text-muted">Web Designer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1830.PNG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1828.PNG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Sara Holland</div>
-                                    <div class="font-s13 text-muted">Font Designer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1828.PNG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1823.PNG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Megan Dean</div>
-                                    <div class="font-s13 text-muted">Artist</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1823.PNG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1825.PNG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Ashley Welch</div>
-                                    <div class="font-s13 text-muted">Graphic Designer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1825.PNG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1826.JPG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Amanda Powell</div>
-                                    <div class="font-s13 text-muted">Photographer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1826.JPG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1829.JPG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Tiffany Kim</div>
-                                    <div class="font-s13 text-muted">Web Developer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1829.JPG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1741.PNG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Tiffany Kim</div>
-                                    <div class="font-s13 text-muted">Web Developer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1741.PNG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1820.PNG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Tiffany Kim</div>
-                                    <div class="font-s13 text-muted">Web Developer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1820.PNG?v=1" alt="" style='width:91%;'>
                                 </div>
                                 <div>
-                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1822.PNG?v=1" alt="">
-                                    <div class="push-10-t font-w600">Tiffany Kim</div>
-                                    <div class="font-s13 text-muted">Web Developer</div>
+                                    <img class="img-responsive" src="https://morfix.co/app/testimonials/IMG_1822.PNG?v=1" alt="" style='width:91%;'>
                                 </div>
                             </div>
                             <!-- END Slider with Multiple Slides/Avatars -->
