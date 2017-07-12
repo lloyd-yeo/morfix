@@ -7,7 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'Morfix') }}</title>
 
         <meta name="description" content="Morfix - The Best Instagram Growth Hacking Tool">
@@ -55,14 +54,10 @@
 
         <!-- Scripts -->
         <script>
-            window.Laravel = {!! json_encode([
-                    'csrfToken' => csrf_token(),
-            ]) !!}
-            ;
         </script>
     </head>
     <body>
-        <main id="main-container">
+        <main id="main-container" style='min-height: 100%; background-image: url(vsl-background.jpg); background-color: rgba(0,0,0,1); background-size:cover;'>
             
         </main>
     </body>
