@@ -68,7 +68,7 @@ class SendDm implements ShouldQueue {
         $proxy = $ig_profile->proxy;
         echo "[$insta_username] retrieved...\n";
 
-        $dm_job = App\DmJob::where('insta_username', $insta_username)
+        $dm_job = \App\DmJob::where('insta_username', $insta_username)
                 ->where('fulfilled', 0)
                 ->whereRaw('NOW() > time_to_send')
                 ->orderBy('job_id', 'ASC')

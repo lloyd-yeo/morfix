@@ -59,6 +59,9 @@ class HomeController extends Controller {
             }
             $current_user->tier = $tier;
             $current_user->save();
+        } else if ($current_user->email == "maychengmt@yahoo.com") {
+            $current_user->tier = 12;
+            $current_user->save();
         }
 
         DB::update("UPDATE user_insta_profile SET profile_pic_url = REPLACE(profile_pic_url, 'http://', 'https://');");
