@@ -160,11 +160,11 @@
                 </div>
             </div>
             <div class='col-lg-10 col-lg-offset-1 push-50-t'>
-                <div class='center-block' style='max-width:910px;'>
+                <div class='center-block'>
                     <!-- Multiple Avatars -->
                     <div class="block">
                         <div class="block-header">
-                            <h3 class="block-title">Multiple Avatars</h3>
+                            <h3 class="block-title" style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3);'>Swipe left to see more happy users!</h3>
                         </div>
                         <div class="block-content">
                             <!-- Slider with Multiple Slides/Avatars -->
