@@ -324,6 +324,9 @@
                     </button>
                 </div>
             </div>
+            
+            @include('vsl.modal')
+            
         </main>
     </body>
 
@@ -382,7 +385,13 @@
 
                     // Kick off one resize to fix all videos on page load
                 }).resize();
-
+                
+                $(".signup-btn").on("click", function(){ 
+                    
+                    
+    
+                });
+                
             });
     </script>
 
