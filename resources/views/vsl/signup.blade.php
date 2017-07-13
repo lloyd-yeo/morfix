@@ -39,7 +39,8 @@
         <!-- Web fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300,400,400italic,600,700%7COpen+Sans:100,200,300,400,400italic,600,700">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Montserrat:400,900|Raleway">
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CRaleway%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900%7CDroid+Serif%3A400%2C700%2C400italic%2C700italic%7CLora%3A400%2C700%2C400italic%2C700italic&amp;subset=latin&amp;ver=1479142963">
+        
         <!-- Page JS Plugins CSS -->
         <link rel="stylesheet" href="../assets/js/plugins/slick/slick.min.css">
         <link rel="stylesheet" href="../assets/js/plugins/slick/slick-theme.min.css">

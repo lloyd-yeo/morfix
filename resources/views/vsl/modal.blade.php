@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color: #FF6A5C;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">SIGN UP NOW!</h4>
+                <h4 class="modal-title text-white">SIGN UP NOW!</h4>
             </div>
 
             <div id="modal-body" class="modal-body">
@@ -11,7 +11,7 @@
                     <label>Select your plan:</label>
                     <select id="plan-dropdown" name="plan_dropdown" class="form-control">
                         <option value="1">Premium ($37/mth)</option>
-                        <option value="2">Pro ($375/yr) - Get 2 months free!</option>
+                        <option value="2">Pro ($370/yr) - Get 2 months free!</option>
                     </select>
                 </div>
                 <!-- -->
