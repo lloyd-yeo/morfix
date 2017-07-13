@@ -352,66 +352,69 @@
 
     <!-- Page JS Code -->
     <script>
-            jQuery(function () {
+        var $plan = 1;
+        jQuery(function () {
 
-                App.initHelpers('slick');
+            App.initHelpers('slick');
 
-                var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
-                        // The element that is fluid width
-                        //                $fluidEl = $("body");
-                        $fluidEl = $("#vid-container");
+            var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
+                    // The element that is fluid width
+                    //                $fluidEl = $("body");
+                    $fluidEl = $("#vid-container");
 
-                // Figure out and save aspect ratio for each video
-                $allVideos.each(function () {
-                    console.log("aspectRatio " + (this.height / this.width));
-                    $(this).data('aspectRatio', this.height / this.width)
+            // Figure out and save aspect ratio for each video
+            $allVideos.each(function () {
+                console.log("aspectRatio " + (this.height / this.width));
+                $(this).data('aspectRatio', this.height / this.width)
 
-                            // and remove the hard coded width/height
-                            .removeAttr('height')
-                            .removeAttr('width');
+                        // and remove the hard coded width/height
+                        .removeAttr('height')
+                        .removeAttr('width');
 
-                });
-
-                // When the window is resized
-                $(window).resize(function () {
-
-                    var newWidth = $fluidEl.width();
-
-                    // Resize all videos according to their own aspect ratio
-                    $allVideos.each(function () {
-
-                        var $el = $(this);
-                        $el
-                                .width(newWidth)
-                                .height(newWidth * $el.data('aspectRatio'));
-
-                    });
-
-                    // Kick off one resize to fix all videos on page load
-                }).resize();
-                
-                $(".signup-btn").on("click", function(){ 
-                    jQuery('#modal-payment').modal('show');
-                });
-                
-                $("#plan-dropdown").on("change", function (e) {
-                    $("select option:selected").each(function () {
-                        var $selectedOpt = $(this).val();
-                        $plan = $selectedOpt;
-
-                        if ($selectedOpt === 1) {
-                            $("#pro-pkg").fadeOut("slow", function () {
-                                $("#premium-pkg").fadeIn("slow");
-                            });
-                        } else if ($selectedOpt === 2) {
-                            $("#premium-pkg").fadeOut("slow", function () {
-                                $("#pro-pkg").fadeIn("slow");
-                            });
-                        }
-                    });
-                });
-                
             });
+
+            // When the window is resized
+            $(window).resize(function () {
+
+                var newWidth = $fluidEl.width();
+
+                // Resize all videos according to their own aspect ratio
+                $allVideos.each(function () {
+
+                    var $el = $(this);
+                    $el
+                            .width(newWidth)
+                            .height(newWidth * $el.data('aspectRatio'));
+
+                });
+
+                // Kick off one resize to fix all videos on page load
+            }).resize();
+
+            $(".signup-btn").on("click", function(){ 
+                jQuery('#modal-payment').modal('show');
+            });
+
+
+
+            $("#plan-dropdown").on("change", function (e) {
+                $("select option:selected").each(function () {
+                    var $selectedOpt = $(this).val();
+                    $plan = $selectedOpt;
+                    console.log($selectedOpt);
+                    if ($selectedOpt === 1) {
+                        $("#pro-pkg").fadeOut("slow", function () {
+                            $("#premium-pkg").fadeIn("slow");
+                        });
+                    } else if ($selectedOpt === 2) {
+                        $("#premium-pkg").fadeOut("slow", function () {
+                            $("#pro-pkg").fadeIn("slow");
+                        });
+                    }
+                });
+            });
+
+        });
     </script>
 
 </html>

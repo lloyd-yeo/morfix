@@ -7,6 +7,7 @@
             </div>
 
             <div id="modal-body" class="modal-body">
+                
                 <div class="form-group" style="margin-bottom: 10px; ">
                     <label>Select your plan:</label>
                     <select id="plan-dropdown" name="plan_dropdown" class="form-control">
@@ -14,7 +15,7 @@
                         <option value="2">Pro ($370/yr) - Get 2 months free!</option>
                     </select>
                 </div>
-                <!-- -->
+                
                 <div class="row col-lg-12" style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
                     <div id="premium-pkg" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
