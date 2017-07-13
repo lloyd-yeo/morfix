@@ -16,7 +16,7 @@
                 </div>
                 <!-- -->
                 <div class="row col-lg-12" style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
-                    <div id="premium-pkg" class="col-lg-6 col-xs-12">
+                    <div id="premium-pkg" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
                             <div class="dfd-pricing-cover cr-animate-gen animation-done" data-animate-type="transition.slideLeftIn" style="opacity: 1; display: block; transform: translateX(0px); padding-top: 0px;">
                                 <div class="ult_pricing_table_wrap ult_design_1  ult_hot ">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div style="display:none;" id="pro-pkg" class="col-lg-6 col-xs-12">
+                    <div style="display:none;" id="pro-pkg" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
                             <div class="dfd-pricing-cover cr-animate-gen animation-done" data-animate-type="transition.slideLeftIn" style="opacity: 1; display: block; transform: translateX(0px); padding-top: 0px;">
                                 <div class="ult_pricing_table_wrap ult_design_1  ult_hot ">
