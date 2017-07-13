@@ -18,7 +18,8 @@ class ReferrerController extends Controller {
         $redir = $request->input("redir");
         
         if ($redir == "payment") {
-            
+            return view('vsl.payment', [
+            ]);
         } else {
             return view('vsl.signup', [
                 'redir' => $redir,
