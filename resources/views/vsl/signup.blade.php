@@ -147,20 +147,24 @@
                     <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
                         @if ($redir == "mmovsl")
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
+                        @elseif ($redir == "ospvsl")
+                        YOUR OSP BUSINESS WILL<br/>GROW FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
                         @elseif ($redir == "davsl")
                         YOUR DIGITAL ALTITUDE<br/> BUSINESS WILL GROW <br/>FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
-                        @elseif ($redir == "ebook")
                         @elseif ($redir == "mcavsl")
                         YOUR MCA BUSINESS WILL<br/>GROW FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
+                        @elseif ($redir == "rcvsl")
+                        YOUR REVERSE COMMISSION<br/> BUSINESS WILL GROW <br/>FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
                         @elseif ($redir == "mlm")
                         YOUR MLM BUSINESS WILL<br/>GROW FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
                         @elseif ($redir == "online")
                         GET THOUSANDS OF LEADS FOR YOUR ONLINE BUSINESS WITH THIS #1 INSTAGRAM GROWTH HACKING TOOL
-                        @elseif ($redir == "ospvsl")
-                        YOUR OSP BUSINESS WILL<br/>GROW FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
-                        @elseif ($redir == "payment")
-                        @elseif ($redir == "rcvsl")
+                        @elseif ($redir == "ebook")
+                        DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                         @elseif ($redir == "tool")
+                        DISCOVER HOW TO GROW YOUR<br/>INSTAGRAM FASTER<br/>WITH THIS AUTOMATION TOOL
+                        @elseif ($redir == "payment")
+                        
                         @endif
                     </h1>
                 </div>
