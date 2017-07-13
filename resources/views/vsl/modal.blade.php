@@ -28,7 +28,7 @@
                                                     <div class="ult_price">
                                                         <span class="price-value" style="">$</span>
                                                         <span class="ult_price_figure" style="">37</span><span class="ult_price_term" style="">mo.</span></div>
-                                                    <div class="price-description subtitle" style="color:white;">Unlock the full potential of MorfiX</div>
+                                                    <div class="price-description subtitle" style="color:white;">Unlock the full potential of Morfix</div>
                                                 </div>
                                             </div><!--ult_price_body_block-->
                                         </div><!--ult_top-part--><div class="bottom-part">
