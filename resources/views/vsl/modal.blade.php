@@ -22,7 +22,7 @@
                                 <div class="ult_pricing_table_wrap ult_design_1  ult_hot ">
                                     <div class="ult_pricing_table" style=""><div class="top-part" style="background-color:#E14658;"><span class="inscription-hot">hot!</span>
                                             <div class="ult_pricing_heading">
-                                                <h3 class="box-name" style="">PREMIUM<br/>PACKAGE</h3>
+                                                <h3 class="box-name" style="font-size:40px;">PREMIUM<br/>PACKAGE</h3>
                                                 <h5 class="subtitle" style="color:white;">Main features</h5></div><!--ult_pricing_heading--><div class="ult_price_body_block">
                                                 <div class="ult_price_body">
                                                     <div class="ult_price">
@@ -59,7 +59,7 @@
                                 <div class="ult_pricing_table_wrap ult_design_1  ult_hot ">
                                     <div class="ult_pricing_table" style=""><div class="top-part" style="background-color:#E14658;"><span class="inscription-hot">hot!</span>
                                             <div class="ult_pricing_heading">
-                                                <h3 class="box-name" style="">PRO<br/>PACKAGE</h3>
+                                                <h3 class="box-name" style="font-size:40px;">PRO<br/>PACKAGE</h3>
                                                 <h5 class="subtitle" style="color:white;">Save & learn!</h5></div><!--ult_pricing_heading--><div class="ult_price_body_block">
                                                 <div class="ult_price_body">
                                                     <div class="ult_price">
