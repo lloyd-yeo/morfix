@@ -391,10 +391,24 @@
                 }).resize();
                 
                 $(".signup-btn").on("click", function(){ 
-                    
                     jQuery('#modal-payment').modal('show');
-                    
-    
+                });
+                
+                $("#plan-dropdown").on("change", function (e) {
+                    $("select option:selected").each(function () {
+                        var $selectedOpt = $(this).val();
+                        $plan = $selectedOpt;
+
+                        if ($selectedOpt === 1) {
+                            $("#pro-pkg").fadeOut("slow", function () {
+                                $("#premium-pkg").fadeIn("slow");
+                            });
+                        } else if ($selectedOpt === 2) {
+                            $("#premium-pkg").fadeOut("slow", function () {
+                                $("#pro-pkg").fadeIn("slow");
+                            });
+                        }
+                    });
                 });
                 
             });
