@@ -140,7 +140,7 @@
             <div class='col-lg-12 push-50-t'>
                 <div class='col-lg-10 col-lg-offset-1'>
                     <p>
-                        <a href='https://morfix.co'>
+                        <a href='javascript:void(0);'>
                             <img class='center-block' src="../assets/img/promo/vsl-instaffiliates-logo.png" style='width:180px; height:180px;'>
                         </a>
                     </p>
