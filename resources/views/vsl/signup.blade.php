@@ -163,17 +163,50 @@
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                         @elseif ($redir == "tool")
                         DISCOVER HOW TO GROW YOUR<br/>INSTAGRAM FASTER<br/>WITH THIS AUTOMATION TOOL
-                        @elseif ($redir == "payment")
-                        
                         @endif
                     </h1>
                 </div>
             </div>
             <div class='col-lg-10 col-lg-offset-1 push-30-t'>
                 <div id='vid-container' class='center-block' style='max-width:910px;'>
+                    
+                    @if ($redir == "mmovsl")
                     <iframe src="https://player.vimeo.com/video/198823397" 
                             width="640" height="400" frameborder="0" 
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "ospvsl")
+                    <iframe src="https://player.vimeo.com/video/199027287" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "davsl")
+                    <iframe src="https://player.vimeo.com/video/199028557" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "mcavsl")
+                    <iframe src="https://player.vimeo.com/video/199100363" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "rcvsl")
+                    <iframe src="https://player.vimeo.com/video/199101398" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "mlm")
+                    <iframe src="https://player.vimeo.com/video/198823397" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "online")
+                    <iframe src="https://player.vimeo.com/video/198823397" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "ebook")
+                    <iframe src="https://player.vimeo.com/video/198823397" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "tool")
+                    <iframe src="https://player.vimeo.com/video/198823397"
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @endif
                 </div>
             </div>
             <div class='col-lg-10 col-lg-offset-1 push-50-t'>
