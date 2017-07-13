@@ -27,7 +27,7 @@ class PaypalController extends Controller {
     private $mode;
     private $client_id;
     private $secret;
-
+ 
     // Create a new instance with our paypal credentials
     public function __construct() {
         // Detect if we are running in live mode or sandbox
