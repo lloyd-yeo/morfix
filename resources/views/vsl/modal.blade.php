@@ -125,7 +125,7 @@
                                     <label>Confirm Password:</label>
                                     <input id="signup-pw2" name="" type="password" class="form-control">
                                     <!--<br/>-->
-                                    <input type="submit" class="btn btn-success submit" value="Submit Payment">
+                                    <input type="submit" class="btn btn-success submit push-10-t" value="Submit Payment">
                                 </form>
                             </div>
                         </div>
