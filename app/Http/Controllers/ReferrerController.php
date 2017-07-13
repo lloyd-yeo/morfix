@@ -13,18 +13,21 @@ class ReferrerController extends Controller {
         
         if ($request->referrer) {
             $cookieJar->queue(cookie('referrer', $request->referrer, 45000));
-        } else {
-            echo $request->cookie('referrer');
         }
-
-        #$referrer = $request->input("referrer");
+        
         $redir = $request->input("redir");
         
         if ($redir == "payment") {
             
         } else {
-            return view('vsl.signup');
+            return view('vsl.signup', [
+                'redir' => $redir,
+            ]);
         }
     }
-
+    
+    public function processPayment(Request $request) {
+        #echo $request->cookie('referrer');
+    }
+    
 }
