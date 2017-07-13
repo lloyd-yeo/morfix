@@ -94,12 +94,12 @@
                                 <form id="payment-form" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
                                     <label>Email:</label>
                                     <input id="signup-email" name="email" type="text" class="form-control" autofocus>
-                                    <br/>
+                                    <!--<br/>-->
 
                                     <label>
                                         <span>Card Number</span></label>
                                     <input class="form-control" type="text" size="20" data-stripe="number">
-                                    <br/>
+                                    <!--<br/>-->
                                     <div class="form-row">
                                         <label>
                                             <span>Expiration (MM/YY)</span></label><br/>
@@ -107,24 +107,24 @@
                                         <span> / </span>
                                         <input style="width: 40%; display:inline;" class="form-control"  type="text" size="2" data-stripe="exp_year">
                                     </div>
-                                    <br/>
+                                    <!--<br/>-->
 
                                     <label>
                                         <span>CVC</span></label>
                                     <input class="form-control" style="width: 30%;" type="text" size="4" data-stripe="cvc">
 
-                                    <br/>
+                                    <!--<br/>-->
 
                                     <label>Name:</label>
                                     <input id="signup-name" name="name" type="text" class="form-control">
-                                    <br/>
+                                    <!--<br/>-->
 
                                     <label>Password:</label>
                                     <input id="signup-pw" name="pw" type="password" class="form-control">
-                                    <br/>
+                                    <!--<br/>-->
                                     <label>Confirm Password:</label>
                                     <input id="signup-pw2" name="" type="password" class="form-control">
-                                    <br/>
+                                    <!--<br/>-->
                                     <input type="submit" class="btn btn-success submit" value="Submit Payment">
                                 </form>
                             </div>
