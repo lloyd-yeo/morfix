@@ -80,7 +80,13 @@ class SendDm implements ShouldQueue {
         } else {
             echo "[$insta_username] retrieved job...\n";
         }
-
+        
+        if ($ig_profile->auto_dm_delay == 0 && $dm_job->follow_up_order == 1) {
+            $dm_job->fulfilled = 2;
+            $dm_job->save();
+            exit;
+        }
+        
         try {
             $config = array();
             $config["storage"] = "mysql";
