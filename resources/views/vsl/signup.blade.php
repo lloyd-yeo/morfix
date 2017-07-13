@@ -148,7 +148,7 @@
                         @if ($redir == "mmovsl")
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                         @elseif ($redir == "davsl")
-                        YOUR DIGITAL ALTITUDE BUSINESS WILL<br/>GROW FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
+                        YOUR DIGITAL ALTITUDE<br/> BUSINESS WILL GROW <br/>FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
                         @elseif ($redir == "ebook")
                         @elseif ($redir == "mcavsl")
                         YOUR MCA BUSINESS WILL<br/>GROW FASTER WITH THIS<br/>INSTAGRAM LOOPHOLE<br/>SYSTEM
