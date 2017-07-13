@@ -63,7 +63,8 @@
             .start-stop-btn:hover {
                 background-color: #E55F53;
                 color:white;
-            }    
+                cursor:pointer;
+            }
 
             /* Large desktops and laptops */
             @media (min-width: 1200px) {
