@@ -388,6 +388,7 @@
                 
                 $(".signup-btn").on("click", function(){ 
                     
+                    jQuery('#modal-payment').modal('show');
                     
     
                 });
