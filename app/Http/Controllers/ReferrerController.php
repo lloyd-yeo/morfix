@@ -20,8 +20,6 @@ class ReferrerController extends Controller {
         
         if ($redir == "payment") {
             
-        } else if ($redir == "") {
-            
         } else {
             return view('vsl.signup');
         }
