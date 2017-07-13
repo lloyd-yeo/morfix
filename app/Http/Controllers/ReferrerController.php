@@ -13,6 +13,7 @@ class ReferrerController extends Controller {
         
         if ($request->referrer) {
             $cookieJar->queue(cookie('referrer', $request->referrer, 45000));
+            echo $request->referrer;
         }
 
         #$referrer = $request->input("referrer");
