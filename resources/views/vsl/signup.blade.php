@@ -426,7 +426,7 @@
             });
 
             $("#plan-dropdown").on("change", function (e) {
-                $("select option:selected").each(function () {
+                $("select.plan-dropdown option:selected").each(function () {
                     var $selectedOpt = $(this).val();
                     $plan = $selectedOpt;
                     console.log($selectedOpt);
@@ -443,7 +443,7 @@
             });
             
             $("#payment-method-dropdown").on("change", function (e) {
-                $("select option:selected").each(function () {
+                $("select.payment-method-dropdown option:selected").each(function () {
                     var $selectedOptPayment = $(this).val();
                     $plan = $selectedOptPayment;
                     console.log($selectedOptPayment);

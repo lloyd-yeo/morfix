@@ -10,7 +10,7 @@
                 
                 <div class="form-group" style="margin-bottom: 10px; ">
                     <label>Select your plan:</label>
-                    <select id="plan-dropdown" name="plan_dropdown" class="form-control">
+                    <select id="plan-dropdown" name="plan_dropdown" class="plan-dropdown form-control">
                         <option value="1">Premium ($37/mth)</option>
                         <option value="2">Pro ($370/yr) - Get 2 months free!</option>
                     </select>
@@ -133,7 +133,7 @@
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <div class="form-material form-material-primary ">
-                                                    <select id="payment-method-dropdown" name="payment_method_dropdown" class="form-control">
+                                                    <select id="payment-method-dropdown" name="payment_method_dropdown" class="payment-method-dropdown form-control">
                                                         <option value="1">Pay by Debit/Credit Card</option>
                                                         <option value="2">Pay by Paypal</option>
                                                     </select>
