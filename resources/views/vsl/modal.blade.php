@@ -136,11 +136,13 @@
                                         
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <select id="payment-method-dropdown" name="payment_method_dropdown" class="form-control">
-                                                    <option value="1">Pay by Debit/Credit Card</option>
-                                                    <option value="2">Pay by Paypal</option>
-                                                </select>
-                                                <label for="payment-method-dropdown">Select Payment Method</label>
+                                                <div class="form-material form-material-primary ">
+                                                    <select id="payment-method-dropdown" name="payment_method_dropdown" class="form-control">
+                                                        <option value="1">Pay by Debit/Credit Card</option>
+                                                        <option value="2">Pay by Paypal</option>
+                                                    </select>
+                                                    <label for="payment-method-dropdown">Select Payment Method</label>
+                                                </div>
                                             </div>
                                         </div>
                                         
