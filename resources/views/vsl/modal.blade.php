@@ -99,7 +99,7 @@
                                     <form id="payment-form" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <div class="form-material form-material-primary floating">
+                                                <div class="form-material form-material-primary ">
                                                     <input class="form-control" type="text" 
                                                            id="signup-email"  name="email">
                                                     <label for="signup-email">Email:</label>
@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <div class="form-material form-material-primary floating">
+                                                <div class="form-material form-material-primary ">
                                                     <input class="form-control" type="text" 
                                                            id="signup-name"  name="name">
                                                     <label for="signup-name">Name:</label>
@@ -117,7 +117,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <div class="form-material form-material-primary floating">
+                                                <div class="form-material form-material-primary ">
                                                     <input class="form-control" type="password" 
                                                            id="signup-pw"  name="email">
                                                     <label for="signup-pw">Password:</label>
@@ -126,7 +126,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <div class="form-material form-material-primary floating">
+                                                <div class="form-material form-material-primary ">
                                                     <input class="form-control" type="password" 
                                                            id="signup-pw2"  name="email">
                                                     <label for="signup-pw2">Confirm Password:</label>
