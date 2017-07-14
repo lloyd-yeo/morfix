@@ -95,17 +95,45 @@
                                 <div class='block-header'>
                                     <h3 class="block-title" style='font-size: 24px;'>Your account details:</h3>
                                 </div>
-                                <div class="block-content block-content-full">
+                                <div class="block-content-full">
                                     <form id="payment-form" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <div class="form-material form-material-primary floating">
                                                     <input class="form-control" type="text" 
                                                            id="signup-email"  name="email">
-                                                    <label for="material-color-primary2">Email:</label>
+                                                    <label for="signup-email">Email:</label>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material form-material-primary floating">
+                                                    <input class="form-control" type="text" 
+                                                           id="signup-name"  name="name">
+                                                    <label for="signup-name">Name:</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material form-material-primary floating">
+                                                    <input class="form-control" type="password" 
+                                                           id="signup-pw"  name="email">
+                                                    <label for="signup-pw">Password:</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div class="form-material form-material-primary floating">
+                                                    <input class="form-control" type="password" 
+                                                           id="signup-pw2"  name="email">
+                                                    <label for="signup-pw2">Confirm Password:</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label for="card-element">
@@ -123,33 +151,6 @@
                                         
                                     </form>
                                 </div>
-                            </div>
-                            
-                            <div class="form-group" style="margin-bottom: 10px; margin-left: 20px; margin-right: 20px;">
-                                <form id="payment-form" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
-                                    <label>Email:</label>
-                                    <input id="signup-email" name="email" type="text" class="form-control" autofocus>
-                                    <label>
-                                        <span>Card Number</span></label>
-                                    <input class="form-control" type="text" size="20" data-stripe="number">
-                                    <div class="form-row">
-                                        <label>
-                                            <span>Expiration (MM/YY)</span></label><br/>
-                                        <input style="width: 40%; display:inline;" class="form-control"  type="text" size="2" data-stripe="exp_month">
-                                        <span> / </span>
-                                        <input style="width: 40%; display:inline;" class="form-control"  type="text" size="2" data-stripe="exp_year">
-                                    </div>
-                                    <label>
-                                        <span>CVC</span></label>
-                                    <input class="form-control" style="width: 30%;" type="text" size="4" data-stripe="cvc">
-                                    <label>Name:</label>
-                                    <input id="signup-name" name="name" type="text" class="form-control">
-                                    <label>Password:</label>
-                                    <input id="signup-pw" name="pw" type="password" class="form-control">
-                                    <label>Confirm Password:</label>
-                                    <input id="signup-pw2" name="" type="password" class="form-control">
-                                    <input type="submit" class="btn btn-success submit push-10-t" value="Submit Payment">
-                                </form>
                             </div>
                         </div>
                     </div>
