@@ -95,7 +95,7 @@
                                 <div class='block-header'>
                                     <h3 class="block-title" style='font-size: 24px;'>Your account details:</h3>
                                 </div>
-                                <div class="block-content-full">
+                                <div class="block-content block-content-full">
                                     <form id="payment-form" class="form-horizontal push-10-t" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
                                         <div class="form-group">
                                             <div class="col-sm-12">
