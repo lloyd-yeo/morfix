@@ -33,6 +33,22 @@ class PaymentController extends Controller {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $stripeToken = $request->input('stripeToken');
         
+        $email = $request->input('email');
+        $password = $request->input('pw');
+        $name = $request->input('name');
+        $referrer = $request->cookie('referrer');
+        
+        $num_acct = 1;
+        $active = 1;
+        $user_tier = 1;
+        $verification_token = bin2hex(random_bytes(18));
+        $plan_id = "0137";
+        
+        if ($request->plan == 1) {
+            $plan_id = "0137";
+        } else {
+            $plan_id = "MX370";
+        }
     }
     
     public function processPaypalPayment(Request $request) {
