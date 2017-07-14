@@ -87,20 +87,23 @@
 
                     <div id="payment-detail-div" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
-                            <h2 class="form-login-heading" style="margin-left: 20px; margin-right: 20px;">
+<!--                            <h2 class="form-login-heading push-20-t" style="margin-left: 20px; margin-right: 20px;">
                                 <p style="color:#797979; font-weight: 900;">Your account details:</p>
-                                <!--<span style="color:#797979; font-variant-caps: all-small-caps;">Sign up below:</span>-->
-                            </h2>
+                            </h2>-->
+                            
+                            <div class='block'>
+                                <div class='block-header'>
+                                    <h3 class="block-title">Your account details:</h3>
+                                </div>
+                            </div>
+                            
                             <div class="form-group" style="margin-bottom: 10px; margin-left: 20px; margin-right: 20px;">
                                 <form id="payment-form" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
                                     <label>Email:</label>
                                     <input id="signup-email" name="email" type="text" class="form-control" autofocus>
-                                    <!--<br/>-->
-
                                     <label>
                                         <span>Card Number</span></label>
                                     <input class="form-control" type="text" size="20" data-stripe="number">
-                                    <!--<br/>-->
                                     <div class="form-row">
                                         <label>
                                             <span>Expiration (MM/YY)</span></label><br/>
@@ -108,24 +111,15 @@
                                         <span> / </span>
                                         <input style="width: 40%; display:inline;" class="form-control"  type="text" size="2" data-stripe="exp_year">
                                     </div>
-                                    <!--<br/>-->
-
                                     <label>
                                         <span>CVC</span></label>
                                     <input class="form-control" style="width: 30%;" type="text" size="4" data-stripe="cvc">
-
-                                    <!--<br/>-->
-
                                     <label>Name:</label>
                                     <input id="signup-name" name="name" type="text" class="form-control">
-                                    <!--<br/>-->
-
                                     <label>Password:</label>
                                     <input id="signup-pw" name="pw" type="password" class="form-control">
-                                    <!--<br/>-->
                                     <label>Confirm Password:</label>
                                     <input id="signup-pw2" name="" type="password" class="form-control">
-                                    <!--<br/>-->
                                     <input type="submit" class="btn btn-success submit push-10-t" value="Submit Payment">
                                 </form>
                             </div>
