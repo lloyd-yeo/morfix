@@ -122,9 +122,9 @@
                                             @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
                                             <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
                                             @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
-                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h" data-toggle="popover" data-original-title="DM Probation" data-content="The suspension on sending DMs has been lifted on this account. However to simulate human behaviour we have imposed probation to reduce the chances of timing out."></i> Probation</td>
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h" type="button" data-toggle="popover" data-original-title="DM Probation" data-content="The suspension on sending DMs has been lifted on this account. However to simulate human behaviour we have imposed probation to reduce the chances of timing out."></i> Probation</td>
                                             @elseif ($ig_profile->temporary_ban != NULL)
-                                            <td class='text-danger'><i class="fa fa-fw fa-times-circle" data-toggle="popover" data-original-title="DM Timeout" data-content="Instagram has placed a temporary suspension for sending out DMs using this account. This is routine & there's nothing to worry about, Morfix will resume sending out DMs the earliest time possible."></i> Timeout</td>
+                                            <td class='text-danger'><i class="fa fa-fw fa-times-circle" type="button" data-toggle="popover" data-original-title="DM Timeout" data-content="Instagram has placed a temporary suspension for sending out DMs using this account. This is routine & there's nothing to worry about, Morfix will resume sending out DMs the earliest time possible."></i> Timeout</td>
                                             @endif
                                         @endif
                                     @else
