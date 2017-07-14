@@ -91,7 +91,7 @@
                             @if ($ig_profile->incorrect_pw == 1)
                             <a class="text-danger incorrect-pw-btn" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Incorrect Password" data-content="The password on your account currently is different from the one you supplied us. Click to resolve.">
                                 <i class="fa fa-2x fa-fw fa-asterisk"></i>
-                                <strong> Mouse over the cross to find out more.</strongp>
+                                <strong> Mouse over the cross to find out more.</strong>
                             </a>
                             @else
                             @endif
@@ -122,7 +122,7 @@
                                             @if ($ig_profile->dm_probation === 0 && $ig_profile->temporary_ban === NULL)
                                             <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
                                             @elseif ($ig_profile->temporary_ban === NULL && $ig_profile->dm_probation === 1)
-                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Probation</td>
+                                            <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h" data-toggle="popover" data-original-title="DM Probation" data-content="Instagram has placed a temporary suspension for sending out DMs using this account. This is routine & there's nothing to worry about, Morfix will resume sending out DMs the earliest time possible."></i> Probation</td>
                                             @elseif ($ig_profile->temporary_ban != NULL)
                                             <td class='text-danger'><i class="fa fa-fw fa-times-circle"></i> Timeout</td>
                                             @endif
