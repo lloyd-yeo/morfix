@@ -93,7 +93,7 @@
                             
                             <div class='block'>
                                 <div class='block-header'>
-                                    <h3 class="block-title">Your account details:</h3>
+                                    <h3 class="block-title" style='font-size: 24px;'>Your account details:</h3>
                                 </div>
                             </div>
                             
