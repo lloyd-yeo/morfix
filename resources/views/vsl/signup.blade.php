@@ -133,7 +133,33 @@
             .sepia {-webkit-filter: sepia(100%); filter: sepia(100%);}
             .huerotate {-webkit-filter: hue-rotate(180deg); filter: hue-rotate(180deg);}
             .rss.opacity {-webkit-filter: opacity(50%); filter: opacity(50%);}
+            
+            /**
+            * The CSS shown here will not be introduced in the Quickstart guide, but shows
+            * how you can use CSS to style your Element's container.
+            */
+            .StripeElement {
+                background-color: white;
+                padding: 8px 12px;
+                border-radius: 4px;
+                border: 1px solid transparent;
+                box-shadow: 0 1px 3px 0 #e6ebf1;
+                -webkit-transition: box-shadow 150ms ease;
+                transition: box-shadow 150ms ease;
+            }
 
+            .StripeElement--focus {
+                box-shadow: 0 1px 3px 0 #cfd7df;
+            }
+
+            .StripeElement--invalid {
+                border-color: #fa755a;
+            }
+
+            .StripeElement--webkit-autofill {
+                background-color: #fefde5 !important;
+            }
+            
         </style>
         <!-- Scripts -->
         <script>

@@ -106,15 +106,19 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         <div class="form-group">
                                             <div class="col-sm-10">
-                                                <div class="form-material form-material-primary floating">
-                                                    <input class="form-control" 
-                                                           type="text" size="20" data-stripe="number">
-                                                    <label for="material-color-primary2">Card Number</label>
+                                                <label for="card-element">
+                                                    Credit or Debit Card
+                                                </label>
+                                                <div id="card-element">
+                                                    <!-- a Stripe Element will be inserted here. -->
                                                 </div>
+
+                                                <!-- Used to display form errors -->
+                                                <div id="card-errors"></div>
                                             </div>
+                                            <div style="margin-top: 5px; margin-bottom: 15px;"><img src="../assets/img/logo/powered-by-stripe.png" /></div>
                                         </div>
                                         
                                     </form>
