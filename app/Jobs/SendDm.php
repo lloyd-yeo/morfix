@@ -147,6 +147,7 @@ class SendDm implements ShouldQueue {
                 if (stripos(trim($request_ex->getMessage()), "Feedback required") !== false) {
                     $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
+                    $ig_profile->feedback_required = 1;
                     $ig_profile->save();
                     $dm_job->error_msg = $request_ex->getMessage();
                     $dm_job->save();
