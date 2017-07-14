@@ -376,6 +376,7 @@
     <!-- Page Plugins -->
     <script src="../assets/js/plugins/slick/slick.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v2/"></script>
     <!-- Page JS Code -->
     <script>
         var $plan = 1;
