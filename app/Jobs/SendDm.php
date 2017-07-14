@@ -144,14 +144,14 @@ class SendDm implements ShouldQueue {
                 }
             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                 echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
-                if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                if (stripos(trim($request_ex->getMessage()), "Feedback required") !== false) {
                     $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->save();
                     $dm_job->error_msg = $request_ex->getMessage();
                     $dm_job->save();
                 }
-                if (stripos(trim($request_ex->getMessage()), "checkpoint_required") !== false) {
+                if (stripos(trim($request_ex->getMessage()), "Checkpoint") !== false) {
                     $ig_profile->checkpoint_required = 1;
                     $ig_profile->save();
                 }
