@@ -98,7 +98,7 @@
                                 <div class="block-content block-content-full">
                                     <form id="payment-form" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
                                         <div class="form-group">
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <div class="form-material form-material-primary floating">
                                                     <input class="form-control" type="text" 
                                                            id="signup-email"  name="email">
@@ -107,7 +107,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-12">
                                                 <label for="card-element">
                                                     Credit or Debit Card
                                                 </label>
