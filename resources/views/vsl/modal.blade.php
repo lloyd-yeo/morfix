@@ -146,10 +146,15 @@
                                                 <!-- Used to display form errors -->
                                                 <div id="card-errors"></div>
                                             </div>
-                                            <div style="margin-top: 5px; margin-bottom: 15px;"><img src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
                                         </div>
-                                        
-                                        
+                                        <div class="form-group">
+                                            <div class='col-sm-12'>
+                                                <div style="margin-top: 5px; margin-bottom: 15px;"><img src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
+                                            </div>
+                                        </div>
+                                        <div class='form-group'>
+                                            <button class="btn btn-sm btn-primary" type="submit">Make Payment</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
