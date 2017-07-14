@@ -30,6 +30,8 @@ class PaymentController extends Controller {
     }
     
     public function processCreditCardPayment(Request $request) {
+        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        $stripeToken = $request->input('stripeToken');
         
     }
     

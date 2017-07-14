@@ -128,7 +128,7 @@ class SendDm implements ShouldQueue {
                 if ($ig_profile->auto_dm_delay == 1) {
                     \App\DmJob::where('insta_username', $insta_username)
                             ->where('fulfilled', 0)
-                            ->where('recipent_insta_id', $dm_job->recipient_insta_id)
+                            ->where('recipient_insta_id', $dm_job->recipient_insta_id)
                             ->update(['time_to_send' => \Carbon\Carbon::tomorrow()]);
                 }
 
