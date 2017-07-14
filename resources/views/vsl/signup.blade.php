@@ -375,14 +375,16 @@
 
     <!-- Page Plugins -->
     <script src="../assets/js/plugins/slick/slick.min.js"></script>
-
+    <script src="https://js.stripe.com/v3/"></script>
     <!-- Page JS Code -->
     <script>
         var $plan = 1;
+        
         jQuery(function () {
 
             App.initHelpers('slick');
-
+            Stripe.setPublishableKey('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
+            
             var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
                     // The element that is fluid width
                     //                $fluidEl = $("body");
