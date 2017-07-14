@@ -87,10 +87,6 @@
 
                     <div id="payment-detail-div" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
-<!--                            <h2 class="form-login-heading push-20-t" style="margin-left: 20px; margin-right: 20px;">
-                                <p style="color:#797979; font-weight: 900;">Your account details:</p>
-                            </h2>-->
-                            
                             <div class='block'>
                                 <div class='block-header'>
                                     <h3 class="block-title" style='font-size: 24px;'>Your account details:</h3>
@@ -167,7 +163,7 @@
                                         <div id="stripe-card-btn" class='form-group'>
                                             <div class='col-sm-12'>
                                                 <div class="form-material form-material-primary">
-                                                    <button class="btn btn-sm btn-primary" type="submit">Make Payment</button>
+                                                    <button class="pull-right btn btn-sm btn-primary" type="submit">Make Payment</button>
                                                 </div>
                                             </div>
                                         </div>
