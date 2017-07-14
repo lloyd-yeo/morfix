@@ -136,8 +136,18 @@
                                         
                                         <div class="form-group">
                                             <div class="col-sm-12">
+                                                <select id="payment-method-dropdown" name="payment_method_dropdown" class="form-control">
+                                                    <option value="1">Pay by Debit/Credit Card</option>
+                                                    <option value="2">Pay by Paypal</option>
+                                                </select>
+                                                <label for="payment-method-dropdown">Select Payment Method</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div id="stripe-card-group" class="form-group">
+                                            <div class="col-sm-12">
                                                 <label for="card-element">
-                                                    Credit or Debit Card
+                                                    Credit or Debit Card Number
                                                 </label>
                                                 <div id="card-element">
                                                     <!-- a Stripe Element will be inserted here. -->
@@ -147,18 +157,29 @@
                                                 <div id="card-errors"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div id="stripe-logo" class="form-group">
                                             <div class='col-sm-12'>
                                                 <div class='pull-right' style="margin-top: 5px; margin-bottom: 15px;"><img style='height:30px;' src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
                                             </div>
                                         </div>
-                                        <div class='form-group'>
+                                        <div id="stripe-card-btn" class='form-group'>
                                             <div class='col-sm-12'>
                                                 <div class="form-material form-material-primary">
                                                     <button class="btn btn-sm btn-primary" type="submit">Make Payment</button>
                                                 </div>
                                             </div>
                                         </div>
+                                        
+                                        <div id="paypal-group" class="form-group" style="display:none;">
+                                            <div class="col-sm-12">
+                                                <!-- PayPal Logo -->
+                                                <a href="{{ url('subscribe/paypal/premium') }}">
+                                                    <img src="https://www.paypalobjects.com/webstatic/en_AU/i/buttons/btn_paywith_primary_s.png" alt="Pay with PayPal" />
+                                                </a>
+                                                <!-- PayPal Logo -->
+                                            </div>
+                                        </div>
+                                        
                                     </form>
                                 </div>
                             </div>
