@@ -155,9 +155,9 @@
                                                 <div id="card-errors"></div>
                                             </div>
                                         </div>
-                                        <div id="stripe-logo" class="form-group">
+                                        <div id="stripe-logo" class="form-group" style="margin-bottom:0px;">
                                             <div class='col-sm-12'>
-                                                <div class='pull-right' style="margin-top: 5px; margin-bottom: 15px;"><img style='height:30px;' src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
+                                                <div class='pull-right' style="margin-top: 5px;"><img style='height:30px;' src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
                                             </div>
                                         </div>
                                         <div id="stripe-card-btn" class='form-group'>
