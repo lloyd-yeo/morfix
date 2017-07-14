@@ -146,8 +146,9 @@
                                                 <!-- Used to display form errors -->
                                                 <div id="card-errors"></div>
                                             </div>
-                                            <div style="margin-top: 5px; margin-bottom: 15px;"><img src="../assets/img/logo/powered-by-stripe.png" /></div>
+                                            <div style="margin-top: 5px; margin-bottom: 15px;"><img src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
                                         </div>
+                                        
                                         
                                     </form>
                                 </div>
