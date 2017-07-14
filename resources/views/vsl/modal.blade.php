@@ -153,7 +153,9 @@
                                             </div>
                                         </div>
                                         <div class='form-group'>
-                                            <button class="btn btn-sm btn-primary" type="submit">Make Payment</button>
+                                            <div class="form-material form-material-primary ">
+                                                <button class="btn btn-sm btn-primary" type="submit">Make Payment</button>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
