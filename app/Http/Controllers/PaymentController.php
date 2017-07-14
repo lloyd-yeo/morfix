@@ -29,6 +29,14 @@ class PaymentController extends Controller {
         ]);
     }
     
+    public function processCreditCardPayment(Request $request) {
+        
+    }
+    
+    public function processPaypalPayment(Request $request) {
+        
+    }
+    
     public function upgrade(Request $request, $plan) {
         $response = array();
 

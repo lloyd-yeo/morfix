@@ -44,9 +44,6 @@
                                                 <p>First Comment Function</p>
                                                 <p>Private Facebook Group</p>
                                             </div><!--ult_price_features-->
-                                            <!--<div class="ult_price_link" style="padding-top: 0px;">-->
-                                            <!--<a href="#" class="ult_price_action_button" style="" id="premium-plan-btn" >Subscribe now</a>-->
-                                            <!--</div>--><!--ult_price_link-->
                                         </div><!--ult_bottom-part--><div class="ult_clr"></div>
                                     </div><!--pricing_table-->
                                 </div><!--pricing_table_wrap-->
@@ -75,9 +72,6 @@
                                                 <p>2 months of <b>FREE</b> premium functions</p>
                                                 <p>EXCLUSIVE access to our 6 figures Instagram System training videos!</p>
                                             </div><!--ult_price_features-->
-                                            <!--<div class="ult_price_link" style="padding-top: 10px;">-->
-                                            <!--<a href="#" class="ult_price_action_button" style="" id="premium-plan-btn" >Subscribe now</a>-->
-                                            <!--</div>-->
                                             <!--ult_price_link--></div><!--ult_bottom-part--><div class="ult_clr"></div>
                                     </div><!--pricing_table-->
                                 </div><!--pricing_table_wrap-->
@@ -92,7 +86,7 @@
                                     <h3 class="block-title" style='font-size: 24px;'>Your account details:</h3>
                                 </div>
                                 <div class="block-content block-content-full">
-                                    <form id="payment-form" class="form-horizontal push-10-t" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
+                                    <form id="payment-form" class="form-horizontal push-10-t" onsubmit="event.preventDefault();" method="post" action="{{ url('vsl/signup/cc') }}">
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <div class="form-material form-material-primary ">
@@ -171,7 +165,7 @@
                                         <div id="paypal-group" class="form-group" style="display:none;">
                                             <div class="col-sm-12">
                                                 <!-- PayPal Logo -->
-                                                <a href="{{ url('subscribe/paypal/premium') }}">
+                                                <a href="{{ url('vsl/signup/paypal') }}">
                                                     <img src="https://www.paypalobjects.com/webstatic/en_AU/i/buttons/btn_paywith_primary_s.png" alt="Pay with PayPal" />
                                                 </a>
                                                 <!-- PayPal Logo -->

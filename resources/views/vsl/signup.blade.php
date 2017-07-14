@@ -445,7 +445,7 @@
             $("#payment-method-dropdown").on("change", function (e) {
                 $("select.payment-method-dropdown option:selected").each(function () {
                     var $selectedOptPayment = $(this).val();
-                    $plan = $selectedOptPayment;
+                    $paymentMethod = $selectedOptPayment;
                     console.log($selectedOptPayment);
                     if ($selectedOptPayment === "1") {
                         $("#paypal-group").fadeOut("slow", function () {
@@ -493,6 +493,52 @@
 
             // Add an instance of the card Element into the `card-element` <div>
             card.mount('#card-element');
+            
+            // Handle form submission
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function (event) {
+
+                event.preventDefault();
+
+                if (!validateEmail($("#signup-email").val())) {
+                    event.preventDefault();
+                } else {
+                    var pw1 = $("#signup-pw").val();
+                    var pw2 = $("#signup-pw2").val();
+                    var name = $("#signup-name").val();
+                    if (!pw1 || !pw2) {
+                        event.preventDefault();
+                        alert("Empty passwords are not allowed.");
+                    } else if (!name) {
+                        event.preventDefault();
+                        alert("Please enter your name.");
+                    } else if (pw1 !== pw2) {
+                        event.preventDefault();
+                        alert("Your passwords do not match.");
+                    } else {
+                        // Disable the submit button to prevent repeated clicks:
+                        $form.find('.submit').prop('disabled', true);
+                    }
+                }
+                
+                if ($paymentMethod === 1) { //pay via Stripe
+                    stripe.createToken(card).then(function (result) {
+                        if (result.error) {
+                            // Inform the user if there was an error
+                            var errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = result.error.message;
+                        } else {
+                            // Send the token to your server
+                            stripeTokenHandler(result.token);
+                        }
+                    });
+                } else { //pay via Credit Card
+                    
+                }
+
+            });
+            
+            
             
         });
     </script>
