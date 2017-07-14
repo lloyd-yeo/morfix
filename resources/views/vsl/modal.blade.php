@@ -149,12 +149,12 @@
                                         </div>
                                         <div class="form-group">
                                             <div class='col-sm-12'>
-                                                <div style="margin-top: 5px; margin-bottom: 15px;"><img src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
+                                                <div class='pull-right' style="margin-top: 5px; margin-bottom: 15px;"><img style='height:30px;' src="../assets/img/logo/powered-by-stripe-dark.png" /></div>
                                             </div>
                                         </div>
                                         <div class='form-group'>
                                             <div class='col-sm-12'>
-                                                <div class="form-material form-material-primary ">
+                                                <div class="form-material form-material-primary">
                                                     <button class="btn btn-sm btn-primary" type="submit">Make Payment</button>
                                                 </div>
                                             </div>
