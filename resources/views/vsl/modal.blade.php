@@ -95,6 +95,30 @@
                                 <div class='block-header'>
                                     <h3 class="block-title" style='font-size: 24px;'>Your account details:</h3>
                                 </div>
+                                <div class="block-content block-content-narrow">
+                                    <form id="payment-form" onsubmit="event.preventDefault();" method="post" action="register-vsl.php">
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <div class="form-material form-material-primary floating">
+                                                    <input class="form-control" type="text" 
+                                                           id="signup-email"  name="email">
+                                                    <label for="material-color-primary2">Email:</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="col-sm-10">
+                                                <div class="form-material form-material-primary floating">
+                                                    <input class="form-control" 
+                                                           type="text" size="20" data-stripe="number">
+                                                    <label for="material-color-primary2">Card Number</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
                             </div>
                             
                             <div class="form-group" style="margin-bottom: 10px; margin-left: 20px; margin-right: 20px;">
