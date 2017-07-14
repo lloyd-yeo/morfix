@@ -380,6 +380,7 @@
     <!-- Page JS Code -->
     <script>
         var $plan = 1;
+        var $paymentMethod = 1;
         
         jQuery(function () {
 
@@ -437,6 +438,27 @@
                         $("#premium-pkg").fadeOut("slow", function () {
                             $("#pro-pkg").fadeIn("slow");
                         });
+                    }
+                });
+            });
+            
+            $("#payment-method-dropdown").on("change", function (e) {
+                $("select option:selected").each(function () {
+                    var $selectedOpt = $(this).val();
+                    $plan = $selectedOpt;
+                    console.log($selectedOpt);
+                    if ($selectedOpt === "1") {
+                        $("#paypal-group").fadeOut("slow", function () {
+                            $("#stripe-card-group").fadeIn("slow");
+                            $("#stripe-logo").fadeIn("slow");
+                            $("#stripe-card-btn").fadeIn("slow");
+                        });
+                    } else if ($selectedOpt === "2") {
+                        $("#stripe-card-group").fadeOut("slow", function () {
+                            $("#paypal-group").fadeIn("slow");
+                        });
+                        $("#stripe-logo").fadeOut("slow");
+                        $("#stripe-card-btn").fadeOut("slow");
                     }
                 });
             });
