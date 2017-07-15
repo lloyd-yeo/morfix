@@ -496,11 +496,12 @@
             card.mount('#card-element');
             
             // Handle form submission
-            var $form = $('#payment-form');
+            var $form = document.getElementById('payment-form');
+            
             $form.addEventListener('submit', function (event) {
 
                 event.preventDefault();
-
+                $form = $($form);
                 if (!validateEmail($("#signup-email").val())) {
                     event.preventDefault();
                 } else {
