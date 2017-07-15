@@ -465,7 +465,8 @@
             });
             
             // Create a Stripe client
-            var stripe = Stripe('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
+//            var stripe = Stripe('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
+            var stripe = Stripe('pk_test_9AIw34u0sCHRPJIjOyFh19LN');
 
             // Create an instance of Elements
             var elements = stripe.elements();
