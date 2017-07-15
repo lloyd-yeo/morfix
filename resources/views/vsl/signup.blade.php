@@ -496,7 +496,7 @@
             card.mount('#card-element');
             
             // Handle form submission
-            var $form = document.getElementById('payment-form');
+            var $form = jQuery('#payment-form');
             $form.addEventListener('submit', function (event) {
 
                 event.preventDefault();
