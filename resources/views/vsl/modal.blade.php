@@ -109,7 +109,7 @@
                                             <div class="col-sm-12">
                                                 <div class="form-material form-material-primary ">
                                                     <input class="form-control" type="password" 
-                                                           id="signup-pw"  name="email">
+                                                           id="signup-pw"  name="pw">
                                                     <label for="signup-pw">Password:</label>
                                                 </div>
                                             </div>
@@ -118,7 +118,7 @@
                                             <div class="col-sm-12">
                                                 <div class="form-material form-material-primary ">
                                                     <input class="form-control" type="password" 
-                                                           id="signup-pw2"  name="email">
+                                                           id="signup-pw2"  name="pw2">
                                                     <label for="signup-pw2">Confirm Password:</label>
                                                 </div>
                                             </div>
