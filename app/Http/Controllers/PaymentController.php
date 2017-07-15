@@ -56,8 +56,7 @@ class PaymentController extends Controller {
     }
     
     public function processCreditCardPayment(Request $request) {
-//        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
+        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $stripeToken = $request->input('stripeToken');
         
         $email = $request->input('email');
