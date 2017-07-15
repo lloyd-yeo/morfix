@@ -532,13 +532,7 @@
                                 errorElement.textContent = result.error.message;
                             } else {
                                 // Send the token to your server
-//                                alert(result.id);
-//                                var token = result.id;
-                                // Insert the token ID into the form so it gets submitted to the server:
-                                $form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
-                                $form.append($('<input type="hidden" name="plan">').val($plan));
-                                // Submit the form:
-                                $form.submit();
+                                stripeTokenHandler(result);
                             }
                         });
                     } else { //pay via Paypal
@@ -551,6 +545,23 @@
                     $form.submit();
                 });
 
+                function stripeTokenHandler(token) {
+                    // Insert the token ID into the form so it gets submitted to the server
+                    var form = document.getElementById('payment-form');
+                    var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'stripeToken');
+                    hiddenInput.setAttribute('value', token.id);
+                    form.appendChild(hiddenInput);
+                    var hiddenInput2 = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'plan');
+                    hiddenInput.setAttribute('value', $plan);
+                    form.appendChild(hiddenInput);
+                    form.appendChild(hiddenInput2);
+                    // Submit the form
+                    form.submit();
+                }
 
 
                 function validateEmail(mail) {
