@@ -27,7 +27,6 @@ use App\StripeDetail;
 use App\PaymentLog;
 use App\UserAffiliates;
 use Response;
-use Request;
 use AWeberAPI;
 use \DateTimeZone;
 
