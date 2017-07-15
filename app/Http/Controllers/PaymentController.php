@@ -9,17 +9,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Response;
+use Request;
 use App\User;
-use App\InstagramProfile;
-use App\Niche;
-use App\InstagramProfileComment;
-use App\InstagramProfileTargetHashtag;
-use App\InstagramProfileTargetUsername;
-use App\DefaultImageGallery;
-use App\UserImages;
-use App\InstagramProfilePhotoPostSchedule;
 use App\StripeDetail;
 use App\PaymentLog;
+use App\UserAffiliates;
+use \Stripe\Customer;
+use AWeberAPI;
 
 class PaymentController extends Controller {
 
@@ -38,16 +34,84 @@ class PaymentController extends Controller {
         $name = $request->input('name');
         $referrer = $request->cookie('referrer');
         
-        $num_acct = 1;
-        $active = 1;
         $user_tier = 1;
         $verification_token = bin2hex(random_bytes(18));
         $plan_id = "0137";
         
         if ($request->plan == 1) {
             $plan_id = "0137";
+            $user_tier = 2;
         } else {
             $plan_id = "MX370";
+            $user_tier = 3;
+        }
+
+        try {
+            
+            $customer = \Stripe\Customer::create(array(
+                "source" => $stripeToken,
+                "plan" => $plan_id,
+                "email" => $email)
+            );
+            
+            $customer_id = $customer->id;
+            
+            $user = new User;
+            $user->email = $email;
+            $user->password = $password;
+            $user->num_acct = 1;
+            $user->active = 1;
+            $user->verification_token = $verification_token;
+            $user->user_tier = $user_tier;
+            $user->name = $name;
+            $user->stripe_id = $customer_id;
+            $user->save();
+            
+            $stripe_detail = new StripeDetail;
+            $stripe_detail->email = $email;
+            $stripe_detail->stripe_id = $customer_id;
+            $stripe_detail->save();
+            
+            $user_affiliate = new UserAffiliates;
+            $user_affiliate->referrer = $referrer;
+            $user_affiliate->referred = $user->user_id;
+            $user_affiliate->save();
+            
+            $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
+            $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
+
+            $aweber = new AWeberAPI($consumerKey, $consumerSecret);
+            $account = $aweber->getAccount("AgI2J88WjcAhUkFlCn3OwzLx", "wdX1JHuuhIFm9AEiJt3SVUdM5S7Z8lAE7UKmP29P");
+            
+            foreach ($account->lists as $offset => $list) {
+
+                $list_id = $list->id;
+
+                if ($list_id != 4485376 OR $list_id != 4631962) {
+                    continue;
+                }
+
+                # create a subscriber
+                $params = array(
+                    'email' => $email,
+                    'name' => $name,
+                    'ip_address' => $request->ip(),
+                    'ad_tracking' => 'morfix_registration',
+                    'last_followup_message_number_sent' => 1,
+                    'misc_notes' => 'MorifX Registration Page'
+                );
+
+                try {
+                    $subscribers = $list->subscribers;
+                    $new_subscriber = $subscribers->create($params);
+                } catch (Exception $ex) {
+                    $error_msg = $ex->getMessage();
+                }
+            }
+            Auth::login($user);
+        } catch (\Exception $ex) {
+            $success = false;
+            $error_msg = $ex->getMessage();
         }
     }
     
