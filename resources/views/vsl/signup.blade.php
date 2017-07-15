@@ -385,7 +385,8 @@
         jQuery(function () {
 
             App.initHelpers('slick');
-            Stripe.setPublishableKey('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
+            //Stripe.setPublishableKey('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
+            Stripe.setPublishableKey('pk_test_9AIw34u0sCHRPJIjOyFh19LN');
             
             var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
                     // The element that is fluid width
