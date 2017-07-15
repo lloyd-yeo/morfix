@@ -40,7 +40,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:100,200,300,400,400italic,600,700%7COpen+Sans:100,200,300,400,400italic,600,700">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Montserrat:400,900|Raleway">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat%3A400%2C700%7CRaleway%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900%7CDroid+Serif%3A400%2C700%2C400italic%2C700italic%7CLora%3A400%2C700%2C400italic%2C700italic&amp;subset=latin&amp;ver=1479142963">
-        
+
         <!-- Page JS Plugins CSS -->
         <link rel="stylesheet" href="../assets/js/plugins/slick/slick.min.css">
         <link rel="stylesheet" href="../assets/js/plugins/slick/slick-theme.min.css">
@@ -133,7 +133,7 @@
             .sepia {-webkit-filter: sepia(100%); filter: sepia(100%);}
             .huerotate {-webkit-filter: hue-rotate(180deg); filter: hue-rotate(180deg);}
             .rss.opacity {-webkit-filter: opacity(50%); filter: opacity(50%);}
-            
+
             /**
             * The CSS shown here will not be introduced in the Quickstart guide, but shows
             * how you can use CSS to style your Element's container.
@@ -159,7 +159,7 @@
             .StripeElement--webkit-autofill {
                 background-color: #fefde5 !important;
             }
-            
+
         </style>
         <!-- Scripts -->
         <script>
@@ -199,7 +199,7 @@
             </div>
             <div class='col-lg-10 col-lg-offset-1 push-30-t'>
                 <div id='vid-container' class='center-block' style='max-width:910px;'>
-                    
+
                     @if ($redir == "mmovsl")
                     <iframe src="https://player.vimeo.com/video/198823397" 
                             width="640" height="400" frameborder="0" 
@@ -354,9 +354,9 @@
                     </button>
                 </div>
             </div>
-            
+
             @include('vsl.modal')
-            
+
         </main>
     </body>
 
@@ -379,212 +379,209 @@
     <script src="https://js.stripe.com/v2/"></script>
     <!-- Page JS Code -->
     <script>
-        var $plan = 1;
-        var $paymentMethod = 1;
-        
-        jQuery(function () {
+            var $plan = 1;
+            var $paymentMethod = 1;
 
-            App.initHelpers('slick');
-            //Stripe.setPublishableKey('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
-            Stripe.setPublishableKey('pk_test_9AIw34u0sCHRPJIjOyFh19LN');
-            
-            var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
-                    // The element that is fluid width
-                    //                $fluidEl = $("body");
-                    $fluidEl = $("#vid-container");
+            jQuery(function () {
 
-            // Figure out and save aspect ratio for each video
-            $allVideos.each(function () {
-                console.log("aspectRatio " + (this.height / this.width));
-                $(this).data('aspectRatio', this.height / this.width)
+                App.initHelpers('slick');
+                //Stripe.setPublishableKey('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
+                Stripe.setPublishableKey('pk_test_9AIw34u0sCHRPJIjOyFh19LN');
 
-                        // and remove the hard coded width/height
-                        .removeAttr('height')
-                        .removeAttr('width');
+                var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
+                        // The element that is fluid width
+                        //                $fluidEl = $("body");
+                        $fluidEl = $("#vid-container");
 
-            });
-
-            // When the window is resized
-            $(window).resize(function () {
-
-                var newWidth = $fluidEl.width();
-
-                // Resize all videos according to their own aspect ratio
+                // Figure out and save aspect ratio for each video
                 $allVideos.each(function () {
+                    console.log("aspectRatio " + (this.height / this.width));
+                    $(this).data('aspectRatio', this.height / this.width)
 
-                    var $el = $(this);
-                    $el
-                            .width(newWidth)
-                            .height(newWidth * $el.data('aspectRatio'));
+                            // and remove the hard coded width/height
+                            .removeAttr('height')
+                            .removeAttr('width');
 
                 });
 
-                // Kick off one resize to fix all videos on page load
-            }).resize();
+                // When the window is resized
+                $(window).resize(function () {
 
-            $(".signup-btn").on("click", function(){ 
-                jQuery('#modal-payment').modal('show');
-            });
-            
-            $("#plan-dropdown").on("change", function (e) {
-                $("select.plan-dropdown option:selected").each(function () {
-                    var $selectedOpt = $(this).val();
-                    $plan = $selectedOpt;
-                    console.log($selectedOpt);
-                    if ($selectedOpt === "1") {
-                        $("#pro-pkg").fadeOut("slow", function () {
-                            $("#premium-pkg").fadeIn("slow");
-                        });
-                    } else if ($selectedOpt === "2") {
-                        $("#premium-pkg").fadeOut("slow", function () {
-                            $("#pro-pkg").fadeIn("slow");
-                        });
-                    }
+                    var newWidth = $fluidEl.width();
+
+                    // Resize all videos according to their own aspect ratio
+                    $allVideos.each(function () {
+
+                        var $el = $(this);
+                        $el
+                                .width(newWidth)
+                                .height(newWidth * $el.data('aspectRatio'));
+
+                    });
+
+                    // Kick off one resize to fix all videos on page load
+                }).resize();
+
+                $(".signup-btn").on("click", function () {
+                    jQuery('#modal-payment').modal('show');
                 });
-            });
-            
-            $("#payment-method-dropdown").on("change", function (e) {
-                $("select.payment-method-dropdown option:selected").each(function () {
-                    var $selectedOptPayment = $(this).val();
-                    $paymentMethod = $selectedOptPayment;
-                    console.log($selectedOptPayment);
-                    if ($selectedOptPayment === "1") {
-                        $("#paypal-group").fadeOut("slow", function () {
-                            $("#stripe-card-group").fadeIn("slow");
-                            $("#stripe-logo").fadeIn("slow");
-                            $("#stripe-card-btn").fadeIn("slow");
-                        });
-                    } else if ($selectedOptPayment === "2") {
-                        $("#stripe-card-group").fadeOut("slow", function () {
-                            $("#paypal-group").fadeIn("slow");
-                        });
-                        $("#stripe-logo").fadeOut("slow");
-                        $("#stripe-card-btn").fadeOut("slow");
-                    }
-                });
-            });
-            
-            // Create a Stripe client
-//            var stripe = Stripe('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
-            var stripe = Stripe('pk_test_9AIw34u0sCHRPJIjOyFh19LN');
 
-            // Create an instance of Elements
-            var elements = stripe.elements();
-
-            // Custom styling can be passed to options when creating an Element.
-            // (Note that this demo uses a wider set of styles than the guide below.)
-            var style = {
-                base: {
-                    color: '#32325d',
-                    lineHeight: '24px',
-                    fontFamily: 'Helvetica Neue',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                        color: '#aab7c4'
-                    }
-                },
-                invalid: {
-                    color: '#fa755a',
-                    iconColor: '#fa755a'
-                }
-            };
-
-            // Create an instance of the card Element
-            var card = elements.create('card', {style: style});
-
-            // Add an instance of the card Element into the `card-element` <div>
-            card.mount('#card-element');
-            
-            // Handle form submission
-            var $form = document.getElementById('payment-form');
-            
-            $form.addEventListener('submit', function (event) {
-
-                event.preventDefault();
-                $form = $($form);
-                if (!validateEmail($("#signup-email").val())) {
-                    event.preventDefault();
-                } else {
-                    var pw1 = $("#signup-pw").val();
-                    var pw2 = $("#signup-pw2").val();
-                    var name = $("#signup-name").val();
-                    if (!pw1 || !pw2) {
-                        event.preventDefault();
-                        alert("Empty passwords are not allowed.");
-                    } else if (!name) {
-                        event.preventDefault();
-                        alert("Please enter your name.");
-                    } else if (pw1 !== pw2) {
-                        event.preventDefault();
-                        alert("Your passwords do not match.");
-                    } else {
-                        // Disable the submit button to prevent repeated clicks:
-                        $form.find('.submit').prop('disabled', true);
-                    }
-                }
-                
-                if ($paymentMethod === 1) { //pay via Stripe
-                    stripe.createToken(card).then(function (result) {
-                        if (result.error) {
-                            // Inform the user if there was an error
-                            var errorElement = document.getElementById('card-errors');
-                            errorElement.textContent = result.error.message;
-                        } else {
-                            // Send the token to your server
-                            alert(result.id);
-                            var token = result.id;
-                            // Insert the token ID into the form so it gets submitted to the server:
-                            $form.append($('<input type="hidden" name="stripeToken">').val(token));
-                            $form.append($('<input type="hidden" name="plan">').val($plan));
-                            // Submit the form:
-                            $form.submit();
-                            
-//                            stripeResponseHandler(result);
-//                            stripeTokenHandler(result);
+                $("#plan-dropdown").on("change", function (e) {
+                    $("select.plan-dropdown option:selected").each(function () {
+                        var $selectedOpt = $(this).val();
+                        $plan = $selectedOpt;
+                        console.log($selectedOpt);
+                        if ($selectedOpt === "1") {
+                            $("#pro-pkg").fadeOut("slow", function () {
+                                $("#premium-pkg").fadeIn("slow");
+                            });
+                        } else if ($selectedOpt === "2") {
+                            $("#premium-pkg").fadeOut("slow", function () {
+                                $("#pro-pkg").fadeIn("slow");
+                            });
                         }
                     });
-                } else { //pay via Paypal
-                }
-            });
-            
-            $("#paypal-btn").on("click", function(){ 
+                });
+
+                $("#payment-method-dropdown").on("change", function (e) {
+                    $("select.payment-method-dropdown option:selected").each(function () {
+                        var $selectedOptPayment = $(this).val();
+                        $paymentMethod = $selectedOptPayment;
+                        console.log($selectedOptPayment);
+                        if ($selectedOptPayment === "1") {
+                            $("#paypal-group").fadeOut("slow", function () {
+                                $("#stripe-card-group").fadeIn("slow");
+                                $("#stripe-logo").fadeIn("slow");
+                                $("#stripe-card-btn").fadeIn("slow");
+                            });
+                        } else if ($selectedOptPayment === "2") {
+                            $("#stripe-card-group").fadeOut("slow", function () {
+                                $("#paypal-group").fadeIn("slow");
+                            });
+                            $("#stripe-logo").fadeOut("slow");
+                            $("#stripe-card-btn").fadeOut("slow");
+                        }
+                    });
+                });
+
+                // Create a Stripe client
+//            var stripe = Stripe('pk_live_WrvnbbOwMxU7FwZzaoTdaUpa');
+                var stripe = Stripe('pk_test_9AIw34u0sCHRPJIjOyFh19LN');
+
+                // Create an instance of Elements
+                var elements = stripe.elements();
+
+                // Custom styling can be passed to options when creating an Element.
+                // (Note that this demo uses a wider set of styles than the guide below.)
+                var style = {
+                    base: {
+                        color: '#32325d',
+                        lineHeight: '24px',
+                        fontFamily: 'Helvetica Neue',
+                        fontSmoothing: 'antialiased',
+                        fontSize: '16px',
+                        '::placeholder': {
+                            color: '#aab7c4'
+                        }
+                    },
+                    invalid: {
+                        color: '#fa755a',
+                        iconColor: '#fa755a'
+                    }
+                };
+
+                // Create an instance of the card Element
+                var card = elements.create('card', {style: style});
+
+                // Add an instance of the card Element into the `card-element` <div>
+                card.mount('#card-element');
+
+                // Handle form submission
                 var $form = document.getElementById('payment-form');
-                $form.attr("action", $(this).attr("href"));
-                $form.submit();
+
+                $form.addEventListener('submit', function (event) {
+
+                    event.preventDefault();
+                    $form = $($form);
+                    if (!validateEmail($("#signup-email").val())) {
+                        event.preventDefault();
+                    } else {
+                        var pw1 = $("#signup-pw").val();
+                        var pw2 = $("#signup-pw2").val();
+                        var name = $("#signup-name").val();
+                        if (!pw1 || !pw2) {
+                            event.preventDefault();
+                            alert("Empty passwords are not allowed.");
+                        } else if (!name) {
+                            event.preventDefault();
+                            alert("Please enter your name.");
+                        } else if (pw1 !== pw2) {
+                            event.preventDefault();
+                            alert("Your passwords do not match.");
+                        } else {
+                            // Disable the submit button to prevent repeated clicks:
+                            $form.find('.submit').prop('disabled', true);
+                        }
+                    }
+
+                    if ($paymentMethod === 1) { //pay via Stripe
+                        stripe.createToken(card).then(function (result) {
+                            if (result.error) {
+                                // Inform the user if there was an error
+                                var errorElement = document.getElementById('card-errors');
+                                errorElement.textContent = result.error.message;
+                            } else {
+                                // Send the token to your server
+//                                alert(result.id);
+//                                var token = result.id;
+                                // Insert the token ID into the form so it gets submitted to the server:
+                                $form.append($('<input type="hidden" name="stripeToken">').val(token));
+                                $form.append($('<input type="hidden" name="plan">').val($plan));
+                                // Submit the form:
+                                $form.submit();
+
+//                            stripeResponseHandler(result);
+                            stripeTokenHandler(result);
+                            }
+                        });
+                    } else { //pay via Paypal
+                    }
+                });
+
+                $("#paypal-btn").on("click", function () {
+                    var $form = document.getElementById('payment-form');
+                    $form.attr("action", $(this).attr("href"));
+                    $form.submit();
+                });
+
+                function stripeTokenHandler(token) {
+                    // Insert the token ID into the form so it gets submitted to the server
+                    var form = document.getElementById('payment-form');
+                    var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'stripeToken');
+                    hiddenInput.setAttribute('value', token.id);
+                    form.appendChild(hiddenInput);
+                    var hiddenInput2 = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'plan');
+                    hiddenInput.setAttribute('value', $plan);
+                    form.appendChild(hiddenInput);
+                    form.appendChild(hiddenInput2);
+                    // Submit the form
+                    form.submit();
+                }
+
+
+                function validateEmail(mail) {
+                    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+                    {
+                        return true;
+                    }
+                    alert("You have entered an invalid email address!");
+                    return false;
+                }
             });
-            
-            function stripeResponseHandler(response) {
-                // Grab the form:
-                var $form = $('#payment-form');
-
-                if (response.error) { // Problem!
-
-                    // Show the errors on the form:
-                    alert(response.error.message);
-                    //$form.find('.payment-errors').text(response.error.message);
-                    $form.find('.submit').prop('disabled', false); // Re-enable submission
-
-                } else { // Token was created!
-                    // Get the token ID:
-                    var token = response.id;
-                    // Insert the token ID into the form so it gets submitted to the server:
-                    $form.append($('<input type="hidden" name="stripeToken">').val(token));
-                    $form.append($('<input type="hidden" name="plan">').val($plan));
-                    // Submit the form:
-                    $form.get(0).submit();
-                }
-            };
-            
-            function validateEmail(mail) {
-                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
-                {
-                    return true;
-                }
-                alert("You have entered an invalid email address!");
-                return false;
-            }
-        });
     </script>
 
 </html>
