@@ -553,15 +553,15 @@
                     hiddenInput.setAttribute('type', 'hidden');
                     hiddenInput.setAttribute('name', 'stripeToken');
                     hiddenInput.setAttribute('value', token.id);
-                    form.appendChild(hiddenInput);
                     
                     var hiddenInput2 = document.createElement('input');
-                    hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'plan');
-                    hiddenInput.setAttribute('value', $plan);
+                    hiddenInput2.setAttribute('type', 'hidden');
+                    hiddenInput2.setAttribute('name', 'plan');
+                    hiddenInput2.setAttribute('value', $plan);
                     
                     form.appendChild(hiddenInput);
                     form.appendChild(hiddenInput2);
+                    
                     // Submit the form
                     form.submit();
                 }
