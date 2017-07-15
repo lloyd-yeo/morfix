@@ -541,7 +541,7 @@
                                 $form.submit();
 
 //                            stripeResponseHandler(result);
-                            stripeTokenHandler(result);
+                                stripeTokenHandler(result);
                             }
                         });
                     } else { //pay via Paypal
