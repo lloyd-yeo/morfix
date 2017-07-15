@@ -153,47 +153,175 @@ class PaymentController extends Controller {
     }
     
     public function processPaypalPayment(Request $request) {
-        $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
         
-        if ($request->plan == 2) {
-            $paypal_plan_id = MorfixPlan::where('name', 'Pro')->first()->paypal_id;
-        } else {
-            // Instantiate Plan
-            $plan = new Plan();
-            $plan->setId($paypal_plan_id);
+        $email = $request->input('email');
+        $password = $request->input('pw');
+        $name = $request->input('name');
+        $referrer = $request->cookie('referrer');
+        $verification_token = bin2hex(random_bytes(18));
+        
+        $user = new User;
+        $user->email = $email;
+        $user->password = $password;
+        $user->num_acct = 1;
+        $user->active = 1;
+        $user->verification_token = $verification_token;
+        $user->user_tier = 1;
+        $user->name = $name;
+        $user->paypal = 1;
+        $user->save();
+        
+        $user_affiliate = new UserAffiliates;
+        $user_affiliate->referrer = $referrer;
+        $user_affiliate->referred = $user->user_id;
+        $user_affiliate->save();
+        
+        Auth::login($user);
 
-            // Create new agreement
-            $agreement = new Agreement();
-            $agreement->setName('Morfix Monthly Premium Subscription (37/month)')
-                    ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD per month.')
-                    ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+        $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
+        $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
 
-            // Set plan id
-            $agreement->setPlan($plan);
+        $aweber = new AWeberAPI($consumerKey, $consumerSecret);
+        $account = $aweber->getAccount("AgI2J88WjcAhUkFlCn3OwzLx", "wdX1JHuuhIFm9AEiJt3SVUdM5S7Z8lAE7UKmP29P");
 
-            // Add payer type
-            $payer = new Payer();
-            $payer->setPaymentMethod('paypal');
-            $agreement->setPayer($payer);
+        foreach ($account->lists as $offset => $list) {
+
+            $list_id = $list->id;
+
+            if ($list_id != 4485376 OR $list_id != 4631962) {
+                continue;
+            }
+
+            # create a subscriber
+            $params = array(
+                'email' => $email,
+                'name' => $name,
+                'ip_address' => $request->ip(),
+                'ad_tracking' => 'morfix_registration',
+                'last_followup_message_number_sent' => 1,
+                'misc_notes' => 'MorifX Registration Page'
+            );
 
             try {
-                // Create agreement on Paypal
-                $agreement = $agreement->create($this->apiContext);
-
-                // Extract approval URL to redirect user
-                $approvalUrl = $agreement->getApprovalLink();
-
-                return redirect($approvalUrl);
-            } catch (PayPal\Exception\PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
+                $subscribers = $list->subscribers;
+                $new_subscriber = $subscribers->create($params);
             } catch (Exception $ex) {
-                die($ex);
+                $error_msg = $ex->getMessage();
             }
         }
         
+        $paypal_plan_id = MorfixPlan::where('name', 'Premium New')->first()->paypal_id;
         
+        if ($request->plan == 2) { //Pro
+            $paypal_plan_id = MorfixPlan::where('name', 'Pro New')->first()->paypal_id;
+        }
+        
+        // Instantiate Plan
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+
+        // Create new agreement
+        $agreement = new Agreement();
+        $agreement->setName('Morfix Monthly Premium Subscription (37/month)')
+                ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD per month.')
+                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+        
+        if ($request->plan == 2) { //Pro
+            $agreement->setName('Morfix Yearly Pro Subscription (370/year)')
+                ->setDescription('This subscription is for the Pro package of Morfix, amounting to $370USD per year.')
+                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+        }
+        
+        // Set plan id
+        $agreement->setPlan($plan);
+
+        // Add payer type
+        $payer = new Payer();
+        $payer->setPaymentMethod('paypal');
+        $agreement->setPayer($payer);
+
+        try {
+            // Create agreement on Paypal
+            $agreement = $agreement->create($this->apiContext);
+
+            // Extract approval URL to redirect user
+            $approvalUrl = $agreement->getApprovalLink();
+
+            return redirect($approvalUrl);
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+    
+    public function paypalReturnPremium(Request $request) {
+        $paypal_plan_id = MorfixPlan::where('name', 'Premium New')->first()->paypal_id;
+        $token = $request->token;
+        $agreement = new \PayPal\Api\Agreement();
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        $agreement->setPlan($plan);
+        try {
+            // Execute agreement
+            $result = $agreement->execute($token, $this->apiContext);
+            $user = Auth::user();
+            $user->tier = 2;
+            $user->paypal = 1;
+            if (isset($result->id)) {
+                $_agreement = new PaypalAgreement;
+                $_agreement->agreement_id = $result->id;
+                $_agreement->email = Auth::user()->email;
+                $_agreement->save();
+            }
+            $user->save();
+
+            //redirect to Success page.
+            return view('home', [
+                "upgrade_message" => "You have been successfully upgraded to Premium!"
+            ]);
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            //redirect to fail page
+//            var_dump($ex->getData());
+//            echo $ex->getTraceAsString() . "\n";
+//            echo $ex->getMessage() . "\n";
+//            echo 'You have either cancelled the request or your session has expired';
+//            echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
+        }
+    }
+    
+    public function paypalReturnPro(Request $request) {
+        $paypal_plan_id = MorfixPlan::where('name', 'Pro New')->first()->paypal_id;
+        $token = $request->token;
+        $agreement = new \PayPal\Api\Agreement();
+        // Set plan id
+        $plan = new Plan();
+        $plan->setId($paypal_plan_id);
+        $agreement->setPlan($plan);
+        try {
+            // Execute agreement
+            $result = $agreement->execute($token, $this->apiContext);
+            $user = Auth::user();
+            $user->tier = 3;
+            $user->paypal = 1;
+            if (isset($result->id)) {
+                $_agreement = new PaypalAgreement;
+                $_agreement->agreement_id = $result->id;
+                $_agreement->email = Auth::user()->email;
+                $_agreement->save();
+            }
+            $user->save();
+
+            //redirect to Success page.
+            return view('home', [
+                "upgrade_message" => "You have been successfully upgraded to Pro!"
+            ]);
+        } catch (\PayPal\Exception\PayPalConnectionException $ex) {
+            //redirect to fail page
+        }
     }
     
     public function upgrade(Request $request, $plan) {

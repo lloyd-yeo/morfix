@@ -237,7 +237,7 @@ class PaypalController extends Controller {
     }
 
     public function paypalReturnPro(Request $request) {
-        $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
+        $paypal_plan_id = MorfixPlan::where('name', 'Pro')->first()->paypal_id;
         $token = $request->token;
         $agreement = new \PayPal\Api\Agreement();
         // Set plan id
@@ -398,120 +398,5 @@ class PaypalController extends Controller {
         var_dump($plan);
     }
 
-    public function create_plan_premium() {
-        // Create a new billing plan
-        $plan = new Plan();
-        $plan->setName('Premium Morfix Subscription')
-                ->setDescription('Monthly Subscription to Morfix (Premium)')
-                ->setType('infinite');
-
-        // Set billing plan definitions
-        $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Morfix Premium Subscription (37/mth)')
-                ->setType('REGULAR')
-                ->setFrequency('MONTH')
-                ->setFrequencyInterval('1')
-                ->setCycles('0')
-                ->setAmount(new Currency(array('value' => 37, 'currency' => 'USD')));
-
-        // Set merchant preferences
-        $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://app.morfix.co/new/subscribe/paypal/return/premium')
-                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
-                ->setAutoBillAmount('yes')
-                ->setInitialFailAmountAction('CONTINUE')
-                ->setMaxFailAttempts('0');
-
-        $plan->setPaymentDefinitions(array($paymentDefinition));
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        //create the plan
-        try {
-            $createdPlan = $plan->create($this->apiContext);
-            try {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
-                $patch->setOp('replace')
-                        ->setPath('/')
-                        ->setValue($value);
-                $patchRequest = new PatchRequest();
-                $patchRequest->addPatch($patch);
-                $createdPlan->update($patchRequest, $this->apiContext);
-                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
-                // Output plan id
-                echo 'Plan ID:' . $plan->getId();
-            } catch (PayPal\Exception\PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
-            } catch (Exception $ex) {
-                die($ex);
-            }
-        } catch (PayPal\Exception\PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        } catch (Exception $ex) {
-            die($ex);
-        }
-    }
-
-    public function create_plan_pro() {
-        // Create a new billing plan
-        $plan = new Plan();
-        $plan->setName('Pro Morfix Subscription')
-                ->setDescription('Yearly Subscription to Morfix (Pro)')
-                ->setType('infinite');
-
-        // Set billing plan definitions
-        $paymentDefinition = new PaymentDefinition();
-        $paymentDefinition->setName('Morfix Pro Subscription (370/yr)')
-                ->setType('REGULAR')
-                ->setFrequency('YEAR')
-                ->setFrequencyInterval('1')
-                ->setCycles('0')
-                ->setAmount(new Currency(array('value' => 370, 'currency' => 'USD')));
-
-        // Set merchant preferences
-        $merchantPreferences = new MerchantPreferences();
-        $merchantPreferences->setReturnUrl('https://app.morfix.co/new/subscribe/paypal/return/pro')
-                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
-                ->setAutoBillAmount('yes')
-                ->setInitialFailAmountAction('CONTINUE')
-                ->setMaxFailAttempts('0');
-
-        $plan->setPaymentDefinitions(array($paymentDefinition));
-        $plan->setMerchantPreferences($merchantPreferences);
-
-        //create the plan
-        try {
-            $createdPlan = $plan->create($this->apiContext);
-            try {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
-                $patch->setOp('replace')
-                        ->setPath('/')
-                        ->setValue($value);
-                $patchRequest = new PatchRequest();
-                $patchRequest->addPatch($patch);
-                $createdPlan->update($patchRequest, $this->apiContext);
-                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
-                // Output plan id
-                echo 'Plan ID:' . $plan->getId();
-            } catch (PayPal\Exception\PayPalConnectionException $ex) {
-                echo $ex->getCode();
-                echo $ex->getData();
-                die($ex);
-            } catch (Exception $ex) {
-                die($ex);
-            }
-        } catch (PayPal\Exception\PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData();
-            die($ex);
-        } catch (Exception $ex) {
-            die($ex);
-        }
-    }
 
 }
