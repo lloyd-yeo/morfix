@@ -146,6 +146,7 @@ class PaymentController extends Controller {
         } catch (\Exception $ex) {
             $success = false;
             $error_msg = $ex->getMessage();
+            echo $error_msg;
         }
     }
     
