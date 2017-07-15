@@ -115,6 +115,9 @@ Route::get('/subscribe/paypal/return/pro', 'PaypalController@paypalReturnPro');
 Route::get('/subscribe/paypal/return/business', 'PaypalController@paypalReturnBusiness');
 Route::get('/subscribe/paypal/return/mastermind', 'PaypalController@paypalReturnMastermind');
 
+Route::get('/subscribe/paypal/return/premium', 'PaymentController@paypalReturnPremium');
+Route::get('/subscribe/paypal/return/pro', 'PaymentController@paypalReturnPro');
+
 Route::get('/vsl/signup', 'ReferrerController@redirect');
 Route::post('/vsl/signup/cc', 'ReferrerController@processCreditCardPayment');
 Route::post('/vsl/signup/paypal', 'ReferrerController@processPaypalPayment');
@@ -122,7 +125,7 @@ Route::post('/vsl/signup/paypal', 'ReferrerController@processPaypalPayment');
 /**
  * Routes for creation of Paypal Subscription plans.
  */
-#Route::get('/paypal/plan/create/premium', 'PaypalController@create_plan_premium');
+Route::get('/paypal/plan/create/premium', 'PaypalController@create_plan_premium');
 #Route::get('/paypal/plan/create/pro', 'PaypalController@create_plan_pro');
 #Route::get('/paypal/plan/create/business', 'PaypalController@create_plan_business');
 #Route::get('/paypal/plan/create/mastermind', 'PaypalController@create_plan_mastermind');

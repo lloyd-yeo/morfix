@@ -27,7 +27,7 @@ class PaypalController extends Controller {
     private $mode;
     private $client_id;
     private $secret;
- 
+
     // Create a new instance with our paypal credentials
     public function __construct() {
         // Detect if we are running in live mode or sandbox
@@ -43,21 +43,21 @@ class PaypalController extends Controller {
         $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
         $this->apiContext->setConfig(config('paypal.settings'));
     }
-    
+
     public function paypalRedirectPremium() {
-        
+
         $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
-        
+
         // Instantiate Plan
         $plan = new Plan();
         $plan->setId($paypal_plan_id);
-        
+
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Monthly Premium Subscription (37/month)')
                 ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD per month.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
-        
+
         // Set plan id
         $agreement->setPlan($plan);
 
@@ -82,21 +82,21 @@ class PaypalController extends Controller {
             die($ex);
         }
     }
-    
+
     public function paypalRedirectBusiness() {
-        
+
         $paypal_plan_id = MorfixPlan::where('name', 'Business')->first()->paypal_id;
-        
+
         // Instantiate Plan
         $plan = new Plan();
         $plan->setId($paypal_plan_id);
-        
+
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Monthly Business Subscription (97/month)')
                 ->setDescription('This subscription is for the Business add-on package of Morfix, amounting to $97USD per month.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
-        
+
         // Set plan id
         $agreement->setPlan($plan);
 
@@ -121,21 +121,21 @@ class PaypalController extends Controller {
             die($ex);
         }
     }
-    
+
     public function paypalRedirectPro() {
-        
+
         $paypal_plan_id = MorfixPlan::where('name', 'Pro')->first()->paypal_id;
-        
+
         // Instantiate Plan
         $plan = new Plan();
         $plan->setId($paypal_plan_id);
-        
+
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Yearly Pro Subscription (370/yr)')
                 ->setDescription('This subscription is for the annual Pro package of Morfix, amounting to $370USD per year.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
-        
+
         // Set plan id
         $agreement->setPlan($plan);
 
@@ -160,21 +160,21 @@ class PaypalController extends Controller {
             die($ex);
         }
     }
-    
+
     public function paypalRedirectMastermind() {
-        
+
         $paypal_plan_id = MorfixPlan::where('name', 'Mastermind')->first()->paypal_id;
-        
+
         // Instantiate Plan
         $plan = new Plan();
         $plan->setId($paypal_plan_id);
-        
+
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Yearly Mastermind Subscription (970/yr)')
                 ->setDescription('This subscription is for the annual Mastermind package of Morfix, amounting to $970USD per year.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
-        
+
         // Set plan id
         $agreement->setPlan($plan);
 
@@ -199,7 +199,7 @@ class PaypalController extends Controller {
             die($ex);
         }
     }
-    
+
     public function paypalReturnPremium(Request $request) {
         $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
         $token = $request->token;
@@ -214,22 +214,20 @@ class PaypalController extends Controller {
             $user = Auth::user();
             $user->tier = 2;
             $user->paypal = 1;
-            if(isset($result->id)){
+            if (isset($result->id)) {
                 $_agreement = new PaypalAgreement;
                 $_agreement->agreement_id = $result->id;
                 $_agreement->email = Auth::user()->email;
                 $_agreement->save();
             }
             $user->save();
-            
+
             //redirect to Success page.
             return view('payment', [
                 "upgrade_message" => "You have been successfully upgraded to Premium!"
             ]);
-            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
-            
 //            var_dump($ex->getData());
 //            echo $ex->getTraceAsString() . "\n";
 //            echo $ex->getMessage() . "\n";
@@ -237,7 +235,7 @@ class PaypalController extends Controller {
 //            echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
         }
     }
-    
+
     public function paypalReturnPro(Request $request) {
         $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
         $token = $request->token;
@@ -252,24 +250,23 @@ class PaypalController extends Controller {
             $user = Auth::user();
             $user->tier = 3;
             $user->paypal = 1;
-            if(isset($result->id)){
+            if (isset($result->id)) {
                 $_agreement = new PaypalAgreement;
                 $_agreement->agreement_id = $result->id;
                 $_agreement->email = Auth::user()->email;
                 $_agreement->save();
             }
             $user->save();
-            
+
             //redirect to Success page.
             return view('payment', [
                 "upgrade_message" => "You have been successfully upgraded to Pro!"
             ]);
-            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
         }
     }
-    
+
     public function paypalReturnBusiness(Request $request) {
         $paypal_plan_id = MorfixPlan::where('name', 'Business')->first()->paypal_id;
         $token = $request->token;
@@ -285,24 +282,23 @@ class PaypalController extends Controller {
             $user->tier = $user->tier + 10;
             $user->num_acct = $user->num_acct + 5;
             $user->paypal = 1;
-            if(isset($result->id)){
+            if (isset($result->id)) {
                 $_agreement = new PaypalAgreement;
                 $_agreement->agreement_id = $result->id;
                 $_agreement->email = Auth::user()->email;
                 $_agreement->save();
             }
             $user->save();
-            
+
             //redirect to Success page.
             return view('payment', [
                 "upgrade_message" => "You have been successfully upgraded to Business!"
             ]);
-            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
         }
     }
-    
+
     public function paypalReturnMastermind(Request $request) {
         $paypal_plan_id = MorfixPlan::where('name', 'Mastermind')->first()->paypal_id;
         $token = $request->token;
@@ -318,25 +314,22 @@ class PaypalController extends Controller {
             $user->tier = $user->tier + 20;
             $user->num_acct = $user->num_acct + 5;
             $user->paypal = 1;
-            if(isset($result->id)){
+            if (isset($result->id)) {
                 $_agreement = new PaypalAgreement;
                 $_agreement->agreement_id = $result->id;
                 $_agreement->email = Auth::user()->email;
                 $_agreement->save();
             }
             $user->save();
-            
+
             //redirect to Success page.
             return view('payment', [
                 "upgrade_message" => "You have been successfully upgraded to Mastermind!"
             ]);
-            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
         }
     }
-    
-    
 
     public function paypalReturn(Request $request) {
         $token = $request->token;
@@ -360,8 +353,8 @@ class PaypalController extends Controller {
             echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
         }
     }
-    
-     public function paypalRedirect() {
+
+    public function paypalRedirect() {
         // Create new agreement
         $agreement = new Agreement();
         $agreement->setName('Morfix Monthly Test Subscription (TestR)')
@@ -394,7 +387,7 @@ class PaypalController extends Controller {
             die($ex);
         }
     }
-    
+
     public function listPlans() {
         #$params = array();
 //        $planList = Plan::all($params, $this->apiContext);
@@ -404,5 +397,121 @@ class PaypalController extends Controller {
         $plan = Plan::get("P-18H64176W28665839BHWBX7Y", $this->apiContext);
         var_dump($plan);
     }
-    
+
+    public function create_plan_premium() {
+        // Create a new billing plan
+        $plan = new Plan();
+        $plan->setName('Premium Morfix Subscription')
+                ->setDescription('Monthly Subscription to Morfix (Premium)')
+                ->setType('infinite');
+
+        // Set billing plan definitions
+        $paymentDefinition = new PaymentDefinition();
+        $paymentDefinition->setName('Morfix Premium Subscription (37/mth)')
+                ->setType('REGULAR')
+                ->setFrequency('MONTH')
+                ->setFrequencyInterval('1')
+                ->setCycles('0')
+                ->setAmount(new Currency(array('value' => 37, 'currency' => 'USD')));
+
+        // Set merchant preferences
+        $merchantPreferences = new MerchantPreferences();
+        $merchantPreferences->setReturnUrl('https://app.morfix.co/new/subscribe/paypal/return/premium')
+                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
+                ->setAutoBillAmount('yes')
+                ->setInitialFailAmountAction('CONTINUE')
+                ->setMaxFailAttempts('0');
+
+        $plan->setPaymentDefinitions(array($paymentDefinition));
+        $plan->setMerchantPreferences($merchantPreferences);
+
+        //create the plan
+        try {
+            $createdPlan = $plan->create($this->apiContext);
+            try {
+                $patch = new Patch();
+                $value = new PayPalModel('{"state":"ACTIVE"}');
+                $patch->setOp('replace')
+                        ->setPath('/')
+                        ->setValue($value);
+                $patchRequest = new PatchRequest();
+                $patchRequest->addPatch($patch);
+                $createdPlan->update($patchRequest, $this->apiContext);
+                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
+                // Output plan id
+                echo 'Plan ID:' . $plan->getId();
+            } catch (PayPal\Exception\PayPalConnectionException $ex) {
+                echo $ex->getCode();
+                echo $ex->getData();
+                die($ex);
+            } catch (Exception $ex) {
+                die($ex);
+            }
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+
+    public function create_plan_pro() {
+        // Create a new billing plan
+        $plan = new Plan();
+        $plan->setName('Pro Morfix Subscription')
+                ->setDescription('Yearly Subscription to Morfix (Pro)')
+                ->setType('infinite');
+
+        // Set billing plan definitions
+        $paymentDefinition = new PaymentDefinition();
+        $paymentDefinition->setName('Morfix Pro Subscription (370/yr)')
+                ->setType('REGULAR')
+                ->setFrequency('YEAR')
+                ->setFrequencyInterval('1')
+                ->setCycles('0')
+                ->setAmount(new Currency(array('value' => 370, 'currency' => 'USD')));
+
+        // Set merchant preferences
+        $merchantPreferences = new MerchantPreferences();
+        $merchantPreferences->setReturnUrl('https://app.morfix.co/new/subscribe/paypal/return/pro')
+                ->setCancelUrl('https://app.morfix.co/subscribe/paypal/cancel')
+                ->setAutoBillAmount('yes')
+                ->setInitialFailAmountAction('CONTINUE')
+                ->setMaxFailAttempts('0');
+
+        $plan->setPaymentDefinitions(array($paymentDefinition));
+        $plan->setMerchantPreferences($merchantPreferences);
+
+        //create the plan
+        try {
+            $createdPlan = $plan->create($this->apiContext);
+            try {
+                $patch = new Patch();
+                $value = new PayPalModel('{"state":"ACTIVE"}');
+                $patch->setOp('replace')
+                        ->setPath('/')
+                        ->setValue($value);
+                $patchRequest = new PatchRequest();
+                $patchRequest->addPatch($patch);
+                $createdPlan->update($patchRequest, $this->apiContext);
+                $plan = Plan::get($createdPlan->getId(), $this->apiContext);
+                // Output plan id
+                echo 'Plan ID:' . $plan->getId();
+            } catch (PayPal\Exception\PayPalConnectionException $ex) {
+                echo $ex->getCode();
+                echo $ex->getData();
+                die($ex);
+            } catch (Exception $ex) {
+                die($ex);
+            }
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+    }
+
 }

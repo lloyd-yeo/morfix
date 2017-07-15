@@ -8,20 +8,55 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Response;
-use Request;
+use PayPal\Api\ChargeModel;
+use PayPal\Api\Currency;
+use PayPal\Api\MerchantPreferences;
+use PayPal\Api\PaymentDefinition;
+use PayPal\Api\Plan;
+use PayPal\Api\Patch;
+use PayPal\Api\PatchRequest;
+use PayPal\Common\PayPalModel;
+use PayPal\Rest\ApiContext;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Api\Agreement;
+use PayPal\Api\Payer;
 use App\User;
+use App\MorfixPlan;
+use App\PaypalAgreement;
 use App\StripeDetail;
 use App\PaymentLog;
 use App\UserAffiliates;
-use \Stripe\Customer;
+use Response;
+use Request;
 use AWeberAPI;
+use \Stripe\Customer;
+use \DateTimeZone;
 
 class PaymentController extends Controller {
 
+    private $apiContext;
+    private $mode;
+    private $client_id;
+    private $secret;
+    
+    // Create a new instance with our paypal credentials
+    public function __construct() {
+        // Detect if we are running in live mode or sandbox
+        if (config('paypal.settings.mode') == 'live') {
+            $this->client_id = config('paypal.live_client_id');
+            $this->secret = config('paypal.live_secret');
+        } else {
+            $this->client_id = config('paypal.sandbox_client_id');
+            $this->secret = config('paypal.sandbox_secret');
+        }
+
+        // Set the Paypal API Context/Credentials
+        $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
+        $this->apiContext->setConfig(config('paypal.settings'));
+    }
+    
     public function index(Request $request) {
         return view('payment.index', [
-            
         ]);
     }
     
@@ -108,7 +143,9 @@ class PaymentController extends Controller {
                     $error_msg = $ex->getMessage();
                 }
             }
+            
             Auth::login($user);
+            
         } catch (\Exception $ex) {
             $success = false;
             $error_msg = $ex->getMessage();
@@ -116,6 +153,46 @@ class PaymentController extends Controller {
     }
     
     public function processPaypalPayment(Request $request) {
+        $paypal_plan_id = MorfixPlan::where('name', 'Premium')->first()->paypal_id;
+        
+        if ($request->plan == 2) {
+            $paypal_plan_id = MorfixPlan::where('name', 'Pro')->first()->paypal_id;
+        } else {
+            // Instantiate Plan
+            $plan = new Plan();
+            $plan->setId($paypal_plan_id);
+
+            // Create new agreement
+            $agreement = new Agreement();
+            $agreement->setName('Morfix Monthly Premium Subscription (37/month)')
+                    ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD per month.')
+                    ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+
+            // Set plan id
+            $agreement->setPlan($plan);
+
+            // Add payer type
+            $payer = new Payer();
+            $payer->setPaymentMethod('paypal');
+            $agreement->setPayer($payer);
+
+            try {
+                // Create agreement on Paypal
+                $agreement = $agreement->create($this->apiContext);
+
+                // Extract approval URL to redirect user
+                $approvalUrl = $agreement->getApprovalLink();
+
+                return redirect($approvalUrl);
+            } catch (PayPal\Exception\PayPalConnectionException $ex) {
+                echo $ex->getCode();
+                echo $ex->getData();
+                die($ex);
+            } catch (Exception $ex) {
+                die($ex);
+            }
+        }
+        
         
     }
     
