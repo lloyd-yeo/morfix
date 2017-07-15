@@ -29,7 +29,6 @@ use App\UserAffiliates;
 use Response;
 use Request;
 use AWeberAPI;
-use \Stripe\Customer;
 use \DateTimeZone;
 
 class PaymentController extends Controller {
@@ -145,6 +144,7 @@ class PaymentController extends Controller {
             }
             
             Auth::login($user);
+            return redirect()->action('HomeController@index');
             
         } catch (\Exception $ex) {
             $success = false;
@@ -248,6 +248,7 @@ class PaymentController extends Controller {
             $approvalUrl = $agreement->getApprovalLink();
 
             return redirect($approvalUrl);
+            
         } catch (PayPal\Exception\PayPalConnectionException $ex) {
             echo $ex->getCode();
             echo $ex->getData();
@@ -280,16 +281,10 @@ class PaymentController extends Controller {
             $user->save();
 
             //redirect to Success page.
-            return view('home', [
-                "upgrade_message" => "You have been successfully upgraded to Premium!"
-            ]);
+            return redirect()->action('HomeController@index');
+            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
-//            var_dump($ex->getData());
-//            echo $ex->getTraceAsString() . "\n";
-//            echo $ex->getMessage() . "\n";
-//            echo 'You have either cancelled the request or your session has expired';
-//            echo '<br/><br/>' . \Carbon\Carbon::now()->addMinutes(5)->toIso8601String();
         }
     }
     
@@ -316,9 +311,8 @@ class PaymentController extends Controller {
             $user->save();
 
             //redirect to Success page.
-            return view('home', [
-                "upgrade_message" => "You have been successfully upgraded to Pro!"
-            ]);
+            return redirect()->action('HomeController@index');
+            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
         }
