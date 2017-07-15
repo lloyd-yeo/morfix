@@ -119,8 +119,8 @@ Route::get('/new/subscribe/paypal/return/premium', 'PaymentController@paypalRetu
 Route::get('/new/subscribe/paypal/return/pro', 'PaymentController@paypalReturnPro');
 
 Route::get('/vsl/signup', 'ReferrerController@redirect');
-Route::post('/vsl/signup/cc', 'ReferrerController@processCreditCardPayment');
-Route::post('/vsl/signup/paypal', 'ReferrerController@processPaypalPayment');
+Route::post('/vsl/signup/cc', 'PaymentController@processCreditCardPayment');
+Route::post('/vsl/signup/paypal', 'PaymentController@processPaypalPayment');
 
 /**
  * Routes for creation of Paypal Subscription plans.
