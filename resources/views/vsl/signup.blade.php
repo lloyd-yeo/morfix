@@ -532,7 +532,8 @@
                             errorElement.textContent = result.error.message;
                         } else {
                             // Send the token to your server
-                            stripeTokenHandler(result.token);
+                            stripeResponseHandler(result);
+//                            stripeTokenHandler(result);
                         }
                     });
                 } else { //pay via Paypal
@@ -545,7 +546,7 @@
                 $form.submit();
             });
             
-            function stripeResponseHandler(status, response) {
+            function stripeResponseHandler(response) {
                 // Grab the form:
                 var $form = $('#payment-form');
 
