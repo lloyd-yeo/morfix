@@ -532,7 +532,7 @@
                             errorElement.textContent = result.error.message;
                         } else {
                             // Send the token to your server
-                            
+                            alert(result);
                             var token = result.id;
                             // Insert the token ID into the form so it gets submitted to the server:
                             $form.append($('<input type="hidden" name="stripeToken">').val(token));
