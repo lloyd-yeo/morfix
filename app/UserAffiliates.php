@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserAffiliates extends Model {
 
     protected $table = 'user_affiliate';
-    protected $connection = 'mysql_old';
+    protected $primaryKey = 'affiliate_id'; 
+    public $timestamps = false;
 }
