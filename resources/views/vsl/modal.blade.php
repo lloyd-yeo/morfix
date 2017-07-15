@@ -165,7 +165,7 @@
                                         <div id="paypal-group" class="form-group" style="display:none;">
                                             <div class="col-sm-12">
                                                 <!-- PayPal Logo -->
-                                                <a href="{{ url('vsl/signup/paypal') }}">
+                                                <a id="paypal-btn" href="{{ url('vsl/signup/paypal') }}">
                                                     <img src="https://www.paypalobjects.com/webstatic/en_AU/i/buttons/btn_paywith_primary_s.png" alt="Pay with PayPal" />
                                                 </a>
                                                 <!-- PayPal Logo -->

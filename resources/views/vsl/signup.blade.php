@@ -425,7 +425,7 @@
             $(".signup-btn").on("click", function(){ 
                 jQuery('#modal-payment').modal('show');
             });
-
+            
             $("#plan-dropdown").on("change", function (e) {
                 $("select.plan-dropdown option:selected").each(function () {
                     var $selectedOpt = $(this).val();
@@ -533,10 +533,14 @@
                             stripeTokenHandler(result.token);
                         }
                     });
-                } else { //pay via Credit Card
-                    
+                } else { //pay via Paypal
                 }
-
+            });
+            
+            $("#paypal-btn").on("click", function(){ 
+                var $form = document.getElementById('payment-form');
+                $form.attr("action", $(this).attr("href"));
+                $form.submit();
             });
             
             function stripeResponseHandler(status, response) {
