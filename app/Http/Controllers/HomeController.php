@@ -30,7 +30,7 @@ class HomeController extends Controller {
 
         $current_user = Auth::user();
         
-        if ($current_user -> paypal == 1) {
+        if ($current_user->paypal == 1) {
         } else if ($current_user->email == "maychengmt@yahoo.com") {
             $current_user->tier = 12;
             $current_user->save();
