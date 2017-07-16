@@ -119,8 +119,8 @@ class PostSchedulingController extends Controller {
         $schedules = InstagramProfilePhotoPostSchedule::where('insta_username', $insta_username)->orderBy('schedule_id', 'desc')->get();
         foreach ($schedules as $schedule) {
             try {
-//                var_dump(unserialize($schedule->failure_msg));
-                echo "<br/><br/><br/>" . unserialize($schedule->failure_msg)->message . "</br><br/>";
+                var_dump(unserialize($schedule->failure_msg));
+                echo "<br/><br/><br/></br><br/>";
             } catch (\Exception $ex) {
                 echo $schedule->failure_msg;
             }
