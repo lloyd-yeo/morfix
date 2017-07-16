@@ -117,9 +117,9 @@ class PostSchedulingController extends Controller {
         
         $insta_username = $ig_profile->insta_username;
         $schedules = InstagramProfilePhotoPostSchedule::where('insta_username', $insta_username)->orderBy('schedule_id', 'desc')->get();
-        foreach ($schedules as $schedule) {
-            echo ($schedule->failure_msg);
-        }
+//        foreach ($schedules as $schedule) {
+//            echo ($schedule->failure_msg);
+//        }
         return view('postscheduling.log', [
             'schedules' => $schedules
         ]);
