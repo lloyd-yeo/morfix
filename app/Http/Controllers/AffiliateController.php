@@ -84,7 +84,7 @@ class AffiliateController extends Controller {
                                                         ORDER BY invoice_date DESC;', [Auth::user()->email]);
         
         $qualified = array();
-        \Stripe\Subscription::all(array('limit'=>100, 'status'=>'all', 'customer', Auth::user()->stripe_id));
+        \Stripe\Subscription::all(array('limit'=>100, 'status'=>'all', 'customer' => Auth::user()->stripe_id));
         
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
             var_dump($subscription);
