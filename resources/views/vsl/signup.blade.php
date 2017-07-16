@@ -204,6 +204,10 @@
                     <iframe src="https://player.vimeo.com/video/198823397" 
                             width="640" height="400" frameborder="0" 
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "home")
+                    <iframe src="https://player.vimeo.com/video/199027287" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                     @elseif ($redir == "ospvsl")
                     <iframe src="https://player.vimeo.com/video/199027287" 
                             width="640" height="400" frameborder="0" 
