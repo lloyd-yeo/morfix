@@ -26,7 +26,7 @@ var BaseTableDatatables = function() {
     // Init full DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableSchedule = function() {
         jQuery('.js-dataTable-schedule').dataTable({
-            columnDefs: [ { orderable: false, targets: [ 4 ] } ],
+            columnDefs: [ { orderable: false, targets: [ 5 ] } ],
             pageLength: 10,
             columns: [
                     { "width": "10%" },
