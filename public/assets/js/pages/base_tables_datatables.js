@@ -28,7 +28,7 @@ var BaseTableDatatables = function() {
         jQuery('.js-dataTable-schedule').dataTable({
             columnDefs: [ { orderable: false, targets: [ 4 ] } ],
             pageLength: 10,
-            order: [[ 1, "desc" ]]
+            order: [[ 1, "desc" ]],
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
     };
