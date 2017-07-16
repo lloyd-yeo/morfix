@@ -31,10 +31,10 @@
                     <table class="table table-bordered table-striped js-dataTable-schedule">
                         <thead>
                             <tr>
-                                <th class="text-center">Log ID</th>
-                                <th class="text-center"><i class="fa fa-clock-o"></i> Date To Post (GMT+8)</th>
-                                <th class="text-center">Status</th>
-                                <th class="text-center">Log</th>
+                                <th class="text-center" style="width: 10%;">Log ID</th>
+                                <th class="text-center" style="width: 20%;"><i class="fa fa-clock-o"></i> Date To Post (GMT+8)</th>
+                                <th class="text-center" style="width: 20%;">Status</th>
+                                <th class="text-center" style="width: 40%;">Log</th>
                                 <th class="text-center" style="width: 10%;"></th>
                             </tr>
                         </thead>
