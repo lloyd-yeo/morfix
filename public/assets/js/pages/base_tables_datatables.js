@@ -32,8 +32,7 @@ var BaseTableDatatables = function() {
                     { "width": "10%" },
                     { "width": "25%" },
                     { "width": "20%" },
-                    { "width": "30%" },
-                    { "width": "15%" }
+                    { "width": "30%" }
                   ],
             order: [[ 0, "desc" ]],
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
