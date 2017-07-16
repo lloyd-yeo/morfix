@@ -206,9 +206,9 @@
                                     <td>Pro</td>
                                     @elseif ($referral->tier == 12)
                                     <td>Business</td>
-                                    @elseif ($referral->user_tier == 22)
+                                    @elseif ($referral->tier == 22)
                                     <td>Mastermind</td>
-                                    @elseif ($referral->user_tier == 23)
+                                    @elseif ($referral->tier == 23)
                                     <td>Mastermind</td>
                                     @endif
                                     <td>{{ $referral->created_at }}</td>
