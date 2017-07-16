@@ -28,10 +28,18 @@ var BaseTableDatatables = function() {
         jQuery('.js-dataTable-schedule').dataTable({
             columnDefs: [ { orderable: false, targets: [ 4 ] } ],
             pageLength: 10,
+            columns: [
+                    { "width": "10%" },
+                    { "width": "25%" },
+                    { "width": "20%" },
+                    { "width": "30%" },
+                    { "width": "15%" }
+                  ],
             order: [[ 0, "desc" ]],
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
     };
+    //columnDefs: [ { orderable: false, targets: [ 4 ] } ],
     
     // Init full DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableDirectMessageJob = function() {
