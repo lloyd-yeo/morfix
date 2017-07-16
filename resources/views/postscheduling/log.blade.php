@@ -51,7 +51,7 @@
                                     @if ($schedule->posted == 0)
                                     <label class="label label-primary">Pending</label>
                                     @elseif ($schedule->posted == 1)
-                                    <label class="label label-success">Posted Successfully!</label>
+                                    <label class="label label-success">Success!</label>
                                     @elseif ($schedule->posted == 2)
                                     <label class="label label-default">Failed</label>
                                     @endif
