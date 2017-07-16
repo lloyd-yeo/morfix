@@ -135,6 +135,9 @@ class InteractionFollow implements ShouldQueue {
         if ($speed == "Ultra Fast") {
             $follow_unfollow_delay = 0;
         }
+        if ($insta_username == "weikian_") {
+            $follow_unfollow_delay = 0;
+        }
 
         $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
         //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
