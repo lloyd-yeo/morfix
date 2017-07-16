@@ -121,7 +121,7 @@ class PostSchedulingController extends Controller {
             try {
                 if ($schedule->failure_msg !== NULL) {
                     if (!is_bool(unserialize($schedule->failure_msg))) {
-                        echo unserialize($schedule->failure_msg)->message;
+                        echo unserialize($schedule->failure_msg)->getMessage();
                     } else {
                         var_dump(unserialize($schedule->failure_msg));
                     }
