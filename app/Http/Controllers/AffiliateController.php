@@ -86,11 +86,11 @@ class AffiliateController extends Controller {
         $qualified = array();
         \Stripe\Subscription::all(array('limit'=>100, 'status'=>'all', 'customer' => Auth::user()->stripe_id));
         
-        foreach ($subscriptions->autoPagingIterator() as $subscription) {
-            echo "<pre>";
-            var_dump($subscription);
-            echo "</pre>";
-        }
+        #foreach ($subscriptions->autoPagingIterator() as $subscription) {
+        #    echo "<pre>";
+        #    var_dump($subscription);
+        #    echo "</pre>";
+        #}
 //        foreach ($invoices as $invoice) {
 //            
 //        }
