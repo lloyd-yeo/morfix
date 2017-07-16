@@ -121,15 +121,14 @@ class PostSchedulingController extends Controller {
             try {
                 if ($schedule->failure_msg !== NULL) {
                     if (!is_bool(unserialize($schedule->failure_msg))) {
-                        var_dump(unserialize($schedule->failure_msg));
-                        echo "<br/><br/><br/></br><br/>";
+                        echo unserialize($schedule->failure_msg)->message;
                     } else {
                         var_dump(unserialize($schedule->failure_msg));
                     }
                 }
             } catch (\Exception $ex) {
                 if ($schedule->failure_msg == "checkpoint_required") {
-                    $schedule->failure_msg = "Unable to post due to furthur verification required from Instagram. Please go to the dashboard.";
+                    $schedule->failure_msg = "Unable to post due to further verification required from Instagram. Please go to the dashboard.";
                     $schedule->save();
                 }
                 echo $schedule->failure_msg;
