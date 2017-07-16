@@ -40,7 +40,11 @@
                         <tbody>
                             @foreach ($schedules as $schedule)
                             <tr id="schedule-{{ $schedule->schedule_id }}">
+                                @if ($schedule->date_to_post !== NULL)
                                 <td>{{ Carbon\Carbon::parse($schedule->date_to_post)->toDayDateTimeString() }}</td>
+                                @else
+                                <td>No date defined.</td>
+                                @endif
                                 <td class="text-center">
                                     @if ($schedule->posted == 0)
                                     <label class="label label-primary">Pending</label>
