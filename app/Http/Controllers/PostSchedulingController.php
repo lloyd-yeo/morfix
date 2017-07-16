@@ -119,14 +119,19 @@ class PostSchedulingController extends Controller {
         $schedules = InstagramProfilePhotoPostSchedule::where('insta_username', $insta_username)->orderBy('schedule_id', 'desc')->get();
         foreach ($schedules as $schedule) {
             try {
-                
-                if (!is_bool(unserialize($schedule->failure_msg))) {
-                    var_dump(unserialize($schedule->failure_msg));
-                    echo "<br/><br/><br/></br><br/>";
-                } else {
-                    var_dump(unserialize($schedule->failure_msg));
+                if ($schedule->failure_msg !== NULL) {
+                    if (!is_bool(unserialize($schedule->failure_msg))) {
+                        var_dump(unserialize($schedule->failure_msg));
+                        echo "<br/><br/><br/></br><br/>";
+                    } else {
+                        var_dump(unserialize($schedule->failure_msg));
+                    }
                 }
             } catch (\Exception $ex) {
+                if ($schedule->failure_msg == "checkpoint_required") {
+                    $schedule->failure_msg = "Unable to post due to furthur verification required from Instagram. Please go to the dashboard.";
+                    $schedule->save();
+                }
                 echo $schedule->failure_msg;
             }
         }
