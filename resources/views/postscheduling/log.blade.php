@@ -57,6 +57,8 @@
                                 <td class="text-center">
                                     @if ($schedule->log == NULL)
                                     Your post is pending posting.
+                                    @elseif ($schedule->failure_msg !== NULL)
+                                    {{ $schedule->failure_msg }}
                                     @else
                                     {{ $schedule->log }}
                                     @endif
