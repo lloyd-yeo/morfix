@@ -43,9 +43,9 @@
                             <tr id="schedule-{{ $schedule->schedule_id }}">
                                 <td>{{ $schedule->schedule_id }}</td>
                                 @if ($schedule->date_to_post !== NULL)
-                                <td>{{ Carbon\Carbon::parse($schedule->date_to_post)->toDayDateTimeString() }}</td>
+                                <td class="text-center">{{ Carbon\Carbon::parse($schedule->date_to_post)->toDayDateTimeString() }}</td>
                                 @else
-                                <td>No date defined.</td>
+                                <td class="text-center"><label class="label label-danger">No date defined.</label></td>
                                 @endif
                                 <td class="text-center">
                                     @if ($schedule->posted == 0)
