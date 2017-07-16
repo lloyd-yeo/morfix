@@ -31,6 +31,7 @@
                     <table class="table table-bordered table-striped js-dataTable-schedule">
                         <thead>
                             <tr>
+                                <th class="text-center">Log ID</th>
                                 <th class="text-center"><i class="fa fa-clock-o"></i> Date To Post (GMT+8)</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">Log</th>
@@ -40,6 +41,7 @@
                         <tbody>
                             @foreach ($schedules as $schedule)
                             <tr id="schedule-{{ $schedule->schedule_id }}">
+                                <td>{{ $schedule->schedule_id }}</td>
                                 @if ($schedule->date_to_post !== NULL)
                                 <td>{{ Carbon\Carbon::parse($schedule->date_to_post)->toDayDateTimeString() }}</td>
                                 @else
