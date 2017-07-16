@@ -57,9 +57,11 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    @if ($schedule->log == NULL)
+                                    @if ($schedule->posted == 0)
                                     Your post is pending posting.
-                                    @elseif ($schedule->failure_msg !== NULL)
+                                    @elseif ($schedule->posted == 1)
+                                    Your post has been successfully uploaded on to Instagram!
+                                    @elseif ($schedule->posted == 2 && $schedule->failure_msg !== NULL)
                                     {{ $schedule->failure_msg }}
                                     @else
                                     {{ $schedule->log }}
