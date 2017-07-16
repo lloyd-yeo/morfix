@@ -88,6 +88,7 @@ class AffiliateController extends Controller {
         
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
             var_dump($subscription);
+            echo "<br/><br/><br/>";
         }
 //        foreach ($invoices as $invoice) {
 //            
