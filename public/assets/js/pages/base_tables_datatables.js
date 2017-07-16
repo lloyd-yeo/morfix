@@ -28,13 +28,6 @@ var BaseTableDatatables = function() {
         jQuery('.js-dataTable-schedule').dataTable({
             columnDefs: [ { orderable: false, targets: [ 4 ] } ],
             pageLength: 10,
-            columns: [
-                    { width: "10%" },
-                    { width: "25%" },
-                    { width: "20%" },
-                    { width: "30%" },
-                    { width: "10%" }
-                  ],
             order: [[ 0, "desc" ]],
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
