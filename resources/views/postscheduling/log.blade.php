@@ -64,7 +64,7 @@
                                     @elseif ($schedule->posted == 1)
                                     <label class="label label-success">Your post has been successfully uploaded on to Instagram!</label>
                                     @elseif ($schedule->posted == 2 && $schedule->failure_msg !== NULL)
-                                    <label class="label label-navy">{{ $schedule->failure_msg }}</label>
+                                    <label class="label label-primary">{{ $schedule->failure_msg }}</label>
                                     @else
                                     {{ $schedule->log }}
                                     @endif
