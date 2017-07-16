@@ -83,6 +83,16 @@ class AffiliateController extends Controller {
                                                         AND r.email = ?
                                                         ORDER BY invoice_date DESC;', [Auth::user()->email]);
         
+        $qualified = array();
+        \Stripe\Subscription::all(array('limit'=>100, 'status'=>'all', 'customer', Auth::user()->stripe_id));
+        
+        foreach ($subscriptions->autoPagingIterator() as $subscription) {
+            var_dump($subscription);
+        }
+//        foreach ($invoices as $invoice) {
+//            
+//        }
+        
         return view('affiliate.dashboard', [
             'referral_links' => $referral_links,
             'referrals' => $referrals,
