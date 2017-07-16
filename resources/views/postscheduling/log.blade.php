@@ -58,11 +58,11 @@
                                 </td>
                                 <td class="text-center">
                                     @if ($schedule->date_to_post === NULL)
-                                    We are unable to post because you have not defined the date to post.
+                                    <label class="label label-danger">We are unable to post because you have not defined the date to post.</label>
                                     @elseif ($schedule->posted == 0)
-                                    Your post is pending posting.
+                                    <label class="label label-primary">Your post is pending posting.</label>
                                     @elseif ($schedule->posted == 1)
-                                    Your post has been successfully uploaded on to Instagram!
+                                    <label class="label label-success">Your post has been successfully uploaded on to Instagram!</label>
                                     @elseif ($schedule->posted == 2 && $schedule->failure_msg !== NULL)
                                     {{ $schedule->failure_msg }}
                                     @else
