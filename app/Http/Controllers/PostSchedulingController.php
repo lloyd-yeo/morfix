@@ -120,6 +120,7 @@ class PostSchedulingController extends Controller {
         foreach ($schedules as $schedule) {
             try {
                 var_dump(unserialize($schedule->failure_msg));
+                echo "<br/><br/><br/>EXCEPTION</br><br/>";
             } catch (\Exception $ex) {
                 echo $schedule->failure_msg;
             }
