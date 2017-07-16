@@ -124,7 +124,7 @@ class PostSchedulingController extends Controller {
                         $schedule->failure_msg = unserialize($schedule->failure_msg)->getMessage();
                         $schedule->save();
                     } else {
-                        var_dump(unserialize($schedule->failure_msg));
+                        #var_dump(unserialize($schedule->failure_msg));
                     }
                 }
             } catch (\Exception $ex) {
@@ -132,7 +132,6 @@ class PostSchedulingController extends Controller {
                     $schedule->failure_msg = "Unable to post due to further verification required from Instagram. Please go to the dashboard.";
                     $schedule->save();
                 }
-                echo $schedule->failure_msg;
             }
         }
         
