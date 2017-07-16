@@ -57,7 +57,9 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    @if ($schedule->posted == 0)
+                                    @if ($schedule->date_to_post === NULL)
+                                    We are unable to post because you have not defined the date to post.
+                                    @elseif ($schedule->posted == 0)
                                     Your post is pending posting.
                                     @elseif ($schedule->posted == 1)
                                     Your post has been successfully uploaded on to Instagram!
