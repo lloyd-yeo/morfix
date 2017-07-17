@@ -98,7 +98,7 @@
             </div>
             <div class="block-content">
                 <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                <table class="table table-bordered table-striped js-dataTable-subscription">
+                <table class="table table-bordered table-striped js-dataTable-invoices">
                     <thead>
                         <tr>
                             <th class="text-center">Invoice</th>

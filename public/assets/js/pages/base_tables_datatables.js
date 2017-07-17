@@ -24,6 +24,16 @@ var BaseTableDatatables = function() {
     };
     
     // Init full DataTable, for more examples you can check out https://www.datatables.net/
+    var initDataTableSubscriptions = function() {
+        jQuery('.js-dataTable-invoices').dataTable({
+            columnDefs: [ { orderable: false, targets: [ 4 ] } ],
+            pageLength: 10,
+            order: [[ 0, "desc" ]],
+            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
+        });
+    };
+    
+    // Init full DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableSchedule = function() {
         jQuery('.js-dataTable-schedule').dataTable({
             columnDefs: [ { orderable: false, targets: [ 4 ] } ],
