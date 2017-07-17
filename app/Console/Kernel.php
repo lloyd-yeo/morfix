@@ -45,6 +45,8 @@ class Kernel extends ConsoleKernel {
         Commands\UpdatePendingCommission::class,
         Commands\AddUserUpdate::class,
         Commands\ReconcileStripeCharges::class,
+        Commands\GetUserSubscription::class,
+        Commands\GetUserInvoices::class,
     ];
 
     /**

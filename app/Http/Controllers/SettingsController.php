@@ -13,6 +13,7 @@ use App\InstagramProfileComment;
 use App\InstagramProfileTargetHashtag;
 use App\InstagramProfileTargetUsername;
 use App\StripeActiveSubscription;
+use App\PaymentLog;
 use Stripe\Stripe as Stripe;
 
 class SettingsController extends Controller {
@@ -136,7 +137,6 @@ class SettingsController extends Controller {
         try {
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
             $invoice = \Stripe\Invoice::retrieve($invoice_id);
-            
             if ($invoice->pay()->paid == true) {
                 $payment_log->log = "invoice_paid";
                 $payment_log->save();
