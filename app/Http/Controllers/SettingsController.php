@@ -142,7 +142,7 @@ class SettingsController extends Controller {
             'update_credit_card_response' => "Your card has been updated",
             'subscriptions' => $subscriptions,
             'invoices' => $invoices,
-            'invoices_' => $invoices_,
+            'invoices2' => $invoices_,
         ]);
     }
 
