@@ -20,6 +20,8 @@ class ReferrerController extends Controller {
         if ($redir == "payment") {
             return view('vsl.payment', [
             ]);
+        } elseif ($redir == "home") {  
+            return redirect('https://morfix.co');
         } else {
             return view('vsl.signup', [
                 'redir' => $redir,
