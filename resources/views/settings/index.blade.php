@@ -103,7 +103,7 @@
                         <tr>
                             <th class="text-center">Invoice</th>
                             <th class="text-center"><i class="fa fa-tags"></i> Invoice Plan</th>
-                            <th class="text-center"><i class="fa fa-clock-o"></i> Invoice Date</th>
+                            <th class="text-center"><i class="fa fa-clock-o"></i> Invoice Date (GMT+8)</th>
                             <th class="text-center">Status</th>
                         </tr>
                     </thead>
@@ -111,9 +111,24 @@
                         @foreach ($invoices_->autoPagingIterator() as $invoice)
                         <tr>
                             @foreach ($invoice->lines->data as $invoice_lines) 
-                            <td>{{ $invoice->id }}</td>    
-                            <td>{{ $invoice_lines->plan->id }}</td>    
-                            <td>{{ \Carbon\Carbon::createFromTimestamp($invoice->date)->toDateTimeString() }}</td>    
+                            <td class="text-center">{{ $invoice->id }}</td>    
+                            
+                            @if ($invoice_lines->plan->id == "0137")
+                            <td class="text-center"><label class="label label-info">Premium</label></td>
+                            @elseif ($invoice_lines->plan->id == "MX370")
+                            <td class="text-center"><label class="label label-danger">Pro</label></td>
+                            @elseif ($invoice_lines->plan->id == "0297")
+                            <td class="text-center"><label class="label label-primary">Business</label></td>
+                            @elseif ($invoice_lines->plan->id == "MX970")
+                            <td class="text-center"><label class="label label-primary">Mastermind</label></td>
+                            @elseif ($invoice_lines->plan->id == "0167")
+                            <td class="text-center"><label class="label label-primary">Business</label></td>
+                            @elseif ($invoice_lines->plan->id == "0197")
+                            <td class="text-center"><label class="label label-primary">Business</label></td>
+                            @elseif ($invoice_lines->plan->id == "0247")
+                            <td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
+                            @endif
+                            <td class="text-center">{{ \Carbon\Carbon::createFromTimestamp($invoice->date)->toDayDateTimeString() }}</td>    
                             @if (!$invoice->paid)
                                 <td class="text-center"><label class="label label-danger">Unpaid</label></td>
                             @else
