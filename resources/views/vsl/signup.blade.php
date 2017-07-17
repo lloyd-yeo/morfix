@@ -177,6 +177,8 @@
                     <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
                         @if ($redir == "home")
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
+                        @if ($redir == "vsl")
+                        DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                         @elseif ($redir == "mmovsl")
                         DISCOVER HOW TO CREATE<br/>HUGE AUTOMATED INCOME ON<br/>SOCIAL MEDIA EVEN IF YOU HAVE NO EXPERIENCE
                         @elseif ($redir == "ospvsl")
@@ -203,6 +205,10 @@
                 <div id='vid-container' class='center-block' style='max-width:910px;'>
 
                     @if ($redir == "mmovsl")
+                    <iframe src="https://player.vimeo.com/video/198823397" 
+                            width="640" height="400" frameborder="0" 
+                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    @elseif ($redir == "vsl")
                     <iframe src="https://player.vimeo.com/video/198823397" 
                             width="640" height="400" frameborder="0" 
                             webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
