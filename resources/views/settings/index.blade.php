@@ -115,9 +115,9 @@
                             <td>{{ $invoice_lines->plan->id }}</td>    
                             <td>{{ \Carbon\Carbon::createFromTimestamp($invoice->date)->toDateTimeString() }}</td>    
                             @if (!$invoice->paid)
-                            <td>Unpaid</td>
+                                <td class="text-center"><label class="label label-danger">Unpaid</label></td>
                             @else
-                            <td>Paid</td>
+                            <td class="text-center"><label class="label label-success">Paid</label></td>
                             @endif
                             @endforeach
                         </tr>
