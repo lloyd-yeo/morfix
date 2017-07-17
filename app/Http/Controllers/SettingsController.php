@@ -65,11 +65,14 @@ class SettingsController extends Controller {
                     $active_subscription->save();
                 }
             }
+            
+            $invoices_ = \Stripe\Invoice::all(array('limit'=>100, 'customer'=>$stripe_id));
         }
 
         return view('settings.index', [
             'subscriptions' => $subscriptions,
             'invoices' => $invoices,
+            'invoices_' => $invoices_,
         ]);
     }
 
@@ -142,7 +145,7 @@ class SettingsController extends Controller {
             'update_credit_card_response' => "Your card has been updated",
             'subscriptions' => $subscriptions,
             'invoices' => $invoices,
-            'invoices2' => $invoices_,
+            'invoices_' => $invoices_,
         ]);
     }
 

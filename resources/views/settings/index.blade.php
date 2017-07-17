@@ -108,7 +108,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($invoices2->autoPagingIterator() as $invoice)
+                        @foreach ($invoices_->autoPagingIterator() as $invoice)
                         <tr>
                             @foreach ($invoice->lines->data as $invoice_lines) 
                             <td>{{ $invoice->id }}</td>    
