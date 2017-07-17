@@ -105,6 +105,7 @@
                             <th class="text-center"><i class="fa fa-tags"></i> Invoice Plan</th>
                             <th class="text-center"><i class="fa fa-clock-o"></i> Invoice Date (GMT+8)</th>
                             <th class="text-center">Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -135,6 +136,15 @@
                             <td class="text-center"><label class="label label-success">Paid</label></td>
                             @endif
                             @endforeach
+                            
+                            <td class="text-center">
+                                @if (!$invoice->paid)
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-success btn-pay-invoice" data-invoice-id="{{ $invoice->id }}" type="button" data-toggle="tooltip" title="Pay Invoice"><i class="fa fa-credit-card"></i></button>
+                                </div>
+                                @endif
+                            </td>
+                            
                         </tr>
                         @endforeach
                     </tbody>

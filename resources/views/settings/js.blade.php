@@ -55,7 +55,7 @@ $(".btn-cancel-subscription").on("click", function(){
 });
 
 $(".btn-pay-invoice").on("click", function(){ 
-    var $sub_id = $(this).attr("data-sub-id");
+//    var $sub_id = $(this).attr("data-sub-id");
     var $invoice_id = $(this).attr("data-invoice-id");
     
     $.ajax({
