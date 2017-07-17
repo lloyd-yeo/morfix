@@ -90,6 +90,44 @@
             </div>
         </div>
         <!-- END Dynamic Table Full -->
+        
+        <!-- Dynamic Table Full -->
+        <div class="block">
+            <div class="block-header">
+                <h3 class="block-title">My Invoices</h3>
+            </div>
+            <div class="block-content">
+                <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                <table class="table table-bordered table-striped js-dataTable-subscription">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Invoice</th>
+                            <th class="text-center"><i class="fa fa-tags"></i> Invoice Plan</th>
+                            <th class="text-center"><i class="fa fa-clock-o"></i> Invoice Date</th>
+                            <th class="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($invoices_->autoPagingIterator() as $invoice)
+                        <tr>
+                            @foreach ($invoice->lines->data as $invoice_lines) 
+                            <td>{{ $invoice->id }}</td>    
+                            <td>{{ $invoice_lines->plan->id }}</td>    
+                            <td>{{ \Carbon\Carbon::createFromTimestamp($invoice->date)->toDateTimeString() }}</td>    
+                            @if (!$invoice->paid)
+                            <td>Unpaid</td>
+                            @else
+                            <td>Paid</td>
+                            @endif
+                            @endforeach
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END Dynamic Table Full -->
+        
 
         <div class="block">
             <div class="block-header">

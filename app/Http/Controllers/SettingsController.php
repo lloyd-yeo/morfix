@@ -95,7 +95,7 @@ class SettingsController extends Controller {
         $subscriptions_listings = \Stripe\Subscription::all(array('customer' => Auth::user()->stripe_id));
         $subscriptions = $subscriptions_listings->data;
 
-        //Remove al active subscription
+        //Remove all active subscription
         Auth::user()->deleteStripeSubscriptions();
 
         foreach ($subscriptions as $subscription) {
@@ -119,11 +119,30 @@ class SettingsController extends Controller {
                 $active_subscription->save();
             }
         }
-
+        
+        $invoices_ = \Stripe\Invoice::all(array('limit'=>100, 'customer'=>$stripe_id));
+        
+//        foreach ($invoices->autoPagingIterator() as $invoice) {
+//            $paid = $invoice->paid;
+//            if (is_bool($paid)) {
+//                if (!$paid) {
+//                    $paid = "Unpaid";
+//                } else {
+//                    $paid = "Paid";
+//                }
+//            }
+//            
+//            foreach ($invoice->lines->data as $invoice_lines) {
+//                echo $invoice->id . " [" . $paid . "]\t" . $invoice_lines->plan->id . "\t" . 
+//                        \Carbon\Carbon::createFromTimestamp($invoice->date)->toDateTimeString()  . "\n";
+//            }
+//        }
+        
         return view('settings.index', [
             'update_credit_card_response' => "Your card has been updated",
             'subscriptions' => $subscriptions,
             'invoices' => $invoices,
+            'invoices_' => $invoices_,
         ]);
     }
 
