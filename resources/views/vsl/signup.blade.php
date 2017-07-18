@@ -548,7 +548,7 @@
                             }
                         });
                     } else { //pay via Paypal
-                        paypalHandler();
+                        $form.submit();
                     }
                 });
 
