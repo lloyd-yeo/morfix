@@ -553,7 +553,7 @@
 
                 $("#paypal-btn").on("click", function (event) {
                     event.preventDefault();
-                    var $form = document.getElementById('payment-form');
+                    var $form = $('#payment-form');
                     $form.attr("action", $(this).attr("href"));
                     $form.submit();
                 });
