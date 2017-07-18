@@ -551,7 +551,8 @@
                     }
                 });
 
-                $("#paypal-btn").on("click", function () {
+                $("#paypal-btn").on("click", function (event) {
+                    event.preventDefault();
                     var $form = document.getElementById('payment-form');
                     $form.attr("action", $(this).attr("href"));
                     $form.submit();
