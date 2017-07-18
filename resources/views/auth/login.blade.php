@@ -122,7 +122,7 @@
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="font-s13 text-center push-5-t">
-                                            Don't have an account? Register <a href="{{ route('register') }}">HERE</a>
+                                            Don't have an account? Register <a href="{{ redirect('https://morfix.co/app/register.php') }}">HERE</a>
                                         </div>
                                     </div>
                                 </div>
