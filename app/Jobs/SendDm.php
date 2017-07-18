@@ -112,7 +112,7 @@ class SendDm implements ShouldQueue {
             $instagram->login();
 
             try {
-                $delay = rand(35, 45);
+                $delay = rand(50, 65);
                 $recipients = array();
                 $recipients["users"] = array();
                 $recipients["users"][] = $dm_job->recipient_insta_id;
