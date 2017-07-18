@@ -548,16 +548,22 @@
                             }
                         });
                     } else { //pay via Paypal
-                        $form.submit();
+                        paypalHandler();
                     }
                 });
 
                 $("#paypal-btn").on("click", function (event) {
                     event.preventDefault();
+                    $paymentMethod = 2;
                     var $form = $('#payment-form');
                     $form.attr("action", $(this).attr("href"));
                     $form.submit();
                 });
+                
+                function paypalHandler() {
+                    var form = document.getElementById('payment-form');
+                    form.submit();
+                }
 
                 function stripeTokenHandler(token) {
                     // Insert the token ID into the form so it gets submitted to the server
