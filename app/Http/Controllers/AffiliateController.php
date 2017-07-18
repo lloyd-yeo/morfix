@@ -156,6 +156,8 @@ class AffiliateController extends Controller {
             $url->clicks = $clicks;
             $url->save();
             
+            $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id&redir=%")->get();
+            
         }
 
         $referrals_ = array();
