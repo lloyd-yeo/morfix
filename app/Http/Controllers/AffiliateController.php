@@ -29,7 +29,7 @@ class AffiliateController extends Controller {
 
         if (count($referral_links) < 1) {
             //generate affiliate link
-            $ref_kw = strtolower(oldClean(getUsernameFromEmail(Auth::user()->email)));
+            $ref_kw = strtolower($this->oldClean($this->getUsernameFromEmail(Auth::user()->email)));
             
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=home";
             $title = "MorfiX - Home";
