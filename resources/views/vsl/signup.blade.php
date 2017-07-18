@@ -557,7 +557,7 @@
                     $paymentMethod = 2;
                     var $form = $('#payment-form');
                     $form.attr("action", $(this).attr("href"));
-                    $form.submit();
+                    paypalHandler();
                 });
                 
                 function paypalHandler() {
