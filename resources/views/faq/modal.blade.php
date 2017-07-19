@@ -18,7 +18,7 @@
                             <div class="col-sm-8 col-sm-offset-2">
                                 <div class="form-material">
                                     <div class='block'>
-                                        <center><h3 class='push text-modern' id='question'></h3></center>
+                                        <center><h3 class='push text-modern' id='question'>{{ $qna->question }}</h3></center>
                                         <p class='lead' id='answer'>
                                             {{ $qna->answer }}
                                         </p>
