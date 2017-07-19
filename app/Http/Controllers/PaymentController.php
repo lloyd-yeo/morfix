@@ -415,14 +415,16 @@ class PaymentController extends Controller {
                     $user->tier = $user->tier + 2;
                 } else if ($plan == "business") {
                     $user->tier = $user->tier + 10;
-                    if ($user->tier < 10) {
-                        $user->num_acct = $user->num_acct + 5;
-                    }
+//                    if ($user->tier < 10) {
+//                        $user->num_acct = $user->num_acct + 5;
+//                    }
+                    $user->num_acct = 6;
                 } else if ($plan == "mastermind") {
                     $user->tier = $user->tier + 20;
-                    if ($user->tier < 10) {
-                        $user->num_acct = $user->num_acct + 5;
-                    }
+//                    if ($user->tier < 10) {
+//                        $user->num_acct = $user->num_acct + 5;
+//                    }
+                    $user->num_acct = 6;
                 }
                 $user->save();
                 
