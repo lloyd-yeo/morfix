@@ -28,7 +28,9 @@
                 <div class="block-header">
                     <h3 class="block-title">Pending DMs</h3>
                 </div>
-                
+                <button class='btn btn-danger' id='delete-all-pending-btn' data-insta-id='{{ $ig_profile->id }}'>
+                    <i class='fa fa-times'></i> Delete All Pending Jobs
+                </button>
                 <div class="block-content">
                     <table class="table table-bordered table-striped js-dataTable-dmJob">
                         <thead>

@@ -99,6 +99,7 @@ Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
 
 Route::get('/dm/logs/{id}', 'DirectMessageLogsController@index');
 Route::post('/dm/logs/cancel/{id}', 'DirectMessageLogsController@cancel');
+Route::post('/dm/logs/clear/{insta_id}', 'DirectMessageLogsController@cancelAllPendingJobs');
 
 Route::post('/webhooks/paypal', 'PaypalWebhookController@listen');
 

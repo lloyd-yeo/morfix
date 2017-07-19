@@ -30,6 +30,9 @@
                 </div>
                 
                 <div class="block-content">
+                    <button class="btn btn-xs btn-danger" id='delete-all-pending-btn' data-insta-username='{{ '>
+                        Delete All Pending Messages <i class="fa fa-envelope"></i>
+                    </button>
                     <table class="table table-bordered table-striped js-dataTable-dmJob">
                         <thead>
                             <tr>
