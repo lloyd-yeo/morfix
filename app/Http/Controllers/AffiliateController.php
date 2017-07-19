@@ -27,9 +27,18 @@ class AffiliateController extends Controller {
 
         $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id&redir=%")->get();
 
+        $suffix = '0';
+        
         if (count($referral_links) < 1) {
             //generate affiliate link
             $ref_kw = strtolower($this->oldClean($this->getUsernameFromEmail(Auth::user()->email)));
+            $original_ref_kw = $ref_kw;
+            
+            while (count(YourlsUrl::where('keyword', 'like', '%' . $ref_kw . '%')->get()) > 0) {
+                $ref_kw = $original_ref_kw;
+                $ref_kw = $ref_kw . "_" . $suffix;
+                $suffix++;
+            }
             
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=home";
             $title = "MorfiX - Home";
