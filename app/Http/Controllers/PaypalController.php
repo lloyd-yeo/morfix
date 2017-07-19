@@ -223,7 +223,7 @@ class PaypalController extends Controller {
             $user->save();
 
             //redirect to Success page.
-            return view('payment', [
+            return view('payment.index', [
                 "upgrade_message" => "You have been successfully upgraded to Premium!"
             ]);
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
@@ -259,7 +259,7 @@ class PaypalController extends Controller {
             $user->save();
 
             //redirect to Success page.
-            return view('payment', [
+            return view('payment.index', [
                 "upgrade_message" => "You have been successfully upgraded to Pro!"
             ]);
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
@@ -291,7 +291,7 @@ class PaypalController extends Controller {
             $user->save();
 
             //redirect to Success page.
-            return view('payment', [
+            return view('payment.index', [
                 "upgrade_message" => "You have been successfully upgraded to Business!"
             ]);
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
@@ -323,7 +323,7 @@ class PaypalController extends Controller {
             $user->save();
 
             //redirect to Success page.
-            return view('payment', [
+            return view('payment.index', [
                 "upgrade_message" => "You have been successfully upgraded to Mastermind!"
             ]);
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
