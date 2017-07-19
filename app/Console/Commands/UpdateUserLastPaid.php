@@ -20,7 +20,7 @@ class UpdateUserLastPaid extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Update last paid of affiliates.';
 
     /**
      * Create a new command instance.
