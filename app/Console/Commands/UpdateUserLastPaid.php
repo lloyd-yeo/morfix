@@ -41,7 +41,10 @@ class UpdateUserLastPaid extends Command
     {
         $referral_charges_users = DB::select('SELECT DISTINCT(referrer_email) FROM insta_affiliate.get_referral_charges_of_user LIMIT 1000');
         foreach ($referral_charges_users as $referral_charges_user) {
-            echo $referral_charges_user->referrer_email . "\n";
+            $user = User::where('email', $referral_charges_user->referrer_email)->first();
+            if ($user !== NULL && $user->paypal_email !== NULL) {
+                echo $referral_charges_user->referrer_email . "\t" . $user->paypal_email . "\n";
+            }
         }
         
     }
