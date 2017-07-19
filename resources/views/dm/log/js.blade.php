@@ -29,7 +29,7 @@ $("#delete-all-pending-btn").on("click", function() {
                 url: "/dm/logs/clear/" + $insta_id,
                 dataType: "json",
                 data: {
-
+                    
                 },
                 success: function (data) {
                     if (data.success === true) {
