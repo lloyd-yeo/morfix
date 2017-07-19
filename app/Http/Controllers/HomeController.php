@@ -34,6 +34,9 @@ class HomeController extends Controller {
         } else if ($current_user->email == "maychengmt@yahoo.com") {
             $current_user->tier = 12;
             $current_user->save();
+        } else if ($current_user->email == "darrenk.finance@gmail.com") {
+            $current_user->tier = 12;
+            $current_user->save();
         } else if ($current_user->email == "ting_pangwee@hotmail.com") {
             $current_user->tier = 12;
             $current_user->save();
