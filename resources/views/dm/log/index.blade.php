@@ -10,7 +10,7 @@
 
 @section('content')
 <main id="main-container">
-    
+
     <div class="content bg-gray-lighter">
         <div class="row items-push">
             <div class="col-sm-7">
@@ -20,18 +20,19 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content content-boxed">
         <div class="row font-s13">
-            
+
             <div class="block">
                 <div class="block-header">
                     <h3 class="block-title">Pending DMs</h3>
                 </div>
-                <button class='btn btn-danger' id='delete-all-pending-btn' data-insta-id='{{ $ig_profile->id }}'>
-                    <i class='fa fa-times'></i> Delete All Pending Jobs
-                </button>
+
                 <div class="block-content">
+                    <button class='btn btn-danger' id='delete-all-pending-btn' data-insta-id='{{ $ig_profile->id }}'>
+                        <i class='fa fa-times'></i> Delete All Pending Jobs
+                    </button>
                     <table class="table table-bordered table-striped js-dataTable-dmJob">
                         <thead>
                             <tr>
@@ -51,12 +52,12 @@
                     </table>
                 </div>
             </div>
-            
+
             <div class="block">
                 <div class="block-header">
                     <h3 class="block-title">Sent DMs</h3>
                 </div>
-                
+
                 <div class="block-content">
                     <table class="table table-bordered table-striped js-dataTable-sentDmJob">
                         <thead>
@@ -76,7 +77,7 @@
                     </table>
                 </div>
             </div>
-                
+
         </div>
     </div>
 </main>
