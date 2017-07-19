@@ -61,7 +61,7 @@ class DirectMessageLogsController extends Controller
              return redirect('home');
         }
         
-        DmJob::where('fulfilled', 0)->where('insta_username', $ig_profile->insta_username)->update(['fulfilled', 2]);
+        DmJob::where('fulfilled', 0)->where('insta_username', $ig_profile->insta_username)->update(['fulfilled' => 2]);
         return Response::json(array("success" => true, 'message' => "Your pending DM has all been cancelled."));
     }
 }
