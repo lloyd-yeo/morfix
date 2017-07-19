@@ -91,8 +91,8 @@ Route::post('/settings/invoice/pay/{invoice_id}', 'SettingsController@attemptInv
 
 Route::post('/settings/cards/update', 'SettingsController@updateCreditCard');
 
-Route::get('/faq', 'FaqController@index');
-Route::get('/faqtopic', 'FaqController@topic');
+#Route::get('/faq', 'FaqController@index');
+Route::get('/faq', 'FaqController@topic');
 Route::get('/faq/{topic}', 'FaqController@listQuestions');
 
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
