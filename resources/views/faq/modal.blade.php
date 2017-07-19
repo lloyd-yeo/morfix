@@ -1,4 +1,4 @@
-<div class="modal fade" id="question-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="qna-{{ $qna->id }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-popin modal-lg">
         <div class="modal-content">
             <div class="block block-themed block-transparent remove-margin-b">

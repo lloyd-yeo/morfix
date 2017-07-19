@@ -21,7 +21,7 @@
         @foreach ($qnas as $qna)
         <div class="row">
             <div class="col-sm-12">
-                <a class="block block-link-hover3 question-link" href='#' data-q='{{ $qna->id }}'>
+                <a class="block block-link-hover3 question-link" data-toggle='modal' data-target='#qna-{{ $qna->id }}' href='#' data-q='{{ $qna->id }}'>
                     <div class="block-content" style='padding-bottom: 40px;'>
                         <div class="push">
                             <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
@@ -29,7 +29,7 @@
                         </div>
                         
                         <h4 class="push-10">{{ $qna->question }}</h4>
-                        <p>{{ str_limit($qna->answer, 100, '...') }}...</p>
+                        <p>{{ str_limit($qna->answer, 150, '...') }}...</p>
                     </div>
                 </a>
             </div>
@@ -37,9 +37,9 @@
         @endforeach
     </div>
     <!-- END Page Content -->
-    
-    @include('faq.modal')
-    
+    @foreach ($qnas as $qna)
+        @include('faq.modal', ['qna' => $qna])
+    @endforeach
 </main>
 @endsection
 
