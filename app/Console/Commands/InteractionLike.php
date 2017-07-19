@@ -66,6 +66,10 @@ class InteractionLike extends Command {
 
         foreach ($users as $user) {
             
+            if ($user->email != "theoilybabes@yahoo.com") {
+                continue;
+            }
+            
             if (NULL === $this->argument("email")) {
                 #dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)))->onQueue('like');
                 
