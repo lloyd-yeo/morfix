@@ -20,7 +20,7 @@
                                     <div class='block'>
                                         <center><h3 class='push text-modern' id='question'>{{ $qna->question }}</h3></center>
                                         <p class='lead' id='answer'>
-                                            {{ $qna->answer }}
+                                            {!! $qna->answer !!}
                                         </p>
                                     </div>
                                 </div>
