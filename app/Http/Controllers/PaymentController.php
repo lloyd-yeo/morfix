@@ -325,13 +325,13 @@ class PaymentController extends Controller {
         $payment_log->save();
 
         $plan_id = "0137";
-        if ($plan == "Premium") {
+        if ($plan == "premium") {
             $plan_id = "0137";
-        } else if ($plan == "Pro") {
+        } else if ($plan == "pro") {
             $plan_id = "MX370";
-        } else if ($plan == "Business") {
+        } else if ($plan == "business") {
             $plan_id = "0297";
-        } else if ($plan == "Mastermind") {
+        } else if ($plan == "mastermind") {
             $plan_id = "MX970";
         }
 
@@ -409,16 +409,16 @@ class PaymentController extends Controller {
 
                 $response['subscription_success'] = true;
 
-                if ($plan == "Premium") {
+                if ($plan == "premium") {
                     $user->tier = $user->tier + 1;
-                } else if ($plan == "Pro") {
+                } else if ($plan == "pro") {
                     $user->tier = $user->tier + 2;
-                } else if ($plan == "Business") {
+                } else if ($plan == "business") {
                     $user->tier = $user->tier + 10;
                     if ($user->tier < 10) {
                         $user->num_acct = $user->num_acct + 5;
                     }
-                } else if ($plan == "Mastermind") {
+                } else if ($plan == "mastermind") {
                     $user->tier = $user->tier + 20;
                     if ($user->tier < 10) {
                         $user->num_acct = $user->num_acct + 5;
