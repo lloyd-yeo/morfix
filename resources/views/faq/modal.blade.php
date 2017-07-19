@@ -8,7 +8,7 @@
                             <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
                         </li>
                     </ul>
-                    <h3 class="block-title"><i class='fa fa-info'></i> FAQ</h3>
+                    <h3 class="block-title">{{ $qna->question }}</h3>
                 </div>
                 <div class="block-content">
                     <!-- Form -->
@@ -20,6 +20,7 @@
                                     <div class='block'>
                                         <center><h3 class='push text-modern' id='question'></h3></center>
                                         <p class='lead' id='answer'>
+                                            {{ $qna->answer }}
                                         </p>
                                     </div>
                                 </div>
