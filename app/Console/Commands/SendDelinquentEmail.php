@@ -50,6 +50,9 @@ class SendDelinquentEmail extends Command
             if ($delinquent_customer->delinquent) {
                 $delinquent_emails[] = $email;
             }
+            if (count($delinquent_emails) > 29) {
+                break;
+            }
         }
         
         foreach ($delinquent_emails as $delinquent_email) {
