@@ -57,6 +57,7 @@ class SendDelinquentEmail extends Command
         
         foreach ($delinquent_emails as $delinquent_email) {
             echo $delinquent_email . "\n";
+            Mail::to($delinquent_email)->send(new PaymentFailed());
         }
     }
 }
