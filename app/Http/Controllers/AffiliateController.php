@@ -36,7 +36,7 @@ class AffiliateController extends Controller {
             
             while (count(YourlsUrl::where('keyword', 'like', '%' . $ref_kw . '%')->get()) > 0) {
                 $ref_kw = $original_ref_kw;
-                $ref_kw = $ref_kw . "_" . $suffix;
+                $ref_kw = $ref_kw . "-" . $suffix;
                 $suffix++;
             }
             
