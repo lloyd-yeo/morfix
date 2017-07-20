@@ -50,7 +50,7 @@ class SendDelinquentEmail extends Command
             $email = $delinquent_customer->email;
             if ($delinquent_customer->delinquent) {
                 $delinquent_emails[] = $email;
-                $user = User::where('email', $email);
+                $user = User::where('email', $email)->first();
                 $user->tier = 1;
                 $user->user_tier = 1;
                 $user->num_acct = 1;
