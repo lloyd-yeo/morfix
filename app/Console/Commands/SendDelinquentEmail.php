@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Mail\PaymentFailed;
 use App\StripeDetail;
 use Illuminate\Support\Facades\Mail;
+use App\User;
 
 class SendDelinquentEmail extends Command
 {
@@ -49,15 +50,24 @@ class SendDelinquentEmail extends Command
             $email = $delinquent_customer->email;
             if ($delinquent_customer->delinquent) {
                 $delinquent_emails[] = $email;
+                $user = User::where('email', $email);
+                $user->tier = 1;
+                $user->user_tier = 1;
+                $user->num_acct = 1;
+                $user->trial_activation = 2;
+                if ($user->save()) {
+                    echo "Downgraded & updated [$email]\n";
+                }
             }
-            if (count($delinquent_emails) > 29) {
-                break;
-            }
+//            if (count($delinquent_emails) > 29) {
+//                break;
+//            }
         }
         
-        foreach ($delinquent_emails as $delinquent_email) {
-            echo $delinquent_email . "\n";
-            Mail::to($delinquent_email)->send(new PaymentFailed());
-        }
+//        foreach ($delinquent_emails as $delinquent_email) {
+//            echo $delinquent_email . "\n";
+//            Mail::to($delinquent_email)->send(new PaymentFailed());
+//            sleep(60*3);
+//        }
     }
 }
