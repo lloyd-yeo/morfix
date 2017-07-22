@@ -111,10 +111,16 @@ class RefreshInstagramProfile extends Command {
                         
                         try {
                             var_dump($item);
-                            break;
+                            $image_url = "";
+                            if (is_null($item->image_versions2)) {
+                                //is carousel media
+                                $image_url = $item->carousel_media[0]->image_versions2->candidates[0]->url;
+                            } else {
+                                $image_url = $item->image_versions2->candidates[0]->url;
+                            }
                             DB::connection('mysql_old')->
                                     insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", 
-                                            [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
+                                            [$ig_username, $item->id, $image_url]);
                         } catch (\ErrorException $e) {
                             $this->error("ERROR: " . $e->getMessage());
                             break;
