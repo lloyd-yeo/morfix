@@ -95,7 +95,7 @@ class RefreshInstagramProfile extends Command {
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $login_response = $instagram->login();
-                    var_dump($login_response);
+                    #var_dump($login_response);
                     $user_response = $instagram->account->getCurrentUser();
                     
                     $instagram_user = $user_response->user;
@@ -105,8 +105,8 @@ class RefreshInstagramProfile extends Command {
                                     [$instagram_user->full_name, $instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
                     
                     $items = $instagram->timeline->getSelfUserFeed()->items;
-                    var_dump($items);
-//                    $this->info(serialize($items));
+//                    var_dump($items);
+                    $this->info(serialize($items));
                     foreach ($items as $item) {
                         try {
                             DB::connection('mysql_old')->
