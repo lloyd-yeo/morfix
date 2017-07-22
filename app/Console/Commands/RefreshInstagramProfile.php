@@ -106,15 +106,19 @@ class RefreshInstagramProfile extends Command {
                     
                     $items = $instagram->timeline->getSelfUserFeed()->items;
                     var_dump($items);
-                    break;
+                    
                     foreach ($items as $item) {
+                        
                         try {
+                            
                             DB::connection('mysql_old')->
-                                    insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
+                                    insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", 
+                                            [$ig_username, $item->id, $item->getItemUrl()]);
                         } catch (\ErrorException $e) {
                             $this->error("ERROR: " . $e->getMessage());
                             break;
                         }
+                        
                     }
 //                    $new_profile = new InstagramProfile;
 //                    $new_profile->user_id = Auth::user()->id;
