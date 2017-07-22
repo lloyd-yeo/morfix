@@ -73,9 +73,11 @@ class RefreshInstagramProfile extends Command {
             
             $debug = false;
             $truncatedDebug = false;
+            
             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
             foreach ($instagram_profiles as $ig_profile) {
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+                
                 $ig_username = $ig_profile->insta_username;
                 $ig_password = $ig_profile->insta_pw;
 
@@ -93,6 +95,7 @@ class RefreshInstagramProfile extends Command {
                 try {
                     $instagram->setUser($ig_username, $ig_password);
                     $login_response = $instagram->login();
+                    var_dump($login_response);
                     $user_response = $instagram->getUserInfoByName($ig_username);
                     $instagram_user = $user_response->user;
                     
