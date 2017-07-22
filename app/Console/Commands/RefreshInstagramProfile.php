@@ -97,11 +97,12 @@ class RefreshInstagramProfile extends Command {
                     $login_response = $instagram->login();
                     var_dump($login_response);
                     $user_response = $instagram->account->getCurrentUser();
-                    var_dump($user_response);
-                    $instagram_user = $user_response->user;
                     
-                    DB::update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
-                                    [$instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
+                    $instagram_user = $user_response->user;
+                    var_dump($instagram_user);
+                    
+                    DB::update("UPDATE user_insta_profile SET name = ?, updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
+                                    [$instagram_user->full_name, $instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
                     
                     $items = $instagram->timeline->getSelfUserFeed()->items;
 //                    $this->info(serialize($items));
