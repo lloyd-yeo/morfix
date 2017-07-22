@@ -96,7 +96,8 @@ class RefreshInstagramProfile extends Command {
                     $instagram->setUser($ig_username, $ig_password);
                     $login_response = $instagram->login();
                     var_dump($login_response);
-                    $user_response = $instagram->people->getInfoByName($ig_username);
+                    $user_response = $instagram->account->getCurrentUser();
+                    var_dump($user_response);
                     $instagram_user = $user_response->user;
                     
                     DB::update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
