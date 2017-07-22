@@ -106,7 +106,7 @@ class RefreshInstagramProfile extends Command {
                     
                     $items = $instagram->timeline->getSelfUserFeed()->items;
                     var_dump($items);
-                    
+                    break;
                     foreach ($items as $item) {
                         try {
                             DB::connection('mysql_old')->
