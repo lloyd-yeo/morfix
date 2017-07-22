@@ -111,6 +111,7 @@ class RefreshInstagramProfile extends Command {
                         
                         try {
                             var_dump($item);
+                            break;
                             DB::connection('mysql_old')->
                                     insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", 
                                             [$ig_username, $item->id, $item->image_versions2->candidates[0]->url]);
