@@ -197,7 +197,8 @@ class InteractionComment implements ShouldQueue {
                     
                     $engaged_user = $unengaged_liking->target_username;
                     try {
-                        $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
+                        $user_instagram_id = $instagram->people->getUserIdForName($unengaged_liking->target_username);
+                        #$user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
@@ -257,7 +258,8 @@ class InteractionComment implements ShouldQueue {
                     $engaged_user = $unengaged_following->target_username;
                     
                     try {
-                        $user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
+                        #$user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
+                        $user_instagram_id = $instagram->people->getUserIdForName($unengaged_liking->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
