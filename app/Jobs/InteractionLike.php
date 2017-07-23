@@ -201,7 +201,8 @@ class InteractionLike implements ShouldQueue {
 
                     //Get followers of the target.
                     echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
-                    $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                    $user_follower_response = $instagram->people->getFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                    #$user_follower_response = $instagram->getUserFollowers();
                     $target_user_followings = $user_follower_response->users;
                     $duplicate = 0;
 
