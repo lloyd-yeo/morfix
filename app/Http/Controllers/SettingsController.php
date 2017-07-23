@@ -66,7 +66,7 @@ class SettingsController extends Controller {
                 }
             }
             
-            $invoices_ = \Stripe\Invoice::all(array('limit'=>100, 'customer'=>$stripe_id));
+            $invoices_ = \Stripe\Invoice::all(array('limit'=>100, 'customer'=> Auth::user()->stripe_id));
         }
 
         return view('settings.index', [
