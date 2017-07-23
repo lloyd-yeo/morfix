@@ -327,7 +327,8 @@ class InteractionLike implements ShouldQueue {
                     if ($like_quota > 0) {
                         echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
                         //Get the feed from the targeted hashtag.
-                        $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+//                        $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                        $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                         //Foreach post under this target hashtag
                         foreach ($hashtag_feed->items as $item) {
                             //Get user because we need to check if they have been liked before.
@@ -520,8 +521,9 @@ class InteractionLike implements ShouldQueue {
                 foreach ($target_hashtags as $target_hashtag) {
 
                     echo("\n" . "target hashtag: " . $target_hashtag->hashtag . "\n\n");
-
-                    $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                    
+                    $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
+                    #$hashtag_feed = $instagram->getHashtagFeed();
 
                     foreach ($hashtag_feed->items as $item) {
                         
