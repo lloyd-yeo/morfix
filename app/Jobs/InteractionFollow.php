@@ -67,7 +67,7 @@ class InteractionFollow implements ShouldQueue {
         DB::reconnect();
 
         $ig_profile = $this->profile;
-        
+
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
 
         $ig_username = $ig_profile->insta_username;
@@ -93,13 +93,13 @@ class InteractionFollow implements ShouldQueue {
         $follow_quota = $ig_profile->follow_quota;
         $unfollow_quota = $ig_profile->unfollow_quota;
         $proxy = $ig_profile->proxy;
-        
+
         $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-                                                    ->where('follow', 1)
-                                                    ->where('unfollowed', 0)
-                                                    ->get();
+                ->where('follow', 1)
+                ->where('unfollowed', 0)
+                ->get();
         $followed_count = count($followed_logs);
-        
+
         echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
 
         if ($followed_count >= $ig_profile->follow_cycle) {
@@ -108,7 +108,7 @@ class InteractionFollow implements ShouldQueue {
             $ig_profile->save();
             $ig_profile = InstagramProfile::find($ig_profile->id);
         }
-        
+
         $target_username = "";
         $target_follow_username = "";
         $target_follow_id = "";
@@ -196,7 +196,6 @@ class InteractionFollow implements ShouldQueue {
                     exit();
                 }
                 //[End LOGIN]
-                
                 //[get users to UNFOLLOW]
                 $users_to_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_username)
                         ->where('unfollowed', false)
@@ -376,7 +375,6 @@ class InteractionFollow implements ShouldQueue {
                 }
             }
             //[End LOGIN]
-            
             //start with targeted usernames/hashtags
             $use_hashtags = rand(0, 1);
             echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
@@ -414,7 +412,8 @@ class InteractionFollow implements ShouldQueue {
                     foreach ($target_hashtags as $target_hashtag) {
 
                         echo "[" . $insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
-                        $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                        #$hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                        $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
 
                         foreach ($hashtag_feed->items as $item) {
 
@@ -463,7 +462,7 @@ class InteractionFollow implements ShouldQueue {
 
                                             $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
                                             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
-                                            
+
                                             if ($ig_profile->save()) {
                                                 echo "[$insta_username] HASHTAG added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
                                             }
@@ -496,27 +495,26 @@ class InteractionFollow implements ShouldQueue {
                                             $followed = 1;
                                             echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
                                             break;
-                                            
                                         } else {
                                             continue;
                                         }
                                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                         echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
-                                        
+
                                         if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
                                             $ig_profile->feedback_required = 1;
                                             $ig_profile->save();
                                             $followed = 1;
                                             break;
                                         }
-                                        
+
                                         if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
                                             $ig_profile->feedback_required = 1;
                                             $ig_profile->save();
                                             $followed = 1;
                                             break;
                                         }
-                                        
+
                                         if (stripos(trim($request_ex->getMessage()), "Sorry, you're following the max limit of accounts. You'll need to unfollow some accounts to start following more.") !== false) {
                                             $followed = 1;
                                             break;
@@ -546,7 +544,10 @@ class InteractionFollow implements ShouldQueue {
                     foreach ($target_usernames as $target_username) {
 
                         echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
-                        $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+
+                        $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+                        $user_follower_response = $instagram->people->getFollowers($username_id);
+                        #$user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
                         $users_to_follow = $user_follower_response->users;
 
                         foreach ($users_to_follow as $user_to_follow) {
@@ -675,14 +676,16 @@ class InteractionFollow implements ShouldQueue {
                         foreach ($target_usernames as $target_username) {
                             echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
                             $user_follower_response = NULL;
-                            
+
                             try {
-                                $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                                $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+                                $user_follower_response = $instagram->people->getFollowers($username_id);
+                                #$user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
                             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                                 $target_username->delete();
                                 continue;
                             }
-                            
+
                             $users_to_follow = $user_follower_response->users;
 
                             foreach ($users_to_follow as $user_to_follow) {
@@ -766,21 +769,21 @@ class InteractionFollow implements ShouldQueue {
                                             }
                                         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                                             echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
-                                            
+
                                             if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
                                                 $ig_profile->feedback_required = 1;
                                                 $ig_profile->save();
                                                 $followed = 1;
                                                 break;
                                             }
-                                            
+
                                             if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
                                                 $ig_profile->feedback_required = 1;
                                                 $ig_profile->save();
                                                 $followed = 1;
                                                 exit();
                                             }
-                                            
+
                                             continue;
                                         } catch (Exception $ex) {
                                             echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
