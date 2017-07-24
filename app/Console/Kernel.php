@@ -49,6 +49,8 @@ class Kernel extends ConsoleKernel {
         Commands\GetUserInvoices::class,
         Commands\UpdateUserLastPaid::class,
         Commands\SendDelinquentEmail::class,
+        Commands\GetUsersWithPendingCommisions::class,
+        Commands\ReadLastPaidCsv::class,
     ];
 
     /**
