@@ -569,7 +569,8 @@ class InteractionFollow implements ShouldQueue {
                                 } else {
                                     try {
                                         $throttle_count++;
-                                        $user_info = $instagram->getUserInfoById($user_to_follow->pk);
+                                        #$user_info = $instagram->getUserInfoById($user_to_follow->pk);
+                                        $user_info = $instagram->people->getInfoById($user_to_follow->pk);
                                         $user_to_follow = $user_info->user;
 
                                         if ($user_to_follow->media_count == 0) {
@@ -706,7 +707,7 @@ class InteractionFollow implements ShouldQueue {
                                     } else {
                                         try {
                                             $throttle_count++;
-                                            $user_info = $instagram->getUserInfoById($user_to_follow->pk);
+                                            $user_info = $instagram->people->getInfoById($user_to_follow->pk);
                                             $user_to_follow = $user_info->user;
 
                                             if ($user_to_follow->media_count == 0) {
