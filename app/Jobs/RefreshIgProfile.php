@@ -91,6 +91,7 @@ class RefreshIgProfile implements ShouldQueue {
         $instagram->setProxy($ig_profile->proxy);
 
         try {
+            
             $instagram->setUser($ig_username, $ig_password);
             $login_response = $instagram->login();
             $user_response = $instagram->account->getCurrentUser();
