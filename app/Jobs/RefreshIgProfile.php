@@ -74,7 +74,7 @@ class RefreshIgProfile implements ShouldQueue {
 
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         $ig_profile = $this->profile;
-        $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
+        echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
 
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
