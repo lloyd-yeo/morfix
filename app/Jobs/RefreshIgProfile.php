@@ -111,7 +111,7 @@ class RefreshIgProfile implements ShouldQueue {
             foreach ($items as $item) {
 
                 try {
-                    var_dump($item);
+                    #var_dump($item);
                     $image_url = "";
                     if (is_null($item->image_versions2)) {
                         //is carousel media
