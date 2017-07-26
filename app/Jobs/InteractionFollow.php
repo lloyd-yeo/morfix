@@ -586,7 +586,7 @@ class InteractionFollow implements ShouldQueue {
                                             continue;
                                         }
 
-                                        $follow_resp = $instagram->follow($user_to_follow->pk);
+                                        $follow_resp = $instagram->people->follow($user_to_follow->pk);
 
                                         if ($follow_resp->friendship_status->following == true) {
 
