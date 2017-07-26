@@ -45,6 +45,7 @@ class RefreshIgProfile implements ShouldQueue {
      * @var int
      */
     public $timeout = 180;
+    
     protected $profile;
 
     /**

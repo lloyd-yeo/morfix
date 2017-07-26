@@ -55,25 +55,22 @@ class RefreshInstagramProfile extends Command {
         }
 
         foreach ($users as $user) {
-            if (NULL === $this->argument("email")) {
-                $instagram_profiles = InstagramProfile::where('checkpoint_required', false)
-                        ->where('account_disabled', false)
-                        ->where('invalid_user', false)
-                        ->where('incorrect_pw', false)
-                        ->where('user_id', $user->user_id)
-                        ->get();
+            $instagram_profiles = InstagramProfile::where('checkpoint_required', false)
+                    ->where('account_disabled', false)
+                    ->where('invalid_user', false)
+                    ->where('incorrect_pw', false)
+                    ->where('user_id', $user->user_id)
+                    ->get();
 
-                foreach ($instagram_profiles as $ig_profile) {
-                    $job = new \App\Jobs\RefreshIgProfile(\App\InstagramProfile::find($ig_profile->id));
-                    $job->onQueue('refresh');
-                    dispatch($job);
-                    $this->line("queued profile: " . $ig_profile->insta_username);
-                }
-                continue;
+            foreach ($instagram_profiles as $ig_profile) {
+                $job = new \App\Jobs\RefreshIgProfile(\App\InstagramProfile::find($ig_profile->id));
+                $job->onQueue('refresh');
+                dispatch($job);
+                $this->line("queued profile: " . $ig_profile->insta_username);
             }
         }
 
         return;
     }
-    
+
 }
