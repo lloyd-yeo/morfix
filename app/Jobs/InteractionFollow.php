@@ -242,7 +242,7 @@ class InteractionFollow implements ShouldQueue {
                         $current_log_id = $user_to_unfollow->log_id;
 
                         if ($unfollow_unfollowed == 1) {
-                            $friendship = $instagram->getUserFriendship($user_to_unfollow->follower_id);
+                            $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
                             if ($friendship->followed_by == true) {
                                 echo "[" . $insta_username . "] is followed by " . $user_to_unfollow->follower_username . "\n";
                                 $user_to_unfollow->unfollowed = 1;
