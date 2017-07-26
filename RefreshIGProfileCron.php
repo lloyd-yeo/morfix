@@ -90,7 +90,8 @@ if (flock($file, LOCK_EX | LOCK_NB)) {
                     $instagram->setProxy($proxy);
                     $instagram->setUser($ig_username, $ig_password);
                     $instagram->login();
-                    $user_response = $instagram->getUserInfoByName($ig_username);
+//                    $user_response = $instagram->getUserInfoByName($ig_username);
+                    $user_response = $instagram->people->getInfoByName($ig_username);
                     $instagram_user = $user_response->user;
                     $conn = getConnection($servername, $username, $password, $dbname);
                     $update_stmt = $conn->prepare("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;");
