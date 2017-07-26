@@ -254,7 +254,8 @@ class InteractionFollow implements ShouldQueue {
                             }
                         }
 
-                        $resp = $instagram->unfollow($user_to_unfollow->follower_id);
+                        #$resp = $instagram->unfollow($user_to_unfollow->follower_id);
+                        $resp = $instagram->people->unfollow($user_to_unfollow->follower_id);
                         echo "[" . $insta_username . "] ";
 //                        var_dump($resp);
 
@@ -457,7 +458,8 @@ class InteractionFollow implements ShouldQueue {
                                             continue;
                                         }
 
-                                        $follow_resp = $instagram->follow($user_to_follow->pk);
+                                        #$follow_resp = $instagram->follow($user_to_follow->pk);
+                                        $follow_resp = $instagram->people->follow($user_to_follow->pk);
 
                                         if ($follow_resp->friendship_status->following == true) {
 
