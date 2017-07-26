@@ -20,7 +20,7 @@ class RefreshInstagramProfile extends Command {
      *
      * @var string
      */
-    protected $signature = 'ig:refresh {offset : The position to start retrieving from.} {limit : The number of results to limit to.} {email?}';
+    protected $signature = 'ig:refresh {email?}';
 
     /**
      * The console command description.
@@ -44,7 +44,38 @@ class RefreshInstagramProfile extends Command {
      * @return mixed
      */
     public function handle() {
-
+        
+        if (NULL !== $this->argument("email")) {
+            $users = User::where('email', $this->argument("email"))->get();
+        } else {
+            $users = DB::table('user')
+                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                    ->orderBy('user_id', 'asc')
+                    ->get();
+        }
+        
+        foreach ($users as $user) {
+            if (NULL === $this->argument("email")) {
+                $instagram_profiles = InstagramProfile::where('checkpoint_required', false)
+                    ->where('account_disabled', false)
+                    ->where('invalid_user', false)
+                    ->where('incorrect_pw', false)
+                    ->where('user_id', $user->user_id)
+                    ->get();
+                
+                foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\RefreshIgProfile(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('refresh');
+                    dispatch($job);
+                    $this->line("queued profile: " . $ig_profile->insta_username);
+                }
+                continue;
+            }
+        }
+        
+        return;
+        
+        
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
 
