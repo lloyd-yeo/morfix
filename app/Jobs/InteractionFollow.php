@@ -211,7 +211,8 @@ class InteractionFollow implements ShouldQueue {
                     #forced unfollow
                     if ($auto_unfollow == 1 && $auto_follow == 0) {
                         echo "[" . $insta_username . "] adding new unfollows..\n";
-                        $followings = $instagram->getSelfUsersFollowing();
+                        #$followings = $instagram->getSelfUsersFollowing();
+                        $followings = $instagram->people->getSelfFollowing();
                         foreach ($followings->users as $user) {
 
                             try {
