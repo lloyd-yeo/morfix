@@ -118,18 +118,18 @@ class RefreshIgProfile implements ShouldQueue {
                     DB::connection('mysql_old')->
                             insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $image_url]);
                 } catch (\ErrorException $e) {
-                    $this->error("ERROR: " . $e->getMessage());
+                    echo("ERROR: " . $e->getMessage());
                     break;
                 }
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-            $this->error($checkpoint_ex->getMessage());
+            echo($checkpoint_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-            $this->error($network_ex->getMessage());
+            echo($network_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-            $this->error($endpoint_ex->getMessage());
+            echo($endpoint_ex->getMessage());
             if (stripos(trim($endpoint_ex->getMessage()), "The username you entered doesn't appear to belong to an account. Please check your username and try again.") !== false) {
                 $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
                 $instagram->setUser("entrepreneur_xyz", "instaffiliates123");
@@ -140,13 +140,13 @@ class RefreshIgProfile implements ShouldQueue {
                 DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
             }
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-            $this->error($incorrectpw_ex->getMessage());
+            echo($incorrectpw_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
         } catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
-            $this->error($accountdisabled_ex->getMessage());
+            echo($accountdisabled_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$accountdisabled_ex->getMessage(), $ig_profile->id]);
         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-            $this->error($request_ex->getMessage());
+            echo($request_ex->getMessage());
             DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$request_ex->getMessage(), $ig_profile->id]);
         }
     }
