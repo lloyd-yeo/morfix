@@ -229,8 +229,8 @@ class InteractionLike extends Command {
 
                                 //Get followers of the target.
                                 $this->line("[$ig_username] Target Username: " . $target_username->target_username . "\n");
-                                #$user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
-                                $user_follower_response = $instagram->people->getFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                                #$user_follower_response = $instagram->getUserFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
+                                $user_follower_response = $instagram->people->getFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
                                 $target_user_followings = $user_follower_response->users;
                                 $duplicate = 0;
 
@@ -424,7 +424,7 @@ class InteractionLike extends Command {
 
                                     //Get followers of the target.
                                     $this->line("Target Username: " . $target_username->target_username . "\n");
-                                    $user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                                    $user_follower_response = $instagram->getUserFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
                                     $target_user_followings = $user_follower_response->users;
                                     $duplicate = 0;
 
