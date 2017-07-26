@@ -6,8 +6,8 @@ use Illuminate\Console\Command;
 use App\User;
 use Carbon\Carbon;
 
-class ReadLastPaidCsv extends Command
-{
+class ReadLastPaidCsv extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -27,8 +27,7 @@ class ReadLastPaidCsv extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -37,25 +36,52 @@ class ReadLastPaidCsv extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-        $path = storage_path('app/june-payout.csv');
+    public function handle() {
+        $path = storage_path('app/june-payment.csv');
         $file = fopen($path, "r");
         $all_data = array();
+        $row_count = 0;
+
+        $current_referrer = "";
+        $current_commission = 0;
+
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
-            
-            $email = $data[0];
-            $paypal_email = $data[1];
-            $last_paid_out = $data[2];
-            
-            echo Carbon::parse($last_paid_out) . "\n";
-            
-//            $referral_charges = DB::select('SELECT * FROM '
-//                    . 'get_referral_charges_of_user '
-//                    . 'WHERE charge_refunded = 0 AND charge_created >= "2017-05-01 00:00:00" '
-//                    . 'AND charge_created <= "2017-05-31 23:59:59" AND referrer_email = ?', [$user->email]);
+            if ($row_count == 0) {
+                $row_count++;
+                continue;
+            }
+
+            if ($current_referrer != $data[0]) {
+                if ($current_referrer == "") {
+                    $current_referrer = $data[0];
+//                    echo $current_referrer . "\n";
+                } else {
+
+                    $user = User::where("email", $current_referrer)->first();
+                    $paypal_email = $user->paypal_email;
+                    
+                    echo $user->email . "," . $user->paypal_email . "," . $current_commission . "\n";
+                    
+                    //reset
+                    $current_referrer = $data[0];
+                    $current_commission = 0;
+                }
+            }
+
+            if ($data[3] == "NOT REFUNDED" && $data[5] == "Paid" && $data[6] == "Eligible") {
+                if ($data[2] == "137") {
+                    $current_commission += 20;
+                } else if ($data[2] == "0297") {
+                    $current_commission += 50;
+                } else if ($data[2] == "0167") {
+                    $current_commission += 26.8;
+                } else if ($data[2] == "0197") {
+                    $current_commission += 38.8;
+                } else if ($data[2] == "MX370") {
+                    $current_commission += 200;
+                }
+            }
         }
-        
-        
     }
+
 }
