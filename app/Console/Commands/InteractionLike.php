@@ -223,13 +223,15 @@ class InteractionLike extends Command {
                         /*
                          * Defined target usernames take precedence.
                          */
-//                        $username_or_hashtag = 0;
+                        $duplicate_found = 0;
                         $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
-//                        $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $ig_username)->inRandomOrder()->get();
-//                        if (count($target_hashtags == 0)) {
-//                            
-//                        }
                         foreach ($target_usernames as $target_username) {
+                            
+                            if ($duplicate_found == 10) {
+                                $duplicate_found = 0;
+                                continue;
+                            }
+                            
                             if ($like_quota > 0) {
 
                                 //Get followers of the target.
@@ -260,6 +262,7 @@ class InteractionLike extends Command {
                                         //Duplicate = liked before.
                                         if (count($liked_users) > 0) {
                                             $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                            $duplicate_found++;
                                             continue;
                                         }
 
