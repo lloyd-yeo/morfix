@@ -102,9 +102,9 @@ class RefreshInstagramProfile extends Command {
 
 
                         DB::update("UPDATE user_insta_profile "
-                                . "SET profile_full_name = ?, updated_at = NOW(), follower_count = ?, "
+                                . "SET insta_username = ?, profile_full_name = ?, updated_at = NOW(), follower_count = ?, "
                                 . "num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
-                                [$instagram_user->full_name, $instagram_user->follower_count, 
+                                [$instagram_user->username, $instagram_user->full_name, $instagram_user->follower_count, 
                                     $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
 
                         $items = $instagram->timeline->getSelfUserFeed()->items;
