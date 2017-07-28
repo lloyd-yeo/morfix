@@ -542,7 +542,7 @@ class InteractionLike extends Command {
 
                                 $this->info("target hashtag: " . $target_hashtag->hashtag . "\n\n");
 
-                                $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                                $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
 
                                 foreach ($hashtag_feed->items as $item) {
 
