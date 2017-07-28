@@ -107,12 +107,10 @@ class RefreshInstagramProfile extends Command {
                                     $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
 
                         $items = $instagram->timeline->getSelfUserFeed()->items;
-                        #var_dump($items);
-
+                        
                         foreach ($items as $item) {
 
                             try {
-                                #var_dump($item);
                                 $image_url = "";
                                 if (is_null($item->image_versions2)) {
                                     //is carousel media
@@ -121,7 +119,7 @@ class RefreshInstagramProfile extends Command {
                                     $image_url = $item->image_versions2->candidates[0]->url;
                                 }
 
-                                DB::connection('mysql_old')->
+                                DB::
                                         insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $image_url]);
                             } catch (\ErrorException $e) {
                                 echo("ERROR: " . $e->getMessage());
@@ -130,10 +128,10 @@ class RefreshInstagramProfile extends Command {
                         }
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                         echo($checkpoint_ex->getMessage());
-                        DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
+                        DB::update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
                     } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                         echo($network_ex->getMessage());
-                        DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
+                        DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
                     } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                         echo($endpoint_ex->getMessage());
                         if (stripos(trim($endpoint_ex->getMessage()), "The username you entered doesn't appear to belong to an account. Please check your username and try again.") !== false) {
@@ -141,19 +139,19 @@ class RefreshInstagramProfile extends Command {
                             $instagram->setUser("entrepreneur_xyz", "instaffiliates123");
                             $instagram->login();
                             $resp = serialize($instagram->getUserInfoById($ig_profile->insta_user_id));
-                            DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$resp, $ig_profile->id]);
+                            DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$resp, $ig_profile->id]);
                         } else {
-                            DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                            DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                         }
                     } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                         echo($incorrectpw_ex->getMessage());
-                        DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
+                        DB::update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
                     } catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
                         echo($accountdisabled_ex->getMessage());
-                        DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$accountdisabled_ex->getMessage(), $ig_profile->id]);
+                        DB::update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$accountdisabled_ex->getMessage(), $ig_profile->id]);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         echo($request_ex->getMessage());
-                        DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$request_ex->getMessage(), $ig_profile->id]);
+                        DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$request_ex->getMessage(), $ig_profile->id]);
                     }
                     
                 }
