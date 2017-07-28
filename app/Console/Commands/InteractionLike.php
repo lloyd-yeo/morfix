@@ -223,7 +223,12 @@ class InteractionLike extends Command {
                         /*
                          * Defined target usernames take precedence.
                          */
+//                        $username_or_hashtag = 0;
                         $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
+//                        $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $ig_username)->inRandomOrder()->get();
+//                        if (count($target_hashtags == 0)) {
+//                            
+//                        }
                         foreach ($target_usernames as $target_username) {
                             if ($like_quota > 0) {
 
@@ -350,7 +355,8 @@ class InteractionLike extends Command {
                                 if ($like_quota > 0) {
                                     $this->info("[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
                                     //Get the feed from the targeted hashtag.
-                                    $hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                                    #$hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                                    $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                                     //Foreach post under this target hashtag
                                     foreach ($hashtag_feed->items as $item) {
                                         //Get user because we need to check if they have been liked before.
