@@ -56,6 +56,7 @@ class RefreshInstagramProfile extends Command {
         
         if (NULL !== $this->argument("email")) {
             foreach ($users as $user) {
+                
                 $instagram_profiles = InstagramProfile::where('checkpoint_required', false)
                             ->where('account_disabled', false)
                             ->where('invalid_user', false)
@@ -74,7 +75,7 @@ class RefreshInstagramProfile extends Command {
                     $truncatedDebug = false;
 
                     $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                    $ig_profile = $this->profile;
+                    #$ig_profile = $this->profile;
                     echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
 
                     $ig_username = $ig_profile->insta_username;
