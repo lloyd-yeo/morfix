@@ -229,6 +229,7 @@ class InteractionLike implements ShouldQueue {
                             //Duplicate = liked before.
                             if (count($liked_users) > 0) {
                                 echo("\n" . "Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                $duplicate_found++;
                                 continue;
                             }
 
