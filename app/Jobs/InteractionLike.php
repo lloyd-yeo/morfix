@@ -188,7 +188,6 @@ class InteractionLike implements ShouldQueue {
             /*
              * Defined target usernames take precedence.
              */
-            $duplicate_found = 0;
             $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
             foreach ($target_usernames as $target_username) {
                 
@@ -201,7 +200,7 @@ class InteractionLike implements ShouldQueue {
                     $user_follower_response = $instagram->people->getFollowers($username_id);
                     $target_user_followings = $user_follower_response->users;
                     $duplicate = 0;
- 
+                    
                     //Foreach follower of the target.
                     foreach ($target_user_followings as $user_to_like) {
                         

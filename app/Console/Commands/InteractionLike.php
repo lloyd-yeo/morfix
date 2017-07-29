@@ -225,7 +225,6 @@ class InteractionLike extends Command {
                         /*
                          * Defined target usernames take precedence.
                          */
-                        $duplicate_found = 0;
                         $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
                         foreach ($target_usernames as $target_username) {
                             
@@ -257,7 +256,7 @@ class InteractionLike extends Command {
 
                                         //Duplicate = liked before.
                                         if (count($liked_users) > 0) {
-                                            $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                            $this->info("[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
                                             break;
                                         }
 
@@ -268,8 +267,8 @@ class InteractionLike extends Command {
 
                                         //Duplicate = liked before.
                                         if (count($liked_users) > 0) {
-                                            $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                            continue;
+                                            $this->info("[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                            break;
                                         }
 
                                         //Get the feed of the user to like.
