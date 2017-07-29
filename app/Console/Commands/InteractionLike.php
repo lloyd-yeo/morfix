@@ -240,11 +240,6 @@ class InteractionLike extends Command {
                                 //Foreach follower of the target.
                                 foreach ($target_user_followings as $user_to_like) {
                                     
-                                    if ($duplicate_found == 10) {
-                                        $duplicate_found = 0;
-                                        break;
-                                    }
-                                    
                                     if ($like_quota > 0) {
 
                                         //Blacklisted username.
@@ -263,8 +258,7 @@ class InteractionLike extends Command {
                                         //Duplicate = liked before.
                                         if (count($liked_users) > 0) {
                                             $this->info("Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                            $duplicate_found++;
-                                            continue;
+                                            break;
                                         }
 
                                         //Check for duplicates.

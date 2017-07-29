@@ -205,11 +205,6 @@ class InteractionLike implements ShouldQueue {
                     //Foreach follower of the target.
                     foreach ($target_user_followings as $user_to_like) {
                         
-                        if ($duplicate_found == 10) {
-                            $duplicate_found = 0;
-                            break;
-                        }
-                        
                         if ($like_quota > 0) {
 
                             //Blacklisted username.
@@ -218,7 +213,7 @@ class InteractionLike implements ShouldQueue {
                                 continue;
                             }
 
-                            echo("\n" . $user_to_like->username . "\t" . $user_to_like->id);
+                            echo("\n" . $user_to_like->username . "\t" . $user_to_like->pk);
 
                             //Check for duplicates.
                             $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
@@ -228,8 +223,7 @@ class InteractionLike implements ShouldQueue {
                             //Duplicate = liked before.
                             if (count($liked_users) > 0) {
                                 echo("\n" . "Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                $duplicate_found++;
-                                continue;
+                                break;
                             }
 
                             //Check for duplicates.
