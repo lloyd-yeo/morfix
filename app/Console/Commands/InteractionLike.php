@@ -345,16 +345,20 @@ class InteractionLike extends Command {
                                                         $like_response = $instagram->media->like($item->id);
 
                                                         if ($like_response->status == "ok") {
-                                                            echo("\n" . "[$ig_username] Liked " . serialize($like_response));
-                                                            $like_log = new InstagramProfileLikeLog;
-                                                            $like_log->insta_username = $ig_username;
-                                                            $like_log->target_username = $user_to_like->username;
-//                                                    $like_log->target_user_insta_id = $user_to_like->id;
-                                                            $like_log->target_media = $item->id;
-                                                            $like_log->target_media_code = $item->getItemUrl();
-                                                            $like_log->log = serialize($like_response);
-                                                            $like_log->save();
-                                                            $like_quota--;
+                                                            try {
+                                                                echo("\n" . "[$ig_username] Liked " . serialize($like_response));
+                                                                $like_log = new InstagramProfileLikeLog;
+                                                                $like_log->insta_username = $ig_username;
+                                                                $like_log->target_username = $user_to_like->username;
+    //                                                    $like_log->target_user_insta_id = $user_to_like->id;
+                                                                $like_log->target_media = $item->id;
+                                                                $like_log->target_media_code = $item->getItemUrl();
+                                                                $like_log->log = serialize($like_response);
+                                                                $like_log->save();
+                                                                $like_quota--;
+                                                            } catch (\Exception $ex) {
+                                                                continue;
+                                                            }
                                                         }
                                                     } else {
                                                         break;
