@@ -651,11 +651,10 @@ class InteractionLike extends Command {
                 $this->error($ex->getLine() . "\t" . $ex->getMessage());
             }
             
-            /* do stuff here */
             $endtime = microtime(true);
             $timediff = $endtime - $starttime;
             
-            echo "\n This run took: $timediff milliseconds";
+            echo "\nThis run took: $timediff milliseconds.\n";
         }
     }
 
