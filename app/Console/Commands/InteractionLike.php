@@ -314,7 +314,6 @@ class InteractionLike extends Command {
                                                     }
                                                     continue;
                                                 } catch (\Exception $ex) {
-
                                                     echo("\n" . "Exception: " . $ex->getMessage());
                                                     continue;
                                                 }
@@ -337,7 +336,7 @@ class InteractionLike extends Command {
                                                                 ->get();
 
                                                         //Duplicate = liked media before.
-                                                        if (count($liked_users) > 0) {
+                                                        if (count($liked_logs) > 0) {
                                                             echo("\n" . "Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->id . "]");
                                                             continue;
                                                         }
@@ -357,6 +356,7 @@ class InteractionLike extends Command {
                                                                 $like_log->save();
                                                                 $like_quota--;
                                                             } catch (\Exception $ex) {
+                                                                echo "[$ig_username] saving error [target_username] " . $ex->getMessage() . "\n";
                                                                 continue;
                                                             }
                                                         }
