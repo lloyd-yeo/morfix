@@ -248,6 +248,7 @@ class InteractionLike extends Command {
                                 if ($target_username_id != "") {
 
                                     $next_max_id = null;
+                                    
                                     do {
                                         echo "[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
 
@@ -258,6 +259,8 @@ class InteractionLike extends Command {
                                         $duplicate = 0;
                                         
                                         $next_max_id = $user_follower_response->next_max_id;
+                                        
+                                        echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id;
                                         
                                         //Foreach follower of the target.
                                         foreach ($target_user_followings as $user_to_like) {
@@ -349,7 +352,6 @@ class InteractionLike extends Command {
                                                                 $like_log = new InstagramProfileLikeLog;
                                                                 $like_log->insta_username = $ig_username;
                                                                 $like_log->target_username = $user_to_like->username;
-    //                                                    $like_log->target_user_insta_id = $user_to_like->id;
                                                                 $like_log->target_media = $item->id;
                                                                 $like_log->target_media_code = $item->getItemUrl();
                                                                 $like_log->log = serialize($like_response);
