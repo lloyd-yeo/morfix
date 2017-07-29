@@ -277,7 +277,7 @@ class InteractionLike extends Command {
                                                 //Blacklisted username.
                                                 $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
                                                 if ($blacklisted_username !== NULL) {
-                                                    continue;
+                                                    break;
                                                 }
 
                                                 echo("\n" . $user_to_like->username . "\t" . $user_to_like->pk);
@@ -290,7 +290,7 @@ class InteractionLike extends Command {
                                                 //Duplicate = liked before.
                                                 if (count($liked_users) > 0) {
                                                     echo("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                                    continue;
+                                                    break;
                                                 }
 
                                                 //Check for duplicates.
@@ -301,7 +301,7 @@ class InteractionLike extends Command {
                                                 //Duplicate = liked before.
                                                 if (count($liked_users) > 0) {
                                                     echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                                    continue;
+                                                    break;
                                                 }
 
                                                 //Get the feed of the user to like.

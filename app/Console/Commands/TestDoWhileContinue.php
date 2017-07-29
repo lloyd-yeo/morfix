@@ -45,18 +45,17 @@ class TestDoWhileContinue extends Command
             $exists = false;
             
             $next_max_id = rand(0,1);
+            echo "next_max_id: " . $next_max_id . "\n";
             if ($next_max_id === 1) {
                 $next_max_id = NULL;
             }
             
             $a = rand(0,1);
             $b = rand(0,1);
-            echo $a . "\t" . $b;
+            echo "a:" . $a . "\tb:" . $b . "\n";
             if ($a == $b) {
                 continue;
             }
-            
-            
             
         } while ($next_max_id !== NULL);
     }
