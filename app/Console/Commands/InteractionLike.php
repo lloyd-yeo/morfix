@@ -250,9 +250,10 @@ class InteractionLike extends Command {
                                     $next_max_id = null;
                                     
                                     do {
+                                        
                                         echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
 
-                                        $user_follower_response = $instagram->people->getFollowers($target_username_id, $next_max_id);
+                                        $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
 
                                         $target_user_followings = $user_follower_response->users;
 
