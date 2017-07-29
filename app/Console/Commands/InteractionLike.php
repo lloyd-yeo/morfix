@@ -226,13 +226,30 @@ class InteractionLike extends Command {
                          * Defined target usernames take precedence.
                          */
                         $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
+                        
                         foreach ($target_usernames as $target_username) {
                             
                             if ($like_quota > 0) {
 
                                 //Get followers of the target.
                                 $this->line("[$ig_username] Target Username: " . $target_username->target_username . "\n");
-                                $user_follower_response = $instagram->people->getFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
+                                $target_target_username = $target_username->target_username;
+                                $target_username_id = "";
+                                try {
+                                    $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
+                                } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
+                                    $target_username_id = "";
+                                    echo "[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
+                                }
+                                
+                                $user_follower_response = NULL;
+                                
+                                if ($target_username_id != "") {
+                                    $user_follower_response = $instagram->people->getFollowers($target_username_id);
+                                } else {
+                                    continue;
+                                }
+                                
                                 $target_user_followings = $user_follower_response->users;
                                 $duplicate = 0;
 
