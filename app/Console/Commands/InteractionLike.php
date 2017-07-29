@@ -256,7 +256,9 @@ class InteractionLike extends Command {
                                         $target_user_followings = $user_follower_response->users;
 
                                         $duplicate = 0;
-
+                                        
+                                        $next_max_id = $user_follower_response->next_max_id;
+                                        
                                         //Foreach follower of the target.
                                         foreach ($target_user_followings as $user_to_like) {
 
@@ -362,8 +364,6 @@ class InteractionLike extends Command {
                                                 break;
                                             }
                                         }
-
-                                        $next_max_id = $user_follower_response->getNextMaxId();
                                     } while ($next_max_id !== null && $like_quota > 0);
                                 } else {
                                     continue;
