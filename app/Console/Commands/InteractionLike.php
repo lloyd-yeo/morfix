@@ -103,6 +103,11 @@ class InteractionLike extends Command {
                     ->get();
 
             try {
+                
+                foreach ($instagram_profiles as $ig_profile) {
+                    $this->line("RETRIEVED: [" . $ig_profile->insta_username . "]\t" . $ig_profile->insta_pw . "\n");
+                }
+                
                 foreach ($instagram_profiles as $ig_profile) {
 
                     $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
@@ -653,6 +658,7 @@ class InteractionLike extends Command {
                         DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                         continue;
                     }
+                    
                 } //end loop for ig profile
             } catch (\Exception $ex) {
                 $this->error($ex->getLine() . "\t" . $ex->getMessage());
