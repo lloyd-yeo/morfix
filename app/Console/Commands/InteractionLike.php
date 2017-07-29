@@ -79,6 +79,7 @@ class InteractionLike extends Command {
                         ->where('invalid_user', false)
                         ->where('incorrect_pw', false)
                         ->where('user_id', $user->user_id)
+                        ->whereRaw('next_like_time IS NULL OR next_like_time > NOW()')
                         ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
@@ -259,6 +260,11 @@ class InteractionLike extends Command {
                                     $target_username->invalid = 1;
                                     $target_username->save();
                                     echo "\n[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
+                                    
+                                    if (strpos($insta_ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
+                                        $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
+                                        $ig_profile->save();
+                                    }
                                 }
 
                                 $user_follower_response = NULL;
