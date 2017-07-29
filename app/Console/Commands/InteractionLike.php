@@ -364,7 +364,7 @@ class InteractionLike extends Command {
                                                 break;
                                             }
                                         }
-                                    } while ($next_max_id !== null && $like_quota > 0);
+                                    } while ($next_max_id !== NULL && $like_quota > 0);
                                 } else {
                                     continue;
                                 }
