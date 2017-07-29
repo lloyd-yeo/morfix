@@ -192,11 +192,6 @@ class InteractionLike implements ShouldQueue {
             $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
             foreach ($target_usernames as $target_username) {
                 
-                if ($duplicate_found == 10) {
-                    $duplicate_found = 0;
-                    continue;
-                }
-                
                 if ($like_quota > 0) {
 
                     //Get followers of the target.
@@ -210,7 +205,12 @@ class InteractionLike implements ShouldQueue {
 
                     //Foreach follower of the target.
                     foreach ($target_user_followings as $user_to_like) {
-
+                        
+                        if ($duplicate_found == 10) {
+                            $duplicate_found = 0;
+                            break;
+                        }
+                        
                         if ($like_quota > 0) {
 
                             //Blacklisted username.
