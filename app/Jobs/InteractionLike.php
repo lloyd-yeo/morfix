@@ -214,10 +214,12 @@ class InteractionLike implements ShouldQueue {
 
                         $next_max_id = null;
                         do {
+                            echo "[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
                             
                             $user_follower_response = $instagram->people->getFollowers($target_username_id, $next_max_id);
 
                             $target_user_followings = $user_follower_response->users;
+                            
                             $duplicate = 0;
                             
                             //Foreach follower of the target.
