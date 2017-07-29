@@ -244,8 +244,20 @@ class InteractionLike extends Command {
                                 $target_username_id = "";
                                 try {
                                     $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
+                                    
+                                    if ($target_username->last_checked === NULL) {
+                                        $target_response = $instagram->people->getInfoById($target_username_id);
+                                        $target_username->last_checked = \Carbon\Carbon::now();
+                                        if ($target_response->user->follower_count < 1000) {
+                                            $target_username->insufficient_followers = 1;
+                                            $target_username->save();
+                                        }
+                                    }
+                                    
                                 } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
                                     $target_username_id = "";
+                                    $target_username->invalid = 1;
+                                    $target_username->save();
                                     echo "\n[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
                                 }
 
