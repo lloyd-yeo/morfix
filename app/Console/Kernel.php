@@ -51,6 +51,7 @@ class Kernel extends ConsoleKernel {
         Commands\SendDelinquentEmail::class,
         Commands\GetUsersWithPendingCommisions::class,
         Commands\ReadLastPaidCsv::class,
+        Commands\TestDoWhileContinue::class,
     ];
 
     /**
