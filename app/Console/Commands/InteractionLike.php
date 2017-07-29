@@ -255,6 +255,8 @@ class InteractionLike extends Command {
 
                                     $next_max_id = null;
                                     
+                                    $page_count = 0;
+                                    
                                     do {
                                         
                                         echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
@@ -268,6 +270,8 @@ class InteractionLike extends Command {
                                         $next_max_id = $user_follower_response->next_max_id;
                                         
                                         echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id;
+                                        
+                                        $page_count++;
                                         
                                         //Foreach follower of the target.
                                         foreach ($target_user_followings as $user_to_like) {
@@ -290,7 +294,13 @@ class InteractionLike extends Command {
                                                 //Duplicate = liked before.
                                                 if (count($liked_users) > 0) {
                                                     echo("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                                    break;
+                                                    
+                                                    if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
+                                                        break;
+                                                    } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
+                                                        continue;
+                                                    }
+                                                    
                                                 }
 
                                                 //Check for duplicates.
@@ -301,7 +311,12 @@ class InteractionLike extends Command {
                                                 //Duplicate = liked before.
                                                 if (count($liked_users) > 0) {
                                                     echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                                    break;
+                                                    
+                                                    if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
+                                                        break;
+                                                    } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
+                                                        continue;
+                                                    }
                                                 }
 
                                                 //Get the feed of the user to like.
