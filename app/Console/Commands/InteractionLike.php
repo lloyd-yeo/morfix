@@ -89,7 +89,9 @@ class InteractionLike extends Command {
                 }
                 continue;
             }
-
+            // microtime(true) returns the unix timestamp plus milliseconds as a float
+            $starttime = microtime(true);
+            
             $this->line($user->user_id);
 
             $instagram_profiles = InstagramProfile::where('auto_like', true)
@@ -648,6 +650,12 @@ class InteractionLike extends Command {
             } catch (\Exception $ex) {
                 $this->error($ex->getLine() . "\t" . $ex->getMessage());
             }
+            
+            /* do stuff here */
+            $endtime = microtime(true);
+            $timediff = $endtime - $starttime;
+            
+            echo "\n This run took: $timediff milliseconds";
         }
     }
 
