@@ -71,7 +71,7 @@ class InteractionLike extends Command {
 //            }
             
             if (NULL === $this->argument("email")) {
-                #dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)))->onQueue('like');
+//                dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)))->onQueue('like');
                 
                 $instagram_profiles = InstagramProfile::where('auto_like', true)
                     ->where('checkpoint_required', false)
@@ -151,10 +151,11 @@ class InteractionLike extends Command {
                                 $like_response = NULL;
 
                                 try {
-
+                                    
                                     $engagement_job->fulfilled = 1;
                                     $engagement_job->save();
                                     $like_response = $instagram->media->like($media_id);
+                                    
                                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
 
                                     $this->error("checkpt\t" . $checkpoint_ex->getMessage());
@@ -212,6 +213,7 @@ class InteractionLike extends Command {
                         /**
                          * End of engagement jobs.
                          */
+                        
                         /*
                          * If user is free tier & not on trial / run out of quota then break.
                          */
@@ -227,23 +229,22 @@ class InteractionLike extends Command {
                         $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
                         foreach ($target_usernames as $target_username) {
                             
-                            if ($duplicate_found == 10) {
-                                $duplicate_found = 0;
-                                continue;
-                            }
-                            
                             if ($like_quota > 0) {
 
                                 //Get followers of the target.
                                 $this->line("[$ig_username] Target Username: " . $target_username->target_username . "\n");
-                                #$user_follower_response = $instagram->getUserFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
                                 $user_follower_response = $instagram->people->getFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
                                 $target_user_followings = $user_follower_response->users;
                                 $duplicate = 0;
 
                                 //Foreach follower of the target.
                                 foreach ($target_user_followings as $user_to_like) {
-
+                                    
+                                    if ($duplicate_found == 10) {
+                                        $duplicate_found = 0;
+                                        break;
+                                    }
+                                    
                                     if ($like_quota > 0) {
 
                                         //Blacklisted username.
