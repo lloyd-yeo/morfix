@@ -281,7 +281,12 @@ class InteractionLike extends Command {
                                                 //Blacklisted username.
                                                 $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
                                                 if ($blacklisted_username !== NULL) {
-                                                    break;
+                                                    
+                                                    if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
+                                                        break;
+                                                    } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
+                                                        continue;
+                                                    }
                                                 }
 
                                                 echo("\n" . $user_to_like->username . "\t" . $user_to_like->pk);
