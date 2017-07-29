@@ -233,7 +233,9 @@ class InteractionLike extends Command {
 
                                 //Get followers of the target.
                                 $this->line("[$ig_username] Target Username: " . $target_username->target_username . "\n");
+                                
                                 $target_target_username = $target_username->target_username;
+                                
                                 $target_username_id = "";
                                 try {
                                     $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
