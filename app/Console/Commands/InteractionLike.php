@@ -89,6 +89,7 @@ class InteractionLike extends Command {
                 }
                 continue;
             }
+            
             // microtime(true) returns the unix timestamp plus milliseconds as a float
             $starttime = microtime(true);
             

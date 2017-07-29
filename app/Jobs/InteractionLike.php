@@ -188,13 +188,14 @@ class InteractionLike implements ShouldQueue {
              * Defined target usernames take precedence.
              */
             $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
+
             foreach ($target_usernames as $target_username) {
 
                 if ($like_quota > 0) {
 
                     //Get followers of the target.
                     echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
-                    
+
                     $target_target_username = $target_username->target_username;
 
                     $target_username_id = "";
@@ -202,7 +203,7 @@ class InteractionLike implements ShouldQueue {
                         $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
                     } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
                         $target_username_id = "";
-                        echo "[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
+                        echo "\n[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
                     }
 
                     $user_follower_response = NULL;
@@ -210,15 +211,21 @@ class InteractionLike implements ShouldQueue {
                     if ($target_username_id != "") {
 
                         $next_max_id = null;
+
                         do {
-                            echo "[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
-                            
-                            $user_follower_response = $instagram->people->getFollowers($target_username_id, $next_max_id);
+
+                            echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
+
+                            $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
 
                             $target_user_followings = $user_follower_response->users;
-                            
+
                             $duplicate = 0;
-                            
+
+                            $next_max_id = $user_follower_response->next_max_id;
+
+                            echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id;
+
                             //Foreach follower of the target.
                             foreach ($target_user_followings as $user_to_like) {
 
@@ -274,7 +281,6 @@ class InteractionLike implements ShouldQueue {
                                         }
                                         continue;
                                     } catch (\Exception $ex) {
-
                                         echo("\n" . "Exception: " . $ex->getMessage());
                                         continue;
                                     }
@@ -297,7 +303,7 @@ class InteractionLike implements ShouldQueue {
                                                     ->get();
 
                                             //Duplicate = liked media before.
-                                            if (count($liked_users) > 0) {
+                                            if (count($liked_logs) > 0) {
                                                 echo("\n" . "Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->id . "]");
                                                 continue;
                                             }
@@ -305,16 +311,20 @@ class InteractionLike implements ShouldQueue {
                                             $like_response = $instagram->media->like($item->id);
 
                                             if ($like_response->status == "ok") {
-                                                echo("\n" . "[$ig_username] Liked " . serialize($like_response));
-                                                $like_log = new InstagramProfileLikeLog;
-                                                $like_log->insta_username = $ig_username;
-                                                $like_log->target_username = $user_to_like->username;
-//                                                    $like_log->target_user_insta_id = $user_to_like->id;
-                                                $like_log->target_media = $item->id;
-                                                $like_log->target_media_code = $item->getItemUrl();
-                                                $like_log->log = serialize($like_response);
-                                                $like_log->save();
-                                                $like_quota--;
+                                                try {
+                                                    echo("\n" . "[$ig_username] Liked " . serialize($like_response));
+                                                    $like_log = new InstagramProfileLikeLog;
+                                                    $like_log->insta_username = $ig_username;
+                                                    $like_log->target_username = $user_to_like->username;
+                                                    $like_log->target_media = $item->id;
+                                                    $like_log->target_media_code = $item->getItemUrl();
+                                                    $like_log->log = serialize($like_response);
+                                                    $like_log->save();
+                                                    $like_quota--;
+                                                } catch (\Exception $ex) {
+                                                    echo "[$ig_username] saving error [target_username] " . $ex->getMessage() . "\n";
+                                                    continue;
+                                                }
                                             }
                                         } else {
                                             break;
@@ -324,11 +334,7 @@ class InteractionLike implements ShouldQueue {
                                     break;
                                 }
                             }
-                            
-                            $next_max_id = $user_follower_response->getNextMaxId();
-                            
-                        } while ($next_max_id !== null && $like_quota > 0);
-                        
+                        } while ($next_max_id !== NULL && $like_quota > 0);
                     } else {
                         continue;
                     }
