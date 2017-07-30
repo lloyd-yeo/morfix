@@ -99,7 +99,11 @@ class InteractionLike implements ShouldQueue {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
                 exit();
+            } catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
+                $ig_profile->invalid_user = 1;
+                $ig_profile->save();
             }
+            
             echo("\n" . "Logged in \t quota: " . $like_quota);
             $engagement_jobs = EngagementJob::where('action', 0)
                     ->where('fulfilled', 0)
