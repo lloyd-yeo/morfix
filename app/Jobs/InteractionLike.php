@@ -316,10 +316,14 @@ class InteractionLike implements ShouldQueue {
                                         echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
 
                                         if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
-                                            $blacklist_username = new BlacklistedUsername;
-                                            $blacklist_username->username = $user_to_like->username;
-                                            $blacklist_username->save();
-                                            echo("\n" . "Blacklisted: " . $user_to_like->username);
+                                            if (BlacklistedUsername::find($user_to_like->username) !== NULL) {
+                                                $blacklist_username = new BlacklistedUsername;
+                                                $blacklist_username->username = $user_to_like->username;
+                                                $blacklist_username->save();
+                                                echo("\n" . "Blacklisted: " . $user_to_like->username);
+                                            } else {
+                                                continue;
+                                            }
                                         }
                                         continue;
                                     } catch (\Exception $ex) {
