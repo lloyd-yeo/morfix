@@ -155,7 +155,7 @@ class SendDm implements ShouldQueue {
                     $dm_job->error_msg = $request_ex->getMessage();
                     $dm_job->save();
                 }
-                if (stripos(trim($request_ex->getMessage()), "Checkpoint") !== false) {
+                else if (stripos(trim($request_ex->getMessage()), "Checkpoint") !== false) {
                     $ig_profile->checkpoint_required = 1;
                     $ig_profile->save();
                 }

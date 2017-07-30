@@ -64,7 +64,7 @@ class Kernel extends ConsoleKernel {
     protected function schedule(Schedule $schedule) {
         $schedule->command('interaction:like')->everyFiveMinutes();
         $schedule->command('interaction:comment')->everyFiveMinutes();
-        $schedule->command('interaction:follow')->everyMinute();
+        #$schedule->command('interaction:follow')->everyMinute();
         $schedule->command('dm:get')->everyThirtyMinutes();
         $schedule->command('dm:send')->everyTenMinutes();
         $schedule->command("engagement:add")->hourly();
