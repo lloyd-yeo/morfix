@@ -80,6 +80,7 @@ class ManuallyFollowBack extends Command {
         $instagram->setProxy($ig_profile->proxy);
 
         $instagram->setUser($ig_username, $ig_password);
+        
         try {
             $explorer_response = $instagram->login();
             var_dump($explorer_response);
@@ -95,7 +96,9 @@ class ManuallyFollowBack extends Command {
             $ig_profile->save();
             exit();
         }
-
+        
+        $response = $instagram->people->follow(13202235);
+        var_dump($response);
         #echo $ig_profile;
     }
 
