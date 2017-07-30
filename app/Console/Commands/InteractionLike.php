@@ -513,12 +513,46 @@ class InteractionLike extends Command {
                             foreach ($niche_targets as $target_username) {
 
                                 if ($like_quota > 0) {
-
+                                    
                                     //Get followers of the target.
-                                    $this->line("Target Username: " . $target_username->target_username . "\n");
-                                    $user_follower_response = $instagram->getUserFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
-                                    $target_user_followings = $user_follower_response->users;
-                                    $duplicate = 0;
+                                    echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
+
+                                    $target_target_username = $target_username->target_username;
+
+                                    $target_username_id = "";
+                                    try {
+                                        $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
+
+                                        if ($target_username->last_checked === NULL) {
+                                            $target_response = $instagram->people->getInfoById($target_username_id);
+                                            $target_username->last_checked = \Carbon\Carbon::now();
+                                            if ($target_response->user->follower_count < 50000) {
+                                                $target_username->insufficient_followers = 1;
+                                                echo "[$ig_username] [$target_username] has insufficient followers.\n";
+                                            }
+                                            $target_username->save();
+                                        }
+
+                                    } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
+                                        $target_username_id = "";
+                                        $target_username->invalid = 1;
+                                        $target_username->save();
+                                        echo "\n[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
+
+                                        if (strpos($insta_ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
+                                            $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
+                                            $ig_profile->save();
+                                            echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+                                            echo "\nTerminating...";
+                                            exit;
+                                        }
+                                    }
+                                    
+                                    //Get followers of the target.
+//                                    $this->line("Target Username: " . $target_username->target_username . "\n");
+//                                    $user_follower_response = $instagram->getUserFollowers($instagram->people->getUserIdForName(trim($target_username->target_username)));
+//                                    $target_user_followings = $user_follower_response->users;
+//                                    $duplicate = 0;
 
                                     //Foreach follower of the target.
                                     foreach ($target_user_followings as $user_to_like) {
