@@ -540,7 +540,7 @@ class InteractionLike extends Command {
                                             
                                             $target_user_followings = $user_follower_response->users;
                                             
-                                            echo "\n[$ig_username] requesting [$target_target_username] got us a list of " . count($target_user_followings) . "users. \n";
+                                            echo "\n[$ig_username] requesting [$target_target_username] got us a list of [" . count($target_user_followings) . "] users. \n";
                                             
                                             $duplicate = 0;
 
