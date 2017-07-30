@@ -55,7 +55,7 @@ class ManuallyFollowBack extends Command
     public function handle()
     {   
         $profile_to_follow_id = $this->argument('profile_id');
-        $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->find();
+        $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
         echo $ig_profile;
     }
 }
