@@ -86,6 +86,7 @@ class GetDm implements ShouldQueue {
             $activity_response = $instagram->getRecentActivity();
             
             $newest_timestamp = 0;
+            
             foreach ($activity_response->old_stories as $story) {
                 
                 if ($story->type == 3) {
