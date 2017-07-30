@@ -79,6 +79,9 @@ class SendDm implements ShouldQueue {
             exit;
         } else {
             echo "[$insta_username] retrieved job...\n";
+            if (trim($dm_job->message) == "") {
+                exit();
+            }
         }
         
         if ($ig_profile->auto_dm_delay == 0 && $dm_job->follow_up_order == 1) {
@@ -110,7 +113,7 @@ class SendDm implements ShouldQueue {
             $instagram->setProxy($ig_profile->proxy);
             $instagram->setUser($ig_username, $ig_password);
             $instagram->login();
-
+            
             try {
                 $delay = rand(50, 65);
                 $recipients = array();
