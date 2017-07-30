@@ -519,7 +519,7 @@ class InteractionLike extends Command {
                                     $target_target_username = $target_username->target_username;
 
                                     $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
-                                    
+
                                     $user_follower_response = NULL;
 
                                     if ($target_username_id != "") {
@@ -531,17 +531,17 @@ class InteractionLike extends Command {
                                         do {
 
                                             echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
-                                            
+
                                             if ($next_max_id === NULL) {
                                                 $user_follower_response = $instagram->people->getFollowers($target_username_id);
                                             } else {
                                                 $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
                                             }
-                                            
+
                                             $target_user_followings = $user_follower_response->users;
-                                            
+
                                             echo "\n[$ig_username] requesting [$target_target_username] got us a list of [" . count($target_user_followings) . "] users. \n";
-                                            
+
                                             $duplicate = 0;
 
                                             $next_max_id = $user_follower_response->next_max_id;
@@ -587,7 +587,7 @@ class InteractionLike extends Command {
 
                                                     //Get the feed of the user to like.
                                                     $user_feed_response = NULL;
-                                                    
+
                                                     try {
                                                         if (is_null($user_to_like)) {
                                                             echo("\n" . "Null User - Target Username");
