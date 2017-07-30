@@ -103,7 +103,7 @@ class InteractionLike extends Command {
                     ->where('invalid_user', false)
                     ->where('incorrect_pw', false)
                     ->where('user_id', $user->user_id)
-                    ->whereNull('next_like_time')
+                    ->orWhereNull('next_like_time')
                     ->orWhere('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                     ->get();
 
@@ -251,7 +251,7 @@ class InteractionLike extends Command {
                                 $target_username_id = "";
                                 try {
                                     $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
-
+                                    
                                     if ($target_username->last_checked === NULL) {
                                         $target_response = $instagram->people->getInfoById($target_username_id);
                                         $target_username->last_checked = \Carbon\Carbon::now();
@@ -261,6 +261,7 @@ class InteractionLike extends Command {
                                         }
                                         $target_username->save();
                                     }
+                                    
                                 } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
                                     $target_username_id = "";
                                     $target_username->invalid = 1;
