@@ -79,7 +79,8 @@ class InteractionLike extends Command {
                         ->where('invalid_user', false)
                         ->where('incorrect_pw', false)
                         ->where('user_id', $user->user_id)
-                        ->whereRaw('next_like_time IS NULL OR next_like_time <= NOW()')
+                        ->whereNull('next_like_time')
+                        ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                         ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
