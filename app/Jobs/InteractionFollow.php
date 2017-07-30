@@ -169,6 +169,7 @@ class InteractionFollow implements ShouldQueue {
             }
 
             $current_log_id = "";
+            $current_user_to_unfollow = NULL;
             try {
                 $ig_username = $insta_username;
                 $ig_password = $insta_pw;
@@ -204,7 +205,9 @@ class InteractionFollow implements ShouldQueue {
                         ->orderBy('date_inserted', 'asc')
                         ->take(2)
                         ->get();
-
+                
+                
+                
                 if (count($users_to_unfollow) == 0) {
 
                     echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
@@ -286,6 +289,16 @@ class InteractionFollow implements ShouldQueue {
                 echo "[" . $insta_username . "] network_ex: " . $network_ex->getMessage() . "\n";
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                 echo "[" . $insta_username . "] endpoint_ex: " . $endpoint_ex->getMessage() . "\n";
+                
+                if (stripos(trim($endpoint_ex->getMessage()), "Requested resource does not exist.") !== false) {
+                    $unfollow_log_to_update = InstagramProfileFollowLog::find($current_log_id);
+                    $unfollow_log_to_update->unfollowed = 1;
+                    $unfollow_log_to_update->save();
+                    $followed = 1;
+                    exit();
+                }
+                
+                
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 echo "[" . $insta_username . "] incorrectpw_ex: " . $incorrectpw_ex->getMessage() . "\n";
                 $ig_profile->incorrect_pw = 1;
