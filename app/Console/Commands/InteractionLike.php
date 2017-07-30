@@ -234,7 +234,10 @@ class InteractionLike extends Command {
                         /*
                          * Defined target usernames take precedence.
                          */
-                        $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)->inRandomOrder()->get();
+                        $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)
+                                ->where('invalid', 0)
+                                ->where('insufficient_followers', 0)
+                                ->inRandomOrder()->get();
 
                         foreach ($target_usernames as $target_username) {
 
