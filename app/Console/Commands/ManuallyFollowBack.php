@@ -97,9 +97,16 @@ class ManuallyFollowBack extends Command {
             exit();
         }
         
-        $response = $instagram->people->follow(13202235);
-        var_dump($response);
-        #echo $ig_profile;
+        $targets = \App\InstagramProfileFollowLog::where('insta_username', $ig_username)
+                                                    ->whereNull('log')
+                                                    ->where('unfollowed', true)
+                                                    ->get();
+        foreach ($targets as $target) { 
+            $follower_id = $target->follower_id;
+            $response = $instagram->people->follow($follower_id);
+            var_dump($response);
+            sleep(60); #sleep 60 seconds per follow.   
+        }
     }
 
 }
