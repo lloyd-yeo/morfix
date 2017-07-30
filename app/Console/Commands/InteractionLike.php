@@ -80,7 +80,7 @@ class InteractionLike extends Command {
                         ->where('incorrect_pw', false)
                         ->where('user_id', $user->user_id)
                         ->whereNull('next_like_time')
-                        ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
+                        ->orWhere('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                         ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
@@ -104,7 +104,7 @@ class InteractionLike extends Command {
                     ->where('incorrect_pw', false)
                     ->where('user_id', $user->user_id)
                     ->whereNull('next_like_time')
-                    ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
+                    ->orWhere('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                     ->get();
 
             try {
