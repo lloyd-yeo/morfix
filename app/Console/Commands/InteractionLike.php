@@ -264,8 +264,10 @@ class InteractionLike extends Command {
                                     if (strpos($insta_ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
                                         $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
                                         $ig_profile->save();
+                                        echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+                                        echo "\nTerminating...";
+                                        exit;
                                         
-                                        "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                                     }
                                 }
 
