@@ -184,7 +184,7 @@ class InteractionLike implements ShouldQueue {
              * If user is free tier & not on trial / run out of quota then break.
              */
             if ((!($this->profile->owner()->tier > 1 || $this->profile->owner()->trial_activation == 1)) || !($like_quota > 0)) {
-                echo ("User is not free tier & not on free trial.\n");
+                echo ("\nUser is not free tier & not on free trial.\n");
                 exit();
             }
 
