@@ -83,7 +83,6 @@ class GetDm implements ShouldQueue {
 
         try {
             $explorer_response = $instagram->login();
-            #$activity_response = $instagram->getRecentActivity();
             $activity_response = $instagram->people->getRecentActivityInbox();
             $newest_timestamp = 0;
             
@@ -120,7 +119,7 @@ class GetDm implements ShouldQueue {
                     if (floatval($ig_profile->recent_activity_timestamp) < floatval($story->args->timestamp)) {
 
                         #echo("queue as new dm");
-                        $user_info_response = $instagram->getUserInfoById($story->args->profile_id);
+                        $user_info_response = $instagram->people->getInfoById($story->args->profile_id);
                         $new_follower = $user_info_response->user;
                         #echo($new_follower->full_name);
 
