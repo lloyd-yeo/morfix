@@ -91,10 +91,10 @@ class InteractionLike extends Command {
                 }
                 continue;
             }
-            
+
             // microtime(true) returns the unix timestamp plus milliseconds as a float
             $starttime = microtime(true);
-            
+
             $this->line($user->user_id);
 
             $instagram_profiles = InstagramProfile::where('auto_like', true)
@@ -108,11 +108,11 @@ class InteractionLike extends Command {
                     ->get();
 
             try {
-                
+
                 foreach ($instagram_profiles as $ig_profile) {
                     $this->line("RETRIEVED: [" . $ig_profile->insta_username . "]\t" . $ig_profile->insta_pw . "\n");
                 }
-                
+
                 foreach ($instagram_profiles as $ig_profile) {
 
                     $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
@@ -235,9 +235,9 @@ class InteractionLike extends Command {
                          * Defined target usernames take precedence.
                          */
                         $target_usernames = InstagramProfileTargetUsername::where('insta_username', $ig_username)
-                                ->where('invalid', 0)
-                                ->where('insufficient_followers', 0)
-                                ->inRandomOrder()->get();
+                                        ->where('invalid', 0)
+                                        ->where('insufficient_followers', 0)
+                                        ->inRandomOrder()->get();
 
                         foreach ($target_usernames as $target_username) {
 
@@ -251,7 +251,7 @@ class InteractionLike extends Command {
                                 $target_username_id = "";
                                 try {
                                     $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
-                                    
+
                                     if ($target_username->last_checked === NULL) {
                                         $target_response = $instagram->people->getInfoById($target_username_id);
                                         $target_username->last_checked = \Carbon\Carbon::now();
@@ -261,20 +261,18 @@ class InteractionLike extends Command {
                                         }
                                         $target_username->save();
                                     }
-                                    
                                 } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
                                     $target_username_id = "";
                                     $target_username->invalid = 1;
                                     $target_username->save();
                                     echo "\n[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
-                                    
+
                                     if (strpos($insta_ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
                                         $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
                                         $ig_profile->save();
                                         echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                                         echo "\nTerminating...";
                                         exit;
-                                        
                                     }
                                 }
 
@@ -283,11 +281,11 @@ class InteractionLike extends Command {
                                 if ($target_username_id != "") {
 
                                     $next_max_id = null;
-                                    
+
                                     $page_count = 0;
-                                    
+
                                     do {
-                                        
+
                                         echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
 
                                         $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
@@ -295,13 +293,13 @@ class InteractionLike extends Command {
                                         $target_user_followings = $user_follower_response->users;
 
                                         $duplicate = 0;
-                                        
+
                                         $next_max_id = $user_follower_response->next_max_id;
-                                        
+
                                         echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id;
-                                        
+
                                         $page_count++;
-                                        
+
                                         //Foreach follower of the target.
                                         foreach ($target_user_followings as $user_to_like) {
 
@@ -310,7 +308,7 @@ class InteractionLike extends Command {
                                                 //Blacklisted username.
                                                 $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
                                                 if ($blacklisted_username !== NULL) {
-                                                    
+
                                                     if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
                                                         break;
                                                     } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
@@ -328,13 +326,12 @@ class InteractionLike extends Command {
                                                 //Duplicate = liked before.
                                                 if (count($liked_users) > 0) {
                                                     echo("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                                    
+
                                                     if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
                                                         break;
                                                     } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
                                                         continue;
                                                     }
-                                                    
                                                 }
 
                                                 //Check for duplicates.
@@ -345,7 +342,7 @@ class InteractionLike extends Command {
                                                 //Duplicate = liked before.
                                                 if (count($liked_users) > 0) {
                                                     echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
-                                                    
+
                                                     if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
                                                         break;
                                                     } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
@@ -708,15 +705,14 @@ class InteractionLike extends Command {
                         DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
                         continue;
                     }
-                    
                 } //end loop for ig profile
             } catch (\Exception $ex) {
                 $this->error($ex->getLine() . "\t" . $ex->getMessage());
             }
-            
+
             $endtime = microtime(true);
             $timediff = $endtime - $starttime;
-            
+
             echo "\nThis run took: $timediff milliseconds.\n";
         }
     }
