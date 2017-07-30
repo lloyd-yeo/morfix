@@ -519,7 +519,7 @@ class InteractionLike extends Command {
                                     $target_target_username = $target_username->target_username;
 
                                     $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
-
+                                    
                                     $user_follower_response = NULL;
 
                                     if ($target_username_id != "") {
@@ -552,12 +552,7 @@ class InteractionLike extends Command {
                                                     //Blacklisted username.
                                                     $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
                                                     if ($blacklisted_username !== NULL) {
-
-                                                        if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
-                                                            break;
-                                                        } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
-                                                            continue;
-                                                        }
+                                                        continue;
                                                     }
 
                                                     echo("\n" . $user_to_like->username . "\t" . $user_to_like->pk);
