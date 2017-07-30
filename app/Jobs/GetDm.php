@@ -66,7 +66,7 @@ class GetDm implements ShouldQueue {
         $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
         
-        $debug = true;
+        $debug = false;
         $truncatedDebug = false;
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
@@ -83,8 +83,8 @@ class GetDm implements ShouldQueue {
 
         try {
             $explorer_response = $instagram->login();
-            $activity_response = $instagram->getRecentActivity();
-            
+            #$activity_response = $instagram->getRecentActivity();
+            $activity_response = $instagram->people->getRecentActivityInbox();
             $newest_timestamp = 0;
             
             foreach ($activity_response->old_stories as $story) {
