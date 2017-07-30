@@ -252,8 +252,9 @@ class InteractionLike extends Command {
                                         $target_username->last_checked = \Carbon\Carbon::now();
                                         if ($target_response->user->follower_count < 1000) {
                                             $target_username->insufficient_followers = 1;
-                                            $target_username->save();
+                                            echo "[$ig_username] [$target_username] has insufficient followers.\n";
                                         }
+                                        $target_username->save();
                                     }
                                     
                                 } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
