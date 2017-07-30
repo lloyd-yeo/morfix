@@ -63,13 +63,13 @@ class Kernel extends ConsoleKernel {
      */
     protected function schedule(Schedule $schedule) {
         #$schedule->command('interaction:like')->cron('*/3 * * * * *');
-        $schedule->command('interaction:comment')->everyFiveMinutes();
-        $schedule->command('interaction:follow')->cron('*/3 * * * * *');
+        #$schedule->command('interaction:comment')->everyFiveMinutes();
+        #$schedule->command('interaction:follow')->cron('*/3 * * * * *');
         #$schedule->command('dm:get')->everyThirtyMinutes();
         #$schedule->command('dm:send')->everyTenMinutes();
-        $schedule->command("engagement:add")->hourly();
-        $schedule->command("analysis:follower")->daily("00:00");
-        $schedule->command("ig:refresh")->everyThirtyMinutes();
+        #$schedule->command("engagement:add")->hourly();
+        #$schedule->command("analysis:follower")->daily("00:00");
+        #$schedule->command("ig:refresh")->everyThirtyMinutes();
     }
 
     /**
