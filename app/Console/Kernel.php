@@ -52,6 +52,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetUsersWithPendingCommisions::class,
         Commands\ReadLastPaidCsv::class,
         Commands\TestDoWhileContinue::class,
+        Commands\ManuallyFollowBack::class,
     ];
 
     /**
