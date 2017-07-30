@@ -44,7 +44,9 @@ class InteractionFollow extends Command {
      * @return mixed
      */
     public function handle() {
-
+        
+        $users = NULL;
+        
         if (NULL !== $this->argument("email")) {
             $this->line('email: ' . $this->argument("email"));
             $users = User::where('email', $this->argument("email"))->get();
@@ -64,20 +66,14 @@ class InteractionFollow extends Command {
                     . 'AND invalid_user = 0 '
                     . 'AND incorrect_pw = 0 '
                     . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
-                    . 'AND user_id = ' . $user->user_id)
-//                    ->where('checkpoint_required', false)
-//                    ->where('account_disabled', false)
-//                    ->where('invalid_user', false)
-//                    ->where('incorrect_pw', false)
-//                    ->where('user_id', $user->user_id)
-//                    ->whereRaw('NOW() >= next_follow_time OR next_follow_time IS NULL')
-                    ->get();
+                    . 'AND user_id = ' . $user->user_id)->get();
 
             foreach ($instagram_profiles as $ig_profile) {
-                dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))->onQueue('follows'));
+                dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                        ->onQueue('follows'));
                 $this->line("queued profile: " . $ig_profile->insta_username);
-                continue;
             }
+            
         }
     }
 

@@ -112,11 +112,11 @@ class GetDm implements ShouldQueue {
                         $job_exists = 1;
                         break;
                     }
+                    
                     if ($job_exists) {
                         break;
                     }
                     
-
                     if (floatval($ig_profile->recent_activity_timestamp) < floatval($story->args->timestamp)) {
 
                         #echo("queue as new dm");
