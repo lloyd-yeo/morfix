@@ -201,9 +201,28 @@ class InteractionLike implements ShouldQueue {
                     $target_username_id = "";
                     try {
                         $target_username_id = $instagram->people->getUserIdForName(trim($target_target_username));
+
+                        if ($target_username->last_checked === NULL) {
+                            $target_response = $instagram->people->getInfoById($target_username_id);
+                            $target_username->last_checked = \Carbon\Carbon::now();
+                            if ($target_response->user->follower_count < 1000) {
+                                $target_username->insufficient_followers = 1;
+                                $target_username->save();
+                            }
+                        }
                     } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
                         $target_username_id = "";
+                        $target_username->invalid = 1;
+                        $target_username->save();
                         echo "\n[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
+
+                        if (strpos($insta_ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
+                            $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
+                            $ig_profile->save();
+                            echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+                            echo "\nTerminating...";
+                            exit;
+                        }
                     }
 
                     $user_follower_response = NULL;
