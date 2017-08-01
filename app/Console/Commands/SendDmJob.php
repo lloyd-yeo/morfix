@@ -71,6 +71,7 @@ class SendDmJob extends Command
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                                                         ->get();
+                
                 foreach ($instagram_profiles as $ig_profile) {
                     $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('senddm');

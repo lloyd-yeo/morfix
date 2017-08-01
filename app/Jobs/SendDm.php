@@ -66,6 +66,7 @@ class SendDm implements ShouldQueue {
         $insta_new_follower_template = $ig_profile->insta_new_follower_template;
         $follow_up_message = $ig_profile->follow_up_message;
         $proxy = $ig_profile->proxy;
+        
         echo "[$insta_username] retrieved...\n";
 
         $dm_job = \App\DmJob::where('insta_username', $insta_username)
