@@ -660,7 +660,14 @@ class InteractionFollow implements ShouldQueue {
                                             $ig_profile->feedback_required = 1;
                                             $ig_profile->save();
                                             $followed = 1;
-                                            exit();
+                                            break;
+                                        } else if (stripos(trim($request_ex->getMessage()), "Feedback") !== false) {
+                                            $ig_profile->feedback_required = 1;
+                                            $ig_profile->auto_follow_ban = 1;
+                                            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(6)->toDateTimeString();
+                                            $ig_profile->save();
+                                            $followed = 1;
+                                            break;
                                         }
                                         if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
                                             $ig_profile->feedback_required = 1;
@@ -795,6 +802,13 @@ class InteractionFollow implements ShouldQueue {
 
                                             if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
                                                 $ig_profile->feedback_required = 1;
+                                                $ig_profile->save();
+                                                $followed = 1;
+                                                break;
+                                            } else if (stripos(trim($request_ex->getMessage()), "Feedback") !== false) {
+                                                $ig_profile->feedback_required = 1;
+                                                $ig_profile->auto_follow_ban = 1;
+                                                $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(6)->toDateTimeString();
                                                 $ig_profile->save();
                                                 $followed = 1;
                                                 break;
