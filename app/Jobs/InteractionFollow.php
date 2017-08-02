@@ -103,7 +103,7 @@ class InteractionFollow implements ShouldQueue {
 
         echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
 
-        if ($followed_count >= $ig_profile->follow_cycle) {
+        if (($followed_count >= $ig_profile->follow_cycle) && $ig_profile->auto_unfollow = 1) {
             $ig_profile->unfollow = 1;
             $unfollow = 1;
             $ig_profile->save();
@@ -297,6 +297,7 @@ class InteractionFollow implements ShouldQueue {
                     $followed = 1;
                     exit();
                 }
+                
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 echo "[" . $insta_username . "] incorrectpw_ex: " . $incorrectpw_ex->getMessage() . "\n";
                 $ig_profile->incorrect_pw = 1;
