@@ -78,8 +78,6 @@ class InteractionFollow extends Command {
                 
                 foreach ($instagram_profiles as $ig_profile) {
                     
-                    $ig_profile = $this->profile;
-
                     echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
 
                     $ig_username = $ig_profile->insta_username;
