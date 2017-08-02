@@ -83,9 +83,9 @@ class InteractionFollow extends Command {
                     $this->line("queued profile: " . $ig_profile->insta_username);
                 }
             } else {
-                
+
                 foreach ($instagram_profiles as $ig_profile) {
-                    
+
                     echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
 
                     $ig_username = $ig_profile->insta_username;
@@ -540,7 +540,7 @@ class InteractionFollow extends Command {
                                                         $ig_profile->save();
                                                         $followed = 1;
                                                         break;
-                                                    } else if (stripos(trim($request_ex->getMessage()), "Feedback required.") !== false) {
+                                                    } else if (stripos(trim($request_ex->getMessage()), "Feedback") !== false) {
                                                         $ig_profile->feedback_required = 1;
                                                         $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(6)->toDateTimeString();
                                                         $ig_profile->save();
