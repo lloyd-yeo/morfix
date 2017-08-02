@@ -10,6 +10,7 @@ use InstagramAPI\InstagramException as InstagramException;
 use App\InstagramProfile;
 use App\User;
 use App\CreateInstagramProfileLog;
+use App\InstagramProfileFollowLog;
 use App\Proxy;
 use App\DmJob;
 
