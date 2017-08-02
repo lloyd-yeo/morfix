@@ -172,7 +172,7 @@
                                             {{-- If error is there, show suspension --}}
                                             <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
                                         @elseif ($ig_profile->auto_follow_ban == 1)
-                                        <td class='text-warning'><i class="fa fa-fw fa-info-circle"></i> <small>Throttled by Instagram Temporarily - Next Attempt at {{ Carbon\Carbon::parse($ig_profile->next_follow_time)->toDayDateTimeString() }}</small></td>
+                                        <td class='text-warning'><i class="fa fa-fw fa-info-circle"></i> <small>Throttled by Instagram Temporarily - Next Attempt at {{ Carbon\Carbon::parse($ig_profile->next_follow_time)->toDayDateTimeString() }} (GMT +8)</small></td>
                                         @else
                                             {{-- If error isnt there, proceed as usual --}}
                                             <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
