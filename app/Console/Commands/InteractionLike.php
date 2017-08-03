@@ -141,14 +141,14 @@ class InteractionLike extends Command {
                         $like_quota = rand(1, 3);
                         $instagram->setUser($ig_username, $ig_password);
                         $explorer_response = $instagram->login();
-                        $this->line("Logged in \t quota: " . $like_quota);
+                        $this->line("[$ig_username] Logged in \t quota: " . $like_quota);
 
                         $engagement_jobs = EngagementJob::where('action', 0)
                                 ->where('fulfilled', 0)
                                 ->where('insta_username', $ig_username)
                                 ->get();
 
-                        $this->line(count($engagement_jobs) . " engagement jobs left.");
+                        $this->line("[$ig_username] has " . count($engagement_jobs) . " engagement jobs left.");
 
                         /**
                          * Start of engagement jobs.
@@ -165,6 +165,7 @@ class InteractionLike extends Command {
                                     $engagement_job->fulfilled = 1;
                                     $engagement_job->save();
                                     $like_response = $instagram->media->like($media_id);
+                                    
                                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
 
                                     $this->error("checkpt\t" . $checkpoint_ex->getMessage());
@@ -225,7 +226,7 @@ class InteractionLike extends Command {
                          * If user is free tier & not on trial / run out of quota then break.
                          */
                         if ((!($user->tier > 1 || $user->trial_activation == 1)) || !($like_quota > 0)) {
-                            $this->line("");
+                            $this->line("[$ig_username] User is free tier & not on trial / run out of quota then break.");
                             continue;
                         }
 
