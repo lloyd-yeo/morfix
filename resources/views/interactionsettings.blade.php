@@ -344,9 +344,9 @@
                                         <div id="users-well-inner" data-toggle="slimscroll" data-color="#568bce" data-always-visible="true">
                                             @foreach ($user_ig_target_usernames as $target_username)
                                             <button id="username-{{ $target_username->target_id }}" class="btn 
-                                                    @if ($target_username->invalid || $target_username->insufficient_followers) 
+                                                    @if ($target_username->invalid == 1 || $target_username->insufficient_followers == 1)
                                                     btn-danger
-                                                    @else  
+                                                    @else
                                                     btn-primary
                                                     @endif 
                                                     btn-sm btn-rounded remove-username-btn push-5-r push-10" type="button" data-id="{{ $target_username->target_id }}">{{ $target_username->target_username }}<i class="fa fa-times"></i> </button>
