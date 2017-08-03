@@ -188,7 +188,7 @@ class InteractionFollow extends Command {
 
                         $current_log_id = "";
                         $current_user_to_unfollow = NULL;
-                        
+
                         try {
                             $ig_username = $insta_username;
                             $ig_password = $insta_pw;
@@ -724,142 +724,284 @@ class InteractionFollow extends Command {
                                     exit();
                                 } else {
                                     $target_usernames = Niche::find($niche)->targetUsernames();
+                                    if (count($target_usernames) > 0) {
+                                        foreach ($target_usernames as $target_username) {
+                                            echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
+                                            $user_follower_response = NULL;
 
-                                    foreach ($target_usernames as $target_username) {
-                                        echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
-                                        $user_follower_response = NULL;
-
-                                        try {
-                                            $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
-                                            $user_follower_response = $instagram->people->getFollowers($username_id);
-                                            #$user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
-                                        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                                            $target_username->delete();
-                                            continue;
-                                        }
-
-                                        $users_to_follow = $user_follower_response->users;
-
-                                        foreach ($users_to_follow as $user_to_follow) {
-                                            if ($user_to_follow->is_private) {
-                                                echo "[" . $insta_username . "] [$user_to_follow->username] is private.\n";
+                                            try {
+                                                $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+                                                $user_follower_response = $instagram->people->getFollowers($username_id);
+                                                #$user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
+                                            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                                                $target_username->delete();
                                                 continue;
-                                            } else if ($user_to_follow->has_anonymous_profile_picture) {
-                                                echo "[" . $insta_username . "] [$user_to_follow->username] has no profile pic.\n";
-                                                continue;
-                                            } else {
-                                                if (InstagramProfileFollowLog::where('insta_username', $insta_username)->where('follower_id', $user_to_follow->pk)->count() > 0) {
-                                                    //user exists aka duplicate
-                                                    echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
+                                            }
+
+                                            $users_to_follow = $user_follower_response->users;
+
+                                            foreach ($users_to_follow as $user_to_follow) {
+                                                if ($user_to_follow->is_private) {
+                                                    echo "[" . $insta_username . "] [$user_to_follow->username] is private.\n";
+                                                    continue;
+                                                } else if ($user_to_follow->has_anonymous_profile_picture) {
+                                                    echo "[" . $insta_username . "] [$user_to_follow->username] has no profile pic.\n";
                                                     continue;
                                                 } else {
-                                                    try {
-                                                        $throttle_count++;
-                                                        $user_info = $instagram->people->getInfoById($user_to_follow->pk);
-                                                        $user_to_follow = $user_info->user;
+                                                    if (InstagramProfileFollowLog::where('insta_username', $insta_username)->where('follower_id', $user_to_follow->pk)->count() > 0) {
+                                                        //user exists aka duplicate
+                                                        echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
+                                                        continue;
+                                                    } else {
+                                                        try {
+                                                            $throttle_count++;
+                                                            $user_info = $instagram->people->getInfoById($user_to_follow->pk);
+                                                            $user_to_follow = $user_info->user;
 
-                                                        if ($user_to_follow->media_count == 0) {
-                                                            echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
-                                                            continue;
-                                                        }
-                                                        if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
-                                                            echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
-                                                            continue;
-                                                        }
-                                                        if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
-                                                            echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
-                                                            continue;
-                                                        }
-
-                                                        $follow_resp = $instagram->people->follow($user_to_follow->pk);
-
-                                                        if ($follow_resp->friendship_status->following == true) {
-
-                                                            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
-                                                            $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
-                                                            if ($ig_profile->save()) {
-                                                                echo "[$insta_username] NICHE added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
-                                                            }
-
-                                                            $new_follow_log = new InstagramProfileFollowLog;
-                                                            $new_follow_log->insta_username = $insta_username;
-                                                            $new_follow_log->follower_username = $user_to_follow->username;
-                                                            $new_follow_log->follower_id = $user_to_follow->pk;
-                                                            $new_follow_log->log = serialize($follow_resp);
-                                                            $new_follow_log->follow_success = 1;
-                                                            if ($new_follow_log->save()) {
-                                                                echo "[$insta_username] added new follow log.";
-                                                            }
-
-                                                            echo "[$insta_username] follow cycle: " . $follow_cycle . "\n";
-
-                                                            $followed_logs = InstagramProfileFollowLog::where('insta_username', $insta_username)
-                                                                    ->where('follow', 1)
-                                                                    ->where('unfollowed', 0)
-                                                                    ->get();
-
-                                                            $followed_count = count($followed_logs);
-                                                            echo "[$insta_username] number of follows: " . $followed_count . "\n";
-
-                                                            if ($followed_count >= $follow_cycle) {
-                                                                $ig_profile->unfollow = 1;
-                                                                $ig_profile->save();
-                                                            }
-
-                                                            $followed = 1;
-                                                            echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
-                                                            break;
-                                                        } else {
-                                                            if ($follow_resp->friendship_status->is_private) {
+                                                            if ($user_to_follow->media_count == 0) {
+                                                                echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
                                                                 continue;
-                                                            } else if ($follow_resp->friendship_status->following == false) {
-                                                                $ig_profile->next_follow_time = \Carbon\Carbon::now()->addSeconds(180)->toDateTimeString();
-                                                                $ig_profile->follow_quota = $ig_profile->follow_quota + 1;
-                                                                $ig_profile->save();
                                                             }
+                                                            if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
+                                                                echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
+                                                                continue;
+                                                            }
+                                                            if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
+                                                                echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
+                                                                continue;
+                                                            }
+
+                                                            $follow_resp = $instagram->people->follow($user_to_follow->pk);
+
+                                                            if ($follow_resp->friendship_status->following == true) {
+
+                                                                $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
+                                                                $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
+                                                                if ($ig_profile->save()) {
+                                                                    echo "[$insta_username] NICHE added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
+                                                                }
+
+                                                                $new_follow_log = new InstagramProfileFollowLog;
+                                                                $new_follow_log->insta_username = $insta_username;
+                                                                $new_follow_log->follower_username = $user_to_follow->username;
+                                                                $new_follow_log->follower_id = $user_to_follow->pk;
+                                                                $new_follow_log->log = serialize($follow_resp);
+                                                                $new_follow_log->follow_success = 1;
+                                                                if ($new_follow_log->save()) {
+                                                                    echo "[$insta_username] added new follow log.";
+                                                                }
+
+                                                                echo "[$insta_username] follow cycle: " . $follow_cycle . "\n";
+
+                                                                $followed_logs = InstagramProfileFollowLog::where('insta_username', $insta_username)
+                                                                        ->where('follow', 1)
+                                                                        ->where('unfollowed', 0)
+                                                                        ->get();
+
+                                                                $followed_count = count($followed_logs);
+                                                                echo "[$insta_username] number of follows: " . $followed_count . "\n";
+
+                                                                if ($followed_count >= $follow_cycle) {
+                                                                    $ig_profile->unfollow = 1;
+                                                                    $ig_profile->save();
+                                                                }
+
+                                                                $followed = 1;
+                                                                echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
+                                                                break;
+                                                            } else {
+                                                                if ($follow_resp->friendship_status->is_private) {
+                                                                    continue;
+                                                                } else if ($follow_resp->friendship_status->following == false) {
+                                                                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addSeconds(180)->toDateTimeString();
+                                                                    $ig_profile->follow_quota = $ig_profile->follow_quota + 1;
+                                                                    $ig_profile->save();
+                                                                }
+                                                                continue;
+                                                            }
+                                                        } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                                                            echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+
+                                                            if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                                                $ig_profile->feedback_required = 1;
+                                                                $ig_profile->save();
+                                                                $followed = 1;
+                                                                break;
+                                                            } else if (stripos(trim($request_ex->getMessage()), "Feedback") !== false) {
+                                                                $ig_profile->feedback_required = 1;
+                                                                $ig_profile->auto_follow_ban = 1;
+                                                                $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(6)->toDateTimeString();
+                                                                $ig_profile->save();
+                                                                $followed = 1;
+                                                                break;
+                                                            }
+
+                                                            if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
+                                                                $ig_profile->feedback_required = 1;
+                                                                $ig_profile->save();
+                                                                $followed = 1;
+                                                                exit();
+                                                            }
+
+                                                            continue;
+                                                        } catch (Exception $ex) {
+                                                            echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
                                                             continue;
                                                         }
-                                                    } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                                                        echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
-
-                                                        if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
-                                                            $ig_profile->feedback_required = 1;
-                                                            $ig_profile->save();
-                                                            $followed = 1;
-                                                            break;
-                                                        } else if (stripos(trim($request_ex->getMessage()), "Feedback") !== false) {
-                                                            $ig_profile->feedback_required = 1;
-                                                            $ig_profile->auto_follow_ban = 1;
-                                                            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(6)->toDateTimeString();
-                                                            $ig_profile->save();
-                                                            $followed = 1;
-                                                            break;
-                                                        }
-
-                                                        if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
-                                                            $ig_profile->feedback_required = 1;
-                                                            $ig_profile->save();
-                                                            $followed = 1;
-                                                            exit();
-                                                        }
-
-                                                        continue;
-                                                    } catch (Exception $ex) {
-                                                        echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
-                                                        continue;
                                                     }
                                                 }
                                             }
-                                        }
 
-                                        if ($throttle_count == $throttle_limit) {
-                                            break;
-                                        }
+                                            if ($throttle_count == $throttle_limit) {
+                                                break;
+                                            }
 
-                                        if ($followed == 1) {
-                                            break;
+                                            if ($followed == 1) {
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        $throttle_count = 0;
+                                        $target_hashtags = Niche::find($niche)->targetHashtags();
+                                        try {
+                                            foreach ($target_hashtags as $target_hashtag) {
+
+                                                echo "[" . $insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
+                                                #$hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
+                                                $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
+
+                                                foreach ($hashtag_feed->items as $item) {
+
+                                                    $throttle_count++;
+
+                                                    if ($throttle_count == $throttle_limit) {
+                                                        break;
+                                                    }
+
+                                                    $user_to_follow = $item->user;
+
+                                                    if (InstagramProfileFollowLog::where('insta_username', $insta_username)->where('follower_id', $user_to_follow->pk)->count() > 0) {
+                                                        //user exists aka duplicate
+                                                        echo "[" . $insta_username . "] has followed [$user_to_follow->username] before.\n";
+                                                        continue;
+                                                    } else {
+                                                        if ($user_to_follow->is_private) {
+                                                            echo "[" . $insta_username . "] [$user_to_follow->username] is private.\n";
+                                                            continue;
+                                                        } else if ($user_to_follow->has_anonymous_profile_picture) {
+                                                            echo "[" . $insta_username . "] [$user_to_follow->username] has no profile pic.\n";
+                                                            continue;
+                                                        } else {
+                                                            try {
+                                                                #$user_info = $instagram->getUserInfoById($user_to_follow->pk);
+                                                                $user_info = $instagram->people->getInfoById($user_to_follow->pk);
+                                                                $user_to_follow = $user_info->user;
+
+                                                                if ($user_to_follow->media_count == 0) {
+                                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: > 0 photos \n";
+                                                                    continue;
+                                                                }
+
+                                                                if ($follow_min_follower != 0 && $user_to_follow->follower_count < $follow_min_follower) {
+                                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] < [$follow_min_follower] \n";
+                                                                    continue;
+                                                                }
+
+                                                                if ($follow_max_follower != 0 && $user_to_follow->follower_count > $follow_max_follower) {
+                                                                    echo "[$insta_username] [$user_to_follow->username] does not meet requirement: [" . $user_to_follow->follower_count . "] > [$follow_max_follower] \n";
+                                                                    continue;
+                                                                }
+
+                                                                #$follow_resp = $instagram->follow($user_to_follow->pk);
+                                                                $follow_resp = $instagram->people->follow($user_to_follow->pk);
+
+                                                                if ($follow_resp->friendship_status->following == true) {
+
+                                                                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
+                                                                    $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
+
+                                                                    if ($ig_profile->save()) {
+                                                                        echo "[$insta_username] HASHTAG added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
+                                                                    }
+
+                                                                    $new_follow_log = new InstagramProfileFollowLog;
+                                                                    $new_follow_log->insta_username = $insta_username;
+                                                                    $new_follow_log->follower_username = $user_to_follow->username;
+                                                                    $new_follow_log->follower_id = $user_to_follow->pk;
+                                                                    $new_follow_log->log = serialize($follow_resp);
+                                                                    $new_follow_log->follow_success = 1;
+                                                                    if ($new_follow_log->save()) {
+                                                                        echo "[$insta_username] added new follow log.";
+                                                                    }
+
+                                                                    echo "[$insta_username] follow cycle: " . $follow_cycle . "\n";
+
+                                                                    $followed_logs = InstagramProfileFollowLog::where('insta_username', $insta_username)
+                                                                            ->where('follow', 1)
+                                                                            ->where('unfollowed', 0)
+                                                                            ->get();
+
+                                                                    $followed_count = count($followed_logs);
+                                                                    echo "[$insta_username] number of follows: " . $followed_count . "\n";
+
+                                                                    if ($followed_count >= $follow_cycle) {
+                                                                        $ig_profile->unfollow = 1;
+                                                                        $ig_profile->save();
+                                                                    }
+
+                                                                    $followed = 1;
+                                                                    echo "[" . $insta_username . "] followed [$user_to_follow->username].\n";
+                                                                    break;
+                                                                } else {
+                                                                    continue;
+                                                                }
+                                                            } catch (\InstagramAPI\Exception\RequestException $request_ex) {
+                                                                echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
+
+                                                                if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
+                                                                    $ig_profile->feedback_required = 1;
+                                                                    $ig_profile->save();
+                                                                    $followed = 1;
+                                                                    break;
+                                                                } else if (stripos(trim($request_ex->getMessage()), "Feedback") !== false) {
+                                                                    $ig_profile->feedback_required = 1;
+                                                                    $ig_profile->auto_follow_ban = 1;
+                                                                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(6)->toDateTimeString();
+                                                                    $ig_profile->save();
+                                                                    $followed = 1;
+                                                                    break;
+                                                                }
+
+                                                                if (stripos(trim($request_ex->getMessage()), "Throttled by Instagram because of too many API requests.") !== false) {
+                                                                    $ig_profile->feedback_required = 1;
+                                                                    $ig_profile->save();
+                                                                    $followed = 1;
+                                                                    break;
+                                                                }
+
+                                                                if (stripos(trim($request_ex->getMessage()), "Sorry, you're following the max limit of accounts. You'll need to unfollow some accounts to start following more.") !== false) {
+                                                                    $followed = 1;
+                                                                    break;
+                                                                }
+                                                                continue;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                if ($throttle_count == $throttle_limit) {
+                                                    break;
+                                                }
+
+                                                if ($followed == 1) {
+                                                    break;
+                                                }
+                                            }
+                                        } catch (Exception $ex) {
+                                            echo "[" . $insta_username . "] hashtag-error: " . $ex->getMessage() . "\n";
                                         }
                                     }
+                                    //put curly bracket here.
                                 }
                             } catch (Exception $ex) {
                                 echo "[" . $insta_username . "] niche-error: " . $ex->getMessage() . "\n";
