@@ -297,7 +297,6 @@ class InteractionFollow implements ShouldQueue {
                     $followed = 1;
                     exit();
                 }
-                
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 echo "[" . $insta_username . "] incorrectpw_ex: " . $incorrectpw_ex->getMessage() . "\n";
                 $ig_profile->incorrect_pw = 1;
@@ -676,6 +675,9 @@ class InteractionFollow implements ShouldQueue {
                                             $followed = 1;
                                             exit();
                                         }
+                                        if (stripos(trim($request_ex->getMessage()), "Sorry, you're following the max limit of accounts. You'll need to unfollow some accounts to start following more.") !== false) {
+                                            exit();
+                                        }
                                         continue;
                                     } catch (Exception $ex) {
                                         echo "[" . $insta_username . "] username-error: " . $ex->getMessage() . "\n";
@@ -819,6 +821,9 @@ class InteractionFollow implements ShouldQueue {
                                                 $ig_profile->feedback_required = 1;
                                                 $ig_profile->save();
                                                 $followed = 1;
+                                                exit();
+                                            }
+                                            if (stripos(trim($request_ex->getMessage()), "Sorry, you're following the max limit of accounts. You'll need to unfollow some accounts to start following more.") !== false) {
                                                 exit();
                                             }
 
