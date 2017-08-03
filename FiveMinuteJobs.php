@@ -17,6 +17,7 @@ $conn->query("UPDATE user_insta_target_username SET target_username = REPLACE(`t
 $conn->query("UPDATE user_insta_target_hashtag SET hashtag = REPLACE(`hashtag`, '\n', '');");
 $conn->query("UPDATE user_insta_target_username SET target_username = REPLACE(`target_username`, '\t', '');");
 $conn->query("UPDATE user_insta_target_hashtag SET hashtag = REPLACE(`hashtag`, '\t', '');");
+$conn->query("UPDATE user SET trial_activation = 1, trial_end_date = NOW() + INTERVAL 7 DAY WHERE trial_activation = 0;");
 $conn->close();
 $time_elapsed_secs = microtime(true) - $start;
 echo "Time taken: " . $time_elapsed_secs;
