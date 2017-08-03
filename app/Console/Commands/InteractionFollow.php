@@ -188,6 +188,7 @@ class InteractionFollow extends Command {
 
                         $current_log_id = "";
                         $current_user_to_unfollow = NULL;
+                        
                         try {
                             $ig_username = $insta_username;
                             $ig_password = $insta_pw;
