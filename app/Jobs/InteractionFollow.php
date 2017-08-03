@@ -565,6 +565,10 @@ class InteractionFollow implements ShouldQueue {
                 try {
                     foreach ($target_usernames as $target_username) {
 
+                        if (trim($target_username->target_username) === "") {
+                            continue;
+                        }
+
                         echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
 
                         $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
@@ -707,6 +711,11 @@ class InteractionFollow implements ShouldQueue {
                         $target_usernames = Niche::find($niche)->targetUsernames();
 
                         foreach ($target_usernames as $target_username) {
+
+                            if (trim($target_username->target_username) === "") {
+                                continue;
+                            }
+
                             echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
                             $user_follower_response = NULL;
 
