@@ -28,7 +28,7 @@ class ManuallyFollowBack extends Command {
      *
      * @var string
      */
-    protected $signature = 'manual:follow {insta_username} {profile_id}';
+    protected $signature = 'manual:follow {insta_username}';
 
     /**
      * The console command description.
@@ -52,7 +52,7 @@ class ManuallyFollowBack extends Command {
      * @return mixed
      */
     public function handle() {
-        $profile_to_follow_id = $this->argument('profile_id');
+        #$profile_to_follow_id = $this->argument('profile_id');
         $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
 
         echo("\n" . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
