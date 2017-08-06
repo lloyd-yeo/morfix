@@ -41,21 +41,29 @@ class UpdatePendingCommissionPayable extends Command {
         $path = storage_path('app/june-updates.csv');
         $file = fopen($path, "r");
         $all_data = array();
+        
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             
             if ($data[3] == "Yes") {
                 echo $data[0] . "\t" . $data[3] . "\n";
                 $user = User::where('email', trim($data[0]))->first();
                 if ($user !== NULL) {
-//                    echo $user;
                     
                     //UPDATE LAST PAID
                     $user->last_pay_out_date = "2017-07-25 00:00:00";
                     $user->save();
                     
+                    //UPDATE ALL_TIME_COMMISSION
+                    $comms = $data[2];
+                    $user->all_time_commission = $user->all_time_commission + $comms;
+                    $user->save();
+                    
+                    $user->pending_commission = $user->pending_commission - $comms;
+                    $user->save();
+                    
+                    $user->pending_commission_payable = $user->pending_commission;
+                    $user->save();
                 }
-                
-                
                 
             }
             
