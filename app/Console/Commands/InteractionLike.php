@@ -141,7 +141,7 @@ class InteractionLike extends Command {
                         $like_quota = rand(1, 3);
                         $instagram->setUser($ig_username, $ig_password);
                         $explorer_response = $instagram->login();
-                        $this->line("[$ig_username] Logged in \t quota: " . $like_quota);
+                        $this->line("[$ig_username] Logged in \t Round-Quota: " . $like_quota);
 
                         $engagement_jobs = EngagementJob::where('action', 0)
                                 ->where('fulfilled', 0)
@@ -222,12 +222,16 @@ class InteractionLike extends Command {
                         /**
                          * End of engagement jobs.
                          */
+                        
+                        
                         /*
                          * If user is free tier & not on trial / run out of quota then break.
                          */
                         if ((!($user->tier > 1 || $user->trial_activation == 1)) || !($like_quota > 0)) {
                             $this->line("[$ig_username] User is free tier & not on trial / run out of quota then break.");
                             continue;
+                        } else {
+                            $this->line("[$ig_username] beginning LIKE sequence.");
                         }
 
                         /*
@@ -237,7 +241,9 @@ class InteractionLike extends Command {
                                         ->where('invalid', 0)
                                         ->where('insufficient_followers', 0)
                                         ->inRandomOrder()->get();
-
+                        
+                        $this->line("[$ig_username] retrieved " . count($target_usernames)  . " user-defined usernames.");
+                        
                         foreach ($target_usernames as $target_username) {
 
                             if ($like_quota > 0) {
@@ -509,7 +515,8 @@ class InteractionLike extends Command {
 
                             $niche = Niche::find($ig_profile->niche);
                             $niche_targets = $niche->targetUsernames();
-
+                            $this->line("[$ig_username] retrieved " . count($niche_targets)  . " niche usernames.");
+                            
                             foreach ($niche_targets as $target_username) {
 
                                 if ($like_quota > 0) {
