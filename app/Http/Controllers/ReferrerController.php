@@ -13,7 +13,7 @@ class ReferrerController extends Controller {
         
         if ($request->referrer) {
             \Cookie::forget('referrer');
-            $cookieJar->queue(cookie()->forever('referrer', $request->referrer, 45000));
+            $cookieJar->queue(cookie()->forever('referrer', $request->referrer));
         }
         
         $redir = $request->input("redir");
