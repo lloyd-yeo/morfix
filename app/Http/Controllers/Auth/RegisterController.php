@@ -9,6 +9,7 @@ use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\UserAffiliates;
+use Illuminate\Cookie\CookieJar;
 
 class RegisterController extends Controller {
     /*

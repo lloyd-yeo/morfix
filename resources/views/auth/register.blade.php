@@ -65,6 +65,7 @@
                             <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
                             <form class="js-validation-register form-horizontal push-50-t push-50" action="{{ route('register') }}" method="post">
                                 {{ csrf_field() }}
+                                <input type="hidden" name="referrer" value="{{ cookie('referrer') }}">
                                 <div class="form-group">
                                     <div class="col-xs-12">
                                         <div class="form-material form-material-primary">
