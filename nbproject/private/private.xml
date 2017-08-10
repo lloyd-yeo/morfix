@@ -4,12 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/InteractionLike.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/dm/log.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/InteractionFollow.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Kernel.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/interactionsettings.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/resources/views/home.blade.php</file>
-            <file>file:/Applications/MAMP/htdocs/morfix/app/Jobs/InteractionFollow.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/UpdatePendingCommissionPayable.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Http/Controllers/EngagementGroupController.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Console/Commands/ManuallyFollowBack.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/app/Http/Controllers/InteractionsController.php</file>
+            <file>file:/Applications/MAMP/htdocs/morfix/storage/app/june-updates.csv</file>
         </group>
     </open-files>
 </project-private>
