@@ -65,6 +65,10 @@ use RegistersUsers;
         $user->email = $data['email'];
         $user->password = $data['password'];
         
+        if ($request->referrer) {
+            $cookieJar->queue(cookie('referrer', $request->referrer, 45000));
+        }
+        
         if ($user->save()) {
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
             $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
@@ -91,7 +95,7 @@ use RegistersUsers;
                 try {
                     $subscribers = $list->subscribers;
                     $new_subscriber = $subscribers->create($params);
-                } catch (Exception $ex) {
+                } catch (\AWeberAPIException $ex) {
                     echo $ex->getMessage();
                 }
             }
