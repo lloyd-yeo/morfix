@@ -20,7 +20,7 @@ class ReferrerController extends Controller {
         if ($redir == "payment") {
             return view('vsl.payment', [
             ]);
-        } elseif ($redir == "home") {  
+        } elseif ($redir == "home") {
             return redirect('https://morfix.co');
         } else {
             return view('vsl.signup', [
@@ -28,9 +28,4 @@ class ReferrerController extends Controller {
             ]);
         }
     }
-    
-    public function processPayment(Request $request) {
-        #echo $request->cookie('referrer');
-    }
-    
 }

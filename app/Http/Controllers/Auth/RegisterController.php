@@ -8,6 +8,7 @@ use AWeberAPI;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\UserAffiliates;
 
 class RegisterController extends Controller {
     /*
@@ -64,12 +65,19 @@ use RegistersUsers;
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = $data['password'];
-        
-        if ($request->referrer) {
-            $cookieJar->queue(cookie('referrer', $request->referrer, 45000));
-        }
+        $user->tier = 1;
+        $user->num_acct = 1;
+        $user->trial_activation = 1;
         
         if ($user->save()) {
+            
+            $referrer = $data['referrer'];
+            
+            $user_affiliate = new UserAffiliates;
+            $user_affiliate->referrer = $referrer;
+            $user_affiliate->referred = $user->user_id;
+            $user_affiliate->save();
+            
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
             $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
 
@@ -99,6 +107,7 @@ use RegistersUsers;
                     echo $ex->getMessage();
                 }
             }
+            
         }
 
         return $user;
