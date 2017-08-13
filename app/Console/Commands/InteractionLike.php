@@ -88,6 +88,25 @@ class InteractionLike extends Command {
                     dispatch($job);
                     $this->line("queued profile: " . $ig_profile->insta_username);
                 }
+                
+                $instagram_profiles = InstagramProfile::where('auto_like', false)
+                        ->where('checkpoint_required', false)
+                        ->where('account_disabled', false)
+                        ->where('invalid_user', false)
+                        ->where('incorrect_pw', false)
+                        ->where('user_id', $user->user_id)
+                        ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
+                        ->get();
+                
+                foreach ($instagram_profiles as $ig_profile) {
+                    if ($ig_profile->owner()->tier == 1) {
+                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                        $job->onQueue('likes');
+                        dispatch($job);
+                        $this->line("queued profile: " . $ig_profile->insta_username);
+                    }
+                }
+                
                 continue;
             }
 
