@@ -77,10 +77,12 @@ class InteractionFollow extends Command {
                             . 'AND user_id = ' . $user->user_id)->get();
 
             if (NULL === $this->argument("email")) {
-                foreach ($instagram_profiles as $ig_profile) {
-                    dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-                                    ->onQueue('follows'));
-                    $this->line("queued profile: " . $ig_profile->insta_username);
+                if ($user->tier > 1 || $user->trial_activation == 1) {
+                    foreach ($instagram_profiles as $ig_profile) {
+                        dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                                        ->onQueue('follows'));
+                        $this->line("queued profile: " . $ig_profile->insta_username);
+                    }
                 }
             } else {
 

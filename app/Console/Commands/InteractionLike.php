@@ -88,25 +88,24 @@ class InteractionLike extends Command {
                     dispatch($job);
                     $this->line("queued profile: " . $ig_profile->insta_username);
                 }
-                
-                $instagram_profiles = InstagramProfile::where('auto_like', false)
-                        ->where('checkpoint_required', false)
-                        ->where('account_disabled', false)
-                        ->where('invalid_user', false)
-                        ->where('incorrect_pw', false)
-                        ->where('user_id', $user->user_id)
-                        ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
-                        ->get();
-                
-                foreach ($instagram_profiles as $ig_profile) {
-                    if ($ig_profile->owner()->tier == 1) {
+
+                if ($ig_profile->owner()->tier == 1) {
+                    $instagram_profiles = InstagramProfile::where('auto_like', false)
+                            ->where('checkpoint_required', false)
+                            ->where('account_disabled', false)
+                            ->where('invalid_user', false)
+                            ->where('incorrect_pw', false)
+                            ->where('user_id', $user->user_id)
+                            ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
+                            ->get();
+
+                    foreach ($instagram_profiles as $ig_profile) {
                         $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
                         $job->onQueue('likes');
                         dispatch($job);
                         $this->line("queued profile: " . $ig_profile->insta_username);
                     }
                 }
-                
                 continue;
             }
 
@@ -184,7 +183,6 @@ class InteractionLike extends Command {
                                     $engagement_job->fulfilled = 1;
                                     $engagement_job->save();
                                     $like_response = $instagram->media->like($media_id);
-                                    
                                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
 
                                     $this->error("checkpt\t" . $checkpoint_ex->getMessage());
@@ -241,8 +239,6 @@ class InteractionLike extends Command {
                         /**
                          * End of engagement jobs.
                          */
-                        
-                        
                         /*
                          * If user is free tier & not on trial / run out of quota then break.
                          */
@@ -260,9 +256,9 @@ class InteractionLike extends Command {
                                         ->where('invalid', 0)
                                         ->where('insufficient_followers', 0)
                                         ->inRandomOrder()->get();
-                        
-                        $this->line("[$ig_username] retrieved " . count($target_usernames)  . " user-defined usernames.");
-                        
+
+                        $this->line("[$ig_username] retrieved " . count($target_usernames) . " user-defined usernames.");
+
                         foreach ($target_usernames as $target_username) {
 
                             if ($like_quota > 0) {
@@ -534,8 +530,8 @@ class InteractionLike extends Command {
 
                             $niche = Niche::find($ig_profile->niche);
                             $niche_targets = $niche->targetUsernames();
-                            $this->line("[$ig_username] retrieved " . count($niche_targets)  . " niche usernames.");
-                            
+                            $this->line("[$ig_username] retrieved " . count($niche_targets) . " niche usernames.");
+
                             foreach ($niche_targets as $target_username) {
 
                                 if ($like_quota > 0) {
