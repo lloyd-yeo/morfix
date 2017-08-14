@@ -126,6 +126,10 @@ class InteractionLike extends Command {
             try {
 
                 foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('likes');
+                    dispatch($job);
+                    $this->line("queued profile: " . $ig_profile->insta_username);
                     $this->line("RETRIEVED: [" . $ig_profile->insta_username . "]\t" . $ig_profile->insta_pw . "\n");
                 }
 
