@@ -227,6 +227,7 @@ class InteractionLike extends Command {
                                     $ig_profile->save();
                                     continue;
                                 } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+                                    $this->error("emptyresponse\t" . $emptyresponse_ex->getMessage());
                                     continue;
                                 }
 
