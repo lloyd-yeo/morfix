@@ -155,6 +155,10 @@ class InteractionComment implements ShouldQueue {
                 
                 exit();
             }
+            
+            if ($ig_profile->owner()->tier == 1) {
+                exit();
+            }
 
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                     ->orderBy('date_inserted', 'desc')

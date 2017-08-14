@@ -66,21 +66,22 @@ class InteractionComment extends Command {
             executeCommenting($instagram_profiles);
         } else {
             foreach (User::cursor() as $user) {
+                
+                if ($user->tier > 2) {
+                    $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                            ->where('email', $user->email)
+                            ->where('incorrect_pw', false)
+                            ->whereRaw('NOW() >= next_comment_time')
+                            ->get();
 
-                $instagram_profiles = InstagramProfile::where('auto_comment', true)
-                        ->where('email', $user->email)
-                        ->where('incorrect_pw', false)
-                        ->whereRaw('NOW() >= next_comment_time')
-                        ->get();
-
-                if (count($instagram_profiles) > 0) {
-                    foreach ($instagram_profiles as $ig_profile) {
-                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                        $this->line("queued profile: " . $ig_profile->insta_username);
-                        continue;
+                    if (count($instagram_profiles) > 0) {
+                        foreach ($instagram_profiles as $ig_profile) {
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("queued profile: " . $ig_profile->insta_username);
+                            continue;
+                        }
                     }
                 }
-
                 #executeCommenting($instagram_profiles);
             }
         }
