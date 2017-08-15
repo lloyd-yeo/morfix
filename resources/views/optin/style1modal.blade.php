@@ -20,7 +20,7 @@
                                         </h3>
                                     </center>
                                 </div>
-                                <div class="block-content block-content-full">
+                                <div class="block-content block-content-full" style="padding-top: 0px;">
                                     <form id="payment-form" class="form-horizontal push-10-t" onsubmit="event.preventDefault();" method="post" action="{{ url('vsl/signup/cc') }}">
                                         <div class="form-group">
                                             <div class="col-sm-12">
