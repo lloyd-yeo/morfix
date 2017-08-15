@@ -11,7 +11,7 @@
                     <div class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
                             <div class='block' style="margin-bottom: 0px;">
-                                <div class="block-content block-content-full img-container" style="padding-top: 0px;">
+                                <div class="block-content block-content-full img-container" style="height: 100%; padding-top: 0px;">
                                     <center>
                                         <img src="../assets/img/promo/style1optin-popup.png" >
                                     </center>
