@@ -9,7 +9,12 @@
             <div id="modal-body">
                 <div class="row col-lg-12" 
                      style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
-                    <div id="payment-detail-div" class="dfd_col-tablet-12 columns three dfd_col-tabletop-12 dfd_col-laptop-12 dfd_col-mobile-12">
+                    <div class="col-kg-6">
+                        <div class='block' style="margin-bottom: 0px;">
+                            <img src="../assets/img/promo/style1optin-popup.png" >
+                        </div>
+                    </div>
+                    <div id="payment-detail-div" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
                             <div class='block' style="margin-bottom: 0px;">
                                 <div class='block-header'>
