@@ -197,14 +197,15 @@
                 </div>
             </div>
             <div class='col-lg-10 col-lg-offset-1 push-30-t'>
-                <div id='vid-container' class='center-block' style='max-width:910px;'>
-
-                    <iframe src="https://player.vimeo.com/video/198823397" 
-                            width="640" height="400" frameborder="0" 
-                            webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                </div>
+                <center>
+                    <div id='vid-container' class='center-block' style='max-width:910px;'>
+                        <iframe src="https://player.vimeo.com/video/198823397" 
+                                width="640" height="400" frameborder="0" 
+                                webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    </div>
+                </center>
             </div>
-            
+
             <div class='col-lg-10 col-lg-offset-1 push-30-t'>
                 <div class='center-block' style='max-width:910px;'>
                     <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
@@ -216,11 +217,11 @@
                     </button>
                 </div>
             </div>
-            
+
             <div class='col-lg-12 push-50-t' style="padding-left: 0px; padding-right: 0px;">
-                
+
             </div>
-            
+
         </main>
     </body>
 
