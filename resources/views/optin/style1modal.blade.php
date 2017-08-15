@@ -25,7 +25,8 @@
                             <div class='block' style="margin-bottom: 0px; margin-top: 50px;">
                                 <div class='block-header'>
                                     <center>
-                                        <h3 class="block-title" style='text-transform: uppercase; font-size: 24px;'>
+                                        <h3 class="block-title" style='color: #FF6A5C; 
+                                            text-transform: uppercase; font-size: 30px;'>
                                             HOW I MADE $678.25 PER DAY<br/>
                                             FROM THIS INSTAGRAM<br/>LOOPHOLE INCOME SYSTEM
                                         </h3>
