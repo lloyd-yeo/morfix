@@ -7,12 +7,11 @@
             </div>
 
             <div id="modal-body">
-                
-                <div class="row col-lg-12" style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
-                    
+                <div class="row col-lg-12" 
+                     style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
                     <div id="payment-detail-div" class="dfd_col-tablet-12 columns three dfd_col-tabletop-12 dfd_col-laptop-12 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
-                            <div class='block'>
+                            <div class='block' style="margin-bottom: 0px;">
                                 <div class='block-header'>
                                     <center>
                                         <h3 class="block-title" style='text-transform: uppercase; font-size: 24px;'>
