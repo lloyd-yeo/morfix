@@ -207,7 +207,7 @@
             </div>
 
             <div class='col-lg-10 col-lg-offset-1 push-30-t'>
-                <div class='center-block' style='max-width:910px;'>
+                <div class='center-block' style='max-width:455px;'>
                     <input class="form-control" type="email" placeholder="EMAIL">
                     <button class="signup-btn start-stop-btn btn btn-block btn-lg" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 20px;">
                         <span id="signup-btn-text">GET INSTANT ACCESS</span>
