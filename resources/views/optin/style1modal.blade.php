@@ -22,7 +22,7 @@
                     
                     <div id="payment-detail-div" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
-                            <div class='block' style="margin-bottom: 0px;">
+                            <div class='block' style="margin-bottom: 0px; margin-top: 100px;">
                                 <div class='block-header'>
                                     <center>
                                         <h3 class="block-title" style='text-transform: uppercase; font-size: 24px;'>
