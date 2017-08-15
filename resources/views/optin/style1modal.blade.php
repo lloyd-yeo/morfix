@@ -6,7 +6,7 @@
                 <h4 class="modal-title text-white text-center" style="text-transform: uppercase;">Instagram Loophole Income System!</h4>
             </div>
 
-            <div id="modal-body" class="modal-body">
+            <div id="modal-body">
                 
                 <div class="row col-lg-12" style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
                     
@@ -46,11 +46,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- -->
-
-                <div class="modal-footer centered">
-                </div>
-
             </div>
         </div>
     </div>
