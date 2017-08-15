@@ -13,7 +13,7 @@
                             <div class='block' style="margin-bottom: 0px;">
                                 <div class="block-content block-content-full" style="padding-top: 0px;">
                                     <center>
-                                        <img src="../assets/img/promo/style1optin-popup.png" >
+                                        <img class="img-responsive" src="../assets/img/promo/style1optin-popup.png" >
                                     </center>
                                 </div>
                             </div>
