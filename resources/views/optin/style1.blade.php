@@ -231,6 +231,9 @@
     <script src="../assets/js/plugins/slick/slick.min.js"></script>
     <script>
             jQuery(function () {
+                
+                jQuery('#modal-payment').modal('show');
+                
                 var $allVideos = $("iframe[src^='https://player.vimeo.com']"),
                         // The element that is fluid width
                         //                $fluidEl = $("body");
@@ -264,8 +267,6 @@
 
                     // Kick off one resize to fix all videos on page load
                 }).resize();
-                
-                
                 
             });
     </script>
