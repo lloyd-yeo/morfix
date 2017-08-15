@@ -27,8 +27,7 @@
                                             <div class="col-sm-12">
                                                 <div class="">
                                                     <input class="form-control" type="text" 
-                                                           id="signup-email"  name="email">
-                                                    <label for="signup-email">Email:</label>
+                                                           id="signup-email"  name="email" placeholder="EMAIL HERE">
                                                 </div>
                                             </div>
                                         </div>
