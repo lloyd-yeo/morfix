@@ -123,6 +123,8 @@ Route::get('/vsl/signup', 'ReferrerController@redirect');
 Route::post('/vsl/signup/cc', 'PaymentController@processCreditCardPayment');
 Route::post('/vsl/signup/paypal', 'PaymentController@processPaypalPayment');
 
+Route::get('/welcome', 'OptInController@optin');
+
 /**
  * Routes for creation of Paypal Subscription plans.
  */
