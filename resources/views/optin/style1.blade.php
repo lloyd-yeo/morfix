@@ -180,7 +180,9 @@
         </script>
     </head>
     <body style='margin:0px;'>
-        <main id="main-container" style='min-height: 100%; background-image: url("../assets/img/promo/vsl-bg.jpg"); background-color: rgba(0,0,0,1); background-size:cover;'>
+        <main id="main-container" style='min-height: 100%; 
+              background-image: url("../assets/img/promo/vsl-bg.jpg"); 
+              background-color: rgba(0,0,0,0.4); background-size:cover;'>
             <div class='col-lg-12 push-50-t'>
                 <div class='col-lg-10 col-lg-offset-1'>
                     <p>
