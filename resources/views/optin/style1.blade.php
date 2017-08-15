@@ -191,7 +191,7 @@
                         </a>
                     </p>-->
                     <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
-                        INSTAGRAM LOOPHOLE SYSTEM
+                        INSTAGRAM<br/>LOOPHOLE SYSTEM
                     </h1>
                 </div>
             </div>
