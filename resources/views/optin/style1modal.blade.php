@@ -10,10 +10,12 @@
                 <div class="row col-lg-12" 
                      style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
                     <div class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
-                        <div class='block' style="margin-bottom: 0px;">
-                            <center>
-                                <img src="../assets/img/promo/style1optin-popup.png" >
-                            </center>
+                        <div class="wpb_wrapper">
+                            <div class='block' style="margin-bottom: 0px;">
+                                <center>
+                                    <img src="../assets/img/promo/style1optin-popup.png" >
+                                </center>
+                            </div>
                         </div>
                     </div>
                     <div id="payment-detail-div" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
@@ -22,8 +24,8 @@
                                 <div class='block-header'>
                                     <center>
                                         <h3 class="block-title" style='text-transform: uppercase; font-size: 24px;'>
-                                        HOW I MADE $678.25 PER DAY<br/>
-                                        FROM THIS INSTAGRAM<br/>LOOPHOLE INCOME SYSTEM
+                                            HOW I MADE $678.25 PER DAY<br/>
+                                            FROM THIS INSTAGRAM<br/>LOOPHOLE INCOME SYSTEM
                                         </h3>
                                     </center>
                                 </div>
@@ -37,7 +39,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div id="stripe-card-btn" class='form-group'>
                                             <div class='col-sm-12'>
                                                 <div class="form-material form-material-primary">
@@ -45,7 +47,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </form>
                                 </div>
                             </div>
