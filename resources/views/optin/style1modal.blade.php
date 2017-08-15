@@ -25,7 +25,7 @@
                                     <form id="payment-form" class="form-horizontal push-10-t" onsubmit="event.preventDefault();" method="post" action="{{ url('vsl/signup/cc') }}">
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <div class="form-material form-material-primary ">
+                                                <div class="">
                                                     <input class="form-control" type="text" 
                                                            id="signup-email"  name="email">
                                                     <label for="signup-email">Email:</label>
