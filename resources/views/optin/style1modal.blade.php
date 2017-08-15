@@ -15,7 +15,7 @@
                             <div class='block'>
                                 <div class='block-header'>
                                     <center>
-                                        <h3 class="block-title" style='font-size: 24px;'>
+                                        <h3 class="block-title" style='text-transform: uppercase; font-size: 24px;'>
                                         HOW I MADE $678.25 PER DAY<br/>
                                         FROM THIS INSTAGRAM<br/>LOOPHOLE INCOME SYSTEM
                                         </h3>
