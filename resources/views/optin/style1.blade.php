@@ -206,8 +206,10 @@
             
             <div class='col-lg-10 col-lg-offset-1 push-50-t'>
                 <div class='center-block' style='max-width:910px;'>
-                    Enter your email here
-                    <input type="email">
+                    <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
+                        Enter your email here:
+                    </h1>
+                    <input type="email" >
                     <button class="signup-btn start-stop-btn btn btn-block btn-lg" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 20px;">
                         <span id="signup-btn-text">GET INSTANT ACCESS</span>
                     </button>
