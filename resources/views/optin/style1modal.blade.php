@@ -42,10 +42,11 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div id="stripe-card-btn" class='form-group'>
+                                        <div class='form-group'>
                                             <div class='col-sm-12'>
-                                                <button class="start-stop-btn btn btn-block btn-lg" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+                                                <button class="start-stop-btn btn btn-block btn-lg" 
+                                                        style="width: 100%; 
+                                                        margin-left: auto; margin-right: auto;">
                                                     <span id="signup-btn-text">GET INSTANT ACCESS</span>
                                                 </button>
                                             </div>
