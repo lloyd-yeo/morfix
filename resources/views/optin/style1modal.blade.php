@@ -5,13 +5,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title text-white text-center" style="text-transform: uppercase;">Instagram Loophole Income System!</h4>
             </div>
-
             <div id="modal-body">
                 <div class="row col-lg-12" 
-                     style="margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
+                     style="overflow:auto; margin-left: auto; margin-right: auto; padding-left: 0px; padding-right: 0px;">
                     <div class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
-                            
                             <div class='block' style="margin-bottom: 0px;">
                                 <div class="block-content block-content-full" style="padding-top: 0px;">
                                     <center>
