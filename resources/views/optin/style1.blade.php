@@ -185,11 +185,11 @@
               background-color: rgba(0,0,0,0.4); background-size:cover;'>
             <div class='col-lg-12 push-50-t'>
                 <div class='col-lg-10 col-lg-offset-1'>
-                    <p>
+<!--                    <p>
                         <a href='javascript:void(0);'>
                             <img class='center-block' src="../assets/img/promo/vsl-instaffiliates-logo.png" style='width:180px; height:180px;'>
                         </a>
-                    </p>
+                    </p>-->
                     <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
                         INSTAGRAM LOOPHOLE SYSTEM
                     </h1>
@@ -204,7 +204,7 @@
                 </div>
             </div>
             
-            <div class='col-lg-10 col-lg-offset-1 push-50-t'>
+            <div class='col-lg-10 col-lg-offset-1 push-30-t'>
                 <div class='center-block' style='max-width:910px;'>
                     <h1 class='center-block text-center font-w700 push text-white push-30-t' style='text-shadow: 2px 4px 3px rgba(0,0,0,0.3); font-size: 62px; line-height: 0.9; max-width:910px;'>
                         Enter your email here:
