@@ -208,6 +208,9 @@
             
             <div class='col-lg-12 push-50-t' style="padding-left: 0px; padding-right: 0px;">
             </div>
+            
+            @include('optin.style1modal')
+            
         </main>
     </body>
 
