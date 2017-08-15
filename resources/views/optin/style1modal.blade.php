@@ -14,10 +14,12 @@
                         <div class="wpb_wrapper">
                             <div class='block'>
                                 <div class='block-header'>
-                                    <h3 class="block-title" style='font-size: 24px;'>
+                                    <center>
+                                        <h3 class="block-title" style='font-size: 24px;'>
                                         HOW I MADE $678.25 PER DAY<br/>
                                         FROM THIS INSTAGRAM<br/>LOOPHOLE INCOME SYSTEM
-                                    </h3>
+                                        </h3>
+                                    </center>
                                 </div>
                                 <div class="block-content block-content-full">
                                     <form id="payment-form" class="form-horizontal push-10-t" onsubmit="event.preventDefault();" method="post" action="{{ url('vsl/signup/cc') }}">
