@@ -19,6 +19,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div id="payment-detail-div" class="dfd_col-tablet-6 columns three dfd_col-tabletop-6 dfd_col-laptop-6 dfd_col-mobile-12">
                         <div class="wpb_wrapper">
                             <div class='block' style="margin-bottom: 0px;">
@@ -43,9 +44,9 @@
 
                                         <div id="stripe-card-btn" class='form-group'>
                                             <div class='col-sm-12'>
-                                                <div class="form-material form-material-primary">
-                                                    <button class="pull-right btn btn-sm btn-primary" type="submit">Make Payment</button>
-                                                </div>
+                                                <button class="start-stop-btn btn btn-block btn-lg" style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+                                                    <span id="signup-btn-text">GET INSTANT ACCESS</span>
+                                                </button>
                                             </div>
                                         </div>
 
