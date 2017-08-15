@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header" style="background-color: #FF6A5C;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title text-white text-center">Instagram Loophole Income System!</h4>
+                <h4 class="modal-title text-white text-center" style="text-transform: uppercase;">Instagram Loophole Income System!</h4>
             </div>
 
             <div id="modal-body" class="modal-body">
