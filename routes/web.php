@@ -126,7 +126,7 @@ Route::post('/vsl/signup/paypal', 'PaymentController@processPaypalPayment');
 Route::get('/welcome', 'OptInController@optin');
 
 Route::get('/funnel_webhooks/test', 'FunnelWebhookController@test');
-Route::get('/clickfunnel/contact/created', 'FunnelWebhookController@contactCreated');
+Route::post('/clickfunnel/contact/created', 'FunnelWebhookController@contactCreated');
 
 /**
  * Routes for creation of Paypal Subscription plans.
