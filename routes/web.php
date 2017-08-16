@@ -125,7 +125,7 @@ Route::post('/vsl/signup/paypal', 'PaymentController@processPaypalPayment');
 
 Route::get('/welcome', 'OptInController@optin');
 
-Route::get('/funnel_webhooks/test', 'FunnelWebhookController@test');
+Route::post('/funnel_webhooks/test', 'FunnelWebhookController@test');
 Route::post('/clickfunnel/contact/created', 'FunnelWebhookController@contactCreated');
 
 /**
