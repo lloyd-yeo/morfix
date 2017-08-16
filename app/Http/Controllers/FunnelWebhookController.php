@@ -25,4 +25,12 @@ class FunnelWebhookController extends Controller
     public function purchaseUpdated() {
         return response('Purchase Updated', 200);
     }
+    
+    public function freeTrialCustomerCreated() {
+        return response('Free Trial Customer Updated', 200);
+    }
+    
+    public function freeTrialCustomerUpdated() {
+        return response('Free Trial Customer Updated', 200);
+    }
 }
