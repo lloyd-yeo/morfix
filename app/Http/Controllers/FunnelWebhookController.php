@@ -61,8 +61,8 @@ class FunnelWebhookController extends Controller {
 
                 # create a subscriber
                 $params = array(
-                    'email' => $data['email'],
-                    'name' => $data['name'],
+                    'email' => $request->input('contact.email'),
+                    'name' => $request->input('contact.name'),
                     'ip_address' => \Request::ip(),
                     'ad_tracking' => 'morfix_registration',
                     'last_followup_message_number_sent' => 1,
