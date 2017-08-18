@@ -125,7 +125,6 @@ class InteractionLike implements ShouldQueue {
                         $engagement_job->save();
                         $like_response = $instagram->media->like($media_id);
                     } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-
                         echo("\n" . "checkpt\t" . $checkpoint_ex->getMessage());
                         $ig_profile->checkpoint_required = 1;
                         $ig_profile->save();
