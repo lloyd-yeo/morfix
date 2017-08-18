@@ -30,12 +30,12 @@ class FunnelWebhookController extends Controller {
 
     public function freeTrialCustomerCreated(Request $request) {
 
-        $payload = $request->json();
-        $customer = $payload->contact;
+//        $payload = $request->json()->all();
+//        $customer = $request->contact;
 
         $user = new User;
-        $user->email = $customer->email;
-        $user->name = $customer->name;
+        $user->email = $request->input('contact.email');
+        $user->name = $request->input('contact.name');
         $user->trial_activation = 1;
         $user->trial_end_date = \Carbon\Carbon::now()->addWeek();
         $user->password = str_random(8);
