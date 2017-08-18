@@ -438,7 +438,12 @@ class InteractionLike implements ShouldQueue {
                             }
 
                             if ($like_quota > 0) {
-
+                                
+                                if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
+                                    #duplicate. Liked before this photo with this id.
+                                    continue;
+                                }
+                                
                                 $like_response = $instagram->media->like($item->id);
 
                                 if ($like_response->status == "ok") {
