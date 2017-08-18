@@ -30,7 +30,7 @@ class FunnelWebhookController extends Controller {
 
     public function freeTrialCustomerCreated(Request $request) {
 
-        $payload = $request->json()->all();
+        $payload = $request->json();
         $customer = $payload->contact;
 
         $user = new User;
