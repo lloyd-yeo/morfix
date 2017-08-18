@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
 use App\Mail\NewPassword;
@@ -77,13 +78,13 @@ class FunnelWebhookController extends Controller {
                     $subscribers = $list->subscribers;
                     $new_subscriber = $subscribers->create($params);
                 } catch (\AWeberAPIException $ex) {
-                    return response('[' . $user->email . '] Free Trial Customer Updated & Registered Before!', 200);
+                    return response('[' . $user->email . '] Free Trial Customer Updated & Registered Before in the List!', 200);
                 }
             }
             
             return response('[' . $user->email . '] Free Trial Customer Updated', 200);
         } else {
-            
+            return response('[' . $user->email . '] Free Trial Customer Updated', 200);
         }
     }
 
