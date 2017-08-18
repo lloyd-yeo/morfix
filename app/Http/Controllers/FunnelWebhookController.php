@@ -73,12 +73,13 @@ class FunnelWebhookController extends Controller {
                     $subscribers = $list->subscribers;
                     $new_subscriber = $subscribers->create($params);
                 } catch (\AWeberAPIException $ex) {
-                    echo $ex->getMessage();
+                    return response('[' . $user->email . '] Free Trial Customer Updated & Registered Before!', 200);
                 }
             }
             
+            return response('[' . $user->email . '] Free Trial Customer Updated', 200);
+        } else {
             
-            return response('[' . $customer->email . '] Free Trial Customer Updated', 200);
         }
     }
 

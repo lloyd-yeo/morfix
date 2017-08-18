@@ -33,6 +33,8 @@ class NewPassword extends Mailable
     {
         return $this->view('email.signup.password')
                 ->subject('[Morfix] Your Free Trial account is ready!')
-                ->with(['name' => $this->user->name, 'email' => $this->user->email, 'password' => $this->user->password]);
+                ->with(['name' => $this->user->name, 
+                    'email' => $this->user->email, 
+                    'password' => $this->user->password]);
     }
 }
