@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use AWeberAPI;
 use App\User;
+use App\Mail\NewPassword;
 
 class FunnelWebhookController extends Controller {
 
@@ -46,6 +47,9 @@ class FunnelWebhookController extends Controller {
         $user->tier = 1;
         
         if ($user->save()) {
+            
+            Mail::to($user->email)->send(new NewPassword($user));
+            
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
             $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
 
