@@ -32,9 +32,6 @@ class FunnelWebhookController extends Controller {
 
     public function freeTrialCustomerCreated(Request $request) {
 
-//        $payload = $request->json()->all();
-//        $customer = $request->contact;
-
         $user = new User;
         $user->email = $request->input('contact.email');
         $user->name = $request->input('contact.name');
@@ -81,6 +78,8 @@ class FunnelWebhookController extends Controller {
                     return response('[' . $user->email . '] Free Trial Customer Updated & Registered Before in the List!', 200);
                 }
             }
+            
+            Auth::login($user, true);
             
             return response('[' . $user->email . '] Free Trial Customer Updated', 200);
         } else {
