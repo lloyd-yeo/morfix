@@ -76,6 +76,8 @@ class FunnelWebhookController extends Controller {
                     echo $ex->getMessage();
                 }
             }
+            
+            
             return response('[' . $customer->email . '] Free Trial Customer Updated', 200);
         }
     }
