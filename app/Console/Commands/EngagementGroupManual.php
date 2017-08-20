@@ -84,6 +84,8 @@ class EngagementGroupManual extends Command {
                 $response = $instagram->media->like($mediaId);
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
                 continue;
+            } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                continue;
             }
             
             var_dump ($response);
