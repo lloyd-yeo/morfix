@@ -32,6 +32,7 @@ class HomeController extends Controller {
         
         if ($current_user->created_at === $current_user->updated_at) {
             $referrer = $request->cookie('referrer');
+            echo "Referred found: " . $referrer;
             $user_affiliate = new UserAffiliates;
             $user_affiliate->referrer = $referrer;
             $user_affiliate->referred = $current_user->user_id;
