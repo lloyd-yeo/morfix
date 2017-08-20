@@ -72,7 +72,13 @@ class EngagementGroupManual extends Command {
 
             $instagram->setProxy($ig_profile->proxy);
             $instagram->setUser($ig_username, $ig_password);
-            $explorer_response = $instagram->login();
+            try {
+                $explorer_response = $instagram->login();
+            } catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
+                $ig_profile->invalid_user = 1;
+                $ig_profile->save();
+                continue;
+            }
             
             $response = $instagram->media->like($mediaId);
             
