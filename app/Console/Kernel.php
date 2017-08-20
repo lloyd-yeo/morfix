@@ -53,6 +53,7 @@ class Kernel extends ConsoleKernel {
         Commands\ReadLastPaidCsv::class,
         Commands\TestDoWhileContinue::class,
         Commands\ManuallyFollowBack::class,
+        Commands\EngagementGroupManual::class,
     ];
 
     /**
