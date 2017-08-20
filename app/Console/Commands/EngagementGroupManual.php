@@ -72,6 +72,7 @@ class EngagementGroupManual extends Command {
 
             $instagram->setProxy($ig_profile->proxy);
             $instagram->setUser($ig_username, $ig_password);
+            
             try {
                 $explorer_response = $instagram->login();
             } catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {

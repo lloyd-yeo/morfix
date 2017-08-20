@@ -26,9 +26,17 @@ class HomeController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
 
         $current_user = Auth::user();
+        
+        if ($current_user->created_at === $current_user->updated_at) {
+            $referrer = $request->cookie('referrer');
+            $user_affiliate = new UserAffiliates;
+            $user_affiliate->referrer = $referrer;
+            $user_affiliate->referred = $current_user->user_id;
+            $user_affiliate->save();
+        }
         
         if ($current_user->paypal == 1) {
         } else if ($current_user->email == "maychengmt@yahoo.com") {
