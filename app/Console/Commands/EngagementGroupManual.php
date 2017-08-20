@@ -3,8 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use App\User;
 use App\InstagramProfile;
+
 
 class EngagementGroupManual extends Command {
 
@@ -75,7 +77,6 @@ class EngagementGroupManual extends Command {
             $response = $instagram->media->like($mediaId);
             
             var_dump ($response);
-            
         }
     }
 
