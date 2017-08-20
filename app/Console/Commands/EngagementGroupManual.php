@@ -78,6 +78,8 @@ class EngagementGroupManual extends Command {
                 $ig_profile->invalid_user = 1;
                 $ig_profile->save();
                 continue;
+            } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                continue;
             }
             
             try {
