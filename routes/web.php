@@ -134,6 +134,7 @@ Route::post('/clickfunnel/purchase/updated', 'FunnelWebhookController@purchaseUp
 Route::post('/clickfunnel/freetrial/new', 'FunnelWebhookController@freeTrialCustomerCreated');
 
 Route::post('/clickfunnel/sales/new', 'FunnelWebhookController@salesCustomerCreated');
+Route::post('/clickfunnel/sales/purchase', 'FunnelWebhookController@salesCustomerCreated');
 
 /**
  * Routes for creation of Paypal Subscription plans.
