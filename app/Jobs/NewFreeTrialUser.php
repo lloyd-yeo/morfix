@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -68,7 +67,9 @@ class NewFreeTrialUser implements ShouldQueue
         $user->tier = 1;
         
         if ($user->save()) {
+            
             echo $user;
+            
             Mail::to($user->email)->send(new NewPassword($user));
             
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
