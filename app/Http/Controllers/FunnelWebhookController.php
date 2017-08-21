@@ -4,17 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
-use AWeberAPI;
-use App\User;
-use App\Mail\NewPassword;
 use App\Jobs\NewFreeTrialUser;
 
 
 class FunnelWebhookController extends Controller {
     
-     use DispatchesJobs;
+    use DispatchesJobs;
     
     public function test() {
         return response('Hello World', 200);
