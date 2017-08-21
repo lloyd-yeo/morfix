@@ -98,7 +98,8 @@ class NewFreeTrialUser implements ShouldQueue
                     $subscribers = $list->subscribers;
                     $new_subscriber = $subscribers->create($params);
                 } catch (\AWeberAPIException $ex) {
-                    return response('[' . $request->input('contact.email') . '] Free Trial Customer Updated & Registered Before in the List!', 200);
+                    echo $ex->getMessage();
+                    #return response('[' . $request->input('contact.email') . '] Free Trial Customer Updated & Registered Before in the List!', 200);
                 }
             }
         }

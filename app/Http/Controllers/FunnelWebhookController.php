@@ -35,7 +35,6 @@ class FunnelWebhookController extends Controller {
     }
 
     public function freeTrialCustomerCreated(Request $request) {
-        
         $job = new NewFreeTrialUser($request->input('contact.email'), $request->input('contact.name'));
         $job->onQueue('freetrialuser');
         dispatch($job);
