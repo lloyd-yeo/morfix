@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use AWeberAPI;
 use App\User;
 use App\Mail\NewPassword;
+use App\Jobs\NewFreeTrialUser;
+
 
 class FunnelWebhookController extends Controller {
 
@@ -32,10 +36,13 @@ class FunnelWebhookController extends Controller {
 
     public function freeTrialCustomerCreated(Request $request) {
         
-        
+        $job = new NewFreeTrialUser($request);
+        $job->onQueue('freetrialuser');
+        dispatch($job);
+        return response('[' . $request->input('contact.email') . '] Free Trial Customer Updated', 200);
     }
-    
-    public function salesCustomerCreated() { 
+
+    public function salesCustomerCreated() {
         
     }
 
