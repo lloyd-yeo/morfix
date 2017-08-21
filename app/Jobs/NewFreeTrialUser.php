@@ -39,8 +39,8 @@ class NewFreeTrialUser implements ShouldQueue
     public function handle()
     {
         $user = new User;
-        $user->email = $this->request->input('contact.email');
-        $user->name = $this->request->input('contact.name');
+        $user->email = $this->email;
+        $user->name = $this->name;
         $user->trial_activation = 1;
         $user->trial_end_date = \Carbon\Carbon::now()->addWeek();
         $user->password = str_random(8);
@@ -84,10 +84,6 @@ class NewFreeTrialUser implements ShouldQueue
                     return response('[' . $request->input('contact.email') . '] Free Trial Customer Updated & Registered Before in the List!', 200);
                 }
             }
-            
-            #Auth::login($user, true);
-        } else {
-            return response('[' . $request->input('contact.email') . '] Free Trial Customer Updated', 200);
         }
     }
 }
