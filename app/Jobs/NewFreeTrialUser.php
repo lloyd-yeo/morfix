@@ -17,16 +17,18 @@ class NewFreeTrialUser implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     
-    public $request;
+    public $email;
+    public $name;
     
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct($email, $name)
     {
-        $this->request = $request;
+        $this->email = $email;
+        $this->name = $name;
     }
 
     /**
