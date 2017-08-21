@@ -86,6 +86,8 @@ class EngagementGroupManual extends Command {
                 $ig_profile->checkpoint_required = 1;
                 $ig_profile->save();
                 continue;
+            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                continue;
             }
             
             try {
@@ -97,6 +99,8 @@ class EngagementGroupManual extends Command {
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                 $ig_profile->checkpoint_required = 1;
                 $ig_profile->save();
+                continue;
+            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                 continue;
             }
             
