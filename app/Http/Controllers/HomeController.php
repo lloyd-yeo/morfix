@@ -32,7 +32,7 @@ class HomeController extends Controller {
 
         $current_user = Auth::user();
 
-        if (UserAffiliates::where('referred', $current_user->id)->count() == 0) {
+        if (UserAffiliates::where('referred', $current_user->user_id)->count() == 0) {
             $referrer = Cookie::get('referrer');
             if ($referrer !== NULL) {
                 $user_affiliate = new UserAffiliates;
