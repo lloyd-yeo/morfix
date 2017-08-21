@@ -46,7 +46,7 @@ class FunnelWebhookController extends Controller {
         
         if ($user->save()) {
             
-            Mail::to($user->email)->send(new NewPassword($user));
+            Mail::to($user->email)->queue(new NewPassword($user));
             
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
             $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
@@ -80,11 +80,14 @@ class FunnelWebhookController extends Controller {
             }
             
             Auth::login($user, true);
-            
             return response('[' . $user->email . '] Free Trial Customer Updated', 200);
         } else {
             return response('[' . $user->email . '] Free Trial Customer Updated', 200);
         }
+    }
+    
+    public function salesCustomerCreated() { 
+        
     }
 
     public function freeTrialCustomerUpdated() {

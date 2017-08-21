@@ -39,6 +39,7 @@ class EngagementGroupManual extends Command {
      * @return mixed
      */
     public function handle() {
+        
         $ig_profiles = InstagramProfile::where('checkpoint_required', 0)
                 ->where('account_disabled', 0)
                 ->where('invalid_user', 0)
