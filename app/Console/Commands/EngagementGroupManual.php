@@ -88,6 +88,8 @@ class EngagementGroupManual extends Command {
                 continue;
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                 continue;
+            } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
+                continue;
             }
             
             try {
@@ -101,6 +103,8 @@ class EngagementGroupManual extends Command {
                 $ig_profile->save();
                 continue;
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                continue;
+            } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 continue;
             }
             
