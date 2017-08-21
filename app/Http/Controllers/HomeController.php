@@ -9,6 +9,7 @@ use App\User;
 use App\InstagramProfile;
 use App\UserUpdate;
 use App\StripeActiveSubscription;
+use App\UserAffiliates;
 
 class HomeController extends Controller {
 
@@ -29,16 +30,19 @@ class HomeController extends Controller {
     public function index(Request $request) {
 
         $current_user = Auth::user();
-        
+
         if (UserAffiliates::where('referred', $current_user->id)->count() == 0) {
             $referrer = Cookie::get('referrer');
-            $user_affiliate = new UserAffiliates;
-            $user_affiliate->referrer = $referrer;
-            $user_affiliate->referred = $current_user->user_id;
-            $user_affiliate->save();
+            if ($referrer !== NULL) {
+                $user_affiliate = new UserAffiliates;
+                $user_affiliate->referrer = $referrer;
+                $user_affiliate->referred = $current_user->user_id;
+                $user_affiliate->save();
+            }
         }
-        
+
         if ($current_user->paypal == 1) {
+            
         } else if ($current_user->email == "maychengmt@yahoo.com") {
             $current_user->tier = 12;
             $current_user->save();
@@ -48,7 +52,7 @@ class HomeController extends Controller {
         } else if ($current_user->email == "ting_pangwee@hotmail.com") {
             $current_user->tier = 12;
             $current_user->save();
-        } else if ($current_user->email == "kingkew18@gmail.com") { 
+        } else if ($current_user->email == "kingkew18@gmail.com") {
             $current_user->tier = 12;
             $current_user->save();
         } else if ($current_user->vip == 0 && $current_user->admin == 0 && $current_user->stripe_id !== NULL) {
