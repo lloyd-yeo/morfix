@@ -68,7 +68,7 @@ class NewFreeTrialUser implements ShouldQueue
         $user->tier = 1;
         
         if ($user->save()) {
-            
+            echo $user;
             Mail::to($user->email)->send(new NewPassword($user));
             
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
@@ -102,6 +102,8 @@ class NewFreeTrialUser implements ShouldQueue
                     #return response('[' . $request->input('contact.email') . '] Free Trial Customer Updated & Registered Before in the List!', 200);
                 }
             }
+        } else {
+            echo "Unable to save user: " . $this->email . "\n\n";
         }
     }
 }
