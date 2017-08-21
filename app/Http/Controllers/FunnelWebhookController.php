@@ -13,7 +13,9 @@ use App\Jobs\NewFreeTrialUser;
 
 
 class FunnelWebhookController extends Controller {
-
+    
+     use DispatchesJobs;
+    
     public function test() {
         return response('Hello World', 200);
     }
