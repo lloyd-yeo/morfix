@@ -30,9 +30,8 @@ class HomeController extends Controller {
 
         $current_user = Auth::user();
         
-        if ($current_user->created_at === $current_user->updated_at) {
-            $referrer = $request->cookie('referrer');
-            echo "Referred found: " . $referrer;
+        if (UserAffiliates::where('referred', $current_user->id)->count() == 0) {
+            $referrer = Cookie::get('referrer');
             $user_affiliate = new UserAffiliates;
             $user_affiliate->referrer = $referrer;
             $user_affiliate->referred = $current_user->user_id;
