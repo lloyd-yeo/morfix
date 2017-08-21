@@ -81,6 +81,10 @@ class EngagementGroupManual extends Command {
                 continue;
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                 continue;
+            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                $ig_profile->checkpoint_required = 1;
+                $ig_profile->save();
+                continue;
             }
             
             try {
@@ -88,6 +92,10 @@ class EngagementGroupManual extends Command {
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
                 continue;
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+                continue;
+            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+                $ig_profile->checkpoint_required = 1;
+                $ig_profile->save();
                 continue;
             }
             
