@@ -50,6 +50,18 @@ class EngagementGroupManual extends Command {
         $mediaId = $this->argument('media_id');
         
         $default_comments = array();
+        $default_comments[] = "That is really insta-worthy.";
+        $default_comments[] = "Seriously. That's a awesome photo!";
+        $default_comments[] = "Really love your feeds. Keep it coming!";
+        $default_comments[] = "Your photos look really really good!";
+        $default_comments[] = "Those are some good-looking photos!";
+        $default_comments[] = "That's an amazing shot!";
+        $default_comments[] = "Keep it going! I really like your feed.";
+        $default_comments[] = "Keep the photos coming!";
+        $default_comments[] = "That is a breathtaking photo! Nicely done!";
+        $default_comments[] = "Nice photo! I love your feed!";
+        $default_comments[] = "I really love this photo.";
+//        $default_comments[] = "";
         
         foreach ($ig_profiles as $ig_profile) {
 
@@ -97,8 +109,14 @@ class EngagementGroupManual extends Command {
             try {
                 $response = $instagram->media->like($mediaId);
                 
-                if ($ig_profile->owner()->trial_activation == 1) {
+                if ($ig_profile->owner()->trial_activation === 1) {
                     
+                } else {
+                    if ($ig_profile->auto_comment === 1) {
+                        $comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
+                        $comment = $comments->random();
+                        $instagram->media->comment($mediaId, $comment->comment);
+                    }
                 }
                 
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
