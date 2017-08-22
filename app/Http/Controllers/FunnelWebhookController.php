@@ -48,13 +48,13 @@ class FunnelWebhookController extends Controller {
         
         $stripe_plan = NULL;
         foreach ($products as $product) {
-            $stripe_plan = $product->stripe_plan;
+            $stripe_plan = $product['stripe_plan'];
         }
         
         $contact = $request->input('purchase.contact');
-        $contact_email = $contact->email;
-        $contact_name = $contact->name;
-        $contact_ip = $contact->ip;
+        $contact_email = $contact['email'];
+        $contact_name = $contact['name'];
+        $contact_ip = $contact['ip'];
         $subscription_id = $request->input('purchase.subscription_id');
         $status = $request->input('purchase.status');
         
