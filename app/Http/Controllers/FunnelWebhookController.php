@@ -61,9 +61,12 @@ class FunnelWebhookController extends Controller {
         if ($stripe_plan !== NULL && $status === "paid") {
             dispatch((new \App\Jobs\NewPaidUser($contact_email, $contact_name, $contact_ip, $stripe_plan, $subscription_id))
                                            ->onQueue('freetrialuser'));
+            return response('Queued for new user [' . $contact_email . ']', 200);
+        } else {
+            return response('Failed to queue for new user [' . $contact_email . ']', 200);
         }
         
-        return response('', 200);
+        
     }
 
     public function freeTrialCustomerUpdated() {
