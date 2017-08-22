@@ -40,14 +40,14 @@
         </div>
 
         <div class="row">
-            
+
             <div class="col-xs-12 col-lg-4">
                 <!-- Sizes -->
                 <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
                         <h3 class="block-title text-white text-uppercase"><i class="fa fa-bar-chart"></i> Statistics</h3>
                     </div>
-                    
+
                     <div class="block-content" id="auto-interaction-settings-container">
                         <div class="row items-push">
                             <div class="col-xs-12 col-sm-12 col-lg-12">
@@ -83,7 +83,7 @@
                 </div>
                 <!-- END Sizes -->
             </div>
-            
+
             <div class="col-xs-12 col-lg-4">
                 <!-- Sizes -->
                 <div class="block" style='height: 300px;'>
@@ -102,7 +102,7 @@
                                     <input class="toggle-like-btn" data-id="{{ $ig_profile->id }}" type="checkbox"><span></span> <span style='font-weight: 600;'><i class='fa fa-2x fa-heart text-danger'></i> Like</span>
                                     <i class="fa fa-refresh text-modern" id="like-spinner"></i>
                                     @endif
-                                    
+
                                 </label>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-lg-12">
@@ -143,7 +143,7 @@
                 </div>
                 <!-- END Sizes -->
             </div>
-            
+
             <div class="col-xs-12 col-lg-4">
                 <div class="block" style='height: 300px;'>
                     <div class="block-header bg-primary">
@@ -202,12 +202,12 @@
                                                     <input type="checkbox" name="unfollow-toggle" checked><span></span> 
                                                     <span style='font-weight: 600;'>Only Unfollow users that didn't follow me back </span>
                                                     <small><i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
-                                                            data-placement="top" title="Skip unfollowing users that have followed you back" type="button"></i></small>
+                                                              data-placement="top" title="Skip unfollowing users that have followed you back" type="button"></i></small>
                                                     @else
                                                     <input type="checkbox" name="unfollow-toggle"><span></span> 
                                                     <span style='font-weight: 600;'>Only Unfollow users that didn't follow me back</span>
                                                     <small><i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
-                                                            data-placement="top" title="Skip unfollowing users that have followed you back" type="button"></i></small>
+                                                              data-placement="top" title="Skip unfollowing users that have followed you back" type="button"></i></small>
                                                     @endif
                                                 </label>
                                             </div>
@@ -221,12 +221,12 @@
                                                     <input type="checkbox" name="recent-follower-toggle" checked><span></span> 
                                                     <span style='font-weight: 600;'>Follow Likers & Commenters of 3 most recent posts</span>
                                                     <small><i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
-                                                            data-placement="top" title="Target people that has engaged with your competitor's 3 most recent posts instead of their followers." type="button"></i></small>
+                                                              data-placement="top" title="Target people that has engaged with your competitor's 3 most recent posts instead of their followers." type="button"></i></small>
                                                     @else
                                                     <input type="checkbox" name="recent-follower-toggle"><span></span> 
                                                     <span style='font-weight: 600;'>Follow Likers & Commenters of 3 most recent posts</span>
                                                     <small><i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip" 
-                                                            data-placement="top" title="Engage people that has engaged with your competitor's 3 most recent posts instead of their followers." type="button"></i></small>
+                                                              data-placement="top" title="Engage people that has engaged with your competitor's 3 most recent posts instead of their followers." type="button"></i></small>
                                                     @endif
                                                 </label>
                                             </div>
@@ -366,8 +366,6 @@
                                             </div>
                                             <div class="help-block text-left" style="color:#d26a5c;">
                                                 When entering usernames make sure to exclude "@" & also ensure that the username is valid.
-                                            </div>
-                                            <div class="help-block text-left" style="color:#d26a5c;">
                                                 Usernames in red means that they are invalid or lesser than 10k followers.
                                             </div>
                                         </div>
@@ -447,7 +445,7 @@
             var $myTargetedHashtagsBoxHeight = $("#my-hashtags-block").height();
             var $hashtagsWellHeight = $("#hashtags-well").height();
             var $hashtagsBoxHeight = $("#hashtags-text").height();
-            var $hashtagsBlockHeight = $myTargetedHashtagsBoxHeight - $hashtagsBoxHeight - 20 - 20 - 20 -40;
+            var $hashtagsBlockHeight = $myTargetedHashtagsBoxHeight - $hashtagsBoxHeight - 20 - 20 - 20 - 40;
             $("#hashtags-well").css("height", $hashtagsBlockHeight + "px");
         </script>
     </div>
