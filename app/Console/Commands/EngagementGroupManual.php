@@ -103,6 +103,10 @@ class EngagementGroupManual extends Command {
                 continue;
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 continue;
+            } catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
+                $ig_profile->incorrect_pw = 1;
+                $ig_profile->save();
+                continue;
             }
 
             try {
