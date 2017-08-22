@@ -24,10 +24,10 @@ class FaqController extends Controller {
     public function index() {
         $faq_topics = FaqTopic::all();
         $question_and_answers = array();
+        
         foreach ($faq_topics as $faq_topic) {
             $topic_id = $faq_topic->id;
             $topic_name = $faq_topic->topic;
-
             $faq_qnas = FaqQna::where('topic_id', $topic_id)->get();
             $question_and_answers[$topic_name] = $faq_qnas;
         }
@@ -51,5 +51,4 @@ class FaqController extends Controller {
             'qnas' => $faq_qnas,
         ]);
     }
-
 }

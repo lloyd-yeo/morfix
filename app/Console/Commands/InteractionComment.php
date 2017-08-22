@@ -82,7 +82,7 @@ class InteractionComment extends Command {
                         }
                     }
                 }
-                #executeCommenting($instagram_profiles);
+                
             }
         }
     }

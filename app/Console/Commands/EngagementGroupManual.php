@@ -49,6 +49,8 @@ class EngagementGroupManual extends Command {
         
         $mediaId = $this->argument('media_id');
         
+        $default_comments = array();
+        
         foreach ($ig_profiles as $ig_profile) {
 
             $ig_username = $ig_profile->insta_username;
@@ -94,6 +96,11 @@ class EngagementGroupManual extends Command {
             
             try {
                 $response = $instagram->media->like($mediaId);
+                
+                if ($ig_profile->owner()->trial_activation == 1) {
+                    
+                }
+                
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
                 continue;
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {

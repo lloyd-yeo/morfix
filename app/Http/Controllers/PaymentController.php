@@ -33,7 +33,7 @@ class PaymentController extends Controller {
     private $mode;
     private $client_id;
     private $secret;
-    
+
     // Create a new instance with our paypal credentials
     public function __construct() {
         // Detect if we are running in live mode or sandbox
@@ -49,25 +49,25 @@ class PaymentController extends Controller {
         $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
         $this->apiContext->setConfig(config('paypal.settings'));
     }
-    
+
     public function index(Request $request) {
         return view('payment.index', [
         ]);
     }
-    
+
     public function processCreditCardPayment(Request $request) {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $stripeToken = $request->input('stripeToken');
-        
+
         $email = $request->input('email');
         $password = $request->input('pw');
         $name = $request->input('name');
         $referrer = $request->cookie('referrer');
-        
+
         $user_tier = 1;
         $verification_token = bin2hex(random_bytes(18));
         $plan_id = "0137";
-        
+
         if ($request->plan == 1) {
             $plan_id = "0137";
             $user_tier = 2;
@@ -77,15 +77,15 @@ class PaymentController extends Controller {
         }
 
         try {
-            
+
             $customer = \Stripe\Customer::create(array(
-                "source" => $stripeToken,
-                "plan" => $plan_id,
-                "email" => $email)
+                        "source" => $stripeToken,
+                        "plan" => $plan_id,
+                        "email" => $email)
             );
-            
+
             $customer_id = $customer->id;
-            
+
             $user = new User;
             $user->email = $email;
             $user->password = $password;
@@ -96,23 +96,23 @@ class PaymentController extends Controller {
             $user->name = $name;
             $user->stripe_id = $customer_id;
             $user->save();
-            
+
             $stripe_detail = new StripeDetail;
             $stripe_detail->email = $email;
             $stripe_detail->stripe_id = $customer_id;
             $stripe_detail->save();
-            
+
             $user_affiliate = new UserAffiliates;
             $user_affiliate->referrer = $referrer;
             $user_affiliate->referred = $user->user_id;
             $user_affiliate->save();
-            
+
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
             $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
 
             $aweber = new AWeberAPI($consumerKey, $consumerSecret);
             $account = $aweber->getAccount("AgI2J88WjcAhUkFlCn3OwzLx", "wdX1JHuuhIFm9AEiJt3SVUdM5S7Z8lAE7UKmP29P");
-            
+
             foreach ($account->lists as $offset => $list) {
 
                 $list_id = $list->id;
@@ -138,25 +138,24 @@ class PaymentController extends Controller {
                     $error_msg = $ex->getMessage();
                 }
             }
-            
+
             Auth::login($user);
             return redirect()->action('HomeController@index');
-            
         } catch (\Exception $ex) {
             $success = false;
             $error_msg = $ex->getMessage();
             echo $error_msg;
         }
     }
-    
+
     public function processPaypalPayment(Request $request) {
-        
+
         $email = $request->input('email');
         $password = $request->input('pw');
         $name = $request->input('name');
         $referrer = $request->cookie('referrer');
         $verification_token = bin2hex(random_bytes(18));
-        
+
         $user = new User;
         $user->email = $email;
         $user->password = $password;
@@ -167,12 +166,12 @@ class PaymentController extends Controller {
         $user->name = $name;
         $user->paypal = 1;
         $user->save();
-        
+
         $user_affiliate = new UserAffiliates;
         $user_affiliate->referrer = $referrer;
         $user_affiliate->referred = $user->user_id;
         $user_affiliate->save();
-        
+
         Auth::login($user);
 
         $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
@@ -206,13 +205,13 @@ class PaymentController extends Controller {
                 $error_msg = $ex->getMessage();
             }
         }
-        
+
         $paypal_plan_id = MorfixPlan::where('name', 'Premium New')->first()->paypal_id;
-        
+
         if ($request->plan == 2) { //Pro
             $paypal_plan_id = MorfixPlan::where('name', 'Pro New')->first()->paypal_id;
         }
-        
+
         // Instantiate Plan
         $plan = new Plan();
         $plan->setId($paypal_plan_id);
@@ -222,13 +221,13 @@ class PaymentController extends Controller {
         $agreement->setName('Morfix Monthly Premium Subscription (37/month)')
                 ->setDescription('This subscription is for the Premium package of Morfix, amounting to $37USD per month.')
                 ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
-        
+
         if ($request->plan == 2) { //Pro
             $agreement->setName('Morfix Yearly Pro Subscription (370/year)')
-                ->setDescription('This subscription is for the Pro package of Morfix, amounting to $370USD per year.')
-                ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
+                    ->setDescription('This subscription is for the Pro package of Morfix, amounting to $370USD per year.')
+                    ->setStartDate(\Carbon\Carbon::now()->addDay(1)->toIso8601String());
         }
-        
+
         // Set plan id
         $agreement->setPlan($plan);
 
@@ -245,7 +244,6 @@ class PaymentController extends Controller {
             $approvalUrl = $agreement->getApprovalLink();
 
             return redirect($approvalUrl);
-            
         } catch (PayPal\Exception\PayPalConnectionException $ex) {
             echo $ex->getCode();
             echo $ex->getData();
@@ -254,7 +252,7 @@ class PaymentController extends Controller {
             die($ex);
         }
     }
-    
+
     public function paypalReturnPremium(Request $request) {
         $paypal_plan_id = MorfixPlan::where('name', 'Premium New')->first()->paypal_id;
         $token = $request->token;
@@ -279,12 +277,11 @@ class PaymentController extends Controller {
 
             //redirect to Success page.
             return redirect()->action('HomeController@index');
-            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
         }
     }
-    
+
     public function paypalReturnPro(Request $request) {
         $paypal_plan_id = MorfixPlan::where('name', 'Pro New')->first()->paypal_id;
         $token = $request->token;
@@ -309,12 +306,11 @@ class PaymentController extends Controller {
 
             //redirect to Success page.
             return redirect()->action('HomeController@index');
-            
         } catch (\PayPal\Exception\PayPalConnectionException $ex) {
             //redirect to fail page
         }
     }
-    
+
     public function upgrade(Request $request, $plan) {
         $response = array();
 
@@ -343,7 +339,7 @@ class PaymentController extends Controller {
 
         $token = $request->input('stripeToken');
         $customer = NULL;
-        
+
         if ($stripe_id === NULL) {
             try {
 
@@ -361,7 +357,6 @@ class PaymentController extends Controller {
                 $stripe_details->email = Auth::user()->email;
                 $stripe_details->stripe_id = $customer->id;
                 $stripe_details->save();
-                
             } catch (\Stripe\Error\Card $e) {
                 // Since it's a decline, \Stripe\Error\Card will be caught
                 $payment_log->log = $e->getMessage();
@@ -427,7 +422,6 @@ class PaymentController extends Controller {
                     $user->num_acct = 6;
                 }
                 $user->save();
-                
             } catch (\Stripe\Error\Card $e) {
                 // Since it's a decline, \Stripe\Error\Card will be caught
                 $payment_log->log = $e->getMessage();
@@ -504,6 +498,8 @@ class PaymentController extends Controller {
                             "message" => $e->getMessage()]);
             }
         }
+        
         return response()->json($response);
     }
+
 }

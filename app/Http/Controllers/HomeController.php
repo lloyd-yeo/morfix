@@ -44,6 +44,9 @@ class HomeController extends Controller {
 
         if ($current_user->paypal == 1) {
             
+        } else if ($current_user->email == "ghazanfar.uruj.cool@gmail.com") {
+            $current_user->tier = 12;
+            $current_user->save();
         } else if ($current_user->email == "darrenk.finance@gmail.com") {
             $current_user->tier = 12;
             $current_user->save();
