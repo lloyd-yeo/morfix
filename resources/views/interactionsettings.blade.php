@@ -367,6 +367,9 @@
                                             <div class="help-block text-left" style="color:#d26a5c;">
                                                 When entering usernames make sure to exclude "@" & also ensure that the username is valid.
                                             </div>
+                                            <div class="help-block text-left" style="color:#d26a5c;">
+                                                Usernames in red means that they are invalid or lesser than 10k followers.
+                                            </div>
                                         </div>
                                     </div>
                                 </form>

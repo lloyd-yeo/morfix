@@ -52,41 +52,41 @@
                         <a href="/post-scheduling"><i class="si si-picture"></i><span class="sidebar-mini-hide">Post Scheduling</span></a>
                         @endif
                     </li>
-                    
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">VIRAL ENGAGEMENT</span></li>
                     <li>
                         @if ($page == 'engagement-group')
                         <a class="active" href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
                         @else
-                            @if (Auth::user()->tier > 3 || Auth::user()->vip == 1)
-                            <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
-                            @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-engagement-group-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
-                            @endif
+                        @if (Auth::user()->tier > 3 || Auth::user()->vip == 1)
+                        <a href="/engagement-group"><i class="si si-picture"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                        @else
+                        <a href="#" data-toggle="modal" data-target="#upgrade-engagement-group-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Engagement Group</span></a>
+                        @endif
                         @endif
                     </li>
-                    
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AFFILIATE AREA</span></li>
                     <li>
                         @if ($page == 'affiliate')
                         <a class="active" href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @else
-                            @if (Auth::user()->tier > 1)
-                            <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
-                            @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Dashboard</span></a>
-                            @endif
+                        @if (Auth::user()->tier > 1)
+                        <a href="/affiliate"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                        @else
+                        <a href="#" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                        @endif
                         @endif
                     </li>
                     <li>
                         @if ($page == 'affiliate-builder')
                         <a class="active"  href="javascript:void(0)"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
                         @else
-                            @if (Auth::user()->tier > 1)
-                            <a href="javascript:void(0)"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
-                            @else
-                            <a href="javascript:void(0)" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
-                            @endif
+                        @if (Auth::user()->tier > 1)
+                        <a href="javascript:void(0)"><i class="si si-magic-wand"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
+                        @else
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#upgrade-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Landing Pages <small>[coming soon!]</small></span></a>
+                        @endif
                         @endif
                     </li>
 
@@ -96,7 +96,7 @@
                         <a href="#" data-toggle="modal" data-target="#upgrade-modal"><i class="si si-bag"></i><span class="sidebar-mini-hide">Purchase</span></a>
                     </li>
                     @endif
-                    
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">TRAINING VIDEOS</span></li>
                     <li>
                         @if ($page == 'training-morfix')
@@ -105,47 +105,47 @@
                         <a href="/training/morfix"><i class="si si-layers"></i><span class="sidebar-mini-hide">How-to-use Morfix</span></a>
                         @endif
                     </li>
-                    
+
                     <li>
                         @if ($page == 'training-bootcamp')
                         <a class="active" href="/training/bootcamp"><i class="si si-layers"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
                         @else
-                            @if (Auth::user()->tier > 1)
-                            <a href="/training/bootcamp"><i class="si si-layers"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
-                            @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-training-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
-                            @endif
+                        @if (Auth::user()->tier > 1)
+                        <a href="/training/bootcamp"><i class="si si-layers"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
+                        @else
+                        <a href="#" data-toggle="modal" data-target="#upgrade-training-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Morfix Bootcamp</span></a>
+                        @endif
                         @endif
                     </li>
-                    
+
                     <li>
                         @if ($page == 'training-affiliate')
                         <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
                         @else
-                            @if (Auth::user()->tier > 1)
-                            <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
-                            @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-training-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
-                            @endif
+                        @if (Auth::user()->tier > 1)
+                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                        @else
+                        <a href="#" data-toggle="modal" data-target="#upgrade-training-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                        @endif
                         @endif
                     </li>
-                    
+
                     <li>
                         @if ($page == 'training-6figureprofile')
                         <a class="active" href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
                         @else
-                            @if ($page == 'training-6figureprofile')
-                            <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
-                            @else
-                                @if ((Auth::user()->tier % 10) == 3)
-                                <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
-                                @else
-                                <a href="#" data-toggle="modal" data-target="#upgrade-training-6figure-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
-                                @endif
-                            @endif
+                        @if ($page == 'training-6figureprofile')
+                        <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                        @else
+                        @if ((Auth::user()->tier % 10) == 3)
+                        <a href="/training/6figureprofile"><i class="si si-layers"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                        @else
+                        <a href="#" data-toggle="modal" data-target="#upgrade-training-6figure-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Build a 6-Figure Profile</span></a>
+                        @endif
+                        @endif
                         @endif
                     </li>
-                    
+
                     <li>
                         @if ($page == 'training-fbads')
                         <a class="active" href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
@@ -153,24 +153,37 @@
                         @if ($page == 'training-fbads')
                         <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
                         @else
-                            @if (Auth::user()->tier > 3)
-                            <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
-                            @else
-                            <a href="#" data-toggle="modal" data-target="#upgrade-training-video-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
-                            @endif
+                        @if (Auth::user()->tier > 3)
+                        <a href="/training/fbadsbasic"><i class="fa fa-facebook"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
+                        @else
+                        <a href="#" data-toggle="modal" data-target="#upgrade-training-video-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Facebook Ads <small>[Business Only]</small></span></a>
+                        @endif
                         @endif
                         @endif
                     </li>
-                    
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">Support</span></li>
-                    
-                     <li>
+
+                    <li>
                         @if ($page == 'faq')
                         <a class="active" href="/faq"><i class="fa fa-question-circle-o"></i><span class="sidebar-mini-hide">FAQ</span></a>
                         @else
                         <a href="/faq"><i class="fa fa-question-circle-o"></i><span class="sidebar-mini-hide">FAQ</span></a>
                         @endif
                     </li>
+
+                    <li>
+                        @if ($page == 'admin')
+                        <a class="active" href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                        @else
+                        @if (Auth::user()->tier == 10)
+                        <a href="/training/affiliate"><i class="si si-layers"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                        @else
+                        <a href="#" data-toggle="modal" data-target="#upgrade-training-affiliate-modal"><i class="si si-lock"></i><span class="sidebar-mini-hide">Affiliate Training</span></a>
+                        @endif
+                        @endif
+                    </li>
+
                 </ul>
             </div>
             <!-- END Side Content -->
