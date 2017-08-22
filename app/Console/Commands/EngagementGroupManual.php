@@ -115,7 +115,9 @@ class EngagementGroupManual extends Command {
                     if ($ig_profile->auto_comment === 1) {
                         $comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
                         $comment = $comments->random();
-                        $instagram->media->comment($mediaId, $comment->comment);
+                        if (!empty($comment->comment)) {
+                            $instagram->media->comment($mediaId, $comment->comment);
+                        }
                     }
                 }
                 
