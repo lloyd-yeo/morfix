@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\InstagramProfile;
 
-
 class EngagementGroupManual extends Command {
 
     /**
@@ -39,16 +38,16 @@ class EngagementGroupManual extends Command {
      * @return mixed
      */
     public function handle() {
-        
+
         $ig_profiles = InstagramProfile::where('checkpoint_required', 0)
                 ->where('account_disabled', 0)
                 ->where('invalid_user', 0)
                 ->where('incorrect_pw', 0)
                 ->where('invalid_proxy', 0)
                 ->get();
-        
+
         $mediaId = $this->argument('media_id');
-        
+
         $default_comments = array();
         $default_comments[] = "That is really insta-worthy.";
         $default_comments[] = "Seriously. That's a awesome photo!";
@@ -62,7 +61,7 @@ class EngagementGroupManual extends Command {
         $default_comments[] = "Nice photo! I love your feed!";
         $default_comments[] = "I really love this photo.";
 //        $default_comments[] = "";
-        
+
         foreach ($ig_profiles as $ig_profile) {
 
             $ig_username = $ig_profile->insta_username;
@@ -87,7 +86,7 @@ class EngagementGroupManual extends Command {
 
             $instagram->setProxy($ig_profile->proxy);
             $instagram->setUser($ig_username, $ig_password);
-            
+
             try {
                 $explorer_response = $instagram->login();
             } catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
@@ -105,22 +104,23 @@ class EngagementGroupManual extends Command {
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 continue;
             }
-            
+
             try {
                 $response = $instagram->media->like($mediaId);
-                
+
                 if ($ig_profile->owner()->trial_activation === 1) {
                     
                 } else {
                     if ($ig_profile->auto_comment === 1) {
                         $comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
-                        $comment = $comments->random();
-                        if (!empty($comment->comment)) {
-                            $instagram->media->comment($mediaId, $comment->comment);
+                        if (count($comments) > 0) {
+                            $comment = $comments->random();
+                            if (!empty($comment->comment)) {
+                                $instagram->media->comment($mediaId, $comment->comment);
+                            }
                         }
                     }
                 }
-                
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
                 continue;
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
@@ -134,8 +134,8 @@ class EngagementGroupManual extends Command {
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 continue;
             }
-            
-            var_dump ($response);
+
+            var_dump($response);
         }
     }
 
