@@ -7,13 +7,14 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
 use App\Mail\NewPassword;
 
-class NewFreeTrialUser implements ShouldQueue
-{
+class NewPaidUser implements ShouldQueue {
+
     use Dispatchable,
         InteractsWithQueue,
         Queueable,
@@ -32,21 +33,23 @@ class NewFreeTrialUser implements ShouldQueue
      * @var int
      */
     public $timeout = 60;
-    
     protected $email;
     protected $name;
     protected $ip;
-    
+    protected $plan_id;
+    protected $subscription_id;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($email, $name, $ip)
-    {
+    public function __construct($email, $name, $ip, $plan_id, $subscription_id) {
         $this->email = $email;
         $this->name = $name;
         $this->ip = $ip;
+        $this->plan_id = $plan_id;
+        $this->subscription_id = $subscription_id;
     }
 
     /**
@@ -54,26 +57,64 @@ class NewFreeTrialUser implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {
+    public function handle() {
+
         $user = new User;
         $user->email = $this->email;
         $user->name = $this->name;
-        $user->trial_activation = 1;
-        $user->trial_end_date = \Carbon\Carbon::now()->addWeek();
+        $user->trial_activation = 2;
+        $user->trial_end_date = \Carbon\Carbon::now();
         $user->password = str_random(8);
         $user->num_acct = 1;
         $user->active = 1;
         $user->verification_token = str_random(20);
         $user->user_tier = 1;
         $user->tier = 1;
-        
+
+        if ($this->plan_id == "0137") {
+            //Premium
+            $user->tier += 1;
+        } else if ($this->plan_id == "0297") {
+            //Business
+            $user->tier += 10;
+        } else if ($this->plan_id == "MX370") {
+            //Pro
+            $user->tier += 2;
+        } else if ($this->plan_id == "MX970") {
+            //Mastermind
+            $user->tier += 20;
+        } else if ($this->plan_id == "MX670") {
+            //Mastermind OTO
+            $user->tier += 20;
+        } else if ($this->plan_id == "MX297") {
+            //Pro OTO
+            $user->tier += 2;
+        }
+
         if ($user->save()) {
-            
+
             echo $user;
-            
-            Mail::to($user->email)->send(new NewPassword($user, "free_trial"));
-            
+
+            if ($this->plan_id == "0137") {
+                //Premium
+                Mail::to($user->email)->send(new NewPassword($user, "premium"));
+            } else if ($this->plan_id == "0297") {
+                //Business
+                Mail::to($user->email)->send(new NewPassword($user, "business"));
+            } else if ($this->plan_id == "MX370") {
+                //Pro
+                Mail::to($user->email)->send(new NewPassword($user, "pro"));
+            } else if ($this->plan_id == "MX970") {
+                //Mastermind
+                Mail::to($user->email)->send(new NewPassword($user, "mastermind"));
+            } else if ($this->plan_id == "MX670") {
+                //Mastermind OTO
+                Mail::to($user->email)->send(new NewPassword($user, "mastermind"));
+            } else if ($this->plan_id == "MX297") {
+                //Pro OTO
+                Mail::to($user->email)->send(new NewPassword($user, "pro"));
+            }
+
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
             $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
 
@@ -82,8 +123,8 @@ class NewFreeTrialUser implements ShouldQueue
 
             foreach ($account->lists as $offset => $list) {
                 $list_id = $list->id;
-                
-                if ($list_id != 4485376) {
+
+                if ($list_id != 4485376 OR $list_id != 4631962) {
                     continue;
                 }
 
@@ -109,4 +150,5 @@ class NewFreeTrialUser implements ShouldQueue
             echo "Unable to save user: " . $this->email . "\n\n";
         }
     }
+
 }

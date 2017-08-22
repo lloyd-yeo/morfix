@@ -13,15 +13,17 @@ class NewPassword extends Mailable
     use Queueable, SerializesModels;
     
     public $user;
+    public $mode;
     
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $mode)
     {
         $this->user = $user;
+        $this->mode = $mode;
     }
 
     /**
@@ -31,10 +33,19 @@ class NewPassword extends Mailable
      */
     public function build()
     {
+        $subject = "";
+        if ($this->mode == "free_trial") {
+            $subject = '[Morfix] Your Free Trial account is ready!';
+        } else if ($this->mode == "premium") {
+            $subject = '[Morfix] Your Premium account is ready!';
+        }
+        
         return $this->view('email.signup.password')
-                ->subject('[Morfix] Your Free Trial account is ready!')
-                ->with(['name' => $this->user->name, 
-                    'email' => $this->user->email, 
-                    'password' => $this->user->password]);
+                    ->subject($subject)
+                    ->with(['name' => $this->user->name, 
+                        'email' => $this->user->email, 
+                        'password' => $this->user->password,
+                        'mode' => $this->mode]);
+        
     }
 }
