@@ -43,8 +43,8 @@ class RetrieveCommentForCertainDate extends Command
         $rows = DB::table('user_insta_profile')
                 ->join('user_insta_profile_comment_log', function ($join) {
                         $join->on('user_insta_profile.insta_username', '=', 'user_insta_profile_comment_log.insta_username')
-                             ->where('user_insta_profile_comment_log.date_commented', '>=', '2017-08-21 00:00:00')
-                             ->where('user_insta_profile_comment_log.date_commented', '>=', '2017-09-21 00:00:00');
+                             ->where('user_insta_profile_comment_log.date_commented', '>=', '2017-04-26 20:32:20')
+                             ->where('user_insta_profile_comment_log.date_commented', '>=', '2017-04-27 20:32:20');
                             
                     })
                 ->select('user_insta_profile.insta_username', 'user_insta_profile.insta_pw', 
