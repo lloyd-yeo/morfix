@@ -54,6 +54,7 @@ class Kernel extends ConsoleKernel {
         Commands\TestDoWhileContinue::class,
         Commands\ManuallyFollowBack::class,
         Commands\EngagementGroupManual::class,
+        Commands\RetrieveCommentForCertainDate::class,
     ];
 
     /**
