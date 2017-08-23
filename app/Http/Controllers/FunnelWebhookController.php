@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
-use App\Jobs\NewFreeTrialUser;
-
+use App\User;
 
 class FunnelWebhookController extends Controller {
-    
+
     use DispatchesJobs;
-    
+
     public function test() {
         return response('Hello World', 200);
     }
@@ -33,40 +32,45 @@ class FunnelWebhookController extends Controller {
 
     public function freeTrialCustomerCreated(Request $request) {
         dispatch((new \App\Jobs\NewFreeTrialUser($request->input('contact.email'), $request->input('contact.name'), $request->input('contact.ip')))
-                                        ->onQueue('freetrialuser'));
+                        ->onQueue('freetrialuser'));
         return response('[' . $request->input('contact.email') . '] Free Trial Customer Updated', 200);
     }
 
     public function salesCustomerCreated(Request $request) {
-        
+
         return response('', 200);
     }
-    
+
     public function salesNewPurchase(Request $request) {
-        
+
         $products = $request->input('purchase.products');
-        
+
         $stripe_plan = NULL;
         foreach ($products as $product) {
             $stripe_plan = $product['stripe_plan'];
         }
-        
+
         $contact = $request->input('purchase.contact');
         $contact_email = $contact['email'];
-        $contact_name = $contact['name'];
-        $contact_ip = $contact['ip'];
-        $subscription_id = $request->input('purchase.subscription_id');
-        $status = $request->input('purchase.status');
-        
-        if ($stripe_plan !== NULL && $status === "paid") {
-            dispatch((new \App\Jobs\NewPaidUser($contact_email, $contact_name, $contact_ip, $stripe_plan, $subscription_id))
-                                           ->onQueue('freetrialuser'));
-            return response('Queued for new user [' . $contact_email . ']', 200);
+
+        if (User::where('email', $contact_email)->count() == 0) {
+            $contact_name = $contact['name'];
+            $contact_ip = $contact['ip'];
+            $subscription_id = $request->input('purchase.subscription_id');
+            $status = $request->input('purchase.status');
+
+            if ($stripe_plan !== NULL && $status === "paid") {
+                dispatch((new \App\Jobs\NewPaidUser($contact_email, $contact_name, $contact_ip, $stripe_plan, $subscription_id))
+                                ->onQueue('freetrialuser'));
+                return response('Queued for new user [' . $contact_email . ']', 200);
+            } else {
+                return response('Failed to queue for new user [' . $contact_email . ']', 200);
+            }
         } else {
-            return response('Failed to queue for new user [' . $contact_email . ']', 200);
+            dispatch((new \App\Jobs\UpgradeUserTier($contact_email, $subscription_id))
+                                ->onQueue('freetrialuser'));
+                return response('Updating tier for user [' . $contact_email . ']', 200);
         }
-        
-        
     }
 
     public function freeTrialCustomerUpdated() {

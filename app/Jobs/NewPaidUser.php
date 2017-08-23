@@ -32,6 +32,7 @@ class NewPaidUser implements ShouldQueue {
      * @var int
      */
     public $timeout = 60;
+    
     protected $email;
     protected $name;
     protected $ip;
