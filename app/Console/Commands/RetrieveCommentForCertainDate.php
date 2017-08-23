@@ -51,8 +51,17 @@ class RetrieveCommentForCertainDate extends Command
                         'user_insta_profile_comment_log.target_username', 'user_insta_profile_comment_log.target_media')
                 ->get();
                     
+       
+       
+       $rows = DB::table('user_insta_profile')
+            ->join('user_insta_profile_comment_log', 'user_insta_profile.id', '=', 'user_insta_profile_comment_log.user_insta_profile_id')
+            ->select('user_insta_profile.insta_username', 'user_insta_profile.insta_pw', 'user_insta_profile_comment_log.target_username', 'user_insta_profile_comment_log.target_media')
+            ->whereBetween(Carbon::createFromDate(2017, 8, 21), Carbon::createFromDate(2017, 9, 21))
+            ->get();
+       
        foreach ($rows as $row) {
            var_dump($row);
        }
+       
     }
 }
