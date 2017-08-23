@@ -39,7 +39,7 @@ class RetrieveCommentForCertainDate extends Command
      */
     public function handle()
     {
-        DB::table('user_insta_profile')
+        $rows = DB::table('user_insta_profile')
                 ->join('user_insta_profile_comment_log', function ($join) {
                         $join->on('user_insta_profile.insta_username', '=', 'user_insta_profile_comment_log.insta_username')
                              ->where('user_insta_profile_comment_log.date_commented', '>=', '2017-08-21 00:00:00')
@@ -49,5 +49,9 @@ class RetrieveCommentForCertainDate extends Command
                 ->select('user_insta_profile.insta_username', 'user_insta_profile.insta_pw', 
                         'user_insta_profile_comment_log.target_username', 'user_insta_profile_comment_log.target_media')
                 ->get();
+                    
+       foreach ($rows as $row) {
+           var_dump($row);
+       }
     }
 }
