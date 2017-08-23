@@ -46,8 +46,6 @@ class UpgradeUserTier implements ShouldQueue
     {
         $this->email = $email;
         $this->subscription_id = $subscription_id;
-//        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
     }
 
     /**
@@ -57,6 +55,8 @@ class UpgradeUserTier implements ShouldQueue
      */
     public function handle()
     {
+//        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
         $subscription = \Stripe\Subscription::retrieve($this->subscription_id);
         $stripe_customer_id = $subscription->customer;
         
