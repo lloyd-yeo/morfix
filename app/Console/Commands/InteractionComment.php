@@ -195,7 +195,7 @@ function executeCommenting($instagram_profiles) {
                     echo("[$ig_username] unengaged likes: \t" . $unengaged_liking->target_username . "\n");
 
                     try {
-                        $user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
+                        $user_instagram_id = $instagram->people->getUserIdForName($unengaged_liking->target_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
 
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
@@ -255,7 +255,7 @@ function executeCommenting($instagram_profiles) {
                     echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
 
                     try {
-                        $user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
+                        $user_instagram_id = $instagram->people->getUserIdForName($unengaged_following->follower_username);
                     } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                         if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                             $comment_log = new InstagramProfileCommentLog;
