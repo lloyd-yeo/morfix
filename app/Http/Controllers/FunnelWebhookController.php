@@ -52,11 +52,11 @@ class FunnelWebhookController extends Controller {
 
         $contact = $request->input('purchase.contact');
         $contact_email = $contact['email'];
-
+        $subscription_id = $request->input('purchase.subscription_id');
+        
         if (User::where('email', $contact_email)->count() == 0) {
             $contact_name = $contact['name'];
             $contact_ip = $contact['ip'];
-            $subscription_id = $request->input('purchase.subscription_id');
             $status = $request->input('purchase.status');
 
             if ($stripe_plan !== NULL && $status === "paid") {
@@ -69,7 +69,7 @@ class FunnelWebhookController extends Controller {
         } else {
             dispatch((new \App\Jobs\UpgradeUserTier($contact_email, $subscription_id))
                                 ->onQueue('freetrialuser'));
-                return response('Updating tier for user [' . $contact_email . ']', 200);
+            return response('Updating tier for user [' . $contact_email . ']', 200);
         }
     }
 
