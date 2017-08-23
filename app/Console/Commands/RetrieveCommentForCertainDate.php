@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use DB;
 use App\InstagramProfile;
 use App\InstagramProfileCommentLog;
 
