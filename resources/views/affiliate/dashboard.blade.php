@@ -214,9 +214,9 @@
                                     @endif
                                     <td>{{ $referral->created_at }}</td>
                                     @if ($referral->paypal == 1)
-                                    <td>Credit Card</td>
+                                    <td><img src="{{ asset('assets/img/logo/credit-card.png') }}" /></td>
                                     @else
-                                    <td>Paypal</td>
+                                    <td><img src="{{ asset('assets/img/logo/paypal-logo.png') }}" /></td>
                                     @endif
                                 </tr>
                             @endif
