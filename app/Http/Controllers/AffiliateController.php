@@ -28,153 +28,152 @@ class AffiliateController extends Controller {
         $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id&redir=%")->get();
 
         $suffix = '0';
-        
+
         if (count($referral_links) < 1) {
             //generate affiliate link
             $ref_kw = strtolower($this->oldClean($this->getUsernameFromEmail(Auth::user()->email)));
             $original_ref_kw = $ref_kw;
-            
+
             while (count(YourlsUrl::where('keyword', 'like', '%' . $ref_kw . '%')->get()) > 0) {
                 $ref_kw = $original_ref_kw;
                 $ref_kw = $ref_kw . "-" . $suffix;
                 $suffix++;
             }
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=home";
             $title = "MorfiX - Home";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $url = new YourlsUrl;
-            $url->keyword = $ref_kw; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $ref_kw;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=vsl";
             $title = "MorfiX - VSL";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "-1";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=rcvsl";
             $title = "MorfiX - Reverse Commission Funnel";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "rc";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=mcavsl";
             $title = "MorfiX - Motor Club of America VSL";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "mca";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=davsl";
             $title = "MorfiX - Digital Altitude VSL";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "da";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=ospvsl";
             $title = "MorfiX - Online Sales Pro VSL";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "osp";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=mmovsl";
             $title = "MorfiX - Make Money Online Niche VSL";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "mmo";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=tool";
             $title = "MorfiX - The #1 Instagram Growth Hacking Tool";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "tool";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://morfix.co/app/get-referral-cookie.php?referrer=" . $user_id . "&redir=payment";
             $title = "MorfiX - Payment Page";
             $ip = "155.69.160.38";
             $clicks = 0;
-            
+
             $keyword = $ref_kw . "payment";
             $url = new YourlsUrl;
-            $url->keyword = $keyword; 
-            $url->url = $url_; 
-            $url->title = $title; 
-            $url->ip = $ip; 
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $referral_links = YourlsUrl::where('url', 'like', "%referrer=$user_id&redir=%")->get();
-            
         }
 
         $referrals_ = array();
-        $referrals = DB::connection('mysql_old')->table('user')
+        $referrals = DB::table('user')
                 ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
                 ->where('user_affiliate.referrer', Auth::user()->user_id)
                 ->where('user.tier', '>', 1)
-                ->select('user.email', 'user.tier', 'user.created_at')
+                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
                 ->get();
 
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
@@ -187,16 +186,20 @@ class AffiliateController extends Controller {
 
             $active = false;
 
-            $stripe_details = StripeDetail::where('email', $referral->email)->get();
+            if ($referral->paypal == 0) {
+                $stripe_details = StripeDetail::where('email', $referral->email)->get();
 
-            foreach ($stripe_details as $stripe_detail) {
-                $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
-                foreach ($subscriptions->data as $subscription) {
-                    if ($subscription->status == "trialing" || $subscription->status == "active") {
-                        $active = true;
-                        break;
+                foreach ($stripe_details as $stripe_detail) {
+                    $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
+                    foreach ($subscriptions->data as $subscription) {
+                        if ($subscription->status == "trialing" || $subscription->status == "active") {
+                            $active = true;
+                            break;
+                        }
                     }
                 }
+            } else {
+                $active = true;
             }
 
             if ($active) {
@@ -277,7 +280,7 @@ class AffiliateController extends Controller {
         $username = substr($email, 0, $pos);
         return $username;
     }
-    
+
     public function oldClean($string) {
         $string = str_replace(' ', '#', $string); // Replaces all spaces with hyphens.
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.

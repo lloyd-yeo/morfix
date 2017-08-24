@@ -189,6 +189,7 @@
                                 <th>Email</th>
                                 <th class="hidden-xs">User Tier</th>
                                 <th>Join Date</th>
+                                <th>Payment Source</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -212,6 +213,11 @@
                                     <td>Mastermind</td>
                                     @endif
                                     <td>{{ $referral->created_at }}</td>
+                                    @if ($referral->paypal == 1)
+                                    <td>Credit Card</td>
+                                    @else
+                                    <td>Paypal</td>
+                                    @endif
                                 </tr>
                             @endif
                             @endforeach
