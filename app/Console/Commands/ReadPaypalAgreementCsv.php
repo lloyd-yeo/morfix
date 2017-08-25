@@ -73,6 +73,7 @@ class ReadPaypalAgreementCsv extends Command {
                                 . "," . "NOT REFUNDED"
                                 . "," . "Paypal"
                                 . "," . "Paid"
+                                . "," . "Eligible"
                                 . "\n";
                     }
                     
