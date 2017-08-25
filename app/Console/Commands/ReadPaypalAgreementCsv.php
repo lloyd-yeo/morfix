@@ -66,16 +66,16 @@ class ReadPaypalAgreementCsv extends Command {
                     
                     $valid = 0;
                     if ($data[4] == 1) {
-                        $valid = "Valid";
+                        echo 
+                        $referrer_user->email . "," 
+                                . $referred_user->email 
+                                . "," . $data[2] 
+                                . "," . $plan
+                                . "," . $valid
+                                . "\n";
                     }
                     
-                    echo 
-                    $referrer_user->email . "," 
-                            . $referred_user->email 
-                            . "," . $data[2] 
-                            . "," . $plan
-                            . "," . $valid
-                            . "\n";
+                    
                 }
             }
         }
