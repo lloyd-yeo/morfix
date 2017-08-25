@@ -144,7 +144,7 @@ class GetUsersWithPendingCommisions extends Command {
                 }
 
                 echo $referral_charge->referrer_email . "," . $referral_charge->referred_email . "," .
-                $referral_charge->subscription_id . "," . $refunded . "," . $referral_charge->invoice_id . "," . $charge_paid . "," . $eligibility . "\n";
+                $referral_charge->subscription_id . "," . $referral_charge->charge_created . "," . $refunded . "," . $referral_charge->invoice_id . "," . $charge_paid . "," . $eligibility . "\n";
             }
         }
     }
