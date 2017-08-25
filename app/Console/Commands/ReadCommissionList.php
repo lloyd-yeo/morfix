@@ -44,9 +44,9 @@ class ReadCommissionList extends Command {
         $referrers = array();
         $referrer_eligiblity = array();
         $referrer_paypal_email = array();
-        
+
         $bartu_referral = array();
-        
+
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
 
             if ($row_count == 0) {
@@ -62,7 +62,7 @@ class ReadCommissionList extends Command {
 
             if (key_exists($referrer_email, $referrers)) {
                 $current_comms = $referrers[$referrer_email];
-                
+
                 if ($data[7] == "Eligible") {
                     if ($data[2] == "137") {
                         $current_comms += 20;
@@ -71,17 +71,14 @@ class ReadCommissionList extends Command {
                         $current_comms += 50;
                     }
                     $referrers[$referrer_email] = $current_comms;
-                    
                     if ($referrer_email == "thelifeofwinners@gmail.com") {
                         $bartu_referral[] = $data[1] . "," . $data[2] . "," . $data[5];
                     }
                 }
-                
-                
             } else {
                 $user = User::where('email', $referrer_email)->first();
                 if ($user !== NULL) {
-                    
+
                     $current_comms = 0;
                     $referrers[$referrer_email] = $current_comms;
                     $referrer_paypal_email[$referrer_email] = $user->paypal_email;
@@ -94,10 +91,9 @@ class ReadCommissionList extends Command {
                             $current_comms = 50;
                         }
                         $referrers[$referrer_email] = $current_comms;
-                    }
-                    
-                    if ($referrer_email == "thelifeofwinners@gmail.com") {
-                        $bartu_referral[] = $data[1] . "," . $data[2] . "," . $data[5];
+                        if ($referrer_email == "thelifeofwinners@gmail.com") {
+                            $bartu_referral[] = $data[1] . "," . $data[2] . "," . $data[5];
+                        }
                     }
                 }
             }
@@ -109,7 +105,7 @@ class ReadCommissionList extends Command {
 //            }
 //            echo $referrer_email . "," . $referrer_paypal_email[$referrer_email] . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
 //        }
-        
+
         foreach ($bartu_referral as $referral) {
             echo $referral . "\n";
         }
