@@ -72,7 +72,6 @@ class ReadPaypalAgreementCsv extends Command {
                                 . "," . $plan
                                 . "," . "NOT REFUNDED"
                                 . "," . "Paypal"
-                                . "," . $data[2] 
                                 . "," . "Paid"
                                 . "\n";
                     }
