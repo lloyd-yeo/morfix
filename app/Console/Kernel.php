@@ -56,6 +56,7 @@ class Kernel extends ConsoleKernel {
         Commands\EngagementGroupManual::class,
         Commands\RetrieveCommentForCertainDate::class,
         Commands\ReadPaypalAgreementCsv::class,
+        Commands\ReadCommissionList::class,
     ];
 
     /**

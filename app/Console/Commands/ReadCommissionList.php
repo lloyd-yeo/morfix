@@ -45,6 +45,7 @@ class ReadCommissionList extends Command
 
         $referrers = array();
         $referrer_eligiblity = array();
+        $referrer_paypal_email = array();
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             
             if ($row_count == 0) {
@@ -58,12 +59,16 @@ class ReadCommissionList extends Command
                 continue;
             }
             
-            if (in_array($referrer_email, $referrers)) {
+            if (key_exists($referrer_email, $referrers)) {
                 $current_comms = $referrers[$referrer_email];
             } else {
-                $current_comms = 0;
-                $referrers[$referrer_email] = $current_comms;
-                $referrer_eligiblity[$referrer_email] = $data[7];
+                $user = User::where('email', $referrer_email)->first();
+                if ($user !== NULL) {
+                    $current_comms = 0;
+                    $referrers[$referrer_email] = $current_comms;
+                    $referrer_eligiblity[$referrer_email] = $data[7];
+                    $referrer_paypal_email[$referrer_email] = $user->paypal_email;
+                }
             }
         }
         
