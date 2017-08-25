@@ -69,8 +69,10 @@ class ReadPaypalAgreementCsv extends Command {
                         echo 
                         $referrer_user->email . "," 
                                 . $referred_user->email 
-                                . "," . $data[2] 
                                 . "," . $plan
+                                . "," . "NOT REFUNDED"
+                                . "," . "Paypal"
+                                . "," . $data[2] 
                                 . "," . "Paid"
                                 . "\n";
                     }
