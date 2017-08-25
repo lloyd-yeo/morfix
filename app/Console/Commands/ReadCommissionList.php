@@ -73,7 +73,7 @@ class ReadCommissionList extends Command {
                     $referrers[$referrer_email] = $current_comms;
                     
                     if ($referrer_email == "thelifeofwinners@gmail.com") {
-                        $bartu_referral[] = $data[1];
+                        $bartu_referral[] = $data[1] . "," . $data[2] . "," . $data[5];
                     }
                 }
                 
