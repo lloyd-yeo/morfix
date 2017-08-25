@@ -43,15 +43,26 @@ class ReadCommissionList extends Command
         $all_data = array();
         $row_count = 0;
 
+        $referrers = array();
+        $referrer_eligiblity = array();
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             
             if ($row_count == 0) {
                 $row_count++;
                 continue;
             }
-            
-            
-            
+            $referrer_email = $data[0];
+            if (in_array($referrer_email, $referrers)) {
+                $current_comms = $referrers[$referrer_email];
+            } else {
+                $current_comms = 0;
+                $referrers[$referrer_email] = $current_comms;
+                $referrer_eligiblity[$referrer_email] = $data[7];
+            }
+        }
+        
+        foreach ($referrers as $referrer_email => $comms) {
+            echo $referrer_email . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
         }
     }
 }
