@@ -67,6 +67,7 @@ class GetUsersWithPendingCommisions extends Command {
                                 . 'AND charge_created <= "2017-07-31 23:59:59" AND referrer_email = ?', [$user->email]);
             } else if ($user->last_pay_out_date !== NULL) {
                 $month = $dt->month;
+                $month = $month + 1;
                 $referral_charges = DB::select('SELECT * FROM '
                                 . 'get_referral_charges_of_user '
                                 . 'WHERE charge_refunded = 0 '
