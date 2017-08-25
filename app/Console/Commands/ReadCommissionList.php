@@ -44,6 +44,9 @@ class ReadCommissionList extends Command {
         $referrers = array();
         $referrer_eligiblity = array();
         $referrer_paypal_email = array();
+        
+        $bartu_referral = array();
+        
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
 
             if ($row_count == 0) {
@@ -68,7 +71,12 @@ class ReadCommissionList extends Command {
                         $current_comms += 50;
                     }
                     $referrers[$referrer_email] = $current_comms;
+                    
+                    if ($referrer_email == "thelifeofwinners@gmail.com") {
+                        $bartu_referral[] = $data[1];
+                    }
                 }
+                
                 
             } else {
                 $user = User::where('email', $referrer_email)->first();
@@ -86,6 +94,10 @@ class ReadCommissionList extends Command {
                             $current_comms = 50;
                         }
                         $referrers[$referrer_email] = $current_comms;
+                    }
+                    
+                    if ($referrer_email == "thelifeofwinners@gmail.com") {
+                        $bartu_referral[] = $data[1];
                     }
                 }
             }
