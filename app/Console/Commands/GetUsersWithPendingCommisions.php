@@ -51,6 +51,7 @@ class GetUsersWithPendingCommisions extends Command {
 //                $last_pay_out_date = $user->last_pay_out_date;
 //            }
 //            echo $user->email . "," . $paypal_email . "," . $user->pending_commission . "," . $user->user_id . "," . $last_pay_out_date . "\n";
+            
             $dt = NULL;
 
             if ($user->last_pay_out_date !== NULL) {
