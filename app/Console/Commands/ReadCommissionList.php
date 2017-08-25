@@ -63,6 +63,7 @@ class ReadCommissionList extends Command {
                 if ($data[7] == "Eligible") {
                     if ($data[2] == "137") {
                         $current_comms += 20;
+                        $referrer_eligiblity[$referrer_email] = "Eligible";
                     } else if ($data[2] == "297") {
                         $current_comms += 50;
                     }
@@ -72,15 +73,15 @@ class ReadCommissionList extends Command {
             } else {
                 $user = User::where('email', $referrer_email)->first();
                 if ($user !== NULL) {
+                    
                     $current_comms = 0;
-
                     $referrers[$referrer_email] = $current_comms;
-                    $referrer_eligiblity[$referrer_email] = $data[7];
                     $referrer_paypal_email[$referrer_email] = $user->paypal_email;
-
+                    $referrer_eligiblity[$referrer_email] = "Not Eligible";
                     if ($data[7] == "Eligible") {
                         if ($data[2] == "137") {
                             $current_comms = 20;
+                            $referrer_eligiblity[$referrer_email] = "Eligible";
                         } else if ($data[2] == "297") {
                             $current_comms = 50;
                         }
@@ -91,6 +92,9 @@ class ReadCommissionList extends Command {
         }
 
         foreach ($referrers as $referrer_email => $comms) {
+            if ($comms >= 50 && $referrer_eligiblity[$referrer_email] != "Not Eligible") {
+                $referrer_eligiblity[$referrer_email] = "Eligible";
+            }
             echo $referrer_email . "," . $referrer_paypal_email[$referrer_email] . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
         }
     }
