@@ -51,7 +51,13 @@ class ReadCommissionList extends Command
                 $row_count++;
                 continue;
             }
+            
             $referrer_email = $data[0];
+            
+            if ($referrer_email == "gabriel@instaffiliates.com") {
+                continue;
+            }
+            
             if (in_array($referrer_email, $referrers)) {
                 $current_comms = $referrers[$referrer_email];
             } else {
