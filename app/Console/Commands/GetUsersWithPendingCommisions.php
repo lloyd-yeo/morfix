@@ -40,6 +40,7 @@ class GetUsersWithPendingCommisions extends Command {
      */
     public function handle() {
         $users = User::where('pending_commission', '>', 0)->get();
+        
         foreach ($users as $user) {
 //            $paypal_email = "NULL";
 //            if ($user->paypal_email !== NULL) {
@@ -63,14 +64,14 @@ class GetUsersWithPendingCommisions extends Command {
                                 . 'get_referral_charges_of_user '
                                 . 'WHERE charge_refunded = 0 '
                                 . 'AND charge_created >= "2017-01-01 00:00:00" '
-                                . 'AND charge_created <= "2017-06-31 23:59:59" AND referrer_email = ?', [$user->email]);
+                                . 'AND charge_created <= "2017-07-31 23:59:59" AND referrer_email = ?', [$user->email]);
             } else if ($user->last_pay_out_date !== NULL) {
                 $month = $dt->month;
                 $referral_charges = DB::select('SELECT * FROM '
                                 . 'get_referral_charges_of_user '
                                 . 'WHERE charge_refunded = 0 '
                                 . 'AND charge_created >= "2017-0' . $month . '-01 00:00:00" '
-                                . 'AND charge_created <= "2017-06-31 23:59:59" AND referrer_email = ?', [$user->email]);
+                                . 'AND charge_created <= "2017-07-31 23:59:59" AND referrer_email = ?', [$user->email]);
             }
 
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
