@@ -44,6 +44,7 @@ class ReadPaypalAgreementCsv extends Command {
         $row_count = 0;
 
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
+            
             if ($row_count == 0) {
                 $row_count++;
                 continue;
@@ -53,11 +54,24 @@ class ReadPaypalAgreementCsv extends Command {
             $referred_user = User::where('email', $morfix_email)->first();
             
             if ($referred_user !== NULL) {
-                
                 $user_affiliate = UserAffiliates::where('referred', $referred_user->user_id)->first();
                 if ($user_affiliate !== NULL && $user_affiliate->referrer !== NULL) {
                     $referrer_user = User::where('user_id', $user_affiliate->referrer)->first();
-                    echo $referrer_user->email . "," . $referred_user->email . "," . $data[1] . "," . $data[2] . "," . $data[3] . "," . $data[4] . "\n";
+                    $plan = "137";
+                    if ($data[3] == "Business") {
+                        $plan = "297";
+                    } else if ($data[3] == "Pro") {
+                        $plan = "MX370";
+                    }
+                    
+                    echo 
+                    $referrer_user->email . "," 
+                            . $referred_user->email 
+                            . "," . $data[1] 
+                            . "," . $data[2] 
+                            . "," . $data[3] 
+                            . "," . $data[4] 
+                            . "\n";
                 }
             }
         }
