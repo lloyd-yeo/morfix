@@ -64,12 +64,17 @@ class ReadPaypalAgreementCsv extends Command {
                         $plan = "MX370";
                     }
                     
+                    $valid = 0;
+                    if ($data[4] == 1) {
+                        $valid = "Valid";
+                    }
+                    
                     echo 
                     $referrer_user->email . "," 
                             . $referred_user->email 
-                            . "," . $data[1]
+                            . "," . $data[2] 
                             . "," . $plan
-                            . "," . $data[4] 
+                            . "," . $valid
                             . "\n";
                 }
             }
