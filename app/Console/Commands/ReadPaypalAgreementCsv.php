@@ -44,7 +44,7 @@ class ReadPaypalAgreementCsv extends Command {
         $row_count = 0;
 
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
-            
+
             if ($row_count == 0) {
                 $row_count++;
                 continue;
@@ -52,7 +52,7 @@ class ReadPaypalAgreementCsv extends Command {
 
             $morfix_email = $data[0];
             $referred_user = User::where('email', $morfix_email)->first();
-            
+
             if ($referred_user !== NULL) {
                 $user_affiliate = UserAffiliates::where('referred', $referred_user->user_id)->first();
                 if ($user_affiliate !== NULL && $user_affiliate->referrer !== NULL) {
@@ -63,22 +63,23 @@ class ReadPaypalAgreementCsv extends Command {
                     } else if ($data[3] == "Pro") {
                         $plan = "MX370";
                     }
-                    
+
                     $valid = 0;
                     if ($data[4] == 1) {
-                        echo 
-                        $referrer_user->email . "," 
-                                . $referred_user->email 
-                                . "," . $plan
-                                . "," . $data[2]
-                                . "," . "NOT REFUNDED"
-                                . "," . "Paypal"
-                                . "," . "Paid"
-                                . "," . "Eligible"
-                                . "\n";
+
+                        if (strpos($data[2], '2017-07') !== false) {
+                            echo
+                            $referrer_user->email . ","
+                            . $referred_user->email
+                            . "," . $plan
+                            . "," . $data[2]
+                            . "," . "NOT REFUNDED"
+                            . "," . "Paypal"
+                            . "," . "Paid"
+                            . "," . "Eligible"
+                            . "\n";
+                        }
                     }
-                    
-                    
                 }
             }
         }
