@@ -88,7 +88,7 @@ class ReadCommissionList extends Command {
         }
 
         foreach ($referrers as $referrer_email => $comms) {
-            echo $referrer_email . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
+            echo $referrer_email . "," . $referrer_paypal_email[$referrer_email] . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
         }
     }
 
