@@ -97,17 +97,21 @@ class ReadCommissionList extends Command {
                     }
                     
                     if ($referrer_email == "thelifeofwinners@gmail.com") {
-                        $bartu_referral[] = $data[1];
+                        $bartu_referral[] = $data[1] . "," . $data[2] . "," . $data[5];
                     }
                 }
             }
         }
 
-        foreach ($referrers as $referrer_email => $comms) {
-            if ($comms < 50) {
-                $referrer_eligiblity[$referrer_email] = "Not Eligible";
-            }
-            echo $referrer_email . "," . $referrer_paypal_email[$referrer_email] . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
+//        foreach ($referrers as $referrer_email => $comms) {
+//            if ($comms < 50) {
+//                $referrer_eligiblity[$referrer_email] = "Not Eligible";
+//            }
+//            echo $referrer_email . "," . $referrer_paypal_email[$referrer_email] . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
+//        }
+        
+        foreach ($bartu_referral as $referral) {
+            echo $referral . "\n";
         }
     }
 
