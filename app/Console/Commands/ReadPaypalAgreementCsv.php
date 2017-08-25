@@ -58,8 +58,6 @@ class ReadPaypalAgreementCsv extends Command {
                 if ($user_affiliate !== NULL && $user_affiliate->referrer !== NULL) {
                     $referrer_user = User::where('user_id', $user_affiliate->referrer)->first();
                     echo $referrer_user->email . "," . $referred_user->email . "," . $data[1] . "," . $data[2] . "," . $data[3] . "," . $data[4] . "\n";
-                } else {
-                    echo "NULL" . "," . $referred_user->email . "," . $data[1] . "," . $data[2] . "," . $data[3] . "," . $data[4] . "\n";
                 }
             }
         }
