@@ -67,8 +67,7 @@ class ReadPaypalAgreementCsv extends Command {
                     echo 
                     $referrer_user->email . "," 
                             . $referred_user->email 
-                            . "," . $data[1] 
-                            . "," . $data[2] 
+                            . "," . $data[1]
                             . "," . $plan
                             . "," . $data[4] 
                             . "\n";
