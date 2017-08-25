@@ -41,6 +41,7 @@ class GetTotalPendingPayable extends Command {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
         $path = storage_path('app/may-affiliate-comms2.csv');
         $path = storage_path('app/may-affiliate-comms3.csv');
+        $path = storage_path('app/august-commission.csv');
         $file = fopen($path, "r");
         $current_referrer = "";
         $row = 0;
