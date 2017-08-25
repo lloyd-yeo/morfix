@@ -92,8 +92,8 @@ class ReadCommissionList extends Command {
         }
 
         foreach ($referrers as $referrer_email => $comms) {
-            if ($comms >= 50 && $referrer_eligiblity[$referrer_email] != "Not Eligible") {
-                $referrer_eligiblity[$referrer_email] = "Eligible";
+            if ($comms < 50) {
+                $referrer_eligiblity[$referrer_email] = "Not Eligible";
             }
             echo $referrer_email . "," . $referrer_paypal_email[$referrer_email] . "," . $comms . "," . $referrer_eligiblity[$referrer_email] . "\n";
         }
