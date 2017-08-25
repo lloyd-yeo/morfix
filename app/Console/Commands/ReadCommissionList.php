@@ -59,30 +59,33 @@ class ReadCommissionList extends Command {
 
             if (key_exists($referrer_email, $referrers)) {
                 $current_comms = $referrers[$referrer_email];
-
-                if ($data[2] == "137") {
-                    $current_comms += 20;
-                } else if ($data[2] == "297") {
-                    $current_comms += 50;
-                }
                 
-                $referrers[$referrer_email] = $current_comms;
+                if ($data[7] == "Eligible") {
+                    if ($data[2] == "137") {
+                        $current_comms += 20;
+                    } else if ($data[2] == "297") {
+                        $current_comms += 50;
+                    }
+                    $referrers[$referrer_email] = $current_comms;
+                }
                 
             } else {
                 $user = User::where('email', $referrer_email)->first();
                 if ($user !== NULL) {
                     $current_comms = 0;
+
                     $referrers[$referrer_email] = $current_comms;
                     $referrer_eligiblity[$referrer_email] = $data[7];
                     $referrer_paypal_email[$referrer_email] = $user->paypal_email;
 
-                    if ($data[2] == "137") {
-                        $current_comms = 20;
-                    } else if ($data[2] == "297") {
-                        $current_comms = 50;
+                    if ($data[7] == "Eligible") {
+                        if ($data[2] == "137") {
+                            $current_comms = 20;
+                        } else if ($data[2] == "297") {
+                            $current_comms = 50;
+                        }
+                        $referrers[$referrer_email] = $current_comms;
                     }
-
-                    $referrers[$referrer_email] = $current_comms;
                 }
             }
         }
