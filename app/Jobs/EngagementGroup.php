@@ -30,7 +30,7 @@ class EngagementGroup implements ShouldQueue {
      *
      * @var int
      */
-    public $timeout = 60;
+    public $timeout = 7200;
 
     protected $mediaId;
 
