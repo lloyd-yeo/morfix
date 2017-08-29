@@ -107,6 +107,10 @@ class EngagementGroupManual extends Command {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
                 continue;
+            } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+                $ig_profile->incorrect_pw = 1;
+                $ig_profile->save();
+                continue;
             }
 
             try {
