@@ -38,6 +38,7 @@ class InteractionLike implements ShouldQueue {
      * @var int
      */
     public $timeout = 60;
+    
     protected $profile;
 
     /**
@@ -86,6 +87,7 @@ class InteractionLike implements ShouldQueue {
         try {
             $like_quota = rand(1, 3);
             $instagram->setUser($ig_username, $ig_password);
+            
             try {
                 $explorer_response = $instagram->login();
             } catch (\InstagramAPI\Exception\SentryBlockException $sentry_block_ex) {
@@ -138,12 +140,15 @@ class InteractionLike implements ShouldQueue {
                         if ($target_username->last_checked === NULL) {
                             $target_response = $instagram->people->getInfoById($target_username_id);
                             $target_username->last_checked = \Carbon\Carbon::now();
+                            
                             if ($target_response->user->follower_count < 10000) {
                                 $target_username->insufficient_followers = 1;
                                 echo "[$ig_username] [$target_username] has insufficient followers.\n";
                             }
+                            
                             $target_username->save();
                         }
+                        
                     } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
                         $target_username_id = "";
                         $target_username->invalid = 1;
@@ -157,6 +162,8 @@ class InteractionLike implements ShouldQueue {
                             echo "\nTerminating...";
                             exit;
                         }
+                        
+                        
                     }
 
                     $user_follower_response = NULL;
@@ -191,7 +198,6 @@ class InteractionLike implements ShouldQueue {
                                     //Blacklisted username.
                                     $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
                                     if ($blacklisted_username !== NULL) {
-
                                         if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
                                             break;
                                         } else if ($page_count === 2) { //if stuck on page 2 - continue browsing.
