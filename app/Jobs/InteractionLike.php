@@ -116,7 +116,7 @@ class InteractionLike implements ShouldQueue {
                 exit();
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 exit();
-            } 
+            }
             
             
             /*
