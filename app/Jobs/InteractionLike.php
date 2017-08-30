@@ -37,7 +37,7 @@ class InteractionLike implements ShouldQueue {
      *
      * @var int
      */
-    public $timeout = 60;
+    public $timeout = 360;
     
     protected $profile;
 
