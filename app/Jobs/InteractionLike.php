@@ -105,6 +105,7 @@ class InteractionLike implements ShouldQueue {
             }
             
             echo("\n" . "Logged in \t quota: " . $like_quota);
+<<<<<<< HEAD
             $engagement_jobs = EngagementJob::where('action', 0)
                     ->where('fulfilled', 0)
                     ->where('insta_username', $ig_username)
@@ -181,6 +182,9 @@ class InteractionLike implements ShouldQueue {
             /**
              * End of engagement jobs.
              */
+=======
+            
+>>>>>>> c4b210d17f664af7974e799a4ce39dede44500a9
             /*
              * If user is free tier & not on trial / run out of quota then break.
              */

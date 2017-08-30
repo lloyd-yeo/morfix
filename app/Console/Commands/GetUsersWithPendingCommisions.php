@@ -40,6 +40,7 @@ class GetUsersWithPendingCommisions extends Command {
      */
     public function handle() {
         $users = User::where('pending_commission', '>', 0)->get();
+        
         foreach ($users as $user) {
 //            $paypal_email = "NULL";
 //            if ($user->paypal_email !== NULL) {
@@ -50,12 +51,14 @@ class GetUsersWithPendingCommisions extends Command {
 //                $last_pay_out_date = $user->last_pay_out_date;
 //            }
 //            echo $user->email . "," . $paypal_email . "," . $user->pending_commission . "," . $user->user_id . "," . $last_pay_out_date . "\n";
+            
             $dt = NULL;
 
             if ($user->last_pay_out_date !== NULL) {
                 $dt = Carbon::parse($user->last_pay_out_date);
 //                echo "mth: " . $dt->month . "\n";
             }
+            
             $referral_charges = NULL;
 
             if ($user->last_pay_out_date === NULL) {
@@ -63,14 +66,14 @@ class GetUsersWithPendingCommisions extends Command {
                                 . 'get_referral_charges_of_user '
                                 . 'WHERE charge_refunded = 0 '
                                 . 'AND charge_created >= "2017-01-01 00:00:00" '
-                                . 'AND charge_created <= "2017-06-31 23:59:59" AND referrer_email = ?', [$user->email]);
+                                . 'AND charge_created <= "2017-07-31 23:59:59" AND referrer_email = ?', [$user->email]);
             } else if ($user->last_pay_out_date !== NULL) {
                 $month = $dt->month;
                 $referral_charges = DB::select('SELECT * FROM '
                                 . 'get_referral_charges_of_user '
                                 . 'WHERE charge_refunded = 0 '
                                 . 'AND charge_created >= "2017-0' . $month . '-01 00:00:00" '
-                                . 'AND charge_created <= "2017-06-31 23:59:59" AND referrer_email = ?', [$user->email]);
+                                . 'AND charge_created <= "2017-07-31 23:59:59" AND referrer_email = ?', [$user->email]);
             }
 
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
@@ -141,7 +144,7 @@ class GetUsersWithPendingCommisions extends Command {
                 }
 
                 echo $referral_charge->referrer_email . "," . $referral_charge->referred_email . "," .
-                $referral_charge->subscription_id . "," . $refunded . "," . $referral_charge->invoice_id . "," . $charge_paid . "," . $eligibility . "\n";
+                $referral_charge->subscription_id . "," . $referral_charge->charge_created . "," . $refunded . "," . $referral_charge->invoice_id . "," . $charge_paid . "," . $eligibility . "\n";
             }
         }
     }

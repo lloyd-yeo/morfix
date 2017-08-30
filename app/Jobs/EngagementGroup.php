@@ -1,44 +1,54 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Jobs;
 
-use Illuminate\Console\Command;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\InstagramProfile;
 
-class EngagementGroupManual extends Command {
+class EngagementGroup implements ShouldQueue {
+
+    use Dispatchable,
+        InteractsWithQueue,
+        Queueable,
+        SerializesModels;
 
     /**
-     * The name and signature of the console command.
+     * The number of times the job may be attempted.
      *
-     * @var string
+     * @var int
      */
-    protected $signature = 'engagementgroup:like {media_id}';
+    public $tries = 1;
 
     /**
-     * The console command description.
+     * The number of seconds the job can run before timing out.
      *
-     * @var string
+     * @var int
      */
-    protected $description = 'Run engagement group on a media_id.';
+    public $timeout = 7200;
+
+    protected $mediaId;
 
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @return void
      */
-    public function __construct() {
-        parent::__construct();
+    public function __construct($mediaId) {
+        $this->mediaId = $mediaId;
     }
 
     /**
-     * Execute the console command.
+     * Execute the job.
      *
-     * @return mixed
+     * @return void
      */
     public function handle() {
-
         $ig_profiles = InstagramProfile::where('checkpoint_required', 0)
                 ->where('account_disabled', 0)
                 ->where('invalid_user', 0)
@@ -46,7 +56,7 @@ class EngagementGroupManual extends Command {
                 ->where('invalid_proxy', 0)
                 ->get();
 
-        $mediaId = $this->argument('media_id');
+        $mediaId = $this->mediaId;
 
         $default_comments = array();
         $default_comments[] = "That is really insta-worthy.";

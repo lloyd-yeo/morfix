@@ -67,6 +67,9 @@ class EngagementGroupController extends Controller {
                 if ($engagement_group_job->save()) {
                     $user->engagement_quota = $user->engagement_quota - 1;
                     $user->save();
+                    $job = new \App\Jobs\EngagementGroup($media_id);
+                    $job->onQueue('engagementgroup');
+                    dispatch($job);
                 }
                 return Response::json(array("success" => true, 'message' => "Your photo has been sent for engagement group. Expect a increase in engagement."));
             } else {
