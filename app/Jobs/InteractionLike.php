@@ -108,15 +108,15 @@ class InteractionLike implements ShouldQueue {
                 $ig_profile->checkpoint_required = 1;
                 $ig_profile->save();
                 exit();
-            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                exit();
-            } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
-                exit();
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
                 exit();
-            }
+            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+                exit();
+            } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
+                exit();
+            } 
             
             
             /*
