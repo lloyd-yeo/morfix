@@ -149,6 +149,8 @@ class InteractionLike implements ShouldQueue {
 
                         echo("\n" . "incorrectpw\t" . $incorrectpw_ex->getMessage());
                         $ig_profile->incorrect_pw = 1;
+
+
                         $ig_profile->error_msg = $incorrectpw_ex->getMessage();
                         $ig_profile->save();
                         continue;
