@@ -118,7 +118,6 @@ class InteractionLike implements ShouldQueue {
                 exit();
             }
             
-            
             /*
              * If user is free tier & not on trial / run out of quota then break.
              */
