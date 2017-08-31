@@ -177,7 +177,7 @@
             <div class='col-lg-12 push-50-t'>
                 <div class='col-lg-10 col-lg-offset-1'>
                     @if ($redir == "ebook")
-                    <p class="text-center">Your copy of the free e-book has been sent to your email.</p>
+                    <p class="text-center text-white">Your copy of the free e-book has been sent to your email.</p>
                     @endif
                     <p>
                         <a href='javascript:void(0);'>
