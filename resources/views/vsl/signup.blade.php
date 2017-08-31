@@ -176,7 +176,7 @@
         <main id="main-container" style='min-height: 100%; background-image: url("../assets/img/promo/vsl-bg.jpg"); background-color: rgba(0,0,0,1); background-size:cover;'>
             <div class='col-lg-12 push-50-t'>
                 <div class='col-lg-10 col-lg-offset-1'>
-                    @elseif ($redir == "ebook")
+                    @if ($redir == "ebook")
                     <p>Your copy of the free e-book has been sent to your email.</p>
                     @endif
                     <p>
