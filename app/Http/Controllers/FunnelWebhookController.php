@@ -53,23 +53,25 @@ class FunnelWebhookController extends Controller {
         $contact = $request->input('purchase.contact');
         $contact_email = $contact['email'];
         $subscription_id = $request->input('purchase.subscription_id');
-        
-        if (User::where('email', $contact_email)->count() == 0) {
-            $contact_name = $contact['name'];
-            $contact_ip = $contact['ip'];
-            $status = $request->input('purchase.status');
 
-            if ($stripe_plan !== NULL && $status === "paid") {
-                dispatch((new \App\Jobs\NewPaidUser($contact_email, $contact_name, $contact_ip, $stripe_plan, $subscription_id))
-                                ->onQueue('freetrialuser'));
-                return response('Queued for new user [' . $contact_email . ']', 200);
+        if ($subscription_id == "0137") {
+            if (User::where('email', $contact_email)->count() == 0) {
+                $contact_name = $contact['name'];
+                $contact_ip = $contact['ip'];
+                $status = $request->input('purchase.status');
+
+                if ($stripe_plan !== NULL && $status === "paid") {
+                    dispatch((new \App\Jobs\NewPaidUser($contact_email, $contact_name, $contact_ip, $stripe_plan, $subscription_id))
+                                    ->onQueue('freetrialuser'));
+                    return response('Queued for new user [' . $contact_email . ']', 200);
+                } else {
+                    return response('Failed to queue for new user [' . $contact_email . ']', 200);
+                }
             } else {
-                return response('Failed to queue for new user [' . $contact_email . ']', 200);
-            }
-        } else {
-            dispatch((new \App\Jobs\UpgradeUserTier($contact_email, $subscription_id))
+                dispatch((new \App\Jobs\UpgradeUserTier($contact_email, $subscription_id))
                                 ->onQueue('freetrialuser'));
-            return response('Updating tier for user [' . $contact_email . ']', 200);
+                return response('Updating tier for user [' . $contact_email . ']', 200);
+            }
         }
     }
 

@@ -176,6 +176,7 @@
         <main id="main-container" style='min-height: 100%; background-image: url("../assets/img/promo/vsl-bg.jpg"); background-color: rgba(0,0,0,1); background-size:cover;'>
             <div class='col-lg-12 push-50-t'>
                 <div class='col-lg-10 col-lg-offset-1'>
+                    <p>Your copy of the free e-book has been sent to your email.</p>
                     <p>
                         <a href='javascript:void(0);'>
                             <img class='center-block' src="../assets/img/promo/vsl-instaffiliates-logo.png" style='width:180px; height:180px;'>
