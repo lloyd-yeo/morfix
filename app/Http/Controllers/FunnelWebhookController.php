@@ -32,7 +32,7 @@ class FunnelWebhookController extends Controller {
 
     public function freeTrialCustomerCreated(Request $request) {
         
-        if (User::where('email', $contact_email)->count() == 0) {
+        if (User::where('email', $request->input('contact.email'))->count() == 0) {
             dispatch((new \App\Jobs\NewFreeTrialUser($request->input('contact.email'), $request->input('contact.name'), $request->input('contact.ip')))
                             ->onQueue('freetrialuser'));
             return response('[' . $request->input('contact.email') . '] Free Trial Customer Created', 200);
