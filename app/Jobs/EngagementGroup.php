@@ -31,16 +31,17 @@ class EngagementGroup implements ShouldQueue {
      * @var int
      */
     public $timeout = 7200;
-
     protected $mediaId;
+    protected $igProfileUsername;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($mediaId) {
+    public function __construct($mediaId, $igProfileUsername) {
         $this->mediaId = $mediaId;
+        $this->igProfileUsername = $igProfileUsername;
     }
 
     /**
@@ -49,6 +50,7 @@ class EngagementGroup implements ShouldQueue {
      * @return void
      */
     public function handle() {
+
         $ig_profiles = InstagramProfile::where('checkpoint_required', 0)
                 ->where('account_disabled', 0)
                 ->where('invalid_user', 0)
@@ -73,6 +75,10 @@ class EngagementGroup implements ShouldQueue {
 //        $default_comments[] = "";
 
         foreach ($ig_profiles as $ig_profile) {
+
+            if ($ig_profile->insta_username === $this->igProfileUsername) {
+                continue;
+            }
 
             $ig_username = $ig_profile->insta_username;
             $ig_password = $ig_profile->insta_pw;
