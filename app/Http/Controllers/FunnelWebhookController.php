@@ -55,6 +55,7 @@ class FunnelWebhookController extends Controller {
         $stripe_plan = NULL;
         foreach ($products as $product) {
             $stripe_plan = $product['stripe_plan'];
+            Log::debug("Updated stripe plan to: " . $stripe_plan);
         }
 
         $contact = $request->input('purchase.contact');
