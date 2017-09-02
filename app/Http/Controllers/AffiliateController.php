@@ -136,6 +136,20 @@ class AffiliateController extends Controller {
             $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
+            
+            $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=mlmvsl";
+            $title = "MorfiX - MLM VSL";
+            $ip = "155.69.160.38";
+            $clicks = 0;
+
+            $keyword = $ref_kw . "mlm";
+            $url = new YourlsUrl;
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
+            $url->clicks = $clicks;
+            $url->save();
 
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=tool";
             $title = "MorfiX - The #1 Instagram Growth Hacking Tool";

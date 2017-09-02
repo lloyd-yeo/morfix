@@ -18,15 +18,33 @@ class ReferrerController extends Controller {
         
         $redir = $request->input("redir");
         
+//        if ($redir == "payment") {
+//            return view('vsl.payment', [
+//            ]);
+//        } 
+        
         if ($redir == "payment") {
-            return view('vsl.payment', [
-            ]);
+            return redirect('https://upgrade.morfix.co/premium');
         } elseif ($redir == "home") {
             return redirect('https://morfix.co');
+        } elseif ($redir == "vsl") {
+            return redirect('https://signup.morfix.co/vsl-online');
+        } elseif ($redir == "rcvsl") {
+            return redirect('https://signup.morfix.co/vsl-rc');
+        } elseif ($redir == "mcavsl") {
+            return redirect('https://signup.morfix.co/mca-vsl');
+        } elseif ($redir == "davsl") {
+            return redirect('https://signup.morfix.co/vsl-da');
+        } elseif ($redir == "ospvsl") {
+            return redirect('https://signup.morfix.co/vsl-osp');
+        } elseif ($redir == "mmovsl") {
+            return redirect('https://signup.morfix.co/vsl-mmo');
+        } elseif ($redir == "tool") {
+            return redirect('https://signup.morfix.co/vsl-tool');
+        } elseif ($redir == "mlmvsl") {
+            return redirect('https://signup.morfix.co/vsl-mlm');
         } else {
-            return view('vsl.signup', [
-                'redir' => $redir,
-            ]);
+            return redirect('https://morfix.co');
         }
     }
 }
