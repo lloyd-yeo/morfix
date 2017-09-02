@@ -55,13 +55,13 @@ class InteractionLike extends Command {
      */
     public function handle() {
         if (NULL === $this->argument("email")) {
-            
             $users = DB::table('user')
                     ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
                     ->get();
             
             foreach ($users as $user) {
+                
                 if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
                     $instagram_profiles = InstagramProfile::where('auto_like', true)
                             ->where('checkpoint_required', false)
@@ -78,47 +78,6 @@ class InteractionLike extends Command {
                         dispatch($job);
                         $this->line("queued profile: " . $ig_profile->insta_username);
                     }
-                }
-
-
-                if (NULL === $this->argument("email")) {
-//                dispatch(new \App\Jobs\InteractionLike(\App\User::find($user->user_id)))->onQueue('like');
-
-                    $instagram_profiles = InstagramProfile::where('auto_like', true)
-                            ->where('checkpoint_required', false)
-                            ->where('account_disabled', false)
-                            ->where('invalid_user', false)
-                            ->where('incorrect_pw', false)
-                            ->where('user_id', $user->user_id)
-                            ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
-                            ->get();
-
-                    foreach ($instagram_profiles as $ig_profile) {
-
-                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                        $job->onQueue('likes');
-                        dispatch($job);
-                        $this->line("queued profile: " . $ig_profile->insta_username);
-
-                        if ($ig_profile->owner()->tier == 1) {
-                            $instagram_profiles_owner = InstagramProfile::where('auto_like', false)
-                                    ->where('checkpoint_required', false)
-                                    ->where('account_disabled', false)
-                                    ->where('invalid_user', false)
-                                    ->where('incorrect_pw', false)
-                                    ->where('user_id', $user->user_id)
-                                    ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
-                                    ->get();
-
-                            foreach ($instagram_profiles_owner as $ig_profile_owner) {
-                                $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile_owner->id));
-                                $job->onQueue('likes');
-                                dispatch($job);
-                                $this->line("queued profile: " . $ig_profile_owner->insta_username);
-                            }
-                        }
-                    }
-                    continue;
                 }
             }
         } else {
