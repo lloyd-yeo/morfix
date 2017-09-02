@@ -53,8 +53,8 @@ class NewFreeTrialUser implements ShouldQueue {
      * @return void
      */
     public function handle() {
+        
         if (User::where('email', $this->email)->count() === 0) {
-            
             $user = new User;
             $user->email = $this->email;
             $user->name = $this->name;
@@ -109,5 +109,4 @@ class NewFreeTrialUser implements ShouldQueue {
             }
         }
     }
-
 }
