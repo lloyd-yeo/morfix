@@ -59,8 +59,8 @@ class UpgradeUserTier implements ShouldQueue
     {
         echo "Upgrading customer: " . $this->email . " with subscription: " . $this->subscription_id . "\n";
         
-//        \Stripe\Stripe::setApiKey("sk_live_HeS5 nnfJ5qARMPsANoGw32c2");
-        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
+        \Stripe\Stripe::setApiKey("sk_live_HeS5 nnfJ5qARMPsANoGw32c2");
+//        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
         
         $subscription = \Stripe\Subscription::retrieve($this->subscription_id);
         
