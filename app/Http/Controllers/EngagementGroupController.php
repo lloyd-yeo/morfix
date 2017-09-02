@@ -67,7 +67,7 @@ class EngagementGroupController extends Controller {
                 if ($engagement_group_job->save()) {
                     $user->engagement_quota = $user->engagement_quota - 1;
                     $user->save();
-                    $job = new \App\Jobs\EngagementGroup($media_id);
+                    $job = new \App\Jobs\EngagementGroup($media_id, $request->input('profile_id'));
                     $job->onQueue('engagementgroup');
                     dispatch($job);
                 }

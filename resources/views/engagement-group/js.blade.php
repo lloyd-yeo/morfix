@@ -24,6 +24,8 @@ jQuery(function () {
     var $media_id = 0;
     $(".engagement-btn").on("click", function(){ 
         $media_id = $(this).attr('data-image-id');
+        $profile_id = $(this).attr('data-profile-id');
+        
         swal({
             title: 'Send for Engagement Group',
             text: "You will use 1 engagement credit for boosting this post.",
@@ -35,7 +37,7 @@ jQuery(function () {
             showLoaderOnConfirm: true,
             preConfirm: function () {
               return new Promise(function (resolve, reject) {
-                  $.post('/engagement-group/schedule/' + $media_id, { }, function (data) {
+                  $.post('/engagement-group/schedule/' + $media_id, { profile_id: $profile_id }, function (data) {
                         if (data.success === true) {
                            resolve()
                         } else {

@@ -32,16 +32,16 @@ class EngagementGroup implements ShouldQueue {
      */
     public $timeout = 7200;
     protected $mediaId;
-    protected $igProfileUsername;
+    protected $igProfileId;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($mediaId, $igProfileUsername) {
+    public function __construct($mediaId, $igProfileId) {
         $this->mediaId = $mediaId;
-        $this->igProfileUsername = $igProfileUsername;
+        $this->igProfileId = $igProfileId;
     }
 
     /**
@@ -76,7 +76,7 @@ class EngagementGroup implements ShouldQueue {
 
         foreach ($ig_profiles as $ig_profile) {
 
-            if ($ig_profile->insta_username === $this->igProfileUsername) {
+            if ($ig_profile->id === $this->igProfileId) {
                 continue;
             }
 
