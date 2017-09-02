@@ -65,7 +65,7 @@ class FunnelWebhookController extends Controller {
         $subscription_id = $request->input('purchase.subscription_id');
         Log::debug("Subscription ID: " . $subscription_id);
 
-        if ($subscription_id == "0137") {
+        if ($stripe_plan == "0137") {
             if (User::where('email', $contact_email)->count() == 0) {
                 $contact_name = $contact['name'];
                 $contact_ip = $contact['ip'];
