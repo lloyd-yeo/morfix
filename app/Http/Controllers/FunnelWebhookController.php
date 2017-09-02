@@ -59,8 +59,11 @@ class FunnelWebhookController extends Controller {
         }
 
         $contact = $request->input('purchase.contact');
+        Log::debug("Contact serialized: " . serialize($contact));
         $contact_email = $contact['email'];
+        Log::debug("Contact email is: " . $contact_email);
         $subscription_id = $request->input('purchase.subscription_id');
+        Log::debug("Subscription ID: " . $subscription_id);
 
         if ($subscription_id == "0137") {
             if (User::where('email', $contact_email)->count() == 0) {
