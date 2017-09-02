@@ -31,7 +31,6 @@ class FunnelWebhookController extends Controller {
     }
 
     public function freeTrialCustomerCreated(Request $request) {
-        
         if (User::where('email', $request->input('contact.email'))->count() == 0) {
             dispatch((new \App\Jobs\NewFreeTrialUser($request->input('contact.email'), $request->input('contact.name'), $request->input('contact.ip')))
                             ->onQueue('freetrialuser'));
@@ -39,7 +38,6 @@ class FunnelWebhookController extends Controller {
         } else {
             return response('[' . $request->input('contact.email') . '] Free Trial Customer Exists!', 200);
         }
-        
     }
 
     public function salesCustomerCreated(Request $request) {
@@ -48,9 +46,11 @@ class FunnelWebhookController extends Controller {
     }
 
     public function salesNewPurchase(Request $request) {
-
+        
+        Log::debug("Rcvd new purchase webhook from ClickFunnels");
+        
         $products = $request->input('purchase.products');
-
+        
         $stripe_plan = NULL;
         foreach ($products as $product) {
             $stripe_plan = $product['stripe_plan'];
@@ -65,7 +65,6 @@ class FunnelWebhookController extends Controller {
                 $contact_name = $contact['name'];
                 $contact_ip = $contact['ip'];
                 $status = $request->input('purchase.status');
-
                 if ($stripe_plan !== NULL && $status === "paid") {
                     dispatch((new \App\Jobs\NewPaidUser($contact_email, $contact_name, $contact_ip, $stripe_plan, $subscription_id))
                                     ->onQueue('freetrialuser'));
