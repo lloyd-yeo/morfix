@@ -13,7 +13,6 @@ use App\Mail\NewPassword;
 use App\Mail\ProCongrats;
 use App\Mail\BusinessCongrats;
 use App\StripeDetail;
-use Carbon\Carbon;
 
 class UpgradeUserTier implements ShouldQueue
 {
@@ -58,7 +57,6 @@ class UpgradeUserTier implements ShouldQueue
     public function handle()
     {
         echo "Upgrading customer: " . $this->email . " with subscription: " . $this->subscription_id . "\n";
-        
 //        \Stripe\Stripe::setApiKey("sk_live_HeS5 nnfJ5qARMPsANoGw32c2");
         \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
         
