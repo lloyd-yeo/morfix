@@ -18,8 +18,6 @@ Hey {{ $name }}!
     each referral gaining you $20 per month as long as you and them stay subscribed!</p>
 <p>To get started using Morfix! Login to your account using the following details:<p>
     
-@elseif ($mode === "business")
-
 @endif
 <p>
     Username: <b>{{ $email }}</b>

@@ -8,10 +8,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\User;
 
-class ProCongrats extends Mailable
+class BusinessCongrats extends Mailable
 {
     use Queueable, SerializesModels;
-    
+
     public $user;
     
     /**
@@ -31,9 +31,9 @@ class ProCongrats extends Mailable
      */
     public function build()
     {
-        $subject = "[Morfix] Congrats! You are officially a Pro user now!";
+        $subject = "[Morfix] Congrats! You are officially a Business user now!";
         
-        return $this->view('email.upgrade.pro')
+        return $this->view('email.upgrade.business')
                     ->subject($subject)
                     ->with(['name' => $this->user->name]);
     }

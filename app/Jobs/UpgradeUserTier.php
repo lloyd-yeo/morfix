@@ -10,6 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use AWeberAPI;
 use App\User;
 use App\Mail\NewPassword;
+use App\Mail\ProCongrats;
+use App\Mail\BusinessCongrats;
 use App\StripeDetail;
 use Carbon\Carbon;
 
@@ -55,8 +57,8 @@ class UpgradeUserTier implements ShouldQueue
      */
     public function handle()
     {
-//        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
+        \Stripe\Stripe::setApiKey("sk_live_HeS5 nnfJ5qARMPsANoGw32c2");
+//        \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
         
         $subscription = \Stripe\Subscription::retrieve($this->subscription_id);
         $stripe_customer_id = $subscription->customer;
@@ -75,17 +77,25 @@ class UpgradeUserTier implements ShouldQueue
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 10;
             $user->num_acct = 6;
-            $user->save();
+            if ($user->save()) {
+                //Pro
+                Mail::to($user->email)->send(new BusinessCongrats($user));
+            }
         } else if ($plan->id == "MX297") {
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 1;
-            $user->save();
+            
+            if ($user->save()) {
+                //Pro
+                Mail::to($user->email)->send(new ProCongrats($user));
+            }
             
             //change subscription prorate to false;
             $subscription->prorate = false;
             $new_date = $subscription->current_period_start + 34128000;
             $subscription->trial_end = $new_date;
             $subscription = $subscription->save();
+            
         }
     }
 }
