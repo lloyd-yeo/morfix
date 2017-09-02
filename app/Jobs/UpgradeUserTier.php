@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
 use App\Mail\NewPassword;
@@ -57,6 +58,7 @@ class UpgradeUserTier implements ShouldQueue
     public function handle()
     {
         echo "Upgrading customer: " . $this->email . " with subscription: " . $this->subscription_id . "\n";
+        
 //        \Stripe\Stripe::setApiKey("sk_live_HeS5 nnfJ5qARMPsANoGw32c2");
         \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
         
@@ -96,7 +98,6 @@ class UpgradeUserTier implements ShouldQueue
             $new_date = $subscription->current_period_start + 34128000;
             $subscription->trial_end = $new_date;
             $subscription = $subscription->save();
-            
         }
     }
 }
