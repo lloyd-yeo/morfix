@@ -76,9 +76,7 @@ class UpgradeUserTier implements ShouldQueue
             $user->tier = $user->tier + 10;
             $user->num_acct = 6;
             $user->save();
-            
         } else if ($plan->id == "MX297") {
-            
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 1;
             $user->save();
@@ -88,7 +86,6 @@ class UpgradeUserTier implements ShouldQueue
             $new_date = $subscription->current_period_start + 34128000;
             $subscription->trial_end = $new_date;
             $subscription = $subscription->save();
-            
         }
     }
 }
