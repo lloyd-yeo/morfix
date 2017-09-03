@@ -38,7 +38,7 @@ class EngagementGroupController extends Controller {
     public function index() {
 
         $exit_code = Artisan::call('ig:refresh', [
-            'email' => Auth::user()->email,
+                    'email' => Auth::user()->email,
         ]);
 
         $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(Auth::user()->num_acct)->get();
@@ -58,6 +58,7 @@ class EngagementGroupController extends Controller {
 
     public function schedule(Request $request, $media_id) {
         $user = User::where('email', Auth::user()->email)->first();
+
         if ($user->engagement_quota > 0) {
             $engagement_group_job = EngagementGroupJob::where('media_id', '=', $media_id)->first();
             if ($engagement_group_job === null) {
