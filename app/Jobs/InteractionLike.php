@@ -220,7 +220,7 @@ class InteractionLike implements ShouldQueue {
                                     //Check for duplicates.
                                     $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
                                             ->where('target_username', $user_to_like->username)
-                                            ->get();
+                                            ->first();
 
                                     //Duplicate = liked before.
                                     if (count($liked_users) > 0) {
@@ -236,7 +236,7 @@ class InteractionLike implements ShouldQueue {
                                     //Check for duplicates.
                                     $liked_users = LikeLogsArchive::where('insta_username', $ig_username)
                                             ->where('target_username', $user_to_like->username)
-                                            ->get();
+                                            ->first();
 
                                     //Duplicate = liked before.
                                     if (count($liked_users) > 0) {
@@ -360,7 +360,7 @@ class InteractionLike implements ShouldQueue {
                             //Check for duplicates.
                             $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
                                     ->where('target_username', $user_to_like->username)
-                                    ->get();
+                                    ->first();
 
                             //Duplicate = liked before.
                             if (count($liked_users) > 0) {
@@ -371,7 +371,7 @@ class InteractionLike implements ShouldQueue {
                             //Check for duplicates.
                             $liked_users = LikeLogsArchive::where('insta_username', $ig_username)
                                     ->where('target_username', $user_to_like->username)
-                                    ->get();
+                                    ->first();
 
                             //Duplicate = liked before.
                             if (count($liked_users) > 0) {
