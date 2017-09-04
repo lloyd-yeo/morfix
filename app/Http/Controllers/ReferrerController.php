@@ -19,7 +19,7 @@ class ReferrerController extends Controller {
             \Cookie::forget('referrer');
             $cookieJar->queue(cookie()->forever('referrer', $request->referrer));
             
-            if (ReferrerIp::where('ip', '=', $referrer_ip->ip)->first() === NULL) {
+            if (ReferrerIp::where('ip', '=', $request->ip())->first() === NULL) {
                 $referrer_ip->referrer = $request->referrer;
                 $referrer_ip->ip = $request->ip();
                 $referrer_ip->save();
