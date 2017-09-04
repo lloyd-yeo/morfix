@@ -24,10 +24,6 @@ class ReferrerController extends Controller {
         
         $redir = $request->input("redir");
         
-        
-        
-        
-        
 //        if ($redir == "payment") {
 //            return view('vsl.payment', [
 //            ]);
