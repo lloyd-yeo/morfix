@@ -11,24 +11,26 @@ use App\ReferrerIp;
 class ReferrerController extends Controller {
 
     public function redirect(CookieJar $cookieJar, Request $request) {
-        
+
         $referrer_ip = new ReferrerIp;
-        
+
         if ($request->referrer) {
             \Cookie::forget('referrer');
             $cookieJar->queue(cookie()->forever('referrer', $request->referrer));
-            $referrer_ip->referrer = $request->referrer;
-            $referrer_ip->ip = $request->ip();
-            $referrer_ip->save();
+            if (ReferrerIp::where('ip', $referrer_ip->ip)->first() === NULL) {
+                $referrer_ip->referrer = $request->referrer;
+                $referrer_ip->ip = $request->ip();
+                $referrer_ip->save();
+            }
         }
-        
+
         $redir = $request->input("redir");
-        
+
 //        if ($redir == "payment") {
 //            return view('vsl.payment', [
 //            ]);
 //        }
-        
+
         if ($redir == "payment") {
             return redirect('https://upgrade.morfix.co/premium');
         } elseif ($redir == "home") {
@@ -53,4 +55,5 @@ class ReferrerController extends Controller {
             return redirect('https://morfix.co');
         }
     }
+
 }
