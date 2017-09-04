@@ -6,22 +6,32 @@ use Illuminate\Http\Request;
 use Illuminate\Cookie\CookieJar;
 use Response;
 use App\User;
+use App\ReferrerIp;
 
 class ReferrerController extends Controller {
 
     public function redirect(CookieJar $cookieJar, Request $request) {
         
+        $referrer_ip = new ReferrerIp;
+        
         if ($request->referrer) {
             \Cookie::forget('referrer');
             $cookieJar->queue(cookie()->forever('referrer', $request->referrer));
+            $referrer_ip->referrer = $request->referrer;
+            $referrer_ip->ip = $request->ip();
+            $referrer_ip->save();
         }
         
         $redir = $request->input("redir");
         
+        
+        
+        
+        
 //        if ($redir == "payment") {
 //            return view('vsl.payment', [
 //            ]);
-//        } 
+//        }
         
         if ($redir == "payment") {
             return redirect('https://upgrade.morfix.co/premium');
