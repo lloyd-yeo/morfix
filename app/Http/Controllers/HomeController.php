@@ -56,6 +56,9 @@ class HomeController extends Controller {
         } else if ($current_user->email == "kingkew18@gmail.com") {
             $current_user->tier = 12;
             $current_user->save();
+        } else if ($current_user->email == "aronyoung31@gmail.com") {
+            $current_user->tier = 12;
+            $current_user->save();
         } else if ($current_user->vip == 0 && $current_user->admin == 0 && $current_user->stripe_id !== NULL) {
             $tier = 1;
             \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");

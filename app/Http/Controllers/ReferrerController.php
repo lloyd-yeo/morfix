@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Cookie\CookieJar;
+use Cookie;
 use Response;
 use App\User;
 use App\ReferrerIp;
@@ -15,13 +16,15 @@ class ReferrerController extends Controller {
         $referrer_ip = new ReferrerIp;
 
         if ($request->referrer) {
-            
-            \Cookie::forget('referrer');
+            Cookie::forget('referrer');
             $cookieJar->queue(cookie()->forever('referrer', $request->referrer));
-            
-            if (ReferrerIp::where('ip', '=', $request->ip())->first() === NULL) {
+            if (ReferrerIp::where('ip', $request->ip())->first() === NULL) { //doesn't exists
                 $referrer_ip->referrer = $request->referrer;
                 $referrer_ip->ip = $request->ip();
+                $referrer_ip->save();
+            } else { //update the referrer
+                $referrer_ip = ReferrerIp::where('ip', '=', $request->ip())->first();
+                $referrer_ip->referrer = $request->referrer;
                 $referrer_ip->save();
             }
         }
