@@ -9,7 +9,6 @@ use Cookie;
 use App\User;
 use App\InstagramProfile;
 use App\UserUpdate;
-use App\StripeActiveSubscription;
 use App\UserAffiliates;
 
 class HomeController extends Controller {
@@ -34,7 +33,7 @@ class HomeController extends Controller {
 
         if (UserAffiliates::where('referred', $current_user->user_id)->count() == 0) {
             $referrer = Cookie::get('referrer');
-            if ($referrer !== NULL) {
+            if ($referrer !== NULL && !($referrer == $current_user->user_id)) {
                 $user_affiliate = new UserAffiliates;
                 $user_affiliate->referrer = $referrer;
                 $user_affiliate->referred = $current_user->user_id;
