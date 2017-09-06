@@ -53,9 +53,9 @@
                     </a>
                 </div>
                 <!-- PayPal Logo -->
-                <a href="{{ url('subscribe/paypal/pro') }}">
+<!--                <a href="{{ url('subscribe/paypal/pro') }}">
                     <img src="https://www.paypalobjects.com/webstatic/en_AU/i/buttons/btn_paywith_primary_s.png" alt="Pay with PayPal" />
-                </a>
+                </a>-->
                 <!-- PayPal Logo -->
             </div>
         </div>
