@@ -78,8 +78,8 @@ class FunnelWebhookController extends Controller {
                     return response('Failed to queue for new user [' . $contact_email . ']', 200);
                 }
             } else {
-//                dispatch((new \App\Jobs\UpgradeUserTier($contact_email, $subscription_id))
-//                                ->onQueue('freetrialuser'));
+                dispatch((new \App\Jobs\UpgradeUserTier($contact_email, $subscription_id))
+                                ->onQueue('freetrialuser'));
                 return response('User exists! [' . $contact_email . ']', 200);
             }
         } else {
