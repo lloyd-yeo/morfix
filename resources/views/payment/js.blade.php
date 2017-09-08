@@ -87,12 +87,12 @@ var mastermind_handler = StripeCheckout.configure({
 
 $("#premium-btn").on("click", function(){ 
     // Open Checkout with further options:
-    premium_handler.open({
-        name: 'Morfix.co',
-        description: 'Premium Package ($37 per mth)',
-        panelLabel: 'Subscribe',
-        email: "{{ Auth::user()->email }}"
-    });
+//    premium_handler.open({
+//        name: 'Morfix.co',
+//        description: 'Premium Package ($37 per mth)',
+//        panelLabel: 'Subscribe',
+//        email: "{{ Auth::user()->email }}"
+//    });
 });
 
 $("#pro-btn").on("click", function(){ 
