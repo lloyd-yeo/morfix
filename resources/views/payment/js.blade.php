@@ -97,12 +97,12 @@ $("#premium-btn").on("click", function(){
 
 $("#pro-btn").on("click", function(){ 
     // Open Checkout with further options:
-    pro_handler.open({
-        name: 'Morfix.co',
-        description: 'Pro Package ($370 per yr)',
-        panelLabel: 'Subscribe',
-        email: "{{ Auth::user()->email }}"
-    });
+//    pro_handler.open({
+//        name: 'Morfix.co',
+//        description: 'Pro Package ($370 per yr)',
+//        panelLabel: 'Subscribe',
+//        email: "{{ Auth::user()->email }}"
+//    });
 });
 
 $("#business-btn").on("click", function(){ 
