@@ -81,6 +81,17 @@ class UpgradeUserTier implements ShouldQueue
             $user->tier = $user->tier + 1;
             if ($user->save()) {
             }
+        } else if ($plan->id == "MX370") {
+            $user = User::where('email', $this->email)->first();
+            
+            if ($user->tier % 10 == 2) {
+                $user->tier = $user->tier + 1;
+            } else {
+                $user->tier = $user->tier + 2;
+            }
+            
+            if ($user->save()) {
+            }
         } else if ($plan->id == "0297") {
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 10;
