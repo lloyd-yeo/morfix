@@ -44,53 +44,53 @@ class HomeController extends Controller {
         $current_user->last_login = \Carbon\Carbon::now();
         $current_user->save();
 
-        if ($current_user->paypal == 1) {
-            
-        } else if ($current_user->email == "ghazanfar.uruj.cool@gmail.com") {
-            $current_user->tier = 12;
-            $current_user->save();
-        } else if ($current_user->email == "darrenk.finance@gmail.com") {
-            $current_user->tier = 12;
-            $current_user->save();
-        } else if ($current_user->email == "ting_pangwee@hotmail.com") {
-            $current_user->tier = 12;
-            $current_user->save();
-        } else if ($current_user->email == "kingkew18@gmail.com") {
-            $current_user->tier = 12;
-            $current_user->save();
-        } else if ($current_user->email == "aronyoung31@gmail.com") {
-            $current_user->tier = 12;
-            $current_user->save();
-        } else if ($current_user->vip == 0 && $current_user->admin == 0 && $current_user->stripe_id !== NULL) {
-            $tier = 1;
-            \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-            $stripe_id = $current_user->stripe_id;
-            $subscriptions = \Stripe\Subscription::all(array("customer" => $stripe_id));
-            foreach ($subscriptions->autoPagingIterator() as $subscription) {
-                $stripe_id = $subscription->customer;
-                $items = $subscription->items->data;
-                foreach ($items as $item) {
-                    $plan = $item->plan;
-                    $plan_id = $plan->id;
-
-                    if ($subscription->status == "active" || $subscription->status == "trialing") {
-                        if ($plan_id == "0137") {
-                            $tier = $tier + 1;
-                        } else if ($plan_id == "0297") {
-                            $tier = $tier + 10;
-                        } else if ($plan_id == "MX370") {
-                            $tier = $tier + 2;
-                        } else if ($plan_id == "MX970") {
-                            $tier = $tier + 20;
-                        } else if ($plan_id == "0197" || $plan_id == "0167") {
-                            $tier = $tier + 11;
-                        }
-                    }
-                }
-            }
-            $current_user->tier = $tier;
-            $current_user->save();
-        }
+//        if ($current_user->paypal == 1) {
+//            
+//        } else if ($current_user->email == "ghazanfar.uruj.cool@gmail.com") {
+//            $current_user->tier = 12;
+//            $current_user->save();
+//        } else if ($current_user->email == "darrenk.finance@gmail.com") {
+//            $current_user->tier = 12;
+//            $current_user->save();
+//        } else if ($current_user->email == "ting_pangwee@hotmail.com") {
+//            $current_user->tier = 12;
+//            $current_user->save();
+//        } else if ($current_user->email == "kingkew18@gmail.com") {
+//            $current_user->tier = 12;
+//            $current_user->save();
+//        } else if ($current_user->email == "aronyoung31@gmail.com") {
+//            $current_user->tier = 12;
+//            $current_user->save();
+//        } else if ($current_user->vip == 0 && $current_user->admin == 0 && $current_user->stripe_id !== NULL) {
+//            $tier = 1;
+//            \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+//            $stripe_id = $current_user->stripe_id;
+//            $subscriptions = \Stripe\Subscription::all(array("customer" => $stripe_id));
+//            foreach ($subscriptions->autoPagingIterator() as $subscription) {
+//                $stripe_id = $subscription->customer;
+//                $items = $subscription->items->data;
+//                foreach ($items as $item) {
+//                    $plan = $item->plan;
+//                    $plan_id = $plan->id;
+//
+//                    if ($subscription->status == "active" || $subscription->status == "trialing") {
+//                        if ($plan_id == "0137") {
+//                            $tier = $tier + 1;
+//                        } else if ($plan_id == "0297") {
+//                            $tier = $tier + 10;
+//                        } else if ($plan_id == "MX370") {
+//                            $tier = $tier + 2;
+//                        } else if ($plan_id == "MX970") {
+//                            $tier = $tier + 20;
+//                        } else if ($plan_id == "0197" || $plan_id == "0167") {
+//                            $tier = $tier + 11;
+//                        }
+//                    }
+//                }
+//            }
+//            $current_user->tier = $tier;
+//            $current_user->save();
+//        }
 
         DB::update("UPDATE user_insta_profile SET profile_pic_url = REPLACE(profile_pic_url, 'http://', 'https://');");
 
