@@ -218,14 +218,18 @@ function executeCommenting($instagram_profiles) {
 
                         foreach ($user_feed_items as $item) {
 
-                            $comment_log = new InstagramProfileCommentLog;
-                            $comment_log->insta_username = $ig_username;
-                            $comment_log->target_username = $unengaged_liking->target_username;
-                            $comment_log->target_insta_id = $user_instagram_id;
-                            $comment_log->target_media = $item->id;
-                            $comment_log->save();
 
-                            if (InstagramProfileCommentLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() == 0) {
+
+                            if (InstagramProfileCommentLog::where('insta_username', $ig_username)
+                                            ->where('target_media', $item->id)->count() == 0) {
+
+                                $comment_log = new InstagramProfileCommentLog;
+                                $comment_log->insta_username = $ig_username;
+                                $comment_log->target_username = $unengaged_liking->target_username;
+                                $comment_log->target_insta_id = $user_instagram_id;
+                                $comment_log->target_media = $item->id;
+                                $comment_log->save();
+
                                 $comment_resp = $instagram->media->comment($item->id, $commentText);
                                 $comment_log->log = serialize($comment_resp);
                                 if ($comment_log->save()) {
