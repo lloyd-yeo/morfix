@@ -66,7 +66,7 @@ class InteractionComment extends Command {
             executeCommenting($instagram_profiles);
         } else {
             foreach (User::cursor() as $user) {
-                
+
                 if ($user->tier > 2) {
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
                             ->where('email', $user->email)
@@ -82,7 +82,6 @@ class InteractionComment extends Command {
                         }
                     }
                 }
-                
             }
         }
     }
@@ -184,7 +183,7 @@ function executeCommenting($instagram_profiles) {
                         ->get();
 
                 foreach ($unengaged_likings as $unengaged_liking) {
-                    
+
                     if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
                                     ->where('target_username', $unengaged_liking->target_username)
                                     ->count() > 0) {
@@ -216,6 +215,7 @@ function executeCommenting($instagram_profiles) {
                     $user_feed_items = $user_feed->items;
 
                     if (count($user_feed_items) > 0) {
+
                         foreach ($user_feed_items as $item) {
 
                             $comment_log = new InstagramProfileCommentLog;
@@ -224,22 +224,20 @@ function executeCommenting($instagram_profiles) {
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
-                            
+
                             if (InstagramProfileCommentLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() == 0) {
                                 $comment_resp = $instagram->media->comment($item->id, $commentText);
                                 $comment_log->log = serialize($comment_resp);
                                 if ($comment_log->save()) {
                                     echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
                                 }
+                                $commented = true;
+                                $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+                                $ig_profile->save();
+                                break;
                             } else {
                                 echo("[$ig_username] has commented on [" . $item->getItemUrl() . "] before.\n");
                             }
-                            
-
-                            $commented = true;
-                            $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
-                            $ig_profile->save();
-                            break;
                         }
                     }
 
