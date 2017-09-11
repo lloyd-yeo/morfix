@@ -119,15 +119,15 @@ class EngagementGroupManual extends Command {
                 if ($ig_profile->owner()->trial_activation === 1) {
                     
                 } else {
-//                    if ($ig_profile->auto_comment === 1) {
-//                        $comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
-//                        if (count($comments) > 0) {
-//                            $comment = $comments->random();
-//                            if (!empty($comment->comment)) {
-//                                $instagram->media->comment($mediaId, $comment->comment);
-//                            }
-//                        }
-//                    }
+                    if ($ig_profile->auto_comment === 1) {
+                        $comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
+                        if (count($comments) > 0) {
+                            $comment = $comments->random();
+                            if (!empty($comment->comment)) {
+                                $instagram->media->comment($mediaId, $comment->comment);
+                            }
+                        }
+                    }
                 }
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
                 continue;
