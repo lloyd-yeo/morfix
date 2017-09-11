@@ -184,8 +184,8 @@ function executeCommenting($instagram_profiles) {
                         ->get();
 
                 foreach ($unengaged_likings as $unengaged_liking) {
-
-                    if (InstagramProfileCommentLog::where('insta_username', $ig_username)
+                    
+                    if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
                                     ->where('target_username', $unengaged_liking->target_username)
                                     ->count() > 0) {
                         echo("[Like][$ig_username] has engaged before " . $unengaged_liking->target_username . "\n");
@@ -220,7 +220,7 @@ function executeCommenting($instagram_profiles) {
 
                             $comment_log = new InstagramProfileCommentLog;
                             $comment_log->insta_username = $ig_username;
-                            $comment_log->target_username = $unengaged_liking->follower_username;
+                            $comment_log->target_username = $unengaged_liking->target_username;
                             $comment_log->target_insta_id = $user_instagram_id;
                             $comment_log->target_media = $item->id;
                             $comment_log->save();
