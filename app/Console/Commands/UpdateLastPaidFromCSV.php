@@ -37,7 +37,7 @@ class UpdateLastPaidFromCSV extends Command {
      * @return mixed
      */
     public function handle() {
-        $path = storage_path('app/august-commission.csv');
+        $path = storage_path('app/august-payout.csv');
         $file = fopen($path, "r");
 
         $current_email = "";
@@ -50,7 +50,7 @@ class UpdateLastPaidFromCSV extends Command {
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
   
-                if ($data[2] > 0) {
+                if (($data[2] > 50) && ($data[1] != empty) && ($data[3] == 'Eligible') ) {
 
                     $user->last_pay_out_date = $last_pay_out_coms_date;
                     $user->save;
