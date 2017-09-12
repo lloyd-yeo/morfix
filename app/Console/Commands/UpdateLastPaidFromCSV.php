@@ -41,7 +41,7 @@ class UpdateLastPaidFromCSV extends Command {
         $file = fopen($path, "r");
 
         $current_email = "";
-        $last_pay_out_coms_date = new Carbon('25th of July');
+        $last_pay_out_coms_date = new Carbon('25th of August');
 
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             #$data is one row.
