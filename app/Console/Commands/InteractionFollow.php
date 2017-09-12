@@ -92,6 +92,18 @@ class InteractionFollow extends Command {
         }
     }
 
+    private function followUnfollowDelay($speed){
+        switch ($speed) {
+            case 'Fast':    return 2;
+            case 'Medium':  return 3;
+            case 'Slow':    return 5;
+            case 'Ultra Fast': return 0;
+            case 'weikian_': return 0;
+            default: return 5;
+        }
+    }
+
+
     private function jobHandle($ig_profile) {
         
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
@@ -147,23 +159,12 @@ class InteractionFollow extends Command {
             echo "[" . $insta_username . "] will be following this round.\n";
         }
 
-        $follow_unfollow_delay = 5;
-        if ($speed == "Fast") {
-            $follow_unfollow_delay = 2;
-        }
-        if ($speed == "Medium") {
-            $follow_unfollow_delay = 3;
-        }
-        if ($speed == "Slow") {
-            $follow_unfollow_delay = 5;
-        }
-        if ($speed == "Ultra Fast") {
-            $follow_unfollow_delay = 0;
-        }
-        if ($insta_username == "weikian_") {
-            $follow_unfollow_delay = 0;
-        }
+        /*
+            Get Unfollow Delay
+        */
 
+        $follow_unfollow_delay = $this->followUnfollowDelay($speed);
+ 
         $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
         //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
         if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
