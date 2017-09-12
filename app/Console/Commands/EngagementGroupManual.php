@@ -111,6 +111,10 @@ class EngagementGroupManual extends Command {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
                 continue;
+            } catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
+                $ig_profile->invalid_user = 1;
+                $ig_profile->save();
+                continue;
             }
 
             try {

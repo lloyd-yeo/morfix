@@ -66,7 +66,6 @@ class InteractionComment extends Command {
             executeCommenting($instagram_profiles);
         } else {
             foreach (User::cursor() as $user) {
-
                 if ($user->tier > 2) {
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
                             ->where('email', $user->email)
@@ -85,7 +84,6 @@ class InteractionComment extends Command {
             }
         }
     }
-
 }
 
 function executeCommenting($instagram_profiles) {
