@@ -41,22 +41,24 @@ class UpdateLastPaidFromCSV extends Command {
         $file = fopen($path, "r");
 
         $current_email = "";
-        $last_pay_out_coms = 0;
+        $last_pay_out_coms_date = new Carbon('25th of July');
 
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             #$data is one row.
             #$data[0] is first cell so on & so forth.
-            
-            if ($data[2] > 0) {
+            $current_email = $data[0];
+            $user = User::where('email', $current_email)->first();
+            if ($user !== NULL) {
+  
+                if ($data[2] > 0) {
 
-                $current_email = $data[0];
-                $last_pay_out_coms = $data[3];
-                $user = User::where('email', $current_email)->first();
-
-                if ($user !== NULL) {
-                    $user->last_pay_out_date = $last_pay_out_coms;
+                    $user->last_pay_out_date = $last_pay_out_coms_date;
                     $user->save;
-                    echo "Updated [$current_email] last pay out coms to [$last_pay_out_coms]\n";
+                    echo "Updated [$current_email] last pay out coms to [$last_pay_out_coms_date]\n";
+                } 
+                
+                else {
+                    $user->last_pay_out_date = NULL;
                 }
             }
         }
