@@ -48,7 +48,6 @@ class InteractionFollow extends Command {
      *  Local Variables
      *
     */
-
     protected $ig_username;
     protected $ig_password;
     protected $insta_username;

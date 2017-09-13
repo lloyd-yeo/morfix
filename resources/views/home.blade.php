@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         
-                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                        @if ($ig_profile->feedback_required == 1 || $ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
                         <div class="text-center text-danger push">
                             <span>We've encountered issues with your account. Mouse-over the icons below to find out more:</span>
                         </div>
@@ -108,13 +108,20 @@
                                 <i class="fa fa-2x fa-fw fa-user-times"></i>
                             </a>
                             @endif
+                            
+                            @if ($ig_profile->feedback_required == 1)
+                            <a class="text-danger" href="javascript:void(0)" data-profile-id="{{ $ig_profile->id }}" data-toggle="popover" data-original-title="Account Disabled" data-content="This account has been soft-banned by Instagram. Do check back in awhile.">
+                                <i class="fa fa-2x fa-fw fa-user-times"></i>
+                            </a>
+                            @endif
+                            
                         </div>
                         <table class="table table-borderless table-striped font-s13">
                             <tbody>
                                 <tr>
                                     <td class="font-w600" style="width: 30%;"><i class="fa fa-fw fa-envelope text-primary-light"></i> DM Status</td>
                                     @if ($ig_profile->auto_dm_new_follower == 1)
-                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 || $ig_profile->feedback_required == 1)
                                             {{-- If error is there, show suspension --}}
                                             <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
                                         @else
@@ -135,7 +142,7 @@
                                     <td class="font-w600"><i class='fa fa-heart text-danger'></i> Likes</td>
                                     @if ($ig_profile->auto_like == 1)
                                     
-                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 || $ig_profile->feedback_required == 1)
                                             {{-- If error is there, show suspension --}}
                                             <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
                                         @else
@@ -152,7 +159,7 @@
                                     <td class="font-w600"><i class='fa fa-comments text-primary'></i> Comment</td>
                                     @if ($ig_profile->auto_comment == 1)
                                     
-                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 || $ig_profile->feedback_required == 1)
                                             {{-- If error is there, show suspension --}}
                                             <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
                                         @else
@@ -168,7 +175,7 @@
                                 <tr>
                                     <td class="font-w600"><i class='si si-user-follow text-modern'></i> Follow</td>
                                     @if ($ig_profile->auto_follow == 1)
-                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 || $ig_profile->feedback_required == 1)
                                             {{-- If error is there, show suspension --}}
                                             <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
                                         @elseif ($ig_profile->auto_follow_ban == 1)
@@ -185,7 +192,7 @@
                                 <tr>
                                     <td class="font-w600"><i class='si si-user-follow text-lightred'></i> Unfollow</td>
                                     @if ($ig_profile->auto_unfollow == 1)
-                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
+                                        @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 || $ig_profile->feedback_required == 1)
                                             {{-- If error is there, show suspension --}}
                                             <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
                                         @else
