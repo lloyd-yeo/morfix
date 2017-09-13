@@ -119,6 +119,53 @@ class InteractionFollow extends Command {
     }
 
 
+    private function jobHandle($ig_profile) {
+        $this->initVariables($ig_profile);
+        $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                ->where('follow', 1)
+                ->where('unfollowed', 0)
+                ->get();
+
+        $followed_count = count($followed_logs);
+
+        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
+
+        if ($followed_count >= $ig_profile->follow_cycle) {
+            $ig_profile->unfollow = 1;
+            $unfollow = 1;
+            $ig_profile->save();
+            $ig_profile = InstagramProfile::find($ig_profile->id);
+        }
+
+        $target_username = "";
+        $target_follow_username = "";
+        $target_follow_id = "";
+        $custom_target_defined = false;
+
+        echo "[" . $insta_username . "] Niche: " . $niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
+
+        if ($unfollow == 1) {
+            echo "[" . $insta_username . "] will be unfollowing this round.\n";
+        } else {
+            echo "[" . $insta_username . "] will be following this round.\n";
+        }
+
+        /*
+            Get Unfollow Delay
+        */
+
+        $follow_unfollow_delay = $this->followUnfollowDelay($speed);
+ 
+        $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
+        //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
+        if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
+            $this->unFollowing();
+        } else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) {
+            $this->autoFollow();
+        }
+    }
+
+
     protected function initialize($ig_profile){
         /*
             1. Initialize instagram account
@@ -187,7 +234,7 @@ class InteractionFollow extends Command {
         }
     }
 
-    private function forcedToUnfollow(Instagram $instagram){
+    private function forcedToUnfollow(Instagram $instagram, $ig_profile){
         $insta_username = $this->insta_username;
         echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
 
@@ -222,72 +269,7 @@ class InteractionFollow extends Command {
     }
 
 
-    private function jobHandle($ig_profile) {
-        /*
-        echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
-        $ig_username = $ig_profile->insta_username;
-        $ig_password = $ig_profile->insta_pw;
-        $insta_username = $ig_profile->insta_username;
-        $insta_user_id = $ig_profile->insta_user_id;
-        $insta_id = $ig_profile->insta_id;
-        $insta_pw = $ig_profile->insta_pw;
-        $niche = $ig_profile->niche;
-        $next_follow_time = $ig_profile->next_follow_time;
-        $unfollow = $ig_profile->unfollow;
-        $follow_cycle = $ig_profile->follow_cycle;
-        $auto_unfollow = $ig_profile->auto_unfollow;
-        $auto_follow = $ig_profile->auto_follow;
-        $auto_follow_ban = $ig_profile->auto_follow_ban;
-        $auto_follow_ban_time = $ig_profile->auto_follow_ban_time;
-        $follow_unfollow_delay = $ig_profile->follow_unfollow_delay;
-        $speed = $ig_profile->speed;
-        $follow_min_follower = $ig_profile->follow_min_follower;
-        $follow_max_follower = $ig_profile->follow_max_follower;
-        $unfollow_unfollowed = $ig_profile->unfollow_unfollowed;
-        $follow_quota = $ig_profile->follow_quota;
-        $unfollow_quota = $ig_profile->unfollow_quota;
-        $proxy = $ig_profile->proxy;
-        */
-        $this->initVariables($ig_profile);
-        $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-                ->where('follow', 1)
-                ->where('unfollowed', 0)
-                ->get();
-
-        $followed_count = count($followed_logs);
-
-        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
-
-        if ($followed_count >= $ig_profile->follow_cycle) {
-            $ig_profile->unfollow = 1;
-            $unfollow = 1;
-            $ig_profile->save();
-            $ig_profile = InstagramProfile::find($ig_profile->id);
-        }
-
-        $target_username = "";
-        $target_follow_username = "";
-        $target_follow_id = "";
-        $custom_target_defined = false;
-
-        echo "[" . $insta_username . "] Niche: " . $niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
-
-        if ($unfollow == 1) {
-            echo "[" . $insta_username . "] will be unfollowing this round.\n";
-        } else {
-            echo "[" . $insta_username . "] will be following this round.\n";
-        }
-
-        /*
-            Get Unfollow Delay
-        */
-
-        $follow_unfollow_delay = $this->followUnfollowDelay($speed);
- 
-        $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
-        //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
-        if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
-
+    private function unFollowing(){
             if ($unfollow_quota < 1) {
                 echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
                 exit();
@@ -322,31 +304,6 @@ class InteractionFollow extends Command {
 
                 //[LOGIN segment]
                 $this->loginSegment($instagram, $ig_profile);
-                /*
-                $instagram->setProxy($ig_profile->proxy);
-                $instagram->setUser($ig_username, $ig_password);
-
-                try {
-                    $instagram->login();
-                    echo "[$ig_username] logged in.\n";
-                } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-
-                    $proxy = Proxy::inRandomOrder()->first();
-                    $ig_profile->proxy = $proxy->proxy;
-                    $ig_profile->save();
-                    $proxy->assigned = $proxy->assigned + 1;
-                    $proxy->save();
-                    $instagram->setProxy($ig_profile->proxy);
-                    $instagram->login();
-
-//                    var_dump($network_ex);
-                } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                    $ig_profile->incorrect_pw = 1;
-                    $ig_profile->save();
-                    exit();
-                }
-                */
-                //[End LOGIN]
                 //[get users to UNFOLLOW]
                 $users_to_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_username)
                         ->where('unfollowed', false)
@@ -357,38 +314,10 @@ class InteractionFollow extends Command {
 
 
 
-                if (count($users_to_unfollow) == 0) {
-                    #forced unfollow
-
-                    $this->forcedToUnfollow($instagram);
-
-                    /*
-                    echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
-
-                    #forced unfollow
-                    if ($auto_unfollow == 1 && $auto_follow == 0) {
-                        echo "[" . $insta_username . "] adding new unfollows..\n";
-                        #$followings = $instagram->getSelfUsersFollowing();
-                        $followings = $instagram->people->getSelfFollowing();
-                        foreach ($followings->users as $user) {
-
-                            try {
-                                if (InstagramProfileFollowLog::where('insta_username', $insta_username)->where('follower_id', $user->pk)->count() > 0) {
-                                    continue;
-                                }
-                                $follow_log = new InstagramProfileFollowLog;
-                                $follow_log->insta_username = $insta_username;
-                                $follow_log->follower_username = $user->username;
-                                $follow_log->follower_id = $user->pk;
-                                $follow_log->follow_success = 1;
-                                $follow_log->save();
-                            } catch (Exception $ex) {
-                                echo "[" . $insta_username . "] " . $ex->getMessage() . "..\n";
-                                continue;
-                            }
-                        }
-                    */
-                    } else {
+                    if (count($users_to_unfollow) == 0) {
+                        //Forced to unfollow
+                        $this->forcedToUnfollow($instagram, $ig_profile);
+                    }else {
                         $ig_profile->unfollow = 0;
                         if ($ig_profile->save()) {
                             echo "[" . $insta_username . "] is following next round.\n\n";
@@ -477,8 +406,9 @@ class InteractionFollow extends Command {
                     exit();
                 }
             }
-        } else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) {
+    }
 
+    private function autoFollow(){
             if ($follow_quota < 1) {
                 echo "[" . $insta_username . "] has reached quota for following today.\n";
                 exit();
@@ -1148,7 +1078,7 @@ class InteractionFollow extends Command {
                     }
                 }
             }
-        }
+        
     }
 
 }
