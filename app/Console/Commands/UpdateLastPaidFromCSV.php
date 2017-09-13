@@ -49,15 +49,12 @@ class UpdateLastPaidFromCSV extends Command {
             $current_email = $data[0];
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
-  
-                if ($data[2] > 0) {
 
+                if ($data[2] > 0) {
                     $user->last_pay_out_date = $last_pay_out_coms_date;
                     $user->save;
                     echo "Updated [$current_email] last pay out coms to [$last_pay_out_coms_date]\n";
-                } 
-                
-                else {
+                } else {
                     $user->last_pay_out_date = NULL;
                 }
             }
