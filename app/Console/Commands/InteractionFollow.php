@@ -98,6 +98,34 @@ class InteractionFollow extends Command {
         }
     }
 
+    public function loginSegment(Instagram $instagram, $ig_profile){
+        //[LOGIN segment]
+        $ig_username = $ig_profile->insta_username;
+        $ig_password = $ig_profile->insta_pw;
+        $instagram->setProxy($ig_profile->proxy);
+        $instagram->setUser($ig_username, $ig_password);
+
+        try {
+            $instagram->login();
+            echo "[$ig_username] logged in.\n";
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+
+            $proxy = Proxy::inRandomOrder()->first();
+            $ig_profile->proxy = $proxy->proxy;
+            $ig_profile->save();
+            $proxy->assigned = $proxy->assigned + 1;
+            $proxy->save();
+            $instagram->setProxy($ig_profile->proxy);
+            $instagram->login();
+
+//                    var_dump($network_ex);
+        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+            $ig_profile->incorrect_pw = 1;
+            $ig_profile->save();
+            exit();
+        }
+    }
+
 
     private function jobHandle($ig_profile) {
         
@@ -195,7 +223,10 @@ class InteractionFollow extends Command {
                 $ig_username = $insta_username;
                 $ig_password = $insta_pw;
 
+
                 //[LOGIN segment]
+                $this->loginSegment($instagram, $ig_profile);
+                /*
                 $instagram->setProxy($ig_profile->proxy);
                 $instagram->setUser($ig_username, $ig_password);
 
@@ -218,6 +249,7 @@ class InteractionFollow extends Command {
                     $ig_profile->save();
                     exit();
                 }
+                */
                 //[End LOGIN]
                 //[get users to UNFOLLOW]
                 $users_to_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_username)
