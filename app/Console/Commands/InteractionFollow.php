@@ -118,7 +118,8 @@ class InteractionFollow extends Command {
         }
     }
 
-    private function initVariables($ig_profile){
+
+    protected function initialize($ig_profile){
         /*
             1. Initialize instagram account
         */
