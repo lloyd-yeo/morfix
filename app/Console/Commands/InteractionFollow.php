@@ -42,6 +42,37 @@ class InteractionFollow extends Command {
      *
      * @return void
      */
+
+    /**
+     *
+     *  Local Variables
+     *
+    */
+
+    protected $ig_username;
+    protected $ig_password;
+    protected $insta_username;
+    protected $insta_user_id;
+    protected $insta_id;
+    protected $insta_pw;
+    protected $niche;
+    protected $next_follow_time;
+    protected $unfollow;
+    protected $follow_cycle;
+    protected $auto_unfollow;
+    protected $auto_followow;
+    protected $auto_follow_ban;
+    protected $auto_follow_ban_time;
+    protected $follow_unfollow_delay;
+    protected $speed;
+    protected $follow_min_follower;
+    protected $follow_max_follower;
+    protected $unfollow_unfollowed;
+    protected $follow_quota;
+    protected $unfollow_quota;
+    protected $proxy;
+
+
     public function __construct() {
         parent::__construct();
     }
@@ -87,6 +118,35 @@ class InteractionFollow extends Command {
         }
     }
 
+    private function initialize($ig_profile){
+        /*
+            1. Initialize instagram account
+        */
+        echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
+        $this->ig_username = $ig_profile->insta_username;
+        $this->ig_password = $ig_profile->insta_pw;
+        $this->insta_username = $ig_profile->insta_username;
+        $this->insta_user_id = $ig_profile->insta_user_id;
+        $this->insta_id = $ig_profile->insta_id;
+        $this->insta_pw = $ig_profile->insta_pw;
+        $this->niche = $ig_profile->niche;
+        $this->next_follow_time = $ig_profile->next_follow_time;
+        $this->unfollow = $ig_profile->unfollow;
+        $this->follow_cycle = $ig_profile->follow_cycle;
+        $this->auto_unfollow = $ig_profile->auto_unfollow;
+        $this->auto_follow = $ig_profile->auto_follow;
+        $this->auto_follow_ban = $ig_profile->auto_follow_ban;
+        $this->auto_follow_ban_time = $ig_profile->auto_follow_ban_time;
+        $this->follow_unfollow_delay = $ig_profile->follow_unfollow_delay;
+        $this->speed = $ig_profile->speed;
+        $this->follow_min_follower = $ig_profile->follow_min_follower;
+        $this->follow_max_follower = $ig_profile->follow_max_follower;
+        $this->unfollow_unfollowed = $ig_profile->unfollow_unfollowed;
+        $this->follow_quota = $ig_profile->follow_quota;
+        $this->unfollow_quota = $ig_profile->unfollow_quota;
+        $this->proxy = $ig_profile->proxy;
+    }
+
     private function followUnfollowDelay($speed){
         switch ($speed) {
             case 'Fast':    return 2;
@@ -128,7 +188,7 @@ class InteractionFollow extends Command {
 
 
     private function jobHandle($ig_profile) {
-        
+        /*
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
@@ -152,7 +212,8 @@ class InteractionFollow extends Command {
         $follow_quota = $ig_profile->follow_quota;
         $unfollow_quota = $ig_profile->unfollow_quota;
         $proxy = $ig_profile->proxy;
-
+        */
+        $this->initialize($ig_profile);
         $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->where('follow', 1)
                 ->where('unfollowed', 0)
