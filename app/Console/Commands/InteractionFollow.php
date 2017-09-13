@@ -118,7 +118,7 @@ class InteractionFollow extends Command {
         }
     }
 
-    private function initialize($ig_profile){
+    private function initVariables($ig_profile){
         /*
             1. Initialize instagram account
         */
@@ -186,6 +186,40 @@ class InteractionFollow extends Command {
         }
     }
 
+    private function forcedToUnfollow(Instagram $instagram){
+        $insta_username = $this->insta_username;
+        echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
+
+        #forced unfollow
+        if ($this->auto_unfollow == 1 && $this->auto_follow == 0) {
+            echo "[" . $insta_username . "] adding new unfollows..\n";
+            #$followings = $instagram->getSelfUsersFollowing();
+            $followings = $instagram->people->getSelfFollowing();
+            foreach ($followings->users as $user) {
+
+                try {
+                    if (InstagramProfileFollowLog::where('insta_username', $insta_username)->where('follower_id', $user->pk)->count() > 0) {
+                        continue;
+                    }
+                    $follow_log = new InstagramProfileFollowLog;
+                    $follow_log->insta_username = $insta_username;
+                    $follow_log->follower_username = $user->username;
+                    $follow_log->follower_id = $user->pk;
+                    $follow_log->follow_success = 1;
+                    $follow_log->save();
+                } catch (Exception $ex) {
+                    echo "[" . $insta_username . "] " . $ex->getMessage() . "..\n";
+                    continue;
+                }
+            }
+        } else {
+            $ig_profile->unfollow = 0;
+            if ($ig_profile->save()) {
+                echo "[" . $insta_username . "] is following next round.\n\n";
+            }
+        }
+    }
+
 
     private function jobHandle($ig_profile) {
         /*
@@ -213,7 +247,7 @@ class InteractionFollow extends Command {
         $unfollow_quota = $ig_profile->unfollow_quota;
         $proxy = $ig_profile->proxy;
         */
-        $this->initialize($ig_profile);
+        $this->initVariables($ig_profile);
         $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->where('follow', 1)
                 ->where('unfollowed', 0)
@@ -323,7 +357,11 @@ class InteractionFollow extends Command {
 
 
                 if (count($users_to_unfollow) == 0) {
+                    #forced unfollow
 
+                    $this->forcedToUnfollow($instagram);
+
+                    /*
                     echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
 
                     #forced unfollow
@@ -348,6 +386,7 @@ class InteractionFollow extends Command {
                                 continue;
                             }
                         }
+                    */
                     } else {
                         $ig_profile->unfollow = 0;
                         if ($ig_profile->save()) {
