@@ -43,7 +43,7 @@
                                     </blockquote>
                                     <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
                                 </div>
-                                <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                                <form class="form-horizontal push-10" method="post" onsubmit="return false;">
                                     <div class="form-group">
                                         <div class="col-xs-12">
                                             <div class="form-material">

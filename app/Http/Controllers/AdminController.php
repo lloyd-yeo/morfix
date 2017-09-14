@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Response;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -21,6 +22,14 @@ class AdminController extends Controller
             
         } else {
             return view('admin.index');
+        }
+    }
+    
+    public function upgradeUserTier(Request $request) {
+        if (Auth::user()->admin == 1) {
+            
+        } else {
+            //not enough permission.
         }
     }
 }

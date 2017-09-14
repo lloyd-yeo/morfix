@@ -164,6 +164,20 @@ class AffiliateController extends Controller {
             $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
+            
+            $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=ebook";
+            $title = "MorfiX - Ebook VSL";
+            $ip = "155.69.160.38";
+            $clicks = 0;
+
+            $keyword = $ref_kw . "ebook";
+            $url = new YourlsUrl;
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
+            $url->clicks = $clicks;
+            $url->save();
 
             $url_ = "https://morfix.co/app/get-referral-cookie.php?referrer=" . $user_id . "&redir=payment";
             $title = "MorfiX - Payment Page";

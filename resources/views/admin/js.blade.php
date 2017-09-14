@@ -16,5 +16,19 @@ jQuery(function () {
     // Init page helpers (Select2 + Tags Inputs plugins)
     App.initHelpers(['select2', 'tags-inputs', 'slimscroll']);
     
+    $("#upgrade-tier-btn").on("click", function(){ 
+        var $email = $("#upgrade-tier-email").val();
+        var $tier = $("#upgrade-tier").val();
+        
+        $.post('/admin/upgrade', { email: $email, tier: $tier }, function (data) {
+            if (data.success === true) {
+               alert('Successfully updated!');
+            } else {
+               alert('Updating failed! Ask Lloyd for help.');
+            }
+        },"json");
+        
+    });
+    
 });
 </script>

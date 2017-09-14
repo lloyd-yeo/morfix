@@ -1,3 +1,8 @@
-@section('css')
-@include('interactions.css')
-@endsection
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
