@@ -119,7 +119,12 @@ class InteractionFollow extends Command {
 
     private function jobHandle($ig_profile) {
         
+        if ($ig_profile->feedback_required == 1) {
+            echo "[" . $ig_profile->insta_username . "] has feedback_required flag on.\n";
+        }
+        
         $this->initVariables($ig_profile);
+        
         $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->where('follow', 1)
                 ->where('unfollowed', 0)
