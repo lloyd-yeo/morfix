@@ -270,6 +270,13 @@ class InteractionFollow extends Command {
 
     private function unFollowing($ig_profile){
         /*
+                - configure database
+                - set proxy
+            try:
+                - Login
+                - Get Users to unfollow
+                    - 0, force to unfollow
+                    - > 0, 
             catch:
                 - CheckpointRequiredException
                 - NetworkException
