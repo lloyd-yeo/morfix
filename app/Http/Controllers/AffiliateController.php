@@ -197,6 +197,7 @@ class AffiliateController extends Controller {
         }
 
         $referrals_ = array();
+        $free_trial_referrals = array();
         $referrals = DB::table('user')
                 ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
                 ->where('user_affiliate.referrer', Auth::user()->user_id)
@@ -211,27 +212,33 @@ class AffiliateController extends Controller {
                 continue;
                 $referrals_[] = $referral;
             }
+            
+            
+            
+            if ($referral->tier > 1) {
+                $active = false;
 
-            $active = false;
+                if ($referral->paypal == 0) {
+                    $stripe_details = StripeDetail::where('email', $referral->email)->get();
 
-            if ($referral->paypal == 0) {
-                $stripe_details = StripeDetail::where('email', $referral->email)->get();
-
-                foreach ($stripe_details as $stripe_detail) {
-                    $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
-                    foreach ($subscriptions->data as $subscription) {
-                        if ($subscription->status == "trialing" || $subscription->status == "active") {
-                            $active = true;
-                            break;
+                    foreach ($stripe_details as $stripe_detail) {
+                        $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
+                        foreach ($subscriptions->data as $subscription) {
+                            if ($subscription->status == "trialing" || $subscription->status == "active") {
+                                $active = true;
+                                break;
+                            }
                         }
                     }
+                } else {
+                    $active = true;
+                }
+
+                if ($active) {
+                    $referrals_[] = $referral;
                 }
             } else {
-                $active = true;
-            }
-
-            if ($active) {
-                $referrals_[] = $referral;
+                $free_trial_referrals[] = $referral;
             }
         }
 
@@ -269,6 +276,7 @@ class AffiliateController extends Controller {
         return view('affiliate.dashboard', [
             'referral_links' => $referral_links,
             'referrals' => $referrals,
+            'free_trial_referrals' => $free_trial_referrals,
             'invoices' => $invoices,
         ]);
     }
