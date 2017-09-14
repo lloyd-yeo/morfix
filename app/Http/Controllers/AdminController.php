@@ -51,7 +51,6 @@ class AdminController extends Controller
                         'response' => "User not found. Can't update."));
             }
         } else {
-            
             return Response::json(array("success" => false, 
                         'response' => "You are not authorized to carry out this operation."));
         }

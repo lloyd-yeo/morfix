@@ -36,8 +36,8 @@
                             <div class="block-content">
                                 <div class="text-center push-10-t push-30">
                                     <blockquote>
-                                        <p>Instructions:</p>
                                         <p>
+                                            Instructions:
                                             <ol>
                                                 <li>Key in the <b>Morfix</b> email of the user to upgrade.</li>
                                                 <li>Select the tier using the dropbox below.</li>
@@ -47,6 +47,7 @@
                                     </blockquote>
                                     <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
                                 </div>
+                                
                                 <form class="form-horizontal push-10" method="post" onsubmit="return false;">
                                     <div class="form-group">
                                         <div class="col-xs-12">
