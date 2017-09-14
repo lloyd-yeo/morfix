@@ -94,7 +94,7 @@ var BaseTableDatatables = function() {
     };
     
     // Init full extra DataTable, for more examples you can check out https://www.datatables.net/
-    var initDataTableFullPagination = function() {
+    var initDataTableFullPaginationFreeTrial = function() {
         jQuery('.js-dataTable-full-pagination-free-trial').dataTable({
             pagingType: "full_numbers",
             pageLength: 5,
@@ -259,6 +259,7 @@ var BaseTableDatatables = function() {
             // Init Datatables
             bsDataTables();
             initDataTableFullPagination();
+            initDataTableFullPaginationFreeTrial();
         }
     };
 }();
