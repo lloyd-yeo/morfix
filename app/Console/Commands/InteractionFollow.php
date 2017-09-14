@@ -141,7 +141,7 @@ class InteractionFollow extends Command {
         $target_follow_id = "";
         $custom_target_defined = false;
 
-        echo "[" . $insta_username . "] Niche: " . $niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
+        echo "[" . $insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
 
         if ($unfollow == 1) {
             echo "[" . $insta_username . "] will be unfollowing this round.\n";
@@ -268,7 +268,8 @@ class InteractionFollow extends Command {
     }
 
 
-    private function unFollowing(){
+    private function unFollowing($ig_profile){
+            $insta_username = $this->insta_username;
             if ($unfollow_quota < 1) {
                 echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
                 exit();
@@ -298,7 +299,7 @@ class InteractionFollow extends Command {
 
             try {
                 $ig_username = $insta_username;
-                $ig_password = $insta_pw;
+                $ig_password = $this->insta_pw;
 
 
                 //[LOGIN segment]
@@ -318,7 +319,6 @@ class InteractionFollow extends Command {
                     $this->forcedToUnfollow($instagram, $ig_profile);
                 } else {
                     foreach ($users_to_unfollow as $user_to_unfollow) {
-
                         echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow->follower_username . "\n";
                         $current_log_id = $user_to_unfollow->log_id;
 
@@ -401,7 +401,8 @@ class InteractionFollow extends Command {
             }
     }
 
-    private function autoFollow(){
+    private function autoFollow($ig_profile){
+        $insta_username = $this->insta_username;
             if ($follow_quota < 1) {
                 echo "[" . $insta_username . "] has reached quota for following today.\n";
                 exit();
@@ -427,7 +428,7 @@ class InteractionFollow extends Command {
             }
 
             $ig_username = $insta_username;
-            $ig_password = $insta_pw;
+            $ig_password = $this->insta_pw;
 
             //[LOGIN segment]
             $instagram->setProxy($ig_profile->proxy);
@@ -491,7 +492,7 @@ class InteractionFollow extends Command {
             }
 
             echo "[" . $insta_username . "] AFTER random use hashtag: $use_hashtags\n";
-            echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) . "] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $niche . "]\n";
+            echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) . "] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $this->niche . "]\n";
             $followed = 0;
             $throttle_limit = 41;
 
@@ -778,10 +779,10 @@ class InteractionFollow extends Command {
             } else if ($use_hashtags == 0 && count($target_usernames) == 0 && count($target_hashtags) == 0) {
                 $throttle_count = 0;
                 try {
-                    if ($niche == 0) {
+                    if ($this->niche == 0) {
                         exit();
                     } else {
-                        $target_usernames = Niche::find($niche)->targetUsernames();
+                        $target_usernames = Niche::find($this->niche)->targetUsernames();
                         if (count($target_usernames) > 0) {
                             foreach ($target_usernames as $target_username) {
                                 echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
@@ -920,7 +921,7 @@ class InteractionFollow extends Command {
                             }
                         } else {
                             $throttle_count = 0;
-                            $target_hashtags = Niche::find($niche)->targetHashtags();
+                            $target_hashtags = Niche::find($this->niche)->targetHashtags();
                             try {
                                 foreach ($target_hashtags as $target_hashtag) {
 
