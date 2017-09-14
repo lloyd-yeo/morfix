@@ -43,6 +43,29 @@ jQuery(function () {
         },"json");
     });
     
+    $("#interaction-like-btn").on("click", function(){ 
+        var $email = $("#interaction-like-email").val();
+        
+        $.post('/admin/interaction/like', { email: $email }, function (data) {
+            if (data.success === true) {
+               alert(data.response);
+            } else {
+               alert(data.response);
+            }
+        },"json");
+    });
+    
+    $("#interaction-comment-btn").on("click", function(){ 
+        var $email = $("#interaction-comment-email").val();
+        
+        $.post('/admin/interaction/comment', { email: $email }, function (data) {
+            if (data.success === true) {
+               alert(data.response);
+            } else {
+               alert(data.response);
+            }
+        },"json");
+    });
     
 });
 </script>

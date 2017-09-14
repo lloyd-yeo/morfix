@@ -28,14 +28,19 @@ class AdminController extends Controller
         }
     }
     
+    
+    private function logAdminActions($admin_email, $action, $message) {
+        $admin_log = new AdminLog;
+        $admin_log->admin_email = $admin_email;
+        $admin_log->action = $action;
+        $admin_log->message = $message;
+        $admin_log->save();
+    } 
+    
     public function upgradeUserTier(Request $request) {
         if (Auth::user()->admin == 1) {
             
-            $admin_log = new AdminLog;
-            $admin_log->admin_email = Auth::user()->email;
-            $admin_log->action = "UPGRADE_USER_TIER";
-            $admin_log->message = "Admin tried upgrading " . $request->input('email') . " to " . $request->input('tier');
-            $admin_log->save();
+            $this->logAdminActions(Auth::user()->email, "UPGRADE_USER_TIER", "Admin tried upgrading " . $request->input('email') . " to " . $request->input('tier'));
             
             $user = User::where('email', $request->input('email'))->first();
             if ($user !== NULL) {
@@ -60,11 +65,9 @@ class AdminController extends Controller
     public function getStripeDetails(Request $request) {
         if (Auth::user()->admin == 1) {
             
-            $admin_log = new AdminLog;
-            $admin_log->admin_email = Auth::user()->email;
-            $admin_log->action = "GET_STRIPE_DETAILS";
-            $admin_log->message = "Admin tried retrieving stripe details for: " . $request->input('email');
-            $admin_log->save();
+            $this->logAdminActions(Auth::user()->email, 
+                    "GET_STRIPE_DETAILS", 
+                    "Admin tried retrieving stripe details for: " . $request->input('email'));
             
             $user = User::where('email', $request->input("email"))->first();
             if ($user !== NULL) {
@@ -81,6 +84,63 @@ class AdminController extends Controller
             } else {
                 return Response::json(array("success" => false, 
                         'response' => "User not found. Nothing retrieved."));
+            }
+        } else {
+            return Response::json(array("success" => false, 
+                        'response' => "You are not authorized to carry out this operation. "
+                . "Try again & we will hunt you down via your IP."));
+        }
+    }
+    
+    public function runInteractionLike(Request $request) {
+        if (Auth::user()->admin == 1) {
+            
+            $this->logAdminActions(Auth::user()->email, 
+                    "RUN_INTERACTION_LIKE", 
+                    "Admin tried to run interaction:like for: " . $request->input('email'));
+            
+            $user = User::where('email', $request->input("email"))->first();
+            if ($user !== NULL) {
+                
+                $exitCode = Artisan::call('interaction:like', [
+                    'email' => $request->input("email")
+                ]);
+                
+                return Response::json(array("success" => true, 
+                        'response' => "Ran interaction:like for " . $request->input('email') . " !"));
+                
+            } else {
+                return Response::json(array("success" => false, 
+                        'response' => "User not found! Can't run anything."));
+            }
+        } else {
+            return Response::json(array("success" => false, 
+                        'response' => "You are not authorized to carry out this operation. "
+                . "Try again & we will hunt you down via your IP."));
+        }
+    }
+    
+    public function runInteractionComment(Request $request) {
+        if (Auth::user()->admin == 1) {
+            
+            $this->logAdminActions(Auth::user()->email, 
+                    "RUN_INTERACTION_COMMENT", 
+                    "Admin tried to run interaction:comment for: " . $request->input('email'));
+            
+            $user = User::where('email', $request->input("email"))->first();
+            if ($user !== NULL) {
+                
+                $exitCode = Artisan::call('interaction:comment', [
+                    'email' => $request->input("email")
+                ]);
+                
+                return Response::json(array("success" => true, 
+                        'response' => "Ran interaction:comment for " . $request->input('email') . " !"));
+                
+            } else {
+                
+                return Response::json(array("success" => false, 
+                        'response' => "User not found! Can't run anything."));
             }
         } else {
             return Response::json(array("success" => false, 

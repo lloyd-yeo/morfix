@@ -128,36 +128,87 @@
                 </div>
                 <!-- END Material Lock -->
             </div>
+        </div>
+        
+        <h2>Auto Interactions</h2>
+        <div class="row">
             <div class="col-lg-6">
                 <!-- Material Lock -->
                 <div class="block block-themed">
                     <div class="block-header bg-danger">
-                        <ul class="block-options">
-                            <li>
-                                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                            </li>
-                            <li>
-                                <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
-                            </li>
-                        </ul>
-                        <h3 class="block-title">Material</h3>
+                        <h3 class="block-title">Manually activate Likes</h3>
                     </div>
                     <div class="block-content">
                         <div class="text-center push-10-t push-30">
-                            <img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">
+                            <blockquote class='font-s12'>
+                                <p>
+                                    Instructions:
+                                <ol>
+                                    <li>Key in the <b>Morfix</b> email of the user to run Likes for manually.</li>
+                                    <li>Click run & wait, the details will be displayed below:</li>
+                                </ol>
+                                </p>
+                            </blockquote>
+                            <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
                         </div>
-                        <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+
+                        <form class="form-horizontal push-10" method="post" onsubmit="return false;">
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-material">
-                                        <input class="form-control" type="password" id="lock2-password" name="lock2-password" placeholder="Enter your password..">
-                                        <label for="lock2-password">Password</label>
+                                        <input class="form-control" type="email" id="interaction-like-email" name="interaction-like-email" 
+                                               placeholder="Enter user's email...">
+                                        <label for="interaction-like-email">Email</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-unlock push-5-r"></i> Unlock</button>
+                                    <button id='interaction-like-btn' class="btn btn-sm btn-danger" type="submit">
+                                        <i class="fa fa-hourglass push-5-r"></i> Run</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+                <!-- END Material Lock -->
+            </div>
+            
+            <div class="col-lg-6">
+                <!-- Material Lock -->
+                <div class="block block-themed">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">Manually activate Comments</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <blockquote class='font-s12'>
+                                <p>
+                                    Instructions:
+                                <ol>
+                                    <li>Key in the <b>Morfix</b> email of the user to run Comments for manually.</li>
+                                    <li>Click run & wait, the details will be displayed below:</li>
+                                </ol>
+                                </p>
+                            </blockquote>
+                            <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
+                        </div>
+
+                        <form class="form-horizontal push-10" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <input class="form-control" type="email" id="interaction-comment-email" name="interaction-comment-email" 
+                                               placeholder="Enter user's email...">
+                                        <label for="interaction-comment-email">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button id='interaction-comment-btn' class="btn btn-sm btn-danger" type="submit">
+                                        <i class="fa fa-hourglass push-5-r"></i> Run</button>
                                 </div>
                             </div>
                         </form>
