@@ -59,7 +59,7 @@ class InteractionFollow extends Command {
     protected $unfollow; // Not use
     protected $follow_cycle;
     protected $auto_unfollow;
-    protected $auto_followow;
+    protected $auto_follow;
     protected $auto_follow_ban;
     protected $auto_follow_ban_time;
     protected $follow_unfollow_delay;
@@ -288,6 +288,7 @@ class InteractionFollow extends Command {
          */
         $insta_username = $this->insta_username;
         $unfollow_quota = $this->unfollow_quota;
+        
         if ($unfollow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
             exit();
