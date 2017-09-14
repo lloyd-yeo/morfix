@@ -119,7 +119,6 @@ class InteractionFollow extends Command {
     private function jobHandle($ig_profile) {
         
         $this->initVariables($ig_profile);
-        
         $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->where('follow', 1)
                 ->where('unfollowed', 0)
@@ -128,29 +127,32 @@ class InteractionFollow extends Command {
         $followed_count = count($followed_logs);
 
         echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
-
+        
         if ($followed_count >= $ig_profile->follow_cycle) {
             echo "[" . $ig_profile->insta_username . "] number of follows exceeded follow cycle.\n";
             $ig_profile->unfollow = 1;
-            $unfollow = 1;
+            $this->unfollow = 1;
             $ig_profile->save();
             $ig_profile = InstagramProfile::find($ig_profile->id);
         }
-
+        
+        
         $target_username = "";
         $target_follow_username = "";
         $target_follow_id = "";
         $custom_target_defined = false;
+        
         $auto_follow = $this->auto_followow;
         $auto_unfollow = $this->auto_unfollow;
+        $unfollow = $this->unfollow;
         
         
-        echo "[" . $ig_profile->insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
+        echo "[" . $this->insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
 
         if ($unfollow == 1) {
-            echo "[" . $ig_profile->insta_username . "] will be unfollowing this round.\n";
+            echo "[" . $this->insta_username . "] will be unfollowing this round.\n";
         } else {
-            echo "[" . $ig_profile->insta_username . "] will be following this round.\n";
+            echo "[" . $this->insta_username . "] will be following this round.\n";
         }
 
         /*
