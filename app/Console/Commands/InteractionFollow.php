@@ -70,6 +70,7 @@ class InteractionFollow extends Command {
     protected $follow_quota;
     protected $unfollow_quota;
     protected $proxy;
+    protected $delay;
 
     public function __construct() {
         parent::__construct();
@@ -161,7 +162,8 @@ class InteractionFollow extends Command {
 
         $follow_unfollow_delay = $this->followUnfollowDelay($speed);
 
-        $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
+        $this->delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
+        
         //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
         if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
             $this->unFollowing($ig_profile);
@@ -420,7 +422,7 @@ class InteractionFollow extends Command {
         
         $insta_username = $ig_profile->insta_username;
         
-        if ($follow_quota < 1) {
+        if ($this->follow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for following today.\n";
             exit();
         }
