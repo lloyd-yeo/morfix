@@ -27,7 +27,7 @@
             <div class="block-content block-content-full block-content-narrow">
                 <h2 class="content-heading">User Administration</h2>
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <!-- Material Lock -->
                         <div class="block block-themed">
                             <div id="upgrade-tier-block" class="block-header bg-danger">
