@@ -22,9 +22,9 @@ jQuery(function () {
         
         $.post('/admin/upgrade', { email: $email, tier: $tier }, function (data) {
             if (data.success === true) {
-               alert('Successfully updated!');
+               alert(data.response);
             } else {
-               alert('Updating failed! Ask Lloyd for help.');
+               alert(data.response);
             }
         },"json");
         
