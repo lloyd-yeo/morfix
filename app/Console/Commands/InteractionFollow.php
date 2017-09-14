@@ -432,6 +432,7 @@ class InteractionFollow extends Command {
         $unfollow_quota = $this->unfollow_quota;
         $follow_min_follower = $this->follow_min_follower;
         $follow_max_follower = $this->follow_max_follower;
+        $delay = $this->delay;
         
         if ($follow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for following today.\n";
