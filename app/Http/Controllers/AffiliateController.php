@@ -137,7 +137,7 @@ class AffiliateController extends Controller {
             $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=mlmvsl";
             $title = "MorfiX - MLM VSL";
             $ip = "155.69.160.38";
@@ -165,7 +165,7 @@ class AffiliateController extends Controller {
             $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=ebook";
             $title = "MorfiX - Ebook VSL";
             $ip = "155.69.160.38";
@@ -199,14 +199,15 @@ class AffiliateController extends Controller {
 
         $referrals_ = array();
         $free_trial_referrals = array();
-        
+
         $referrals = DB::table('user as u')
                 ->select('u.email', 'u.tier', 'u.created_at', 'u.paypal')
-                ->join('user_affiliate as ua', 'ua.referred', '=', 'u.user_id')
-                ->join('user as r', 'r.user_id', '=', 'ua.referrer')
-                ->where('r.user_id', '=', Auth::user()->user_id)
+                ->join('user_affiliate as ua', function($join) {
+                    $join->on('ua.referred', '=', 'u.user_id')
+                    ->on('ua.referrer', '=', Auth::user()->user_id);
+                })
                 ->get();
-        
+
 //        $referrals = DB::table('user')
 //                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
 //                ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
@@ -217,12 +218,12 @@ class AffiliateController extends Controller {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
 
         foreach ($referrals as $referral) {
-            
+
             if ($referral->email == "maychengmt@yahoo.com" || $referral->email == "michaeltang90@hotmail.com" || $referral->email == "kingkew18@gmail.com") {
                 continue;
                 $referrals_[] = $referral;
             }
-            
+
             if ($referral->tier > 1) {
                 $active = false;
 
@@ -245,7 +246,6 @@ class AffiliateController extends Controller {
                 if ($active) {
                     $referrals_[] = $referral;
                 }
-                
             } else {
                 $free_trial_referrals[] = $referral;
             }
