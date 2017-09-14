@@ -205,6 +205,8 @@
                                     <td>Premium</td>
                                     @elseif ($referral->tier == 3)
                                     <td>Pro</td>
+                                    @elseif ($referral->tier == 11)
+                                    <td>Business</td>
                                     @elseif ($referral->tier == 12)
                                     <td>Business</td>
                                     @elseif ($referral->tier == 22)

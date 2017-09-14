@@ -213,8 +213,6 @@ class AffiliateController extends Controller {
                 $referrals_[] = $referral;
             }
             
-            
-            
             if ($referral->tier > 1) {
                 $active = false;
 
