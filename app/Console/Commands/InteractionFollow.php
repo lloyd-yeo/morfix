@@ -412,7 +412,8 @@ class InteractionFollow extends Command {
     }
 
     private function autoFollow($ig_profile) {
-        $insta_username = $this->insta_username;
+        
+        $insta_username = $ig_profile->insta_username;
         
         if ($follow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for following today.\n";
