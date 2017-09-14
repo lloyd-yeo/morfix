@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+@include('interactions.css')
+@endsection
+
 @section('sidebar')
 @include('sidebar', ['page' => 'admin'])
 @endsection
@@ -10,7 +14,7 @@
         <div class="row items-push">
             <div class="col-sm-7">
                 <h1 class="page-heading">
-                    <i class="fa fa-question-circle-o"></i> Admin <small> Manage Morfix Settings here.</small>
+                    <i class="fa fa-wrench"></i> Admin <small> Manage Morfix Settings here.</small>
                 </h1>
             </div>
         </div>
@@ -31,7 +35,13 @@
                             </div>
                             <div class="block-content">
                                 <div class="text-center push-10-t push-30">
-                                    <img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">
+                                    <blockquote>
+                                        <p>Instructions:</p>
+                                        <p>1. Key in the <b>Morfix</b> email of the user to upgrade.</p>
+                                        <p>2. Select the tier using the dropbox below.</p>
+                                        <p>3. Click Upgrade & wait for confirmation.</p>
+                                    </blockquote>
+                                    <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
                                 </div>
                                 <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
                                     <div class="form-group">
@@ -58,7 +68,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-xs-12">
-                                            <button class="btn btn-sm btn-danger" type="submit">
+                                            <button id='upgrade-tier-btn' class="btn btn-sm btn-danger" type="submit">
                                                 <i class="fa fa-angle-double-up push-5-r"></i> Upgrade</button>
                                         </div>
                                     </div>
@@ -140,4 +150,8 @@
     </div>
     <!-- END Page Content -->
 </main>
+@endsection
+
+@section('js')
+@include('admin.js')
 @endsection
