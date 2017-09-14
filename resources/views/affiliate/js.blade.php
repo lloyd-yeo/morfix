@@ -92,6 +92,15 @@ var BaseTableDatatables = function() {
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
     };
+    
+    // Init full extra DataTable, for more examples you can check out https://www.datatables.net/
+    var initDataTableFullPagination = function() {
+        jQuery('.js-dataTable-full-pagination-free-trial').dataTable({
+            pagingType: "full_numbers",
+            pageLength: 5,
+            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
+        });
+    };
 
     // DataTables Bootstrap integration
     var bsDataTables = function() {
