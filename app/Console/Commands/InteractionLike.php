@@ -108,7 +108,7 @@ class InteractionLike extends Command {
 //                }
 
                 foreach ($instagram_profiles as $ig_profile) {
-                    $this->jobHandle($ig_profile);
+                    $this->jobHandle($user, $ig_profile);
                 } //end loop for ig profile
             } catch (\Exception $ex) {
                 $this->error($ex->getLine() . "\t" . $ex->getMessage());
@@ -121,8 +121,8 @@ class InteractionLike extends Command {
         }
     }
 
-    public function jobHandle($ig_profile) {
-
+    public function jobHandle($user, $ig_profile) {
+        
         $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
 
         $ig_username = $ig_profile->insta_username;
