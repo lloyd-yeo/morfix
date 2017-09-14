@@ -138,6 +138,7 @@ Route::post('/clickfunnel/sales/purchase', 'FunnelWebhookController@salesNewPurc
 
 Route::get('/admin', 'AdminController@index');
 Route::post('/admin/upgrade', 'AdminController@upgradeUserTier');
+Route::post('/admin/getstripedetails', 'AdminController@getStripeDetails');
 
 /**
  * Routes for creation of Paypal Subscription plans.

@@ -84,27 +84,46 @@
                 <!-- Material Lock -->
                 <div class="block block-themed">
                     <div class="block-header bg-danger">
-                        <h3 class="block-title">Material</h3>
+                        <h3 class="block-title">Customer Stripe Details</h3>
                     </div>
                     <div class="block-content">
                         <div class="text-center push-10-t push-30">
-                            <img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">
+                            <blockquote class='font-s12'>
+                                <p>
+                                    Instructions:
+                                <ol>
+                                    <li>Key in the <b>Morfix</b> email of the user to show stripe details for.</li>
+                                    <li>Click show & wait, the details will be displayed below:</li>
+                                </ol>
+                                </p>
+                            </blockquote>
+                            <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
                         </div>
-                        <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+
+                        <form class="form-horizontal push-10" method="post" onsubmit="return false;">
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-material">
-                                        <input class="form-control" type="password" id="lock2-password" name="lock2-password" placeholder="Enter your password..">
-                                        <label for="lock2-password">Password</label>
+                                        <input class="form-control" type="email" id="show-stripe-customer-id-email" name="show-stripe-customer-id-email" 
+                                               placeholder="Enter user's email...">
+                                        <label for="show-stripe-customer-id-email">Email</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12">
-                                    <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-unlock push-5-r"></i> Unlock</button>
+                                    <button id='show-stripe-customer-id-btn' class="btn btn-sm btn-danger" type="submit">
+                                        <i class="fa fa-address-book push-5-r"></i> Show Stripe Details</button>
                                 </div>
                             </div>
                         </form>
+                        <div class="text-center push-10-t push-30">
+                            <h3>Stripe IDs:</h3>
+                            <ol id='show-stripe-customer-id-output-list'>
+                                
+                            </ol>
+                        </div>
+                        
                     </div>
                 </div>
                 <!-- END Material Lock -->

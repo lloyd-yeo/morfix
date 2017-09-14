@@ -27,8 +27,21 @@ jQuery(function () {
                alert(data.response);
             }
         },"json");
-        
     });
+    
+    $("#show-stripe-customer-id-btn").on("click", function(){ 
+        var $email = $("#show-stripe-customer-id-email").val();
+        
+        $.post('/admin/getstripedetails', { email: $email }, function (data) {
+            if (data.success === true) {
+               alert(data.response);
+               $("#show-stripe-customer-id-output-list").innerHtml(data.html);
+            } else {
+               alert(data.response);
+            }
+        },"json");
+    });
+    
     
 });
 </script>
