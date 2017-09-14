@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Artisan;
 use Response;
 use App\User;
 use App\AdminLog;
