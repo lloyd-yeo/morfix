@@ -114,6 +114,7 @@ class AdminController extends Controller
                 return Response::json(array("success" => false, 
                         'response' => "User not found! Can't run anything."));
             }
+            
         } else {
             return Response::json(array("success" => false, 
                         'response' => "You are not authorized to carry out this operation. "
