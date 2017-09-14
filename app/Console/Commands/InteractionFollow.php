@@ -132,7 +132,7 @@ class InteractionFollow extends Command {
 
         $followed_count = count($followed_logs);
 
-        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
+        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . ", cycle: " . $this->follow_cycle . "\n";
         
         if ($followed_count >= $ig_profile->follow_cycle) {
             echo "[" . $ig_profile->insta_username . "] number of follows exceeded follow cycle.\n";
