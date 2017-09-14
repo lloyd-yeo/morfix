@@ -165,7 +165,7 @@ class InteractionFollow extends Command {
     }
 
 
-    protected function initialize($ig_profile){
+    private function initVariables($ig_profile){
         /*
             1. Initialize instagram account
         */
@@ -259,7 +259,7 @@ class InteractionFollow extends Command {
                     continue;
                 }
             }
-        } else {
+        } else{
             $ig_profile->unfollow = 0;
             if ($ig_profile->save()) {
                 echo "[" . $insta_username . "] is following next round.\n\n";
@@ -313,15 +313,9 @@ class InteractionFollow extends Command {
 
 
 
-                    if (count($users_to_unfollow) == 0) {
-                        //Forced to unfollow
-                        $this->forcedToUnfollow($instagram, $ig_profile);
-                    }else {
-                        $ig_profile->unfollow = 0;
-                        if ($ig_profile->save()) {
-                            echo "[" . $insta_username . "] is following next round.\n\n";
-                        }
-                    }
+                if (count($users_to_unfollow) == 0) {
+                    //Forced to unfollow
+                    $this->forcedToUnfollow($instagram, $ig_profile);
                 } else {
                     foreach ($users_to_unfollow as $user_to_unfollow) {
 
