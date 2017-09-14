@@ -515,7 +515,10 @@ class InteractionFollow extends Command {
                 $use_hashtags = 0;
             }
         } else if ($use_hashtags == 0) {
-            $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)->get();
+            $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)
+                    ->where('invalid', 0)
+                    ->where('insufficient_followers', 0)
+                    ->get();
             if (count($target_usernames) == 0) {
                 $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
                 if (count($target_hashtags) > 0) {
