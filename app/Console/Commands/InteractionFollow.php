@@ -143,7 +143,7 @@ class InteractionFollow extends Command {
         $target_follow_id = "";
         $custom_target_defined = false;
         
-        $auto_follow = $this->auto_followow;
+        $auto_follow = $this->auto_follow;
         $auto_unfollow = $this->auto_unfollow;
         $unfollow = $this->unfollow;
         $speed = $this->speed;
