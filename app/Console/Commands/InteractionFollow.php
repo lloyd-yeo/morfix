@@ -145,7 +145,7 @@ class InteractionFollow extends Command {
         $auto_follow = $this->auto_followow;
         $auto_unfollow = $this->auto_unfollow;
         $unfollow = $this->unfollow;
-        
+        $speed = $this->speed;
         
         echo "[" . $this->insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
 
