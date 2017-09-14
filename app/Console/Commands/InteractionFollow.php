@@ -141,7 +141,10 @@ class InteractionFollow extends Command {
         $target_follow_username = "";
         $target_follow_id = "";
         $custom_target_defined = false;
-
+        $auto_follow = $this->auto_followow;
+        $auto_unfollow = $this->auto_unfollow;
+        
+        
         echo "[" . $ig_profile->insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
 
         if ($unfollow == 1) {
