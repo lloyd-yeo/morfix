@@ -142,12 +142,12 @@ class InteractionFollow extends Command {
         $target_follow_id = "";
         $custom_target_defined = false;
 
-        echo "[" . $insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
+        echo "[" . $ig_profile->insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
 
         if ($unfollow == 1) {
-            echo "[" . $insta_username . "] will be unfollowing this round.\n";
+            echo "[" . $ig_profile->insta_username . "] will be unfollowing this round.\n";
         } else {
-            echo "[" . $insta_username . "] will be following this round.\n";
+            echo "[" . $ig_profile->insta_username . "] will be following this round.\n";
         }
 
         /*
