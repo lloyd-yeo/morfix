@@ -285,7 +285,7 @@ class AffiliateController extends Controller {
 //        foreach ($invoices as $invoice) {
 //            
 //        }
-        dd($free_trial_referrals);
+//        dd($free_trial_referrals);
         return view('affiliate.dashboard', [
             'referral_links' => $referral_links,
             'referrals' => $referrals,
