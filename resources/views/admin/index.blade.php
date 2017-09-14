@@ -23,132 +23,128 @@
     <!-- Page Content -->
     <div class="content content-boxed">
         <!-- Modules -->
-        <div class="block">
-            <div class="block-content block-content-full block-content-narrow">
-                <h2 class="content-heading">User Administration</h2>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <!-- Material Lock -->
-                        <div class="block block-themed">
-                            <div id="upgrade-tier-block" class="block-header bg-danger">
-                                <h3 class="block-title">Upgrade User Tier</h3>
-                            </div>
-                            <div class="block-content">
-                                <div class="text-center push-10-t push-30">
-                                    <blockquote>
-                                        <p>
-                                            Instructions:
-                                            <ol>
-                                                <li>Key in the <b>Morfix</b> email of the user to upgrade.</li>
-                                                <li>Select the tier using the dropbox below.</li>
-                                                <li>Click Upgrade & wait for confirmation.</li>
-                                            </ol>
-                                        </p>
-                                    </blockquote>
-                                    <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
-                                </div>
-                                
-                                <form class="form-horizontal push-10" method="post" onsubmit="return false;">
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <div class="form-material">
-                                                <input class="form-control" type="email" id="upgrade-tier-email" name="upgrade-tier-email" 
-                                                       placeholder="Enter user's email...">
-                                                <label for="upgrade-tier-email">Email</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <div class="form-material">
-                                                <select class="form-control" id="upgrade-tier" name="upgrade-tier" size="1">
-                                                    <option value="2">Premium</option>
-                                                    <option value="12">Business + Premium</option>
-                                                    <option value="3">Pro</option>
-                                                    <option value="13">Business + Pro</option>
-                                                </select>
-                                                <label for="upgrade-tier">Tier?</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <button id='upgrade-tier-btn' class="btn btn-sm btn-danger" type="submit">
-                                                <i class="fa fa-angle-double-up push-5-r"></i> Upgrade</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- END Material Lock -->
+        <h2 class="content-heading">User Administration</h2>
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Material Lock -->
+                <div class="block block-themed">
+                    <div id="upgrade-tier-block" class="block-header bg-danger">
+                        <h3 class="block-title">Upgrade User Tier</h3>
                     </div>
-                    <div class="col-lg-6">
-                        <!-- Material Lock -->
-                        <div class="block block-themed">
-                            <div class="block-header bg-danger">
-                                <h3 class="block-title">Material</h3>
-                            </div>
-                            <div class="block-content">
-                                <div class="text-center push-10-t push-30">
-                                    <img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">
-                                </div>
-                                <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <div class="form-material">
-                                                <input class="form-control" type="password" id="lock2-password" name="lock2-password" placeholder="Enter your password..">
-                                                <label for="lock2-password">Password</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-unlock push-5-r"></i> Unlock</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <blockquote>
+                                <p>
+                                    Instructions:
+                                <ol>
+                                    <li>Key in the <b>Morfix</b> email of the user to upgrade.</li>
+                                    <li>Select the tier using the dropbox below.</li>
+                                    <li>Click Upgrade & wait for confirmation.</li>
+                                </ol>
+                                </p>
+                            </blockquote>
+                            <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
                         </div>
-                        <!-- END Material Lock -->
-                    </div>
-                    <div class="col-lg-6">
-                        <!-- Material Lock -->
-                        <div class="block block-themed">
-                            <div class="block-header bg-danger">
-                                <ul class="block-options">
-                                    <li>
-                                        <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                                    </li>
-                                    <li>
-                                        <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
-                                    </li>
-                                </ul>
-                                <h3 class="block-title">Material</h3>
-                            </div>
-                            <div class="block-content">
-                                <div class="text-center push-10-t push-30">
-                                    <img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">
+
+                        <form class="form-horizontal push-10" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <input class="form-control" type="email" id="upgrade-tier-email" name="upgrade-tier-email" 
+                                               placeholder="Enter user's email...">
+                                        <label for="upgrade-tier-email">Email</label>
+                                    </div>
                                 </div>
-                                <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <div class="form-material">
-                                                <input class="form-control" type="password" id="lock2-password" name="lock2-password" placeholder="Enter your password..">
-                                                <label for="lock2-password">Password</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-unlock push-5-r"></i> Unlock</button>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
-                        </div>
-                        <!-- END Material Lock -->
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <select class="form-control" id="upgrade-tier" name="upgrade-tier" size="1">
+                                            <option value="2">Premium</option>
+                                            <option value="12">Business + Premium</option>
+                                            <option value="3">Pro</option>
+                                            <option value="13">Business + Pro</option>
+                                        </select>
+                                        <label for="upgrade-tier">Tier?</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button id='upgrade-tier-btn' class="btn btn-sm btn-danger" type="submit">
+                                        <i class="fa fa-angle-double-up push-5-r"></i> Upgrade</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
+                <!-- END Material Lock -->
+            </div>
+            <div class="col-lg-6">
+                <!-- Material Lock -->
+                <div class="block block-themed">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">Material</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">
+                        </div>
+                        <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <input class="form-control" type="password" id="lock2-password" name="lock2-password" placeholder="Enter your password..">
+                                        <label for="lock2-password">Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-unlock push-5-r"></i> Unlock</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END Material Lock -->
+            </div>
+            <div class="col-lg-6">
+                <!-- Material Lock -->
+                <div class="block block-themed">
+                    <div class="block-header bg-danger">
+                        <ul class="block-options">
+                            <li>
+                                <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                            </li>
+                            <li>
+                                <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
+                            </li>
+                        </ul>
+                        <h3 class="block-title">Material</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">
+                        </div>
+                        <form class="form-horizontal push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <input class="form-control" type="password" id="lock2-password" name="lock2-password" placeholder="Enter your password..">
+                                        <label for="lock2-password">Password</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-unlock push-5-r"></i> Unlock</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END Material Lock -->
             </div>
         </div>
         <!-- Modules -->
