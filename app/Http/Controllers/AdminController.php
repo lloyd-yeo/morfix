@@ -108,7 +108,7 @@ class AdminController extends Controller
                 ]);
                 
                 return Response::json(array("success" => true, 
-                        'response' => "Ran interaction:like for " . $request->input('email') . " !"));
+                        'response' => "Ran interaction:like for " . $request->input('email') . "!"));
                 
             } else {
                 return Response::json(array("success" => false, 
@@ -136,7 +136,7 @@ class AdminController extends Controller
                 ]);
                 
                 return Response::json(array("success" => true, 
-                        'response' => "Ran interaction:comment for " . $request->input('email') . " !"));
+                        'response' => "Ran interaction:comment for " . $request->input('email') . "!"));
                 
             } else {
                 
