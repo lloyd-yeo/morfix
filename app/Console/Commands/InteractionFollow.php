@@ -439,6 +439,7 @@ class InteractionFollow extends Command {
         $unfollow_quota = $this->unfollow_quota;
         $follow_min_follower = $this->follow_min_follower;
         $follow_max_follower = $this->follow_max_follower;
+        $follow_cycle = $this->follow_cycle;
         $delay = $this->delay;
         
         if ($follow_quota < 1) {
