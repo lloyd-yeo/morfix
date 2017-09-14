@@ -33,7 +33,7 @@
                     </div>
                     <div class="block-content">
                         <div class="text-center push-10-t push-30">
-                            <blockquote>
+                            <blockquote class='font-s12'>
                                 <p>
                                     Instructions:
                                 <ol>
