@@ -322,17 +322,15 @@
                         </thead>
                         <tbody>
                             @foreach ($free_trial_referrals as $key => $referral)
-                            @if ($referral->tier > 1)
-                                @if ($key%2 == 0)
-                                <tr role="row" class="even">
-                                    @else
-                                <tr role="row" class="odd">
-                                    @endif
-                                    <td class="font-w600">{{ $referral->email }}</td>
-                                    <td>Free Trial</td>
-                                    <td>{{ $referral->created_at }}</td>
-                                </tr>
+                            @if ($key%2 == 0)
+                            <tr role="row" class="even">
+                            @else
+                            <tr role="row" class="odd">
                             @endif
+                                <td class="font-w600">{{ $referral->email }}</td>
+                                <td>Free Trial</td>
+                                <td>{{ $referral->created_at }}</td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
