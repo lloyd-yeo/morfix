@@ -199,7 +199,7 @@ class AffiliateController extends Controller {
 
         $referrals_ = array();
         $free_trial_referrals = array();
-        DB::enableQueryLog();
+//        DB::enableQueryLog();
         $referrals = DB::table('user as u')
                 ->select('u.email', 'u.tier', 'u.created_at', 'u.paypal')
                 ->join('user_affiliate as ua', function($join) {
@@ -207,7 +207,8 @@ class AffiliateController extends Controller {
                 })
                 ->where('ua.referrer', '=', Auth::user()->user_id)
                 ->get();
-        dd(DB::getQueryLog());
+        dd($referrals);
+//        dd(DB::getQueryLog());
 //        $referrals = DB::table('user')
 //                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
 //                ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
