@@ -219,7 +219,11 @@ class AffiliateController extends Controller {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
 
         foreach ($referrals as $referral) {
-            dd($referral);
+            
+            if ($referral->tier == 1) {
+                $free_trial_referrals[] = $referral;
+            }
+            
             if ($referral->email == "maychengmt@yahoo.com" || $referral->email == "michaeltang90@hotmail.com" || $referral->email == "kingkew18@gmail.com") {
                 continue;
                 $referrals_[] = $referral;
@@ -247,8 +251,6 @@ class AffiliateController extends Controller {
                 if ($active) {
                     $referrals_[] = $referral;
                 }
-            } else {
-                $free_trial_referrals[] = $referral;
             }
         }
 
@@ -282,7 +284,7 @@ class AffiliateController extends Controller {
 //        foreach ($invoices as $invoice) {
 //            
 //        }
-
+        dd($free_trial_referrals);
         return view('affiliate.dashboard', [
             'referral_links' => $referral_links,
             'referrals' => $referrals,
