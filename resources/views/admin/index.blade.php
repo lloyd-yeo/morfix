@@ -58,7 +58,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-xs-12">
-                                            <button class="btn btn-sm btn-danger" type="submit"><i class="fa fa-unlock push-5-r"></i> Unlock</button>
+                                            <button class="btn btn-sm btn-danger" type="submit">
+                                                <i class="fa fa-unlock push-5-r"></i> Upgrade</button>
                                         </div>
                                     </div>
                                 </form>
