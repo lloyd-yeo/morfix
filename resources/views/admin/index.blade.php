@@ -37,9 +37,13 @@
                                 <div class="text-center push-10-t push-30">
                                     <blockquote>
                                         <p>Instructions:</p>
-                                        <p>1. Key in the <b>Morfix</b> email of the user to upgrade.</p>
-                                        <p>2. Select the tier using the dropbox below.</p>
-                                        <p>3. Click Upgrade & wait for confirmation.</p>
+                                        <p>
+                                            <ol>
+                                                <li>Key in the <b>Morfix</b> email of the user to upgrade.</li>
+                                                <li>Select the tier using the dropbox below.</li>
+                                                <li>Click Upgrade & wait for confirmation.</li>
+                                            </ol>
+                                        </p>
                                     </blockquote>
                                     <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
                                 </div>
