@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Response;
 use App\User;
+use App\AdminLog;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -28,6 +29,13 @@ class AdminController extends Controller
     
     public function upgradeUserTier(Request $request) {
         if (Auth::user()->admin == 1) {
+            
+            $admin_log = new AdminLog;
+            $admin_log->admin_email = Auth::user()->email;
+            $admin_log->action = "UPGRADE_USER_TIER";
+            $admin_log->message = "Admin tried upgrading " . $request->input('email') . " to " . $request->input('tier');
+            $admin_log->save();
+            
             $user = User::where('email', $request->input('email'))->first();
             if ($user !== NULL) {
                 $user->tier = $request->input('tier');
@@ -43,6 +51,7 @@ class AdminController extends Controller
                         'response' => "User not found. Can't update."));
             }
         } else {
+            
             return Response::json(array("success" => false, 
                         'response' => "You are not authorized to carry out this operation."));
         }
