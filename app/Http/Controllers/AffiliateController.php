@@ -201,7 +201,7 @@ class AffiliateController extends Controller {
         $free_trial_referrals = array();
         
         $referrals = DB::table('user as u')
-                ->select('u.email, u.tier, u.created_at, u.paypal')
+                ->select('u.email, u.tier, u.created_at as created_at, u.paypal')
                 ->join('user_affiliate as ua', 'ua.referred', '=', 'u.user_id')
                 ->join('user as r', 'r.user_id', '=', 'ua.referrer')
                 ->where('r.user_id', '=', Auth::user()->user_id)
