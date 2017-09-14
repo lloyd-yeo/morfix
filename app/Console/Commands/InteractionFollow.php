@@ -55,8 +55,8 @@ class InteractionFollow extends Command {
     protected $insta_id;
     protected $insta_pw;
     protected $niche;
-    protected $next_follow_time;
-    protected $unfollow;
+    protected $next_follow_time; //
+    protected $unfollow;// Not use
     protected $follow_cycle;
     protected $auto_unfollow;
     protected $auto_followow;
@@ -269,6 +269,17 @@ class InteractionFollow extends Command {
 
 
     private function unFollowing($ig_profile){
+        /*
+            catch:
+                - CheckpointRequiredException
+                - NetworkException
+                - EndpointException
+                - IncorrectPasswordException
+                - FeedbackRequiredException
+                - EmptyResponseException
+                - ThrottledException
+                - RequestException
+        */
             $insta_username = $this->insta_username;
             if ($unfollow_quota < 1) {
                 echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
