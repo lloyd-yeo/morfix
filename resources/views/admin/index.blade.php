@@ -130,7 +130,7 @@
             </div>
         </div>
         
-        <h2>Auto Interactions</h2>
+        <h2 class="content-heading">Auto Interactions</h2>
         <div class="row">
             <div class="col-lg-6">
                 <!-- Material Lock -->
