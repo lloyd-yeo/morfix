@@ -300,6 +300,7 @@ class InteractionFollow extends Command {
         */
         $insta_username = $this->insta_username;
         $unfollow_quota = $this->unfollow_quota;
+        $unfollow_unfollowed = $this->unfollow_unfollowed;
         
         if ($unfollow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
