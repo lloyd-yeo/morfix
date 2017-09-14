@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\YourlsUrl;
 use App\StripeDetail;
 use App\User;
+use App\UserAffiliates;
 use Response;
 
 class AffiliateController extends Controller {
@@ -198,16 +199,25 @@ class AffiliateController extends Controller {
 
         $referrals_ = array();
         $free_trial_referrals = array();
-        $referrals = DB::table('user')
-                ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
-                ->where('user_affiliate.referrer', Auth::user()->user_id)
-//                ->where('user.tier', '>', 1)
-                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
+        
+        $referrals = DB::table('user as u')
+                ->select('u.email, u.tier, u.created_at, u.paypal')
+                ->join('user_affiliate as ua', 'ua.referred', '=', 'u.user_id')
+                ->join('user as r', 'r.user_id', '=', 'ua.referrer')
+                ->where('r.user_id', '=', Auth::user()->user_id)
                 ->get();
+        
+//        $referrals = DB::table('user')
+//                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
+//                ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
+//                ->where('user_affiliate.referrer', Auth::user()->user_id)
+//                ->where('user.tier', '>', 1)
+//                ->get();
 
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
 
         foreach ($referrals as $referral) {
+            
             if ($referral->email == "maychengmt@yahoo.com" || $referral->email == "michaeltang90@hotmail.com" || $referral->email == "kingkew18@gmail.com") {
                 continue;
                 $referrals_[] = $referral;
@@ -235,6 +245,7 @@ class AffiliateController extends Controller {
                 if ($active) {
                     $referrals_[] = $referral;
                 }
+                
             } else {
                 $free_trial_referrals[] = $referral;
             }
