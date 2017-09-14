@@ -205,8 +205,9 @@ class AffiliateController extends Controller {
                 ->join('user_affiliate as ua', function($join) {
                     $join->on('ua.referred', '=', 'u.user_id');
                 })
-                ->where('ua.referrer', '=', Auth::user()->user_id)
-                ->get();
+                ->where('ua.referrer', '=', Auth::user()->user_id);
+        var_dump($referrals);
+        $referrals = $referrals->get();
 
 //        $referrals = DB::table('user')
 //                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
