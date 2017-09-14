@@ -35,6 +35,7 @@ jQuery(function () {
         $.post('/admin/getstripedetails', { email: $email }, function (data) {
             if (data.success === true) {
                alert(data.response);
+               $("#show-stripe-customer-id-output-list").html('');
                $("#show-stripe-customer-id-output-list").append(data.html);
             } else {
                alert(data.response);
