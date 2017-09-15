@@ -95,6 +95,20 @@ return [
             'engine' => null,
         ],
         
+        'mysql_master_igsession' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_MASTER_COOKIE', '52.221.60.235'),
+            'port' => env('DB_PORT_MASTER_COOKIE', '3306'),
+            'database' => env('DB_DATABASE_MASTER_COOKIE', 'morfix'),
+            'username' => env('DB_USERNAME_MASTER_COOKIE', 'root'),
+            'password' => env('DB_PASSWORD_MASTER_COOKIE', 'inst@ffiliates123'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+        
         'mysql_igsession' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST_3', '52.221.60.235'),

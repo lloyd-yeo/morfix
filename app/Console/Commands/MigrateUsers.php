@@ -155,11 +155,25 @@ class MigrateUsers extends Command {
                     $ig_profile->updated_at = $master_instagram_profile->updated_at;
                     $ig_profile->created_at = $master_instagram_profile->created_at;
                     if ($ig_profile->save()) {
-//                        echo ($ig_profile);
-                        $ig_profile_cookies = IGProfileCookie::all();
-                        foreach ($ig_profile_cookies as $ig_profile_cookie) {
-                            echo ($ig_profile_cookie);
+                        
+                        $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
+                        ->table('instagram_sessions')
+                        ->get();
+                        
+                        foreach ($master_instagram_profile_cookies as $master_instagram_profile_cookie) {
+                            $ig_profile_cookie = new IGProfileCookie;
+                            $ig_profile_cookie->id = $master_instagram_profile_cookie->id;
+                            $ig_profile_cookie->username = $master_instagram_profile_cookie->username;
+                            $ig_profile_cookie->settings = $master_instagram_profile_cookie->settings;
+                            $ig_profile_cookie->cookies = $master_instagram_profile_cookie->cookies;
+                            $ig_profile_cookie->last_modified = $master_instagram_profile_cookie->last_modified;
+                            $ig_profile_cookie->save();
                         }
+                        
+//                        $ig_profile_cookies = IGProfileCookie::all();
+//                        foreach ($ig_profile_cookies as $ig_profile_cookie) {
+//                            echo ($ig_profile_cookie);
+//                        }
                     }
                 }
             }
