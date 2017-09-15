@@ -26,6 +26,16 @@
                         <a href="/home"><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         @endif
                     </li>
+                    
+                    @if (Auth::user()->admin == 1)
+                    <li>
+                        @if ($page == 'admin')
+                        <a class="active" href="/admin"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Admin Dashboard</span></a>
+                        @else
+                        <a href="/admin"><i class="si si-wrench"></i><span class="sidebar-mini-hide">Admin Dashboard</span></a>
+                        @endif
+                    </li>
+                    @endif
 
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AUTOMATION TOOLS</span></li>
 

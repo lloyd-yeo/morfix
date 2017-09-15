@@ -205,6 +205,8 @@
                                     <td>Premium</td>
                                     @elseif ($referral->tier == 3)
                                     <td>Pro</td>
+                                    @elseif ($referral->tier == 11)
+                                    <td>Business</td>
                                     @elseif ($referral->tier == 12)
                                     <td>Business</td>
                                     @elseif ($referral->tier == 22)
@@ -221,378 +223,6 @@
                                 </tr>
                             @endif
                             @endforeach
-                            
-                            @if (Auth::user()->email == "gabriel@instaffiliates.com")
-                            <tr role="row" class="even">
-                                <td class="font-w600">joel@onlinesalespro.com</td>
-                                <td>Mastermind</td>
-                                <td>2017-04-26 08:04:07</td>
-                            </tr>
-                            <tr role="row" class="odd">
-                                <td class="font-w600">Shawnjosiah.pd@gmail.com</td>
-                                <td>Mastermind</td>
-                                <td>2017-04-26 08:04:07</td>
-                            </tr>
-                            <tr role="row" class="even">
-                                <td class="font-w600">albertjames24mb@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-04-26 08:04:07</td>
-                            </tr>
-                            <tr role="row" class="odd">
-                                <td class="font-w600">sl@buildsocialprofits.com</td>
-                                <td>Premium</td>
-                                <td>2017-04-26 08:04:07</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zwaccount@live.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Zumbagirl1991@yahoo.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zuhair.tahan@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">zoe.vanhayden@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zloster89@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">zkaylintha@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zisizit@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">ziliana97@hotmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zhiyunlim99@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Zhengting2001@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zhangyixin.911@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">zettabarcus@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">Zestliving01@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Zenprofits4cindy@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zayd.boon@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Zavierlimjj@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zarqasaif@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Zariuschan1993@hotmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">Zari04815@yahoo.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">zakiarahmalia19@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zainuddin0480@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">zainabjacobs.z@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zahi_deeb.4@hotmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">zahidul_islam31@yahoo.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zackrahim46@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">zackquilici@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">zackmichaelofficial@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Zachly25@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">yvimaria@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">yusmaniar06@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">Yuesheng7296@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Youssef.sabbahi1019@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">younessouazri@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">you@norahelton.com.co</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">yostachu@wp.pl</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">Yongshaokoko@gmail.com</td>
-                                <td>Pro</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">yohansanjeewa0@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">yohancemcgruder@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">yogiinthelight@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">yob.fxe.rmondragon@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">yma_hopson@yahoo.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">yendezanele.yende@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">yaangmathew90@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">yaakoubifarhat121@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">xtremewealth@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">xtremeseby10@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">xspurs2017@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">xleah.juma@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">xhuang025@mymail.sim.edu.sg</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">XAxlx_@hotmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">wyckly@ymail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">www.gbayo2657@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">wshana42@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">workwithnickgomez@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">workwithjonny@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">workwithcoachmike@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="odd">
-                                <td class="font-w600">Workwithblaul@gmail.com</td>
-                                <td>Premium</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            <tr role="row" class="even">
-                                <td class="font-w600">wongzigang19990905@gmail.com</td>
-                                <td>Business</td>
-                                <td>2017-01-27 00:00:00</td>
-                            </tr>
-
-                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -670,7 +300,44 @@
                 </div>
             </div>
         </div>
-
+        <!--FREE TRIAL REFERRALS-->
+        <div class="row font-s13">
+            <div class="block">
+                <div class="block-header">
+                    <ul class="block-options">
+                        <li>
+                            <button type="button" data-toggle="block-option" data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                        </li>
+                    </ul>
+                    <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-group"></i> Free-Trial Referrals</h2>
+                </div>
+                <div class="block-content block-content-full">
+                    <table class="table table-bordered table-striped js-dataTable-full-pagination-free-trial">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th class="hidden-xs">Tier</th>
+                                <th>Join Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($free_trial_referrals as $key => $referral)
+                            @if ($key%2 == 0)
+                            <tr role="row" class="even">
+                            @else
+                            <tr role="row" class="odd">
+                            @endif
+                                <td class="font-w600">{{ $referral->email }}</td>
+                                <td>Free Trial</td>
+                                <td>{{ $referral->created_at }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </main>
 @endsection

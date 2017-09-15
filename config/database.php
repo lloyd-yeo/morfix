@@ -53,6 +53,34 @@ return [
             'engine' => null,
         ],
         
+        'mysql_master' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_MASTER', '52.221.60.235'),
+            'port' => env('DB_HOST_MASTER', '3306'),
+            'database' => env('DB_HOST_MASTER', 'insta_affiliate'),
+            'username' => env('DB_HOST_MASTER', 'root'),
+            'password' => env('DB_HOST_MASTER', 'inst@ffiliates123'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+        
+        'mysql_queue' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST_QUEUE', '52.221.60.235'),
+            'port' => env('DB_PORT_QUEUE', '3306'),
+            'database' => env('DB_DATABASE_QUEUE', 'insta_affiliate'),
+            'username' => env('DB_USERNAME_QUEUE', 'root'),
+            'password' => env('DB_PASSWORD_QUEUE', 'inst@ffiliates123'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+        
         'mysql_old' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST_2', '52.221.60.235'),

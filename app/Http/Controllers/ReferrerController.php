@@ -57,10 +57,10 @@ class ReferrerController extends Controller {
         } elseif ($redir == "mlmvsl") {
             return redirect('https://signup.morfix.co/vsl-mlm');
         } elseif ($redir == "ebook") {
-            return redirect('https://signup.morfix.co/ebook');
+            return redirect('https://signup.morfix.co/ebookmmo');
         } elseif ($redir == "online") {
             return redirect('https://signup.morfix.co/vsl-online');
-        }else {
+        } else {
             return redirect('https://morfix.co');
         }
     }

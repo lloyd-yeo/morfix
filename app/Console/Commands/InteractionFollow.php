@@ -140,7 +140,7 @@ class InteractionFollow extends Command {
 
         $followed_count = count($followed_logs);
 
-        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
+        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . ", cycle: " . $this->follow_cycle . "\n";
         
         if ($followed_count >= $ig_profile->follow_cycle) {
             echo "[" . $ig_profile->insta_username . "] number of follows exceeded follow cycle.\n";
@@ -308,6 +308,8 @@ class InteractionFollow extends Command {
         */
         $insta_username = $this->insta_username;
         $unfollow_quota = $this->unfollow_quota;
+        $unfollow_unfollowed = $this->unfollow_unfollowed;
+        $delay = $this->delay;
         
         if ($unfollow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
@@ -447,6 +449,7 @@ class InteractionFollow extends Command {
         $unfollow_quota = $this->unfollow_quota;
         $follow_min_follower = $this->follow_min_follower;
         $follow_max_follower = $this->follow_max_follower;
+        $follow_cycle = $this->follow_cycle;
         $delay = $this->delay;
         
         if ($follow_quota < 1) {
@@ -523,11 +526,13 @@ class InteractionFollow extends Command {
 
         if ($use_hashtags == 1) {
             $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
+            $target_hashtags->shuffle();
             if (count($target_hashtags) == 0) {
                 $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)
                         ->where('invalid', 0)
                         ->where('insufficient_followers', 0)
                         ->get();
+                $target_usernames->shuffle();
                 $use_hashtags = 0;
             }
         } else if ($use_hashtags == 0) {
@@ -535,8 +540,10 @@ class InteractionFollow extends Command {
                     ->where('invalid', 0)
                     ->where('insufficient_followers', 0)
                     ->get();
+            $target_usernames->shuffle();
             if (count($target_usernames) == 0) {
                 $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
+                $target_hashtags->shuffle();
                 if (count($target_hashtags) > 0) {
                     $use_hashtags = 1;
                 } else {

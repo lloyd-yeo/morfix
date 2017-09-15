@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\YourlsUrl;
 use App\StripeDetail;
 use App\User;
+use App\UserAffiliates;
 use Response;
 
 class AffiliateController extends Controller {
@@ -136,7 +137,7 @@ class AffiliateController extends Controller {
             $url->ip = $ip;
             $url->clicks = $clicks;
             $url->save();
-            
+
             $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=mlmvsl";
             $title = "MorfiX - MLM VSL";
             $ip = "155.69.160.38";
@@ -165,6 +166,20 @@ class AffiliateController extends Controller {
             $url->clicks = $clicks;
             $url->save();
 
+            $url_ = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=ebook";
+            $title = "MorfiX - Ebook VSL";
+            $ip = "155.69.160.38";
+            $clicks = 0;
+
+            $keyword = $ref_kw . "ebook";
+            $url = new YourlsUrl;
+            $url->keyword = $keyword;
+            $url->url = $url_;
+            $url->title = $title;
+            $url->ip = $ip;
+            $url->clicks = $clicks;
+            $url->save();
+
             $url_ = "https://morfix.co/app/get-referral-cookie.php?referrer=" . $user_id . "&redir=payment";
             $title = "MorfiX - Payment Page";
             $ip = "155.69.160.38";
@@ -183,41 +198,60 @@ class AffiliateController extends Controller {
         }
 
         $referrals_ = array();
-        $referrals = DB::table('user')
-                ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
-                ->where('user_affiliate.referrer', Auth::user()->user_id)
-                ->where('user.tier', '>', 1)
-                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
+        $free_trial_referrals = array();
+//        DB::enableQueryLog();
+        $referrals = DB::table('user as u')
+                ->select('u.email', 'u.tier', 'u.created_at', 'u.paypal')
+                ->join('user_affiliate as ua', function($join) {
+                    $join->on('ua.referred', '=', 'u.user_id');
+                })
+                ->where('ua.referrer', '=', Auth::user()->user_id)
                 ->get();
+//        dd($referrals);
+//        dd(DB::getQueryLog());
+//        $referrals = DB::table('user')
+//                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
+//                ->join('user_affiliate', 'user.user_id', '=', 'user_affiliate.referred')
+//                ->where('user_affiliate.referrer', Auth::user()->user_id)
+//                ->where('user.tier', '>', 1)
+//                ->get();
 
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
 
         foreach ($referrals as $referral) {
+            
+            if ($referral->tier == 1) {
+                $free_trial_referrals[] = $referral;
+                continue;
+            }
+            
             if ($referral->email == "maychengmt@yahoo.com" || $referral->email == "michaeltang90@hotmail.com" || $referral->email == "kingkew18@gmail.com") {
                 continue;
                 $referrals_[] = $referral;
             }
 
-            $active = false;
+            if ($referral->tier > 1) {
+                $active = false;
 
-            if ($referral->paypal == 0) {
-                $stripe_details = StripeDetail::where('email', $referral->email)->get();
+                if ($referral->paypal == 0) {
+                    $stripe_details = StripeDetail::where('email', $referral->email)->get();
 
-                foreach ($stripe_details as $stripe_detail) {
-                    $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
-                    foreach ($subscriptions->data as $subscription) {
-                        if ($subscription->status == "trialing" || $subscription->status == "active") {
-                            $active = true;
-                            break;
+                    foreach ($stripe_details as $stripe_detail) {
+                        $subscriptions = \Stripe\Subscription::all(array('customer' => $stripe_detail->stripe_id));
+                        foreach ($subscriptions->data as $subscription) {
+                            if ($subscription->status == "trialing" || $subscription->status == "active") {
+                                $active = true;
+                                break;
+                            }
                         }
                     }
+                } else {
+                    $active = true;
                 }
-            } else {
-                $active = true;
-            }
 
-            if ($active) {
-                $referrals_[] = $referral;
+                if ($active) {
+                    $referrals_[] = $referral;
+                }
             }
         }
 
@@ -251,10 +285,11 @@ class AffiliateController extends Controller {
 //        foreach ($invoices as $invoice) {
 //            
 //        }
-
+//        dd($free_trial_referrals);
         return view('affiliate.dashboard', [
             'referral_links' => $referral_links,
             'referrals' => $referrals,
+            'free_trial_referrals' => $free_trial_referrals,
             'invoices' => $invoices,
         ]);
     }

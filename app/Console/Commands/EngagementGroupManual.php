@@ -14,7 +14,7 @@ class EngagementGroupManual extends Command {
      *
      * @var string
      */
-    protected $signature = 'engagementgroup:like {media_id}';
+    protected $signature = 'engagementgroup:like {media_id} {comment}';
 
     /**
      * The console command description.
@@ -124,11 +124,13 @@ class EngagementGroupManual extends Command {
                     
                 } else {
                     if ($ig_profile->auto_comment === 1) {
-                        $comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
-                        if (count($comments) > 0) {
-                            $comment = $comments->random();
-                            if (!empty($comment->comment)) {
-                                $instagram->media->comment($mediaId, $comment->comment);
+                        if ($this->argument('comment') == 1) {
+                            $comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
+                            if (count($comments) > 0) {
+                                $comment = $comments->random();
+                                if (!empty($comment->comment)) {
+                                    $instagram->media->comment($mediaId, $comment->comment);
+                                }
                             }
                         }
                     }
