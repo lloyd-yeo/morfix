@@ -150,4 +150,32 @@ class AdminController extends Controller
                 . "Try again & we will hunt you down via your IP."));
         }
     }
+     public function runInteractionFollow(Request $request) {
+        if (Auth::user()->admin == 1) {
+            
+            $this->logAdminActions(Auth::user()->email, 
+                    "RUN_INTERACTION_Follow", 
+                    "Admin tried to run interaction:comment for: " . $request->input('email'));
+            
+            $user = User::where('email', $request->input("email"))->first();
+            if ($user !== NULL) {
+                
+                $exitCode = Artisan::call('interaction:follow', [
+                    'email' => $request->input("email")
+                ]);
+                
+                return Response::json(array("success" => true, 
+                        'response' => "Ran interaction:follow for " . $request->input('email') . "!"));
+                
+            } else {
+                
+                return Response::json(array("success" => false, 
+                        'response' => "User not found! Can't run anything."));
+            }
+        } else {
+            return Response::json(array("success" => false, 
+                        'response' => "You are not authorized to carry out this operation. "
+                . "Try again & we will hunt you down via your IP."));
+        }
+    }
 }
