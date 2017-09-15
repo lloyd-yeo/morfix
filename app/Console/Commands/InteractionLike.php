@@ -159,7 +159,9 @@ class InteractionLike extends Command {
 
         try {
             $like_quota = rand(1, 3);
-            $explorer_response = $instagram->login($ig_username, $ig_password);
+            $instagram->setUser($ig_username, $ig_password);
+            $explorer_response = $instagram->login();
+//            $explorer_response = $instagram->login($ig_username, $ig_password);
             $this->line("[$ig_username] Logged in \t Round-Quota: " . $like_quota);
 
             /*
@@ -306,10 +308,14 @@ class InteractionLike extends Command {
                                         echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
 
                                         if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
-                                            $blacklist_username = new BlacklistedUsername;
-                                            $blacklist_username->username = $user_to_like->username;
-                                            $blacklist_username->save();
-                                            echo("\n" . "Blacklisted: " . $user_to_like->username);
+                                            if (BlacklistedUsername::where('username', $user_to_like->username)->count() == 0) {
+                                                $blacklist_username = new BlacklistedUsername;
+                                                $blacklist_username->username = $user_to_like->username;
+                                                $blacklist_username->save();
+                                                echo("\n" . "Blacklisted: " . $user_to_like->username);
+                                            } else {
+                                                echo("\n" . "Is a blacklisted username.");
+                                            }
                                         }
                                         continue;
                                     } catch (\Exception $ex) {
