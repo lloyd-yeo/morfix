@@ -146,7 +146,7 @@ class InteractionLike extends Command {
         $debug = false;
         $truncatedDebug = false;
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
+        
         if ($ig_profile->proxy === NULL) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
@@ -159,8 +159,9 @@ class InteractionLike extends Command {
 
         try {
             $like_quota = rand(1, 3);
-            $instagram->setUser($ig_username, $ig_password);
-            $explorer_response = $instagram->login();
+//            $instagram->setUser($ig_username, $ig_password);
+            
+            $explorer_response = $instagram->login($ig_username, $ig_password);
             $this->line("[$ig_username] Logged in \t Round-Quota: " . $like_quota);
 
             /*
