@@ -167,7 +167,9 @@ class MigrateUsers extends Command {
                             $ig_profile_cookie->settings = $master_instagram_profile_cookie->settings;
                             $ig_profile_cookie->cookies = $master_instagram_profile_cookie->cookies;
                             $ig_profile_cookie->last_modified = $master_instagram_profile_cookie->last_modified;
-                            $ig_profile_cookie->save();
+                            if ($ig_profile_cookie->save()){
+                                dd($ig_profile_cookie);
+                            }
                         }
                         
 //                        $ig_profile_cookies = IGProfileCookie::all();
