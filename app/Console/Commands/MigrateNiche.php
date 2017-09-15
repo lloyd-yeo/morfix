@@ -74,7 +74,7 @@ class MigrateNiche extends Command
         
         foreach ($master_niches_hashtags as $master_niches_hashtag) {
             $niches_hashtag = new NicheTargetHashtag();
-            $niches_hashtag->id = $master_niches_hashtag->id;
+            $niches_hashtag->niche_hashtag_id = $master_niches_hashtag->niche_hashtag_id;
             $niches_hashtag->niche_id = $master_niches_hashtag->niche_id;
             $niches_hashtag->hashtag = $master_niches_hashtag->hashtag;
             $niches_hashtag->save();
