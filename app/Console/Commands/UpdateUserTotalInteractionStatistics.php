@@ -10,6 +10,7 @@ use App\InstagramProfileLikeLog;
 use App\InstagramProfileCommentLog;
 use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
+use DB;
 
 class UpdateUserTotalInteractionStatistics extends Command {
 
