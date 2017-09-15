@@ -58,6 +58,7 @@ class Kernel extends ConsoleKernel {
         Commands\ReadPaypalAgreementCsv::class,
         Commands\ReadCommissionList::class,
         Commands\MigrateUsers::class,
+        Commands\UpdateUserTotalInteractionStatistics::class,
     ];
 
     /**
