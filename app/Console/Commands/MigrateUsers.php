@@ -45,8 +45,16 @@ class MigrateUsers extends Command
                 ->table('user')
                 ->where('partition', $this->argument('partition'))
                 ->get();
+        
         foreach ($master_users as $master_user) {
             $this->line($master_user);
+            $user = new User();
+            $user->user_id = $master_user->user_id;
+            $user->created_at = $master_user->created_at;
+            $user->updated_at = $master_user->updated_at;
+            if ($user->save()) {
+                dd($user);
+            }
         }
     }
 }
