@@ -35,7 +35,7 @@ return [
         ],
 
         'database' => [
-            'connection' => 'mysql_queue',
+            'connection' => 'mysql_master',
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
