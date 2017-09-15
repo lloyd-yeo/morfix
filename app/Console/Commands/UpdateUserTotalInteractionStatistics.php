@@ -49,12 +49,12 @@ class UpdateUserTotalInteractionStatistics extends Command {
             //Global update;
             $ig_profiles = InstagramProfile::all();
             foreach ($ig_profiles as $ig_profile) {
-                $this->initialUpdateOfStats($ig_profile);
+                $this->initialUpdateOfTotalStats($ig_profile);
             }
         }
     }
 
-    public function initialUpdateOfTotalStats($ig_profile) {
+    private function initialUpdateOfTotalStats($ig_profile) {
             $total_likes = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
             $ig_profile->total_likes = $total_likes;
             $ig_profile->save();
