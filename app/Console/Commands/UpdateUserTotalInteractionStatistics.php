@@ -64,8 +64,8 @@ class UpdateUserTotalInteractionStatistics extends Command {
             $ig_profile->save();
             
             $daily_likes = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
-                    ->whereBetween('date_liked', Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
-                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s'))
+                    ->whereBetween('date_liked', [Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
+                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s')])
                     ->count();
             $ig_profile->daily_likes = $daily_likes;
             $ig_profile->save();
@@ -75,8 +75,8 @@ class UpdateUserTotalInteractionStatistics extends Command {
             $ig_profile->save();
             
             $daily_comments = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
-                    ->whereBetween('date_commented', Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
-                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s'))
+                    ->whereBetween('date_commented', [Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
+                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s')])
                     ->count();
             $ig_profile->daily_comments = $daily_comments;
             $ig_profile->save();
@@ -89,8 +89,8 @@ class UpdateUserTotalInteractionStatistics extends Command {
             $ig_profile->save();
             
             $daily_follows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-                    ->whereBetween('date_inserted', Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
-                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s'))
+                    ->whereBetween('date_inserted', [Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
+                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s')])
                     ->count();
             $ig_profile->daily_follows = $daily_follows;
             $ig_profile->save();
@@ -102,8 +102,8 @@ class UpdateUserTotalInteractionStatistics extends Command {
             $ig_profile->save();
             
             $daily_unfollows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-                    ->whereBetween('date_unfollowed', Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
-                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s'))
+                    ->whereBetween('date_unfollowed', [Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
+                            Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s')])
                     ->count();
             $ig_profile->daily_unfollows = $daily_unfollows;
             $ig_profile->save();
