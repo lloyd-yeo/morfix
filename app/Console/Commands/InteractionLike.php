@@ -30,7 +30,7 @@ class InteractionLike extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:like {email?}';
+    protected $signature = 'interaction:like {email?} {partition?}';
 
     /**
      * The console command description.
@@ -55,10 +55,18 @@ class InteractionLike extends Command {
      */
     public function handle() {
         if (NULL === $this->argument("email")) {
-            $users = DB::table('user')
-                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
-                    ->orderBy('user_id', 'asc')
-                    ->get();
+            $users = array();
+            if ($this->argument('partition') === NULL) {
+                $users = DB::table('user')
+                        ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                        ->orderBy('user_id', 'asc')
+                        ->get();
+            } else {
+                $users = DB::table('user')
+                        ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile) AND partition = ' . $this->argument('partition'))
+                        ->orderBy('user_id', 'asc')
+                        ->get();
+            }
 
             foreach ($users as $user) {
 
