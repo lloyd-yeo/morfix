@@ -47,7 +47,6 @@ class MigrateUsers extends Command {
             
             $this->line($master_user);
             $user = new User();
-            
             $user->user_id = $master_user->user_id;
             $user->email = $master_user->email;
             $user->password = $master_user->password;
@@ -85,7 +84,7 @@ class MigrateUsers extends Command {
             $user->partition = $master_user->partition;
             
             if ($user->save()) {
-                dd($user);
+                echo($user);
             }
         }
     }
