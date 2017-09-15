@@ -95,7 +95,9 @@ class MigrateUsers extends Command {
                         ->table('user_insta_target_hashtag')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
-
+                
+                DB::table('user_insta_target_hashtag')->where('insta_username', $ig_profile->insta_username)->delete();
+                
                 foreach ($master_user_insta_target_hashtags as $master_user_insta_target_hashtag) {
                     $this->addNewInstagramProfileHashtag($master_user_insta_target_hashtag);
                 }
@@ -104,6 +106,8 @@ class MigrateUsers extends Command {
                         ->table('user_insta_target_username')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
+                
+                DB::table('user_insta_target_username')->where('insta_username', $ig_profile->insta_username)->delete();
 
                 foreach ($master_user_insta_target_usernames as $master_user_insta_target_username) {
                     $this->addNewInstagramProfileUsername($master_user_insta_target_username);
