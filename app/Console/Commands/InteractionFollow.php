@@ -232,8 +232,8 @@ class InteractionFollow extends Command {
             - try 
                 -  login
             - catch
-                - NetworkException
-                - IncorrectPasswordException
+                - NetworkException, login again
+                - IncorrectPasswordException, exit
         */
 
         $ig_username = $ig_profile->insta_username;
@@ -263,6 +263,17 @@ class InteractionFollow extends Command {
     }
 
     private function forcedToUnfollow(Instagram $instagram, $ig_profile) {
+
+        /*
+            - If auto_unfollow = 1, auto_follow == 0
+                - Get followings users
+                    - try
+                        - Query: InstagramProfileFollowLog
+                        - Save
+                    - catch
+                        - Exception
+            - Else, save
+        */
         $insta_username = $this->insta_username;
         echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
 
