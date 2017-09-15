@@ -88,7 +88,7 @@ class MigrateUsers extends Command {
                 
                 $master_instagram_profiles = DB::connection('mysql_master')
                 ->table('user_insta_profile')
-                ->where('partition', $this->argument('partition'))
+                ->where('email', $user->email)
                 ->get();
                 
                 foreach ($master_instagram_profiles as $master_instagram_profile) {
