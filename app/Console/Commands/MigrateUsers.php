@@ -84,9 +84,83 @@ class MigrateUsers extends Command {
             $user->partition = $master_user->partition;
             
             if ($user->save()) {
-                echo($user);
+//                echo($user);
+                
+                $master_instagram_profiles = DB::connection('mysql_master')
+                ->table('user_insta_profile')
+                ->where('partition', $this->argument('partition'))
+                ->get();
+                
+                foreach ($master_instagram_profiles as $master_instagram_profile) {
+                    $ig_profile = new InstagramProfile;
+                    $ig_profile->id = $master_instagram_profile->id;
+                    $ig_profile->user_id = $master_instagram_profile->user_id;
+                    $ig_profile->email = $master_instagram_profile->email;
+                    $ig_profile->insta_user_id = $master_instagram_profile->insta_user_id;
+                    $ig_profile->insta_username = $master_instagram_profile->insta_username;
+                    $ig_profile->insta_pw = $master_instagram_profile->insta_pw;
+                    $ig_profile->profile_pic_url = $master_instagram_profile->profile_pic_url;
+                    $ig_profile->follower_count = $master_instagram_profile->follower_count;
+                    $ig_profile->profile_full_name = $master_instagram_profile->profile_full_name;
+                    $ig_profile->insta_new_follower_template = $master_instagram_profile->insta_new_follower_template;
+                    $ig_profile->follow_up_message = $master_instagram_profile->follow_up_message;
+                    $ig_profile->num_posts = $master_instagram_profile->num_posts;
+                    $ig_profile->recent_activity_timestamp = $master_instagram_profile->recent_activity_timestamp;
+                    $ig_profile->auto_dm_new_follower = $master_instagram_profile->auto_dm_new_follower;
+                    $ig_profile->auto_dm_delay = $master_instagram_profile->auto_dm_delay;
+                    $ig_profile->last_sent_dm = $master_instagram_profile->last_sent_dm;
+                    $ig_profile->temporary_ban = $master_instagram_profile->temporary_ban;
+                    $ig_profile->dm_probation = $master_instagram_profile->dm_probation;
+                    $ig_profile->niche = $master_instagram_profile->niche;
+                    $ig_profile->speed = $master_instagram_profile->speed;
+                    $ig_profile->next_follow_time = $master_instagram_profile->next_follow_time;
+                    $ig_profile->unfollow = $master_instagram_profile->unfollow;
+                    $ig_profile->login_log = $master_instagram_profile->login_log;
+                    $ig_profile->last_instagram_login = $master_instagram_profile->last_instagram_login;
+                    $ig_profile->follow_cycle = $master_instagram_profile->follow_cycle;
+                    $ig_profile->follow_quota = $master_instagram_profile->follow_quota;
+                    $ig_profile->unfollow_quota = $master_instagram_profile->unfollow_quota;
+                    $ig_profile->like_quota = $master_instagram_profile->like_quota;
+                    $ig_profile->comment_quota = $master_instagram_profile->comment_quota;
+                    $ig_profile->auto_interaction = $master_instagram_profile->auto_interaction;
+                    $ig_profile->auto_comment = $master_instagram_profile->auto_comment;
+                    $ig_profile->auto_like = $master_instagram_profile->auto_like;
+                    $ig_profile->auto_follow = $master_instagram_profile->auto_follow;
+                    $ig_profile->auto_follow_ban = $master_instagram_profile->auto_follow_ban;
+                    $ig_profile->auto_follow_ban_time = $master_instagram_profile->auto_follow_ban_time;
+                    $ig_profile->auto_unfollow = $master_instagram_profile->auto_unfollow;
+                    $ig_profile->auto_unfollow_ban = $master_instagram_profile->auto_unfollow_ban;
+                    $ig_profile->auto_unfollow_ban_time = $master_instagram_profile->auto_unfollow_ban_time;
+                    $ig_profile->follow_max_followers = $master_instagram_profile->follow_max_followers;
+                    $ig_profile->next_like_time = $master_instagram_profile->next_like_time;
+                    $ig_profile->auto_like_ban = $master_instagram_profile->auto_like_ban;
+                    $ig_profile->auto_like_ban_time = $master_instagram_profile->auto_like_ban_time;
+                    $ig_profile->auto_comment_ban = $master_instagram_profile->auto_comment_ban;
+                    $ig_profile->auto_comment_ban_time = $master_instagram_profile->auto_comment_ban_time;
+                    $ig_profile->next_comment_time = $master_instagram_profile->next_comment_time;
+                    $ig_profile->unfollow_unfollowed = $master_instagram_profile->unfollow_unfollowed;
+                    $ig_profile->follow_min_followers = $master_instagram_profile->follow_min_followers;
+                    $ig_profile->follow_unfollow_delay = $master_instagram_profile->follow_unfollow_delay;
+                    $ig_profile->follow_recent_engaged = $master_instagram_profile->follow_recent_engaged;
+                    $ig_profile->checkpoint_required = $master_instagram_profile->checkpoint_required;
+                    $ig_profile->account_disabled = $master_instagram_profile->account_disabled;
+                    $ig_profile->invalid_user = $master_instagram_profile->invalid_user;
+                    $ig_profile->incorrect_pw = $master_instagram_profile->incorrect_pw;
+                    $ig_profile->invalid_proxy = $master_instagram_profile->invalid_proxy;
+                    $ig_profile->feedback_required = $master_instagram_profile->feedback_required;
+                    $ig_profile->comment_feedback_required = $master_instagram_profile->comment_feedback_required;
+                    $ig_profile->error_msg = $master_instagram_profile->error_msg;
+                    $ig_profile->proxy = $master_instagram_profile->proxy;
+                    $ig_profile->updated_at = $master_instagram_profile->updated_at;
+                    $ig_profile->created_at = $master_instagram_profile->created_at;
+                    if ($ig_profile->save()) {
+                        echo ($ig_profile);
+                    }
+                }
             }
         }
+        
+        
     }
 
 }
