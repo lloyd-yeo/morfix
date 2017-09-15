@@ -79,7 +79,7 @@ return [
     */
 
     'failed' => [
-        'database' => env('DB_CONNECTION_QUEUE', 'mysql_queue'),
+        'database' => env('DB_CONNECTION_QUEUE', 'mysql'),
         'table' => 'failed_jobs',
     ],
 
