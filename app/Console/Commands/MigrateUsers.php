@@ -24,7 +24,7 @@ class MigrateUsers extends Command {
      *
      * @var string
      */
-    protected $description = 'Migrate User, InstagramProfile to the target table.';
+    protected $description = 'Initial Migration of User, InstagramProfile to the target table.';
 
     /**
      * Create a new command instance.
@@ -41,12 +41,19 @@ class MigrateUsers extends Command {
      * @return mixed
      */
     public function handle() {
+        
         $master_users = DB::connection('mysql_master')
                 ->table('user')
                 ->where('partition', $this->argument('partition'))
                 ->get();
 
         foreach ($master_users as $master_user) {
+            
+            //refresh user.
+            $user_ = User::find($master_user->user_id);
+            if ($user_ !== NULL) {
+                $user_->delete();
+            }
             
             $this->line($master_user);
             $user = new User();
@@ -94,6 +101,13 @@ class MigrateUsers extends Command {
                 ->get();
                 
                 foreach ($master_instagram_profiles as $master_instagram_profile) {
+                    
+                    //refresh user.
+                    $profile = InstagramProfile::find($master_instagram_profile->id);
+                    if ($profile !== NULL) {
+                        $profile->delete();
+                    }
+                    
                     $ig_profile = new InstagramProfile;
                     $ig_profile->id = $master_instagram_profile->id;
                     $ig_profile->user_id = $master_instagram_profile->user_id;
@@ -155,6 +169,7 @@ class MigrateUsers extends Command {
                     $ig_profile->proxy = $master_instagram_profile->proxy;
                     $ig_profile->updated_at = $master_instagram_profile->updated_at;
                     $ig_profile->created_at = $master_instagram_profile->created_at;
+                    
                     if ($ig_profile->save()) {
                         
                         $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
@@ -204,6 +219,8 @@ class MigrateUsers extends Command {
                             $target_username->last_checked = $master_user_insta_target_username->last_checked;
                             $target_username->save();
                         }
+                        
+                        
                         
                     }
                 }
