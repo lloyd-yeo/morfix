@@ -55,19 +55,11 @@ class InteractionLike extends Command {
      */
     public function handle() {
         if (NULL === $this->argument("email")) {
-            
-            $users = array();
-            if ($this->argument('partition') === NULL) {
-                $users = DB::table('user')
-                        ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
-                        ->orderBy('user_id', 'asc')
-                        ->get();
-            } else {
-                $users = DB::table('user')
-                        ->where('partition', $this->argument('partition'))
-                        ->orderBy('user_id', 'asc')
-                        ->get();
-            }
+
+            $users = DB::table('user')
+                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                    ->orderBy('user_id', 'asc')
+                    ->get();
 
             foreach ($users as $user) {
 
@@ -82,17 +74,17 @@ class InteractionLike extends Command {
                             ->get();
 
                     foreach ($instagram_profiles as $ig_profile) {
-                        
+
                         $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
                         $queue_name = "";
-                        
+
                         if ($user->partition === 0) {
                             $queue_name = "likes";
                         } else if ($user->partition > 0) {
                             $queue_name = 'likes' . $user->partition;
                         }
-                        
-                         $job->onQueue($queue_name);
+
+                        $job->onQueue($queue_name);
                         dispatch($job);
                         $this->line("[] queued profile: " . $ig_profile->insta_username);
                     }
@@ -140,7 +132,7 @@ class InteractionLike extends Command {
     }
 
     public function jobHandle($user, $ig_profile) {
-        
+
         $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
 
         $ig_username = $ig_profile->insta_username;
