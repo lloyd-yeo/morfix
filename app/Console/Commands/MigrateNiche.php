@@ -39,7 +39,11 @@ class MigrateNiche extends Command
      * @return mixed
      */
     public function handle()
-    {
+    {   
+        DB::table('niches')->delete();
+        DB::table('niche_targets')->delete();
+        DB::table('niche_targets_hashtags')->delete();
+        
         $master_niches = DB::connection('mysql_master')
                         ->table('niches')
                         ->get();
