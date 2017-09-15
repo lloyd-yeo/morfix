@@ -7,6 +7,8 @@ use DB;
 use App\User;
 use App\InstagramProfile;
 use App\IGProfileCookie;
+use App\InstagramProfileTargetHashtag;
+use App\InstagramProfileTargetUsername;
 
 class MigrateUsers extends Command {
 
@@ -85,7 +87,6 @@ class MigrateUsers extends Command {
             $user->partition = $master_user->partition;
             
             if ($user->save()) {
-//                echo($user);
                 
                 $master_instagram_profiles = DB::connection('mysql_master')
                 ->table('user_insta_profile')
@@ -173,10 +174,37 @@ class MigrateUsers extends Command {
                             }
                         }
                         
-//                        $ig_profile_cookies = IGProfileCookie::all();
-//                        foreach ($ig_profile_cookies as $ig_profile_cookie) {
-//                            echo ($ig_profile_cookie);
-//                        }
+                        $master_user_insta_target_hashtags = DB::connection('mysql_master')
+                        ->table('user_insta_target_hashtag')
+                        ->where('insta_username', $ig_profile->insta_username)
+                        ->get();
+                        
+                        foreach ($master_user_insta_target_hashtags as $master_user_insta_target_hashtag) {
+                            $target_hashtag = new InstagramProfileTargetHashtag;
+                            $target_hashtag->id = $master_user_insta_target_hashtag->id;
+                            $target_hashtag->insta_id = $master_user_insta_target_hashtag->insta_id;
+                            $target_hashtag->insta_username = $master_user_insta_target_hashtag->insta_username;
+                            $target_hashtag->hashtag = $master_user_insta_target_hashtag->hashtag;
+                            $target_hashtag->save();
+                        }
+                        
+                        $master_user_insta_target_usernames = DB::connection('mysql_master')
+                        ->table('user_insta_target_username')
+                        ->where('insta_username', $ig_profile->insta_username)
+                        ->get();
+                        
+                        foreach ($master_user_insta_target_usernames as $master_user_insta_target_username) {
+                            $target_username = new InstagramProfileTargetUsername;
+                            $target_username->target_id = $master_user_insta_target_username->target_id;
+                            $target_username->insta_id = $master_user_insta_target_username->insta_id;
+                            $target_username->insta_username = $master_user_insta_target_username->insta_username;
+                            $target_username->target_username = $master_user_insta_target_username->target_username;
+                            $target_username->invalid = $master_user_insta_target_username->invalid;
+                            $target_username->insufficient_followers = $master_user_insta_target_username->insufficient_followers;
+                            $target_username->last_checked = $master_user_insta_target_username->last_checked;
+                            $target_username->save();
+                        }
+                        
                     }
                 }
             }
