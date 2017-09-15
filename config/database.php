@@ -53,6 +53,20 @@ return [
             'engine' => null,
         ],
         
+        'mysql_queue' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '52.221.60.235'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'insta_affiliate'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', 'inst@ffiliates123'),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+        
         'mysql_old' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST_2', '52.221.60.235'),

@@ -75,13 +75,17 @@ class InteractionLike extends Command {
                     foreach ($instagram_profiles as $ig_profile) {
                         
                         $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                        $queue_name = "";
+                        
                         if ($user->partition === 0) {
-                            $job->onQueue('likes');
+                            $queue_name = "likes";
                         } else if ($user->partition > 0) {
-                            $job->onQueue('likes' . $user->partition);
+                            $queue_name = 'likes' . $user->partition;
                         }
+                        
+                         $job->onQueue($queue_name);
                         dispatch($job);
-                        $this->line("queued profile: " . $ig_profile->insta_username);
+                        $this->line("[] queued profile: " . $ig_profile->insta_username);
                     }
                 }
             }
