@@ -159,9 +159,9 @@ class InteractionLike extends Command {
 
         try {
             $like_quota = rand(1, 3);
-            $instagram->setUser($ig_username, $ig_password);
-            $explorer_response = $instagram->login();
-//            $explorer_response = $instagram->login($ig_username, $ig_password);
+//            $instagram->setUser($ig_username, $ig_password);
+//            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_username, $ig_password);
             $this->line("[$ig_username] Logged in \t Round-Quota: " . $like_quota);
 
             /*
