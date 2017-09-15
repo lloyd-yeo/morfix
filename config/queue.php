@@ -35,10 +35,10 @@ return [
         ],
 
         'database' => [
-            'connections' => 'mysql_queue',
+            'connections' => 'mysql',
             'driver' => 'database',
             'table' => 'jobs',
-            'queue' => 'likes1',
+            'queue' => 'default',
             'retry_after' => 90,
         ],
 
