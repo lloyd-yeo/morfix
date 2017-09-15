@@ -55,6 +55,7 @@ class InteractionLike extends Command {
      */
     public function handle() {
         if (NULL === $this->argument("email")) {
+            
             $users = array();
             if ($this->argument('partition') === NULL) {
                 $users = DB::table('user')
@@ -63,7 +64,7 @@ class InteractionLike extends Command {
                         ->get();
             } else {
                 $users = DB::table('user')
-                        ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile) AND partition = ' . $this->argument('partition'))
+                        ->where('partition', $this->argument('partition'))
                         ->orderBy('user_id', 'asc')
                         ->get();
             }
