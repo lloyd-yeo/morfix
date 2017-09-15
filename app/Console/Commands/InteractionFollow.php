@@ -226,7 +226,16 @@ class InteractionFollow extends Command {
     }
 
     public function loginSegment(Instagram $instagram, $ig_profile) {
-        //[LOGIN segment]
+        /*
+            - set proxy
+            - set user
+            - try 
+                -  login
+            - catch
+                - NetworkException
+                - IncorrectPasswordException
+        */
+
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
         $instagram->setProxy($ig_profile->proxy);
