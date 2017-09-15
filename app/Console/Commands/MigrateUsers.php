@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use DB;
 use App\User;
 use App\InstagramProfile;
+use App\IGProfileCookie;
 
 class MigrateUsers extends Command {
 
@@ -154,7 +155,11 @@ class MigrateUsers extends Command {
                     $ig_profile->updated_at = $master_instagram_profile->updated_at;
                     $ig_profile->created_at = $master_instagram_profile->created_at;
                     if ($ig_profile->save()) {
-                        echo ($ig_profile);
+//                        echo ($ig_profile);
+                        $ig_profile_cookies = IGProfileCookie::all();
+                        foreach ($ig_profile_cookies as $ig_profile_cookie) {
+                            echo ($ig_profile_cookie);
+                        }
                     }
                 }
             }
