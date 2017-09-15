@@ -30,7 +30,7 @@ class InteractionLike extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:like {email?}';
+    protected $signature = 'interaction:like {email?} {partition?}';
 
     /**
      * The console command description.
@@ -55,6 +55,7 @@ class InteractionLike extends Command {
      */
     public function handle() {
         if (NULL === $this->argument("email")) {
+
             $users = DB::table('user')
                     ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
@@ -73,15 +74,19 @@ class InteractionLike extends Command {
                             ->get();
 
                     foreach ($instagram_profiles as $ig_profile) {
-                        
+
                         $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                        $queue_name = "";
+
                         if ($user->partition === 0) {
-                            $job->onQueue('likes');
+                            $queue_name = "likes";
                         } else if ($user->partition > 0) {
-                            $job->onQueue('likes' . $user->partition);
+                            $queue_name = 'likes' . $user->partition;
                         }
+
+                        $job->onQueue($queue_name);
                         dispatch($job);
-                        $this->line("queued profile: " . $ig_profile->insta_username);
+                        $this->line("[] queued profile: " . $ig_profile->insta_username);
                     }
                 }
             }
@@ -101,7 +106,7 @@ class InteractionLike extends Command {
                     ->where('user_id', $user->user_id)
                     ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                     ->get();
-
+//            dump($instagram_profiles);
             try {
 
 //                foreach ($instagram_profiles as $ig_profile) {
@@ -127,7 +132,7 @@ class InteractionLike extends Command {
     }
 
     public function jobHandle($user, $ig_profile) {
-        
+
         $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
 
         $ig_username = $ig_profile->insta_username;
@@ -141,7 +146,7 @@ class InteractionLike extends Command {
         $debug = false;
         $truncatedDebug = false;
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
+        
         if ($ig_profile->proxy === NULL) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
@@ -154,8 +159,7 @@ class InteractionLike extends Command {
 
         try {
             $like_quota = rand(1, 3);
-            $instagram->setUser($ig_username, $ig_password);
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_username, $ig_password);
             $this->line("[$ig_username] Logged in \t Round-Quota: " . $like_quota);
 
             /*

@@ -118,7 +118,15 @@ class InteractionFollow extends Command {
     }
 
     private function jobHandle($ig_profile) {
-        
+        /*
+            - Check if feedback is required, echo feedback
+            - Initialize Variables
+            - Get followed logs
+            - Check followed logs count is greater than follow cycle, save
+            - Get unfollow delay
+            - If unfollowing, unfollow
+            - If auto follow, follow
+        */
         if ($ig_profile->feedback_required == 1) {
             echo "[" . $ig_profile->insta_username . "] has feedback_required flag on.\n";
         }
@@ -218,7 +226,16 @@ class InteractionFollow extends Command {
     }
 
     public function loginSegment(Instagram $instagram, $ig_profile) {
-        //[LOGIN segment]
+        /*
+            - set proxy
+            - set user
+            - try 
+                -  login
+            - catch
+                - NetworkException, login again
+                - IncorrectPasswordException, exit
+        */
+
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
         $instagram->setProxy($ig_profile->proxy);
@@ -246,6 +263,17 @@ class InteractionFollow extends Command {
     }
 
     private function forcedToUnfollow(Instagram $instagram, $ig_profile) {
+
+        /*
+            - If auto_unfollow = 1, auto_follow == 0
+                - Get followings users
+                    - try
+                        - Query: InstagramProfileFollowLog
+                        - Save
+                    - catch
+                        - Exception
+            - Else, save
+        */
         $insta_username = $this->insta_username;
         echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
 
@@ -287,7 +315,7 @@ class InteractionFollow extends Command {
                 - Login
                 - Get Users to unfollow
                     - 0, force to unfollow
-                    - > 0, 
+                    - 0, 
             catch:
                 - CheckpointRequiredException
                 - NetworkException
