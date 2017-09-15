@@ -105,7 +105,7 @@ class InteractionLike extends Command {
                     ->where('user_id', $user->user_id)
                     ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                     ->get();
-
+            dump($instagram_profiles);
             try {
 
 //                foreach ($instagram_profiles as $ig_profile) {
