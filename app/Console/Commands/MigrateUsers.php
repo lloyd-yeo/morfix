@@ -157,6 +157,7 @@ class MigrateUsers extends Command {
                     if ($ig_profile->save()) {
                         
                         $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
+                        ->where('username', $ig_profile->insta_username)
                         ->table('instagram_sessions')
                         ->get();
                         
