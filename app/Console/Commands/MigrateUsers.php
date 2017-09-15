@@ -17,7 +17,7 @@ class MigrateUsers extends Command {
      *
      * @var string
      */
-    protected $signature = 'migrate:user {partition}';
+    protected $signature = 'migrate:user {partition} {mode?}';
 
     /**
      * The console command description.
@@ -47,50 +47,66 @@ class MigrateUsers extends Command {
                 ->where('partition', $this->argument('partition'))
                 ->get();
 
+        $partition_user_ids = array();
+
         foreach ($master_users as $master_user) {
-
             $user = $this->addNewUser($master_user);
-
             if ($user !== NULL) {
+                $partition_user_ids[] = $user->user_id;
+            }
+        }
 
-                $master_instagram_profiles = DB::connection('mysql_master')
-                        ->table('user_insta_profile')
-                        ->where('email', $user->email)
+        $master_instagram_profiles = DB::connection('mysql_master')
+                ->table('user_insta_profile')
+                ->whereIn('user_id', $partition_user_ids)
+                ->get();
+
+        foreach ($master_instagram_profiles as $master_instagram_profile) {
+
+            $ig_profile = $this->addNewInstagramProfile($master_instagram_profile);
+
+            if ($ig_profile !== NULL) {
+
+                if ($this->argument('mode') == 'import') {
+                    
+                    $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
+                            ->table('instagram_sessions')
+                            ->where('username', $ig_profile->insta_username)
+                            ->get();
+
+                    foreach ($master_instagram_profile_cookies as $master_instagram_profile_cookie) {
+                        $this->addNewInstagramCookies($master_instagram_profile_cookie);
+                    }
+                    
+                } else if ($this->argument('mode') == 'refresh') {
+                    foreach (IGProfileCookie::all() as $ig_profile_cookie) {
+                        DB::connection('mysql_master_igsession')
+                                ->table('instagram_sessions')
+                                ->where('username', $ig_profile_cookie->id)
+                                ->update([
+                                    'settings' => $ig_profile_cookie->settings,
+                                    'cookies' => $ig_profile_cookie->cookies,
+                                    'last_modified' => $ig_profile_cookie->last_modified
+                        ]);
+                    }
+                }
+
+                $master_user_insta_target_hashtags = DB::connection('mysql_master')
+                        ->table('user_insta_target_hashtag')
+                        ->where('insta_username', $ig_profile->insta_username)
                         ->get();
 
-                foreach ($master_instagram_profiles as $master_instagram_profile) {
+                foreach ($master_user_insta_target_hashtags as $master_user_insta_target_hashtag) {
+                    $this->addNewInstagramProfileHashtag($master_user_insta_target_hashtag);
+                }
 
-                    $ig_profile = $this->addNewInstagramProfile($master_instagram_profile);
+                $master_user_insta_target_usernames = DB::connection('mysql_master')
+                        ->table('user_insta_target_username')
+                        ->where('insta_username', $ig_profile->insta_username)
+                        ->get();
 
-                    if ($ig_profile !== NULL) {
-
-                        $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
-                                ->table('instagram_sessions')
-                                ->where('username', $ig_profile->insta_username)
-                                ->get();
-
-                        foreach ($master_instagram_profile_cookies as $master_instagram_profile_cookie) {
-                            $this->addNewInstagramCookies($master_instagram_profile_cookie);
-                        }
-
-                        $master_user_insta_target_hashtags = DB::connection('mysql_master')
-                                ->table('user_insta_target_hashtag')
-                                ->where('insta_username', $ig_profile->insta_username)
-                                ->get();
-
-                        foreach ($master_user_insta_target_hashtags as $master_user_insta_target_hashtag) {
-                            $this->addNewInstagramProfileHashtag($master_user_insta_target_hashtag);
-                        }
-
-                        $master_user_insta_target_usernames = DB::connection('mysql_master')
-                                ->table('user_insta_target_username')
-                                ->where('insta_username', $ig_profile->insta_username)
-                                ->get();
-
-                        foreach ($master_user_insta_target_usernames as $master_user_insta_target_username) {
-                            $this->addNewInstagramProfileUsername($master_user_insta_target_username);
-                        }
-                    }
+                foreach ($master_user_insta_target_usernames as $master_user_insta_target_username) {
+                    $this->addNewInstagramProfileUsername($master_user_insta_target_username);
                 }
             }
         }
@@ -101,6 +117,7 @@ class MigrateUsers extends Command {
         $user_ = User::find($master_user->user_id);
         if ($user_ !== NULL) {
             $user_->delete();
+            DB::table('user_insta_profile')->where('email', $user_->email)->delete();
         }
 
         $this->line($master_user);
@@ -150,6 +167,7 @@ class MigrateUsers extends Command {
 
     private function addNewInstagramProfile($master_instagram_profile) {
         //refresh user.
+
         $profile = InstagramProfile::find($master_instagram_profile->id);
         if ($profile !== NULL) {
             $profile->delete();
@@ -225,14 +243,19 @@ class MigrateUsers extends Command {
     }
 
     private function addNewInstagramCookies($master_instagram_profile_cookie) {
+        $ig_profile_cookie_local = IGProfileCookie::find($master_instagram_profile_cookie->id);
+        if ($ig_profile_cookie_local !== NULL) {
+            $ig_profile_cookie_local->delete();
+        }
         $ig_profile_cookie = new IGProfileCookie;
         $ig_profile_cookie->id = $master_instagram_profile_cookie->id;
         $ig_profile_cookie->username = $master_instagram_profile_cookie->username;
         $ig_profile_cookie->settings = $master_instagram_profile_cookie->settings;
         $ig_profile_cookie->cookies = $master_instagram_profile_cookie->cookies;
         $ig_profile_cookie->last_modified = $master_instagram_profile_cookie->last_modified;
+        
         if ($ig_profile_cookie->save()) {
-//            dump($ig_profile_cookie);
+            
         }
     }
 
@@ -244,7 +267,7 @@ class MigrateUsers extends Command {
         $target_hashtag->hashtag = $master_user_insta_target_hashtag->hashtag;
         $target_hashtag->save();
     }
-    
+
     private function addNewInstagramProfileUsername($master_user_insta_target_username) {
         $target_username = new InstagramProfileTargetUsername;
         $target_username->target_id = $master_user_insta_target_username->target_id;
@@ -256,6 +279,5 @@ class MigrateUsers extends Command {
         $target_username->last_checked = $master_user_insta_target_username->last_checked;
         $target_username->save();
     }
-    
-    
+
 }
