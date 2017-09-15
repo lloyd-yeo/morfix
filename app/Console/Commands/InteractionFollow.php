@@ -118,7 +118,15 @@ class InteractionFollow extends Command {
     }
 
     private function jobHandle($ig_profile) {
-        
+        /*
+            - Check if feedback is required, echo feedback
+            - Initialize Variables
+            - Get followed logs
+            - Check followed logs count is greater than follow cycle, save
+            - Get unfollow delay
+            - If unfollowing, unfollow
+            - If auto follow, follow
+        */
         if ($ig_profile->feedback_required == 1) {
             echo "[" . $ig_profile->insta_username . "] has feedback_required flag on.\n";
         }
@@ -287,7 +295,7 @@ class InteractionFollow extends Command {
                 - Login
                 - Get Users to unfollow
                     - 0, force to unfollow
-                    - > 0, 
+                    - 0, 
             catch:
                 - CheckpointRequiredException
                 - NetworkException
