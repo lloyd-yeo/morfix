@@ -115,7 +115,6 @@ class MigrateUsers extends Command {
             DB::table('user_insta_profile')->where('email', $user_->email)->delete();
         }
 
-        $this->line($master_user);
         $user = new User();
         $user->user_id = $master_user->user_id;
         $user->email = $master_user->email;
