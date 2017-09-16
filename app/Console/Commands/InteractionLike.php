@@ -59,12 +59,12 @@ class InteractionLike extends Command {
             $this->line("Beginning sequence to queue jobs...");
 
             $users = DB::table('user')
-                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
                     ->get();
 
             foreach ($users as $user) {
                 if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
+                    
                     $instagram_profiles = InstagramProfile::where('auto_like', true)
                             ->where('checkpoint_required', false)
                             ->where('account_disabled', false)
@@ -72,6 +72,7 @@ class InteractionLike extends Command {
                             ->where('incorrect_pw', false)
                             ->where('user_id', $user->user_id)
                             ->get();
+                    
                     foreach ($instagram_profiles as $ig_profile) {
 
                         if ($ig_profile->next_like_time === NULL) {
