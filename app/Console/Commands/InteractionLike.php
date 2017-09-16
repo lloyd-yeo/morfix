@@ -55,9 +55,9 @@ class InteractionLike extends Command {
      */
     public function handle() {
         if (NULL === $this->argument("email")) {
-            
+
             $this->line("Beginning sequence to queue jobs...");
-            
+
             $users = DB::table('user')
                     ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
@@ -71,17 +71,30 @@ class InteractionLike extends Command {
                             ->where('invalid_user', false)
                             ->where('incorrect_pw', false)
                             ->where('user_id', $user->user_id)
-                            ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                             ->get();
                     foreach ($instagram_profiles as $ig_profile) {
-                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                        $job->onQueue("likes");
-                        dispatch($job);
-                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+
+                        if ($ig_profile->next_like_time === NULL) {
+                            
+                            $ig_profile->next_like_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            
+                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                            $job->onQueue("likes");
+                            dispatch($job);
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                            
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                            
+                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                            $job->onQueue("likes");
+                            dispatch($job);
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                            
+                        }
                     }
                 }
             }
-            
         } else {
             $user = User::where('email', $this->argument("email"))->first();
 
@@ -98,7 +111,7 @@ class InteractionLike extends Command {
                     ->where('user_id', $user->user_id)
                     ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                     ->get();
-            
+
             try {
 
 //                foreach ($instagram_profiles as $ig_profile) {
@@ -138,7 +151,7 @@ class InteractionLike extends Command {
         $debug = false;
         $truncatedDebug = false;
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-        
+
         if ($ig_profile->proxy === NULL) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
