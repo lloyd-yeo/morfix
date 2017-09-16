@@ -62,7 +62,6 @@ class InteractionLike extends Command {
                     ->get();
 
             foreach ($users as $user) {
-
                 if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
                     $instagram_profiles = InstagramProfile::where('auto_like', true)
                             ->where('checkpoint_required', false)
@@ -76,17 +75,9 @@ class InteractionLike extends Command {
                     foreach ($instagram_profiles as $ig_profile) {
 
                         $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                        $queue_name = "";
-
-                        if ($user->partition === 0) {
-                            $queue_name = "likes";
-                        } else if ($user->partition > 0) {
-                            $queue_name = 'likes' . $user->partition;
-                        }
-
-                        $job->onQueue($queue_name);
+                        $job->onQueue("likes");
                         dispatch($job);
-                        $this->line("[] queued profile: " . $ig_profile->insta_username);
+                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
                     }
                 }
             }
