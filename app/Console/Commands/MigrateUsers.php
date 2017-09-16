@@ -79,16 +79,7 @@ class MigrateUsers extends Command {
                     }
                     
                 } else if ($this->argument('mode') == 'refresh') {
-//                    foreach (IGProfileCookie::all() as $ig_profile_cookie) {
-//                        DB::connection('mysql_master_igsession')
-//                                ->table('instagram_sessions')
-//                                ->where('username', $ig_profile_cookie->id)
-//                                ->update([
-//                                    'settings' => $ig_profile_cookie->settings,
-//                                    'cookies' => $ig_profile_cookie->cookies,
-//                                    'last_modified' => $ig_profile_cookie->last_modified
-//                        ]);
-//                    }
+                    
                 }
 
                 $master_user_insta_target_hashtags = DB::connection('mysql_master')
