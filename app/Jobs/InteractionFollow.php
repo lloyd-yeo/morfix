@@ -176,10 +176,10 @@ class InteractionFollow implements ShouldQueue {
 
                 //[LOGIN segment]
                 $instagram->setProxy($ig_profile->proxy);
-//                $instagram->setUser($ig_username, $ig_password);
+                $instagram->setUser($ig_username, $ig_password);
 
                 try {
-                    $instagram->login($ig_username, $ig_password);
+                    $instagram->login();
                     echo "[$ig_username] logged in.\n";
                 } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
 
