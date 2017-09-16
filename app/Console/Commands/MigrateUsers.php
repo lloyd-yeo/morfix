@@ -79,16 +79,16 @@ class MigrateUsers extends Command {
                     }
                     
                 } else if ($this->argument('mode') == 'refresh') {
-                    foreach (IGProfileCookie::all() as $ig_profile_cookie) {
-                        DB::connection('mysql_master_igsession')
-                                ->table('instagram_sessions')
-                                ->where('username', $ig_profile_cookie->id)
-                                ->update([
-                                    'settings' => $ig_profile_cookie->settings,
-                                    'cookies' => $ig_profile_cookie->cookies,
-                                    'last_modified' => $ig_profile_cookie->last_modified
-                        ]);
-                    }
+//                    foreach (IGProfileCookie::all() as $ig_profile_cookie) {
+//                        DB::connection('mysql_master_igsession')
+//                                ->table('instagram_sessions')
+//                                ->where('username', $ig_profile_cookie->id)
+//                                ->update([
+//                                    'settings' => $ig_profile_cookie->settings,
+//                                    'cookies' => $ig_profile_cookie->cookies,
+//                                    'last_modified' => $ig_profile_cookie->last_modified
+//                        ]);
+//                    }
                 }
 
                 $master_user_insta_target_hashtags = DB::connection('mysql_master')
@@ -238,6 +238,15 @@ class MigrateUsers extends Command {
         $ig_profile->proxy = $master_instagram_profile->proxy;
         $ig_profile->updated_at = $master_instagram_profile->updated_at;
         $ig_profile->created_at = $master_instagram_profile->created_at;
+        
+        $ig_profile->daily_likes = $master_instagram_profile->daily_likes;
+        $ig_profile->daily_follows = $master_instagram_profile->daily_follows;
+        $ig_profile->daily_comments = $master_instagram_profile->daily_comments;
+        $ig_profile->daily_unfollows = $master_instagram_profile->daily_unfollows;
+        $ig_profile->total_likes = $master_instagram_profile->total_likes;
+        $ig_profile->total_comments = $master_instagram_profile->total_comments;
+        $ig_profile->total_follows = $master_instagram_profile->total_follows;
+        $ig_profile->total_unfollows = $master_instagram_profile->total_unfollows;
 
         if ($ig_profile->save()) {
             return $ig_profile;
