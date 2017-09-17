@@ -30,7 +30,7 @@ class InteractionLike extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:like {email?}';
+    protected $signature = 'interaction:like {email?} {partition?}';
 
     /**
      * The console command description.
@@ -55,37 +55,44 @@ class InteractionLike extends Command {
      */
     public function handle() {
         if (NULL === $this->argument("email")) {
+
+            $this->line("Beginning sequence to queue jobs...");
+
             $users = DB::table('user')
-                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
                     ->get();
 
             foreach ($users as $user) {
-
                 if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
+                    
                     $instagram_profiles = InstagramProfile::where('auto_like', true)
                             ->where('checkpoint_required', false)
                             ->where('account_disabled', false)
                             ->where('invalid_user', false)
                             ->where('incorrect_pw', false)
                             ->where('user_id', $user->user_id)
-                            ->where('next_like_time', '<=', \Carbon\Carbon::now()->toDateTimeString())
                             ->get();
-
+                    
                     foreach ($instagram_profiles as $ig_profile) {
-                        
-                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                        $queue_name = "";
-                        
-                        if ($user->partition === 0) {
-                            $queue_name = "likes";
-                        } else if ($user->partition > 0) {
-                            $queue_name = 'likes' . $user->partition;
+
+                        if ($ig_profile->next_like_time === NULL) {
+                            
+                            $ig_profile->next_like_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            
+                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                            $job->onQueue("likes");
+                            dispatch($job);
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                            
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                            
+                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                            $job->onQueue("likes");
+                            dispatch($job);
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                            
                         }
-                        
-                         $job->onQueue($queue_name);
-                        dispatch($job);
-                        $this->line("[] queued profile: " . $ig_profile->insta_username);
                     }
                 }
             }
@@ -131,7 +138,7 @@ class InteractionLike extends Command {
     }
 
     public function jobHandle($user, $ig_profile) {
-        
+
         $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
 
         $ig_username = $ig_profile->insta_username;
@@ -158,8 +165,9 @@ class InteractionLike extends Command {
 
         try {
             $like_quota = rand(1, 3);
-            $instagram->setUser($ig_username, $ig_password);
-            $explorer_response = $instagram->login();
+//            $instagram->setUser($ig_username, $ig_password);
+//            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_username, $ig_password);
             $this->line("[$ig_username] Logged in \t Round-Quota: " . $like_quota);
 
             /*
@@ -306,10 +314,14 @@ class InteractionLike extends Command {
                                         echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
 
                                         if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
-                                            $blacklist_username = new BlacklistedUsername;
-                                            $blacklist_username->username = $user_to_like->username;
-                                            $blacklist_username->save();
-                                            echo("\n" . "Blacklisted: " . $user_to_like->username);
+                                            if (BlacklistedUsername::where('username', $user_to_like->username)->count() == 0) {
+                                                $blacklist_username = new BlacklistedUsername;
+                                                $blacklist_username->username = $user_to_like->username;
+                                                $blacklist_username->save();
+                                                echo("\n" . "Blacklisted: " . $user_to_like->username);
+                                            } else {
+                                                echo("\n" . "Is a blacklisted username.");
+                                            }
                                         }
                                         continue;
                                     } catch (\Exception $ex) {

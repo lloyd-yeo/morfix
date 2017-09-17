@@ -72,6 +72,11 @@ class InteractionFollow extends Command {
     protected $proxy;
     protected $delay;
 
+
+    protected $use_hashtags;
+    protected $target_hashtags;
+    protected $target_usernames;
+
     public function __construct() {
         parent::__construct();
     }
@@ -82,6 +87,17 @@ class InteractionFollow extends Command {
      * @return mixed
      */
     public function handle() {
+
+        /*
+            - Get users if email argument is not Null
+            - Get users if email argument is Null in whereRaw
+            - Loop Users
+                - get instagram_profiles 
+                    - if email argument is null & tier is 1 and activation is 1
+                        - dispatch InteractionFollow Job
+                    - else, call handle again(Recursion)
+
+        */
         $users = NULL;
         if (NULL !== $this->argument("email")) {
             $this->line('email: ' . $this->argument("email"));
@@ -212,9 +228,16 @@ class InteractionFollow extends Command {
         $this->follow_quota = $ig_profile->follow_quota;
         $this->unfollow_quota = $ig_profile->unfollow_quota;
         $this->proxy = $ig_profile->proxy;
+
+        $this->use_hashtags     = NULL;
+        $this->target_hashtags  = NULL;
+        $this->target_usernames = NULL;
     }
 
     private function followUnfollowDelay($speed) {
+        /*
+            Set Delay
+        */
         switch ($speed) {
             case 'Fast': return 2;
             case 'Medium': return 3;
@@ -462,12 +485,59 @@ class InteractionFollow extends Command {
         }
     }
 
+    private function useHashtag(){
+        //start with targeted usernames/hashtags
+        $use_hashtags = rand(0, 1);
+        echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
+        $target_hashtags = NULL;
+        $target_usernames = NULL;
+
+        if ($use_hashtags == 1) {
+            $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
+            $target_hashtags->shuffle();
+            if (count($target_hashtags) == 0) {
+                $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)
+                        ->where('invalid', 0)
+                        ->where('insufficient_followers', 0)
+                        ->get();
+                $target_usernames->shuffle();
+                $use_hashtags = 0;
+            }
+        } else if ($use_hashtags == 0) {
+            $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)
+                    ->where('invalid', 0)
+                    ->where('insufficient_followers', 0)
+                    ->get();
+            $target_usernames->shuffle();
+            if (count($target_usernames) == 0) {
+                $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
+                $target_hashtags->shuffle();
+                if (count($target_hashtags) > 0) {
+                    $use_hashtags = 1;
+                } else {
+                    $use_hashtags = 0;
+                }
+            }
+        }
+       $this->use_hashtags = $use_hashtags;
+       $this->target_hashtags = $target_hashtags;
+       $this->target_usernames = $target_usernames;
+    }
+
     private function autoFollow($ig_profile) {
         /*
             - Configure the Database
             - set proxy
             try:
                 - login
+                - follow quota < 1, exit
+                - configure database
+                - set proxy
+            try:
+                - Login
+                - Get Users to unfollow
+                    - 0, force to unfollow
+                    - 0, 
             catch:
                 - NetworkException
                 - IncorrectPasswordException
@@ -475,7 +545,6 @@ class InteractionFollow extends Command {
                 - SentryBlockException
                 - EndpointException
         */
-        
         $insta_username = $ig_profile->insta_username;
         $follow_quota = $this->follow_quota;
         $unfollow_quota = $this->unfollow_quota;
@@ -550,44 +619,18 @@ class InteractionFollow extends Command {
         }
         
         //[End LOGIN]
-        //start with targeted usernames/hashtags
-        $use_hashtags = rand(0, 1);
-        echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
-        $target_hashtags = NULL;
-        $target_usernames = NULL;
+        
 
-        if ($use_hashtags == 1) {
-            $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
-            $target_hashtags->shuffle();
-            if (count($target_hashtags) == 0) {
-                $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)
-                        ->where('invalid', 0)
-                        ->where('insufficient_followers', 0)
-                        ->get();
-                $target_usernames->shuffle();
-                $use_hashtags = 0;
-            }
-        } else if ($use_hashtags == 0) {
-            $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)
-                    ->where('invalid', 0)
-                    ->where('insufficient_followers', 0)
-                    ->get();
-            $target_usernames->shuffle();
-            if (count($target_usernames) == 0) {
-                $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
-                $target_hashtags->shuffle();
-                if (count($target_hashtags) > 0) {
-                    $use_hashtags = 1;
-                } else {
-                    $use_hashtags = 0;
-                }
-            }
-        }
-
+        $this->useHashtag();
+        $use_hashtags       = $this->use_hashtags;
+        $target_hashtags    = $this->target_hashtags;
+        $target_usernames   = $this->target_usernames;
+        
         echo "[" . $insta_username . "] AFTER random use hashtag: $use_hashtags\n";
         echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) . "] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $this->niche . "]\n";
         $followed = 0;
         $throttle_limit = 41;
+
 
         if ($use_hashtags == 1 && count($target_hashtags) > 0) {
 

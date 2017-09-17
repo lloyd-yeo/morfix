@@ -10,6 +10,7 @@ class Niche extends Model {
     
     protected $primaryKey = "niche_id";
     protected $table = "niches";
+    public $timestamps = false;
     
     public function targetUsernames() {
         if ($this->niche_id > 0) {

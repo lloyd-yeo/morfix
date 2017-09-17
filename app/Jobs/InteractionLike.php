@@ -86,10 +86,15 @@ class InteractionLike implements ShouldQueue {
 
         try {
             $like_quota = rand(1, 3);
-            $instagram->setUser($ig_username, $ig_password);
             
             try {
-                $explorer_response = $instagram->login();
+                
+                #Pre-update
+//                $instagram->setUser($ig_username, $ig_password);
+//                $explorer_response = $instagram->login();
+                #New-version
+                $explorer_response = $instagram->login($ig_username, $ig_password);
+                
             } catch (\InstagramAPI\Exception\SentryBlockException $sentry_block_ex) {
                 $proxy = Proxy::inRandomOrder()->first();
                 $ig_profile->proxy = $proxy->proxy;

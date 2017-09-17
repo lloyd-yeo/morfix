@@ -218,6 +218,50 @@
             </div>
         </div>
         <!-- Modules -->
+        <div class="row">
+             <div class="col-lg-6">
+                <!-- Material Lock -->
+                <div class="block block-themed">
+                    <div class="block-header bg-danger">
+                        <h3 class="block-title">Manually activate Follow</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <blockquote class='font-s12'>
+                                <p>
+                                    Instructions:
+                                <ol>
+                                    <li>Key in the <b>Morfix</b> email of the user to run Follow for manually.</li>
+                                    <li>Click run & wait, the details will be displayed below:</li>
+                                </ol>
+                                </p>
+                            </blockquote>
+                            <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
+                        </div>
+
+                        <form class="form-horizontal push-10" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <input class="form-control" type="email" id="interaction-follow-email" name="interaction-follow-email" 
+                                               placeholder="Enter user's email...">w
+                                        <label for="interaction-follow-email">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button id='interaction-follow-btn' class="btn btn-sm btn-danger" type="submit">
+                                        <i class="fa fa-hourglass push-5-r"></i> Run</button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+                <!-- END Material Lock -->
+            </div>           
+        </div>
     </div>
     <!-- END Page Content -->
 </main>
