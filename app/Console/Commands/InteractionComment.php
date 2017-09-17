@@ -146,6 +146,23 @@ public function login($ig_profile){
 }
 
 public function unengagedLikings($ig_username, $ig_profile){
+        /*
+        - Get unengaged_likings
+        - Loop unengaged_likings
+            - If InstagramProfileCommentLog, echo
+            - try:
+                - Get user_instagram_id
+            - catch:
+                - RequestException
+            - get user_feed
+            - get user_feed_items
+            - If user_feed_items > 0
+                - loop user_feed_items
+                    - save comment log
+                    - save ig_profile
+            - If Commented
+                - break
+    */
     $instagram = $this->instagram;
     $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                         ->orderBy('date_liked', 'desc')
@@ -153,7 +170,6 @@ public function unengagedLikings($ig_username, $ig_profile){
                         ->get();
 
         foreach ($unengaged_likings as $unengaged_liking) {
-            $commented = NULL;
             if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
                             ->where('target_username', $unengaged_liking->target_username)
                             ->count() > 0) {
@@ -183,6 +199,7 @@ public function unengagedLikings($ig_username, $ig_profile){
 
             $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
             $user_feed_items = $user_feed->items;
+            $commented = NULL;
 
             if (count($user_feed_items) > 0) {
 
@@ -222,6 +239,22 @@ public function unengagedLikings($ig_username, $ig_profile){
 }
 
 public function unengagedFollowings($unengaged_followings, $ig_profile){
+    /*
+        - Loop unengaged_followings
+            - If InstagramProfileCommentLog, echo
+            - try:
+                - Get user_instagram_id
+            - catch:
+                - RequestException
+            - get user_feed
+            - get user_feed_items
+            - If user_feed_items > 0
+                - loop user_feed_items
+                    - save comment log
+                    - save ig_profile
+            - If Commented
+                - break
+    */
      $instagram = $this->instagram;
      foreach ($unengaged_followings as $unengaged_following) {
         if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
@@ -252,7 +285,7 @@ public function unengagedFollowings($unengaged_followings, $ig_profile){
 
         $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
         $user_feed_items = $user_feed->items;
-
+        $commented = NULL;
         if (count($user_feed_items) > 0) {
             foreach ($user_feed_items as $item) {
 
@@ -281,7 +314,20 @@ public function unengagedFollowings($unengaged_followings, $ig_profile){
     }
 }
 public function executeCommenting($instagram_profiles) {
-
+    /*
+        - Loop instagram profiles
+            - login
+            - try:
+                - unengaged likings
+                - unengaged followings
+            - catch:
+                - CheckpointRequiredException
+                - IncorrectPasswordException
+                - EndpointException
+                - NetworkException
+                - AccountDisabledException
+                - RequestException
+    */
     foreach ($instagram_profiles as $ig_profile) {
 
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
