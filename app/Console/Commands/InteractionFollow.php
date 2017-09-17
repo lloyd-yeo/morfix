@@ -463,6 +463,18 @@ class InteractionFollow extends Command {
     }
 
     private function autoFollow($ig_profile) {
+        /*
+            - Configure the Database
+            - set proxy
+            try:
+                - login
+            catch:
+                - NetworkException
+                - IncorrectPasswordException
+                - CheckpointRequiredException
+                - SentryBlockException
+                - EndpointException
+        */
         
         $insta_username = $ig_profile->insta_username;
         $follow_quota = $this->follow_quota;
