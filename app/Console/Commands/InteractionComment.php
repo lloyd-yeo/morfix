@@ -86,15 +86,21 @@ class InteractionComment extends Command {
     }
 }
 
-function executeCommenting($instagram_profiles) {
 
-    foreach ($instagram_profiles as $ig_profile) {
+public function login($ig_profile){
 
-        echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
+        /*
+            - Set Config
+            - Save Procy
+            - Try:
+                - Login
+            - Catch
+                - NetworkException
+                - IncorrectPasswordException
 
+        */
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
-
         $config = array();
         $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
         $config["dbtablename"] = "instagram_sessions";
@@ -132,8 +138,19 @@ function executeCommenting($instagram_profiles) {
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
-            continue;
         }
+}
+public function executeCommenting($instagram_profiles) {
+
+    foreach ($instagram_profiles as $ig_profile) {
+
+        echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
+
+        $ig_username = $ig_profile->insta_username;
+        $ig_password = $ig_profile->insta_pw;
+
+        //Login
+        $this->login($ig_profile);
 
         try {
 
