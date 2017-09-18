@@ -44,7 +44,13 @@ class MigrateProxyList extends Command
                 ->get();
         
         foreach ($proxies as $proxy) {
-            
+            $new_proxy = new Proxy;
+            $new_proxy->proxy = $proxy->proxy;
+            $new_proxy->assigned = $proxy->proxy;
+            $new_proxy->error = $proxy->error;
+            if ($new_proxy->save()) {
+                $this->line("Migrated [" . $new_proxy->proxy . "]");
+            }
         }
         
     }
