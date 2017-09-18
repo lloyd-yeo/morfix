@@ -526,6 +526,10 @@ class InteractionFollow extends Command {
 
     private function autoFollow($ig_profile) {
         /*
+            - Configure the Database
+            - set proxy
+            try:
+                - login
                 - follow quota < 1, exit
                 - configure database
                 - set proxy
