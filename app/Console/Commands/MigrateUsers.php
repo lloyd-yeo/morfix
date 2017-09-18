@@ -159,14 +159,15 @@ class MigrateUsers extends Command {
     }
 
     private function addNewInstagramProfile($master_instagram_profile) {
+        
         //refresh user.
+        $profile = InstagramProfile::find($master_instagram_profile->id); #find
+        $ig_profile = $profile; #make $ig_profile the placeholder
 
-        $profile = InstagramProfile::find($master_instagram_profile->id);
-        if ($profile !== NULL) {
-            $profile->delete();
+        if ($profile === NULL) {
+            $ig_profile = new InstagramProfile;
         }
 
-        $ig_profile = new InstagramProfile;
         $ig_profile->id = $master_instagram_profile->id;
         $ig_profile->user_id = $master_instagram_profile->user_id;
         $ig_profile->email = $master_instagram_profile->email;
