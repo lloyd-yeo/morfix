@@ -436,17 +436,22 @@ class InteractionLike extends Command {
                             if ($like_quota > 0) {
 
                                 $like_response = $instagram->media->like($item->id);
-
+                                
                                 if ($like_response->status == "ok") {
+                                    
                                     $this->info("[$ig_username] Liked " . serialize($like_response));
+                                    
                                     $like_log = new InstagramProfileLikeLog;
                                     $like_log->insta_username = $ig_username;
                                     $like_log->target_username = $user_to_like->username;
                                     $like_log->target_media = $item->id;
                                     $like_log->target_media_code = $item->getItemUrl();
                                     $like_log->log = serialize($like_response);
-                                    $like_log->save();
+                                    if ($like_log->save()) {
+                                        $this->info("[$ig_username] Saved!");
+                                    }
                                     $like_quota--;
+                                    
                                 }
                             } else {
                                 return;
