@@ -69,16 +69,16 @@ class MigrateUsers extends Command {
 
                 if ($this->argument('mode') == 'import') {
 
-                    $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
-                            ->table('instagram_sessions')
-                            ->where('username', $ig_profile->insta_username)
-                            ->get();
+                    if (IGProfileCookie::where('username', $ig_profile->insta_username)->count() == 0) {
+                        $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
+                                ->table('instagram_sessions')
+                                ->where('username', $ig_profile->insta_username)
+                                ->get();
 
-                    foreach ($master_instagram_profile_cookies as $master_instagram_profile_cookie) {
-                        $this->addNewInstagramCookies($master_instagram_profile_cookie);
+                        foreach ($master_instagram_profile_cookies as $master_instagram_profile_cookie) {
+                            $this->addNewInstagramCookies($master_instagram_profile_cookie);
+                        }
                     }
-                } else if ($this->argument('mode') == 'refresh') {
-                    
                 }
 
                 $master_user_insta_target_hashtags = DB::connection('mysql_master')
@@ -109,7 +109,7 @@ class MigrateUsers extends Command {
     private function addNewUser($master_user) {
         //refresh user.
         $user_ = User::find($master_user->user_id);
-        
+
         $user = $user_;
         if ($user_ === NULL) {
             $user = new User();
