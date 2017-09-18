@@ -389,7 +389,10 @@ class InteractionLike extends Command {
                 /*
                  * Next is to get user-defined hashtags.
                  */
-                $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $ig_username)->inRandomOrder()->get();
+                $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $ig_username)
+                        ->get();
+                
+                $target_hashtags = shuffle($target_hashtags);
 
                 //Foreach targeted hashtags
                 foreach ($target_hashtags as $target_hashtag) {
