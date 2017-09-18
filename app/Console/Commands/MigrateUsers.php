@@ -109,12 +109,12 @@ class MigrateUsers extends Command {
     private function addNewUser($master_user) {
         //refresh user.
         $user_ = User::find($master_user->user_id);
-        if ($user_ !== NULL) {
-            $user_->delete();
-            DB::table('user_insta_profile')->where('email', $user_->email)->delete();
+        
+        $user = $user_;
+        if ($user_ === NULL) {
+            $user = new User();
         }
 
-        $user = new User();
         $user->user_id = $master_user->user_id;
         $user->email = $master_user->email;
         $user->password = $master_user->password;
@@ -159,7 +159,7 @@ class MigrateUsers extends Command {
     }
 
     private function addNewInstagramProfile($master_instagram_profile) {
-        
+
         //refresh user.
         $profile = InstagramProfile::find($master_instagram_profile->id); #find
         $ig_profile = $profile; #make $ig_profile the placeholder
