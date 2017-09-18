@@ -25,6 +25,7 @@ use App\NicheTarget;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\InstagramHelper;
 
 class InteractionFollow implements ShouldQueue {
 
@@ -127,13 +128,13 @@ class InteractionFollow implements ShouldQueue {
         if ($speed == "Fast") {
             $follow_unfollow_delay = 2;
         }
-        if ($speed == "Medium") {
+        else if ($speed == "Medium") {
             $follow_unfollow_delay = 3;
         }
-        if ($speed == "Slow") {
+        else if ($speed == "Slow") {
             $follow_unfollow_delay = 5;
         }
-        if ($speed == "Ultra Fast") {
+        else if ($speed == "Ultra Fast") {
             $follow_unfollow_delay = 0;
         }
         if ($insta_username == "weikian_") {
@@ -141,6 +142,7 @@ class InteractionFollow implements ShouldQueue {
         }
 
         $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
+        
         //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
         if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
 
@@ -150,7 +152,9 @@ class InteractionFollow implements ShouldQueue {
             }
 
             echo "[" . $insta_username . "] beginning unfollowing sequence.\n";
+            
             DB::reconnect();
+            
             $config = array();
             $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
             $config["dbtablename"] = "instagram_sessions";

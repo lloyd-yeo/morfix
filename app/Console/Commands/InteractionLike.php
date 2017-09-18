@@ -20,6 +20,7 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\Niche;
+use App\InstagramHelper;
 
 class InteractionLike extends Command {
 
@@ -143,15 +144,17 @@ class InteractionLike extends Command {
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
 
-        $config = array();
-        $config["storage"] = "mysql";
-        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
-        $config["dbtablename"] = "instagram_sessions";
-
-        $debug = false;
-        $truncatedDebug = false;
-        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
+//        $config = array();
+//        $config["storage"] = "mysql";
+//        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
+//        $config["dbtablename"] = "instagram_sessions";
+//
+//        $debug = false;
+//        $truncatedDebug = false;
+//        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+        
+        $instagram = InstagramHelper::initInstagram();
+        
         if ($ig_profile->proxy === NULL) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
@@ -725,5 +728,4 @@ class InteractionLike extends Command {
             return;
         }
     }
-
 }

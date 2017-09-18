@@ -71,8 +71,6 @@ class InteractionFollow extends Command {
     protected $unfollow_quota;
     protected $proxy;
     protected $delay;
-
-
     protected $use_hashtags;
     protected $target_hashtags;
     protected $target_usernames;
@@ -89,15 +87,15 @@ class InteractionFollow extends Command {
     public function handle() {
 
         /*
-            - Get users if email argument is not Null
-            - Get users if email argument is Null in whereRaw
-            - Loop Users
-                - get instagram_profiles 
-                    - if email argument is null & tier is 1 and activation is 1
-                        - dispatch InteractionFollow Job
-                    - else, call handle again(Recursion)
+          - Get users if email argument is not Null
+          - Get users if email argument is Null in whereRaw
+          - Loop Users
+          - get instagram_profiles
+          - if email argument is null & tier is 1 and activation is 1
+          - dispatch InteractionFollow Job
+          - else, call handle again(Recursion)
 
-        */
+         */
         $users = NULL;
         if (NULL !== $this->argument("email")) {
             $this->line('email: ' . $this->argument("email"));
@@ -135,20 +133,20 @@ class InteractionFollow extends Command {
 
     private function jobHandle($ig_profile) {
         /*
-            - Check if feedback is required, echo feedback
-            - Initialize Variables
-            - Get followed logs
-            - Check followed logs count is greater than follow cycle, save
-            - Get unfollow delay
-            - If unfollowing, unfollow
-            - If auto follow, follow
-        */
+          - Check if feedback is required, echo feedback
+          - Initialize Variables
+          - Get followed logs
+          - Check followed logs count is greater than follow cycle, save
+          - Get unfollow delay
+          - If unfollowing, unfollow
+          - If auto follow, follow
+         */
         if ($ig_profile->feedback_required == 1) {
             echo "[" . $ig_profile->insta_username . "] has feedback_required flag on.\n";
         }
-        
+
         $this->initVariables($ig_profile);
-        
+
         $followed_logs = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->where('follow', 1)
                 ->where('unfollowed', 0)
@@ -157,7 +155,7 @@ class InteractionFollow extends Command {
         $followed_count = count($followed_logs);
 
         echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . ", cycle: " . $this->follow_cycle . "\n";
-        
+
         if ($followed_count >= $ig_profile->follow_cycle) {
             echo "[" . $ig_profile->insta_username . "] number of follows exceeded follow cycle.\n";
             $ig_profile->unfollow = 1;
@@ -165,18 +163,18 @@ class InteractionFollow extends Command {
             $ig_profile->save();
             $ig_profile = InstagramProfile::find($ig_profile->id);
         }
-        
-        
+
+
         $target_username = "";
         $target_follow_username = "";
         $target_follow_id = "";
         $custom_target_defined = false;
-        
+
         $auto_follow = $this->auto_follow;
         $auto_unfollow = $this->auto_unfollow;
         $unfollow = $this->unfollow;
         $speed = $this->speed;
-        
+
         echo "[" . $this->insta_username . "] Niche: " . $this->niche . " Auto_Follow: " . $auto_follow . " Auto_Unfollow: " . $auto_unfollow . "\n";
 
         if ($unfollow == 1) {
@@ -192,7 +190,6 @@ class InteractionFollow extends Command {
         $follow_unfollow_delay = $this->followUnfollowDelay($speed);
 
         $this->delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
-        
         //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
         if (($auto_unfollow == 1 && $auto_follow == 0) || ($auto_follow == 1 && $auto_unfollow == 1 && $unfollow == 1)) {
             $this->unFollowing($ig_profile);
@@ -229,15 +226,15 @@ class InteractionFollow extends Command {
         $this->unfollow_quota = $ig_profile->unfollow_quota;
         $this->proxy = $ig_profile->proxy;
 
-        $this->use_hashtags     = NULL;
-        $this->target_hashtags  = NULL;
+        $this->use_hashtags = NULL;
+        $this->target_hashtags = NULL;
         $this->target_usernames = NULL;
     }
 
     private function followUnfollowDelay($speed) {
         /*
-            Set Delay
-        */
+          Set Delay
+         */
         switch ($speed) {
             case 'Fast': return 2;
             case 'Medium': return 3;
@@ -250,14 +247,14 @@ class InteractionFollow extends Command {
 
     public function loginSegment(Instagram $instagram, $ig_profile) {
         /*
-            - set proxy
-            - set user
-            - try 
-                -  login
-            - catch
-                - NetworkException, login again
-                - IncorrectPasswordException, exit
-        */
+          - set proxy
+          - set user
+          - try
+          -  login
+          - catch
+          - NetworkException, login again
+          - IncorrectPasswordException, exit
+         */
 
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
@@ -288,15 +285,15 @@ class InteractionFollow extends Command {
     private function forcedToUnfollow(Instagram $instagram, $ig_profile) {
 
         /*
-            - If auto_unfollow = 1, auto_follow == 0
-                - Get followings users
-                    - try
-                        - Query: InstagramProfileFollowLog
-                        - Save
-                    - catch
-                        - Exception
-            - Else, save
-        */
+          - If auto_unfollow = 1, auto_follow == 0
+          - Get followings users
+          - try
+          - Query: InstagramProfileFollowLog
+          - Save
+          - catch
+          - Exception
+          - Else, save
+         */
         $insta_username = $this->insta_username;
         echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
 
@@ -332,28 +329,28 @@ class InteractionFollow extends Command {
 
     private function unFollowing($ig_profile) {
         /*
-                - configure database
-                - set proxy
-            try:
-                - Login
-                - Get Users to unfollow
-                    - 0, force to unfollow
-                    - 0, 
-            catch:
-                - CheckpointRequiredException
-                - NetworkException
-                - EndpointException
-                - IncorrectPasswordException
-                - FeedbackRequiredException
-                - EmptyResponseException
-                - ThrottledException
-                - RequestException
-        */
+          - configure database
+          - set proxy
+          try:
+          - Login
+          - Get Users to unfollow
+          - 0, force to unfollow
+          - 0,
+          catch:
+          - CheckpointRequiredException
+          - NetworkException
+          - EndpointException
+          - IncorrectPasswordException
+          - FeedbackRequiredException
+          - EmptyResponseException
+          - ThrottledException
+          - RequestException
+         */
         $insta_username = $this->insta_username;
         $unfollow_quota = $this->unfollow_quota;
         $unfollow_unfollowed = $this->unfollow_unfollowed;
         $delay = $this->delay;
-        
+
         if ($unfollow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for unfollowing today.\n";
             exit();
@@ -485,7 +482,7 @@ class InteractionFollow extends Command {
         }
     }
 
-    private function useHashtag(){
+    private function useHashtag() {
         //start with targeted usernames/hashtags
         $use_hashtags = rand(0, 1);
         echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
@@ -519,32 +516,32 @@ class InteractionFollow extends Command {
                 }
             }
         }
-       $this->use_hashtags = $use_hashtags;
-       $this->target_hashtags = $target_hashtags;
-       $this->target_usernames = $target_usernames;
+        $this->use_hashtags = $use_hashtags;
+        $this->target_hashtags = $target_hashtags;
+        $this->target_usernames = $target_usernames;
     }
 
     private function autoFollow($ig_profile) {
         /*
-            - Configure the Database
-            - set proxy
-            try:
-                - login
-                - follow quota < 1, exit
-                - configure database
-                - set proxy
-            try:
-                - Login
-                - Get Users to unfollow
-                    - 0, force to unfollow
-                    - 0, 
-            catch:
-                - NetworkException
-                - IncorrectPasswordException
-                - CheckpointRequiredException
-                - SentryBlockException
-                - EndpointException
-        */
+          - Configure the Database
+          - set proxy
+          try:
+          - login
+          - follow quota < 1, exit
+          - configure database
+          - set proxy
+          try:
+          - Login
+          - Get Users to unfollow
+          - 0, force to unfollow
+          - 0,
+          catch:
+          - NetworkException
+          - IncorrectPasswordException
+          - CheckpointRequiredException
+          - SentryBlockException
+          - EndpointException
+         */
         $insta_username = $ig_profile->insta_username;
         $follow_quota = $this->follow_quota;
         $unfollow_quota = $this->unfollow_quota;
@@ -552,14 +549,14 @@ class InteractionFollow extends Command {
         $follow_max_follower = $this->follow_max_follower;
         $follow_cycle = $this->follow_cycle;
         $delay = $this->delay;
-        
+
         if ($follow_quota < 1) {
             echo "[" . $insta_username . "] has reached quota for following today.\n";
             exit();
         }
 
         echo "[" . $insta_username . "] beginning following sequence.\n";
-        
+
         DB::reconnect();
         $config = array();
         $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
@@ -617,15 +614,15 @@ class InteractionFollow extends Command {
                 $ig_profile->save();
             }
         }
-        
+
         //[End LOGIN]
-        
+
 
         $this->useHashtag();
-        $use_hashtags       = $this->use_hashtags;
-        $target_hashtags    = $this->target_hashtags;
-        $target_usernames   = $this->target_usernames;
-        
+        $use_hashtags = $this->use_hashtags;
+        $target_hashtags = $this->target_hashtags;
+        $target_usernames = $this->target_usernames;
+
         echo "[" . $insta_username . "] AFTER random use hashtag: $use_hashtags\n";
         echo "[" . $insta_username . "] [target_hashtag_size: " . count($target_hashtags) . "] [target_usernames_size: " . count($target_usernames) . "] [niche: " . $this->niche . "]\n";
         $followed = 0;

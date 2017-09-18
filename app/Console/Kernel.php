@@ -59,6 +59,7 @@ class Kernel extends ConsoleKernel {
         Commands\ReadCommissionList::class,
         Commands\MigrateUsers::class,
         Commands\MigrateNiche::class,
+        Commands\MigrateProxyList::class,
         Commands\UpdateUserTotalInteractionStatistics::class,
     ];
 

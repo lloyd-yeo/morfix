@@ -3,17 +3,15 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Proxy;
-use DB;
 
-class MigrateProxyList extends Command
+class MigrateLikeLogs extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'migrate:proxy';
+    protected $signature = 'command:name';
 
     /**
      * The console command description.
@@ -39,13 +37,6 @@ class MigrateProxyList extends Command
      */
     public function handle()
     {
-        $proxies = DB::connection('mysql_master')
-                ->table('proxy')
-                ->get();
-        
-        foreach ($proxies as $proxy) {
-            
-        }
-        
+        //
     }
 }

@@ -217,6 +217,7 @@
                 <!-- END Material Lock -->
             </div>
         </div>
+        
         <!-- Modules -->
         <div class="row">
              <div class="col-lg-6">
@@ -260,7 +261,7 @@
                     </div>
                 </div>
                 <!-- END Material Lock -->
-            </div>           
+            </div>
         </div>
     </div>
     <!-- END Page Content -->
