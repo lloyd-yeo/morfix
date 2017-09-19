@@ -64,6 +64,7 @@ class Kernel extends ConsoleKernel {
         Commands\MigrateFollowLogs::class,
         Commands\MigrateCommentLogs::class,
         Commands\MigrateLikeLogs::class,
+        Commands\MigrateComments::class,
         Commands\UpdateUserTotalInteractionStatistics::class,
     ];
 
