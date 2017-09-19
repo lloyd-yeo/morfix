@@ -64,7 +64,13 @@ class InteractionLike implements ShouldQueue {
 
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
-
+        
+        $speed = $ig_profile->speed;
+        $speed_delay = 3;
+        if ($speed == "Fast") {
+            $speed_delay = 1;
+        }
+        
         $config = array();
         $config["storage"] = "mysql";
         $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
