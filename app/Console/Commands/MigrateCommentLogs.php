@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use DB;
 use Illuminate\Console\Command;
+use App\InstagramProfileCommentLog;
+use App\InstagramProfile;
 
-class MigrateCommentLogs extends Command
-{
+class MigrateCommentLogs extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -25,8 +28,7 @@ class MigrateCommentLogs extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -35,35 +37,28 @@ class MigrateCommentLogs extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         if ($this->argument('insta_username') === NULL) {
 
             $ig_profiles = InstagramProfile::all();
 
             foreach ($ig_profiles as $ig_profile) {
-
-                $master_follow_logs = DB::connection('mysql_master')
-                        ->table('user_insta_profile_follow_log')
+                $master_comment_logs = DB::connection('mysql_master')
+                        ->table('user_insta_profile_comment_log')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
 
-                foreach ($master_follow_logs as $master_follow_log) {
-                    $follow_log = new InstagramProfileFollowLog;
-                    $follow_log->log_id = $master_follow_log->log_id;
-                    $follow_log->insta_username = $master_follow_log->insta_username;
-                    $follow_log->follower_username = $master_follow_log->follower_username;
-                    $follow_log->follower_id = $master_follow_log->follower_id;
-                    $follow_log->log = $master_follow_log->log;
-                    $follow_log->date_inserted = $master_follow_log->date_inserted;
-                    $follow_log->added_delay = $master_follow_log->added_delay;
-                    $follow_log->follow = $master_follow_log->follow;
-                    $follow_log->follow_success = $master_follow_log->follow_success;
-                    $follow_log->unfollowed = $master_follow_log->unfollowed;
-                    $follow_log->unfollow_log = $master_follow_log->unfollow_log;
-                    $follow_log->date_unfollowed = $master_follow_log->date_unfollowed;
+                foreach ($master_comment_logs as $master_comment_log) {
+                    $comment_log = new InstagramProfileCommentLog;
+                    $comment_log->log_id = $master_comment_log->log_id;
+                    $comment_log->insta_username = $master_comment_log->insta_username;
+                    $comment_log->target_username = $master_comment_log->target_username;
+                    $comment_log->target_insta_id = $master_comment_log->target_insta_id;
+                    $comment_log->target_media = $master_comment_log->target_media;
+                    $comment_log->log = $master_comment_log->log;
+                    $comment_log->date_commented = $master_comment_log->date_commented;
                     try {
-                        $follow_log->save();
+                        $comment_log->save();
                     } catch (QueryException $ex) {
                         continue;
                     }
@@ -72,31 +67,27 @@ class MigrateCommentLogs extends Command
         } else {
             $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
 
-            $master_follow_logs = DB::connection('mysql_master')
-                    ->table('user_insta_profile_follow_log')
+            $master_comment_logs = DB::connection('mysql_master')
+                    ->table('user_insta_profile_comment_log')
                     ->where('insta_username', $ig_profile->insta_username)
                     ->get();
 
-            foreach ($master_follow_logs as $master_follow_log) {
-                $follow_log = new InstagramProfileFollowLog;
-                $follow_log->log_id = $master_follow_log->log_id;
-                $follow_log->insta_username = $master_follow_log->insta_username;
-                $follow_log->follower_username = $master_follow_log->follower_username;
-                $follow_log->follower_id = $master_follow_log->follower_id;
-                $follow_log->log = $master_follow_log->log;
-                $follow_log->date_inserted = $master_follow_log->date_inserted;
-                $follow_log->added_delay = $master_follow_log->added_delay;
-                $follow_log->follow = $master_follow_log->follow;
-                $follow_log->follow_success = $master_follow_log->follow_success;
-                $follow_log->unfollowed = $master_follow_log->unfollowed;
-                $follow_log->unfollow_log = $master_follow_log->unfollow_log;
-                $follow_log->date_unfollowed = $master_follow_log->date_unfollowed;
+            foreach ($master_comment_logs as $master_comment_log) {
+                $comment_log = new InstagramProfileCommentLog;
+                $comment_log->log_id = $master_comment_log->log_id;
+                $comment_log->insta_username = $master_comment_log->insta_username;
+                $comment_log->target_username = $master_comment_log->target_username;
+                $comment_log->target_insta_id = $master_comment_log->target_insta_id;
+                $comment_log->target_media = $master_comment_log->target_media;
+                $comment_log->log = $master_comment_log->log;
+                $comment_log->date_commented = $master_comment_log->date_commented;
                 try {
-                    $follow_log->save();
+                    $comment_log->save();
                 } catch (QueryException $ex) {
                     continue;
                 }
             }
         }
     }
+
 }
