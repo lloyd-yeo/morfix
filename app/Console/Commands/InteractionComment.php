@@ -65,7 +65,7 @@ class InteractionComment extends Command {
 
             foreach (User::where("email", $this->argument("email"))
                     ->where("partition", $partition)->cursor() as $user) {
-
+                $this->info("[" . $user->email . "] retrieving profiles...");
                 if ($user->tier > 1) {
 
                     $instagram_profiles = array();
