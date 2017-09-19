@@ -49,12 +49,12 @@ class MigrateComments extends Command
         $master_comments = DB::connection('mysql_master')
                         ->table('user_insta_profile_comment_log')
                         ->whereIn('insta_username', $ig_profiles_usernames)
-                        
                         ->get();
         
         foreach ($master_comments as $master_comment) {
             #$comment = new InstagramProfileComment;
-            InstagramProfileComment::create($master_comment);
+            $master_comment_as_array = (array)$master_comment;
+            InstagramProfileComment::create($master_comment_as_array);
             #$comment->save();
         }
     }
