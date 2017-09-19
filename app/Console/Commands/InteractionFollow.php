@@ -100,8 +100,7 @@ class InteractionFollow extends Command {
         if ($this->argument("email") == "slave") {
             $partition = $this->argument('partition');
             $this->info("[Follow Interaction] Queueing jobs for slave " . $partition);
-            $users = User::where('email', $this->argument("email"))
-                    ->where('partition', $partition)
+            $users = User::where('partition', $partition)
                     ->get();
         } else if (NULL !== $this->argument("email"))  {
             $this->info("[Follow Interaction] Manually executing follow for " . $this->argument("email"));
