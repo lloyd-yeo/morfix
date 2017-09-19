@@ -9,6 +9,7 @@ use App\InstagramProfileCommentLog;
 use App\InstagramProfileLikeLog;
 use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CheckInteractionsWorking extends Command {
 
@@ -63,30 +64,34 @@ class CheckInteractionsWorking extends Command {
 
                     $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->where('date_inserted', '<=', Carbon::now())
-                            ->where('follow', 1)
+                            ->where('date_inserted', '>=', Carbon::now()->subHours(3))
                             ->get();
-                                        
+                    $user_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                            ->where('date_unfollowed', '<=', Carbon::now())
+                            ->where('date_unfollowed', '>=', Carbon::now()->subHours(3))
+                            ->get();
+
+
                     if ($user_like != null) {
                         $user->auto_interaction_like = 1;
                         $user->save;
                     }
-                    if ($user_comment != null){
-                      $user->auto_interaction_comment = 1;
-                        $user->save;   
+                    if ($user_comment != null) {
+                        $user->auto_interaction_comment = 1;
+                        $user->save;
                     }
-                    if ($user_follow != null){
-                      $user->auto_interaction_follow = 1;
-                        $user->save;   
+                    if ($user_follow != null or $user_follow != null) {
+                        $user->auto_interaction_follow = 1;
+                        $user->save;
                     }
-                    if ($user->auto_interaction_comment = 1 or $user->auto_interaction_like =1){
+                    if ($user->auto_interaction_comment = 1 or $user->auto_interaction_like = 1) {
                         $user->auto_interaction_working = 1;
-                    }
-                    elseif ($user->auto_interaction_comment= 0 and $user->auto_interaction_like = 0){
-                        $user->auto_interaction_working =0;
+                    } elseif ($user->auto_interaction_comment = 0 and $user->auto_interaction_like = 0) {
+                        $user->auto_interaction_working = 0;
                     }
                 }
             }
         }
     }
+
 }
-    
