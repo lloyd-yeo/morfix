@@ -88,7 +88,6 @@ class InstagramHelper {
             $ig_profile->save();
             return false;
         }
-        
     }
 
     public static function verifyAndReassignProxy(InstagramProfile $ig_profile) {

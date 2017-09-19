@@ -56,14 +56,15 @@ class InteractionComment implements ShouldQueue {
     public function handle() {
         DB::reconnect();
 
-        if ($ig_profile->owner()->tier == 1) {
-            exit();
-        }
-
         $ig_profile = $this->profile;
 
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
-
+        
+        
+        if ($ig_profile->owner()->tier == 1) {
+            exit();
+        }
+        
         $ig_username = $ig_profile->insta_username;
 
         $instagram = InstagramHelper::initInstagram();
