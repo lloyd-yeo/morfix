@@ -28,7 +28,7 @@ class InteractionComment extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:comment {partition?} {email?}';
+    protected $signature = 'interaction:comment {email?} {partition?}';
 
     /**
      * The console command description.
@@ -65,7 +65,33 @@ class InteractionComment extends Command {
                     ->get();
 
             jobHandle($instagram_profiles);
-            
+        } else if ($this->argument("email") == "slave") {
+            $partition = $this->argument('partition');
+
+            $user = User::where("email", $this->argument("email"))
+                    ->where('partition', $partition)
+                    ->first();
+
+            foreach (User::cursor() as $user) {
+
+                if ($user->tier > 2) {
+                    $instagram_profiles = array();
+
+                    $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                            ->where('email', $user->email)
+                            ->where('incorrect_pw', false)
+                            ->where('partition', $partition)
+                            ->get();
+
+                    foreach ($instagram_profiles as $ig_profile) {
+                        if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("queued profile: " . $ig_profile->insta_username);
+                            continue;
+                        }
+                    }
+                }
+            }
         } else {
             foreach (User::cursor() as $user) {
 
@@ -97,7 +123,6 @@ class InteractionComment extends Command {
                         }
                     }
                 }
-                
             }
         }
     }
