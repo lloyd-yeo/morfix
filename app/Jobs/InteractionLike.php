@@ -38,7 +38,6 @@ class InteractionLike implements ShouldQueue {
      * @var int
      */
     public $timeout = 360;
-    
     protected $profile;
 
     /**
@@ -64,13 +63,13 @@ class InteractionLike implements ShouldQueue {
 
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
-        
+
         $speed = $ig_profile->speed;
         $speed_delay = 3;
         if ($speed == "Fast") {
             $speed_delay = 1;
         }
-        
+
         $config = array();
         $config["storage"] = "mysql";
         $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
@@ -92,15 +91,14 @@ class InteractionLike implements ShouldQueue {
 
         try {
             $like_quota = rand(1, 3);
-            
+
             try {
-                
+
                 #Pre-update
 //                $instagram->setUser($ig_username, $ig_password);
 //                $explorer_response = $instagram->login();
                 #New-version
                 $explorer_response = $instagram->login($ig_username, $ig_password);
-                
             } catch (\InstagramAPI\Exception\SentryBlockException $sentry_block_ex) {
                 $proxy = Proxy::inRandomOrder()->first();
                 $ig_profile->proxy = $proxy->proxy;
@@ -128,7 +126,7 @@ class InteractionLike implements ShouldQueue {
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 exit();
             }
-            
+
             /*
              * If user is free tier & not on trial / run out of quota then break.
              */
@@ -161,15 +159,14 @@ class InteractionLike implements ShouldQueue {
                         if ($target_username->last_checked === NULL) {
                             $target_response = $instagram->people->getInfoById($target_username_id);
                             $target_username->last_checked = \Carbon\Carbon::now();
-                            
+
                             if ($target_response->user->follower_count < 10000) {
                                 $target_username->insufficient_followers = 1;
                                 echo "[$ig_username] [$target_username] has insufficient followers.\n";
                             }
-                            
+
                             $target_username->save();
                         }
-                        
                     } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
                         $target_username_id = "";
                         $target_username->invalid = 1;
@@ -183,8 +180,6 @@ class InteractionLike implements ShouldQueue {
                             echo "\nTerminating...";
                             exit;
                         }
-                        
-                        
                     }
 
                     $user_follower_response = NULL;
@@ -324,6 +319,9 @@ class InteractionLike implements ShouldQueue {
                                                     $like_log->log = serialize($like_response);
                                                     $like_log->save();
                                                     $like_quota--;
+
+                                                    $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($speed_delay);
+                                                    $ig_profile->save();
                                                 } catch (\Exception $ex) {
                                                     echo "[$ig_username] saving error [target_username] " . $ex->getMessage() . "\n";
                                                     continue;
@@ -391,12 +389,12 @@ class InteractionLike implements ShouldQueue {
                             }
 
                             if ($like_quota > 0) {
-                                
+
                                 if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
                                     #duplicate. Liked before this photo with this id.
                                     continue;
                                 }
-                                
+
                                 $like_response = $instagram->media->like($item->id);
 
                                 if ($like_response->status == "ok") {
@@ -409,6 +407,9 @@ class InteractionLike implements ShouldQueue {
                                     $like_log->log = serialize($like_response);
                                     $like_log->save();
                                     $like_quota--;
+
+                                    $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($speed_delay);
+                                    $ig_profile->save();
                                 }
                             } else {
                                 break;
@@ -567,6 +568,9 @@ class InteractionLike implements ShouldQueue {
                                                         $like_log->log = serialize($like_response);
                                                         $like_log->save();
                                                         $like_quota--;
+
+                                                        $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($speed_delay);
+                                                        $ig_profile->save();
                                                     } catch (\Exception $ex) {
                                                         echo "[$ig_username] saving error [target_username] " . $ex->getMessage() . "\n";
                                                         continue;
