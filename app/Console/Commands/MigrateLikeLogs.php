@@ -39,7 +39,9 @@ class MigrateLikeLogs extends Command {
      */
     public function handle() {
         if ($this->argument('insta_username') === NULL) {
+            
             $ig_profiles = InstagramProfile::all();
+            
             foreach ($ig_profiles as $ig_profile) {
                 
                 $master_like_logs = DB::connection('mysql_master')
@@ -61,8 +63,10 @@ class MigrateLikeLogs extends Command {
                     }
                 }
             }
+            
         } else {
             $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
+            
             $master_like_logs = DB::connection('mysql_master')
                     ->table('user_insta_profile_like_log')
                     ->where('insta_username', $ig_profile->insta_username)

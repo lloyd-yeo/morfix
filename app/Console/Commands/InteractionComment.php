@@ -77,6 +77,7 @@ class InteractionComment extends Command {
                         $instagram_profiles = InstagramProfile::where('auto_comment', true)
                                 ->where('email', $user->email)
                                 ->where('incorrect_pw', false)
+                                ->where('partition', 0)
                                 ->get();
                     } else {
                         $partition = $this->argument("partition");
@@ -97,6 +98,7 @@ class InteractionComment extends Command {
                         }
                     }
                 }
+                
             }
         }
     }
