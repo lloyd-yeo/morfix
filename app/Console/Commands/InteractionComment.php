@@ -28,7 +28,7 @@ class InteractionComment extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:comment {email?}';
+    protected $signature = 'interaction:comment {partition?} {email?}';
 
     /**
      * The console command description.
@@ -56,6 +56,7 @@ class InteractionComment extends Command {
         $users = array();
 
         if (NULL !== $this->argument("email")) {
+
             $user = User::where("email", $this->argument("email"))->first();
 
             $instagram_profiles = InstagramProfile::where('auto_comment', true)
@@ -63,30 +64,46 @@ class InteractionComment extends Command {
                     ->where('incorrect_pw', false)
                     ->get();
 
-            executeCommenting($instagram_profiles);
+            jobHandle($instagram_profiles);
+            
         } else {
             foreach (User::cursor() as $user) {
+
                 if ($user->tier > 2) {
-                    $instagram_profiles = InstagramProfile::where('auto_comment', true)
-                            ->where('email', $user->email)
-                            ->where('incorrect_pw', false)
-                            ->whereRaw('NOW() >= next_comment_time')
-                            ->get();
+
+                    $instagram_profiles = array();
+
+                    if ($this->argument("partition") === NULL) {
+                        $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                                ->where('email', $user->email)
+                                ->where('incorrect_pw', false)
+                                ->get();
+                    } else {
+                        $partition = $this->argument("partition");
+                        $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                                ->where('email', $user->email)
+                                ->where('incorrect_pw', false)
+                                ->where('partition', $partition)
+                                ->get();
+                    }
 
                     if (count($instagram_profiles) > 0) {
                         foreach ($instagram_profiles as $ig_profile) {
-                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                            $this->line("queued profile: " . $ig_profile->insta_username);
-                            continue;
+                            if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                                dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                                $this->line("queued profile: " . $ig_profile->insta_username);
+                                continue;
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 }
 
-function executeCommenting($instagram_profiles) {
+function jobHandle($instagram_profiles) {
 
     foreach ($instagram_profiles as $ig_profile) {
 
