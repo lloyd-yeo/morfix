@@ -46,7 +46,7 @@
                     </p>
                 </div>
                 <div style='padding-top: 0px; padding-bottom: 20px;'>
-                    <a id="business-btn" href='#' target="_blank" class="text-white" style='
+                    <a id="business-btn" href='https://upgrade.morfix.co/business' target="_blank" class="text-white" style='
                        background-color:rgb(30, 115, 190); 
                        padding: 10px 50px;
                        font-weight: 600; 
