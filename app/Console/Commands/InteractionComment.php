@@ -66,7 +66,7 @@ class InteractionComment extends Command {
             foreach (User::where("email", $this->argument("email"))
                     ->where("partition", $partition)->cursor() as $user) {
 
-                if ($user->tier > 2) {
+                if ($user->tier > 1) {
 
                     $instagram_profiles = array();
 
@@ -83,6 +83,7 @@ class InteractionComment extends Command {
                         }
                     }
                 }
+                
             }
             
         } else if (NULL !== $this->argument("email")) {
