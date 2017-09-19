@@ -63,7 +63,8 @@ class InteractionComment extends Command {
                     ->where("partition", $partition)
                     ->get();
 
-            foreach ($users as $user) {
+            foreach (User::where("email", $this->argument("email"))
+                    ->where("partition", $partition)->cursor() as $user) {
 
                 if ($user->tier > 1) {
 
@@ -87,7 +88,7 @@ class InteractionComment extends Command {
             
         } else if (NULL !== $this->argument("email")) {
 
-            $this->info("[Comment Interaction] trying jobs for single email: " . $this->argument("email"))
+            $this->info("[Comment Interaction] trying jobs for single email: " . $this->argument("email"));
 
             $user = User::where("email", $this->argument("email"))->first();
 
