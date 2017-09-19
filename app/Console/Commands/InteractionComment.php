@@ -57,7 +57,11 @@ class InteractionComment extends Command {
 
             $partition = $this->argument("partition");
 
-            $this->info("[Comment Interaction] queueing jobs for slave " . $partition)
+            $this->info("[Comment Interaction] queueing jobs for slave " . $partition);
+
+//            $users = User::where("email", $this->argument("email"))
+//                    ->where("partition", $partition)
+//                    ->get();
 
             foreach (User::where("email", $this->argument("email"))
                     ->where("partition", $partition)->cursor() as $user) {
@@ -76,6 +80,45 @@ class InteractionComment extends Command {
                             dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
                             $this->line("queued profile: " . $ig_profile->insta_username);
                             continue;
+                        }
+                    }
+                }
+            }
+            
+        } else if (NULL !== $this->argument("email")) {
+
+            $this->info("[Comment Interaction] trying jobs for single email: " . $this->argument("email"))
+
+            $user = User::where("email", $this->argument("email"))->first();
+
+            $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                    ->where('email', $user->email)
+                    ->where('incorrect_pw', false)
+                    ->get();
+
+            $this->jobHandle($instagram_profiles);
+            
+        } else {
+            
+            $this->info("[Comment Interaction] queueing jobs for all users in db.");
+            
+            foreach (User::cursor() as $user) {
+                if ($user->tier > 2) {
+                    $instagram_profiles = array();
+
+                    $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                            ->where('email', $user->email)
+                            ->where('incorrect_pw', false)
+                            ->where('partition', 0)
+                            ->get();
+
+                    if (count($instagram_profiles) > 0) {
+                        foreach ($instagram_profiles as $ig_profile) {
+                            if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                                dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                                $this->line("queued profile: " . $ig_profile->insta_username);
+                                continue;
+                            }
                         }
                     }
                 }
