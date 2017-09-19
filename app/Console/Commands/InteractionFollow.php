@@ -133,7 +133,7 @@ class InteractionFollow extends Command {
                         $this->line("queued profile: " . $ig_profile->insta_username);
                     }
                 }
-            } else {
+            } else if ($this->argument("email") != "slave") {
                 foreach ($instagram_profiles as $ig_profile) {
                     $this->jobHandle($ig_profile);
                 }
