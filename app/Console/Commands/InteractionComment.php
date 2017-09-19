@@ -54,13 +54,13 @@ class InteractionComment extends Command {
     public function handle() {
 
         $users = array();
-        
+
         if ($this->argument("email") == "slave") {
-            
+
             $partition = $this->argument('partition');
-            
+
             $this->info("[Comment Interaction] queueing jobs for slave " . $partition)
-            
+
             $users = User::where("email", $this->argument("email"))
                     ->where('partition', $partition)
                     ->get();
@@ -68,7 +68,7 @@ class InteractionComment extends Command {
             foreach ($users as $user) {
 
                 if ($user->tier > 2) {
-                    
+
                     $instagram_profiles = array();
 
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
@@ -86,7 +86,6 @@ class InteractionComment extends Command {
                     }
                 }
             }
-            
         } else if (NULL !== $this->argument("email")) {
 
             $user = User::where("email", $this->argument("email"))->first();
@@ -97,29 +96,19 @@ class InteractionComment extends Command {
                     ->get();
 
             jobHandle($instagram_profiles);
-            
         } else {
-            
+
             foreach (User::cursor() as $user) {
 
                 if ($user->tier > 2) {
                     $instagram_profiles = array();
-
-                    if ($this->argument("partition") === NULL) {
-                        $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                    
+                    $instagram_profiles = InstagramProfile::where('auto_comment', true)
                                 ->where('email', $user->email)
                                 ->where('incorrect_pw', false)
                                 ->where('partition', 0)
                                 ->get();
-                    } else {
-                        $partition = $this->argument("partition");
-                        $instagram_profiles = InstagramProfile::where('auto_comment', true)
-                                ->where('email', $user->email)
-                                ->where('incorrect_pw', false)
-                                ->where('partition', $partition)
-                                ->get();
-                    }
-
+                    
                     if (count($instagram_profiles) > 0) {
                         foreach ($instagram_profiles as $ig_profile) {
                             if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
