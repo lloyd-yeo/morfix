@@ -73,23 +73,23 @@ class CheckInteractionsWorking extends Command {
 
 
                     if ($user_like != null) {
-                        $user->auto_interaction_like = 1;
-                        $user->save;
+                        $ig_profile->auto_interaction_like = 1;
+                        $ig_profile->save;
                     }
                     if ($user_comment != null) {
-                        $user->auto_interaction_comment = 1;
-                        $user->save;
+                        $ig_profile->auto_interaction_comment = 1;
+                        $ig_profile->save;
                     }
                     if ($user_follow != null || $user_follow != null) {
-                        $user->auto_interaction_follow = 1;
-                        $user->save;
+                        $ig_profile->auto_interaction_follow = 1;
+                        $ig_profile->save;
                     }
-                    if ($user->auto_interaction_comment === 1 || $user->auto_interaction_like === 1 || $user->auto_interaction_follow === 1) {
-                        $user->auto_interaction_working = 1;
-                        $user->save;
-                    } elseif ($user->auto_interaction_comment === 0 && $user->auto_interaction_like === 0 && $user->auto_interaction_follow === 1) {
-                        $user->auto_interaction_working = 0;
-                        $user->save;
+                    if ($ig_profile->auto_interaction_comment === 1 || $ig_profile->auto_interaction_like === 1 || $ig_profile->auto_interaction_follow === 1) {
+                        $ig_profile->auto_interaction_working = 1;
+                        $ig_profile->save;
+                    } elseif ($ig_profile->auto_interaction_comment === 0 && $ig_profile->auto_interaction_like === 0 && $ig_profile->auto_interaction_follow === 1) {
+                        $ig_profile->auto_interaction_working = 0;
+                        $ig_profile->save;
                     }
                 }
             }
