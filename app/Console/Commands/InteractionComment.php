@@ -54,20 +54,8 @@ class InteractionComment extends Command {
     public function handle() {
 
         $users = array();
+        if ($this->argument("email") == "slave") {
 
-        if (NULL !== $this->argument("email")) {
-
-            $user = User::where("email", $this->argument("email"))->first();
-
-            $instagram_profiles = InstagramProfile::where('auto_comment', true)
-                    ->where('email', $user->email)
-                    ->where('incorrect_pw', false)
-                    ->get();
-
-            jobHandle($instagram_profiles);
-            
-        } else if ($this->argument("email") == "slave") {
-            
             $partition = $this->argument('partition');
 
             $users = User::where("email", $this->argument("email"))
@@ -94,6 +82,16 @@ class InteractionComment extends Command {
                     }
                 }
             }
+        } else if (NULL !== $this->argument("email")) {
+
+            $user = User::where("email", $this->argument("email"))->first();
+
+            $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                    ->where('email', $user->email)
+                    ->where('incorrect_pw', false)
+                    ->get();
+
+            jobHandle($instagram_profiles);
         } else {
             foreach (User::cursor() as $user) {
 
