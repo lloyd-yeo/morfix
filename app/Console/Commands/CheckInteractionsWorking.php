@@ -55,21 +55,21 @@ class CheckInteractionsWorking extends Command {
                     $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                             ->where('date_liked', '<=', Carbon::now())
                             ->where('date_liked', '>=', Carbon::now()->subHours(3))
-                            ->get();
+                            ->first();
 
                     $user_comment = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
                             ->where('date_commented', '<=', Carbon::now())
                             ->where('date_commented', '>=', Carbon::now()->subHours(3))
-                            ->get();
+                            ->first();
 
                     $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->where('date_inserted', '<=', Carbon::now())
                             ->where('date_inserted', '>=', Carbon::now()->subHours(3))
-                            ->get();
+                            ->first();
                     $user_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->where('date_unfollowed', '<=', Carbon::now())
                             ->where('date_unfollowed', '>=', Carbon::now()->subHours(3))
-                            ->get();
+                            ->first();
 
 
                     if ($user_like != null) {
@@ -84,10 +84,10 @@ class CheckInteractionsWorking extends Command {
                         $user->auto_interaction_follow = 1;
                         $user->save;
                     }
-                    if ($user->auto_interaction_comment = 1 || $user->auto_interaction_like = 1 || $user->auto_interaction_follow =1) {
+                    if ($user->auto_interaction_comment === 1 || $user->auto_interaction_like === 1 || $user->auto_interaction_follow === 1) {
                         $user->auto_interaction_working = 1;
                         $user->save;
-                    } elseif ($user->auto_interaction_comment = 0 && $user->auto_interaction_like = 0 && $user->auto_interaction_follow =1) {
+                    } elseif ($user->auto_interaction_comment === 0 && $user->auto_interaction_like === 0 && $user->auto_interaction_follow === 1) {
                         $user->auto_interaction_working = 0;
                         $user->save;
                     }
