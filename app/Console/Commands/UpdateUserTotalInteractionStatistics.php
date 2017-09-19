@@ -122,7 +122,9 @@ class UpdateUserTotalInteractionStatistics extends Command {
                 ->count();
         $ig_profile->daily_unfollows = $daily_unfollows;
         
-        $ig_profile->save();
+        if ($ig_profile->save()) {
+            $this->info("Saved for profile [" . $ig_profile->insta_username . "]");
+        }
         
         DB::connection('mysql_master')->table('user_insta_profile')
                 ->where('id', $ig_profile->id)

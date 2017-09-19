@@ -59,7 +59,6 @@ class InteractionComment extends Command {
 
             $this->info("[Comment Interaction] queueing jobs for slave " . $partition);
 
-
             foreach (User::where("partition", $partition)->cursor() as $user) {
                 
                 $this->info("[" . $user->email . "] retrieving profiles...");
