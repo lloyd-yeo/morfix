@@ -363,8 +363,10 @@ class InteractionFollow implements ShouldQueue {
 
             try {
 //                $instagram->login();
+                
                 $instagram->login($ig_username, $ig_password);
                 echo "[$ig_username] logged in.\n";
+                
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
                 $proxy = Proxy::inRandomOrder()->first();
                 $ig_profile->proxy = $proxy->proxy;
@@ -430,7 +432,7 @@ class InteractionFollow implements ShouldQueue {
 
                 try {
                     foreach ($target_hashtags as $target_hashtag) {
-
+                        $instagram->login($ig_username, $ig_password);
                         echo "[" . $insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
                         #$hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
                         $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
