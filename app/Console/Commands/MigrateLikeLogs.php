@@ -52,7 +52,7 @@ class MigrateLikeLogs extends Command {
                 if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count() == 0) {
                     foreach ($master_like_logs as $master_like_log) {
                         $like_log = new InstagramProfileLikeLog;
-                        $like_log->log_id = $master_like_log->log_id;
+//                        $like_log->log_id = $master_like_log->log_id;
                         $like_log->insta_username = $master_like_log->insta_username;
                         $like_log->target_username = $master_like_log->target_username;
                         $like_log->target_media = $master_like_log->target_media;
@@ -75,7 +75,7 @@ class MigrateLikeLogs extends Command {
             if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count() == 0) {
                 foreach ($master_like_logs as $master_like_log) {
                     $like_log = new InstagramProfileLikeLog;
-                    $like_log->log_id = $master_like_log->log_id;
+//                    $like_log->log_id = $master_like_log->log_id;
                     $like_log->insta_username = $master_like_log->insta_username;
                     $like_log->target_username = $master_like_log->target_username;
                     $like_log->target_media = $master_like_log->target_media;
