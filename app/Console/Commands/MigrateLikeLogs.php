@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\InstagramProfileLikeLog;
 use App\InstagramProfile;
+use DB;
 
 class MigrateLikeLogs extends Command {
 
