@@ -100,14 +100,13 @@ class InteractionComment extends Command {
             
             $this->info("[Comment Interaction] queueing jobs for all users in db.");
             
-            foreach (User::cursor() as $user) {
+            foreach (User::where("partition", 0)->cursor() as $user) {
                 if ($user->tier > 2) {
                     $instagram_profiles = array();
 
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
                             ->where('email', $user->email)
                             ->where('incorrect_pw', false)
-                            ->where('partition', 0)
                             ->get();
 
                     if (count($instagram_profiles) > 0) {
