@@ -47,7 +47,7 @@ class MigrateComments extends Command
         }
         
         $master_comments = DB::connection('mysql_master')
-                        ->table('user_insta_profile_comment_log')
+                        ->table('user_insta_profile_comment')
                         ->whereIn('insta_username', $ig_profiles_usernames)
                         ->get();
         
