@@ -40,6 +40,8 @@ class MigrateComments extends Command
      */
     public function handle()
     {
+        DB::table('user_insta_profile_comment')->truncate();
+        
         $ig_profiles = InstagramProfile::all();
         $ig_profiles_usernames = array();
         foreach ($ig_profiles as $ig_profile) {
@@ -52,10 +54,8 @@ class MigrateComments extends Command
                         ->get();
         
         foreach ($master_comments as $master_comment) {
-            #$comment = new InstagramProfileComment;
             $master_comment_as_array = (array)$master_comment;
             InstagramProfileComment::create($master_comment_as_array);
-            #$comment->save();
         }
     }
 }
