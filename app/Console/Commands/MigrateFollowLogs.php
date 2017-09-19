@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use DB;
 use App\InstagramProfileFollowLog;
+use App\InstagramProfile;
 
 class MigrateFollowLogs extends Command {
 
