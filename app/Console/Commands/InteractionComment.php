@@ -70,7 +70,6 @@ class InteractionComment extends Command {
             foreach (User::cursor() as $user) {
 
                 if ($user->tier > 2) {
-
                     $instagram_profiles = array();
 
                     if ($this->argument("partition") === NULL) {

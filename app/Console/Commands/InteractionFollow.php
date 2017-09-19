@@ -94,9 +94,9 @@ class InteractionFollow extends Command {
           - if email argument is null & tier is 1 and activation is 1
           - dispatch InteractionFollow Job
           - else, call handle again(Recursion)
-
          */
         $users = NULL;
+        
         if (NULL !== $this->argument("email")) {
             $this->line('email: ' . $this->argument("email"));
             $users = User::where('email', $this->argument("email"))->get();
