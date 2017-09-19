@@ -59,11 +59,12 @@ class InteractionComment extends Command {
 
             $this->info("[Comment Interaction] queueing jobs for slave " . $partition)
 
-            $users = User::where("email", $this->argument("email"))
-                    ->where('partition', $partition)
-                    ->get();
+//            $users = User::where("email", $this->argument("email"))
+//                    ->where("partition", $partition)
+//                    ->get();
 
-            foreach ($users as $user) {
+            foreach (User::where("email", $this->argument("email"))
+                    ->where("partition", $partition)->cursor() as $user) {
 
                 if ($user->tier > 2) {
 
@@ -96,10 +97,10 @@ class InteractionComment extends Command {
                     ->get();
 
             $this->jobHandle($instagram_profiles);
+            
         } else {
             $this->info("[Comment Interaction] queueing jobs for all users in db.");
             foreach (User::cursor() as $user) {
-
                 if ($user->tier > 2) {
                     $instagram_profiles = array();
 
