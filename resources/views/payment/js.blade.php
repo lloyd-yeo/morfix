@@ -107,22 +107,22 @@ $("#pro-btn").on("click", function(){
 
 $("#business-btn").on("click", function(){ 
     // Open Checkout with further options:
-    business_handler.open({
-        name: 'Morfix.co',
-        description: 'Business Package ($97 per mth)',
-        panelLabel: 'Subscribe',
-        email: "{{ Auth::user()->email }}"
-    });
+//    business_handler.open({
+//        name: 'Morfix.co',
+//        description: 'Business Package ($97 per mth)',
+//        panelLabel: 'Subscribe',
+//        email: "{{ Auth::user()->email }}"
+//    });
 });
 
 $("#mastermind-btn").on("click", function(){ 
     // Open Checkout with further options:
-    pro_handler.open({
-        name: 'Morfix.co',
-        description: 'Mastermind Package ($970 per yr)',
-        panelLabel: 'Subscribe',
-        email: "{{ Auth::user()->email }}"
-    });
+//    pro_handler.open({
+//        name: 'Morfix.co',
+//        description: 'Mastermind Package ($970 per yr)',
+//        panelLabel: 'Subscribe',
+//        email: "{{ Auth::user()->email }}"
+//    });
 });
 
 jQuery(function () {
