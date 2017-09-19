@@ -47,7 +47,7 @@ class UpdatePendingCommissionPayableNew extends Command
             $recent_pay_out_date = \Carbon('25th of August');
             
             if($user->last_pay_out_date = $recent_pay_out_date){
-                $user->pending_commission_payable
+                //$user->pending_commission_payable
             }
         }
     }
