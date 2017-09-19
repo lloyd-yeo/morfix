@@ -88,5 +88,5 @@ class CheckInteractionsWorking extends Command {
             }
         }
     }
-}Ï
+}
     
