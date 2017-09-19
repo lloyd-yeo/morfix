@@ -70,11 +70,11 @@ class InteractionComment extends Command {
             
             $partition = $this->argument('partition');
 
-            $user = User::where("email", $this->argument("email"))
+            $users = User::where("email", $this->argument("email"))
                     ->where('partition', $partition)
                     ->get();
 
-            foreach (User::cursor() as $user) {
+            foreach ($users as $user) {
 
                 if ($user->tier > 2) {
                     $instagram_profiles = array();
