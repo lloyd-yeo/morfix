@@ -97,22 +97,17 @@ class InteractionFollow extends Command {
          */
         $users = NULL;
 
-        if (NULL !== $this->argument("email")) {
-            
-            $this->line('email: ' . $this->argument("email"));
-            $users = User::where('email', $this->argument("email"))->get();
-            
-        } else if ($this->argument("email") == "slave") {
-            
+        if ($this->argument("email") == "slave") {
             $partition = $this->argument('partition');
-            
-            $this->line('email: ' . $this->argument("email"));
+            $this->info("[Follow Interaction] Queueing jobs for slave " . $partition);
             $users = User::where('email', $this->argument("email"))
                     ->where('partition', $partition)
                     ->get();
-            
+        } else if (NULL !== $this->argument("email"))  {
+            $this->info("[Follow Interaction] Manually executing follow for " . $this->argument("email"));
+            $users = User::where('email', $this->argument("email"))->get();
         } else {
-            
+            $this->info("[Follow Interaction] Queueing jobs for Master..");
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
                     ->get();
