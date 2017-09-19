@@ -21,7 +21,7 @@ class MigrateCommentLogs extends Command {
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Migrate comment logs for this slave.';
 
     /**
      * Create a new command instance.
