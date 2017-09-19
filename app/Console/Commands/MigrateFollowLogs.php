@@ -13,7 +13,7 @@ class MigrateFollowLogs extends Command {
      *
      * @var string
      */
-    protected $signature = 'migrate:follow';
+    protected $signature = 'migrate:follow {insta_username?}';
 
     /**
      * The console command description.
