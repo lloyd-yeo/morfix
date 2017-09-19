@@ -65,6 +65,7 @@ class InteractionComment extends Command {
                     ->get();
 
             jobHandle($instagram_profiles);
+            
         } else if ($this->argument("email") == "slave") {
             
             $partition = $this->argument('partition');
