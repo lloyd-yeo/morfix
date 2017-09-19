@@ -56,9 +56,11 @@ class InteractionComment extends Command {
         $users = array();
         
         if ($this->argument("email") == "slave") {
-
+            
             $partition = $this->argument('partition');
-
+            
+            $this->info("[Comment Interaction] queueing jobs for slave " . $partition)
+            
             $users = User::where("email", $this->argument("email"))
                     ->where('partition', $partition)
                     ->get();
