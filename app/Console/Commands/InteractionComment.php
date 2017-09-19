@@ -66,11 +66,12 @@ class InteractionComment extends Command {
 
             jobHandle($instagram_profiles);
         } else if ($this->argument("email") == "slave") {
+            
             $partition = $this->argument('partition');
 
             $user = User::where("email", $this->argument("email"))
                     ->where('partition', $partition)
-                    ->first();
+                    ->get();
 
             foreach (User::cursor() as $user) {
 
