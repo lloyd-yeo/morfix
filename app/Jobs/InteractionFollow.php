@@ -372,7 +372,7 @@ class InteractionFollow implements ShouldQueue {
                 $proxy->assigned = $proxy->assigned + 1;
                 $proxy->save();
                 $instagram->setProxy($ig_profile->proxy);
-                $instagram->login();
+                $instagram->login($ig_username, $ig_password);
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                 $ig_profile->incorrect_pw = 1;
                 $ig_profile->save();
