@@ -97,7 +97,9 @@ class InteractionComment extends Command {
                     ->get();
 
             jobHandle($instagram_profiles);
+            
         } else {
+            
             foreach (User::cursor() as $user) {
 
                 if ($user->tier > 2) {
