@@ -59,12 +59,11 @@ class InteractionComment extends Command {
 
             $this->info("[Comment Interaction] queueing jobs for slave " . $partition);
 
-//            $users = User::where("email", $this->argument("email"))
-//                    ->where("partition", $partition)
-//                    ->get();
+            $users = User::where("email", $this->argument("email"))
+                    ->where("partition", $partition)
+                    ->get();
 
-            foreach (User::where("email", $this->argument("email"))
-                    ->where("partition", $partition)->cursor() as $user) {
+            foreach ($users as $user) {
 
                 if ($user->tier > 1) {
 
