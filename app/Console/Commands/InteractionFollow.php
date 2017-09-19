@@ -28,7 +28,7 @@ class InteractionFollow extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:follow {email?}';
+    protected $signature = 'interaction:follow {email?} {partition?}';
 
     /**
      * The console command description.
@@ -96,18 +96,27 @@ class InteractionFollow extends Command {
           - else, call handle again(Recursion)
          */
         $users = NULL;
-        
-        if (NULL !== $this->argument("email")) {
-            $this->line('email: ' . $this->argument("email"));
+
+        if ($this->argument("email") == "slave") {
+            $partition = $this->argument('partition');
+            $this->info("[Follow Interaction] Queueing jobs for slave " . $partition);
+            $users = User::where('partition', $partition)
+                    ->get();
+        } else if (NULL !== $this->argument("email"))  {
+            $this->info("[Follow Interaction] Manually executing follow for " . $this->argument("email"));
             $users = User::where('email', $this->argument("email"))->get();
         } else {
+            $this->info("[Follow Interaction] Queueing jobs for Master..");
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
                     ->get();
+            
         }
 
         foreach ($users as $user) {
+            
             $this->line($user->user_id);
+            
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
                             . 'AND checkpoint_required = 0 '
                             . 'AND account_disabled = 0 '
@@ -115,7 +124,8 @@ class InteractionFollow extends Command {
                             . 'AND incorrect_pw = 0 '
                             . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
                             . 'AND user_id = ' . $user->user_id)->get();
-            if (NULL === $this->argument("email")) {
+            
+            if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
                     foreach ($instagram_profiles as $ig_profile) {
                         dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
