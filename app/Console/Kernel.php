@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel {
      */
     protected $commands = [
         Commands\ImportInstagramSession::class,
+        Commands\CheckInteractionsWorking::class,
         Commands\GetNewDmJob::class,
         Commands\GetDm::class,
         Commands\SendDmJob::class,
