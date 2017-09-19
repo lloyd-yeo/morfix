@@ -14,7 +14,7 @@ class MigrateCommentLogs extends Command {
      *
      * @var string
      */
-    protected $signature = 'migrate:comment {insta_username?}';
+    protected $signature = 'migrate:commentlogs {insta_username?}';
 
     /**
      * The console command description.
