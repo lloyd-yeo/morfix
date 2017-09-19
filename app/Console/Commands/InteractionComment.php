@@ -54,6 +54,7 @@ class InteractionComment extends Command {
     public function handle() {
 
         $users = array();
+        
         if ($this->argument("email") == "slave") {
 
             $partition = $this->argument('partition');
@@ -65,6 +66,7 @@ class InteractionComment extends Command {
             foreach ($users as $user) {
 
                 if ($user->tier > 2) {
+                    
                     $instagram_profiles = array();
 
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
@@ -82,6 +84,7 @@ class InteractionComment extends Command {
                     }
                 }
             }
+            
         } else if (NULL !== $this->argument("email")) {
 
             $user = User::where("email", $this->argument("email"))->first();
