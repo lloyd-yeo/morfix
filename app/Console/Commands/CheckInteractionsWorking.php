@@ -47,7 +47,8 @@ class CheckInteractionsWorking extends Command {
             $users = User::where('email', $this->argument("email"))
                     ->orderBy('user_id', 'desc')
                     ->get();
-
+            echo "retrieved user \n";
+            
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
@@ -56,12 +57,12 @@ class CheckInteractionsWorking extends Command {
                             ->where('date_liked', '<=', Carbon::now())
                             ->where('date_liked', '>=', Carbon::now()->subHours(3))
                             ->first();
-
+                    echo "retrieved like logs \n";
                     $user_comment = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
                             ->where('date_commented', '<=', Carbon::now())
                             ->where('date_commented', '>=', Carbon::now()->subHours(3))
                             ->first();
-
+                    echo "retrieved comment info \n";
                     $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->where('date_inserted', '<=', Carbon::now())
                             ->where('date_inserted', '>=', Carbon::now()->subHours(3))
@@ -70,19 +71,22 @@ class CheckInteractionsWorking extends Command {
                             ->where('date_unfollowed', '<=', Carbon::now())
                             ->where('date_unfollowed', '>=', Carbon::now()->subHours(3))
                             ->first();
+                    echo "retrieved follow info \n";
 
-
-                    if ($user_like != null) {
+                    if (isnull($user_like)) {
                         $ig_profile->auto_interaction_like = 1;
                         $ig_profile->save;
+                        echo "Updated like info \n";
                     }
-                    if ($user_comment != null) {
+                    if (isnull($user_comment)) {
                         $ig_profile->auto_interaction_comment = 1;
                         $ig_profile->save;
+                        echo "Updated comment info \n";
                     }
-                    if ($user_follow != null || $user_follow != null) {
+                    if (isnull($user_follow) || isnull($user_follow)) {
                         $ig_profile->auto_interaction_follow = 1;
                         $ig_profile->save;
+                        echo "Updated follow info \n";
                     }
                     if ($ig_profile->auto_interaction_comment === 1 || $ig_profile->auto_interaction_like === 1 || $ig_profile->auto_interaction_follow === 1) {
                         $ig_profile->auto_interaction_working = 1;
