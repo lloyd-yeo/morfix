@@ -110,7 +110,6 @@ class InteractionFollow extends Command {
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'asc')
                     ->get();
-            
         }
 
         foreach ($users as $user) {
