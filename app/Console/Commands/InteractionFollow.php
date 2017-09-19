@@ -125,7 +125,7 @@ class InteractionFollow extends Command {
                             . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
                             . 'AND user_id = ' . $user->user_id)->get();
             
-            if (NULL === $this->argument("email")) {
+            if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
                     foreach ($instagram_profiles as $ig_profile) {
                         dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
@@ -133,7 +133,7 @@ class InteractionFollow extends Command {
                         $this->line("queued profile: " . $ig_profile->insta_username);
                     }
                 }
-            } else if ($this->argument("email") != "slave") {
+            } else {
                 foreach ($instagram_profiles as $ig_profile) {
                     $this->jobHandle($ig_profile);
                 }
