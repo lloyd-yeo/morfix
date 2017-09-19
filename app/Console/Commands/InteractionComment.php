@@ -53,11 +53,9 @@ class InteractionComment extends Command {
      */
     public function handle() {
 
-        $users = array();
-
         if ($this->argument("email") == "slave") {
 
-            $partition = $this->argument('partition');
+            $partition = $this->argument("partition");
 
             $this->info("[Comment Interaction] queueing jobs for slave " . $partition)
 
@@ -84,10 +82,11 @@ class InteractionComment extends Command {
                             continue;
                         }
                     }
-                    
                 }
             }
         } else if (NULL !== $this->argument("email")) {
+
+            $this->info("[Comment Interaction] trying jobs for single email: " . $this->argument("email"))
 
             $user = User::where("email", $this->argument("email"))->first();
 
@@ -98,7 +97,7 @@ class InteractionComment extends Command {
 
             $this->jobHandle($instagram_profiles);
         } else {
-
+            $this->info("[Comment Interaction] queueing jobs for all users in db.");
             foreach (User::cursor() as $user) {
 
                 if ($user->tier > 2) {
