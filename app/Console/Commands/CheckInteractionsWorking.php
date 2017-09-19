@@ -80,14 +80,16 @@ class CheckInteractionsWorking extends Command {
                         $user->auto_interaction_comment = 1;
                         $user->save;
                     }
-                    if ($user_follow != null or $user_follow != null) {
+                    if ($user_follow != null || $user_follow != null) {
                         $user->auto_interaction_follow = 1;
                         $user->save;
                     }
-                    if ($user->auto_interaction_comment = 1 or $user->auto_interaction_like = 1 or $user->auto_interaction_follow =1) {
+                    if ($user->auto_interaction_comment = 1 || $user->auto_interaction_like = 1 || $user->auto_interaction_follow =1) {
                         $user->auto_interaction_working = 1;
-                    } elseif ($user->auto_interaction_comment = 0 and $user->auto_interaction_like = 0) {
+                        $user->save;
+                    } elseif ($user->auto_interaction_comment = 0 && $user->auto_interaction_like = 0) {
                         $user->auto_interaction_working = 0;
+                        $user->save;
                     }
                 }
             }
