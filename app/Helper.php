@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Config;
 use App\SlaveNodeConnectionDirectory;
 use App\User;
 
