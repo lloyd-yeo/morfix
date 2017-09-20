@@ -147,7 +147,6 @@ class CheckInteractionsWorking extends Command {
                     $from = Carbon::now()->subHours(3);
                     $to = Carbon::now();
 
-
                     foreach ($instagram_profiles as $ig_profile) {
                         $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                                 ->whereBetween('date_liked', array($from, $to))
