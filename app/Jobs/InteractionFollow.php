@@ -176,7 +176,6 @@ class InteractionFollow implements ShouldQueue {
                         ->take(2)
                         ->get();
 
-
                 if (count($users_to_unfollow) == 0) {
 
                     echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
