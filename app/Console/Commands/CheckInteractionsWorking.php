@@ -87,37 +87,31 @@ class CheckInteractionsWorking extends Command {
 
                     if (is_null($user_like) && $ig_profile->auto_like == 1) {
                         $ig_profile->auto_like_working = 0;
-
                         echo "[" . $ig_profile->insta_username . "] Updated like info to 0\n";
                     }
 
                     if (!is_null($user_like) || $ig_profile->auto_like == 0) {
                         $ig_profile->auto_like_working = 1;
-
                         echo "[" . $ig_profile->insta_username . "] Updated like info to 1\n";
                     }
 
                     if (is_null($user_comment) && $ig_profile->auto_comment == 1) {
                         $ig_profile->auto_comment_working = 0;
-
                         echo "[" . $ig_profile->insta_username . "] Updated comment info to 0 \n";
                     }
 
                     if (!is_null($user_comment) || $ig_profile->auto_comment == 0) {
                         $ig_profile->auto_comment_working = 1;
-
                         echo "[" . $ig_profile->insta_username . "] Updated comment info to 1 \n";
                     }
 
                     if ((is_null($user_follow) || is_null($user_unfollow)) && $ig_profile->auto_follow = 1) {
                         $ig_profile->auto_follow_working = 0;
-
                         echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
 
                     if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
                         $ig_profile->auto_follow_working = 1;
-
                         echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
 
@@ -141,7 +135,11 @@ class CheckInteractionsWorking extends Command {
                     ->get();
 
             foreach ($users as $user) {
-
+                
+                if ($user->partition > 0) { #do something later.
+                    echo "[" . $user->email . "] User is on Slave node, moving on...\n";
+                }
+                
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
