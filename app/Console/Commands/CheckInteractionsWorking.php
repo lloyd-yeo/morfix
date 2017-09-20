@@ -45,17 +45,19 @@ class CheckInteractionsWorking extends Command {
         $time_start = microtime(true);
         $users = array();
         if (NULL !== $this->argument("email")) {
+
             $users = User::where('email', $this->argument("email"))
                     ->orderBy('user_id', 'desc')
                     ->get();
-            echo "Retrieved user" . $this->argument("email") . "\n";
 
             foreach ($users as $user) {
+
+                echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
+
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
                 $from = Carbon::now()->subHours(3);
                 $to = Carbon::now();
-
 
                 foreach ($instagram_profiles as $ig_profile) {
                     $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
@@ -66,7 +68,7 @@ class CheckInteractionsWorking extends Command {
                             ->whereBetween('date_commented', array($from, $to))
                             ->first();
 
-                    echo "Retrieved comment info \n";
+//                    echo "Retrieved comment info for [" . $ig_profile->insta_username . "]\n";
 
                     $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->whereBetween('date_inserted', array($from, $to))
@@ -81,48 +83,53 @@ class CheckInteractionsWorking extends Command {
                             ->first();
 
 //                    ->orWhereRaw('date_inserted BETWEEN ? AND ?', array($from, $to))
-
-
-                    echo "Retrieved follow info \n";
+//                    echo "Retrieved follow info for [" . $ig_profile->insta_username . "]\n";
 
                     if (is_null($user_like) && $ig_profile->auto_like == 1) {
                         $ig_profile->auto_like_working = 0;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated like info to 0\n";
                     }
+
                     if (!is_null($user_like) || $ig_profile->auto_like == 0) {
                         $ig_profile->auto_like_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated like info to 1\n";
                     }
+
                     if (is_null($user_comment) && $ig_profile->auto_comment == 1) {
                         $ig_profile->auto_comment_working = 0;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated comment info to 0 \n";
                     }
+
                     if (!is_null($user_comment) || $ig_profile->auto_comment == 0) {
                         $ig_profile->auto_comment_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated comment info to 1 \n";
                     }
 
                     if ((is_null($user_follow) || is_null($user_unfollow)) && $ig_profile->auto_follow = 1) {
                         $ig_profile->auto_follow_working = 0;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
+
                     if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
                         $ig_profile->auto_follow_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
+
                     if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
                         $ig_profile->auto_interactions_working = 0;
-                        $ig_profile->save();
-                    } elseif ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
+                        #$ig_profile->save();
+                    } else if ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
                         $ig_profile->auto_interactions_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                     }
+                    
+                    $ig_profile->save();
                 }
             }
             $time_end = microtime(true);
@@ -133,11 +140,11 @@ class CheckInteractionsWorking extends Command {
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'desc')
                     ->get();
-            
+
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
-                
+
                 $from = Carbon::now()->subHours(3);
                 $to = Carbon::now();
 
@@ -151,7 +158,7 @@ class CheckInteractionsWorking extends Command {
                             ->whereBetween('date_commented', array($from, $to))
                             ->first();
 
-                    echo "Retrieved comment info \n";
+//                    echo "Retrieved comment info \n";
 
                     $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->whereBetween('date_inserted', array($from, $to))
@@ -167,52 +174,53 @@ class CheckInteractionsWorking extends Command {
 
 //                    ->orWhereRaw('date_inserted BETWEEN ? AND ?', array($from, $to))
 
-
-                    echo "Retrieved follow info \n";
+//                    echo "Retrieved follow info \n";
 
                     if (is_null($user_like) && $ig_profile->auto_like == 1) {
                         $ig_profile->auto_like_working = 0;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated like info to 0\n";
                     }
                     if (!is_null($user_like) || $ig_profile->auto_like == 0) {
                         $ig_profile->auto_like_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated like info to 1\n";
                     }
                     if (is_null($user_comment) && $ig_profile->auto_comment == 1) {
                         $ig_profile->auto_comment_working = 0;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated comment info to 0 \n";
                     }
                     if (!is_null($user_comment) || $ig_profile->auto_comment == 0) {
                         $ig_profile->auto_comment_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated comment info to 1 \n";
                     }
 
                     if ((is_null($user_follow) || is_null($user_unfollow)) && $ig_profile->auto_follow = 1) {
                         $ig_profile->auto_follow_working = 0;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
                     if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
                         $ig_profile->auto_follow_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                         echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
                     if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
                         $ig_profile->auto_interactions_working = 0;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                     } elseif ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
                         $ig_profile->auto_interactions_working = 1;
-                        $ig_profile->save();
+                        #$ig_profile->save();
                     }
+                    
+                    $ig_profile->save();
                 }
             }
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
-            echo '<b>Total Execution Time:</b> ' . $execution_time . ' Seconds' . "\n";
+            echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
         }
     }
 
