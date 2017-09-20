@@ -88,33 +88,33 @@ class CheckInteractionsWorking extends Command {
                     if (is_null($user_like) && $ig_profile->auto_like == 1) {
                         $ig_profile->auto_like_working = 0;
                         $ig_profile->save();
-                        echo "Updated like info to 0\n";
+                        echo "[" . $ig_profile->insta_username . "] Updated like info to 0\n";
                     }
                     if (!is_null($user_like) || $ig_profile->auto_like == 0) {
                         $ig_profile->auto_like_working = 1;
                         $ig_profile->save();
-                        echo "Updated like info to 1\n";
+                        echo "[" . $ig_profile->insta_username . "] Updated like info to 1\n";
                     }
                     if (is_null($user_comment) && $ig_profile->auto_comment == 1) {
                         $ig_profile->auto_comment_working = 0;
                         $ig_profile->save();
-                        echo "Updated comment info to 0 \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated comment info to 0 \n";
                     }
                     if (!is_null($user_comment) || $ig_profile->auto_comment == 0) {
                         $ig_profile->auto_comment_working = 1;
                         $ig_profile->save();
-                        echo "Updated comment info to 1 \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated comment info to 1 \n";
                     }
 
                     if ((is_null($user_follow) || is_null($user_unfollow)) && $ig_profile->auto_follow = 1) {
                         $ig_profile->auto_follow_working = 0;
                         $ig_profile->save();
-                        echo "Updated follow info \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
                     if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
                         $ig_profile->auto_follow_working = 1;
                         $ig_profile->save();
-                        echo "Updated follow info \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
                     if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
                         $ig_profile->auto_interactions_working = 0;
@@ -132,7 +132,6 @@ class CheckInteractionsWorking extends Command {
             $time_start = microtime(true);
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'desc')
-//                    ->take(10)
                     ->get();
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
@@ -172,33 +171,33 @@ class CheckInteractionsWorking extends Command {
                     if (is_null($user_like) && $ig_profile->auto_like == 1) {
                         $ig_profile->auto_like_working = 0;
                         $ig_profile->save();
-                        echo "Updated like info to 0\n";
+                        echo "[" . $ig_profile->insta_username . "] Updated like info to 0\n";
                     }
                     if (!is_null($user_like) || $ig_profile->auto_like == 0) {
                         $ig_profile->auto_like_working = 1;
                         $ig_profile->save();
-                        echo "Updated like info to 1\n";
+                        echo "[" . $ig_profile->insta_username . "] Updated like info to 1\n";
                     }
                     if (is_null($user_comment) && $ig_profile->auto_comment == 1) {
                         $ig_profile->auto_comment_working = 0;
                         $ig_profile->save();
-                        echo "Updated comment info to 0 \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated comment info to 0 \n";
                     }
                     if (!is_null($user_comment) || $ig_profile->auto_comment == 0) {
                         $ig_profile->auto_comment_working = 1;
                         $ig_profile->save();
-                        echo "Updated comment info to 1 \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated comment info to 1 \n";
                     }
 
                     if ((is_null($user_follow) || is_null($user_unfollow)) && $ig_profile->auto_follow = 1) {
                         $ig_profile->auto_follow_working = 0;
                         $ig_profile->save();
-                        echo "Updated follow info \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
                     if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
                         $ig_profile->auto_follow_working = 1;
                         $ig_profile->save();
-                        echo "Updated follow info \n";
+                        echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
                     }
                     if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
                         $ig_profile->auto_interactions_working = 0;
