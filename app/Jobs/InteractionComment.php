@@ -60,7 +60,6 @@ class InteractionComment implements ShouldQueue {
 
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
         
-        
         if ($ig_profile->owner()->tier == 1) {
             exit();
         }

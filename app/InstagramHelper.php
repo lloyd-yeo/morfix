@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
