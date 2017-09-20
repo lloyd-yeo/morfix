@@ -384,7 +384,7 @@ class InteractionComment extends Command {
             echo("[$ig_username] unengaged followings: \t" . $unengaged_following->follower_username . "\n");
 
             try {
-                $user_instagram_id = $instagram->people->getUserIdForName($unengaged_following->follower_username);
+                //$user_instagram_id = $instagram->people->getUserIdForName($unengaged_following->follower_username);
             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                 if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                     $comment_log = new InstagramProfileCommentLog;
