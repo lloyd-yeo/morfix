@@ -56,7 +56,7 @@ class InteractionComment extends Command {
     public function handle() {
 
         $users = array();
-
+        
         if ($this->argument("email") == "slave") {
             foreach (User::cursor() as $user) {
                 if ($user->tier > 1) {
@@ -84,6 +84,7 @@ class InteractionComment extends Command {
                     ->get();
 
             executeCommenting($instagram_profiles);
+            
         } else {
             foreach (User::where('partition', 0)->cursor() as $user) {
                 if ($user->tier > 1) {
