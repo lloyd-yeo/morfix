@@ -145,6 +145,14 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto comment function has been turned <b>off</b>.";
             }
+            
+            if (Auth::user()->partition > 0) {
+                $connection_name = Helper::getConnection(Auth::user()->partition);
+                DB::connection($connection_name)->table('user_insta_profile')
+                    ->where('id', $id)
+                    ->update(['auto_comment' => $instagram_profile->auto_comment]);
+            }
+            
             return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_comment));
         } else {
             return Response::json(array("success" => false, 'message' => $response, 'status' => $instagram_profile->auto_comment));
@@ -161,6 +169,14 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto follow function has been turned <b>off</b>.";
             }
+            
+            if (Auth::user()->partition > 0) {
+                $connection_name = Helper::getConnection(Auth::user()->partition);
+                DB::connection($connection_name)->table('user_insta_profile')
+                    ->where('id', $id)
+                    ->update(['auto_comment' => $instagram_profile->auto_follow]);
+            }
+            
             return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_follow));
         } else {
             return Response::json(array("success" => false, 'message' => $response, 'status' => $instagram_profile->auto_follow));
@@ -177,6 +193,14 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto unfollow function has been turned <b>off</b>.";
             }
+            
+            if (Auth::user()->partition > 0) {
+                $connection_name = Helper::getConnection(Auth::user()->partition);
+                DB::connection($connection_name)->table('user_insta_profile')
+                    ->where('id', $id)
+                    ->update(['auto_comment' => $instagram_profile->auto_unfollow]);
+            }
+            
             return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_unfollow));
         } else {
             return Response::json(array("success" => false, 'message' => $response, 'status' => $instagram_profile->auto_unfollow));
@@ -194,6 +218,14 @@ class InteractionsController extends Controller {
             } else {
                 $response = "Your auto unfollow function has been turned <b>off</b>.";
             }
+            
+            if (Auth::user()->partition > 0) {
+                $connection_name = Helper::getConnection(Auth::user()->partition);
+                DB::connection($connection_name)->table('user_insta_profile')
+                    ->where('id', $id)
+                    ->update(['auto_comment' => $instagram_profile->niche]);
+            }
+            
             return Response::json(array("success" => true, 'message' => $response));
         } else {
             return Response::json(array("success" => false, 'message' => $response));
@@ -228,6 +260,19 @@ class InteractionsController extends Controller {
         $response = "There has been an error with the server. Please contact live support.";
         if ($instagram_profile->save()) {
             $response = "Your settings have been saved!";
+            
+            if (Auth::user()->partition > 0) {
+                $connection_name = Helper::getConnection(Auth::user()->partition);
+                DB::connection($connection_name)->table('user_insta_profile')
+                    ->where('id', $id)
+                    ->update(['unfollow_unfollowed' => $unfollow_users_not_following_flag,
+                              'follow_recent_engaged' => $follow_recent_engaged,
+                              'follow_min_followers' => $minimum_follower_filter,
+                              'follow_max_followers' => $maximum_follower_filter,
+                              'speed' => $follow_speed,
+                              'follow_cycle' => $follow_cycle]);
+            }
+            
             return Response::json(array("success" => true, 'response' => $response));
         } else {
             return Response::json(array("success" => false, 'response' => $response));
