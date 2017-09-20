@@ -11,7 +11,7 @@ class Helper {
         $partition = $user->partition;
         if ($partition > 0) {
             $conn_name = 'slave' . $partition;
-            $connection = SlaveNodeConnectionDirectory::where('partition', $partition)->first();
+            $connection = SlaveNodeConnectionDirectory::find($partition);
             if ($connection !== NULL) {
                 Config::set('database.connections.' . $conn_name, array(
                     'driver' => 'mysql',
