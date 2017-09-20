@@ -48,7 +48,7 @@ class CheckInteractionsWorking extends Command {
             $users = User::where('email', $this->argument("email"))
                     ->orderBy('user_id', 'desc')
                     ->get();
-            echo "retrieved user" . $this->argument("email") . "\n";
+            echo "Retrieved user" . $this->argument("email") . "\n";
 
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
@@ -66,7 +66,7 @@ class CheckInteractionsWorking extends Command {
                             ->whereBetween('date_commented', array($from, $to))
                             ->first();
 
-                    echo "retrieved comment info \n";
+                    echo "Retrieved comment info \n";
 
                     $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->whereBetween('date_inserted', array($from, $to))
@@ -83,7 +83,7 @@ class CheckInteractionsWorking extends Command {
 //                    ->orWhereRaw('date_inserted BETWEEN ? AND ?', array($from, $to))
 
 
-                    echo "retrieved follow info \n";
+                    echo "Retrieved follow info \n";
 
                     if (is_null($user_like) && $ig_profile->auto_like == 1) {
                         $ig_profile->auto_like_working = 0;
@@ -133,9 +133,11 @@ class CheckInteractionsWorking extends Command {
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'desc')
                     ->get();
+            
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
+                
                 $from = Carbon::now()->subHours(3);
                 $to = Carbon::now();
 
@@ -144,12 +146,12 @@ class CheckInteractionsWorking extends Command {
                     $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                             ->whereBetween('date_liked', array($from, $to))
                             ->first();
-                    echo "retrieved user " . $ig_profile->email . "\n";
+                    echo "Retrieved user-profile [" . $ig_profile->insta_username . "]\n";
                     $user_comment = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
                             ->whereBetween('date_commented', array($from, $to))
                             ->first();
 
-                    echo "retrieved comment info \n";
+                    echo "Retrieved comment info \n";
 
                     $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                             ->whereBetween('date_inserted', array($from, $to))
@@ -166,7 +168,7 @@ class CheckInteractionsWorking extends Command {
 //                    ->orWhereRaw('date_inserted BETWEEN ? AND ?', array($from, $to))
 
 
-                    echo "retrieved follow info \n";
+                    echo "Retrieved follow info \n";
 
                     if (is_null($user_like) && $ig_profile->auto_like == 1) {
                         $ig_profile->auto_like_working = 0;
