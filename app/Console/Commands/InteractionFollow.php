@@ -121,6 +121,7 @@ class InteractionFollow extends Command {
                             . 'AND account_disabled = 0 '
                             . 'AND invalid_user = 0 '
                             . 'AND incorrect_pw = 0 '
+                            . 'AND feedback_required = 0 '
                             . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
                             . 'AND user_id = ' . $user->user_id)->get();
             
