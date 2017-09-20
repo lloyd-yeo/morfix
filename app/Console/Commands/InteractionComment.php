@@ -146,6 +146,7 @@ class InteractionComment extends Command {
             //Login
             //$this->login($ig_profile);
             $instagram = InstagramHelper::initInstagram();
+            $this->instagram = $instagram;
             if (InstagramHelper::login($instagram, $ig_profile) == true) {
                 try {
                     $comment = InstagramProfileComment::where('insta_username', $ig_username)
@@ -403,7 +404,6 @@ class InteractionComment extends Command {
             $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
             $user_feed_items = $user_feed->items;
             $commented = NULL;
-            echo "406";
             if (count($user_feed_items) > 0) {
                 foreach ($user_feed_items as $item) {
 
