@@ -8,8 +8,8 @@ use App\User;
 
 class Helper {
 
-    public static function getConnection($user) {
-        $partition = $user->partition;
+    public static function getConnection($partition) {
+
         if ($partition > 0) {
             $conn_name = 'slave' . $partition;
             $connection = SlaveNodeConnectionDirectory::find($partition);
@@ -28,6 +28,8 @@ class Helper {
                     'engine' => null,
                 ));
             }
+
+            return $conn_name;
         } else {
             return 'mysql';
         }

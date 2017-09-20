@@ -123,7 +123,7 @@ class InteractionsController extends Controller {
             }
             
             if (Auth::user()->partition > 0) {
-                $connection_name = Helper::getConnection(Auth::user());
+                $connection_name = Helper::getConnection(Auth::user()->partition);
                 DB::connection($connection_name)->table('user_insta_profile')
                     ->where('id', $id)
                     ->update(['auto_like' => $instagram_profile->auto_like]);
