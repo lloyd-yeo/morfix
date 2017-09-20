@@ -61,7 +61,7 @@ class InstagramHelper {
             InstagramHelper::verifyAndReassignProxy($ig_profile);
 
             try {
-                $instagram->login();
+                $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
                 return false;
             }
