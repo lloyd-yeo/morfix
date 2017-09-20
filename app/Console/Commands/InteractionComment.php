@@ -67,17 +67,15 @@ class InteractionComment extends Command {
                         ->where('incorrect_pw', false)
                         ->get();
 
-                if (count($instagram_profiles) > 0) {
-                    foreach ($instagram_profiles as $ig_profile) {
-                        if ($ig_profile->next_comment_time === NULL) {
-                            $ig_profile->next_comment_time = \Carbon\Carbon::now();
-                            $ig_profile->save();
-                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
-                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
-                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
-                        }
+                foreach ($instagram_profiles as $ig_profile) {
+                    if ($ig_profile->next_comment_time === NULL) {
+                        $ig_profile->next_comment_time = \Carbon\Carbon::now();
+                        $ig_profile->save();
+                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                        $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                    } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                        $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
                     }
                 }
             }
