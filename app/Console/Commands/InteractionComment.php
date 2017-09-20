@@ -193,8 +193,7 @@ class InteractionComment extends Command {
                         /*
                           - Call unengaged followings method
                          */
-                        echo '196';
-                        $this->unengagedFollowings($unengaged_followings, $ig_profile);
+                        $this->unengagedFollowings($unengaged_followings,$ig_username, $ig_profile);
                     }
 
 
@@ -356,7 +355,7 @@ class InteractionComment extends Command {
         }
     }
 
-    public function unengagedFollowings($unengaged_followings, $ig_profile) {
+    public function unengagedFollowings($unengaged_followings,$ig_username, $ig_profile) {
         /*
           - Loop unengaged_followings
           - If InstagramProfileCommentLog, echo
