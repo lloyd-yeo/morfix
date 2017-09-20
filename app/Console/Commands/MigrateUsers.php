@@ -105,6 +105,7 @@ class MigrateUsers extends Command {
         }
         
         $this->call('migrate:comment', []);
+        
     }
 
     private function addNewUser($master_user) {
