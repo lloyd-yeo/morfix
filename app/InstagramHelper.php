@@ -36,7 +36,8 @@ class InstagramHelper {
     }
 
     public static function login(Instagram $instagram, InstagramProfile $ig_profile) {
-
+        $flag = true;
+        $message = '';
         echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
 
         InstagramHelper::verifyAndReassignProxy($ig_profile);
@@ -47,23 +48,27 @@ class InstagramHelper {
 
         try {
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
-            return true;
+            $flag = true;
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
-            return false;
+            $message = "CheckpointRequiredException";
+            $flag = false;
         } catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
             $ig_profile->invalid_user = 1;
             $ig_profile->save();
-            return false;
+            $flag = false;
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
 
             InstagramHelper::verifyAndReassignProxy($ig_profile);
 
+            $message = "NetworkException";
             try {
                 $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
+                $flag = true;
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
-                return false;
+                $message .= " with InstagramException";
+                $flag = false;
             }
             
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
@@ -73,20 +78,25 @@ class InstagramHelper {
         } catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
-            return false;
+            $flag = false;
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
-            return false;
+            $flag = false;
+            $message = "IncorrectPasswordException";
         } catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
             $ig_profile->invalid_user = 1;
             $ig_profile->save();
-            return false;
+            $flag = false;
+            $message = "AccountDisabledException";
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
-            return false;
+            $flag = false;
+            $message = "IncorrectPasswordException";
         }
+        echo 'Error: '.$message;
+        return $flag;
     }
 
     public static function verifyAndReassignProxy(InstagramProfile $ig_profile) {
