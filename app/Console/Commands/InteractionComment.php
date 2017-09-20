@@ -44,6 +44,7 @@ class InteractionComment extends Command {
      * @return void
      */
     protected $instagram;
+    protected $commentText;
 
     public function __construct() {
         parent::__construct();
@@ -158,7 +159,7 @@ class InteractionComment extends Command {
                     }
 
                     echo($comment->comment . "\n");
-                    $commentText = $comment->comment;
+                    $this->commentText = $comment->comment;
 
                     $commented = false;
 
@@ -335,7 +336,7 @@ class InteractionComment extends Command {
                         $comment_log->target_media = $item->id;
                         $comment_log->save();
 
-                        $comment_resp = $instagram->media->comment($item->id, $commentText);
+                        $comment_resp = $instagram->media->comment($item->id, $this->commentText);
                         $comment_log->log = serialize($comment_resp);
                         if ($comment_log->save()) {
                             echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
@@ -413,7 +414,7 @@ class InteractionComment extends Command {
                     $comment_log->target_insta_id = $user_instagram_id;
                     $comment_log->target_media = $item->id;
                     $comment_log->save();
-                    $comment_resp = $instagram->media->comment($item->id, $commentText);
+                    $comment_resp = $instagram->media->comment($item->id, $this->commentText);
                     $comment_log->log = serialize($comment_resp);
                     if ($comment_log->save()) {
                         echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
