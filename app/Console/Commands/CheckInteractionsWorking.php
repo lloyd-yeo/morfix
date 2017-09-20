@@ -132,7 +132,7 @@ class CheckInteractionsWorking extends Command {
             $time_start = microtime(true);
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'desc')
-                    ->take(10)
+//                    ->take(10)
                     ->get();
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
