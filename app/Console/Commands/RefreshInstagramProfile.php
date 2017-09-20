@@ -75,7 +75,6 @@ class RefreshInstagramProfile extends Command {
                     $truncatedDebug = false;
 
                     $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                    #$ig_profile = $this->profile;
                     
                     echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
 
