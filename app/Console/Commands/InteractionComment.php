@@ -56,50 +56,58 @@ class InteractionComment extends Command {
     public function handle() {
 
         $users = array();
-        
-        if ($this->argument("email") == "slave") {
-            foreach (User::cursor() as $user) {
-                if ($user->tier > 1) {
-                    $instagram_profiles = InstagramProfile::where('auto_comment', true)
-                            ->where('email', $user->email)
-                            ->where('incorrect_pw', false)
-                            ->whereRaw('NOW() >= next_comment_time')
-                            ->get();
 
-                    if (count($instagram_profiles) > 0) {
-                        foreach ($instagram_profiles as $ig_profile) {
-                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                            $this->line("queued profile: " . $ig_profile->insta_username);
-                            continue;
-                        }
+        if ($this->argument("email") == "slave") {
+            $this->info("On Slave mode. Retrieving all user's on this parition.");
+            
+            foreach (User::where('tier', '>', 1)->cursor() as $user) {
+                $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                        ->where('email', $user->email)
+                        ->where('incorrect_pw', false)
+                        ->whereRaw('NOW() >= next_comment_time')
+                        ->get();
+
+                if (count($instagram_profiles) > 0) {
+                    foreach ($instagram_profiles as $ig_profile) {
+                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                        $this->line("queued profile: " . $ig_profile->insta_username);
+                        continue;
                     }
                 }
             }
         } else if (NULL !== $this->argument("email")) {
-            $user = User::where("email", $this->argument("email"))->first();
-
-            $instagram_profiles = InstagramProfile::where('auto_comment', true)
-                    ->where('email', $user->email)
-                    ->where('incorrect_pw', false)
-                    ->get();
-
-            executeCommenting($instagram_profiles);
+            $this->info("Executing command for [" . $this->argument("email") . "]");
             
-        } else {
-            foreach (User::where('partition', 0)->cursor() as $user) {
+            $user = User::where("email", $this->argument("email"))->first();
+            if ($user !== NULL) {
                 if ($user->tier > 1) {
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
                             ->where('email', $user->email)
                             ->where('incorrect_pw', false)
-                            ->whereRaw('NOW() >= next_comment_time')
                             ->get();
 
-                    if (count($instagram_profiles) > 0) {
-                        foreach ($instagram_profiles as $ig_profile) {
-                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                            $this->line("queued profile: " . $ig_profile->insta_username);
-                            continue;
-                        }
+                    executeCommenting($instagram_profiles);
+                } else {
+                    $this->info("[" . $user->email . "] is not on Premium tier or above.");
+                }
+            } else {
+                $this->info("[" . $this->argument("email") . "] is not a valid user.");
+            }
+        } else {
+            $this->info("Not on Slave mode. Retrieving all user's on Master parition.");
+            
+            foreach (User::where('partition', 0)->where('tier', '>', 1)->cursor() as $user) {
+                $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                        ->where('email', $user->email)
+                        ->where('incorrect_pw', false)
+                        ->whereRaw('NOW() >= next_comment_time')
+                        ->get();
+
+                if (count($instagram_profiles) > 0) {
+                    foreach ($instagram_profiles as $ig_profile) {
+                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                        $this->line("queued profile: " . $ig_profile->insta_username);
+                        continue;
                     }
                 }
             }
