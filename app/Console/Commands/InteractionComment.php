@@ -67,12 +67,19 @@ class InteractionComment extends Command {
                         ->where('incorrect_pw', false)
                         ->whereRaw('NOW() >= next_comment_time')
                         ->get();
-
+                
                 if (count($instagram_profiles) > 0) {
                     foreach ($instagram_profiles as $ig_profile) {
-                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                        $this->line("queued profile: " . $ig_profile->insta_username);
-                        continue;
+                        if ($ig_profile->next_comment_time === NULL) {
+                            $ig_profile->next_comment_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                        }
+                        
                     }
                 }
             }
@@ -95,7 +102,6 @@ class InteractionComment extends Command {
             }
         } else {
             $this->info("Not on Slave mode. Retrieving all user's on Master parition.");
-            
             foreach (User::where('partition', 0)->where('tier', '>', 1)->cursor() as $user) {
                 $instagram_profiles = InstagramProfile::where('auto_comment', true)
                         ->where('email', $user->email)
