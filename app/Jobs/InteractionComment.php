@@ -59,11 +59,11 @@ class InteractionComment implements ShouldQueue {
         $ig_profile = $this->profile;
 
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
-        
+
         if ($ig_profile->owner()->tier == 1) {
             exit();
         }
-        
+
         $ig_username = $ig_profile->insta_username;
 
         $instagram = InstagramHelper::initInstagram();
@@ -75,7 +75,7 @@ class InteractionComment implements ShouldQueue {
             try {
 
                 $comments = InstagramProfileComment::where('insta_username', $ig_username)->get();
-                
+
                 if ($comments->isEmpty()) {
                     exit();
                 }
@@ -83,7 +83,7 @@ class InteractionComment implements ShouldQueue {
                 $comment = $comments->random();
 
                 echo($comment->comment . "\n");
-                
+
                 $commentText = $comment->comment;
 
                 $commented = false;
