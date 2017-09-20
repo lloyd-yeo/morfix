@@ -20,6 +20,7 @@ use App\NicheTarget;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
+use App\InstagramHelper;
 
 class InteractionFollow extends Command {
 
@@ -171,7 +172,6 @@ class InteractionFollow extends Command {
             $ig_profile->save();
             $ig_profile = InstagramProfile::find($ig_profile->id);
         }
-
 
         $target_username = "";
         $target_follow_username = "";
@@ -365,34 +365,23 @@ class InteractionFollow extends Command {
         }
 
         echo "[" . $insta_username . "] beginning unfollowing sequence.\n";
+        
         DB::reconnect();
-        $config = array();
-        $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
-        $config["dbtablename"] = "instagram_sessions";
-        $config["storage"] = "mysql";
-
-        $debug = false;
-        $truncatedDebug = false;
-        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-        if ($ig_profile->proxy === NULL) {
-            $proxy = Proxy::inRandomOrder()->first();
-            $ig_profile->proxy = $proxy->proxy;
-            $ig_profile->save();
-            $proxy->assigned = $proxy->assigned + 1;
-            $proxy->save();
-        }
+        
+        $instagram = InstagramHelper::initInstagram();
 
         $current_log_id = "";
         $current_user_to_unfollow = NULL;
 
         try {
             $ig_username = $insta_username;
-            $ig_password = $this->insta_pw;
-
-
-            //[LOGIN segment]
-            $this->loginSegment($instagram, $ig_profile);
+            
+            if (!InstagramHelper::login($instagram, $ig_profile)) {
+                $this->info("[" . $insta_username . "] failed to login.");
+                exit;
+            }
+            
+            
             //[get users to UNFOLLOW]
             $users_to_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_username)
                     ->where('unfollowed', false)
