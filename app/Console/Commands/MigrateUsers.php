@@ -68,7 +68,6 @@ class MigrateUsers extends Command {
             if ($ig_profile !== NULL) {
 
                 if ($this->argument('mode') == 'import') {
-
                     if (IGProfileCookie::where('username', $ig_profile->insta_username)->count() == 0) {
                         $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
                                 ->table('instagram_sessions')
@@ -87,7 +86,7 @@ class MigrateUsers extends Command {
                         ->get();
 
                 DB::table('user_insta_target_hashtag')->where('insta_username', $ig_profile->insta_username)->delete();
-
+                
                 foreach ($master_user_insta_target_hashtags as $master_user_insta_target_hashtag) {
                     $this->addNewInstagramProfileHashtag($master_user_insta_target_hashtag);
                 }
@@ -104,6 +103,8 @@ class MigrateUsers extends Command {
                 }
             }
         }
+        
+        $this->call('migrate:comment', []);
     }
 
     private function addNewUser($master_user) {
@@ -228,7 +229,6 @@ class MigrateUsers extends Command {
         $ig_profile->proxy = $master_instagram_profile->proxy;
         $ig_profile->updated_at = $master_instagram_profile->updated_at;
         $ig_profile->created_at = $master_instagram_profile->created_at;
-
         $ig_profile->daily_likes = $master_instagram_profile->daily_likes;
         $ig_profile->daily_follows = $master_instagram_profile->daily_follows;
         $ig_profile->daily_comments = $master_instagram_profile->daily_comments;
