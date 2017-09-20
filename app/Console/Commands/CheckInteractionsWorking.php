@@ -138,6 +138,7 @@ class CheckInteractionsWorking extends Command {
                 
                 if ($user->partition > 0) { #do something later.
                     echo "[" . $user->email . "] User is on Slave node, moving on...\n";
+                    continue;
                 }
                 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
