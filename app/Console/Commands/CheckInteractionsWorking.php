@@ -55,8 +55,8 @@ class CheckInteractionsWorking extends Command {
 
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
-                $from = Carbon::now()->subHours(3);
-                $to = Carbon::now();
+                $from = Carbon::now()->subHours(3)->toDateTimeString();
+                $to = Carbon::now()->toDateTimeString();
 
                 foreach ($instagram_profiles as $ig_profile) {
                     $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
