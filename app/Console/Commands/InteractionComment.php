@@ -184,18 +184,17 @@ class InteractionComment extends Command {
 
                     echo "[$ig_username] real unengaged followings count = $real_unengaged_followings_count \n";
 
-                    if (count($unengaged_followings) < 1 || $real_unengaged_followings_count == 0) {
-                        /*
-                          - Call Unengaged Likings Method
-                         */
-                        $this->unengagedLikings($ig_username, $ig_profile);
-                    } else {
-                        /*
-                          - Call unengaged followings method
-                         */
-                        $this->unengagedFollowings($unengaged_followings, $ig_profile);
-                    }
-                    echo '198';
+                    // if (count($unengaged_followings) < 1 || $real_unengaged_followings_count == 0) {
+                    //     /*
+                    //       - Call Unengaged Likings Method
+                    //      */
+                    //     $this->unengagedLikings($ig_username, $ig_profile);
+                    // } else {
+                    //     /*
+                    //       - Call unengaged followings method
+                    //      */
+                    //     $this->unengagedFollowings($unengaged_followings, $ig_profile);
+                    // }
 
 
 
