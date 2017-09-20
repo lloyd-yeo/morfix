@@ -188,15 +188,14 @@ class InteractionComment extends Command {
                         /*
                           - Call Unengaged Likings Method
                          */
-                        echo "191";
-                        //$this->unengagedLikings($ig_username, $ig_profile);
+                        $this->unengagedLikings($ig_username, $ig_profile);
                     } else {
                         /*
                           - Call unengaged followings method
                          */
                         $this->unengagedFollowings($unengaged_followings, $ig_profile);
                     }
-
+                    echo '198';
 
 
 
