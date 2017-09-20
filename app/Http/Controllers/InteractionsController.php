@@ -174,7 +174,7 @@ class InteractionsController extends Controller {
                 $connection_name = Helper::getConnection(Auth::user()->partition);
                 DB::connection($connection_name)->table('user_insta_profile')
                     ->where('id', $id)
-                    ->update(['auto_comment' => $instagram_profile->auto_follow]);
+                    ->update(['auto_follow' => $instagram_profile->auto_follow]);
             }
             
             return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_follow));
@@ -198,7 +198,7 @@ class InteractionsController extends Controller {
                 $connection_name = Helper::getConnection(Auth::user()->partition);
                 DB::connection($connection_name)->table('user_insta_profile')
                     ->where('id', $id)
-                    ->update(['auto_comment' => $instagram_profile->auto_unfollow]);
+                    ->update(['auto_unfollow' => $instagram_profile->auto_unfollow]);
             }
             
             return Response::json(array("success" => true, 'message' => $response, 'status' => $instagram_profile->auto_unfollow));
@@ -223,7 +223,7 @@ class InteractionsController extends Controller {
                 $connection_name = Helper::getConnection(Auth::user()->partition);
                 DB::connection($connection_name)->table('user_insta_profile')
                     ->where('id', $id)
-                    ->update(['auto_comment' => $instagram_profile->niche]);
+                    ->update(['niche' => $instagram_profile->niche]);
             }
             
             return Response::json(array("success" => true, 'message' => $response));
