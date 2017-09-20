@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UpdateLastPaidFromCSV extends Command {
 
@@ -13,14 +14,14 @@ class UpdateLastPaidFromCSV extends Command {
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'update:lastpaid';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'updating when the user last paid from a csv file';
 
     /**
      * Create a new command instance.
@@ -51,7 +52,7 @@ class UpdateLastPaidFromCSV extends Command {
             if ($user !== NULL) {
                 if ($data[2] > 50 && !empty($data[1]) && $data[3] == 'Eligible') {
                 $user->last_pay_out_date = $last_pay_out_coms_date;
-                #$user->save;
+                $user->save;
                 echo "Updated [$current_email] last pay out coms to [$last_pay_out_coms_date]\n";
             }
         }

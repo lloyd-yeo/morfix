@@ -48,7 +48,7 @@ class InteractionFollow implements ShouldQueue {
      *
      * @var int
      */
-    public $timeout = 60;
+    public $timeout = 480;
 
     /**
      * Create a new job instance.
@@ -155,53 +155,18 @@ class InteractionFollow implements ShouldQueue {
             
             DB::reconnect();
             
-            $config = array();
-            $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
-            $config["dbtablename"] = "instagram_sessions";
-            $config["storage"] = "mysql";
-
-            $debug = false;
-            $truncatedDebug = false;
-            $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-            if ($ig_profile->proxy === NULL) {
-                $proxy = Proxy::inRandomOrder()->first();
-                $ig_profile->proxy = $proxy->proxy;
-                $ig_profile->save();
-                $proxy->assigned = $proxy->assigned + 1;
-                $proxy->save();
+            $instagram = InstagramHelper::initInstagram();
+            
+            if (!InstagramHelper::login($instagram, $ig_profile)) {
+                exit();
             }
-
+            
             $current_log_id = "";
             $current_user_to_unfollow = NULL;
+            
             try {
                 $ig_username = $insta_username;
                 $ig_password = $insta_pw;
-
-                //[LOGIN segment]
-                $instagram->setProxy($ig_profile->proxy);
-                $instagram->setUser($ig_username, $ig_password);
-
-                try {
-                    $instagram->login();
-                    echo "[$ig_username] logged in.\n";
-                } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-
-                    $proxy = Proxy::inRandomOrder()->first();
-                    $ig_profile->proxy = $proxy->proxy;
-                    $ig_profile->save();
-                    $proxy->assigned = $proxy->assigned + 1;
-                    $proxy->save();
-                    $instagram->setProxy($ig_profile->proxy);
-                    $instagram->login();
-
-//                    var_dump($network_ex);
-                } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                    $ig_profile->incorrect_pw = 1;
-                    $ig_profile->save();
-                    exit();
-                }
-                //[End LOGIN]
                 
                 //[get users to UNFOLLOW]
                 $users_to_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_username)
@@ -336,63 +301,17 @@ class InteractionFollow implements ShouldQueue {
 
             echo "[" . $insta_username . "] beginning following sequence.\n";
             DB::reconnect();
-            $config = array();
-            $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
-            $config["dbtablename"] = "instagram_sessions";
-            $config["storage"] = "mysql";
-
-            $debug = false;
-            $truncatedDebug = false;
-            $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-            if ($ig_profile->proxy === NULL) {
-                $proxy = Proxy::inRandomOrder()->first();
-                $ig_profile->proxy = $proxy->proxy;
-                $ig_profile->save();
-                $proxy->assigned = $proxy->assigned + 1;
-                $proxy->save();
+            
+            $instagram = InstagramHelper::initInstagram();
+            
+            if (!InstagramHelper::login($instagram, $ig_profile)) {
+                exit();
             }
+            
 
             $ig_username = $insta_username;
             $ig_password = $insta_pw;
-
-            //[LOGIN segment]
-            $instagram->setProxy($ig_profile->proxy);
-            $instagram->setUser($ig_username, $ig_password);
-
-            try {
-                $instagram->login();
-                echo "[$ig_username] logged in.\n";
-            } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                $proxy = Proxy::inRandomOrder()->first();
-                $ig_profile->proxy = $proxy->proxy;
-                $ig_profile->save();
-                $proxy->assigned = $proxy->assigned + 1;
-                $proxy->save();
-                $instagram->setProxy($ig_profile->proxy);
-                $instagram->login();
-            } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                $ig_profile->incorrect_pw = 1;
-                $ig_profile->save();
-                exit();
-            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                $ig_profile->checkpoint_required = 1;
-                $ig_profile->save();
-                exit();
-            } catch (\InstagramAPI\Exception\SentryBlockException $sentry_block_ex) {
-                $proxy = Proxy::inRandomOrder()->first();
-                $ig_profile->proxy = $proxy->proxy;
-                $ig_profile->save();
-                $proxy->assigned = $proxy->assigned + 1;
-                $proxy->save();
-                exit();
-            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                if (strpos($endpoint_ex->getMessage(), 'The username you entered doesn\'t appear to belong to an account.') !== false) {
-                    $ig_profile->invalid_user = 1;
-                    $ig_profile->save();
-                }
-            }
-            //[End LOGIN]
+            
             //start with targeted usernames/hashtags
             $use_hashtags = rand(0, 1);
             echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
@@ -428,7 +347,7 @@ class InteractionFollow implements ShouldQueue {
 
                 try {
                     foreach ($target_hashtags as $target_hashtag) {
-
+                        $instagram->login($ig_username, $ig_password);
                         echo "[" . $insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
                         #$hashtag_feed = $instagram->getHashtagFeed(trim($target_hashtag->hashtag));
                         $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));

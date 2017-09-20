@@ -54,6 +54,11 @@ class InteractionsController extends Controller {
              return redirect('home');
         }
         
+        $likes_done = 0;
+        $comments_done = 0;
+        $follows_done = 0;
+        $unfollows_done = 0;
+        
         $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
         $comments_done = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
         $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();

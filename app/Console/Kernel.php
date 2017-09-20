@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel {
      */
     protected $commands = [
         Commands\ImportInstagramSession::class,
+        Commands\CheckInteractionsWorking::class,
         Commands\GetNewDmJob::class,
         Commands\GetDm::class,
         Commands\SendDmJob::class,
@@ -60,7 +61,10 @@ class Kernel extends ConsoleKernel {
         Commands\MigrateUsers::class,
         Commands\MigrateNiche::class,
         Commands\MigrateProxyList::class,
+        Commands\MigrateFollowLogs::class,
+        Commands\MigrateCommentLogs::class,
         Commands\MigrateLikeLogs::class,
+        Commands\MigrateComments::class,
         Commands\UpdateUserTotalInteractionStatistics::class,
     ];
 

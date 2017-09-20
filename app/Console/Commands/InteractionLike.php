@@ -49,55 +49,70 @@ class InteractionLike extends Command {
         parent::__construct();
     }
 
+    private function dispatchJobsToEligibleUsers($users) {
+        foreach ($users as $user) {
+            if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
+                $instagram_profiles = InstagramProfile::where('auto_like', true)
+                        ->where('checkpoint_required', false)
+                        ->where('account_disabled', false)
+                        ->where('invalid_user', false)
+                        ->where('incorrect_pw', false)
+                        ->where('user_id', $user->user_id)
+                        ->get();
+
+                foreach ($instagram_profiles as $ig_profile) {
+                    if ($ig_profile->next_like_time === NULL) {
+                        $ig_profile->next_like_time = \Carbon\Carbon::now();
+                        $ig_profile->save();
+                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                        $job->onQueue("likes");
+                        dispatch($job);
+                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                    } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                        $job->onQueue("likes");
+                        dispatch($job);
+                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle() {
+
         if (NULL === $this->argument("email")) {
 
-            $this->line("Beginning sequence to queue jobs...");
+            $this->line("[Likes Interaction Master] Beginning sequence to queue jobs...");
 
             $users = DB::table('user')
                     ->orderBy('user_id', 'asc')
                     ->get();
 
-            foreach ($users as $user) {
-                if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
-                    
-                    $instagram_profiles = InstagramProfile::where('auto_like', true)
-                            ->where('checkpoint_required', false)
-                            ->where('account_disabled', false)
-                            ->where('invalid_user', false)
-                            ->where('incorrect_pw', false)
-                            ->where('user_id', $user->user_id)
-                            ->get();
-                    
-                    foreach ($instagram_profiles as $ig_profile) {
+            $this->dispatchJobsToEligibleUsers($users);
+            
+        } else if ($this->argument("email") == "slave") {
 
-                        if ($ig_profile->next_like_time === NULL) {
-                            
-                            $ig_profile->next_like_time = \Carbon\Carbon::now();
-                            $ig_profile->save();
-                            
-                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                            $job->onQueue("likes");
-                            dispatch($job);
-                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                            
-                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
-                            
-                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                            $job->onQueue("likes");
-                            dispatch($job);
-                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                            
-                        }
-                    }
-                }
-            }
+            $partition = $this->argument('partition');
+
+            $this->line("[Likes Interaction Slave] Beginning sequence to queue jobs...");
+
+            $users = DB::table('user')
+                    ->where('partition', $partition)
+                    ->orderBy('user_id', 'asc')
+                    ->get();
+            
+            $this->dispatchJobsToEligibleUsers($users);
+            
         } else {
+            
+            $this->line("[Likes Interaction Email] Beginning sequence for [" . $this->argument("email") . "]");
+            
             $user = User::where('email', $this->argument("email"))->first();
 
             // microtime(true) returns the unix timestamp plus milliseconds as a float
@@ -152,9 +167,9 @@ class InteractionLike extends Command {
 //        $debug = false;
 //        $truncatedDebug = false;
 //        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-        
+
         $instagram = InstagramHelper::initInstagram();
-        
+
         if ($ig_profile->proxy === NULL) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
@@ -394,7 +409,7 @@ class InteractionLike extends Command {
                  */
                 $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $ig_username)
                         ->get();
-                
+
                 $target_hashtags = $target_hashtags->shuffle();
 
                 //Foreach targeted hashtags
@@ -439,11 +454,11 @@ class InteractionLike extends Command {
                             if ($like_quota > 0) {
 
                                 $like_response = $instagram->media->like($item->id);
-                                
+
                                 if ($like_response->status == "ok") {
-                                    
+
                                     $this->info("[$ig_username] Liked " . serialize($like_response));
-                                    
+
                                     $like_log = new InstagramProfileLikeLog;
                                     $like_log->insta_username = $ig_username;
                                     $like_log->target_username = $user_to_like->username;
@@ -454,7 +469,6 @@ class InteractionLike extends Command {
                                         $this->info("[$ig_username] Saved!");
                                     }
                                     $like_quota--;
-                                    
                                 }
                             } else {
                                 return;
@@ -728,4 +742,5 @@ class InteractionLike extends Command {
             return;
         }
     }
+
 }
