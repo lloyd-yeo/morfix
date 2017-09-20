@@ -147,16 +147,50 @@ class CheckInteractionsWorking extends Command {
             $ig_profile->auto_comment_working = 1;
             echo "[" . $ig_profile->insta_username . "] Updated comment info to 1 \n";
         }
-
-        if ((is_null($user_follow) || is_null($user_unfollow)) && $ig_profile->auto_follow = 1) {
-            $ig_profile->auto_follow_working = 0;
-            echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
-        }
-
-        if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
+        
+        if ($ig_profile->auto_follow == 0 && $ig_profile->auto_unfollow == 0) { #User turned off auto follow & auto unfollow
             $ig_profile->auto_follow_working = 1;
-            echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+            echo "[" . $ig_profile->insta_username . "] didn't turn on Auto-Follow/Unfollow \n";
+        } else {
+            if ($ig_profile->auto_follow == 1 && $ig_profile->auto_unfollow == 0) {
+                #turn on Auto-Follow only
+                if (!is_null($user_follow)) {
+                    #If there are follow logs in the past 3 hours then it's working.
+                    #user_follow is first() of past 3 hour follow logs.
+                    $ig_profile->auto_follow_working = 1;
+                    echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+                } else {
+                    $ig_profile->auto_follow_working = 0;
+                    echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+                }
+            } else if ($ig_profile->auto_unfollow == 1 && $ig_profile->auto_follow == 0) {
+                #turn on Auto-Unfollow only
+                if (!is_null($user_unfollow)) {
+                    #If there are unfollow logs in the past 3 hours then it's working.
+                    #$user_unfollow is first() of past 3 hour unfollow logs.
+                    $ig_profile->auto_follow_working = 1;
+                    echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+                } else {
+                    $ig_profile->auto_follow_working = 0;
+                    echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+                }
+            } else {
+                #turn on Both
+                if ((!is_null($user_follow) || !is_null($user_unfollow))) {
+                    #If there are follow logs or unfollow logs in the past 3 hours then it's working.
+                    $ig_profile->auto_follow_working = 1;
+                    echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+                } else {
+                    $ig_profile->auto_follow_working = 0;
+                    echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+                }
+            }
         }
+        
+//        if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
+//            $ig_profile->auto_follow_working = 1;
+//            echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
+//        }
 
         if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
             $ig_profile->auto_interactions_working = 0;
