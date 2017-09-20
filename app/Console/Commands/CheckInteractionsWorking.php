@@ -186,11 +186,6 @@ class CheckInteractionsWorking extends Command {
                 }
             }
         }
-        
-//        if (!is_null($user_follow) || !is_null($user_unfollow) || $ig_profile->auto_follow == 0) {
-//            $ig_profile->auto_follow_working = 1;
-//            echo "[" . $ig_profile->insta_username . "] Updated follow info \n";
-//        }
 
         if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
             $ig_profile->auto_interactions_working = 0;
