@@ -47,8 +47,10 @@ class InstagramHelper {
         echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 
         try {
+            
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
+            
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
@@ -88,7 +90,9 @@ class InstagramHelper {
             $ig_profile->save();
             $message = "IncorrectPasswordException\n";
         }
-        echo 'Error: [' . $ig_profile->insta_username . ']'.$message;
+        if (!$flag) {
+            echo '[' . $ig_profile->insta_username . '] Error:  '.$message . "\n";
+        }
         return $flag;
     }
 
