@@ -59,15 +59,14 @@ class InteractionComment extends Command {
         $users = array();
 
         if ($this->argument("email") == "slave") {
-            $this->info("On Slave mode. Retrieving all user's on this parition.");
-            
+            $this->info("On Slave mode. Retrieving all user's on this partition.");
+
             foreach (User::where('tier', '>', 1)->cursor() as $user) {
                 $instagram_profiles = InstagramProfile::where('auto_comment', true)
                         ->where('email', $user->email)
                         ->where('incorrect_pw', false)
-                        ->whereRaw('NOW() >= next_comment_time')
                         ->get();
-                
+
                 if (count($instagram_profiles) > 0) {
                     foreach ($instagram_profiles as $ig_profile) {
                         if ($ig_profile->next_comment_time === NULL) {
@@ -79,7 +78,6 @@ class InteractionComment extends Command {
                             dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
                             $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
                         }
-                        
                     }
                 }
             }
@@ -106,14 +104,19 @@ class InteractionComment extends Command {
                 $instagram_profiles = InstagramProfile::where('auto_comment', true)
                         ->where('email', $user->email)
                         ->where('incorrect_pw', false)
-                        ->whereRaw('NOW() >= next_comment_time')
                         ->get();
 
                 if (count($instagram_profiles) > 0) {
                     foreach ($instagram_profiles as $ig_profile) {
-                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
-                        $this->line("queued profile: " . $ig_profile->insta_username);
-                        continue;
+                        if ($ig_profile->next_comment_time === NULL) {
+                            $ig_profile->next_comment_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                        }
                     }
                 }
             }
@@ -313,8 +316,8 @@ class InteractionComment extends Command {
 
             //Login
             //$this->login($ig_profile);
-            $instagram      = InstagramHelper::initInstagram();
-            if(InstagramHelper::login($instagram, $ig_profile) == true){
+            $instagram = InstagramHelper::initInstagram();
+            if (InstagramHelper::login($instagram, $ig_profile) == true) {
                 try {
                     $comment = InstagramProfileComment::where('insta_username', $ig_username)
                             ->inRandomOrder()
@@ -368,15 +371,15 @@ class InteractionComment extends Command {
 
 
 
-    //            if (count($unengaged_followings) > 0) {
-    //                continue;
-    //                foreach ($unengaged_followings as $unengaged_following) {
-    //                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
-    //                }
-    //            } else {
-    //                
-    //                
-    //            }
+                    //            if (count($unengaged_followings) > 0) {
+                    //                continue;
+                    //                foreach ($unengaged_followings as $unengaged_following) {
+                    //                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
+                    //                }
+                    //            } else {
+                    //                
+                    //                
+                    //            }
                     #$instagram->setUser($ig_username, $ig_password);
                     #$login_resp = $instagram->login();
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
@@ -420,14 +423,14 @@ class InteractionComment extends Command {
                         var_dump($request_ex->getResponse());
                     }
 
-    //            echo("request1 " . $request_ex->getMessage() . "\n");
-    //            $ig_profile->error_msg = $request_ex->getMessage();
-    //            $ig_profile->save();
+                    //            echo("request1 " . $request_ex->getMessage() . "\n");
+                    //            $ig_profile->error_msg = $request_ex->getMessage();
+                    //            $ig_profile->save();
                 }
-            }
-            else{
+            } else {
                 //echo "Unable to Login";
             }
         }
     }
+
 }
