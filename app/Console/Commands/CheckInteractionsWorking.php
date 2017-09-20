@@ -137,11 +137,15 @@ class CheckInteractionsWorking extends Command {
             echo '<b>Total Execution Time:</b> ' . $execution_time . ' Seconds' . "\n";
         } else {
             $time_start = microtime(true);
+            
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                     ->orderBy('user_id', 'desc')
                     ->get();
 
             foreach ($users as $user) {
+                
+                echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
+                
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
 
