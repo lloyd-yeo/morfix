@@ -339,7 +339,7 @@ class InteractionLike implements ShouldQueue {
                                         #duplicate. Liked before this photo with this id.
                                         continue;
                                     }
-
+                                    echo("\n" . "[$ig_username] attemping to like: " . $item->id);
                                     $like_response = $instagram->media->like($item->id);
 
                                     if ($like_response->status == "ok") {
@@ -652,6 +652,7 @@ class InteractionLike implements ShouldQueue {
         } else if ($ex instanceof \InstagramAPI\Exception\AccountDisabledException) {
             $ig_profile->account_disabled = 1;
         }
+        dump($ex->getResponse());
         $ig_profile->save();
     }
 
