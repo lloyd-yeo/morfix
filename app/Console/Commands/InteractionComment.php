@@ -29,7 +29,7 @@ class InteractionComment extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:comment {email?}';
+    protected $signature = 'interaction:comment {email?} {queueasjob?}';
 
     /**
      * The console command description.
@@ -61,7 +61,6 @@ class InteractionComment extends Command {
 
         if ($this->argument("email") == "slave") {
             $this->info("On Slave mode. Retrieving all user's on this partition.");
-
             foreach (User::where('tier', '>', 1)->cursor() as $user) {
                 $instagram_profiles = InstagramProfile::where('auto_comment', true)
                         ->where('email', $user->email)
@@ -81,6 +80,35 @@ class InteractionComment extends Command {
                         $this->error("[" . $ig_profile->insta_username . "] not queued for [Comments]");
                     }
                 }
+            }
+        } else if (NULL !== $this->argument("email") && NULL !== $this->argument("queueasjob")) {
+            $this->info("Queueing job for [" . $this->argument("email") . "]");
+            $user = User::where("email", $this->argument("email"))->first();
+            if ($user !== NULL) {
+                if ($user->tier > 1) {
+                    $instagram_profiles = InstagramProfile::where('auto_comment', true)
+                            ->where('email', $user->email)
+                            ->where('incorrect_pw', false)
+                            ->get();
+
+                    foreach ($instagram_profiles as $ig_profile) {
+                        if ($ig_profile->next_comment_time === NULL) {
+                            $ig_profile->next_comment_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                        } else {
+                            $this->error("[" . $ig_profile->insta_username . "] not queued for [Comments]");
+                        }
+                    }
+                } else {
+                    $this->info("[" . $user->email . "] is not on Premium tier or above.");
+                }
+            } else {
+                $this->info("[" . $this->argument("email") . "] is not a valid user.");
             }
         } else if (NULL !== $this->argument("email")) {
             $this->info("Executing command for [" . $this->argument("email") . "]");
@@ -197,7 +225,7 @@ class InteractionComment extends Command {
                         /*
                           - Call unengaged followings method
                          */
-                        $this->unengagedFollowings($unengaged_followings,$ig_username, $ig_profile);
+                        $this->unengagedFollowings($unengaged_followings, $ig_username, $ig_profile);
                     }
 
 
@@ -264,7 +292,6 @@ class InteractionComment extends Command {
             }
         }
     }
-
 
     public function unengagedLikings($ig_username, $ig_profile) {
         /*
@@ -359,7 +386,7 @@ class InteractionComment extends Command {
         }
     }
 
-    public function unengagedFollowings($unengaged_followings,$ig_username, $ig_profile) {
+    public function unengagedFollowings($unengaged_followings, $ig_username, $ig_profile) {
         /*
           - Loop unengaged_followings
           - If InstagramProfileCommentLog, echo
