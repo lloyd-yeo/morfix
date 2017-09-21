@@ -77,6 +77,8 @@ class InteractionComment extends Command {
                     } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
                         dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
                         $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+                    } else {
+                        $this->error("[" . $ig_profile->insta_username . "] not queued for [Comments]");
                     }
                 }
             }

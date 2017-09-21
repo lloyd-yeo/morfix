@@ -374,6 +374,7 @@ class InteractionFollow extends Command {
         $current_user_to_unfollow = NULL;
 
         try {
+            
             $ig_username = $insta_username;
             
             if (!InstagramHelper::login($instagram, $ig_profile)) {
@@ -399,7 +400,6 @@ class InteractionFollow extends Command {
                 foreach ($users_to_unfollow as $user_to_unfollow) {
                     echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow->follower_username . "\n";
                     $current_log_id = $user_to_unfollow->log_id;
-
                     if ($unfollow_unfollowed == 1) {
                         $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
                         if ($friendship->followed_by == true) {
