@@ -60,19 +60,16 @@ class InteractionLike implements ShouldQueue {
 
         $ig_profile = $this->profile;
 
-        echo("\n" . $ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
-
         $ig_username = $ig_profile->insta_username;
-        $ig_password = $ig_profile->insta_pw;
 
         $instagram = InstagramHelper::initInstagram();
 
         if (InstagramHelper::login($instagram, $ig_profile)) {
-            
+
             try {
                 $speed = $ig_profile->speed;
                 $speed_delay = 3;
-                
+
                 if ($speed == "Fast") {
                     $speed_delay = 1;
                 }
@@ -120,18 +117,14 @@ class InteractionLike implements ShouldQueue {
                                 $target_username->save();
                             }
                         } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
+                            
                             $target_username_id = "";
                             $target_username->invalid = 1;
                             $target_username->save();
                             echo "\n[$ig_username] encountered error [$target_target_username]: " . $insta_ex->getMessage() . "\n";
-
-                            if (strpos($insta_ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
-                                $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
-                                $ig_profile->save();
-                                echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
-                                echo "\nTerminating...";
-                                exit;
-                            }
+                            
+                            $this->handleInstagramException($ig_profile, $insta_ex);
+                            
                         }
 
                         $user_follower_response = NULL;
@@ -615,32 +608,51 @@ class InteractionLike implements ShouldQueue {
                     }
                 }
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                echo("\n" . "checkpt\t" . $checkpoint_ex->getMessage());
-                DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
+                $this->handleInstagramException($ig_profile, $checkpoint_ex);
             } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                echo("\n" . "network\t" . $network_ex->getMessage());
-                DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
+                $this->handleInstagramException($ig_profile, $network_ex);
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                echo("\n" . "endpt\t" . $endpoint_ex->getMessage());
-                if ($endpoint_ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
-                    DB::connection('mysql_old')->update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
-                } else if ($endpoint_ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
-                    $ig_profile->invalid_user = 1;
-                    $ig_profile->save();
-                }
+                $this->handleInstagramException($ig_profile, $endpoint_ex);
             } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                echo("\n" . "incorrectpw\t" . $incorrectpw_ex->getMessage());
-                DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
+                $this->handleInstagramException($ig_profile, $incorrectpw_ex);
             } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
-                echo("\n" . "feedback\t" . $feedback_ex->getMessage());
-                DB::connection('mysql_old')->update('update user_insta_profile set invalid_proxy = 1, error_msg = ? where id = ?;', [$feedback_ex->getMessage(), $ig_profile->id]);
+                $this->handleInstagramException($ig_profile, $feedback_ex);
             } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
-                
+                $this->handleInstagramException($ig_profile, $emptyresponse_ex);
             } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-                echo("\n" . "acctdisabled\t" . $acctdisabled_ex->getMessage());
-                DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$acctdisabled_ex->getMessage(), $ig_profile->id]);
+                $this->handleInstagramException($ig_profile, $acctdisabled_ex);
             }
         }
+    }
+
+    public function handleInstagramException($ig_profile, $ex) {
+        $ig_username = $ig_profile->insta_username;
+        if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
+            $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
+            $ig_profile->save();
+            echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+            echo "\nTerminating...";
+            exit;
+        } else if ($ex instanceof \InstagramAPI\Exception\FeedbackRequiredException) {
+            $ig_profile->feedback_required = 1;
+            $ig_profile->error_msg = $ex->getMessage();
+        } else if ($ex instanceof \InstagramAPI\Exception\CheckpointRequiredException) {
+            $ig_profile->checkpoint_required = 1;
+            $ig_profile->error_msg = $ex->getMessage();
+        } else if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
+            
+        } else if ($ex instanceof \InstagramAPI\Exception\EndpointException) {
+            if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
+                $ig_profile->error_msg = $ex->getMessage();
+            } else if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
+                $ig_profile->invalid_user = 1;
+            }
+        } else if ($ex instanceof \InstagramAPI\Exception\IncorrectPasswordException) {
+            $ig_profile->incorrect_pw = 1;
+        } else if ($ex instanceof \InstagramAPI\Exception\AccountDisabledException) {
+            $ig_profile->account_disabled = 1;
+        }
+        $ig_profile->save();
     }
 
 }
