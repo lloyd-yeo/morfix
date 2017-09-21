@@ -31,7 +31,7 @@ class InteractionLike extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:like {email?} {partition?}';
+    protected $signature = 'interaction:like {email?} {queueasjob?}';
 
     /**
      * The console command description.
@@ -75,6 +75,8 @@ class InteractionLike extends Command {
                         $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
                     }
                 }
+            } else {
+                $this->line("[" . $user->email . "] is not on Premium Tier or Free-Trial");
             }
         }
     }
@@ -96,14 +98,49 @@ class InteractionLike extends Command {
 
             $this->dispatchJobsToEligibleUsers($users);
             
-        } else if ($this->argument("email") == "slave") {
+        } else if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
+            
+            $this->line("[Likes Interaction Email] Queueing job for [" . $this->argument("email") . "]");
+            
+            $user = User::where('email', $this->argument("email"))->first();
+            
+            if ($user !== NULL) {
+                if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
+                    $instagram_profiles = InstagramProfile::where('auto_like', true)
+                            ->where('checkpoint_required', false)
+                            ->where('account_disabled', false)
+                            ->where('invalid_user', false)
+                            ->where('incorrect_pw', false)
+                            ->where('user_id', $user->user_id)
+                            ->get();
 
-            $partition = $this->argument('partition');
+                    foreach ($instagram_profiles as $ig_profile) {
+                        if ($ig_profile->next_like_time === NULL) {
+                            $ig_profile->next_like_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                            $job->onQueue("likes");
+                            dispatch($job);
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                            $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                            $job->onQueue("likes");
+                            dispatch($job);
+                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                        }
+                    }
+                } else {
+                    $this->line("[" . $user->email . "] is not on Premium Tier or Free-Trial");
+                }
+            } else {
+                $this->line("[" . $this->argument("email") . "] user not found.");
+            }
+            
+        } else if ($this->argument("email") == "slave") {
 
             $this->line("[Likes Interaction Slave] Beginning sequence to queue jobs...");
 
             $users = DB::table('user')
-                    ->where('partition', $partition)
                     ->orderBy('user_id', 'asc')
                     ->get();
             
