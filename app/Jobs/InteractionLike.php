@@ -635,8 +635,9 @@ class InteractionLike implements ShouldQueue {
             exit;
         } else if ($ex instanceof \InstagramAPI\Exception\FeedbackRequiredException) {
             if ($ex->hasResponse()) {
+                
                 $feedback_required_response = $ex->getResponse();
-                if (strpos($feedback_required_response->feedback_message, 
+                if (strpos($feedback_required_response->fullResponse->feedback_message, 
                         'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->auto_like_ban = 1;
