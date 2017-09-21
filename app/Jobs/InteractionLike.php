@@ -638,7 +638,9 @@ class InteractionLike implements ShouldQueue {
                 $feedback_required_response = $ex->getResponse();
                 if (strpos($feedback_required_response->feedback_message, 
                         'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
-                    $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
+                    $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->auto_like_ban = 1;
+                    $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->save();
                     echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                     echo "\nTerminating...";
