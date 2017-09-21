@@ -29,7 +29,7 @@ class InteractionFollow extends Command {
      *
      * @var string
      */
-    protected $signature = 'interaction:follow {email?} {partition?}';
+    protected $signature = 'interaction:follow {email?} {queueasjob?}';
 
     /**
      * The console command description.
@@ -101,7 +101,7 @@ class InteractionFollow extends Command {
         if ($this->argument("email") == "slave") {
             $this->info("[Follow Interaction] Queueing jobs for Slave.");
             $users = User::all();
-        } else if (NULL !== $this->argument("email"))  {
+        } else if (NULL !== $this->argument("email")) {
             $this->info("[Follow Interaction] Manually executing follow for " . $this->argument("email"));
             $users = User::where('email', $this->argument("email"))->get();
         } else {
@@ -110,11 +110,11 @@ class InteractionFollow extends Command {
                     ->orderBy('user_id', 'asc')
                     ->get();
         }
-        
+
         foreach ($users as $user) {
-            
+
             $this->line($user->user_id);
-            
+
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
                             . 'AND checkpoint_required = 0 '
                             . 'AND account_disabled = 0 '
@@ -122,21 +122,26 @@ class InteractionFollow extends Command {
                             . 'AND incorrect_pw = 0 '
                             . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
                             . 'AND user_id = ' . $user->user_id)->get();
-            
+
             if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
                     foreach ($instagram_profiles as $ig_profile) {
                         dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
                                         ->onQueue('follows'));
-                        $this->line("queued profile: " . $ig_profile->insta_username);
+                        $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
                     }
                 }
             } else {
-                foreach ($instagram_profiles as $ig_profile) {
-                    $this->jobHandle($ig_profile);
+                if ($this->argument("queueasjob") === NULL) {
+                    foreach ($instagram_profiles as $ig_profile) {
+                        $this->jobHandle($ig_profile);
+                    }
+                } else {
+                    dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                                        ->onQueue('follows'));
+                    $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
                 }
             }
-            
         }
     }
 
@@ -365,23 +370,24 @@ class InteractionFollow extends Command {
         }
 
         echo "[" . $insta_username . "] beginning unfollowing sequence.\n";
-        
+
         DB::reconnect();
-        
+
         $instagram = InstagramHelper::initInstagram();
 
         $current_log_id = "";
         $current_user_to_unfollow = NULL;
 
         try {
+
             $ig_username = $insta_username;
-            
+
             if (!InstagramHelper::login($instagram, $ig_profile)) {
                 $this->info("[" . $insta_username . "] failed to login.");
                 exit;
             }
-            
-            
+
+
             //[get users to UNFOLLOW]
             $users_to_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_username)
                     ->where('unfollowed', false)
@@ -399,7 +405,6 @@ class InteractionFollow extends Command {
                 foreach ($users_to_unfollow as $user_to_unfollow) {
                     echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow->follower_username . "\n";
                     $current_log_id = $user_to_unfollow->log_id;
-
                     if ($unfollow_unfollowed == 1) {
                         $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
                         if ($friendship->followed_by == true) {
