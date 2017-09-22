@@ -129,6 +129,8 @@ class UpdateUserTotalInteractionStatistics extends Command {
                           'auto_comment_ban' => $ig_profile->auto_comment_ban,
                           'auto_comment_ban_time' => $ig_profile->auto_comment_ban_time,
                           'next_comment_time' => $ig_profile->next_comment_time,
+                          'next_follow_time' => $ig_profile->next_follow_time,
+                          'next_like_time' => $ig_profile->next_like_time,
                           'checkpoint_required' => $ig_profile->checkpoint_required,
                           'account_disabled' => $ig_profile->account_disabled,
                           'invalid_user' => $ig_profile->invalid_user,
