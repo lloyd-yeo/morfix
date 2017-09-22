@@ -40,7 +40,7 @@ class MigrateFollowLogs extends Command {
     public function handle() {
         if ($this->argument('insta_username') === NULL) {
 
-            $ig_profiles = InstagramProfile::all();
+            $ig_profiles = InstagramProfile::orderBy('user_id', 'desc')->get();
 
             foreach ($ig_profiles as $ig_profile) {
 
