@@ -59,7 +59,9 @@ class MigrateLikeLogs extends Command {
                         $like_log->log = $master_like_log->log;
                         $like_log->date_liked = $master_like_log->date_liked;
                         try {
-                            $like_log->save();
+                            if ($like_log->save()) {
+                                $this->line("[Like Logs] Saved: " . $like_log->log_id);
+                            }
                         } catch (QueryException $ex) {
                             continue;
                         }
