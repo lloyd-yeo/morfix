@@ -123,7 +123,17 @@ class UpdateUserTotalInteractionStatistics extends Command {
                 ->update(['daily_likes' => $ig_profile->daily_likes,
                           'daily_comments' => $ig_profile->daily_comments,
                           'daily_follows' => $ig_profile->daily_follows,
-                          'daily_unfollows' => $ig_profile->daily_unfollows]);
+                          'daily_unfollows' => $ig_profile->daily_unfollows,
+                          'auto_like_ban' => $ig_profile->auto_like_ban,
+                          'auto_like_ban_time' => $ig_profile->auto_like_ban_time,
+                          'auto_comment_ban' => $ig_profile->auto_comment_ban,
+                          'auto_comment_ban_time' => $ig_profile->auto_comment_ban_time,
+                          'next_comment_time' => $ig_profile->next_comment_time,
+                          'checkpoint_required' => $ig_profile->checkpoint_required,
+                          'account_disabled' => $ig_profile->account_disabled,
+                          'invalid_user' => $ig_profile->invalid_user,
+                          'incorrect_pw' => $ig_profile->incorrect_pw,
+                          'invalid_proxy' => $ig_profile->invalid_proxy,]);
     }
 
     private function initialUpdateOfTotalStats($ig_profile) {
