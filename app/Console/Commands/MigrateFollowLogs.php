@@ -67,6 +67,7 @@ class MigrateFollowLogs extends Command {
                         $follow_log->date_unfollowed = $master_follow_log->date_unfollowed;
                         try {
                             $follow_log->save();
+                            $this->line("[Follow Log] Saving log id: " . $follow_log->log_id);
                         } catch (QueryException $ex) {
                             $this->line($ex->getMessage());
                         }
