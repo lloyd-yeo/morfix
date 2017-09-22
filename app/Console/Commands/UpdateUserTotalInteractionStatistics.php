@@ -52,6 +52,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
         }
         
         if ($this->argument('mode') !== NULL && $this->argument('mode') == "refresh") {
+            
             foreach ($ig_profiles as $ig_profile) {
                 $this->refreshDailyStats($ig_profile);
             }
@@ -70,7 +71,6 @@ class UpdateUserTotalInteractionStatistics extends Command {
     }
     
     private function accumulate($ig_profile) {
-        
         $ig_profile->total_likes = $ig_profile->total_likes + $ig_profile->daily_likes;
         $ig_profile->daily_likes = 0;
         $ig_profile->total_comments = $ig_profile->total_comments + $ig_profile->daily_comments;
@@ -80,7 +80,6 @@ class UpdateUserTotalInteractionStatistics extends Command {
         $ig_profile->total_unfollows = $ig_profile->total_unfollows + $ig_profile->daily_unfollows;
         $ig_profile->daily_unfollows = 0;
         $ig_profile->save();
-        
         DB::connection('mysql_master')->table('user_insta_profile')
                 ->where('id', $ig_profile->id)
                 ->update(['daily_likes' => $ig_profile->daily_likes,

@@ -45,27 +45,48 @@ class MigrateLikeLogs extends Command {
 
             foreach ($ig_profiles as $ig_profile) {
 
-                $master_like_logs = DB::connection('mysql_master')
+                DB::connection('mysql_master')
                         ->table('user_insta_profile_like_log')
-                        ->where('insta_username', $ig_profile->insta_username)
-                        ->get();
+                        ->where('insta_username', $ig_profile->insta_username)->orderBy('log_id')->chunk(1000, function ($master_like_logs) {
+                    foreach ($master_like_logs as $master_like_log) {
+                        $like_log = new InstagramProfileLikeLog;
+                        $like_log->log_id = $master_like_log->log_id;
+                        $like_log->insta_username = $master_like_log->insta_username;
+                        $like_log->target_username = $master_like_log->target_username;
+                        $like_log->target_media = $master_like_log->target_media;
+                        $like_log->target_media_code = $master_like_log->target_media_code;
+                        $like_log->log = $master_like_log->log;
+                        $like_log->date_liked = $master_like_log->date_liked;
+                        try {
+                            $like_log->save();
+                        } catch (QueryException $ex) {
+                            continue;
+                        }
+                    }
+                });
+
+
+//                $master_like_logs = DB::connection('mysql_master')
+//                        ->table('user_insta_profile_like_log')
+//                        ->where('insta_username', $ig_profile->insta_username)
+//                        ->get();
 
 //                if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count() == 0) {
-                foreach ($master_like_logs as $master_like_log) {
-                    $like_log = new InstagramProfileLikeLog;
-//                        $like_log->log_id = $master_like_log->log_id;
-                    $like_log->insta_username = $master_like_log->insta_username;
-                    $like_log->target_username = $master_like_log->target_username;
-                    $like_log->target_media = $master_like_log->target_media;
-                    $like_log->target_media_code = $master_like_log->target_media_code;
-                    $like_log->log = $master_like_log->log;
-                    $like_log->date_liked = $master_like_log->date_liked;
-                    try {
-                        $like_log->save();
-                    } catch (QueryException $ex) {
-                        continue;
-                    }
-                }
+//                foreach ($master_like_logs as $master_like_log) {
+//                    $like_log = new InstagramProfileLikeLog;
+//                    $like_log->log_id = $master_like_log->log_id;
+//                    $like_log->insta_username = $master_like_log->insta_username;
+//                    $like_log->target_username = $master_like_log->target_username;
+//                    $like_log->target_media = $master_like_log->target_media;
+//                    $like_log->target_media_code = $master_like_log->target_media_code;
+//                    $like_log->log = $master_like_log->log;
+//                    $like_log->date_liked = $master_like_log->date_liked;
+//                    try {
+//                        $like_log->save();
+//                    } catch (QueryException $ex) {
+//                        continue;
+//                    }
+//                }
 //                }
             }
         } else {
