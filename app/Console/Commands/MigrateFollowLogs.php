@@ -66,7 +66,7 @@ class MigrateFollowLogs extends Command {
                     try {
                         $follow_log->save();
                     } catch (QueryException $ex) {
-                        continue;
+                        $this->line($ex->getMessage());
                     }
                 }
             }
@@ -95,7 +95,7 @@ class MigrateFollowLogs extends Command {
                 try {
                     $follow_log->save();
                 } catch (QueryException $ex) {
-                    continue;
+                    $this->line($ex->getMessage());
                 }
             }
         }
