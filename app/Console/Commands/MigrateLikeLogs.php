@@ -44,10 +44,11 @@ class MigrateLikeLogs extends Command {
             $ig_profiles = InstagramProfile::all();
 
             foreach ($ig_profiles as $ig_profile) {
-
                 DB::connection('mysql_master')
                         ->table('user_insta_profile_like_log')
-                        ->where('insta_username', $ig_profile->insta_username)->orderBy('log_id')->chunk(1000, function ($master_like_logs) {
+                        ->where('insta_username', $ig_profile->insta_username)
+                        ->where('date_liked', '>', '2017-08-01 10:04:15')
+                        ->orderBy('log_id')->chunk(10000, function ($master_like_logs) {
                     foreach ($master_like_logs as $master_like_log) {
                         $like_log = new InstagramProfileLikeLog;
                         $like_log->log_id = $master_like_log->log_id;
