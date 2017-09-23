@@ -105,5 +105,16 @@ class InstagramHelper {
             $proxy->save();
         }
     }
+    
+    public static function getUserIdForName($instagram, $target_username) {
+        $username_id = NULL;
+        try {
+            $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+        } catch (\InstagramAPI\Exception\NotFoundException $not_found_ex) {
+            $target_username->invalid = 1;
+            $target_username->save();
+        }
+        return $username_id;
+    }
 
 }
