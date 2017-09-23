@@ -78,11 +78,9 @@ class ManuallyFollowBack extends Command {
         }
 
         $instagram->setProxy($ig_profile->proxy);
-
-        $instagram->setUser($ig_username, $ig_password);
         
         try {
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_username, $ig_password);
             var_dump($explorer_response);
         } catch (\InstagramAPI\Exception\SentryBlockException $sentry_block_ex) {
             $proxy = Proxy::inRandomOrder()->first();

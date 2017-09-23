@@ -227,21 +227,6 @@ class InteractionComment extends Command {
                          */
                         $this->unengagedFollowings($unengaged_followings, $ig_username, $ig_profile);
                     }
-
-
-
-
-                    //            if (count($unengaged_followings) > 0) {
-                    //                continue;
-                    //                foreach ($unengaged_followings as $unengaged_following) {
-                    //                    echo("[$ig_username] \t" . $unengaged_following->follower_username . "\n");
-                    //                }
-                    //            } else {
-                    //                
-                    //                
-                    //            }
-                    #$instagram->setUser($ig_username, $ig_password);
-                    #$login_resp = $instagram->login();
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
                     echo("checkpt1 " . $checkpt_ex->getMessage() . "\n");
                     $ig_profile->checkpoint_required = 1;
@@ -282,10 +267,6 @@ class InteractionComment extends Command {
                         echo("[ENDING] Request Exception: " . $request_ex->getMessage() . "\n");
                         var_dump($request_ex->getResponse());
                     }
-
-                    //            echo("request1 " . $request_ex->getMessage() . "\n");
-                    //            $ig_profile->error_msg = $request_ex->getMessage();
-                    //            $ig_profile->save();
                 }
             } else {
                 //echo "Unable to Login";
@@ -353,8 +334,6 @@ class InteractionComment extends Command {
 
                 foreach ($user_feed_items as $item) {
 
-
-
                     if (InstagramProfileCommentLog::where('insta_username', $ig_username)
                                     ->where('target_media', $item->id)->count() == 0) {
 
@@ -372,6 +351,8 @@ class InteractionComment extends Command {
                         }
                         $commented = true;
                         $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+                        $ig_profile->auto_comment_ban = 0;
+                        $ig_profile->auto_comment_ban_time = NULL;
                         $ig_profile->save();
                         break;
                     } else {
@@ -451,6 +432,8 @@ class InteractionComment extends Command {
 
                     $commented = true;
                     $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+                    $ig_profile->auto_comment_ban = 0;
+                    $ig_profile->auto_comment_ban_time = NULL;
                     $ig_profile->save();
                     break;
                 }

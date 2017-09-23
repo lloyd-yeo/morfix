@@ -47,7 +47,6 @@ class LegacyInstagramProfileController extends Controller {
             
             try {
                 $instagram->setProxy($proxy->proxy);
-                $instagram->setUser($ig_username, $ig_password);
                 $explorer_response = $instagram->login($ig_username, $ig_password);
 
                 $create_log_id = DB::connection('mysql_old')->insert("INSERT INTO `insta_affiliate`.`user_insta_profile`
