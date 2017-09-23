@@ -319,14 +319,18 @@ class InteractionFollow implements ShouldQueue {
 
             if ($use_hashtags == 1) {
                 $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
+                $target_hashtags->shuffle();
                 if (count($target_hashtags) == 0) {
                     $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)->get();
+                    $target_usernames->shuffle();
                     $use_hashtags = 0;
                 }
             } else if ($use_hashtags == 0) {
                 $target_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)->get();
+                $target_usernames->shuffle();
                 if (count($target_usernames) == 0) {
                     $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $insta_username)->get();
+                    $target_hashtags->shuffle();
                     if (count($target_hashtags) > 0) {
                         $use_hashtags = 1;
                     } else {
@@ -492,8 +496,11 @@ class InteractionFollow implements ShouldQueue {
                         }
 
                         echo "[" . $insta_username . "] using target username: " . $target_username->target_username . "\n";
-
-                        $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+                        
+                        if (InstagramHelper::getUserIdForName($instagram, $target_username) === NULL) {
+                            continue;
+                        }
+                        
                         $user_follower_response = $instagram->people->getFollowers($username_id);
                         #$user_follower_response = $instagram->getUserFollowers($instagram->getUsernameId(trim($target_username->target_username)));
                         $users_to_follow = $user_follower_response->users;
