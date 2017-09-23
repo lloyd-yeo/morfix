@@ -47,10 +47,9 @@ class InstagramHelper {
         echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 
         try {
-            
+
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
-            
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
@@ -69,7 +68,6 @@ class InstagramHelper {
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
                 $message .= " with InstagramException\n";
             }
-            
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             
         } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
@@ -91,7 +89,7 @@ class InstagramHelper {
             $message = "IncorrectPasswordException\n";
         }
         if (!$flag) {
-            echo '[' . $ig_profile->insta_username . '] Error:  '.$message . "\n";
+            echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
         }
         return $flag;
     }
@@ -105,7 +103,7 @@ class InstagramHelper {
             $proxy->save();
         }
     }
-    
+
     public static function getUserIdForName($instagram, $target_username) {
         $username_id = NULL;
         try {
@@ -115,6 +113,30 @@ class InstagramHelper {
             $target_username->save();
         }
         return $username_id;
+    }
+
+    public static function validForInteraction($ig_profile) {
+        if ($ig_profile->checkpoint_required == 1) {
+            echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
+            return false;
+        }
+
+        if ($ig_profile->account_disabled == 1) {
+            echo("\n[" . $ig_profile->account_disabled . "] account has been disabled.\n");
+            return false;
+        }
+
+        if ($ig_profile->invalid_user == 1) {
+            echo("\n[" . $ig_profile->invalid_user . "] is a invalid instagram user.\n");
+            return false;
+        }
+
+        if ($ig_profile->incorrect_pw == 1) {
+            echo("\n[" . $ig_profile->incorrect_pw . "] is using an incorrect password.\n");
+            return false;
+        }
+        
+        return true;
     }
 
 }

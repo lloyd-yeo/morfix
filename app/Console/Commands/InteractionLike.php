@@ -58,23 +58,7 @@ class InteractionLike extends Command {
 
                 foreach ($instagram_profiles as $ig_profile) {
 
-                    if ($ig_profile->checkpoint_required == 1) {
-                        $this->error("[" . $ig_profile->insta_username . "] has a checkpoint.");
-                        continue;
-                    }
-
-                    if ($ig_profile->account_disabled == 1) {
-                        $this->error("[" . $ig_profile->account_disabled . "] account has been disabled.");
-                        continue;
-                    }
-
-                    if ($ig_profile->invalid_user == 1) {
-                        $this->error("[" . $ig_profile->invalid_user . "] is a invalid instagram user.");
-                        continue;
-                    }
-
-                    if ($ig_profile->incorrect_pw == 1) {
-                        $this->error("[" . $ig_profile->incorrect_pw . "] is using an incorrect password.");
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
                         continue;
                     }
 
