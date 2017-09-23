@@ -179,7 +179,7 @@ class InteractionComment extends Command {
             $instagram = InstagramHelper::initInstagram();
             $this->instagram = $instagram;
             if (InstagramHelper::login($instagram, $ig_profile) == true) {
-                //try {
+                try {
                     $comment = InstagramProfileComment::where('insta_username', $ig_username)
                             ->inRandomOrder()
                             ->first();
@@ -242,7 +242,7 @@ class InteractionComment extends Command {
                     //            }
                     #$instagram->setUser($ig_username, $ig_password);
                     #$login_resp = $instagram->login();
-                /*} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+                } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
                     echo("checkpt1 " . $checkpt_ex->getMessage() . "\n");
                     $ig_profile->checkpoint_required = 1;
                     $ig_profile->save();
@@ -286,7 +286,7 @@ class InteractionComment extends Command {
                     //            echo("request1 " . $request_ex->getMessage() . "\n");
                     //            $ig_profile->error_msg = $request_ex->getMessage();
                     //            $ig_profile->save();
-                } */
+                }
             } else {
                 //echo "Unable to Login";
             }
