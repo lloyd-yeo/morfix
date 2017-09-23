@@ -63,7 +63,7 @@ class InteractionLike extends Command {
                         continue;
                     }
 
-                    if ($ig_profile->auto_like_ban == 1 && !\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                    if ($ig_profile->auto_like_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
                         $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                         continue;
                     }

@@ -126,6 +126,11 @@ class InteractionFollow extends Command {
                             continue;
                         }
 
+                        if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                            $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
+                            continue;
+                        }
+
                         if ($ig_profile->next_follow_time === NULL) {
                             $ig_profile->next_follow_time = \Carbon\Carbon::now();
                             $ig_profile->save();
@@ -149,6 +154,11 @@ class InteractionFollow extends Command {
                     foreach ($instagram_profiles as $ig_profile) {
 
                         if (!InstagramHelper::validForInteraction($ig_profile)) {
+                            continue;
+                        }
+                        
+                        if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                            $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                             continue;
                         }
 
