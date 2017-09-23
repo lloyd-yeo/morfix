@@ -43,64 +43,45 @@ class UpdatePendingCommissionPayableNew extends Command {
         if (NULL !== $this->argument("email")) {
             $users = User::where('email', $this->argument("email"))
                     ->orderBy('user_id', 'desc')
-                    ->get();
+                    ->get(); //get this user
 
             $recent_pay_out_date = Carbon::create(2017, 8, 25, 0, 0, 0, 'Asia/Singapore');
-            $start_date = "2017-07-31 23:59:59";
-            $end_date = "2017-07-31 23:59:59";
+            $start_date = "2017-07-01 00:00:00";
+            $end_date = "2017-09-31 23:59:59";
             echo "Recent payout date:" . $recent_pay_out_date . "\n";
-
+            echo "Start date for charges:" . $start_date . "\n";
+            echo "End date for charges:" . $end_date . "\n"; 
+            //initialize dates
 
 
             foreach ($users as $user) {
-
+                $time_start = microtime(true);
 //                $referral_charges = DB::select('SELECT * FROM get_referral_charges_of_user WHERE referrer_email = ? AND '
 //                                . 'charge_created >= "2017-07-01 00:00:00" AND charge_created <= "2017-07-31 23:59:59" AND charge_refunded = 0 '
 //                                . 'ORDER BY charge_created DESC;', [$user->email]);
-                $referrals = DB::select('SELECT * FROM insta_affiliate.get_referral_charges_of_user WHERE referrer_email = ?', [$user->email]);
-
-                if ($user->last_pay_out_date = $recent_pay_out_date) {
+                $current_email = $user->email;
+                if ($user->last_pay_out_date == $recent_pay_out_date) {
+                    
+                    $referral_charges = DB::select('SELECT * FROM insta_affiliate.get_referral_charges_of_user WHERE referrer_email = ? ', [$current_email]);
+                    // if we paid user recently, grab the charges from the particular month under him
+               
                     //update last month charges to given if paid this month
-                    foreach ($referrals as $referral) {
-                        if ($referral->referrer_email == $user->email) {
-                            $charges = StripeCharge::where('charge_id', $referral->charge_id)->where('charge_created', '<', $current_month)->get();
-                            foreach ($charges as $charge) {
-                                $charge->commission_given = 1;
-                                echo "update test_commission";
-                            }
-                        }
-//          $referrals = DB::select('SELECT * FROM insta_affiliate.get_referral_charges_of_user WHERE referrer_email = ?', [$user->email]);
-//            
-//            foreach ($referrals as $referral) {
-//                $this->line($referral->charge_id . "\t" . $referral->invoice_id);
-//                $charges = StripeCharge::where('charge_id', $referral->charge_id)->where('charge_created', '<', $current_month)->get();
-//                foreach ($charges as $charge) {
-//                    $charge->commission_given = 1;  
-//                    if ($charge->save()) {
-//                        $this->line("Updated [" . $charge->charge_id . "] for [" . $user->email . "]");
+                    var_dump($referral_charges);
+//                    foreach ($referrals as $referral) {
+//
+//                        $charges = StripeCharge::where('charge_id', $referral->charge_id)
+//                                ->get();
+//                            foreach ($charges as $charge) {
+//                             $charge->test_commission_given = 1;
+//                              $charge->save();
+//                              echo "updated test_commission";
+//                            }
 //                    }
-//                }
-//            }
-//            $user->pending_commission_payable = 0;
-//            $user->save();
-                    }
                 }
+                $time_end = microtime(true);
+                $execution_time = ($time_end - $time_start);
+                echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
             }
-        } else {
-//            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
-//                    ->orderBy('user_id', 'desc')
-//                    ->get();
-//            
-//            foreach ($users as $user) {
-//                $instagram_profiles = InstagramProfile::where('email', $user->email)
-//                        ->get();
-//                foreach ($instagram_profiles as $ig_profile) {
-//                    $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
-//                    $job->onQueue('getdm');
-//                    dispatch($job);
-//                    $this->line("Queued Profile: " . $ig_profile->insta_username);
-//                }
-//            }
         }
     }
 
