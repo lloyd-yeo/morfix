@@ -51,6 +51,7 @@ class InteractionLike extends Command {
 
     private function dispatchJobsToEligibleUsers($users) {
         foreach ($users as $user) {
+
             if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
 
                 $instagram_profiles = InstagramProfile::where('auto_like', true)->where('user_id', $user->user_id)
@@ -59,6 +60,11 @@ class InteractionLike extends Command {
                 foreach ($instagram_profiles as $ig_profile) {
 
                     if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+
+                    if ($ig_profile->auto_like_ban == 1 && !\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                         continue;
                     }
 
@@ -112,26 +118,10 @@ class InteractionLike extends Command {
 
                     foreach ($instagram_profiles as $ig_profile) {
 
-                        if ($ig_profile->checkpoint_required == 1) {
-                            $this->error("[" . $ig_profile->insta_username . "] has a checkpoint.");
+                        if (!InstagramHelper::validForInteraction($ig_profile)) {
                             continue;
                         }
 
-                        if ($ig_profile->account_disabled == 1) {
-                            $this->error("[" . $ig_profile->insta_username . "] account has been disabled.");
-                            continue;
-                        }
-
-                        if ($ig_profile->invalid_user == 1) {
-                            $this->error("[" . $ig_profile->insta_username . "] is a invalid instagram user.");
-                            continue;
-                        }
-
-                        if ($ig_profile->incorrect_pw == 1) {
-                            $this->error("[" . $ig_profile->insta_username . "] is using an incorrect password.");
-                            continue;
-                        }
-                        
                         if ($ig_profile->auto_like_ban == 1 && !\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
                             $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                             continue;

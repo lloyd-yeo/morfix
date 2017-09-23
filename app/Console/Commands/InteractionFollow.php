@@ -116,23 +116,25 @@ class InteractionFollow extends Command {
             $this->line($user->user_id);
 
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
-                            . 'AND account_disabled = 0 '
-                            . 'AND invalid_user = 0 '
-                            . 'AND incorrect_pw = 0 '
                             . 'AND user_id = ' . $user->user_id)->get();
 
             if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
                     foreach ($instagram_profiles as $ig_profile) {
+
+                        if (!InstagramHelper::validForInteraction($ig_profile)) {
+                            continue;
+                        }
+
                         if ($ig_profile->next_follow_time === NULL) {
                             $ig_profile->next_follow_time = \Carbon\Carbon::now();
                             $ig_profile->save();
                             dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-                                        ->onQueue('follows'));
+                                            ->onQueue('follows'));
                             $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
                         } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_follow_time))) {
                             dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-                                        ->onQueue('follows'));
+                                            ->onQueue('follows'));
                             $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
                         }
                     }
@@ -143,23 +145,26 @@ class InteractionFollow extends Command {
                         $this->jobHandle($ig_profile);
                     }
                 } else {
-                    
+
                     foreach ($instagram_profiles as $ig_profile) {
+
+                        if (!InstagramHelper::validForInteraction($ig_profile)) {
+                            continue;
+                        }
+
                         if ($ig_profile->next_follow_time === NULL) {
                             $this->warn("[" . $ig_profile->insta_username . "] next_follow_time is NULL.");
                             $ig_profile->next_follow_time = \Carbon\Carbon::now();
                             $ig_profile->save();
                             dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-                                        ->onQueue('follows'));
+                                            ->onQueue('follows'));
                             $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
                         } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_follow_time))) {
                             dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-                                        ->onQueue('follows'));
+                                            ->onQueue('follows'));
                             $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
                         }
                     }
-                    
-                    
                 }
             }
         }

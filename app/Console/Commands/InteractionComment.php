@@ -62,6 +62,7 @@ class InteractionComment extends Command {
         if ($this->argument("email") == "slave") {
             $this->info("On Slave mode. Retrieving all user's on this partition.");
             foreach (User::where('tier', '>', 1)->cursor() as $user) {
+                
                 $instagram_profiles = InstagramProfile::where('auto_comment', true)
                         ->where('email', $user->email)
                         ->where('incorrect_pw', false)
@@ -86,9 +87,9 @@ class InteractionComment extends Command {
             $user = User::where("email", $this->argument("email"))->first();
             if ($user !== NULL) {
                 if ($user->tier > 1) {
+                    
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
                             ->where('email', $user->email)
-                            ->where('incorrect_pw', false)
                             ->get();
 
                     foreach ($instagram_profiles as $ig_profile) {
