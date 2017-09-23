@@ -100,6 +100,7 @@ class InteractionLike extends Command {
             $this->line("[Likes Interaction Master] Beginning sequence to queue jobs...");
 
             $users = DB::table('user')
+                    ->where('partition', 0)
                     ->orderBy('user_id', 'asc')
                     ->get();
 

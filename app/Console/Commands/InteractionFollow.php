@@ -106,7 +106,7 @@ class InteractionFollow extends Command {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
             $this->info("[Follow Interaction] Queueing jobs for Master.");
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile) AND partition = 0')
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile) AND `partition` = 0')
                     ->orderBy('user_id', 'asc')
                     ->get();
         }
