@@ -94,8 +94,7 @@ class RefreshInstagramProfile extends Command {
 
                     try {
 
-                        $instagram->setUser($ig_username, $ig_password);
-                        $login_response = $instagram->login();
+                        $login_response = $instagram->login($ig_username, $ig_password);
                         $user_response = $instagram->people->getInfoById($ig_profile->insta_user_id);
                         $instagram_user = $user_response->user;
 
@@ -135,8 +134,7 @@ class RefreshInstagramProfile extends Command {
                         echo($endpoint_ex->getMessage());
                         if (stripos(trim($endpoint_ex->getMessage()), "The username you entered doesn't appear to belong to an account. Please check your username and try again.") !== false) {
                             $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                            $instagram->setUser("entrepreneur_xyz", "instaffiliates123");
-                            $instagram->login();
+                            $instagram->login($ig_username, $ig_password);
                             $resp = serialize($instagram->getUserInfoById($ig_profile->insta_user_id));
                             DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$resp, $ig_profile->id]);
                         } else {

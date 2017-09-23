@@ -158,8 +158,7 @@ class SendDmJob extends Command
                     }
                     
                     try {
-                        $instagram->setUser($ig_username, $ig_password);
-                        $explorer_response = $instagram->login();
+                        $explorer_response = $instagram->login($ig_username, $ig_password);
                         $response = $instagram->directMessage($dm_job->recipient_insta_id, $dm_job->message);
                         $this->line(serialize($response));
                         if ($response->status == "ok") {

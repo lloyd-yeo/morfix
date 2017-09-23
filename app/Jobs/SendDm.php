@@ -112,9 +112,8 @@ class SendDm implements ShouldQueue {
             }
 
             $instagram->setProxy($ig_profile->proxy);
-            $instagram->setUser($ig_username, $ig_password);
             try {
-                $instagram->login();
+                $instagram->login($ig_username, $ig_password);
             } catch (\InstagramAPI\Exception\RequestException $request_ex) {
                 echo "[" . $insta_username . "] " . $request_ex->getMessage() . "\n";
                 if (stripos(trim($request_ex->getMessage()), "Feedback required") !== false) {

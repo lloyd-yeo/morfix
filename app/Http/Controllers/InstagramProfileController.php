@@ -65,9 +65,7 @@ class InstagramProfileController extends Controller {
             }
 
             $instagram->setProxy($proxy->proxy);
-            $instagram->setUser($ig_username, $ig_password);
-            
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_username, $ig_password);
 
             $morfix_ig_profile = new InstagramProfile();
             $morfix_ig_profile->user_id = Auth::user()->user_id;
@@ -232,8 +230,7 @@ class InstagramProfileController extends Controller {
 
             $instagram->setProxy($proxy);
             try {
-                $instagram->setUser($ig_username, $ig_password);
-                $explorer_response = $instagram->login();
+                $explorer_response = $instagram->login($ig_username, $ig_password);
                 $user_response = $instagram->getUserInfoByName($ig_username);
                 $instagram_user = $user_response->user;
 
@@ -279,10 +276,8 @@ class InstagramProfileController extends Controller {
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_profile->insta_username, $ig_profile->insta_pw);
-        
         try {
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $ig_profile->checkpoint_required = 0;
             $ig_profile->save();
             return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));
@@ -307,10 +302,9 @@ class InstagramProfileController extends Controller {
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_profile->insta_username, $password);
         
         try {
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_profile->insta_username, $ig_password);
             $ig_profile->incorrect_pw = 0;
             $ig_profile->save();
             return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));
