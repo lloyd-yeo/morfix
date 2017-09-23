@@ -292,7 +292,6 @@ class InteractionFollow extends Command {
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_username, $ig_password);
 
         try {
             $instagram->login($ig_username, $ig_password);
@@ -504,9 +503,10 @@ class InteractionFollow extends Command {
         }
     }
 
-    private function useHashtag() {
+    private function useHashtag($ig_profile) {
         //start with targeted usernames/hashtags
         $use_hashtags = rand(0, 1);
+        $insta_username = $ig_profile->insta_username;
         echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
         $target_hashtags = NULL;
         $target_usernames = NULL;
@@ -639,7 +639,7 @@ class InteractionFollow extends Command {
         //[End LOGIN]
 
 
-        $this->useHashtag();
+        $this->useHashtag($ig_profile);
         $use_hashtags = $this->use_hashtags;
         $target_hashtags = $this->target_hashtags;
         $target_usernames = $this->target_usernames;
