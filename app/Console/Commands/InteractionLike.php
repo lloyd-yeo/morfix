@@ -52,15 +52,32 @@ class InteractionLike extends Command {
     private function dispatchJobsToEligibleUsers($users) {
         foreach ($users as $user) {
             if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
-                $instagram_profiles = InstagramProfile::where('auto_like', true)
-                        ->where('checkpoint_required', false)
-                        ->where('account_disabled', false)
-                        ->where('invalid_user', false)
-                        ->where('incorrect_pw', false)
-                        ->where('user_id', $user->user_id)
+
+                $instagram_profiles = InstagramProfile::where('auto_like', true)->where('user_id', $user->user_id)
                         ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
+
+                    if ($ig_profile->checkpoint_required == 1) {
+                        $this->error("[" . $ig_profile->insta_username . "] has a checkpoint.");
+                        continue;
+                    }
+
+                    if ($ig_profile->account_disabled == 1) {
+                        $this->error("[" . $ig_profile->account_disabled . "] account has been disabled.");
+                        continue;
+                    }
+
+                    if ($ig_profile->invalid_user == 1) {
+                        $this->error("[" . $ig_profile->invalid_user . "] is a invalid instagram user.");
+                        continue;
+                    }
+
+                    if ($ig_profile->incorrect_pw == 1) {
+                        $this->error("[" . $ig_profile->incorrect_pw . "] is using an incorrect password.");
+                        continue;
+                    }
+
                     if ($ig_profile->next_like_time === NULL) {
                         $ig_profile->next_like_time = \Carbon\Carbon::now();
                         $ig_profile->save();
@@ -97,24 +114,45 @@ class InteractionLike extends Command {
                     ->get();
 
             $this->dispatchJobsToEligibleUsers($users);
-            
         } else if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
-            
+
             $this->line("[Likes Interaction Email] Queueing job for [" . $this->argument("email") . "]");
-            
+
             $user = User::where('email', $this->argument("email"))->first();
-            
+
             if ($user !== NULL) {
                 if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
                     $instagram_profiles = InstagramProfile::where('auto_like', true)
-                            ->where('checkpoint_required', false)
-                            ->where('account_disabled', false)
-                            ->where('invalid_user', false)
-                            ->where('incorrect_pw', false)
                             ->where('user_id', $user->user_id)
                             ->get();
 
                     foreach ($instagram_profiles as $ig_profile) {
+
+                        if ($ig_profile->checkpoint_required == 1) {
+                            $this->error("[" . $ig_profile->insta_username . "] has a checkpoint.");
+                            continue;
+                        }
+
+                        if ($ig_profile->account_disabled == 1) {
+                            $this->error("[" . $ig_profile->insta_username . "] account has been disabled.");
+                            continue;
+                        }
+
+                        if ($ig_profile->invalid_user == 1) {
+                            $this->error("[" . $ig_profile->insta_username . "] is a invalid instagram user.");
+                            continue;
+                        }
+
+                        if ($ig_profile->incorrect_pw == 1) {
+                            $this->error("[" . $ig_profile->insta_username . "] is using an incorrect password.");
+                            continue;
+                        }
+                        
+                        if ($ig_profile->auto_like_ban == 1 && !\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                            $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
+                            continue;
+                        }
+
                         if ($ig_profile->next_like_time === NULL) {
                             $ig_profile->next_like_time = \Carbon\Carbon::now();
                             $ig_profile->save();
@@ -135,7 +173,6 @@ class InteractionLike extends Command {
             } else {
                 $this->line("[" . $this->argument("email") . "] user not found.");
             }
-            
         } else if ($this->argument("email") == "slave") {
 
             $this->line("[Likes Interaction Slave] Beginning sequence to queue jobs...");
@@ -143,13 +180,12 @@ class InteractionLike extends Command {
             $users = DB::table('user')
                     ->orderBy('user_id', 'asc')
                     ->get();
-            
+
             $this->dispatchJobsToEligibleUsers($users);
-            
         } else {
-            
+
             $this->line("[Likes Interaction Email] Beginning sequence for [" . $this->argument("email") . "]");
-            
+
             $user = User::where('email', $this->argument("email"))->first();
 
             // microtime(true) returns the unix timestamp plus milliseconds as a float

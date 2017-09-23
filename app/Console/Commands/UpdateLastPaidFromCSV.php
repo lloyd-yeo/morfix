@@ -42,7 +42,7 @@ class UpdateLastPaidFromCSV extends Command {
         $file = fopen($path, "r");
 
         $current_email = "";
-        $last_pay_out_coms_date = new Carbon('25th of August');
+        $last_pay_out_coms_date = "2017-08-25 00:00:00";
 
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             #$data is one row.
@@ -52,7 +52,7 @@ class UpdateLastPaidFromCSV extends Command {
             if ($user !== NULL) {
                 if ($data[2] > 50 && !empty($data[1]) && $data[3] == 'Eligible') {
                 $user->last_pay_out_date = $last_pay_out_coms_date;
-                $user->save;
+                $user->save();
                 echo "Updated [$current_email] last pay out coms to [$last_pay_out_coms_date]\n";
             }
         }
