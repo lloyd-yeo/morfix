@@ -18,6 +18,7 @@ use App\LikeLogsArchive;
 use App\Proxy;
 use App\Niche;
 use App\InstagramHelper;
+use App\InteractionHelper;
 
 class InteractionLike implements ShouldQueue {
 
@@ -343,6 +344,14 @@ class InteractionLike implements ShouldQueue {
                                     echo("\n" . "[$ig_username] attemping to like: " . $item->id);
                                     $like_response = $instagram->media->like($item->id);
 
+                                    if(InteractionHelper::like($ig_username, $like_response, $user_to_like, $item) == true){
+                                        $like_quota--;
+
+                                        $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($speed_delay);
+                                        $ig_profile->save();
+                                    }
+                                    /*
+                                        Fixed
                                     if ($like_response->status == "ok") {
                                         echo("\n" . "[$ig_username] Liked " . serialize($like_response));
                                         $like_log = new InstagramProfileLikeLog;
@@ -356,7 +365,7 @@ class InteractionLike implements ShouldQueue {
 
                                         $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($speed_delay);
                                         $ig_profile->save();
-                                    }
+                                    }*/
                                 } else {
                                     break;
                                 }
