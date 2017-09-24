@@ -19,6 +19,7 @@ use App\Proxy;
 use App\Niche;
 use App\InstagramHelper;
 use App\InteractionHelper;
+use App\TargetHelper;
 
 class InteractionLike implements ShouldQueue {
 
@@ -382,7 +383,8 @@ class InteractionLike implements ShouldQueue {
                  * Next is to get target usernames by niche
                  */
                 if ($like_quota > 0) {
-
+                    TargetHelper::getUsernameByNiche($ig_profile, $like_quota)
+                    /*
                     $niche = Niche::find($ig_profile->niche);
                     $niche_targets = $niche->targetUsernames();
 
@@ -545,6 +547,7 @@ class InteractionLike implements ShouldQueue {
                             }
                         }
                     }
+                    */
                 } else {
                     exit();
                 }
