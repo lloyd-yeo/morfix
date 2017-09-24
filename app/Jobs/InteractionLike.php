@@ -291,13 +291,14 @@ class InteractionLike implements ShouldQueue {
                 }
 
                 if ($like_quota > 0) {
-
-                    /*
-                     * Next is to get user-defined hashtags.
-                     */
+                    $like_quota = TargetHelper::getUserDefinedHashtag($ig_profile, $like_quota, $instagram);
+                /*
+                     
+                    Next is to get user-defined hashtags.
+                     
                     $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $ig_username)->inRandomOrder()->get();
 
-                    //Foreach targeted hashtags
+                    Foreach targeted hashtags
                     foreach ($target_hashtags as $target_hashtag) {
                         if ($like_quota > 0) {
                             echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
@@ -366,7 +367,7 @@ class InteractionLike implements ShouldQueue {
 
                                         $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($speed_delay);
                                         $ig_profile->save();
-                                    }*/
+                                    }
                                 } else {
                                     break;
                                 }
@@ -375,6 +376,8 @@ class InteractionLike implements ShouldQueue {
                             break;
                         }
                     }
+                */
+                    
                 } else {
                     exit();
                 }
@@ -383,8 +386,9 @@ class InteractionLike implements ShouldQueue {
                  * Next is to get target usernames by niche
                  */
                 if ($like_quota > 0) {
-                    TargetHelper::getUsernameByNiche($ig_profile, $like_quota)
-                    /*
+
+                    $like_quota = TargetHelper::getUsernameByNiche($ig_profile, $like_quota, $instagram);
+                /*
                     $niche = Niche::find($ig_profile->niche);
                     $niche_targets = $niche->targetUsernames();
 
@@ -547,7 +551,7 @@ class InteractionLike implements ShouldQueue {
                             }
                         }
                     }
-                    */
+                */
                 } else {
                     exit();
                 }
@@ -556,7 +560,8 @@ class InteractionLike implements ShouldQueue {
                  * Next is to get target hashtags by niche
                  */
                 if ($like_quota > 0) {
-
+                    $like_quota = TargetHelper::getHastagByNiche($ig_profile, $like_quota, $instagram)
+                /*
                     $niche = Niche::find($ig_profile->niche);
                     $target_hashtags = $niche->targetHashtags();
 
@@ -619,6 +624,7 @@ class InteractionLike implements ShouldQueue {
                             break;
                         }
                     }
+                    */
                 }
             } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
                 $this->handleInstagramException($ig_profile, $checkpoint_ex);
