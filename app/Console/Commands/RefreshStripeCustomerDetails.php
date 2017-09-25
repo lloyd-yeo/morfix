@@ -12,7 +12,7 @@ class RefreshStripeCustomerDetails extends Command
      *
      * @var string
      */
-    protected $signature = 'stripe:refresh';
+    protected $signature = 'stripe:refreshcustomerdetails';
 
     /**
      * The console command description.
