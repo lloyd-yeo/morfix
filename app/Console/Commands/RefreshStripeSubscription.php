@@ -42,10 +42,11 @@ class RefreshStripeSubscription extends Command
         $subscriptions = \Stripe\Subscription::all(array('limit'=>100, 'status'=>'all'));
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
             dump ($subscription);
-            
             $active_sub = new StripeActiveSubscription;
             $active_sub->stripe_id = $subscription->customer;
-            $active_sub->subscription_id = $subscription->plan->id;
+            if ($subscription->plan !== NULL) {
+                $active_sub->subscription_id = $subscription->plan->id;
+            }
             $active_sub->status = $subscription->status;
             $active_sub->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start) ;
             $active_sub->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end) ;
