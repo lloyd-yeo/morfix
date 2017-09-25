@@ -171,7 +171,7 @@ class GenerateStripeReferralChargesCsv extends Command {
             $user = User::where('email', $paypal_charge->referrer_email)->first();
 
             if ($user !== NULL) {
-                $referrer_last_payout_date = \Carbon\Carbon::parse($user_last_pay_out_date);
+                $referrer_last_payout_date = \Carbon\Carbon::parse($user->last_payout_date);
                 $charge_created_date = \Carbon\Carbon::parse($paypal_charge);
                 if ($user_last_pay_out_date !== NULL) {
                     if ($charge_created_date->year < $referrer_last_payout_date->year) {
