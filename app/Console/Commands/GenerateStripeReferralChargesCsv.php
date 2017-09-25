@@ -132,21 +132,21 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $eligible);
 
             $comms_row = array();
-            $comms_row[$referrer_email][0] = $referral_charge->referred_email;
-            $comms_row[$referrer_email][1] = $referral_charge->subscription_id;
-            $comms_row[$referrer_email][2] = $amt_to_payout;
-            $comms_row[$referrer_email][3] = $referral_charge->charge_created;
-            $comms_row[$referrer_email][4] = $referral_charge->charge_paid;
-            $comms_row[$referrer_email][5] = $referral_charge->charge_refunded;
-            $comms_row[$referrer_email][6] = $eligible;
+            $comms_row[0] = $referral_charge->referred_email;
+            $comms_row[1] = $referral_charge->subscription_id;
+            $comms_row[2] = $amt_to_payout;
+            $comms_row[3] = $referral_charge->charge_created;
+            $comms_row[4] = $referral_charge->charge_paid;
+            $comms_row[5] = $referral_charge->charge_refunded;
+            $comms_row[6] = $eligible;
+            $comms_row[7] = $referrer_email;
 
             $user_payout_comms[] = $comms_row;
         }
 
         foreach ($user_payout_comms as $comms_row) {
-
-            foreach ($comms_row as $referrer_email => $comm_row) {
-
+            $referrer_email = $comms_row[7];
+            
                 if (!array_has($user_payouts, $referrer_email)) {
                     $referrer_user = User::where("email", $referrer_email)->first();
                     if ($referrer_user !== NULL) {
@@ -155,14 +155,14 @@ class GenerateStripeReferralChargesCsv extends Command {
                     }
                 }
 
-                if ($comm_row[5] == 0) {
+                if ($comms_row[5] == 0) {
                     continue;
                 }
 
-                if ($comm_row[6] == "Yes") {
-                    $user_payouts[$referrer_email]['payout_amt'] = $user_payouts[$referrer_email]['payout_amt'] + $comm_row[2];
+                if ($comms_row[6] == "Yes") {
+                    $user_payouts[$referrer_email]['payout_amt'] = $user_payouts[$referrer_email]['payout_amt'] 
+                            + $comms_row[2];
                 }
-            }
         }
 
         foreach ($user_payouts as $referrer_email => $user_payout) {
