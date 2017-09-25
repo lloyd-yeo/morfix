@@ -83,11 +83,12 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 }
                             }
                         }
+                        $this->line($stripe_detail->email . ", " . $users[$stripe_detail->email]["premium"] . ", " . 
+                                $users[$stripe_detail->email]["business"] . ", " . $users[$stripe_detail->email]["pro"] . ", " . $users[$stripe_detail->email]["mastermind"]);
                     }
                 }
                 
                 $eligible = "No";
-                
                 if ($users[$stripe_detail->email]["vip"] === 1) {
                     $eligible = "Yes";
                 } else {
