@@ -46,8 +46,9 @@ class UpdatePaypalCharges extends Command {
         $this->apiContext->setConfig(config('paypal.settings'));
 
         $agreementId = "I-MK8ENKH9C8XK";
-        
+
         $params = array('start_date' => date('Y-m-d', strtotime('-15 years')), 'end_date' => date('Y-m-d', strtotime('+30 days')));
+        
         try {
             $result = Agreement::searchTransactions($agreementId, $params, $this->apiContext);
             dump($result);
@@ -55,7 +56,7 @@ class UpdatePaypalCharges extends Command {
             // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
             $this->error($ex->getMessage());
         }
-        
+
 //        $uri = 'https://api.sandbox.paypal.com/v1/oauth2/token';
 //
 //        $client = new \GuzzleHttp\Client();
