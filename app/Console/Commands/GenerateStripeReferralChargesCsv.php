@@ -55,9 +55,15 @@ class GenerateStripeReferralChargesCsv extends Command {
         foreach ($referral_charges as $referral_charge) {
             $referrer_email = $referral_charge->referrer_email;
             $referrer_last_payout_date = \Carbon\Carbon::now()->subYear();
+            $charge_created_date = \Carbon\Carbon::parse($referral_charge->charge_created);
             if ($referral_charge->last_pay_out_date !== NULL) {
                 $referrer_last_payout_date = \Carbon\Carbon::parse($referral_charge->last_pay_out_date);
             }
+            
+            if ($charge_created_date->month < $referrer_last_payout_date->month) { 
+                $this->warn("Charge created Monnth is less than referrer's last pay out.");
+            }
+            
             
             if (!array_has($users, $referrer_email)) {
                 $users[$referrer_email] = array();

@@ -66,7 +66,7 @@ class UpdatePendingCommissionPayableNew extends Command {
 
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user)')
                     ->orderBy('last_pay_out_date', 'desc')
-                    ->take(3)
+//                    ->take(3)
                     ->get();
             //Remove ->take(3) after verifying code
             
