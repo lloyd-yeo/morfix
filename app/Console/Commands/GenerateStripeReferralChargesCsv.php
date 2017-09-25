@@ -54,7 +54,11 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 ORDER BY referrer_email ASC, charge_created DESC;');
         foreach ($referral_charges as $referral_charge) {
             $referrer_email = $referral_charge->referrer_email;
-
+            $referrer_last_payout_date = \Carbon\Carbon::now()->subYear();
+            if ($referral_charge->last_pay_out_date !== NULL) {
+                $referrer_last_payout_date = \Carbon\Carbon::parse($referral_charge->last_pay_out_date);
+            }
+            
             if (!array_has($users, $referrer_email)) {
                 $users[$referrer_email] = array();
                 $users[$referrer_email]["premium"] = 0;
