@@ -8,6 +8,7 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Agreement;
 use App\PaypalCharges;
 use App\PaypalAgreement;
+use Carbon\Carbon;
 
 class UpdatePaypalCharges extends Command {
 
@@ -16,7 +17,7 @@ class UpdatePaypalCharges extends Command {
      *
      * @var string
      */
-    protected $signature = 'updatepaypal:charges';
+    protected $signature = 'update:paypalcharges';
 
     /**
      * The console command description.
@@ -64,17 +65,34 @@ class UpdatePaypalCharges extends Command {
                             ->first();
                     if ($check === NULL) {
                         $charge = new PaypalCharges;
+                        $charge->email = $user->email;
                         $charge->agreement_id = $agreementId;
                         $charge->transaction_id = $result->transaction_id;
                         $charge->status = $result->status;
                         $charge->transaction_type = $result->transaction_type;
                         $charge->payer_email = $result->payer_email;
                         $charge->payer_name = $result->payer_name;
-                        $charge->time_stamp = $result->timestamp;
+                        $charge->time_stamp = Carbon::parse($result->timestamp)->setTimezone('GMT+8')->toDateTimeString();
                         if (!is_null($result->amount)) {
-                            $charge->amount = $result->net_amount->value;
+                            $charge->amount = $result->amount->value;
+
+                            switch ($result->amount->value) {
+                                case "37.00":
+                                    $charge->subscription_id = "0137";
+                                    break;
+                                case "97.00":
+                                    $charge->subscription_id = "0297";
+                                    break;
+                                case "0.00":
+                                    $charge->subscription_id = "never pay money";
+                                    break;
+                            }
                         }
-                        echo 'new transaction saved: [' . $result->status . '] for [' . $user->email . ']\n';
+                        $referrer = GetReferralForUser::fromView()
+                                ->where('referred', $user->email)
+                                ->first();
+                        $charge->referrer_email = $referrer->referrer;
+                        echo 'new transaction saved: [' . $result->status . '] for [' . $user->email . "]\n";
                         $charge->save();
                     }
                 }
