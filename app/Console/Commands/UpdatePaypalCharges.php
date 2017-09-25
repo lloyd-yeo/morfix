@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Agreement;
+use App\PaypalCharges;
+use App\PaypalAgreement;
 
 class UpdatePaypalCharges extends Command {
 
@@ -14,7 +16,7 @@ class UpdatePaypalCharges extends Command {
      *
      * @var string
      */
-    protected $signature = 'UpdatePaypal:Charges';
+    protected $signature = 'updatepaypal:charges';
 
     /**
      * The console command description.
@@ -38,6 +40,7 @@ class UpdatePaypalCharges extends Command {
      * @return mixed
      */
     public function handle() {
+        $time_start = microtime(true);
 
         $this->client_id = config('paypal.live_client_id');
         $this->secret = config('paypal.live_secret');
@@ -45,17 +48,45 @@ class UpdatePaypalCharges extends Command {
         $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
         $this->apiContext->setConfig(config('paypal.settings'));
 
-        $agreementId = "I-MK8ENKH9C8XK";
-        
-        $params = array('start_date' => date('Y-m-d', strtotime('-15 years')), 'end_date' => date('Y-m-d', strtotime('+30 days')));
-        try {
-            $result = Agreement::searchTransactions($agreementId, $params, $this->apiContext);
-            dump($result);
-        } catch (\Exception $ex) {
-            // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
-            $this->error($ex->getMessage());
+        $users = PaypalAgreement::whereRaw('agreement_id IN (SELECT DISTINCT(agreement_id) FROM user_paypal_agreements)')
+                ->orderBy('id', 'desc')
+                ->get();
+        foreach ($users as $user) {
+            $agreementId = $user->agreement_id;
+
+            $params = array('start_date' => date('Y-m-d', strtotime('-15 years')), 'end_date' => date('Y-m-d', strtotime('+30 days')));
+            try {
+                $results = Agreement::searchTransactions($agreementId, $params, $this->apiContext)->agreement_transaction_list;
+
+                foreach ($results as $result) {
+                    $check = PaypalCharges::where('transaction_id', $result->transaction_id)
+                            ->where('status', $result->status)
+                            ->first();
+                    if ($check === NULL) {
+                        $charge = new PaypalCharges;
+                        $charge->agreement_id = $agreementId;
+                        $charge->transaction_id = $result->transaction_id;
+                        $charge->status = $result->status;
+                        $charge->transaction_type = $result->transaction_type;
+                        $charge->payer_email = $result->payer_email;
+                        $charge->payer_name = $result->payer_name;
+                        $charge->time_stamp = $result->timestamp;
+                        if (!is_null($result->amount)) {
+                            $charge->amount = $result->net_amount->value;
+                        }
+                        echo 'new transaction saved: [' . $result->status . '] for [' . $user->email . ']\n';
+                        $charge->save();
+                    }
+                }
+            } catch (\Exception $ex) {
+                // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
+                $this->error($ex->getMessage());
+            }
         }
-        
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start);
+        echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
+
 //        $uri = 'https://api.sandbox.paypal.com/v1/oauth2/token';
 //
 //        $client = new \GuzzleHttp\Client();
@@ -71,7 +102,7 @@ class UpdatePaypalCharges extends Command {
 //                ]
 //        );
 //
-//        $data = json_decode($response->getBody(), true);
+//        $data = json_decode($response->getBody(), true);s
 //
 //        $access_token = $data['access_token'];
 //        echo 'access token retrieved';
