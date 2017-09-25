@@ -256,9 +256,9 @@ class GenerateStripeReferralChargesCsv extends Command {
 
         foreach ($user_payouts as $referrer_email => $user_payout) {
             if ($user_payout["payout_amt"] < 50) {
-                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Not Eligible," . $comms_row[8] . "," . $comms_row[9]);
+                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Not Eligible");
             } else {
-                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Eligible," . $comms_row[8] . "," . $comms_row[9]);
+                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Eligible");
             }
         }
     }
