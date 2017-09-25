@@ -84,8 +84,8 @@ class GenerateStripeReferralChargesCsv extends Command {
                             }
                         }
                     }
-                    $this->line($stripe_detail->email . ", " . $users[$stripe_detail->email]["premium"] . ", " .
-                            $users[$stripe_detail->email]["business"] . ", " . $users[$stripe_detail->email]["pro"] . ", " . $users[$stripe_detail->email]["mastermind"]);
+//                    $this->line($stripe_detail->email . ", " . $users[$stripe_detail->email]["premium"] . ", " .
+//                            $users[$stripe_detail->email]["business"] . ", " . $users[$stripe_detail->email]["pro"] . ", " . $users[$stripe_detail->email]["mastermind"]);
                 }
             }
             
