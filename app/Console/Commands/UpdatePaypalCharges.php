@@ -34,17 +34,6 @@ class UpdatePaypalCharges extends Command {
      */
     public function __construct() {
         parent::__construct();
-        if (config('paypal.settings.mode') == 'live') {
-            $this->client_id = config('paypal.live_client_id');
-            $this->secret = config('paypal.live_secret');
-        } else {
-            $this->client_id = config('paypal.sandbox_client_id');
-            $this->secret = config('paypal.sandbox_secret');
-        }
-
-        // Set the Paypal API Context/Credentials
-        $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
-        $this->apiContext->setConfig(config('paypal.settings'));
     }
 
     /**
@@ -54,16 +43,29 @@ class UpdatePaypalCharges extends Command {
      */
     public function handle() {
 
-        $dt = "I-MK8ENKH9C8XK";
+        $apiClientId = 'AebHsSdZdePT3omEiLlf9ZWCUNHU6P5LFIjT9Ba9WHg7VLJiYVXZKhJk3T34mbb-2NtEAWCM2VRUe2Oy';
+        $apiClientSecret = 'EByg2Ma7kSbvGlESzJ1Qa1r7KqUxE7loeR60WnJfcvKeY7FHEGONEeTrA0yRkqjktWrinZUCc7_lMUBD';
+
         $client = new \GuzzleHttp\Client();
 
-        $request = $client->get('https://api.sandbox.paypal.com/v1/payments/billing-agreements/' . $dt . '/transaction?start_date=2017-06-15&end_date=2017-09-17 \
--H "Content-Type:application/json" \
--H "Authorization: Bearer"  . $this->apiContext');
+        $authResponse = $client->post("https://api.sandbox.paypal.com/v1/oauth2/token", [
+            'auth' => [$apiClientId, $apiClientSecret, 'basic'],
+            'json' => ['grant_type' => 'client_credentials'],
+            'headers' => [
+                'Accept-Language' => 'en_US',
+                'Accept' => 'application/json'
+            ]
+        ]);
 
-        $response = $request->getBody();
-
-        dump($response);
+        echo $authResponse->getBody();
+//        $dt = "I-MK8ENKH9C8XK";
+//        $client = new \GuzzleHttp\Client();
+//
+//        $request = $client->get('https://api.sandbox.paypal.com/v1/payments/billing-agreements/' . $dt . '/transaction?start_date=2017-06-15&end_date=2017-09-17');
+//
+//        $response = $request->getBody();
+//
+//        dump($response);
     }
 
 }
