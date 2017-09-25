@@ -194,14 +194,14 @@ class GenerateStripeReferralChargesCsv extends Command {
                 }
 
                 $eligible = "No";
-                if ($users[$referrer_email]["vip"] === 1) {
+                if ($users[$paypal_charge->referrer_email]["vip"] === 1) {
                     $eligible = "Yes";
                 } else {
-                    if ($paypal_charge->subscription_id == "0137" && ($users[$referrer_email]["premium"] == 1 || $users[$referrer_email]["pro"] == 1)) {
+                    if ($paypal_charge->subscription_id == "0137" && ($users[$paypal_charge->referrer_email]["premium"] == 1 || $users[$paypal_charge->referrer_email]["pro"] == 1)) {
                         $eligible = "Yes";
-                    } else if ($paypal_charge->subscription_id == "0297" && ($users[$referrer_email]["business"] == 1)) {
+                    } else if ($paypal_charge->subscription_id == "0297" && ($users[$paypal_charge->referrer_email]["business"] == 1)) {
                         $eligible = "Yes";
-                    } else if ($paypal_charge->subscription_id == "MX370" && ($users[$referrer_email]["pro"] == 1)) {
+                    } else if ($paypal_charge->subscription_id == "MX370" && ($users[$paypal_charge->referrer_email]["pro"] == 1)) {
                         $eligible = "Yes";
                     }
                 }
