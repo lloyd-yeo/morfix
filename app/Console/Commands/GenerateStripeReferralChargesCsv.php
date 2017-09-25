@@ -146,23 +146,22 @@ class GenerateStripeReferralChargesCsv extends Command {
 
         foreach ($user_payout_comms as $comms_row) {
             $referrer_email = $comms_row[7];
-            
-                if (!array_has($user_payouts, $referrer_email)) {
-                    $referrer_user = User::where("email", $referrer_email)->first();
-                    if ($referrer_user !== NULL) {
-                        $user_payouts[$referrer_email]['paypal_email'] = $referrer_user->paypal_email;
-                        $user_payouts[$referrer_email]['payout_amt'] = 0;
-                    }
-                }
 
-                if ($comms_row[5] == 0) {
-                    continue;
+            if (!array_has($user_payouts, $referrer_email)) {
+                $referrer_user = User::where("email", $referrer_email)->first();
+                if ($referrer_user !== NULL) {
+                    $user_payouts[$referrer_email]['paypal_email'] = $referrer_user->paypal_email;
+                    $user_payouts[$referrer_email]['payout_amt'] = 0;
                 }
+            }
 
-                if ($comms_row[6] == "Yes") {
-                    $user_payouts[$referrer_email]['payout_amt'] = $user_payouts[$referrer_email]['payout_amt'] 
-                            + $comms_row[2];
-                }
+            if ($comms_row[5] == 1) {
+                continue;
+            }
+
+            if ($comms_row[6] == "Yes") {
+                $user_payouts[$referrer_email]['payout_amt'] = $user_payouts[$referrer_email]['payout_amt'] + $comms_row[2];
+            }
         }
 
         foreach ($user_payouts as $referrer_email => $user_payout) {
