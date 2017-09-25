@@ -1,167 +1,17 @@
 <?php
 
-namespace App\Jobs;
+namespace App;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\DB;
-use App\InstagramProfile;
-use App\InstagramProfileTargetUsername;
-use App\InstagramProfileTargetHashtag;
-use App\EngagementJob;
-use App\BlacklistedUsername;
 use App\InstagramProfileLikeLog;
 use App\LikeLogsArchive;
-use App\Proxy;
-use App\Niche;
-use App\InstagramHelper;
-use App\InteractionHelper;
-use App\TargetHelper;
+use App\BlacklistedUsername;
+use App\Instagram;
 
-class InteractionLike implements ShouldQueue {
+class InteractionLikeHelper{
 
-    use Dispatchable,
-        InteractsWithQueue,
-        Queueable,
-        SerializesModels;
-
-    /**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 1;
-
-    /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
-     */
-    public $timeout = 360;
-    protected $profile;
-    protected $targeted_hashtags;
-    protected $targeted_usernames;
-    protected $like_quota;
-    protected $speed_delay;
-    protected $instagram;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(InstagramProfile $profile) {
-        $this->profile = $profile;
-        $this->calcSpeedDelay($profile->speed);
-        $this->instagram = InstagramHelper::initInstagram();
-        $this->like_quota = rand(1, 3);
-        $this->targeted_hashtags = TargetHelper::getUserTargetedHashtags($profile);
-        $this->targeted_usernames = TargetHelper::getUserTargetedUsernames($profile);
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle() {
-        DB::reconnect();
-
-        $ig_profile = $this->profile;
-
-        $ig_username = $ig_profile->insta_username;
-
-        $instagram = $this->instagram;
-
-        if (InstagramHelper::login($instagram, $ig_profile)) {
-
-            $use_hashtags = $this->randomizeUseHashtags();
-
-            if (!$use_hashtags) {
-
-                foreach ($this->target_usernames as $target_username) {
-
-                    if ($this->like_quota > 0) {
-
-                        //Get followers of the target.
-                        echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
-                        $target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
-                        if ($target_username_id === NULL) {
-                            continue;
-                        }
-
-                        $target_target_username = $target_username->target_username;
-                        $user_follower_response = NULL;
-                        $next_max_id = null;
-
-                        $page_count = 0;
-
-                        do {
-                            echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
-
-                            $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
-                            $target_user_followings = $user_follower_response->users;
-                            $next_max_id = $user_follower_response->next_max_id;
-                            echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
-                            $page_count++;
-
-                            //Foreach follower of the target.
-                            foreach ($target_user_followings as $user_to_like) {
-
-                                if ($this->like_quota > 0) {
-
-                                    echo("\n" . $user_to_like->username . "\t" . $user_to_like->pk);
-
-                                    $is_duplicate = $this->checkBlacklistAndDuplicate($user_to_like, $page_count);
-
-                                    if ($is_duplicate == 1) {
-                                        break;
-                                    } else if ($is_duplicate == 2) {
-                                        continue;
-                                    }
-
-                                    //Get the feed of the user to like.
-                                    $user_feed_response = InstagramHelper::getUserFeed($instagram, $user_to_like);
-                                    if ($user_feed_response === NULL) {
-                                        continue;
-                                    }
-
-                                    //Get the media posted by the user.
-                                    $user_items = $user_feed_response->items;
-
-                                    //Foreach media posted by the user.
-                                    foreach ($user_items as $item) {
-                                        if ($this->checkDuplicateByMediaId($item)) {
-                                            continue;
-                                        }
-                                        if ($this->like_quota > 0) {
-                                            if ($this->like($user_to_like, $item)) {
-                                               //Decrement like quota if true
-                                                $this->like_quota--;
-                                            }
-                                        } else {
-                                            break;
-                                        }
-                                    }
-                                } else {
-                                    break;
-                                }
-                            }
-                        } while ($next_max_id !== NULL && $this->like_quota > 0);
-                    }
-                }
-            } else {
-                
-            }
-        }
-    }
-
-    public function like($user_to_like, $item) {
-        $ig_profile = $this->profile;
-        $like_response = $this->instagram->media->like($item->id);
+    public static function like($ig_profile, $instagram, $user_to_like, $item) {
+        $ig_profile = $profile;
+        $like_response = $instagram->media->like($item->id);
         if ($like_response->status == "ok") {
             try {
                 echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response));
@@ -176,7 +26,7 @@ class InteractionLike implements ShouldQueue {
                     $ig_profile->auto_like_ban = 0;
                     $ig_profile->auto_like_ban_time = NULL;
                     $ig_profile->save();
-                    return true;
+                    return true; // If true subtract 1 to like_quota
                 } else {
                     return false;
                 }
@@ -188,8 +38,7 @@ class InteractionLike implements ShouldQueue {
         return false;
     }
 
-    public function checkDuplicateByMediaId($item) {
-        $ig_profile = $this->profile;
+    public static function checkDuplicateByMediaId($ig_profile, $item) {
         
         if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                         ->where('target_media', $item->id)->count() > 0) {
@@ -211,7 +60,7 @@ class InteractionLike implements ShouldQueue {
         return false;
     }
 
-    public function checkBlacklistAndDuplicate($user_to_like, $page_count) {
+    public static function checkBlacklistAndDuplicate($user_to_like, $page_count) {
         $ig_profile = $this->profile;
         $ig_username = $ig_profile->insta_username;
 
@@ -258,7 +107,7 @@ class InteractionLike implements ShouldQueue {
         return 0;
     }
 
-    public function checkValidTargetUsername($instagram, $target_username) {
+    public static function checkValidTargetUsername($instagram, $target_username) {
         $target_username_id = NULL;
         try {
             $target_username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
@@ -291,7 +140,7 @@ class InteractionLike implements ShouldQueue {
         return $use_hashtags;
     }
 
-    public function handleInstagramException($ig_profile, $ex) {
+    public static function handleInstagramException($ig_profile, $ex) {
         $ig_username = $ig_profile->insta_username;
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
             $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
@@ -338,12 +187,11 @@ class InteractionLike implements ShouldQueue {
         $ig_profile->save();
     }
 
-    private function calcSpeedDelay($speed) {
+    private static function calcSpeedDelay($speed) {
         $speed_delay = 3;
         if ($speed == "Fast") {
             $speed_delay = 1;
         }
         $this->speed_delay = $speed_delay;
     }
-
 }

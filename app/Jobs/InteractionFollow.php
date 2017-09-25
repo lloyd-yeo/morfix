@@ -26,6 +26,7 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\InstagramHelper;
+use App\InteractionFollowHelper;
 
 class InteractionFollow implements ShouldQueue {
 
@@ -124,23 +125,10 @@ class InteractionFollow implements ShouldQueue {
             echo "[" . $insta_username . "] will be following this round.\n";
         }
 
-        $follow_unfollow_delay = 5;
-        if ($speed == "Fast") {
-            $follow_unfollow_delay = 2;
-        }
-        else if ($speed == "Medium") {
-            $follow_unfollow_delay = 3;
-        }
-        else if ($speed == "Slow") {
-            $follow_unfollow_delay = 5;
-        }
-        else if ($speed == "Ultra Fast") {
-            $follow_unfollow_delay = 0;
-        }
-        if ($insta_username == "weikian_") {
-            $follow_unfollow_delay = 0;
-        }
-
+        /*
+            Set Speed Delay
+        */
+        $follow_unfollow_delay = InteractionFollowHelper::setSpeedDelay($speed);
         $delay = rand($follow_unfollow_delay, $follow_unfollow_delay + 2); //randomize the delay to escape detection from IG.
         
         //go into unfollowing mode if user is entirely on unfollow OR on the unfollowing cycle.
@@ -177,37 +165,7 @@ class InteractionFollow implements ShouldQueue {
                         ->get();
 
                 if (count($users_to_unfollow) == 0) {
-
-                    echo "[" . $insta_username . "] has no follows to unfollow.\n\n";
-
-                    #forced unfollow
-                    if ($auto_unfollow == 1 && $auto_follow == 0) {
-                        echo "[" . $insta_username . "] adding new unfollows..\n";
-                        #$followings = $instagram->getSelfUsersFollowing();
-                        $followings = $instagram->people->getSelfFollowing();
-                        foreach ($followings->users as $user) {
-
-                            try {
-                                if (InstagramProfileFollowLog::where('insta_username', $insta_username)->where('follower_id', $user->pk)->count() > 0) {
-                                    continue;
-                                }
-                                $follow_log = new InstagramProfileFollowLog;
-                                $follow_log->insta_username = $insta_username;
-                                $follow_log->follower_username = $user->username;
-                                $follow_log->follower_id = $user->pk;
-                                $follow_log->follow_success = 1;
-                                $follow_log->save();
-                            } catch (Exception $ex) {
-                                echo "[" . $insta_username . "] " . $ex->getMessage() . "..\n";
-                                continue;
-                            }
-                        }
-                    } else {
-                        $ig_profile->unfollow = 0;
-                        if ($ig_profile->save()) {
-                            echo "[" . $insta_username . "] is following next round.\n\n";
-                        }
-                    }
+                    InteractionFollowHelper::unfollowUseIsEmpty();
                 } else {
                     foreach ($users_to_unfollow as $user_to_unfollow) {
 
