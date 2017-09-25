@@ -56,12 +56,12 @@ class GenerateStripeReferralChargesCsv extends Command {
             $referrer_email = $referral_charge->referrer_email;
 
             if (!array_has($users, $referrer_email)) {
-                $users[$stripe_detail->email] = array();
-                $users[$stripe_detail->email]["premium"] = 0;
-                $users[$stripe_detail->email]["business"] = 0;
-                $users[$stripe_detail->email]["pro"] = 0;
-                $users[$stripe_detail->email]["mastermind"] = 0;
-                $users[$stripe_detail->email]["vip"] = 0;
+                $users[$referrer_email] = array();
+                $users[$referrer_email]["premium"] = 0;
+                $users[$referrer_email]["business"] = 0;
+                $users[$referrer_email]["pro"] = 0;
+                $users[$referrer_email]["mastermind"] = 0;
+                $users[$referrer_email]["vip"] = 0;
 
                 $stripe_details = StripeDetail::where('email', $referrer_email)->get();
                 foreach ($stripe_details as $stripe_detail) {
