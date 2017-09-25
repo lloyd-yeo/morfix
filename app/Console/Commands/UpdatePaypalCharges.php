@@ -9,6 +9,7 @@ use PayPal\Api\Agreement;
 use App\PaypalCharges;
 use App\PaypalAgreement;
 use Carbon\Carbon;
+use App\GetReferralForUser;
 
 class UpdatePaypalCharges extends Command {
 
