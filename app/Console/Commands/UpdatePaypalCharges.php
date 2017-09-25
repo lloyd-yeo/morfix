@@ -73,7 +73,10 @@ class UpdatePaypalCharges extends Command {
                         $charge->transaction_type = $result->transaction_type;
                         $charge->payer_email = $result->payer_email;
                         $charge->payer_name = $result->payer_name;
-                        $charge->time_stamp = Carbon::createFromFormat('Y-m-d H:i:s', $result->time_stamp)->setTimezone('Asia/Singapore')->toDateTimeString();
+                        $timestamp = $result->time_stamp;
+                        $timestamp = str_replace("T", " ");
+                        $timestamp = str_replace("Z", "");
+                        $charge->time_stamp = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp)->setTimezone('Asia/Singapore')->toDateTimeString();
                         if ($result->amount !== NULL) {
                             $charge->amount = $result->amount->value;
                             switch ($result->amount->value) {
