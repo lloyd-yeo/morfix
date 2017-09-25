@@ -165,7 +165,7 @@ class GenerateStripeReferralChargesCsv extends Command {
         }
 
         $paypal_charges = PaypalCharges::where('status', 'Completed')
-                ->where('time_stamp', '<', '2017-09-01 00:00:00');
+                ->where('time_stamp', '<', '2017-09-01 00:00:00')->get();
 
         foreach ($paypal_charges as $paypal_charge) {
             $user = User::where('email', $paypal_charge->referrer_email)->first();
@@ -230,8 +230,6 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $eligible);
                 $user_payout_comms[] = $comms_row;
                 
-            } else {
-                continue;
             }
         }
 
