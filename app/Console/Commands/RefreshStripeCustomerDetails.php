@@ -39,7 +39,7 @@ class RefreshStripeCustomerDetails extends Command
     public function handle()
     {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        $customers = \Stripe\Customer::all(array("limit" => 3));
+        $customers = \Stripe\Customer::all(array("limit" => 100));
         foreach ($customers->data as $customer) {
             $customer_id = $customer->id;
             $customer_email = $customer->email;
@@ -51,7 +51,9 @@ class RefreshStripeCustomerDetails extends Command
                 $stripe_detail->stripe_id = $customer_id;
                 $stripe_detail->email = $customer_email;
             }
-            $stripe_detail->save();
+            if ($stripe_detail->save()) {
+                $this->line("Saved [" . $customer_id . "] [" . $customer_email . "]");
+            }
         }
     }
 }
