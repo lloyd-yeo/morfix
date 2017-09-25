@@ -228,6 +228,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                     "Paypal," .
                     $paypal_charge->transaction_id . "," .
                     $eligible);
+                $user_payout_comms[] = $comms_row;
                 
             } else {
                 continue;
