@@ -54,74 +54,70 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 ORDER BY referrer_email ASC, charge_created DESC;');
         foreach ($referral_charges as $referral_charge) {
             $referrer_email = $referral_charge->referrer_email;
-            $stripe_details = StripeDetail::where('email', $referrer_email)->get();
-            foreach ($stripe_details as $stripe_detail) {
 
-                if (!array_has($users, $stripe_detail->email)) {
-                    $users[$stripe_detail->email] = array();
-                    $users[$stripe_detail->email]["premium"] = 0;
-                    $users[$stripe_detail->email]["business"] = 0;
-                    $users[$stripe_detail->email]["pro"] = 0;
-                    $users[$stripe_detail->email]["mastermind"] = 0;
-                    $users[$stripe_detail->email]["vip"] = 0;
-                }
+            if (!array_has($users, $referrer_email)) {
+                $users[$stripe_detail->email] = array();
+                $users[$stripe_detail->email]["premium"] = 0;
+                $users[$stripe_detail->email]["business"] = 0;
+                $users[$stripe_detail->email]["pro"] = 0;
+                $users[$stripe_detail->email]["mastermind"] = 0;
+                $users[$stripe_detail->email]["vip"] = 0;
 
-                if ($referral_charge->vip == 1) {
-                    $users[$stripe_detail->email]["vip"] = 1;
-                } else {
-                    $subs = StripeActiveSubscription::where('stripe_id', $stripe_detail->stripe_id)->get();
-                    foreach ($subs as $sub) {
-                        if ($sub->status == "active" || $sub->status == "trialing") {
-                            if ($sub->subscription_id == "0137") {
-                                $users[$stripe_detail->email]["premium"] = 1;
-                            } else if ($sub->subscription_id == "0297" && $stripe_detail->email == "yongshaokoko@gmail.com") {
-                                $users[$stripe_detail->email]["premium"] = 1;
-                                $users[$stripe_detail->email]["business"] = 1;
-                            } else if ($sub->subscription_id == "0297") {
-                                $users[$stripe_detail->email]["business"] = 1;
-                            } else if ($sub->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
-                                $users[$stripe_detail->email]["pro"] = 1;
+                $stripe_details = StripeDetail::where('email', $referrer_email)->get();
+                foreach ($stripe_details as $stripe_detail) {
+                    if ($referral_charge->vip == 1) {
+                        $users[$stripe_detail->email]["vip"] = 1;
+                    } else {
+                        $subs = StripeActiveSubscription::where('stripe_id', $stripe_detail->stripe_id)->get();
+                        foreach ($subs as $sub) {
+                            if ($sub->status == "active" || $sub->status == "trialing") {
+                                if ($sub->subscription_id == "0137") {
+                                    $users[$stripe_detail->email]["premium"] = 1;
+                                } else if ($sub->subscription_id == "0297" && $stripe_detail->email == "yongshaokoko@gmail.com") {
+                                    $users[$stripe_detail->email]["premium"] = 1;
+                                    $users[$stripe_detail->email]["business"] = 1;
+                                } else if ($sub->subscription_id == "0297") {
+                                    $users[$stripe_detail->email]["business"] = 1;
+                                } else if ($sub->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
+                                    $users[$stripe_detail->email]["pro"] = 1;
+                                }
                             }
                         }
                     }
-//                    $this->line($stripe_detail->email . ", " . $users[$stripe_detail->email]["premium"] . ", " .
-//                            $users[$stripe_detail->email]["business"] . ", " . $users[$stripe_detail->email]["pro"] . ", " . $users[$stripe_detail->email]["mastermind"]);
                 }
             }
-            
-            
 
 
-                $eligible = "No";
-                if ($users[$stripe_detail->email]["vip"] === 1) {
+
+            $eligible = "No";
+            if ($users[$stripe_detail->email]["vip"] === 1) {
+                $eligible = "Yes";
+            } else {
+                if ($stripe_detail->subscription_id == "0137" && ($users[$stripe_detail->email]["premium"] == 1 || $users[$stripe_detail->email]["pro"] == 1)) {
                     $eligible = "Yes";
-                } else {
-                    if ($stripe_detail->subscription_id == "0137" && ($users[$stripe_detail->email]["premium"] == 1 || $users[$stripe_detail->email]["pro"] == 1)) {
-                        $eligible = "Yes";
-                    } else if ($stripe_detail->subscription_id == "0297" && ($users[$stripe_detail->email]["business"] == 1)) {
-                        $eligible = "Yes";
-                    } else if ($stripe_detail->subscription_id == "MX370" && ($users[$stripe_detail->email]["pro"] == 1)) {
-                        $eligible = "Yes";
-                    }
+                } else if ($stripe_detail->subscription_id == "0297" && ($users[$stripe_detail->email]["business"] == 1)) {
+                    $eligible = "Yes";
+                } else if ($stripe_detail->subscription_id == "MX370" && ($users[$stripe_detail->email]["pro"] == 1)) {
+                    $eligible = "Yes";
                 }
+            }
 
-                $amt_to_payout = 0;
-                if ($referral_charge->subscription_id == "0137") {
-                    $amt_to_payout = 20;
-                } else if ($referral_charge->subscription_id == "0297") {
-                    $amt_to_payout = 50;
-                } else if ($referral_charge->subscription_id == "MX370") {
-                    $amt_to_payout = 200;
-                }
+            $amt_to_payout = 0;
+            if ($referral_charge->subscription_id == "0137") {
+                $amt_to_payout = 20;
+            } else if ($referral_charge->subscription_id == "0297") {
+                $amt_to_payout = 50;
+            } else if ($referral_charge->subscription_id == "MX370") {
+                $amt_to_payout = 200;
+            }
 
-                $this->line($referrer_email . "," .
-                            $referral_charge->referred_email . "," .
-                        $referral_charge->subscription_id . "," .
-                        $referral_charge->charge_created . "," .
-                        $referral_charge->charge_paid . "," .
-                        $referral_charge->charge_refunded . "," .
-                        $eligible);
-            
+            $this->line($referrer_email . "," .
+                    $referral_charge->referred_email . "," .
+                    $referral_charge->subscription_id . "," .
+                    $referral_charge->charge_created . "," .
+                    $referral_charge->charge_paid . "," .
+                    $referral_charge->charge_refunded . "," .
+                    $eligible);
         }
     }
 
