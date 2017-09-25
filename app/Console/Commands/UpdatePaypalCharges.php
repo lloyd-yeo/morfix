@@ -76,7 +76,6 @@ class UpdatePaypalCharges extends Command {
                         $charge->time_stamp = Carbon::parse($result->timestamp)->setTimezone('GMT+8')->toDateTimeString();
                         if (!is_null($result->amount)) {
                             $charge->amount = $result->amount->value;
-
                             switch ($result->amount->value) {
                                 case "37.00":
                                     $charge->subscription_id = "0137";
@@ -99,7 +98,7 @@ class UpdatePaypalCharges extends Command {
                 }
             } catch (\Exception $ex) {
                 // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
-                $this->error($ex->getMessage());
+                dump($ex);
             }
         }
         $time_end = microtime(true);
