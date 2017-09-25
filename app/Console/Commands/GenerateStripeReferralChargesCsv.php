@@ -144,7 +144,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $amt_to_payout . "," .
                     $referral_charge->charge_created . "," .
                     $referral_charge->charge_paid . "," .
-                    $referral_charge->charge_refunded . "," . 
+                    $referral_charge->charge_refunded . "," .
                     "Stripe," .
                     $referral_charge->charge_id . "," .
                     $eligible);
@@ -165,12 +165,60 @@ class GenerateStripeReferralChargesCsv extends Command {
         }
 
         $paypal_charges = PaypalCharges::where('status', 'Completed')
-                ->where('time_stamp', '<', '2017-09-01 00:00:00')->get();
+                        ->where('time_stamp', '<', '2017-09-01 00:00:00')->get();
 
         foreach ($paypal_charges as $paypal_charge) {
             $user = User::where('email', $paypal_charge->referrer_email)->first();
 
             if ($user !== NULL) {
+
+                if (!array_has($users, $paypal_charge->referrer_email)) {
+                    $users[$paypal_charge->referrer_email] = array();
+                    $users[$paypal_charge->referrer_email]["premium"] = 0;
+                    $users[$paypal_charge->referrer_email]["business"] = 0;
+                    $users[$paypal_charge->referrer_email]["pro"] = 0;
+                    $users[$paypal_charge->referrer_email]["mastermind"] = 0;
+                    $users[$paypal_charge->referrer_email]["vip"] = 0;
+                    $referrer_email = $paypal_charge->referrer_email;
+                    $stripe_details = StripeDetail::where('email', $referrer_email)->get();
+                    foreach ($stripe_details as $stripe_detail) {
+                        if ($referral_charge->vip == 1) {
+                            $users[$referrer_email]["vip"] = 1;
+                        } else {
+                            $subs = StripeActiveSubscription::where('stripe_id', $stripe_detail->stripe_id)->get();
+                            foreach ($subs as $sub) {
+                                if ($sub->status == "active" || $sub->status == "trialing") {
+                                    if ($sub->subscription_id == "0137") {
+                                        $users[$referrer_email]["premium"] = 1;
+                                    } else if ($sub->subscription_id == "0297" && $referrer_email == "Yongshaokoko@gmail.com") {
+                                        $users[$referrer_email]["premium"] = 1;
+                                        $users[$referrer_email]["business"] = 1;
+                                    } else if ($sub->subscription_id == "0297") {
+                                        $users[$referrer_email]["business"] = 1;
+                                    } else if ($sub->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
+                                        $users[$referrer_email]["pro"] = 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    $paypal_charges_for_referrer = PaypalCharges::where('email', $referrer_email)
+                                    ->where('status', 'Completed')->where('time_stamp', '<', '2017-09-01 00:00:00')->get();
+                    foreach ($paypal_charges_for_referrer as $paypal_charge_for_referrer) {
+                        if ($paypal_charge_for_referrer->subscription_id == "0137") {
+                            $users[$referrer_email]["premium"] = 1;
+                        } else if ($paypal_charge_for_referrer->subscription_id == "0297" && $referrer_email == "Yongshaokoko@gmail.com") {
+                            $users[$referrer_email]["premium"] = 1;
+                            $users[$referrer_email]["business"] = 1;
+                        } else if ($paypal_charge_for_referrer->subscription_id == "0297") {
+                            $users[$referrer_email]["business"] = 1;
+                        } else if ($paypal_charge_for_referrer->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
+                            $users[$referrer_email]["pro"] = 1;
+                        }
+                    }
+                }
+
                 $referrer_last_payout_date = \Carbon\Carbon::parse($user->last_payout_date);
                 $charge_created_date = \Carbon\Carbon::parse($paypal_charge->time_stamp);
                 if ($user->last_payout_date !== NULL) {
@@ -217,19 +265,18 @@ class GenerateStripeReferralChargesCsv extends Command {
                 $comms_row[7] = $paypal_charge->referrer_email;
                 $comms_row[8] = "Paypal";
                 $comms_row[9] = $paypal_charge->transaction_id;
-                
+
                 $this->line($paypal_charge->referrer_email . "," .
-                    $paypal_charge->email . "," .
-                    $paypal_charge->subscription_id . "," .
-                    $amt_to_payout . "," .
-                    $paypal_charge->time_stamp . "," .
-                    1 . "," .
-                    0 . "," . 
-                    "Paypal," .
-                    $paypal_charge->transaction_id . "," .
-                    $eligible);
+                        $paypal_charge->email . "," .
+                        $paypal_charge->subscription_id . "," .
+                        $amt_to_payout . "," .
+                        $paypal_charge->time_stamp . "," .
+                        1 . "," .
+                        0 . "," .
+                        "Paypal," .
+                        $paypal_charge->transaction_id . "," .
+                        $eligible);
                 $user_payout_comms[] = $comms_row;
-                
             }
         }
 
