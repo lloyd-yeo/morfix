@@ -5,10 +5,10 @@ return array(
     /**
      * Set our Sandbox and Live credentials
      */
-    'sandbox_client_id' => env('PAYPAL_SANDBOX_CLIENT_ID', ''),
-    'sandbox_secret' => env('PAYPAL_SANDBOX_SECRET', ''),
-    'live_client_id' => env('PAYPAL_LIVE_CLIENT_ID', ''),
-    'live_secret' => env('PAYPAL_LIVE_SECRET', ''),
+    'sandbox_client_id' => env('PAYPAL_SANDBOX_CLIENT_ID', 'AQDEKq4WUwNs-PkAPe5IwpE4QoR1iCCVl82VCSjWHyG4hOpX-8573MoNoRAQ22qgzH3ZB2TAie31xgzY'),
+    'sandbox_secret' => env('PAYPAL_SANDBOX_SECRET', 'ELooHOVHf84m0Ov4jYh5lt1KQ7UeCqq_781eWbfOrDTi8l_ScBAZLOWyC8QFLl-0KNEH458Gv2tXIAs1'),
+    'live_client_id' => env('PAYPAL_LIVE_CLIENT_ID', 'AebHsSdZdePT3omEiLlf9ZWCUNHU6P5LFIjT9Ba9WHg7VLJiYVXZKhJk3T34mbb-2NtEAWCM2VRUe2Oy'),
+    'live_secret' => env('PAYPAL_LIVE_SECRET', 'EByg2Ma7kSbvGlESzJ1Qa1r7KqUxE7loeR60WnJfcvKeY7FHEGONEeTrA0yRkqjktWrinZUCc7_lMUBD'),
 
     
     /**
