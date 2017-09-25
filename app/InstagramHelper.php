@@ -115,6 +115,33 @@ class InstagramHelper {
         return $username_id;
     }
 
+    public static function getUserFeed(Instagram $instagram, $user_to_like) {
+        //Get the feed of the user to like.
+        try {
+            if ($user_to_like === NULL) {
+                echo("\n" . "Null User - Target Username");
+                return NULL;
+            }
+            return $instagram->timeline->getUserFeed($user_to_like->pk);
+        } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
+            echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
+            if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
+                if (BlacklistedUsername::find($user_to_like->username) === NULL) {
+                    $blacklist_username = new BlacklistedUsername;
+                    $blacklist_username->username = $user_to_like->username;
+                    $blacklist_username->save();
+                    echo("\n" . "Blacklisted: " . $user_to_like->username);
+                } else {
+                    return NULL;
+                }
+            }
+            return NULL;
+        } catch (\Exception $ex) {
+            echo("\n" . "Exception: " . $ex->getMessage());
+            return NULL;
+        }
+    }
+
     public static function validForInteraction($ig_profile) {
         if ($ig_profile->checkpoint_required == 1) {
             echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
@@ -135,7 +162,7 @@ class InstagramHelper {
             echo("\n[" . $ig_profile->incorrect_pw . "] is using an incorrect password.\n");
             return false;
         }
-        
+
         return true;
     }
 
