@@ -91,11 +91,11 @@ class GenerateStripeReferralChargesCsv extends Command {
                 if ($users[$stripe_detail->email]["vip"] === 1) {
                     $eligible = "Yes";
                 } else {
-                    if ($stripe_detail->subscription_id == "0137" && ($users[$stripe_detail->email]["premium"] === 1 || $users[$stripe_detail->email]["pro"] === 1)) {
+                    if ($stripe_detail->subscription_id == "0137" && ($users[$stripe_detail->email]["premium"] == 1 || $users[$stripe_detail->email]["pro"] == 1)) {
                         $eligible = "Yes";
-                    } else if ($stripe_detail->subscription_id == "0297" && ($users[$stripe_detail->email]["business"] === 1)) {
+                    } else if ($stripe_detail->subscription_id == "0297" && ($users[$stripe_detail->email]["business"] == 1)) {
                         $eligible = "Yes";
-                    } else if ($stripe_detail->subscription_id == "MX370" && ($users[$stripe_detail->email]["pro"] === 1)) {
+                    } else if ($stripe_detail->subscription_id == "MX370" && ($users[$stripe_detail->email]["pro"] == 1)) {
                         $eligible = "Yes";
                     }
                 }
@@ -109,13 +109,13 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $amt_to_payout = 200;
                 }
                 
-                $this->line($referrer_email . "," .
-                            $referral_charge->referred_email . "," .
-                        $referral_charge->subscription_id . "," .
-                        $referral_charge->charge_created . "," .
-                        $referral_charge->charge_paid . "," .
-                        $referral_charge->charge_refunded . "," .
-                        $eligible);
+//                $this->line($referrer_email . "," .
+//                            $referral_charge->referred_email . "," .
+//                        $referral_charge->subscription_id . "," .
+//                        $referral_charge->charge_created . "," .
+//                        $referral_charge->charge_paid . "," .
+//                        $referral_charge->charge_refunded . "," .
+//                        $eligible);
                 
             }
         }
