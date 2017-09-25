@@ -152,12 +152,13 @@ class GenerateStripeReferralChargesCsv extends Command {
                 }
             }
             
-            if ($comms_row[5] == 0) {
+            if ($comms_row[5] === 0) {
                 continue;
             }
             
             if ($comms_row[6] == "Yes") {
-                $user_payouts[$referrer_email]['payout_amt'] = $user_payouts[$referrer_email]['payout_amt'] + $comms_row[2];
+                $user_payouts[$referrer_email]['payout_amt'] = 
+                        $user_payouts[$referrer_email]['payout_amt'] + $comms_row[2];
             }
         }
         
