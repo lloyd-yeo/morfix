@@ -42,14 +42,15 @@ class GenerateStripeReferralChargesCsv extends Command {
         $users = array();
 
         $referral_charges = DB::select('SELECT 
-                                u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, u.tier, rc.referred_email, 
+                                u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
+                                u.tier, rc.referred_email, 
                                 rc.charge_id, rc.invoice_id, 
                                 rc.subscription_id, rc.charge_paid, rc.charge_refunded,
                                 rc.commission_calc, rc.commission_given, u.vip
                                 FROM `user` u, get_referral_charges_of_user rc 
                                 WHERE pending_commission > 0
                                 AND rc.referrer_email = u.email
-                                AND rc.charge_created <= "2017-08-31 00:00:00"
+                                AND rc.charge_created < "2017-09-01 00:00:00"
                                 ORDER BY referrer_email ASC, charge_created DESC;');
         foreach ($referral_charges as $referral_charge) {
             $referrer_email = $referral_charge->referrer_email;
@@ -77,15 +78,45 @@ class GenerateStripeReferralChargesCsv extends Command {
                                     $users[$stripe_detail->email]["business"] = 1;
                                 } else if ($sub->subscription_id == "0297") {
                                     $users[$stripe_detail->email]["business"] = 1;
-                                } else if ($sub->subscription_id == "MX370") {
+                                } else if ($sub->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
                                     $users[$stripe_detail->email]["pro"] = 1;
                                 }
                             }
                         }
                     }
-                    
-                    
                 }
+                
+                $eligible = "No";
+                
+                if ($users[$stripe_detail->email]["vip"] === 1) {
+                    $eligible = "Yes";
+                } else {
+                    if ($stripe_detail->subscription_id == "0137" && ($users[$stripe_detail->email]["premium"] === 1 || $users[$stripe_detail->email]["pro"] === 1)) {
+                        $eligible = "Yes";
+                    } else if ($stripe_detail->subscription_id == "0297" && ($users[$stripe_detail->email]["business"] === 1)) {
+                        $eligible = "Yes";
+                    } else if ($stripe_detail->subscription_id == "MX370" && ($users[$stripe_detail->email]["pro"] === 1)) {
+                        $eligible = "Yes";
+                    }
+                }
+                
+                $amt_to_payout = 0;
+                if ($referral_charge->subscription_id == "0137") {
+                    $amt_to_payout = 20;
+                } else if ($referral_charge->subscription_id == "0297") {
+                    $amt_to_payout = 50;
+                } else if ($referral_charge->subscription_id == "MX370") {
+                    $amt_to_payout = 200;
+                }
+                
+                $this->line($referrer_email . "," .
+                            $referral_charge->referred_email . "," .
+                        $referral_charge->subscription_id . "," .
+                        $referral_charge->charge_created . "," .
+                        $referral_charge->charge_paid . "," .
+                        $referral_charge->charge_refunded . "," .
+                        $eligible);
+                
             }
         }
     }
