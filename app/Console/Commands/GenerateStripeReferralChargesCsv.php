@@ -87,6 +87,12 @@ class GenerateStripeReferralChargesCsv extends Command {
                             if ($sub->status == "active" || $sub->status == "trialing") {
                                 if ($sub->subscription_id == "0137") {
                                     $users[$referrer_email]["premium"] = 1;
+                                } else if ($sub->subscription_id == "0167") {
+                                    $users[$referrer_email]["premium"] = 1;
+                                    $users[$referrer_email]["business"] = 1;
+                                } else if ($sub->subscription_id == "0197") {
+                                    $users[$referrer_email]["premium"] = 1;
+                                    $users[$referrer_email]["business"] = 1;
                                 } else if ($sub->subscription_id == "0297" && $referrer_email == "Yongshaokoko@gmail.com") {
                                     $users[$referrer_email]["premium"] = 1;
                                     $users[$referrer_email]["business"] = 1;
@@ -190,6 +196,12 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 if ($sub->status == "active" || $sub->status == "trialing") {
                                     if ($sub->subscription_id == "0137") {
                                         $users[$referrer_email]["premium"] = 1;
+                                    } else if ($sub->subscription_id == "0167") {
+                                        $users[$referrer_email]["premium"] = 1;
+                                        $users[$referrer_email]["business"] = 1;
+                                    } else if ($sub->subscription_id == "0197") {
+                                        $users[$referrer_email]["premium"] = 1;
+                                        $users[$referrer_email]["business"] = 1;
                                     } else if ($sub->subscription_id == "0297" && $referrer_email == "Yongshaokoko@gmail.com") {
                                         $users[$referrer_email]["premium"] = 1;
                                         $users[$referrer_email]["business"] = 1;
