@@ -91,7 +91,7 @@ class GenerateStripeReferralChargesCsv extends Command {
             if ($users[$referrer_email]["vip"] === 1) {
                 $eligible = "Yes";
             } else {
-                if ($referral_charge->subscription_id == "0137" && ($users[$referrer_email]["premium"] == 1 || $users[$stripe_detail->email]["pro"] == 1)) {
+                if ($referral_charge->subscription_id == "0137" && ($users[$referrer_email]["premium"] == 1 || $users[$referrer_email]["pro"] == 1)) {
                     $eligible = "Yes";
                 } else if ($referral_charge->subscription_id == "0297" && ($users[$referrer_email]["business"] == 1)) {
                     $eligible = "Yes";
