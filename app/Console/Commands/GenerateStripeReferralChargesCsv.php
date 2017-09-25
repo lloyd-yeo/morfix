@@ -173,7 +173,7 @@ class GenerateStripeReferralChargesCsv extends Command {
             if ($user !== NULL) {
                 $referrer_last_payout_date = \Carbon\Carbon::parse($user->last_payout_date);
                 $charge_created_date = \Carbon\Carbon::parse($paypal_charge);
-                if ($user_last_pay_out_date !== NULL) {
+                if ($user->last_payout_date !== NULL) {
                     if ($charge_created_date->year < $referrer_last_payout_date->year) {
 //                $this->warn("Charge created Year is less than referrer's last pay out.");
                         continue;
