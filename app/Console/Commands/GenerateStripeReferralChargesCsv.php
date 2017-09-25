@@ -66,20 +66,20 @@ class GenerateStripeReferralChargesCsv extends Command {
                 $stripe_details = StripeDetail::where('email', $referrer_email)->get();
                 foreach ($stripe_details as $stripe_detail) {
                     if ($referral_charge->vip == 1) {
-                        $users[$stripe_detail->email]["vip"] = 1;
+                        $users[$referrer_email]["vip"] = 1;
                     } else {
                         $subs = StripeActiveSubscription::where('stripe_id', $stripe_detail->stripe_id)->get();
                         foreach ($subs as $sub) {
                             if ($sub->status == "active" || $sub->status == "trialing") {
                                 if ($sub->subscription_id == "0137") {
-                                    $users[$stripe_detail->email]["premium"] = 1;
-                                } else if ($sub->subscription_id == "0297" && $stripe_detail->email == "yongshaokoko@gmail.com") {
-                                    $users[$stripe_detail->email]["premium"] = 1;
-                                    $users[$stripe_detail->email]["business"] = 1;
+                                    $users[$referrer_email]["premium"] = 1;
+                                } else if ($sub->subscription_id == "0297" && $referrer_email == "Yongshaokoko@gmail.com") {
+                                    $users[$referrer_email]["premium"] = 1;
+                                    $users[$referrer_email]["business"] = 1;
                                 } else if ($sub->subscription_id == "0297") {
-                                    $users[$stripe_detail->email]["business"] = 1;
+                                    $users[$referrer_email]["business"] = 1;
                                 } else if ($sub->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
-                                    $users[$stripe_detail->email]["pro"] = 1;
+                                    $users[$referrer_email]["pro"] = 1;
                                 }
                             }
                         }
