@@ -165,90 +165,14 @@ class InteractionFollow implements ShouldQueue {
                         ->get();
 
                 if (count($users_to_unfollow) == 0) {
-                    InteractionFollowHelper::unfollowUseIsEmpty();
+                    InteractionFollowHelper::unfollowUserIsEmpty($ig_profile, $instagram, $insta_username);
                 } else {
-                    foreach ($users_to_unfollow as $user_to_unfollow) {
-
-                        echo "[" . $insta_username . "] retrieved: " . $user_to_unfollow->follower_username . "\n";
-                        $current_log_id = $user_to_unfollow->log_id;
-
-                        if ($unfollow_unfollowed == 1) {
-                            $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
-                            if ($friendship->followed_by == true) {
-                                echo "[" . $insta_username . "] is followed by " . $user_to_unfollow->follower_username . "\n";
-                                $user_to_unfollow->unfollowed = 1;
-                                $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
-                                if ($user_to_unfollow->save()) {
-                                    echo "[" . $insta_username . "] marked as unfollowed & updated log: " . $user_to_unfollow->log_id . "\n\n";
-                                }
-                                continue;
-                            }
-                        }
-
-                        #$resp = $instagram->unfollow($user_to_unfollow->follower_id);
-                        $resp = $instagram->people->unfollow($user_to_unfollow->follower_id);
-                        echo "[" . $insta_username . "] ";
-//                        var_dump($resp);
-
-                        if ($resp->friendship_status->following === false) {
-                            $user_to_unfollow->unfollowed = 1;
-                            $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
-                            if ($user_to_unfollow->save()) {
-                                echo "[" . $insta_username . "] marked as unfollowed & updated log: " . $user_to_unfollow->log_id . "\n\n";
-                            }
-
-                            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
-                            $ig_profile->unfollow_quota = $ig_profile->unfollow_quota - 1;
-                            if ($ig_profile->save()) {
-                                echo "[$insta_username] added $delay minutes of delay & new unfollow quota = " . $ig_profile->unfollow_quota;
-                            }
-                            break;
-                        }
-                    }
+                    InteractionFollowHelper::unFollowUsers($instagram, $insta_username, $users_to_unfollow);
                 }
                 //[END get users to UNFOLLOW]
-            } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                echo "[" . $insta_username . "] checkpoint_ex: " . $checkpoint_ex->getMessage() . "\n";
-                $ig_profile->checkpoint_required = 1;
-                $ig_profile->save();
-            } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                echo "[" . $insta_username . "] network_ex: " . $network_ex->getMessage() . "\n";
-            } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                echo "[" . $insta_username . "] endpoint_ex: " . $endpoint_ex->getMessage() . "\n";
-
-                if (stripos(trim($endpoint_ex->getMessage()), "Requested resource does not exist.") !== false) {
-                    $unfollow_log_to_update = InstagramProfileFollowLog::find($current_log_id);
-                    $unfollow_log_to_update->unfollowed = 1;
-                    $unfollow_log_to_update->save();
-                    $followed = 1;
-                    exit();
-                }
-            } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                echo "[" . $insta_username . "] incorrectpw_ex: " . $incorrectpw_ex->getMessage() . "\n";
-                $ig_profile->incorrect_pw = 1;
-                $ig_profile->save();
-            } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
-                echo "[" . $insta_username . "] feedback_ex: " . $feedback_ex->getMessage() . "\n";
-            } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
-                echo "[" . $insta_username . "] emptyresponse_ex: " . $emptyresponse_ex->getMessage() . "\n";
-                if (stripos(trim($emptyresponse_ex->getMessage()), "No response from server. Either a connection or configuration error") !== false) {
-                    $unfollow_log_to_update = InstagramProfileFollowLog::find($current_log_id);
-                    $unfollow_log_to_update->unfollowed = 1;
-                    $unfollow_log_to_update->save();
-                    $followed = 1;
-                    exit();
-                }
-            } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
-                echo "[" . $insta_username . "] throttled_ex: " . $throttled_ex->getMessage() . "\n";
-            } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                echo "[" . $insta_username . "] request_ex: " . $request_ex->getMessage() . "\n";
-                if (stripos(trim($request_ex->getMessage()), "feedback_required") !== false) {
-                    $ig_profile->feedback_required = 1;
-                    $ig_profile->save();
-                    $followed = 1;
-                    exit();
-                }
-            }
+            } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
+                InteractionFollowHelper::handleInstragramException($ig_profile, $insta_ex, $current_log_id);
+            } 
         } else if (($unfollow == 0 && $auto_follow == 1) || ($auto_follow == 1 && $auto_unfollow == 0)) {
 
             if ($follow_quota < 1) {

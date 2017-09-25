@@ -9,7 +9,7 @@ use App\Instagram;
 
 class InteractionLikeHelper{
 
-    public static function like($ig_profile, $instagram, $user_to_like, $item) {
+    public static function like($ig_profile, $instagram, $user_to_like, $item, $speed_delay) {
         $ig_profile = $profile;
         $like_response = $instagram->media->like($item->id);
         if ($like_response->status == "ok") {
@@ -22,7 +22,7 @@ class InteractionLikeHelper{
                 $like_log->target_media_code = $item->getItemUrl();
                 $like_log->log = serialize($like_response);
                 if ($like_log->save()) {
-                    $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($this->speed_delay);
+                    $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($speed_delay);
                     $ig_profile->auto_like_ban = 0;
                     $ig_profile->auto_like_ban_time = NULL;
                     $ig_profile->save();
@@ -60,8 +60,7 @@ class InteractionLikeHelper{
         return false;
     }
 
-    public static function checkBlacklistAndDuplicate($user_to_like, $page_count) {
-        $ig_profile = $this->profile;
+    public static function checkBlacklistAndDuplicate($ig_profile, $user_to_like, $page_count) {
         $ig_username = $ig_profile->insta_username;
 
         //Blacklisted username.
@@ -107,7 +106,7 @@ class InteractionLikeHelper{
         return 0;
     }
 
-    public static function checkValidTargetUsername($instagram, $target_username) {
+    public static function checkValidTargetUsername($ig_profile, $instagram, $target_username) {
         $target_username_id = NULL;
         try {
             $target_username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
@@ -116,7 +115,7 @@ class InteractionLikeHelper{
                 $target_username->last_checked = \Carbon\Carbon::now();
                 if ($target_response->user->follower_count < 10000) {
                     $target_username->insufficient_followers = 1;
-                    echo "[" . $this->profile->insta_username . "] [" . $target_username->target_username . "] has insufficient followers.\n";
+                    echo "[" . $ig_profile->insta_username . "] [" . $target_username->target_username . "] has insufficient followers.\n";
                 }
                 $target_username->save();
             }
@@ -124,17 +123,17 @@ class InteractionLikeHelper{
             $target_username_id = NULL;
             $target_username->invalid = 1;
             $target_username->save();
-            echo "\n[" . $this->profile->insta_username . "] encountered error [" . $target_username->target_username . "]: " . $insta_ex->getMessage() . "\n";
-            $this->handleInstagramException($this->profile->insta_username, $insta_ex);
+            echo "\n[" . $ig_profile->insta_username . "] encountered error [" . $target_username->target_username . "]: " . $insta_ex->getMessage() . "\n";
+            $this->handleInstagramException($ig_profile->insta_username, $insta_ex);
         }
         return $target_username_id;
     }
 
-    private function randomizeUseHashtags() {
+    private function randomizeUseHashtags($targeted_hashtags) {
         $use_hashtags = rand(0, 1);
-        if ($use_hashtags == 1 && count($this->targeted_hashtags) == 0) {
+        if ($use_hashtags == 1 && count($targeted_hashtags) == 0) {
             $use_hashtags = 0;
-        } else if ($use_hashtags == 0 && count($this->targeted_usernames) == 0) {
+        } else if ($use_hashtags == 0 && count($targeted_usernames) == 0) {
             $use_hashtags = 1;
         }
         return $use_hashtags;
@@ -192,6 +191,6 @@ class InteractionLikeHelper{
         if ($speed == "Fast") {
             $speed_delay = 1;
         }
-        $this->speed_delay = $speed_delay;
+        return $speed_delay;
     }
 }
