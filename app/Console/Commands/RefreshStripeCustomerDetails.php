@@ -39,7 +39,7 @@ class RefreshStripeCustomerDetails extends Command
     public function handle()
     {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
-        $customers = \Stripe\Customer::all(array("limit" => 100));
+        $customers = \Stripe\Customer::all(array("limit" => 100))->autoPagingIterator();
         foreach ($customers->data as $customer) {
             $customer_id = $customer->id;
             $customer_email = $customer->email;
