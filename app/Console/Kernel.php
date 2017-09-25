@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel {
         Commands\ImportInstagramSession::class,
         Commands\CheckInteractionsWorking::class,
         Commands\UpdatePendingCommissionPayableNew::class,
+        Commands\UpdatePaypalCharges::class,
         Commands\UpdateLastPaidFromCSV::class,
         Commands\GetNewDmJob::class,
         Commands\GetDm::class,
