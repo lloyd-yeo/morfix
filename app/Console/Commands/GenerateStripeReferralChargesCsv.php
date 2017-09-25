@@ -163,43 +163,61 @@ class GenerateStripeReferralChargesCsv extends Command {
         }
 
         $paypal_charges = PaypalCharges::where('status', 'Completed')
-                                        ->where('time_stamp', '<', '2017-09-01 00:00:00');
-                                        
+                ->where('time_stamp', '<', '2017-09-01 00:00:00');
+
         foreach ($paypal_charges as $paypal_charge) {
-            
-            $amt_to_payout = 0;
-            if ($paypal_charge->subscription_id == "0137") {
-                $amt_to_payout = 20;
-            } else if ($paypal_charge->subscription_id == "0297") {
-                $amt_to_payout = 50;
-            } else if ($paypal_charge->subscription_id == "MX370") {
-                $amt_to_payout = 200;
-            }
-            
-            $eligible = "No";
-            if ($users[$referrer_email]["vip"] === 1) {
-                $eligible = "Yes";
-            } else {
-                if ($paypal_charge->subscription_id == "0137" && ($users[$referrer_email]["premium"] == 1 || $users[$referrer_email]["pro"] == 1)) {
-                    $eligible = "Yes";
-                } else if ($paypal_charge->subscription_id == "0297" && ($users[$referrer_email]["business"] == 1)) {
-                    $eligible = "Yes";
-                } else if ($paypal_charge->subscription_id == "MX370" && ($users[$referrer_email]["pro"] == 1)) {
-                    $eligible = "Yes";
+            $user = User::where('email', $paypal_charge->referrer_email)->first();
+
+            if ($user !== NULL) {
+                $referrer_last_payout_date = \Carbon\Carbon::parse($user_last_pay_out_date);
+                $charge_created_date = \Carbon\Carbon::parse($paypal_charge);
+                if ($user_last_pay_out_date !== NULL) {
+                    if ($charge_created_date->year < $referrer_last_payout_date->year) {
+//                $this->warn("Charge created Year is less than referrer's last pay out.");
+                        continue;
+                    }
+                    if ($charge_created_date->month < $referrer_last_payout_date->month) {
+//                $this->warn("Charge created Month is less than referrer's last pay out.");
+                        continue;
+                    }
                 }
+
+                $amt_to_payout = 0;
+                if ($paypal_charge->subscription_id == "0137") {
+                    $amt_to_payout = 20;
+                } else if ($paypal_charge->subscription_id == "0297") {
+                    $amt_to_payout = 50;
+                } else if ($paypal_charge->subscription_id == "MX370") {
+                    $amt_to_payout = 200;
+                }
+
+                $eligible = "No";
+                if ($users[$referrer_email]["vip"] === 1) {
+                    $eligible = "Yes";
+                } else {
+                    if ($paypal_charge->subscription_id == "0137" && ($users[$referrer_email]["premium"] == 1 || $users[$referrer_email]["pro"] == 1)) {
+                        $eligible = "Yes";
+                    } else if ($paypal_charge->subscription_id == "0297" && ($users[$referrer_email]["business"] == 1)) {
+                        $eligible = "Yes";
+                    } else if ($paypal_charge->subscription_id == "MX370" && ($users[$referrer_email]["pro"] == 1)) {
+                        $eligible = "Yes";
+                    }
+                }
+
+                $comms_row = array();
+                $comms_row[0] = $paypal_charge->email;
+                $comms_row[1] = $paypal_charge->subscription_id;
+                $comms_row[2] = $amt_to_payout;
+                $comms_row[3] = $paypal_charge->time_stamp;
+                $comms_row[4] = 1;
+                $comms_row[5] = 0;
+                $comms_row[6] = $eligible;
+                $comms_row[7] = $paypal_charge->referrer_email;
+                $comms_row[8] = "Paypal";
+                $comms_row[9] = $paypal_charge->transaction_id;
+            } else {
+                continue;
             }
-            
-            $comms_row = array();
-            $comms_row[0] = $paypal_charge->email;
-            $comms_row[1] = $paypal_charge->subscription_id;
-            $comms_row[2] = $amt_to_payout;
-            $comms_row[3] = $paypal_charge->time_stamp;
-            $comms_row[4] = 1;
-            $comms_row[5] = 0;
-            $comms_row[6] = $eligible;
-            $comms_row[7] = $paypal_charge->referrer_email;
-            $comms_row[8] = "Paypal";
-            $comms_row[9] = $paypal_charge->transaction_id;
         }
 
         foreach ($user_payout_comms as $comms_row) {
