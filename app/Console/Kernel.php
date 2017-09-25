@@ -70,6 +70,7 @@ class Kernel extends ConsoleKernel {
         Commands\MigrateComments::class,
         Commands\UpdateUserTotalInteractionStatistics::class,
         Commands\RefreshStripeCustomerDetails::class,
+        Commands\RefreshStripeSubscription::class,
     ];
 
     /**
