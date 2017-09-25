@@ -2,6 +2,8 @@
 
 namespace App;
 use App\InstagramProfileFollowLog;
+use App\Niche;
+use App\InstagramHelper;
 
 
 class InteractionFollowHelper
@@ -745,9 +747,5 @@ class InteractionFollowHelper
                 exit();
             }
       }
-  }
-
-
-
-    
+  }   
 }
