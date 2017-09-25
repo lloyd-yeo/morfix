@@ -57,17 +57,18 @@ class GenerateStripeReferralChargesCsv extends Command {
             $charge_created_date = \Carbon\Carbon::parse($referral_charge->charge_created);
             if ($referral_charge->last_pay_out_date !== NULL) {
                 $referrer_last_payout_date = \Carbon\Carbon::parse($referral_charge->last_pay_out_date);
-            }
-            if ($charge_created_date->year < $referrer_last_payout_date->year) {
+                if ($charge_created_date->year < $referrer_last_payout_date->year) {
 //                $this->warn("Charge created Year is less than referrer's last pay out.");
-                continue;
-            }
-            if ($charge_created_date->month < $referrer_last_payout_date->month) { 
+                    continue;
+                }
+                if ($charge_created_date->month < $referrer_last_payout_date->month) {
 //                $this->warn("Charge created Month is less than referrer's last pay out.");
-                continue;
+                    continue;
+                }
             }
-            
-            
+
+
+
             if (!array_has($users, $referrer_email)) {
                 $users[$referrer_email] = array();
                 $users[$referrer_email]["premium"] = 0;
@@ -121,7 +122,7 @@ class GenerateStripeReferralChargesCsv extends Command {
             } else if ($referral_charge->subscription_id == "MX370") {
                 $amt_to_payout = 200;
             }
-            
+
             $this->line($referrer_email . "," .
                     $referral_charge->referred_email . "," .
                     $referral_charge->subscription_id . "," .
