@@ -49,6 +49,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 FROM `user` u, get_referral_charges_of_user rc 
                                 WHERE pending_commission > 0
                                 AND rc.referrer_email = u.email
+                                AND rc.charge_created <= "2017-08-31 00:00:00"
                                 ORDER BY referrer_email ASC, charge_created DESC;');
         foreach ($referral_charges as $referral_charge) {
             $referrer_email = $referral_charge->referrer_email;
@@ -62,6 +63,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $users[$stripe_detail->email]["pro"] = 0;
                     $users[$stripe_detail->email]["mastermind"] = 0;
                     $users[$stripe_detail->email]["vip"] = 0;
+                    
                     if ($referral_charge->vip == 1) {
                         $users[$stripe_detail->email]["vip"] = 1;
                     } else {
@@ -73,12 +75,16 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 } else if ($sub->subscription_id == "0297" && $stripe_detail->email == "yongshaokoko@gmail.com") {
                                     $users[$stripe_detail->email]["premium"] = 1;
                                     $users[$stripe_detail->email]["business"] = 1;
+                                } else if ($sub->subscription_id == "0297") {
+                                    $users[$stripe_detail->email]["business"] = 1;
                                 } else if ($sub->subscription_id == "MX370") {
                                     $users[$stripe_detail->email]["pro"] = 1;
                                 }
                             }
                         }
                     }
+                    
+                    
                 }
             }
         }
