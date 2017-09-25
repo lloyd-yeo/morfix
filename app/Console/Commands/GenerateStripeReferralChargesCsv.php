@@ -144,7 +144,9 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $amt_to_payout . "," .
                     $referral_charge->charge_created . "," .
                     $referral_charge->charge_paid . "," .
-                    $referral_charge->charge_refunded . "," .
+                    $referral_charge->charge_refunded . "," . 
+                    "Stripe," .
+                    $referral_charge->charge_id . "," .
                     $eligible);
 
             $comms_row = array();
@@ -215,6 +217,18 @@ class GenerateStripeReferralChargesCsv extends Command {
                 $comms_row[7] = $paypal_charge->referrer_email;
                 $comms_row[8] = "Paypal";
                 $comms_row[9] = $paypal_charge->transaction_id;
+                
+                $this->line($paypal_charge->referrer_email . "," .
+                    $paypal_charge->email . "," .
+                    $paypal_charge->subscription_id . "," .
+                    $amt_to_payout . "," .
+                    $paypal_charge->time_stamp . "," .
+                    1 . "," .
+                    0 . "," . 
+                    "Paypal," .
+                    $paypal_charge->transaction_id . "," .
+                    $eligible);
+                
             } else {
                 continue;
             }
