@@ -110,14 +110,6 @@ class GenerateStripeReferralChargesCsv extends Command {
             }
             
             $this->line($referrer_email . "," .
-                    $users[$referrer_email]["premium"] . "," .
-                    $users[$referrer_email]["business"] . "," .
-                    $users[$referrer_email]["pro"] . "," .
-                    $users[$referrer_email]["mastermind"] . "," .
-                    $users[$referrer_email]["vip"]
-                    );
-            
-            $this->line($referrer_email . "," .
                     $referral_charge->referred_email . "," .
                     $referral_charge->subscription_id . "," .
                     $amt_to_payout . "," .
