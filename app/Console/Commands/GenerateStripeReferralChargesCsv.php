@@ -40,7 +40,8 @@ class GenerateStripeReferralChargesCsv extends Command {
      */
     public function handle() {
         $users = array();
-
+        $user_payout_comms = array();
+        $user_payouts = array();
         $referral_charges = DB::select('SELECT 
                                 u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
                                 u.tier, rc.referred_email, 
@@ -66,8 +67,6 @@ class GenerateStripeReferralChargesCsv extends Command {
                     continue;
                 }
             }
-
-
 
             if (!array_has($users, $referrer_email)) {
                 $users[$referrer_email] = array();
@@ -131,6 +130,43 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $referral_charge->charge_paid . "," .
                     $referral_charge->charge_refunded . "," .
                     $eligible);
+            
+            $comms_row = array();
+            $comms_row[$referrer_email][0] = $referral_charge->referred_email;
+            $comms_row[$referrer_email][1] = $referral_charge->subscription_id;
+            $comms_row[$referrer_email][2] = $amt_to_payout;
+            $comms_row[$referrer_email][3] = $referral_charge->charge_created;
+            $comms_row[$referrer_email][4] = $referral_charge->charge_paid;
+            $comms_row[$referrer_email][5] = $referral_charge->charge_refunded;
+            $comms_row[$referrer_email][6] = $eligible;
+            
+            $user_payout_comms[] = $comms_row;
+        }
+        
+        foreach ($user_payout_comms as $referrer_email => $comms_row) {
+            if (!array_has($user_payouts, $referrer_email)) {
+                $referrer_user = User::where("email", $referrer_email)->first();
+                if ($referrer_user !== NULL) {
+                    $user_payouts[$referrer_email]['paypal_email'] = $referrer_user->paypal_email;
+                    $user_payouts[$referrer_email]['payout_amt'] = 0;
+                }
+            }
+            
+            if ($comms_row[5] == 0) {
+                continue;
+            }
+            
+            if ($comms_row[6] == "Yes") {
+                $user_payouts[$referrer_email]['payout_amt'] = $user_payouts[$referrer_email]['payout_amt'] + $comms_row[2];
+            }
+        }
+        
+        foreach ($user_payouts as $referrer_email => $user_payout) {
+            if ($user_payout["payout_amt"] < 50) {
+                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . "Eligible");
+            } else {
+                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . "Not Eligible");
+            }
         }
     }
 
