@@ -108,7 +108,15 @@ class GenerateStripeReferralChargesCsv extends Command {
             } else if ($referral_charge->subscription_id == "MX370") {
                 $amt_to_payout = 200;
             }
-
+            
+            $this->line($referrer_email . "," .
+                    $users[$referrer_email]["premium"] . "," .
+                    $users[$referrer_email]["business"] . "," .
+                    $users[$referrer_email]["pro"] . "," .
+                    $users[$referrer_email]["mastermind"] . "," .
+                    $users[$referrer_email]["vip"]
+                    );
+            
             $this->line($referrer_email . "," .
                     $referral_charge->referred_email . "," .
                     $referral_charge->subscription_id . "," .
