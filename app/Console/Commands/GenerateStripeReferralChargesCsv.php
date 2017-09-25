@@ -47,8 +47,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 rc.charge_id, rc.invoice_id, 
                                 rc.subscription_id, rc.charge_paid, rc.charge_refunded,
                                 rc.commission_calc, rc.commission_given, u.vip
-                                FROM `user` u, get_referral_charges_of_user rc 
-                                WHERE pending_commission > 0
+                                FROM `user` u, get_referral_charges_of_user rc
                                 AND rc.referrer_email = u.email
                                 AND rc.charge_created < "2017-09-01 00:00:00"
                                 ORDER BY referrer_email ASC, charge_created DESC;');
