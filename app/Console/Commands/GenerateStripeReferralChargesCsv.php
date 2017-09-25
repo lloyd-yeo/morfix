@@ -59,9 +59,13 @@ class GenerateStripeReferralChargesCsv extends Command {
             if ($referral_charge->last_pay_out_date !== NULL) {
                 $referrer_last_payout_date = \Carbon\Carbon::parse($referral_charge->last_pay_out_date);
             }
-            
+            if ($charge_created_date->year < $referrer_last_payout_date->year) {
+                $this->warn("Charge created Year is less than referrer's last pay out.");
+                continue;
+            }
             if ($charge_created_date->month < $referrer_last_payout_date->month) { 
-                $this->warn("Charge created Monnth is less than referrer's last pay out.");
+                $this->warn("Charge created Month is less than referrer's last pay out.");
+                continue;
             }
             
             
