@@ -176,7 +176,10 @@ class GenerateStripeReferralChargesCsv extends Command {
                 ->get();
 
         foreach ($paypal_charges as $paypal_charge) {
-
+            if ($paypal_charge->referrer_email === NULL) {
+                continue;
+            }
+            
             $user = User::where('email', $paypal_charge->referrer_email)->first();
 
             if ($user !== NULL) {
