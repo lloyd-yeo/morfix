@@ -48,7 +48,8 @@ class MigrateUsers extends Command {
                 ->get();
 
         $partition_user_ids = array();
-
+        
+        
         foreach ($master_users as $master_user) {
             $user = $this->addNewUser($master_user);
             if ($user !== NULL) {
@@ -115,6 +116,9 @@ class MigrateUsers extends Command {
         $user = $user_;
         if ($user_ === NULL) {
             $user = new User();
+        } else {
+            $user->delete();
+            $user = new User();
         }
 
         $user->user_id = $master_user->user_id;
@@ -167,6 +171,9 @@ class MigrateUsers extends Command {
         $ig_profile = $profile; #make $ig_profile the placeholder
 
         if ($profile === NULL) {
+            $ig_profile = new InstagramProfile;
+        } else {
+            $ig_profile->delete();
             $ig_profile = new InstagramProfile;
         }
 
