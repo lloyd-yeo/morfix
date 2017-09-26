@@ -66,11 +66,11 @@ class InteractionLike implements ShouldQueue {
     public function handle() {
         DB::reconnect();
         
-        $this->calcSpeedDelay($profile->speed);
+        $this->calcSpeedDelay($this->profile->speed);
         $this->instagram = InstagramHelper::initInstagram();
         $this->like_quota = rand(1, 3);
-        $this->targeted_hashtags = TargetHelper::getUserTargetedHashtags($profile);
-        $this->targeted_usernames = TargetHelper::getUserTargetedUsernames($profile);
+        $this->targeted_hashtags = TargetHelper::getUserTargetedHashtags($this->profile);
+        $this->targeted_usernames = TargetHelper::getUserTargetedUsernames($this->profile);
         
         $ig_profile = $this->profile;
 
