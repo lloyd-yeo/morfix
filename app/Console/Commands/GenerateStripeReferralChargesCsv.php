@@ -239,7 +239,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                 if ($user->last_payout_date !== NULL) {
                     $referrer_last_payout_date = $referrer_last_payout_date->startOfMonth();
                     
-                    if ($user->email == "thelifeofwinners@gmail.com") {
+                    if ($paypal_charge->referrer_email == "thelifeofwinners@gmail.com") {
                         $this->line("[thelifeofwinners@gmail.com]" . $charge_created_date . "\t" . $referrer_last_payout_date);
                     }
                     
