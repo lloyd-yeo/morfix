@@ -308,13 +308,13 @@ class GenerateStripeReferralChargesCsv extends Command {
                         "Paypal," .
                         $paypal_charge->transaction_id . "," .
                         $eligible);
+                
                 $user_payout_comms[] = $comms_row;
             }
         }
 
         foreach ($user_payout_comms as $comms_row) {
             $referrer_email = $comms_row[7];
-
             if (!array_has($user_payouts, $referrer_email)) {
                 $referrer_user = User::where("email", $referrer_email)->first();
                 if ($referrer_user !== NULL) {
