@@ -44,6 +44,7 @@ class CheckDuplicateCharges extends Command
                 ->where('charge_created', '>', '2017-06-01 00:00:00')->get();
         $initial_dir = array();
         $duplicate_dir = array();
+        
         //month same
         //plan same
         //email same
