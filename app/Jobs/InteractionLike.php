@@ -41,7 +41,6 @@ class InteractionLike implements ShouldQueue {
      * @var int
      */
     public $timeout = 360;
-    
     protected $profile;
     protected $targeted_hashtags;
     protected $targeted_usernames;
@@ -65,13 +64,13 @@ class InteractionLike implements ShouldQueue {
      */
     public function handle() {
         DB::reconnect();
-        
+
         $this->calcSpeedDelay($this->profile->speed);
         $this->instagram = InstagramHelper::initInstagram();
         $this->like_quota = rand(1, 3);
         $this->targeted_hashtags = TargetHelper::getUserTargetedHashtags($this->profile);
         $this->targeted_usernames = TargetHelper::getUserTargetedUsernames($this->profile);
-        
+
         $ig_profile = $this->profile;
 
         $ig_username = $ig_profile->insta_username;
@@ -155,7 +154,31 @@ class InteractionLike implements ShouldQueue {
                     }
                 }
             } else {
-                
+
+                foreach ($this->target_hashtags as $target_hashtag) {
+
+                    if ($this->like_quota > 0) {
+
+                        echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
+                        //Get the feed from the targeted hashtag.
+                        $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
+                        foreach ($hashtag_feed->items as $item) {
+                            $user_to_like = $item->user;
+                            
+                            if (!$this->checkDuplicate($user_to_like)) {
+                                if ($this->like_quota > 0) {
+                                    if (!$this->checkDuplicateByMediaId($item)) {
+                                        if (!$this->like($user_to_like, $item)) {
+                                            continue;
+                                        }
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -192,7 +215,7 @@ class InteractionLike implements ShouldQueue {
 
     public function checkDuplicateByMediaId($item) {
         $ig_profile = $this->profile;
-        
+
         if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                         ->where('target_media', $item->id)->count() > 0) {
             #duplicate. Liked before this photo with this id.
@@ -213,7 +236,41 @@ class InteractionLike implements ShouldQueue {
         return false;
     }
 
+    public function checkDuplicate($user_to_like) {
+
+        //Weird error, null user. Check to be safe.
+        if ($user_to_like === NULL) {
+            echo("\n" . "NULL user");
+            return true;
+        }
+
+        //Check for duplicates.
+        $liked_user = InstagramProfileLikeLog::where('insta_username', $this->profile->insta_username)
+                ->where('target_username', $user_to_like->username)
+                ->first();
+
+        //Duplicate = liked before.
+        if ($liked_user !== NULL) {
+            echo("\n" . "[Current] Duplicate log found:\t[$ig_username] [" . $user_to_like->username . "]");
+            return true;
+        }
+
+        //Check for duplicates.
+        $liked_user = LikeLogsArchive::where('insta_username', $this->profile->insta_username)
+                ->where('target_username', $user_to_like->username)
+                ->first();
+
+        //Duplicate = liked before.
+        if ($liked_user !== NULL) {
+            echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+            return true;
+        }
+
+        return false;
+    }
+
     public function checkBlacklistAndDuplicate($user_to_like, $page_count) {
+
         $ig_profile = $this->profile;
         $ig_username = $ig_profile->insta_username;
 
