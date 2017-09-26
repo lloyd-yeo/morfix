@@ -290,6 +290,7 @@ class InteractionLike implements ShouldQueue {
         } else if ($use_hashtags == 0 && count($this->targeted_usernames) == 0) {
             $use_hashtags = 1;
         }
+        echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
         return $use_hashtags;
     }
 
