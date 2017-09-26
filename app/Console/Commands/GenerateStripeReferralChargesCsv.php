@@ -182,12 +182,14 @@ class GenerateStripeReferralChargesCsv extends Command {
             if ($user !== NULL) {
                 if ($user->email == "thelifeofwinners@gmail.com") {
                     $this->line("[thelifeofwinners@gmail.com]" . $user->last_payout_date . "\t" . $paypal_charge->time_stamp);
-                }
                 
-                if ($user->last_payout_date !== NULL) {
+                    if ($user->last_payout_date !== NULL) {
                     $this->line(\Carbon\Carbon::parse($user->last_payout_date)->toDateTimeString());
                     $this->line(\Carbon\Carbon::parse($paypal_charge->time_stamp));
                 }
+                }
+                
+                
                 
                 if (!array_has($users, $paypal_charge->referrer_email)) {
                     $users[$paypal_charge->referrer_email] = array();
