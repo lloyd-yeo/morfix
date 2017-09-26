@@ -144,16 +144,16 @@ class GenerateStripeReferralChargesCsv extends Command {
                 $amt_to_payout = 200;
             }
 
-//            $this->line($referrer_email . "," .
-//                    $referral_charge->referred_email . "," .
-//                    $referral_charge->subscription_id . "," .
-//                    $amt_to_payout . "," .
-//                    $referral_charge->charge_created . "," .
-//                    $referral_charge->charge_paid . "," .
-//                    $referral_charge->charge_refunded . "," .
-//                    "Stripe," .
-//                    $referral_charge->charge_id . "," .
-//                    $eligible);
+            $this->line($referrer_email . "," .
+                    $referral_charge->referred_email . "," .
+                    $referral_charge->subscription_id . "," .
+                    $amt_to_payout . "," .
+                    $referral_charge->charge_created . "," .
+                    $referral_charge->charge_paid . "," .
+                    $referral_charge->charge_refunded . "," .
+                    "Stripe," .
+                    $referral_charge->charge_id . "," .
+                    $eligible);
 
             $comms_row = array();
             $comms_row[0] = $referral_charge->referred_email;
@@ -171,26 +171,15 @@ class GenerateStripeReferralChargesCsv extends Command {
         }
 
         $paypal_charges = PaypalCharges::where('status', 'Completed')
-                        ->where('time_stamp', '<', '2017-09-01 00:00:00')
-                        ->orderBy('email', 'desc')
-                        ->get();
+                ->where('time_stamp', '<', '2017-09-01 00:00:00')
+                ->orderBy('email', 'desc')
+                ->get();
 
         foreach ($paypal_charges as $paypal_charge) {
-            
+
             $user = User::where('email', $paypal_charge->referrer_email)->first();
 
             if ($user !== NULL) {
-                if ($user->email == "thelifeofwinners@gmail.com") {
-                    $this->line("[thelifeofwinners@gmail.com]" . $user->last_payout_date . "\t" . $paypal_charge->time_stamp);
-                
-                    if ($user->last_payout_date !== NULL) {
-                    $this->line(\Carbon\Carbon::parse($user->last_payout_date)->toDateTimeString());
-                    $this->line(\Carbon\Carbon::parse($paypal_charge->time_stamp));
-                }
-                }
-                
-                
-                
                 if (!array_has($users, $paypal_charge->referrer_email)) {
                     $users[$paypal_charge->referrer_email] = array();
                     $users[$paypal_charge->referrer_email]["premium"] = 0;
@@ -244,25 +233,20 @@ class GenerateStripeReferralChargesCsv extends Command {
                     }
                 }
 
-                $referrer_last_payout_date = \Carbon\Carbon::parse($user->last_payout_date);
+                $referrer_last_payout_date = \Carbon\Carbon::parse($user->last_pay_out_date);
                 $charge_created_date = \Carbon\Carbon::parse($paypal_charge->time_stamp);
-                
-                if ($user->last_payout_date !== NULL) {
+
+                if ($user->last_pay_out_date !== NULL) {
                     $referrer_last_payout_date = $referrer_last_payout_date->startOfMonth();
-                    if ($paypal_charge->referrer_email == "thelifeofwinners@gmail.com") {
-                        $this->line("[thelifeofwinners@gmail.com]" . $charge_created_date . "\t" . $referrer_last_payout_date);
-                    }
-                    
+
                     if ($charge_created_date->lt($referrer_last_payout_date)) {
                         continue;
                     }
-                    
+
 //                    if ($user->email == "thelifeofwinners@gmail.com") {
 //                        dump($referrer_last_payout_date);
 //                        dump($charge_created_date);
 //                    }
-                    
-                    
 //                    if ($charge_created_date->year < $referrer_last_payout_date->year) {
 //                $this->warn("Charge created Year is less than referrer's last pay out.");
 //                        continue;
@@ -311,16 +295,16 @@ class GenerateStripeReferralChargesCsv extends Command {
                 $comms_row[8] = "Paypal";
                 $comms_row[9] = $paypal_charge->transaction_id;
 
-//                $this->line($paypal_charge->referrer_email . "," .
-//                        $paypal_charge->email . "," .
-//                        $paypal_charge->subscription_id . "," .
-//                        $amt_to_payout . "," .
-//                        $paypal_charge->time_stamp . "," .
-//                        1 . "," .
-//                        0 . "," .
-//                        "Paypal," .
-//                        $paypal_charge->transaction_id . "," .
-//                        $eligible);
+                $this->line($paypal_charge->referrer_email . "," .
+                        $paypal_charge->email . "," .
+                        $paypal_charge->subscription_id . "," .
+                        $amt_to_payout . "," .
+                        $paypal_charge->time_stamp . "," .
+                        1 . "," .
+                        0 . "," .
+                        "Paypal," .
+                        $paypal_charge->transaction_id . "," .
+                        $eligible);
                 $user_payout_comms[] = $comms_row;
             }
         }
@@ -347,9 +331,9 @@ class GenerateStripeReferralChargesCsv extends Command {
 
         foreach ($user_payouts as $referrer_email => $user_payout) {
             if ($user_payout["payout_amt"] < 50) {
-//                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Not Eligible");
+                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Not Eligible");
             } else {
-//                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Eligible");
+                $this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Eligible");
             }
         }
     }
