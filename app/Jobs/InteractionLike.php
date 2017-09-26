@@ -158,7 +158,6 @@ class InteractionLike implements ShouldQueue {
                 foreach ($this->targeted_hashtags as $target_hashtag) {
 
                     if ($this->like_quota > 0) {
-
                         echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
                         //Get the feed from the targeted hashtag.
                         $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
@@ -171,8 +170,108 @@ class InteractionLike implements ShouldQueue {
                                             continue;
                                         }
                                     }
-                                } else {
-                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ($this->like_quota > 0) {
+                if ($this->profile->niche > 0) {
+
+                    $niche = Niche::find($this->profile->niche);
+                    $niche_targets = $niche->targetUsernames();
+
+                    foreach ($niche_targets as $target_username) {
+
+                        if ($this->like_quota > 0) {
+
+                            //Get followers of the target.
+                            echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
+                            $target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
+                            if ($target_username_id === NULL) {
+                                continue;
+                            }
+
+                            $target_target_username = $target_username->target_username;
+                            $user_follower_response = NULL;
+                            $next_max_id = null;
+
+                            $page_count = 0;
+
+                            do {
+                                echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
+
+                                $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
+                                $target_user_followings = $user_follower_response->users;
+                                $next_max_id = $user_follower_response->next_max_id;
+                                echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
+                                $page_count++;
+
+                                //Foreach follower of the target.
+                                foreach ($target_user_followings as $user_to_like) {
+
+                                    if ($this->like_quota > 0) {
+
+                                        echo("\n" . $user_to_like->username . "\t" . $user_to_like->pk);
+
+                                        $is_duplicate = $this->checkBlacklistAndDuplicate($user_to_like, $page_count);
+
+                                        if ($is_duplicate == 1) {
+                                            break;
+                                        } else if ($is_duplicate == 2) {
+                                            continue;
+                                        }
+
+                                        //Get the feed of the user to like.
+                                        $user_feed_response = InstagramHelper::getUserFeed($instagram, $user_to_like);
+                                        if ($user_feed_response === NULL) {
+                                            continue;
+                                        }
+
+                                        //Get the media posted by the user.
+                                        $user_items = $user_feed_response->items;
+
+                                        //Foreach media posted by the user.
+                                        foreach ($user_items as $item) {
+                                            if ($this->checkDuplicateByMediaId($item)) {
+                                                continue;
+                                            }
+                                            if ($this->like_quota > 0) {
+                                                if (!$this->like($user_to_like, $item)) {
+                                                    continue;
+                                                }
+                                            } else {
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        break;
+                                    }
+                                }
+                            } while ($next_max_id !== NULL && $this->like_quota > 0);
+                        }
+                    }
+
+                    $niche = Niche::find($ig_profile->niche);
+                    $target_hashtags = $niche->targetHashtags();
+
+                    foreach ($target_hashtags as $target_hashtag) {
+                        if ($this->like_quota > 0) {
+                            echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
+                            //Get the feed from the targeted hashtag.
+                            $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
+                            foreach ($hashtag_feed->items as $item) {
+                                $user_to_like = $item->user;
+                                if (!$this->checkDuplicate($user_to_like)) {
+                                    if ($this->like_quota > 0) {
+                                        if (!$this->checkDuplicateByMediaId($item)) {
+                                            if (!$this->like($user_to_like, $item)) {
+                                                continue;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
