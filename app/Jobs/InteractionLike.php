@@ -84,7 +84,7 @@ class InteractionLike implements ShouldQueue {
 
             if (!$use_hashtags) {
 
-                foreach ($this->target_usernames as $target_username) {
+                foreach ($this->targeted_usernames as $target_username) {
 
                     if ($this->like_quota > 0) {
 
