@@ -274,7 +274,9 @@ class GenerateStripeReferralChargesCsv extends Command {
                         $eligible = "Yes";
                     } else if ($paypal_charge->subscription_id == "MX370" && ($users[$paypal_charge->referrer_email]["pro"] == 1)) {
                         $eligible = "Yes";
-                    }
+                    } else if ($paypal_charge->subscription_id == "0137" && $paypal_charge->subscription_id === NULL && $paypal_charge->amount == 74.00) {
+                        $eligible = "Yes";
+                    } 
                 }
 
                 $comms_row = array();
