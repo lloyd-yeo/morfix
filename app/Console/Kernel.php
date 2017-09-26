@@ -73,6 +73,7 @@ class Kernel extends ConsoleKernel {
         Commands\RefreshStripeCustomerDetails::class,
         Commands\RefreshStripeSubscription::class,
         Commands\CarbonTester::class,
+        Commands\CheckDuplicateCharges::class,
     ];
 
     /**
