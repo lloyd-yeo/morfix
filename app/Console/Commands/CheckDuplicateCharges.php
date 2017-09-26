@@ -40,7 +40,7 @@ class CheckDuplicateCharges extends Command
      */
     public function handle()
     {
-        $referral_charges = GetReferralChargesOfUser::where('charge_refunded', 0)
+        $referral_charges = DB::table('get_referral_charges_of_user')->where('charge_refunded', 0)
                 ->where('charge_created', '>', '2017-06-01 00:00:00')->get();
         $initial_dir = array();
         $duplicate_dir = array();
