@@ -47,7 +47,6 @@ class InstagramHelper {
         echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 
         try {
-
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
@@ -90,6 +89,8 @@ class InstagramHelper {
         }
         if (!$flag) {
             echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
+        } else {
+            echo '[' . $ig_profile->insta_username . '] has been logged in.' . "\n";
         }
         return $flag;
     }
