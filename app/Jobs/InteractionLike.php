@@ -155,7 +155,7 @@ class InteractionLike implements ShouldQueue {
                 }
             } else {
 
-                foreach ($this->target_hashtags as $target_hashtag) {
+                foreach ($this->targeted_hashtags as $target_hashtag) {
 
                     if ($this->like_quota > 0) {
 
@@ -164,7 +164,6 @@ class InteractionLike implements ShouldQueue {
                         $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                         foreach ($hashtag_feed->items as $item) {
                             $user_to_like = $item->user;
-                            
                             if (!$this->checkDuplicate($user_to_like)) {
                                 if ($this->like_quota > 0) {
                                     if (!$this->checkDuplicateByMediaId($item)) {
