@@ -49,7 +49,6 @@ class MigrateUsers extends Command {
 
         $partition_user_ids = array();
         
-        
         foreach ($master_users as $master_user) {
             $user = $this->addNewUser($master_user);
             if ($user !== NULL) {
@@ -118,6 +117,7 @@ class MigrateUsers extends Command {
             $user = new User();
         } else {
             $user->delete();
+            $this->line("[Deleted user!]");
             $user = new User();
         }
 
