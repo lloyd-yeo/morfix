@@ -485,13 +485,20 @@ class InteractionLike implements ShouldQueue {
                     $ig_profile->auto_like_ban = 1;
                     $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->save();
-                    echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+                    echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                     exit;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
                     echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+                    exit;
+                } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
+                    $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->auto_like_ban = 1;
+                    $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->save();
+                    echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     exit;
                 }
             }
