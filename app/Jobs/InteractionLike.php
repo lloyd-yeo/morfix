@@ -473,6 +473,7 @@ class InteractionLike implements ShouldQueue {
     }
 
     public function handleInstagramException($ig_profile, $ex) {
+        $this->like_quota = 0;
         $ig_username = $ig_profile->insta_username;
         dump($ex);
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
