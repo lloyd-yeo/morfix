@@ -349,7 +349,7 @@ class InteractionLike implements ShouldQueue {
 
         //Duplicate = liked before.
         if ($liked_user !== NULL) {
-            echo("\n" . "[Current] Duplicate log found:\t[$ig_username] [" . $user_to_like->username . "]");
+            echo("\n" . "[Current] Duplicate log found:\t[" . $this->profile->insta_username . "] [" . $user_to_like->username . "]");
             return true;
         }
 
@@ -360,7 +360,7 @@ class InteractionLike implements ShouldQueue {
 
         //Duplicate = liked before.
         if ($liked_user !== NULL) {
-            echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+            echo("\n" . "[Archive] Duplicate Log Found:\t[" . $this->profile->insta_username . "] [" . $user_to_like->username . "]");
             return true;
         }
 
