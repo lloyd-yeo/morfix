@@ -307,7 +307,7 @@ class InteractionLike implements ShouldQueue {
             return false;
         } else if ($like_response->status == "ok") {
             try {
-                echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response));
+                echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n");
                 $like_log = new InstagramProfileLikeLog;
                 $like_log->insta_username = $ig_profile->insta_username;
                 $like_log->target_username = $user_to_like->username;
@@ -472,6 +472,7 @@ class InteractionLike implements ShouldQueue {
 
     public function handleInstagramException($ig_profile, $ex) {
         $ig_username = $ig_profile->insta_username;
+        dump($ex);
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
             $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
             $ig_profile->save();
