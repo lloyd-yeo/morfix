@@ -282,9 +282,30 @@ class InteractionLike implements ShouldQueue {
     }
 
     public function like($user_to_like, $item) {
+
         $ig_profile = $this->profile;
-        $like_response = $this->instagram->media->like($item->id);
-        if ($like_response->status == "ok") {
+        $like_response = NULL;
+        try {
+            $like_response = $this->instagram->media->like($item->id);
+        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+            $this->handleInstagramException($ig_profile, $checkpoint_ex);
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+            $this->handleInstagramException($ig_profile, $network_ex);
+        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+            $this->handleInstagramException($ig_profile, $endpoint_ex);
+        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+            $this->handleInstagramException($ig_profile, $incorrectpw_ex);
+        } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+            $this->handleInstagramException($ig_profile, $feedback_ex);
+        } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+            $this->handleInstagramException($ig_profile, $emptyresponse_ex);
+        } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+            $this->handleInstagramException($ig_profile, $acctdisabled_ex);
+        }
+
+        if ($like_response == NULL) {
+            return false;
+        } else if ($like_response->status == "ok") {
             try {
                 echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response));
                 $like_log = new InstagramProfileLikeLog;
