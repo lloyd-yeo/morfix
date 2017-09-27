@@ -38,11 +38,11 @@ class UpdateLastPaidFromCSV extends Command {
      * @return mixed
      */
     public function handle() {
-        $path = storage_path('app/august-payout.csv');
+        $path = app_path('september-payout.csv');
         $file = fopen($path, "r");
 
         $current_email = "";
-        $last_pay_out_coms_date = "2017-08-25 00:00:00";
+        $last_pay_out_coms_date = "2017-09-25 00:00:00";
 
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             #$data is one row.
@@ -50,8 +50,8 @@ class UpdateLastPaidFromCSV extends Command {
             $current_email = $data[0];
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
-                if ($data[2] > 50 && !empty($data[1]) && $data[3] == 'Eligible') {
-                $user->last_pay_out_date = $last_pay_out_coms_date;
+                if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
+                $user->testing_last_pay_out_date = $last_pay_out_coms_date;
                 $user->save();
                 echo "Updated [$current_email] last pay out coms to [$last_pay_out_coms_date]\n";
             }

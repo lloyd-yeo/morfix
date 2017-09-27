@@ -69,7 +69,7 @@ class UpdatePendingCommissionPayableNew extends Command {
 //                    ->take(3)
                     ->get();
             //Remove ->take(3) after verifying code
-            
+
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
@@ -86,7 +86,7 @@ class UpdatePendingCommissionPayableNew extends Command {
     }
 
     public function UpdateUserChargesPaid($user) {
-        $recent_pay_out_date = Carbon::create(2017, 8, 25, 0, 0, 0, 'Asia/Singapore');
+        $recent_pay_out_date = Carbon::create(2017, 9, 25, 0, 0, 0, 'Asia/Singapore');
 //        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
         if ($user->last_pay_out_date == $recent_pay_out_date) {
@@ -146,8 +146,19 @@ class UpdatePendingCommissionPayableNew extends Command {
 
                 if ($referral_charge->subscription_id == "0137") {
                     $current_comms = $current_comms + 20;
-                } else if ($referral_charge->subscription_id == "0297") {
+                } if ($referral_charge->subscription_id == "0297") {
                     $current_comms = $current_comms + 50;
+                }
+                if ($referral_charge->subscription_id == "MX370") {
+                    $current_comms = $current_comms + 200;
+                }
+                if ($referral_charge->subscription_id == "MX670") {
+                    $current_comms = $current_comms + 268;
+                }
+                if ($referral_charge->subscription_id == "MX970") {
+                    $current_comms = $current_comms + 500;
+                } else if ($referral_charge->subscription_id == "MX297") {
+                    $current_comms = $current_comms + 118.8;
                 }
             }
             $user->testing_pending_commission_payable = $current_comms;
@@ -171,8 +182,20 @@ class UpdatePendingCommissionPayableNew extends Command {
 
                 if ($referral_charge->subscription_id == "0137") {
                     $current_comms = $current_comms + 20;
-                } else if ($referral_charge->subscription_id == "0297") {
+                }
+                if ($referral_charge->subscription_id == "0297") {
                     $current_comms = $current_comms + 50;
+                }
+                if ($referral_charge->subscription_id == "MX370") {
+                    $current_comms = $current_comms + 200;
+                }
+                if ($referral_charge->subscription_id == "MX670") {
+                    $current_comms = $current_comms + 268;
+                }
+                if ($referral_charge->subscription_id == "MX970") {
+                    $current_comms = $current_comms + 500;
+                } else if ($referral_charge->subscription_id == "MX297") {
+                    $current_comms = $current_comms + 118.8;
                 }
             }
             $user->testing_pending_commission_payable = $current_comms;
