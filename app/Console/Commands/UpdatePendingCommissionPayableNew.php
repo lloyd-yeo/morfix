@@ -86,7 +86,7 @@ class UpdatePendingCommissionPayableNew extends Command {
     }
 
     public function UpdateUserChargesPaid($user) {
-        $recent_pay_out_date = Carbon::create(2017, 8, 25, 0, 0, 0, 'Asia/Singapore');
+        $recent_pay_out_date = Carbon::create(2017, 9, 25, 0, 0, 0, 'Asia/Singapore');
 //        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
         if ($user->last_pay_out_date == $recent_pay_out_date) {
