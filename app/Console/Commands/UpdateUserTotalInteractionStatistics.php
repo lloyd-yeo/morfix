@@ -80,6 +80,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
         $ig_profile->total_unfollows = $ig_profile->total_unfollows + $ig_profile->daily_unfollows;
         $ig_profile->daily_unfollows = 0;
         $ig_profile->save();
+        
         DB::connection('mysql_master')->table('user_insta_profile')
                 ->where('id', $ig_profile->id)
                 ->update(['daily_likes' => $ig_profile->daily_likes,
@@ -89,7 +90,18 @@ class UpdateUserTotalInteractionStatistics extends Command {
                           'total_likes' => $ig_profile->total_likes,
                           'total_comments' => $ig_profile->total_comments,
                           'total_follows' => $ig_profile->total_follows,
-                          'total_unfollows' => $ig_profile->total_unfollows]);
+                          'total_unfollows' => $ig_profile->total_unfollows,
+                          'auto_like_ban' => $ig_profile->auto_like_ban,
+                          'auto_like_ban_time' => $ig_profile->auto_like_ban_time,
+                          'auto_comment_ban' => $ig_profile->auto_comment_ban,
+                          'auto_comment_ban_time' => $ig_profile->auto_comment_ban_time,
+                          'next_comment_time' => $ig_profile->next_comment_time,
+                          'next_follow_time' => $ig_profile->next_follow_time,
+                          'next_like_time' => $ig_profile->next_like_time,
+                          'checkpoint_required' => $ig_profile->checkpoint_required,
+                          'account_disabled' => $ig_profile->account_disabled,
+                          'invalid_user' => $ig_profile->invalid_user,
+                          'incorrect_pw' => $ig_profile->incorrect_pw,]);
     }
     
     private function refreshDailyStats($ig_profile) {
