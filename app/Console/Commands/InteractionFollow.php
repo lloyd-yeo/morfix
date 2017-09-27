@@ -106,8 +106,8 @@ class InteractionFollow extends Command {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
             $this->info("[Follow Interaction] Queueing jobs for Master.");
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile) AND `partition` = 0')
-                    ->orderBy('user_id', 'asc')
+            $users = User::where('partition', 0)
+                    ->orderBy('user_id', 'ASC')
                     ->get();
         }
 
@@ -118,6 +118,7 @@ class InteractionFollow extends Command {
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
                             . 'AND user_id = ' . $user->user_id)->get();
 
+            //Queueing for Master & Slave without Email
             if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
                     foreach ($instagram_profiles as $ig_profile) {
@@ -127,7 +128,7 @@ class InteractionFollow extends Command {
                         }
 
                         if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
-                            $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
+                            $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
                             continue;
                         }
 
@@ -144,24 +145,19 @@ class InteractionFollow extends Command {
                         }
                     }
                 }
+                //Else, queueing for Email.
             } else {
-                if ($this->argument("queueasjob") === NULL) {
-                    foreach ($instagram_profiles as $ig_profile) {
-                        $this->jobHandle($ig_profile);
+                foreach ($instagram_profiles as $ig_profile) {
+
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
                     }
-                } else {
 
-                    foreach ($instagram_profiles as $ig_profile) {
-
-                        if (!InstagramHelper::validForInteraction($ig_profile)) {
-                            continue;
-                        }
-                        
-                        if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
-                            $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
-                            continue;
-                        }
-
+                    if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
+                        continue;
+                    }
+                    if ($this->argument("queueasjob") !== NULL) {
                         if ($ig_profile->next_follow_time === NULL) {
                             $this->warn("[" . $ig_profile->insta_username . "] next_follow_time is NULL.");
                             $ig_profile->next_follow_time = \Carbon\Carbon::now();
@@ -173,6 +169,10 @@ class InteractionFollow extends Command {
                             dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
                                             ->onQueue('follows'));
                             $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+                        }
+                    } else {
+                        foreach ($instagram_profiles as $ig_profile) {
+                            $this->jobHandle($ig_profile);
                         }
                     }
                 }
