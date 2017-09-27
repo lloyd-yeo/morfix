@@ -41,7 +41,12 @@ class MigrateUsers extends Command {
      * @return mixed
      */
     public function handle() {
-
+        
+        DB::table('user')->delete();
+        DB::table('user_insta_profile')->delete();
+        DB::table('user_insta_target_username')->delete();
+        DB::table('user_insta_target_hashtag')->delete();
+        
         $master_users = DB::connection('mysql_master')
                 ->table('user')
                 ->where('partition', $this->argument('partition'))
@@ -84,8 +89,6 @@ class MigrateUsers extends Command {
                         ->table('user_insta_target_hashtag')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
-
-                DB::table('user_insta_target_hashtag')->where('insta_username', $ig_profile->insta_username)->delete();
                 
                 foreach ($master_user_insta_target_hashtags as $master_user_insta_target_hashtag) {
                     $this->addNewInstagramProfileHashtag($master_user_insta_target_hashtag);
@@ -95,9 +98,7 @@ class MigrateUsers extends Command {
                         ->table('user_insta_target_username')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
-
-                DB::table('user_insta_target_username')->where('insta_username', $ig_profile->insta_username)->delete();
-
+                
                 foreach ($master_user_insta_target_usernames as $master_user_insta_target_username) {
                     $this->addNewInstagramProfileUsername($master_user_insta_target_username);
                 }
