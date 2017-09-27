@@ -151,6 +151,8 @@ class InteractionLike implements ShouldQueue {
                                 }
                             }
                         } while ($next_max_id !== NULL && $this->like_quota > 0);
+                    } else {
+                        break;
                     }
                 }
             } else {
@@ -170,9 +172,13 @@ class InteractionLike implements ShouldQueue {
                                             continue;
                                         }
                                     }
+                                } else {
+                                    break;
                                 }
                             }
                         }
+                    } else {
+                        break;
                     }
                 }
             }
@@ -277,6 +283,8 @@ class InteractionLike implements ShouldQueue {
                         }
                     }
                 }
+            } else {
+                break;
             }
         }
     }
