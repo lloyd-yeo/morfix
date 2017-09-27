@@ -139,9 +139,8 @@ class InteractionLike implements ShouldQueue {
                                             continue;
                                         }
                                         if ($this->like_quota > 0) {
-                                            if ($this->like($user_to_like, $item)) {
-                                               //Decrement like quota if true
-                                                $this->like_quota--;
+                                            if (!$this->like($user_to_like, $item)) {
+                                                break;
                                             }
                                         } else {
                                             break;
