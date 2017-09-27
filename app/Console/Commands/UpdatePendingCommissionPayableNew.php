@@ -146,8 +146,19 @@ class UpdatePendingCommissionPayableNew extends Command {
 
                 if ($referral_charge->subscription_id == "0137") {
                     $current_comms = $current_comms + 20;
-                } else if ($referral_charge->subscription_id == "0297") {
+                } if ($referral_charge->subscription_id == "0297") {
                     $current_comms = $current_comms + 50;
+                }
+                if ($referral_charge->subscription_id == "MX370") {
+                    $current_comms = $current_comms + 200;
+                }
+                if ($referral_charge->subscription_id == "MX670") {
+                    $current_comms = $current_comms + 268;
+                }
+                if ($referral_charge->subscription_id == "MX970") {
+                    $current_comms = $current_comms + 500;
+                } else if ($referral_charge->subscription_id == "MX297") {
+                    $current_comms = $current_comms + 118.8;
                 }
             }
             $user->testing_pending_commission_payable = $current_comms;

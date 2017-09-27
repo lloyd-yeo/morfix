@@ -38,7 +38,7 @@ class UpdateLastPaidFromCSV extends Command {
      * @return mixed
      */
     public function handle() {
-        $path = storage_path('app/september-payout.csv');
+        $path = app_path('september-payout.csv');
         $file = fopen($path, "r");
 
         $current_email = "";
