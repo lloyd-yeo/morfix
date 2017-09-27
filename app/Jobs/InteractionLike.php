@@ -307,7 +307,7 @@ class InteractionLike implements ShouldQueue {
             return false;
         } else if ($like_response->status == "ok") {
             try {
-                echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n");
+                echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
                 $like_log = new InstagramProfileLikeLog;
                 $like_log->insta_username = $ig_profile->insta_username;
                 $like_log->target_username = $user_to_like->username;
