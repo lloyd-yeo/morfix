@@ -134,8 +134,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
                           'checkpoint_required' => $ig_profile->checkpoint_required,
                           'account_disabled' => $ig_profile->account_disabled,
                           'invalid_user' => $ig_profile->invalid_user,
-                          'incorrect_pw' => $ig_profile->incorrect_pw,
-                          'invalid_proxy' => $ig_profile->invalid_proxy,]);
+                          'incorrect_pw' => $ig_profile->incorrect_pw,]);
     }
 
     private function initialUpdateOfTotalStats($ig_profile) {
