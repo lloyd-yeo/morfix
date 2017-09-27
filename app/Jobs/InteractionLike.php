@@ -143,16 +143,16 @@ class InteractionLike implements ShouldQueue {
                                                 break;
                                             }
                                         } else {
-                                            break;
+                                            exit;
                                         }
                                     }
                                 } else {
-                                    break;
+                                    exit;
                                 }
                             }
                         } while ($next_max_id !== NULL && $this->like_quota > 0);
                     } else {
-                        break;
+                        exit;
                     }
                 }
             } else {
@@ -173,12 +173,12 @@ class InteractionLike implements ShouldQueue {
                                         }
                                     }
                                 } else {
-                                    break;
+                                    exit;
                                 }
                             }
                         }
                     } else {
-                        break;
+                        exit;
                     }
                 }
             }
@@ -249,11 +249,11 @@ class InteractionLike implements ShouldQueue {
                                                     continue;
                                                 }
                                             } else {
-                                                break;
+                                                exit;
                                             }
                                         }
                                     } else {
-                                        break;
+                                        exit;
                                     }
                                 }
                             } while ($next_max_id !== NULL && $this->like_quota > 0);
@@ -284,7 +284,7 @@ class InteractionLike implements ShouldQueue {
                     }
                 }
             } else {
-                break;
+                exit;
             }
         }
     }
