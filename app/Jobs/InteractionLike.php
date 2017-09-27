@@ -301,6 +301,8 @@ class InteractionLike implements ShouldQueue {
             $this->handleInstagramException($ig_profile, $emptyresponse_ex);
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
             $this->handleInstagramException($ig_profile, $acctdisabled_ex);
+        } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+            $this->handleInstagramException($ig_profile, $throttled_ex);
         }
 
         if ($like_response == NULL) {
@@ -520,6 +522,13 @@ class InteractionLike implements ShouldQueue {
             $ig_profile->incorrect_pw = 1;
         } else if ($ex instanceof \InstagramAPI\Exception\AccountDisabledException) {
             $ig_profile->account_disabled = 1;
+        } else if ($ex instanceof \InstagramAPI\Exception\ThrottledException) {
+            $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
+            $ig_profile->auto_like_ban = 1;
+            $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(2);
+            $ig_profile->save();
+            echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+            exit;
         }
 
         if ($ex->hasResponse()) {
