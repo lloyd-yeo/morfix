@@ -139,8 +139,9 @@ class InteractionLike implements ShouldQueue {
                                             continue;
                                         }
                                         if ($this->like_quota > 0) {
-                                            if (!$this->like($user_to_like, $item)) {
-                                                continue;
+                                            if ($this->like($user_to_like, $item)) {
+                                               //Decrement like quota if true
+                                                $this->like_quota--;
                                             }
                                         } else {
                                             break;
@@ -315,7 +316,6 @@ class InteractionLike implements ShouldQueue {
                 $like_log->target_media_code = $item->getItemUrl();
                 $like_log->log = serialize($like_response);
                 if ($like_log->save()) {
-                    $this->like_quota--;
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($this->speed_delay);
                     $ig_profile->auto_like_ban = 0;
                     $ig_profile->auto_like_ban_time = NULL;
