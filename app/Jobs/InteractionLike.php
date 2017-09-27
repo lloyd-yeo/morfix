@@ -496,7 +496,7 @@ class InteractionLike implements ShouldQueue {
                     exit;
                 }
             }
-            $ig_profile->feedback_required = 1;
+//            $ig_profile->feedback_required = 1;
             $ig_profile->error_msg = $ex->getMessage();
         } else if ($ex instanceof \InstagramAPI\Exception\CheckpointRequiredException) {
             $ig_profile->checkpoint_required = 1;
