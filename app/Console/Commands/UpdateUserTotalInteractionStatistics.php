@@ -79,7 +79,15 @@ class UpdateUserTotalInteractionStatistics extends Command {
         $ig_profile->daily_follows = 0;
         $ig_profile->total_unfollows = $ig_profile->total_unfollows + $ig_profile->daily_unfollows;
         $ig_profile->daily_unfollows = 0;
-        $ig_profile->save();
+        if ($ig_profile->save()) {
+            $this->line('[' . $ig_profile->insta_username . "]");
+            $this->line('[Total] [Likes: ' . $ig_profile->total_likes . '] '
+                    . '[Comments: ' . $ig_profile->total_comments . '] '
+                    . '[Follows: ' . $ig_profile->total_follows . '] '
+                    . '[Unfollows: ' . $ig_profile->total_comments . ']');
+        }
+        
+        
         
         DB::connection('mysql_master')->table('user_insta_profile')
                 ->where('id', $ig_profile->id)
