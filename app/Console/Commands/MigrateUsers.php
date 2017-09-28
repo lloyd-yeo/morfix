@@ -258,7 +258,11 @@ class MigrateUsers extends Command {
         $target_hashtag->insta_id = $master_user_insta_target_hashtag->insta_id;
         $target_hashtag->insta_username = $master_user_insta_target_hashtag->insta_username;
         $target_hashtag->hashtag = $master_user_insta_target_hashtag->hashtag;
-        $target_hashtag->save();
+        try {
+            $target_hashtag->save();
+        } catch (\Illuminate\Database\QueryException $query_ex) {
+            
+        }
     }
 
     private function addNewInstagramProfileUsername($master_user_insta_target_username) {
@@ -270,7 +274,11 @@ class MigrateUsers extends Command {
         $target_username->invalid = $master_user_insta_target_username->invalid;
         $target_username->insufficient_followers = $master_user_insta_target_username->insufficient_followers;
         $target_username->last_checked = $master_user_insta_target_username->last_checked;
-        $target_username->save();
+        try {
+            $target_username->save();
+        } catch (\Illuminate\Database\QueryException $query_ex) {
+            
+        }
     }
 
 }
