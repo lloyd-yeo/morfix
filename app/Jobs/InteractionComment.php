@@ -120,6 +120,7 @@ class InteractionComment implements ShouldQueue {
             } catch(\InstagramAPI\Exception\InstagramException $insta_ex){
                 InteractionCommentHelper::handleInstragramException($ig_profile, $insta_ex, $engaged_user);
             }
+        }
     }
 
 }
