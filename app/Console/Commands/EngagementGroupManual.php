@@ -115,6 +115,10 @@ class EngagementGroupManual extends Command {
                 $ig_profile->invalid_user = 1;
                 $ig_profile->save();
                 continue;
+            } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_ex) {
+                $ig_profile->checkpoint_required = 1;
+                $ig_profile->save();
+                continue;
             }
 
             try {
