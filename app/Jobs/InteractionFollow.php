@@ -24,6 +24,7 @@ use App\Proxy;
 use App\DmJob;
 use App\InstagramHelper;
 use App\InteractionFollowHelper;
+use App\TargetHelper;
 
 class InteractionFollow implements ShouldQueue {
 
@@ -34,6 +35,8 @@ class InteractionFollow implements ShouldQueue {
 
     protected $profile;
     protected $instagram;
+    protected $targeted_hashtags;
+    protected $targeted_usernames;
     
     /**
      * The number of times the job may be attempted.
@@ -67,10 +70,13 @@ class InteractionFollow implements ShouldQueue {
         DB::reconnect();
         
         $follow_mode = InteractionFollowHelper::setFollowMode($this->profile);
+        $this->targeted_hashtags = TargetHelper::getUserTargetedHashtags($this->profile);
+        $this->targeted_usernames = TargetHelper::getUserTargetedUsernames($this->profile);
         
         echo "[" . $this->profile->insta_username . "] Niche: " . $this->profile->niche . 
                 " Auto_Follow: " . $this->profile->auto_follow . 
                 " Auto_Unfollow: " . $this->profile->auto_unfollow . "\n";
+        
         
         if ($follow_mode > 0) { //unfollow segment
         
@@ -104,22 +110,61 @@ class InteractionFollow implements ShouldQueue {
                         break;
                     }
                 }
-                
             } else {
                 echo "[" . $this->profile->insta_username . "] does not have enough <unfollow_quota> left. \n\n";
             }
             
         } else if ($follow_mode === 0) { //follow segment
-            
+            $throttle_limit = 40;
+            $throttle_count = 0;
             //check quota first
             if ($this->profile->follow_quota > 0) {
                 
                 echo "[" . $insta_username . "] beginning following sequence.\n";
                 $this->initInstagramAPI($this->profile);
+                $use_hashtags = InstagramHelper::randomizeUseHashtags($this->instagram, $ig_profile, $this->targeted_hashtags, $this->targeted_usernames);
                 
-                
-                
-                
+                if ($use_hashtags == 0) {
+                    //use targeted usernames
+                    foreach ($this->targeted_usernames as $target_username) {
+                        echo "[" . $this->profile->insta_username . "] using target username: " . $target_username->target_username . "\n";
+                        $username_id = InstagramHelper::getUserIdForName($this->instagram, $target_username);
+                        if ($username_id === NULL) {
+                            continue;
+                        }
+                        
+                        $users_to_follow = InstagramHelper::getTargetUsernameFollowers($target_username, $username_id);
+                        
+                        foreach ($users_to_follow as $user_to_follow) {
+                            if ($throttle_limit < $throttle_count) {
+                                break;
+                            }
+                            
+                            $throttle_count++;
+                            
+                            if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
+                                $followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
+                                if ($followed === 0) {
+                                    break;
+                                } else if ($followed === 1) {
+                                    break;
+                                } else if ($followed === 2) {
+                                    continue;
+                                }
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
+                } else if ($use_hashtags == 1) {
+                    //use targeted hashtags
+                    foreach ($this->targeted_hashtags as $target_hashtag) {
+                        
+                    }
+                } else if ($use_hashtags == 2) {
+                    //use niche targets
+                    
+                }
             } else {
                 echo "[" . $this->profile->insta_username . "] does not have enough <follow_quota> left. \n\n";
             }

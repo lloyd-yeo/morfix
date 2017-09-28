@@ -116,6 +116,12 @@ class InstagramHelper {
         return $username_id;
     }
 
+    public static function getTargetUsernameFollowers($target_username, $username_id) {
+        $user_follower_response = $instagram->people->getFollowers($username_id);
+        $users_to_follow = $user_follower_response->users;
+        return $users_to_follow;
+    }
+
     public static function getUserFeed(Instagram $instagram, $user_to_like) {
         //Get the feed of the user to like.
         try {
@@ -165,6 +171,22 @@ class InstagramHelper {
         }
 
         return true;
+    }
+
+    public static function randomizeUseHashtags(Instagram $instagram, InstagramProfile $ig_profile, $targeted_hashtags, $targeted_usernames) {
+        $use_hashtags = rand(0, 1);
+        if ($use_hashtags == 1 && count($targeted_hashtags) == 0) {
+            $use_hashtags = 0;
+        } else if ($use_hashtags == 0 && count($targeted_usernames) == 0) {
+            $use_hashtags = 1;
+        }
+
+        if (count($targeted_hashtags) == 0 && count($targeted_usernames) == 0) {
+            $use_hashtags = 2;
+        }
+
+        echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
+        return $use_hashtags;
     }
 
 }
