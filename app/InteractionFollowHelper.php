@@ -125,24 +125,34 @@ class InteractionFollowHelper {
         //0 for unfollow failed
         //1 for unfollow succeeded
         //2 for unfollow false-succeeded (i.e. Marked as unfollowed)
-        $delay = InteractionFollowHelper::setSpeedDelay($ig_profile->speed);
-        if ($ig_profile->unfollow_unfollowed == 1) { //only unfollow users that unfollowed me (i.e. followed_by = 0)
-            $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
-            if ($friendship->followed_by == true) {
-                echo "[" . $ig_profile->insta_username . "] is followed by "
-                . $user_to_unfollow->follower_username . "\n";
-                $user_to_unfollow->unfollowed = 1;
-                $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
-                if ($user_to_unfollow->save()) {
-                    echo "[" . $ig_profile->insta_username . "] marked as unfollowed & updated log as NULL: [" .
-                    $user_to_unfollow->log_id . "] [" . $user_to_unfollow->follower_username . "]\n\n";
-                    return 2;
+        try {
+            $delay = InteractionFollowHelper::setSpeedDelay($ig_profile->speed);
+            if ($ig_profile->unfollow_unfollowed == 1) { //only unfollow users that unfollowed me (i.e. followed_by = 0)
+                $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
+                if ($friendship->followed_by == true) {
+                    echo "[" . $ig_profile->insta_username . "] is followed by "
+                    . $user_to_unfollow->follower_username . "\n";
+                    $user_to_unfollow->unfollowed = 1;
+                    $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
+                    if ($user_to_unfollow->save()) {
+                        echo "[" . $ig_profile->insta_username . "] marked as unfollowed & updated log as NULL: [" .
+                        $user_to_unfollow->log_id . "] [" . $user_to_unfollow->follower_username . "]\n\n";
+                        return 2;
+                    }
+                } else {
+                    return InteractionFollowHelper::unfollow_($ig_profile, $instagram, $user_to_unfollow, $delay);
                 }
             } else {
                 return InteractionFollowHelper::unfollow_($ig_profile, $instagram, $user_to_unfollow, $delay);
             }
-        } else {
-            return InteractionFollowHelper::unfollow_($ig_profile, $instagram, $user_to_unfollow, $delay);
+        } catch (\InstagramAPI\Exception\NotFoundException $notfound_ex) {
+            $user_to_unfollow->unfollowed = 1;
+            $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
+            if ($user_to_unfollow->save()) {
+                echo "[" . $ig_profile->insta_username . "] marked as unfollowed & updated log as NULL: [" .
+                $user_to_unfollow->log_id . "] [" . $user_to_unfollow->follower_username . "]\n\n";
+                return 2;
+            }
         }
     }
 
@@ -349,7 +359,7 @@ class InteractionFollowHelper {
 
         $ig_profile->save();
     }
-    
+
     public static function handleFollowInstagramException($ex, $ig_profile) {
         $ig_username = $ig_profile->insta_username;
         dump($ex);
@@ -416,7 +426,7 @@ class InteractionFollowHelper {
 
         $ig_profile->save();
     }
-    
+
     public static function unFollowUsers($ig_profile, $instagram, $users_to_unfollow) {
         $insta_username = $ig_profile->insta_username;
         foreach ($users_to_unfollow as $user_to_unfollow) {
