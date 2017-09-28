@@ -67,6 +67,8 @@ class InstagramHelper {
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
                 $message .= " with InstagramException\n";
             }
+            
+            dump($network_ex);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             
         } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
