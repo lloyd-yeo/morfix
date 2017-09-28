@@ -182,6 +182,60 @@ class InteractionFollow implements ShouldQueue {
                     }
                 } else if ($use_hashtags == 2) {
                     //use niche targets
+                    $niche_usernames = Niche::find($this->profile->niche)->targetUsernames();
+                    foreach ($niche_usernames as $target_username) {
+                        echo "[" . $this->profile->insta_username . "] using NICHE target username: " . $target_username->target_username . "\n";
+                        $username_id = InstagramHelper::getUserIdForName($this->instagram, $target_username);
+                        if ($username_id === NULL) {
+                            continue;
+                        }
+                        $users_to_follow = InstagramHelper::getTargetUsernameFollowers($this->instagram, $target_username, $username_id);
+                        foreach ($users_to_follow as $user_to_follow) {
+                            if ($throttle_limit < $throttle_count) {
+                                break;
+                            }
+                            $throttle_count++;
+                            if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
+                                $followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
+                                if ($followed === 0) {
+                                    break;
+                                } else if ($followed === 1) {
+                                    break;
+                                } else if ($followed === 2) {
+                                    continue;
+                                }
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
+
+                    $niche_hashtags = Niche::find($niche)->targetHashtags();
+                    foreach ($niche_hashtags as $target_hashtag) {
+                        echo "[" . $this->profile->insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
+                        $hashtag_feed = InstagramHelper::getHashtagFeed($this->instagram, trim($target_hashtag));
+                        if ($hashtag_feed !== NULL) {
+                            foreach ($hashtag_feed->items as $item) {
+                                if ($throttle_limit < $throttle_count) {
+                                    break;
+                                }
+                                $throttle_count++;
+                                $user_to_follow = $item->user;
+                                if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
+                                    $followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
+                                    if ($followed === 0) {
+                                        break;
+                                    } else if ($followed === 1) {
+                                        break;
+                                    } else if ($followed === 2) {
+                                        continue;
+                                    }
+                                } else {
+                                    continue;
+                                }
+                            }
+                        }
+                    }
                 }
             } else {
                 echo "[" . $this->profile->insta_username . "] does not have enough <follow_quota> left. \n\n";
