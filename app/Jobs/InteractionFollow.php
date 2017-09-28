@@ -117,7 +117,7 @@ class InteractionFollow implements ShouldQueue {
             //check quota first
             if ($this->profile->follow_quota > 0) {
 
-                echo "[" . $insta_username . "] beginning following sequence.\n";
+                echo "[" . $this->profile->insta_username . "] beginning following sequence.\n";
                 $this->initInstagramAPI($this->profile);
                 $use_hashtags = InstagramHelper::randomizeUseHashtags($this->instagram, $ig_profile, $this->targeted_hashtags, $this->targeted_usernames);
 
