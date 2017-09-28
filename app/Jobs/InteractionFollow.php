@@ -130,7 +130,7 @@ class InteractionFollow implements ShouldQueue {
                             continue;
                         }
 
-                        $users_to_follow = InstagramHelper::getTargetUsernameFollowers($target_username, $username_id);
+                        $users_to_follow = InstagramHelper::getTargetUsernameFollowers($this->instagram, $target_username, $username_id);
 
                         foreach ($users_to_follow as $user_to_follow) {
                             if ($throttle_limit < $throttle_count) {

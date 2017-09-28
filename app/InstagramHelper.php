@@ -116,7 +116,7 @@ class InstagramHelper {
         return $username_id;
     }
 
-    public static function getTargetUsernameFollowers($target_username, $username_id) {
+    public static function getTargetUsernameFollowers($instagram, $target_username, $username_id) {
         $user_follower_response = $instagram->people->getFollowers($username_id);
         $users_to_follow = $user_follower_response->users;
         return $users_to_follow;
