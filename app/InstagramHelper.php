@@ -148,6 +148,16 @@ class InstagramHelper {
             return NULL;
         }
     }
+    
+    public static function getHashtagFeed(Instagram $instagram, $hashtag) {
+        $hashtag_feed = NULL;
+        try {
+            $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
+        } catch (\Exception $ex) {
+            return NULL;
+        }
+        return $hashtag_feed;
+    }
 
     public static function validForInteraction($ig_profile) {
         if ($ig_profile->checkpoint_required == 1) {
