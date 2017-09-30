@@ -12,7 +12,7 @@ class RefreshInteractionsQuota extends Command {
      *
      * @var string
      */
-    protected $signature = 'refresh:interactionsquota {slave?}';
+    protected $signature = 'refresh:interactionsquota';
 
     /**
      * The console command description.
@@ -36,7 +36,7 @@ class RefreshInteractionsQuota extends Command {
      * @return mixed
      */
     public function handle() {
-        DB::connection('mysql_master')->table('user_insta_profile')
+        DB::table('user_insta_profile')
                 ->update(['follow_quota' => 22,
                     'unfollow_quota' => 22,
                     'like_quota' => 30,
