@@ -76,6 +76,9 @@ class Kernel extends ConsoleKernel {
         Commands\RefreshInteractionsQuota::class,
         Commands\CarbonTester::class,
         Commands\CheckDuplicateCharges::class,
+        Commands\UpdateNextInteractionTime::class,
+        Commands\UpdateTrialActivation::class,
+        Commands\UpdateUserTargets::class,
     ];
 
     /**
