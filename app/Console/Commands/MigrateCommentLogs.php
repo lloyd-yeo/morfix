@@ -76,7 +76,6 @@ class MigrateCommentLogs extends Command {
 
             foreach ($master_comment_logs as $master_comment_log) {
                 $comment_log = new InstagramProfileCommentLog;
-                $comment_log->log_id = $master_comment_log->log_id;
                 $comment_log->insta_username = $master_comment_log->insta_username;
                 $comment_log->target_username = $master_comment_log->target_username;
                 $comment_log->target_insta_id = $master_comment_log->target_insta_id;
