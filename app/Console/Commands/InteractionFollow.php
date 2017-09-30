@@ -127,9 +127,15 @@ class InteractionFollow extends Command {
                             continue;
                         }
 
-                        if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
-                            $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
-                            continue;
+                        if ($ig_profile->auto_follow_ban == 1) {
+                            if ($ig_profile->auto_follow_ban_time !== NULL && $ig_profile->auto_follow_ban_time >= \Carbon\Carbon::now()) {
+                                $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
+                                continue;
+                            } else if ($ig_profile->auto_follow_ban_time === NULL) {
+                                $ig_profile->auto_follow_ban = 0;
+                                $ig_profile->auto_follow_ban_time = NULL;
+                                $ig_profile->save();
+                            }
                         }
 
                         if ($ig_profile->next_follow_time === NULL) {
@@ -153,7 +159,7 @@ class InteractionFollow extends Command {
                         continue;
                     }
 
-                    if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                    if ($ig_profile->auto_follow_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
                         $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
                         continue;
                     }
