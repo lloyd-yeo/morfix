@@ -83,6 +83,7 @@ class UpgradeUserTier implements ShouldQueue
             if ($user->save()) {
             }
         } else if ($plan->id == "MX370") {
+            
             $user = User::where('email', $this->email)->first();
             $user->partition = 3;
             if ($user->tier % 10 == 2) {
@@ -90,9 +91,9 @@ class UpgradeUserTier implements ShouldQueue
             } else {
                 $user->tier = $user->tier + 2;
             }
-            
             if ($user->save()) {
             }
+            
         } else if ($plan->id == "0297") {
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 10;
