@@ -179,7 +179,7 @@ class InteractionComment extends Command {
             $instagram = InstagramHelper::initInstagram();
             $this->instagram = $instagram;
             if (InstagramHelper::login($instagram, $ig_profile) == true) {
-                //try {
+                try {
                     $comment = InstagramProfileComment::where('insta_username', $ig_username)
                             ->inRandomOrder()
                             ->first();
@@ -286,7 +286,7 @@ class InteractionComment extends Command {
                     //            echo("request1 " . $request_ex->getMessage() . "\n");
                     //            $ig_profile->error_msg = $request_ex->getMessage();
                     //            $ig_profile->save();
-                } */
+                } 
             } else {
                 //echo "Unable to Login";
             }
