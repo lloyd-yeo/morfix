@@ -79,11 +79,12 @@ class UpgradeUserTier implements ShouldQueue
         if ($plan->id == "0137") {
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 1;
+            $user->partition = 3;
             if ($user->save()) {
             }
         } else if ($plan->id == "MX370") {
             $user = User::where('email', $this->email)->first();
-            
+            $user->partition = 3;
             if ($user->tier % 10 == 2) {
                 $user->tier = $user->tier + 1;
             } else {
@@ -96,6 +97,7 @@ class UpgradeUserTier implements ShouldQueue
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 10;
             $user->num_acct = 6;
+            $user->partition = 3;
             if ($user->save()) {
                 //Pro
                 Mail::to($user->email)->send(new BusinessCongrats($user));
@@ -103,7 +105,7 @@ class UpgradeUserTier implements ShouldQueue
         } else if ($plan->id == "MX297") {
             $user = User::where('email', $this->email)->first();
             $user->tier = $user->tier + 1;
-            
+            $user->partition = 3;
             if ($user->save()) {
                 //Pro
                 Mail::to($user->email)->send(new ProCongrats($user));
