@@ -61,7 +61,7 @@ class MigrateCommentLogs extends Command {
                     $comment_log->date_commented = $master_comment_log->date_commented;
                     try {
                         $comment_log->save();
-                    } catch (QueryException $ex) {
+                    } catch (Illuminate\Database\QueryException $ex) {
                         continue;
                     }
                 }
@@ -85,7 +85,7 @@ class MigrateCommentLogs extends Command {
                 $comment_log->date_commented = $master_comment_log->date_commented;
                 try {
                     $comment_log->save();
-                } catch (QueryException $ex) {
+                } catch (Illuminate\Database\QueryException $ex) {
                     continue;
                 }
             }
