@@ -47,7 +47,8 @@ class UpdateLastPaidFromCSV extends Command {
         $current_email = "";
         $last_pay_out_coms_date = "2017-09-25 00:00:00";
         $paid_amount =0;
-
+        $tier = 0;
+        
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             #$data is one row.
             #$data[0] is first cell so on & so forth.
@@ -68,6 +69,8 @@ class UpdateLastPaidFromCSV extends Command {
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
                     echo "Updated [$current_email] last pay out amount to [$data[3]]\n";
                     echo "Updated [$current_email] pending commission to to [$user->testing_pending_commission]\n";
+                    $paid_amount = 0;
+                    $tier = 0;
                 } else {
                     echo $user->email . "is not eligible for current payout\n";
                 }
