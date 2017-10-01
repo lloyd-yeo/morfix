@@ -107,7 +107,7 @@ class InstagramProfileController extends Controller {
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             $profile_log->error_msg = $endpoint_ex->getMessage();
             $profile_log->save();
-            dump($endpoint_ex);
+//            dump($endpoint_ex);
             return Response::json(array("success" => false, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage()));
         } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
             $profile_log->error_msg = $challenge_required_ex->getMessage();
