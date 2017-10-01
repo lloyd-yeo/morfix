@@ -47,26 +47,29 @@ class ManualLogin extends Command {
         DB::reconnect();
         $ig_username = $this->argument("ig_username");
         $ig_password = $this->argument("ig_password");
-        
+
         $this->line($ig_username . " " . $ig_password);
-        
+
 //        $config = array();
 //        $config["storage"] = "mysql";
 //        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
 //        $config["dbtablename"] = "instagram_sessions";
-
 //        $debug = true;
 //        $truncatedDebug = false;
 //        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-        
+
         $instagram = InstagramHelper::initInstagram();
-        
+
         $proxy = Proxy::inRandomOrder()->first();
-        
+
         $instagram->setProxy($proxy->proxy);
-        $explorer_response = $instagram->login($ig_username, $ig_password);
-        dd($explorer_response);
-        
+        try {
+            $explorer_response = $instagram->login($ig_username, $ig_password);
+            #dd($explorer_response);
+        } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+            dump($emptyresponse_ex);
+        }
+
 //        $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
 //        foreach ($proxies as $proxy) {
 //            $this->line($proxy->proxy);
