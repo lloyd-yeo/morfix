@@ -165,8 +165,10 @@ class UpdateLastPaidFromCSV extends Command {
                 ->where('testing_commission_given', 0)
                 ->where('testing_commission_given_july',0)
                 ->where('status', "Completed")
+                ->where('time_stamp' , '<', $now)
                 ->orderBy('time_stamp', 'desc')
                 ->get();
+        dump($referral_paypal1_charges);
         foreach ($referral_paypal1_charges as $referral_paypal1_charge) {
 
             if ($referral_paypal1_charge->subscription == "0137" && $user->tier >= 2) {
