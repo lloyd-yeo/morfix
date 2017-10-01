@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
 use App\InstagramProfile;
+use App\InstagramHelper;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use InstagramAPI\Instagram as Instagram;
@@ -45,15 +46,8 @@ class InstagramProfileController extends Controller {
         $profile_log->insta_pw = $ig_password;
         $profile_log->save();
 
-        $config = array();
-        $config["storage"] = "mysql";
-        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
-        $config["dbtablename"] = "instagram_sessions";
-
-        $debug = false;
-        $truncatedDebug = false;
-        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
+        $instagram = InstagramHelper::initInstagram();
+        
         $proxy = Proxy::inRandomOrder()->first();
 
         try {
