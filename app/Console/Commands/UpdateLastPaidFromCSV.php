@@ -65,8 +65,7 @@ class UpdateLastPaidFromCSV extends Command {
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
                     echo "Updated [$current_email] last pay out amount to [$data[3]]\n";
                     echo "Updated [$current_email] pending commission to to [$user->testing_pending_commission]\n";
-                }
-                else {
+                } else {
                     echo $user->email . "is not eligible for current payout\n";
                 }
             }
@@ -129,6 +128,7 @@ class UpdateLastPaidFromCSV extends Command {
                 ->where('referrer_email', $user->email)
                 ->where('charge_created', '<', $now)
                 ->where('charge_refunded', 0)
+                ->where('testing_commission_given_july', 0)
                 ->where('commission_given', 0)
                 ->orderBy('charge_created', 'desc')
                 ->get();
@@ -150,7 +150,7 @@ class UpdateLastPaidFromCSV extends Command {
             if ($referral_stripe1_charge->subscription_id == "MX670" && $user->tier >= 22) {
                 $current_comms_stripe = $current_comms_stripe + 268;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX970"  && $user->tier >= 22) {
+            if ($referral_stripe1_charge->subscription_id == "MX970" && $user->tier >= 22) {
                 $current_comms_stripe = $current_comms_stripe + 500;
             } else if ($referral_stripe1_charge->subscription_id == "MX297" && ($user->tier == 3 || $user->tier == 13)) {
                 $current_comms_stripe = $current_comms_stripe + 118.8;
@@ -160,6 +160,7 @@ class UpdateLastPaidFromCSV extends Command {
 
         $referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
                 ->where('testing_commission_given', 0)
+                ->where('testing_commission_given_july',0)
                 ->where('status', "Completed")
                 ->orderBy('time_stamp', 'desc')
                 ->get();
@@ -177,10 +178,10 @@ class UpdateLastPaidFromCSV extends Command {
             if ($referral_paypal1_charge->subscription_id == "MX370" && ($user->tier == 3 || $user->tier == 13)) {
                 $current_comms_paypal = $current_comms_paypal + 200;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX670"  && $user->tier >= 22) {
+            if ($referral_paypal1_charge->subscription_id == "MX670" && $user->tier >= 22) {
                 $current_comms_paypal = $current_comms_paypal + 268;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX970"  && $user->tier >= 22) {
+            if ($referral_paypal1_charge->subscription_id == "MX970" && $user->tier >= 22) {
                 $current_comms_paypal = $current_comms_paypal + 500;
             } else if ($referral_paypal1_charge->subscription_id == "MX297" && ($user->tier == 3 || $user->tier == 13)) {
                 $current_comms_paypal = $current_comms_paypal + 118.8;
