@@ -119,7 +119,7 @@ class UpdateLastPaidFromCSV extends Command {
         $now = Carbon::now();
         $current_comms_stripe = 0;
         $current_comms_paypal = 0;
-        
+
         echo "Time now is: " . $now . "\n";
 
         $referral_stripe1_charges = GetReferralChargesOfUser::fromView()
@@ -136,26 +136,27 @@ class UpdateLastPaidFromCSV extends Command {
         foreach ($referral_stripe1_charges as $referral_stripe1_charge) {
 
             if ($referral_stripe1_charge->subscription_id == "0137") {
-                $current_comms_stripe = $current_comms + 20;
-            } if ($referral_stripe1_charge->subscription_id == "0297") {
-                $current_comms_stripe = $current_comms + 50;
+                $current_comms_stripe = $current_comms_stripe + 20;
+            }
+            if ($referral_stripe1_charge->subscription_id == "0297") {
+                $current_comms_stripe = $current_comms_stripe + 50;
             }
             if ($referral_stripe1_charge->subscription_id == "MX370") {
-               $current_comms_stripe = $current_comms + 200;
+                $current_comms_stripe = $current_comms_stripe + 200;
             }
             if ($referral_stripe1_charge->subscription_id == "MX670") {
-               $current_comms_stripe = $current_comms + 268;
+                $current_comms_stripe = $current_comms_stripe + 268;
             }
             if ($referral_stripe1_charge->subscription_id == "MX970") {
-                $current_comms_stripe = $current_comms + 500;
+                $current_comms_stripe = $current_comms_stripe + 500;
             } else if ($referral_stripe1_charge->subscription_id == "MX297") {
-                $current_comms_stripe = $current_comms + 118.8;
+                $current_comms_stripe = $current_comms_stripe + 118.8;
             }
         }
         $user->testing_pending_commission = $current_comms_stripe;
         $user->save();
         echo "current_comms_stripe = " . $current_comms_stripe . "\n";
-        
+
         $referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
                 ->where('testing_commission_given', 0)
                 ->where('status', "Completed")
@@ -165,28 +166,28 @@ class UpdateLastPaidFromCSV extends Command {
 
             if ($referral_paypal1_charge->subscription == "0137") {
                 if ($referral_paypal1_charge->amount == "37.0000") {
-                    $current_comms_paypal = $current_comms + 20;
+                    $current_comms_paypal = $current_comms_paypal + 20;
                 } elseif ($referral_paypal1_charge->amount == "74.0000") {
-                    $current_comms_paypal = $current_comms + 40;
+                    $current_comms_paypal = $current_comms_paypal + 40;
                 }
             } if ($referral_paypal1_charge->subscription == "0297") {
-                $current_comms_paypal = $current_comms + 50;
+                $current_comms_paypal = $current_comms_paypal + 50;
             }
             if ($referral_paypal1_charge->subscription_id == "MX370") {
-                $current_comms_paypal = $current_comms + 200;
+                $current_comms_paypal = $current_comms_paypal + 200;
             }
             if ($referral_paypal1_charge->subscription_id == "MX670") {
-                $current_comms_paypal = $current_comms + 268;
+                $current_comms_paypal = $current_comms_paypal + 268;
             }
             if ($referral_paypal1_charge->subscription_id == "MX970") {
-                $current_comms_paypal = $current_comms + 500;
+                $current_comms_paypal = $current_comms_paypal + 500;
             } else if ($referral_paypal1_charge->subscription_id == "MX297") {
-                $current_comms_paypal = $current_comms + 118.8;
+                $current_comms_paypal = $current_comms_paypal + 118.8;
             }
         }
         $user->testing_pending_commission = $user->testing_pending_commision + $current_comms_paypal;
         $user->save();
-           echo "current_comms_paypal = " . $current_comms_stripe . "\n";
+        echo "current_comms_paypal = " . $current_comms_stripe . "\n";
     }
 
 }
