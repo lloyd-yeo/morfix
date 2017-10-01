@@ -51,9 +51,7 @@ class UpdateLastPaidFromCSV extends Command {
             #$data is one row.
             #$data[0] is first cell so on & so forth.
             $current_email = $data[0];
-//            $user = User::where('email', $this->argument("email"))
-//                    ->orderBy('user_id', 'desc')
-//                    ->first();
+            
              $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
                 if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
@@ -167,18 +165,18 @@ class UpdateLastPaidFromCSV extends Command {
                 } elseif ($referral_paypal1_charge->amount == "74.0000") {
                     $current_comms = $current_comms + 40;
                 }
-            } if ($referral_stripe1_charge->subscription == "0297") {
+            } if ($referral_paypal1_charge->subscription == "0297") {
                 $current_comms = $current_comms + 50;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX370") {
+            if ($referral_paypal1_charge->subscription_id == "MX370") {
                 $current_comms = $current_comms + 200;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX670") {
+            if ($referral_paypal1_charge->subscription_id == "MX670") {
                 $current_comms = $current_comms + 268;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX970") {
+            if ($referral_paypal1_charge->subscription_id == "MX970") {
                 $current_comms = $current_comms + 500;
-            } else if ($referral_stripe1_charge->subscription_id == "MX297") {
+            } else if ($referral_paypal1_charge->subscription_id == "MX297") {
                 $current_comms = $current_comms + 118.8;
             }
         }
