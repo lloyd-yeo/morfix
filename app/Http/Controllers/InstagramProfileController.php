@@ -59,6 +59,7 @@ class InstagramProfileController extends Controller {
             }
 
             $instagram->setProxy($proxy->proxy);
+            
             $explorer_response = $instagram->login($ig_username, $ig_password);
 
             $morfix_ig_profile = new InstagramProfile();
