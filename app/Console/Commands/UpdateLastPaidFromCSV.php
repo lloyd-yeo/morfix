@@ -48,7 +48,7 @@ class UpdateLastPaidFromCSV extends Command {
         $last_pay_out_coms_date = "2017-09-25 00:00:00";
         $paid_amount =0;
         $tier = 0;
-        
+            
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             #$data is one row.
             #$data[0] is first cell so on & so forth.
@@ -166,7 +166,6 @@ class UpdateLastPaidFromCSV extends Command {
         echo "current_comms_stripe = " . $current_comms_stripe . "\n";
 
         $referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
-                ->where('testing_commission_given', 0)
                 ->where('testing_commission_given_july',0)
                 ->where('status', "Completed")
                 ->where('time_stamp' , '<', $now)
