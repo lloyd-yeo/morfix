@@ -51,22 +51,21 @@ class UpdateLastPaidFromCSV extends Command {
             #$data is one row.
             #$data[0] is first cell so on & so forth.
             $current_email = $data[0];
-            
-             $user = User::where('email', $current_email)->first();
+
+            $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
                 if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
-                    $current_comms = 0;
-                    CalculateUserPendingCommissions($user);
+                    $this->CalculateUserPendingCommissions($user);
                     $user->testing_last_pay_out_date = $last_pay_out_coms_date;
                     $user->paid_amount = $data[3];
-                    UpdateUserChargesPaid($user);
+                    $this->UpdateUserChargesPaid($user);
                     $user->testing_pending_commission_payable = 0;
                     $user->testing_all_time_commission = $user->all_time_commission + $data[3];
-                    echo $current_comms;
                     $user->testing_pending_commission = $user->testing_pending_commission - $data[3];
                     $user->save();
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
                     echo "Updated [$current_email] last pay out amount to [$data[3]]\n";
+                    echo "Updated [$current_email] pending commission to to [$user->testing_pending_commission]\n";
                 }
             }
         }
@@ -118,8 +117,9 @@ class UpdateLastPaidFromCSV extends Command {
 
     public function CalculateUserPendingCommissions($user) {
         $now = Carbon::now();
-        $current_comms = 0;
-
+        $current_comms_stripe = 0;
+        $current_comms_paypal = 0;
+        
         echo "Time now is: " . $now . "\n";
 
         $referral_stripe1_charges = GetReferralChargesOfUser::fromView()
@@ -136,24 +136,28 @@ class UpdateLastPaidFromCSV extends Command {
         foreach ($referral_stripe1_charges as $referral_stripe1_charge) {
 
             if ($referral_stripe1_charge->subscription_id == "0137") {
-                $current_comms = $current_comms + 20;
+                $current_comms_stripe = $current_comms + 20;
             } if ($referral_stripe1_charge->subscription_id == "0297") {
-                $current_comms = $current_comms + 50;
+                $current_comms_stripe = $current_comms + 50;
             }
             if ($referral_stripe1_charge->subscription_id == "MX370") {
-                $current_comms = $current_comms + 200;
+               $current_comms_stripe = $current_comms + 200;
             }
             if ($referral_stripe1_charge->subscription_id == "MX670") {
-                $current_comms = $current_comms + 268;
+               $current_comms_stripe = $current_comms + 268;
             }
             if ($referral_stripe1_charge->subscription_id == "MX970") {
-                $current_comms = $current_comms + 500;
+                $current_comms_stripe = $current_comms + 500;
             } else if ($referral_stripe1_charge->subscription_id == "MX297") {
-                $current_comms = $current_comms + 118.8;
+                $current_comms_stripe = $current_comms + 118.8;
             }
         }
+        $user->testing_pending_commission = $current_comms_stripe;
+        $user->save();
+        echo "current_comms_stripe = " . $current_comms_stripe . "\n";
+        
         $referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
-                ->where('commission_given', 0)
+                ->where('testing_commission_given', 0)
                 ->where('status', "Completed")
                 ->orderBy('time_stamp', 'desc')
                 ->get();
@@ -161,27 +165,28 @@ class UpdateLastPaidFromCSV extends Command {
 
             if ($referral_paypal1_charge->subscription == "0137") {
                 if ($referral_paypal1_charge->amount == "37.0000") {
-                    $current_comms = $current_comms + 20;
+                    $current_comms_paypal = $current_comms + 20;
                 } elseif ($referral_paypal1_charge->amount == "74.0000") {
-                    $current_comms = $current_comms + 40;
+                    $current_comms_paypal = $current_comms + 40;
                 }
             } if ($referral_paypal1_charge->subscription == "0297") {
-                $current_comms = $current_comms + 50;
+                $current_comms_paypal = $current_comms + 50;
             }
             if ($referral_paypal1_charge->subscription_id == "MX370") {
-                $current_comms = $current_comms + 200;
+                $current_comms_paypal = $current_comms + 200;
             }
             if ($referral_paypal1_charge->subscription_id == "MX670") {
-                $current_comms = $current_comms + 268;
+                $current_comms_paypal = $current_comms + 268;
             }
             if ($referral_paypal1_charge->subscription_id == "MX970") {
-                $current_comms = $current_comms + 500;
+                $current_comms_paypal = $current_comms + 500;
             } else if ($referral_paypal1_charge->subscription_id == "MX297") {
-                $current_comms = $current_comms + 118.8;
+                $current_comms_paypal = $current_comms + 118.8;
             }
         }
-        $user->testing_pending_commission = $current_comms;
+        $user->testing_pending_commission = $user->testing_pending_commision + $current_comms_paypal;
         $user->save();
+           echo "current_comms_paypal = " . $current_comms_stripe . "\n";
     }
 
 }
