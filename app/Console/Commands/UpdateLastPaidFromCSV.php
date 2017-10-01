@@ -118,7 +118,7 @@ class UpdateLastPaidFromCSV extends Command {
     }
 
     public function CalculateUserPendingCommissions($user) {
-        $now = Carbon::now();
+        $now = Carbon::now()->toDateTimeString;
         $current_comms_stripe = 0;
         $current_comms_paypal = 0;
 
