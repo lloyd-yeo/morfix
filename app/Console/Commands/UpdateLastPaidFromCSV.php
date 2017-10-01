@@ -46,6 +46,7 @@ class UpdateLastPaidFromCSV extends Command {
 
         $current_email = "";
         $last_pay_out_coms_date = "2017-09-25 00:00:00";
+        $paid_amount =0;
 
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
             #$data is one row.
@@ -55,10 +56,11 @@ class UpdateLastPaidFromCSV extends Command {
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
                 if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
-                    $user->paid_amount = $data[3];
-                    $this->CalculateUserPendingCommissions($user);
+                    $paid_amount = $data[3];
+                    $this->CalculateUserPendingCommissions($user,$paid_amount);
                     $user->testing_last_pay_out_date = $last_pay_out_coms_date;
                     $this->UpdateUserChargesPaid($user);
+                    $user->paid_amount = $data[3];
                     $user->testing_pending_commission_payable = 0;
                     $user->testing_all_time_commission = $user->all_time_commission + $data[3];
                     $user->save();
@@ -116,11 +118,12 @@ class UpdateLastPaidFromCSV extends Command {
         }
     }
 
-    public function CalculateUserPendingCommissions($user) {
+    public function CalculateUserPendingCommissions($user,$paid_amount) {
         $now = Carbon::now();
         $now = $now->toDateTimeString();
         $current_comms_stripe = 0;
         $current_comms_paypal = 0;
+        $final_comms =0;
 
         echo "Time now is: " . $now . "\n";
 
@@ -172,7 +175,8 @@ class UpdateLastPaidFromCSV extends Command {
                 } elseif ($referral_paypal1_charge->amount == "74.0000" && $user->tier >= 2) {
                     $current_comms_paypal = $current_comms_paypal + 40;
                 }
-            } if ($referral_paypal1_charge->subscription == "0297" && $user->tier >= 12) {
+            }
+            if ($referral_paypal1_charge->subscription == "0297" && $user->tier >= 12) {
                 $current_comms_paypal = $current_comms_paypal + 50;
             }
             if ($referral_paypal1_charge->subscription_id == "MX370" && ($user->tier == 3 || $user->tier == 13)) {
@@ -188,10 +192,11 @@ class UpdateLastPaidFromCSV extends Command {
             }
         }
 
-        $user->testing_pending_commission = $current_comms_stripe + $current_comms_paypal - $user->paid;
+        $final_comms = $current_comms_stripe + $current_comms_paypal - $paid_amount;
+        $user->testing_pending_commission = $final_comms;
+        echo "Updated testing_pending_commission to: " . $final_comms . "\n";
         $user->save();
-        echo "current_comms_paypal = " . $current_comms_stripe . "\n";
-        echo "Updated testing_pending_commission to: " . $user->testing_pending_commission . "\n";
+        echo "current_comms_paypal = " . $current_comms_paypal . "\n";
     }
 
 }
