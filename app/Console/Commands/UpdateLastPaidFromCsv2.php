@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\User;
 use Carbon\Carbon;
 use App\PaypalCharges;
+use App\GetReferralChargesOfUser;
 
 class UpdateLastPaidFromCsv2 extends Command {
 
