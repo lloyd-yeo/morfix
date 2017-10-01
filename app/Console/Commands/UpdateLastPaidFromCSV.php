@@ -57,7 +57,8 @@ class UpdateLastPaidFromCSV extends Command {
             if ($user !== NULL) {
                 if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
                     $paid_amount = $data[3];
-                    $this->CalculateUserPendingCommissions($user,$paid_amount);
+                    $tier = $user->tier;
+                    $this->CalculateUserPendingCommissions($user,$paid_amount,$tier);
                     $user->testing_last_pay_out_date = $last_pay_out_coms_date;
                     $this->UpdateUserChargesPaid($user);
                     $user->paid_amount = $data[3];
@@ -118,7 +119,7 @@ class UpdateLastPaidFromCSV extends Command {
         }
     }
 
-    public function CalculateUserPendingCommissions($user,$paid_amount) {
+    public function CalculateUserPendingCommissions($user,$paid_amount,$tier) {
         $now = Carbon::now();
         $now = $now->toDateTimeString();
         $current_comms_stripe = 0;
@@ -141,21 +142,21 @@ class UpdateLastPaidFromCSV extends Command {
 
         foreach ($referral_stripe1_charges as $referral_stripe1_charge) {
 
-            if ($referral_stripe1_charge->subscription_id == "0137" && $user->tier >= 2) {
+            if ($referral_stripe1_charge->subscription_id == "0137" && $tier >= 2) {
                 $current_comms_stripe = $current_comms_stripe + 20;
             }
-            if ($referral_stripe1_charge->subscription_id == "0297" && $user->tier >= 12) {
+            if ($referral_stripe1_charge->subscription_id == "0297" && $tier >= 12) {
                 $current_comms_stripe = $current_comms_stripe + 50;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX370" && ($user->tier == 3 || $user->tier == 13)) {
+            if ($referral_stripe1_charge->subscription_id == "MX370" && ($tier == 3 || $tier == 13)) {
                 $current_comms_stripe = $current_comms_stripe + 200;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX670" && $user->tier >= 22) {
+            if ($referral_stripe1_charge->subscription_id == "MX670" && $tier >= 22) {
                 $current_comms_stripe = $current_comms_stripe + 268;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX970" && $user->tier >= 22) {
+            if ($referral_stripe1_charge->subscription_id == "MX970" && $tier >= 22) {
                 $current_comms_stripe = $current_comms_stripe + 500;
-            } else if ($referral_stripe1_charge->subscription_id == "MX297" && ($user->tier == 3 || $user->tier == 13)) {
+            } else if ($referral_stripe1_charge->subscription_id == "MX297" && ($tier == 3 || $tier == 13)) {
                 $current_comms_stripe = $current_comms_stripe + 118.8;
             }
         }
@@ -171,25 +172,25 @@ class UpdateLastPaidFromCSV extends Command {
         dump($referral_paypal1_charges);
         foreach ($referral_paypal1_charges as $referral_paypal1_charge) {
 
-            if ($referral_paypal1_charge->subscription == "0137" && $user->tier >= 2) {
+            if ($referral_paypal1_charge->subscription_id == "0137" && $tier >= 2) {
                 if ($referral_paypal1_charge->amount == "37.0000") {
                     $current_comms_paypal = $current_comms_paypal + 20;
-                } elseif ($referral_paypal1_charge->amount == "74.0000" && $user->tier >= 2) {
+                } elseif ($referral_paypal1_charge->amount == "74.0000" && $tier >= 2) {
                     $current_comms_paypal = $current_comms_paypal + 40;
                 }
             }
-            if ($referral_paypal1_charge->subscription == "0297" && $user->tier >= 12) {
+            if ($referral_paypal1_charge->subscription_id == "0297" && $tier >= 12) {
                 $current_comms_paypal = $current_comms_paypal + 50;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX370" && ($user->tier == 3 || $user->tier == 13)) {
+            if ($referral_paypal1_charge->subscription_id == "MX370" && ($tier == 3 || $tier == 13)) {
                 $current_comms_paypal = $current_comms_paypal + 200;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX670" && $user->tier >= 22) {
+            if ($referral_paypal1_charge->subscription_id == "MX670" && $tier >= 22) {
                 $current_comms_paypal = $current_comms_paypal + 268;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX970" && $user->tier >= 22) {
+            if ($referral_paypal1_charge->subscription_id == "MX970" && $tier >= 22) {
                 $current_comms_paypal = $current_comms_paypal + 500;
-            } else if ($referral_paypal1_charge->subscription_id == "MX297" && ($user->tier == 3 || $user->tier == 13)) {
+            } else if ($referral_paypal1_charge->subscription_id == "MX297" && ($tier == 3 || $tier == 13)) {
                 $current_comms_paypal = $current_comms_paypal + 118.8;
             }
         }
