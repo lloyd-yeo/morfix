@@ -101,7 +101,7 @@ class UpdateLastPaidFromCSV extends Command {
                         ->update(['testing_commission_given' => 1]);
                 //update test_commission_given to commission_given after verifying code 
 
-                echo "updated testing_commission: " . $referral_stripe_charge->referrer_email . "\n";
+             //   echo "updated testing_commission: " . $referral_stripe_charge->referrer_email . "\n";
             }
 
             $referral_paypal_charges = PaypalCharges::where('referrer_email', $user->email)
