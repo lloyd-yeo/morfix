@@ -138,26 +138,24 @@ class UpdateLastPaidFromCSV extends Command {
 
         foreach ($referral_stripe1_charges as $referral_stripe1_charge) {
 
-            if ($referral_stripe1_charge->subscription_id == "0137") {
+            if ($referral_stripe1_charge->subscription_id == "0137" && $user->tier >= 2) {
                 $current_comms_stripe = $current_comms_stripe + 20;
             }
-            if ($referral_stripe1_charge->subscription_id == "0297") {
+            if ($referral_stripe1_charge->subscription_id == "0297" && $user->tier >= 12) {
                 $current_comms_stripe = $current_comms_stripe + 50;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX370") {
+            if ($referral_stripe1_charge->subscription_id == "MX370" && ($user->tier == 3 || $user->tier == 13)) {
                 $current_comms_stripe = $current_comms_stripe + 200;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX670") {
+            if ($referral_stripe1_charge->subscription_id == "MX670" && $user->tier >= 22) {
                 $current_comms_stripe = $current_comms_stripe + 268;
             }
-            if ($referral_stripe1_charge->subscription_id == "MX970") {
+            if ($referral_stripe1_charge->subscription_id == "MX970"  && $user->tier >= 22) {
                 $current_comms_stripe = $current_comms_stripe + 500;
-            } else if ($referral_stripe1_charge->subscription_id == "MX297") {
+            } else if ($referral_stripe1_charge->subscription_id == "MX297" && ($user->tier == 3 || $user->tier == 13)) {
                 $current_comms_stripe = $current_comms_stripe + 118.8;
             }
         }
-        $user->testing_pending_commission = $current_comms_stripe;
-        $user->save();
         echo "current_comms_stripe = " . $current_comms_stripe . "\n";
 
         $referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
@@ -167,24 +165,24 @@ class UpdateLastPaidFromCSV extends Command {
                 ->get();
         foreach ($referral_paypal1_charges as $referral_paypal1_charge) {
 
-            if ($referral_paypal1_charge->subscription == "0137") {
+            if ($referral_paypal1_charge->subscription == "0137" && $user->tier >= 2) {
                 if ($referral_paypal1_charge->amount == "37.0000") {
                     $current_comms_paypal = $current_comms_paypal + 20;
-                } elseif ($referral_paypal1_charge->amount == "74.0000") {
+                } elseif ($referral_paypal1_charge->amount == "74.0000" && $user->tier >= 2) {
                     $current_comms_paypal = $current_comms_paypal + 40;
                 }
-            } if ($referral_paypal1_charge->subscription == "0297") {
+            } if ($referral_paypal1_charge->subscription == "0297" && $user->tier >= 12) {
                 $current_comms_paypal = $current_comms_paypal + 50;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX370") {
+            if ($referral_paypal1_charge->subscription_id == "MX370" && ($user->tier == 3 || $user->tier == 13)) {
                 $current_comms_paypal = $current_comms_paypal + 200;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX670") {
+            if ($referral_paypal1_charge->subscription_id == "MX670"  && $user->tier >= 22) {
                 $current_comms_paypal = $current_comms_paypal + 268;
             }
-            if ($referral_paypal1_charge->subscription_id == "MX970") {
+            if ($referral_paypal1_charge->subscription_id == "MX970"  && $user->tier >= 22) {
                 $current_comms_paypal = $current_comms_paypal + 500;
-            } else if ($referral_paypal1_charge->subscription_id == "MX297") {
+            } else if ($referral_paypal1_charge->subscription_id == "MX297" && ($user->tier == 3 || $user->tier == 13)) {
                 $current_comms_paypal = $current_comms_paypal + 118.8;
             }
         }
