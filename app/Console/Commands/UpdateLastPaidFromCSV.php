@@ -55,9 +55,9 @@ class UpdateLastPaidFromCSV extends Command {
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
                 if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
+                    $user->paid_amount = $data[3];
                     $this->CalculateUserPendingCommissions($user);
                     $user->testing_last_pay_out_date = $last_pay_out_coms_date;
-                    $user->paid_amount = $data[3];
                     $this->UpdateUserChargesPaid($user);
                     $user->testing_pending_commission_payable = 0;
                     $user->testing_all_time_commission = $user->all_time_commission + $data[3];
@@ -185,9 +185,11 @@ class UpdateLastPaidFromCSV extends Command {
                 $current_comms_paypal = $current_comms_paypal + 118.8;
             }
         }
-        $user->testing_pending_commission = $user->testing_pending_commision + $current_comms_paypal;
+        
+        $user->testing_pending_commission = $current_comms_stripe + $current_comms_paypal - $user->paid;
         $user->save();
         echo "current_comms_paypal = " . $current_comms_stripe . "\n";
+        echo "Updated testing_pending_commission to: " . $user->testing_pending_commission . "\n";
     }
 
 }
