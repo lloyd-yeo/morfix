@@ -61,11 +61,13 @@ class UpdateLastPaidFromCSV extends Command {
                     $this->UpdateUserChargesPaid($user);
                     $user->testing_pending_commission_payable = 0;
                     $user->testing_all_time_commission = $user->all_time_commission + $data[3];
-                    $user->testing_pending_commission = $user->testing_pending_commission - $data[3];
                     $user->save();
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
                     echo "Updated [$current_email] last pay out amount to [$data[3]]\n";
                     echo "Updated [$current_email] pending commission to to [$user->testing_pending_commission]\n";
+                }
+                else {
+                    echo $user->email . "is not eligible for current payout\n";
                 }
             }
         }
@@ -75,7 +77,7 @@ class UpdateLastPaidFromCSV extends Command {
         $recent_pay_out_date = Carbon::create(2017, 9, 25, 0, 0, 0, 'Asia/Singapore');
 //        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
-        if ($user->last_pay_out_date == $recent_pay_out_date) {
+        if ($user->testing_last_pay_out_date == $recent_pay_out_date) {
 
             $end_date = Carbon::parse($recent_pay_out_date)->subMonth()->endOfMonth();
             echo "Recent payout date:" . $recent_pay_out_date . "\n";
@@ -185,7 +187,7 @@ class UpdateLastPaidFromCSV extends Command {
                 $current_comms_paypal = $current_comms_paypal + 118.8;
             }
         }
-        
+
         $user->testing_pending_commission = $current_comms_stripe + $current_comms_paypal - $user->paid;
         $user->save();
         echo "current_comms_paypal = " . $current_comms_stripe . "\n";
