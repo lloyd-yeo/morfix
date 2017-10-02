@@ -162,13 +162,13 @@ class InteractionLike implements ShouldQueue {
                     if ($this->like_quota > 0) {
                         echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
                         //Get the feed from the targeted hashtag.
-                        
-                        if (empty(trim($target_hashtag->hashtag))){
+
+                        if (empty(trim($target_hashtag->hashtag))) {
                             $target_hashtag->invalid = 1;
                             $target_hashtag->save();
                             continue;
                         }
-                        
+
                         $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                         foreach ($hashtag_feed->items as $item) {
                             $user_to_like = $item->user;
@@ -248,10 +248,10 @@ class InteractionLike implements ShouldQueue {
 
                                         //Foreach media posted by the user.
                                         foreach ($user_items as $item) {
-                                            if ($this->checkDuplicateByMediaId($item)) {
-                                                continue;
-                                            }
                                             if ($this->like_quota > 0) {
+                                                if ($this->checkDuplicateByMediaId($item)) {
+                                                    continue;
+                                                }
                                                 if (!$this->like($user_to_like, $item)) {
                                                     continue;
                                                 }
@@ -284,6 +284,8 @@ class InteractionLike implements ShouldQueue {
                                                 continue;
                                             }
                                         }
+                                    } else {
+                                        exit;
                                     }
                                 }
                             }
@@ -326,6 +328,7 @@ class InteractionLike implements ShouldQueue {
             try {
                 $this->like_quota = $this->like_quota - 1;
                 echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
+                echo("\n" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
                 $like_log = new InstagramProfileLikeLog;
                 $like_log->insta_username = $ig_profile->insta_username;
                 $like_log->target_username = $user_to_like->username;
