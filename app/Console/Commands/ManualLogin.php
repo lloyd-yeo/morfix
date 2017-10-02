@@ -65,7 +65,7 @@ class ManualLogin extends Command {
         $instagram->setProxy($proxy->proxy);
         try {
             $explorer_response = $instagram->login($ig_username, $ig_password);
-            #dd($explorer_response);
+            dd($explorer_response);
         } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
             dump($emptyresponse_ex);
         }

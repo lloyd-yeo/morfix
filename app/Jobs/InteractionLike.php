@@ -162,6 +162,13 @@ class InteractionLike implements ShouldQueue {
                     if ($this->like_quota > 0) {
                         echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
                         //Get the feed from the targeted hashtag.
+                        
+                        if (empty(trim($target_hashtag->hashtag))){
+                            $target_hashtag->invalid = 1;
+                            $target_hashtag->save();
+                            continue;
+                        }
+                        
                         $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                         foreach ($hashtag_feed->items as $item) {
                             $user_to_like = $item->user;
