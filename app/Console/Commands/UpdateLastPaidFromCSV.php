@@ -58,9 +58,9 @@ class UpdateLastPaidFromCSV extends Command {
             if ($user !== NULL) {
                 if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
                     $tier = $user->tier;
+                    $user->last_pay_out_date = $last_pay_out_coms_date;
                     $this->UpdateUserChargesPaid($user);
                     $this->CalculateUserPendingCommissions($user,$paid_amount,$tier);
-                    $user->last_pay_out_date = $last_pay_out_coms_date;
                     $user->paid_amount = $data[3];
                     $user->pending_commission_payable = 0;
                     $user->all_time_commission = $user->all_time_commission + $data[3];
