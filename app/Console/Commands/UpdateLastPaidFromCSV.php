@@ -58,16 +58,16 @@ class UpdateLastPaidFromCSV extends Command {
             if ($user !== NULL) {
                 if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
                     $tier = $user->tier;
-                    $this->CalculateUserPendingCommissions($user,$paid_amount,$tier);
-                    $user->testing_last_pay_out_date = $last_pay_out_coms_date;
+                    $user->last_pay_out_date = $last_pay_out_coms_date;
                     $this->UpdateUserChargesPaid($user);
+                    $this->CalculateUserPendingCommissions($user,$paid_amount,$tier);
                     $user->paid_amount = $data[3];
-                    $user->testing_pending_commission_payable = 0;
-                    $user->testing_all_time_commission = $user->all_time_commission + $data[3];
+                    $user->pending_commission_payable = 0;
+                    $user->all_time_commission = $user->all_time_commission + $data[3];
                     $user->save();
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
                     echo "Updated [$current_email] last pay out amount to [$data[3]]\n";
-                    echo "Updated [$current_email] pending commission to to [$user->testing_pending_commission]\n";
+                    echo "Updated [$current_email] pending commission to to [$user->pending_commission]\n";
                     $paid_amount = 0;
                     $tier = 0;
                 } else {
@@ -81,7 +81,7 @@ class UpdateLastPaidFromCSV extends Command {
         $recent_pay_out_date = Carbon::create(2017, 9, 25, 0, 0, 0, 'Asia/Singapore');
 //        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
-        if ($user->testing_last_pay_out_date == $recent_pay_out_date) {
+        if ($user->last_pay_out_date == $recent_pay_out_date) {
 
             $end_date = Carbon::parse($recent_pay_out_date)->subMonth()->endOfMonth();
             echo "Recent payout date:" . $recent_pay_out_date . "\n";
@@ -103,10 +103,10 @@ class UpdateLastPaidFromCSV extends Command {
             foreach ($referral_stripe_charges as $referral_stripe_charge) {
 
                 $charges = StripeCharge::where('charge_id', $referral_stripe_charge->charge_id)
-                        ->update(['testing_commission_given' => 1]);
-                //update test_commission_given to commission_given after verifying code 
+                        ->update(['commission_given' => 1]);
+                //update commission_given to commission_given after verifying code 
 
-             //   echo "updated testing_commission: " . $referral_stripe_charge->referrer_email . "\n";
+             //   echo "updated commission: " . $referral_stripe_charge->referrer_email . "\n";
             }
 
             $referral_paypal_charges = PaypalCharges::where('referrer_email', $user->email)
@@ -114,7 +114,7 @@ class UpdateLastPaidFromCSV extends Command {
                     ->where('status', 'Completed')
                     ->where('status', '!=', 'Refunded')
                     ->orderBy('time_stamp', 'desc')
-                    ->update(['testing_commission_given' => 1]);
+                    ->update(['commission_given' => 1]);
         } else {
 
             echo "User not paid in recent payout date \n";
@@ -134,7 +134,6 @@ class UpdateLastPaidFromCSV extends Command {
                 ->where('referrer_email', $user->email)
                 ->where('charge_created', '<', $now)
                 ->where('charge_refunded', 0)
-                ->where('testing_commission_given', 0)
                 ->where('commission_given', 0)
                 ->orderBy('charge_created', 'desc')
                 ->get();
@@ -165,7 +164,7 @@ class UpdateLastPaidFromCSV extends Command {
         echo "current_comms_stripe = " . $current_comms_stripe . "\n";
 
         $referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
-                ->where('testing_commission_given',0)
+                ->where('commission_given',0)
                 ->where('status', "Completed")
                 ->where('time_stamp' , '<', $now)
                 ->orderBy('time_stamp', 'desc')
@@ -197,8 +196,8 @@ class UpdateLastPaidFromCSV extends Command {
         }
 
         $final_comms = $current_comms_stripe + $current_comms_paypal;
-        $user->testing_pending_commission = $final_comms;
-        echo "Updated testing_pending_commission to: " . $final_comms . "\n";
+        $user->pending_commission = $final_comms;
+        echo "Updated pending_commission to: " . $final_comms . "\n";
         $user->save();
         echo "current_comms_paypal = " . $current_comms_paypal . "\n";
     }

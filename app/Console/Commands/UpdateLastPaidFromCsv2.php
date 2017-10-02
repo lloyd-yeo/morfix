@@ -66,17 +66,17 @@ class UpdateLastPaidFromCsv2 extends Command {
             foreach ($referral_stripe_charges as $referral_stripe_charge) {
 
                 $charges = StripeCharge::where('charge_id', $referral_stripe_charge->charge_id)
-                        ->update(['testing_commission_given_july' => 1]);
+                        ->update(['commission_given' => 1]);
                 //update test_commission_given to commission_given after verifying code 
 
-                echo "updated testing_commission for july: " . $referral_stripe_charge->referrer_email . "\n";
+                echo "updated commission for july: " . $referral_stripe_charge->referrer_email . "\n";
             }
                      $referral_paypal_charges = PaypalCharges::where('referrer_email', $user->email)
                     ->where('time_stamp', '<', $end_date)
                     ->where('status', 'Completed')
                     ->where('status', '!=', 'Refunded')
                     ->orderBy('time_stamp', 'desc')
-                    ->update(['testing_commission_given_july' => 1]);
+                    ->update(['commission_given' => 1]);
                      echo "Updated for charges paid for " . $current_email;
                 }
             }
