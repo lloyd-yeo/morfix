@@ -67,6 +67,7 @@ class UpdatePendingCommissionPayableNew extends Command {
             $time_start = microtime(true);
 
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user)')
+                    ->where('tier', '>=', 2)
                     ->orderBy('last_pay_out_date', 'desc')
 //                    ->take(3)
                     ->get();
