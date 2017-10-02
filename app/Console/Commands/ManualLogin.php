@@ -61,7 +61,7 @@ class ManualLogin extends Command {
         $instagram = InstagramHelper::initInstagram();
 
         $proxy = Proxy::inRandomOrder()->first();
-
+        $this->line("Using proxy [" . $proxy->proxy . "]");
         $instagram->setProxy($proxy->proxy);
         try {
             $explorer_response = $instagram->login($ig_username, $ig_password);
