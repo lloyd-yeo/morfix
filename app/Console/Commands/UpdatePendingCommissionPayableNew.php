@@ -54,7 +54,6 @@ class UpdatePendingCommissionPayableNew extends Command {
 
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
-                Log::info("Retrieved user [" . $user->email . "] [" . $user->tier . "]\n");
                 $this->UpdateUserChargesPaid($user);    //update charges to paid
 
                 $this->UpdateUserPayableCommissions($user); //update user pending_commissions_payable
