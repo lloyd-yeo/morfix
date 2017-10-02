@@ -324,7 +324,7 @@ class InteractionFollowHelper {
         $ig_profile->save();
     }
 
-    public static function handleFollowInstagramException($ex, $ig_profile) {
+    public static function handleFollowInstagramException($ig_profile, $ex) {
         $ig_username = $ig_profile->insta_username;
         dump($ex);
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
