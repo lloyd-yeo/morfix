@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\GetReferralChargesOfUser;
 use App\StripeCharge;
+use App\PaypalCharges;
 
 class UpdatePendingCommissionPayableNew extends Command {
 
