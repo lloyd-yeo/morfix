@@ -135,7 +135,7 @@ class UpdateLastPaidFromCSV extends Command {
                 ->where('referrer_email', $user->email)
                 ->where('charge_created', '<', $now)
                 ->where('charge_refunded', 0)
-                ->where('testing_commission_given_july', 0)
+                ->where('testing_commission_given', 0)
                 ->where('commission_given', 0)
                 ->orderBy('charge_created', 'desc')
                 ->get();
@@ -166,7 +166,7 @@ class UpdateLastPaidFromCSV extends Command {
         echo "current_comms_stripe = " . $current_comms_stripe . "\n";
 
         $referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
-                ->where('testing_commission_given_july',0)
+                ->where('testing_commission_given',0)
                 ->where('status', "Completed")
                 ->where('time_stamp' , '<', $now)
                 ->orderBy('time_stamp', 'desc')
