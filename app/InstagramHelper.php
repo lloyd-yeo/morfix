@@ -47,7 +47,6 @@ class InstagramHelper {
         echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 
         try {
-
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
@@ -68,6 +67,8 @@ class InstagramHelper {
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
                 $message .= " with InstagramException\n";
             }
+            
+            dump($network_ex);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             
         } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
@@ -87,9 +88,15 @@ class InstagramHelper {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
             $message = "IncorrectPasswordException\n";
+        } catch (\InstagramAPI\Exception\ChallengeRequiredException $challengerequired_ex) {
+            $ig_profile->checkpoint_required = 1;
+            $ig_profile->save();
+            $message = "ChallengeRequiredException\n";
         }
         if (!$flag) {
             echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
+        } else {
+            echo '[' . $ig_profile->insta_username . '] has been logged in.' . "\n";
         }
         return $flag;
     }
@@ -113,6 +120,12 @@ class InstagramHelper {
             $target_username->save();
         }
         return $username_id;
+    }
+
+    public static function getTargetUsernameFollowers($instagram, $target_username, $username_id) {
+        $user_follower_response = $instagram->people->getFollowers($username_id);
+        $users_to_follow = $user_follower_response->users;
+        return $users_to_follow;
     }
 
     public static function getUserFeed(Instagram $instagram, $user_to_like) {
@@ -141,6 +154,16 @@ class InstagramHelper {
             return NULL;
         }
     }
+    
+    public static function getHashtagFeed(Instagram $instagram, $hashtag) {
+        $hashtag_feed = NULL;
+        try {
+            $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+        } catch (\InstagramAPI\Exception\NotFoundException $ex) {
+            return NULL;
+        }
+        return $hashtag_feed;
+    }
 
     public static function validForInteraction($ig_profile) {
         if ($ig_profile->checkpoint_required == 1) {
@@ -164,6 +187,22 @@ class InstagramHelper {
         }
 
         return true;
+    }
+
+    public static function randomizeUseHashtags(Instagram $instagram, InstagramProfile $ig_profile, $targeted_hashtags, $targeted_usernames) {
+        $use_hashtags = rand(0, 1);
+        if ($use_hashtags == 1 && count($targeted_hashtags) == 0) {
+            $use_hashtags = 0;
+        } else if ($use_hashtags == 0 && count($targeted_usernames) == 0) {
+            $use_hashtags = 1;
+        }
+
+        if (count($targeted_hashtags) == 0 && count($targeted_usernames) == 0) {
+            $use_hashtags = 2;
+        }
+
+        echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
+        return $use_hashtags;
     }
 
 }

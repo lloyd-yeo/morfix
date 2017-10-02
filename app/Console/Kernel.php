@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel {
         Commands\UpdatePendingCommissionPayableNew::class,
         Commands\UpdatePaypalCharges::class,
         Commands\UpdateLastPaidFromCSV::class,
+        Commands\UpdateLastPaidFromCsv2::class,
         Commands\GetNewDmJob::class,
         Commands\GetDm::class,
         Commands\SendDmJob::class,
@@ -69,8 +70,15 @@ class Kernel extends ConsoleKernel {
         Commands\MigrateLikeLogs::class,
         Commands\MigrateComments::class,
         Commands\UpdateUserTotalInteractionStatistics::class,
+        Commands\GenerateStripeReferralChargesCsv::class,
         Commands\RefreshStripeCustomerDetails::class,
         Commands\RefreshStripeSubscription::class,
+        Commands\RefreshInteractionsQuota::class,
+        Commands\CarbonTester::class,
+        Commands\CheckDuplicateCharges::class,
+        Commands\UpdateNextInteractionTime::class,
+        Commands\UpdateTrialActivation::class,
+        Commands\UpdateUserTargets::class,
     ];
 
     /**

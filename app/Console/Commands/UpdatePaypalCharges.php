@@ -9,6 +9,7 @@ use PayPal\Api\Agreement;
 use App\PaypalCharges;
 use App\PaypalAgreement;
 use Carbon\Carbon;
+use App\GetReferralForUser;
 
 class UpdatePaypalCharges extends Command {
 
@@ -54,11 +55,11 @@ class UpdatePaypalCharges extends Command {
                 ->get();
         foreach ($users as $user) {
             $agreementId = $user->agreement_id;
-
+//                $agreementId = "I-EEL8GM4YVW3E";
             $params = array('start_date' => date('Y-m-d', strtotime('-15 years')), 'end_date' => date('Y-m-d', strtotime('+30 days')));
             try {
                 $results = Agreement::searchTransactions($agreementId, $params, $this->apiContext)->agreement_transaction_list;
-
+              // dump($results);
                 foreach ($results as $result) {
                     $check = PaypalCharges::where('transaction_id', $result->transaction_id)
                             ->where('status', $result->status)
@@ -72,10 +73,12 @@ class UpdatePaypalCharges extends Command {
                         $charge->transaction_type = $result->transaction_type;
                         $charge->payer_email = $result->payer_email;
                         $charge->payer_name = $result->payer_name;
-                        $charge->time_stamp = Carbon::parse($result->timestamp)->setTimezone('GMT+8')->toDateTimeString();
-                        if (!is_null($result->amount)) {
+                        $timestamp = $result->time_stamp;
+                        $timestamp = str_replace("T", " ", $timestamp);
+                        $timestamp = str_replace("Z", "", $timestamp);
+                        $charge->time_stamp = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp)->setTimezone('Asia/Singapore')->toDateTimeString();
+                        if ($result->amount !== NULL) {
                             $charge->amount = $result->amount->value;
-
                             switch ($result->amount->value) {
                                 case "37.00":
                                     $charge->subscription_id = "0137";
@@ -88,17 +91,19 @@ class UpdatePaypalCharges extends Command {
                                     break;
                             }
                         }
-                        $referrer = GetReferralForUser::fromView()
+                        $referrers = GetReferralForUser::fromView()
                                 ->where('referred', $user->email)
                                 ->first();
-                        $charge->referrer_email = $referrer->referrer;
+                        if ($referrers !== NULL){
+                        $charge->referrer_email = $referrers->referrer;
+                        }
                         echo 'new transaction saved: [' . $result->status . '] for [' . $user->email . "]\n";
                         $charge->save();
                     }
                 }
             } catch (\Exception $ex) {
                 // NOTE: PLEASE DO NOT USE RESULTPRINTER CLASS IN YOUR ORIGINAL CODE. FOR SAMPLE ONLY
-                $this->error($ex->getMessage());
+                dump($ex);
             }
         }
         $time_end = microtime(true);
