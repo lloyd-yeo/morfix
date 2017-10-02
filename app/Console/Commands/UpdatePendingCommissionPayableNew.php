@@ -115,7 +115,7 @@ class UpdatePendingCommissionPayableNew extends Command {
             foreach ($referral_charges as $referral_charge) {
 
                 $charges = StripeCharge::where('charge_id', $referral_charge->charge_id)
-                        ->update(['testing_commission_given' => 1]);
+                        ->update(['commission_given' => 1]);
                 //update test_commission_given to commission_given after verifying code 
             }
             echo "updated testing_commission: " . $user->email . " till $end_date \n";
@@ -124,7 +124,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                     ->where('time_stamp', '<', $end_date)
                     ->where('status', 'Completed')
                     ->orderBy('time_stamp', 'desc')
-                    ->update(['testing_commission_given' => 1]);
+                    ->update(['commission_given' => 1]);
         } else {
 
             echo "$user->email not paid in recent payout date \n";
@@ -209,7 +209,7 @@ class UpdatePendingCommissionPayableNew extends Command {
 
             $final_comms = $current_comms_stripe + $current_comms_paypal;
 
-            $user->testing_pending_commission_payable = $final_comms;
+            $user->pending_commission_payable = $final_comms;
             //Update testing_pending_commission_payable to pending_commission_payable after verifying code
             $user->save();
             echo "updated " . $user->email . "payable commissions to " . $final_comms . "\n";
@@ -285,7 +285,7 @@ class UpdatePendingCommissionPayableNew extends Command {
 
             $final_comms = $current_comms_stripe + $current_comms_paypal;
 
-            $user->testing_pending_commission_payable = $final_comms;
+            $user->pending_commission_payable = $final_comms;
             //Update testing_pending_commission_payable to pending_commission_payable after verifying code
             $user->save();
 
