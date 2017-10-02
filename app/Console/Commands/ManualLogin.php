@@ -44,7 +44,6 @@ class ManualLogin extends Command {
      * @return mixed
      */
     public function handle() {
-        DB::reconnect();
         $ig_username = $this->argument("ig_username");
         $ig_password = $this->argument("ig_password");
 

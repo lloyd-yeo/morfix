@@ -253,7 +253,7 @@ class InteractionFollowHelper {
         return 0;
     }
 
-    public static function handleUnfollowInstagramException($ex, $ig_profile, $user_to_unfollow) {
+    public static function handleUnfollowInstagramException($ig_profile, $ex, $user_to_unfollow) {
         $ig_username = $ig_profile->insta_username;
         dump($ex);
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
