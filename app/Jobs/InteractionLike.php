@@ -135,23 +135,26 @@ class InteractionLike implements ShouldQueue {
 
                                     //Foreach media posted by the user.
                                     foreach ($user_items as $item) {
-                                        if ($this->checkDuplicateByMediaId($item)) {
-                                            continue;
-                                        }
                                         if ($this->like_quota > 0) {
+                                            if ($this->checkDuplicateByMediaId($item)) {
+                                                continue;
+                                            }
                                             if (!$this->like($user_to_like, $item)) {
                                                 break;
                                             }
                                         } else {
+                                            echo "[146] Exiting..."; 
                                             exit;
                                         }
                                     }
                                 } else {
+                                    echo "[151] Exiting..."; 
                                     exit;
                                 }
                             }
                         } while ($next_max_id !== NULL && $this->like_quota > 0);
                     } else {
+                        echo "[157] Exiting..."; 
                         exit;
                     }
                 }
@@ -180,11 +183,13 @@ class InteractionLike implements ShouldQueue {
                                         }
                                     }
                                 } else {
+                                    echo "[186] Exiting..."; 
                                     exit;
                                 }
                             }
                         }
                     } else {
+                        echo "[192] Exiting..."; 
                         exit;
                     }
                 }
@@ -256,10 +261,12 @@ class InteractionLike implements ShouldQueue {
                                                     continue;
                                                 }
                                             } else {
+                                                echo "[264] Exiting..."; 
                                                 exit;
                                             }
                                         }
                                     } else {
+                                        echo "[269] Exiting..."; 
                                         exit;
                                     }
                                 }
