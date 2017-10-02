@@ -88,6 +88,10 @@ class InstagramHelper {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
             $message = "IncorrectPasswordException\n";
+        } catch (\InstagramAPI\Exception\ChallengeRequiredException $challengerequired_ex) {
+            $ig_profile->checkpoint_required = 1;
+            $ig_profile->save();
+            $message = "ChallengeRequiredException\n";
         }
         if (!$flag) {
             echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
