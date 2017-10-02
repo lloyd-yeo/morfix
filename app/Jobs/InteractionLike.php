@@ -144,18 +144,18 @@ class InteractionLike implements ShouldQueue {
                                             }
                                         } else {
                                             echo "[146] Exiting..."; 
-                                            exit;
+                                            return;
                                         }
                                     }
                                 } else {
                                     echo "[151] Exiting..."; 
-                                    exit;
+                                    return;
                                 }
                             }
                         } while ($next_max_id !== NULL && $this->like_quota > 0);
                     } else {
                         echo "[157] Exiting..."; 
-                        exit;
+                        return;
                     }
                 }
             } else {
@@ -184,13 +184,13 @@ class InteractionLike implements ShouldQueue {
                                     }
                                 } else {
                                     echo "[186] Exiting..."; 
-                                    exit;
+                                    return;
                                 }
                             }
                         }
                     } else {
                         echo "[192] Exiting..."; 
-                        exit;
+                        return;
                     }
                 }
             }
@@ -262,12 +262,12 @@ class InteractionLike implements ShouldQueue {
                                                 }
                                             } else {
                                                 echo "[264] Exiting..."; 
-                                                exit;
+                                                return;
                                             }
                                         }
                                     } else {
                                         echo "[269] Exiting..."; 
-                                        exit;
+                                        return;
                                     }
                                 }
                             } while ($next_max_id !== NULL && $this->like_quota > 0);
@@ -292,7 +292,7 @@ class InteractionLike implements ShouldQueue {
                                             }
                                         }
                                     } else {
-                                        exit;
+                                        return;
                                     }
                                 }
                             }
@@ -300,7 +300,7 @@ class InteractionLike implements ShouldQueue {
                     }
                 }
             } else {
-                exit;
+                return;
             }
         }
     }
@@ -504,7 +504,7 @@ class InteractionLike implements ShouldQueue {
             $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
             $ig_profile->save();
             echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
-            exit;
+            return;
         } else if ($ex instanceof \InstagramAPI\Exception\FeedbackRequiredException) {
             if ($ex->hasResponse()) {
                 $feedback_required_response = $ex->getResponse();
@@ -514,20 +514,20 @@ class InteractionLike implements ShouldQueue {
                     $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->save();
                     echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
-                    exit;
+                    return;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
                     echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
-                    exit;
+                    return;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->auto_like_ban = 1;
                     $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->save();
                     echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
-                    exit;
+                    return;
                 }
             }
             $ig_profile->error_msg = $ex->getMessage();
@@ -552,7 +552,7 @@ class InteractionLike implements ShouldQueue {
             $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(2);
             $ig_profile->save();
             echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
-            exit;
+            return;
         }
 
         if ($ex->hasResponse()) {
