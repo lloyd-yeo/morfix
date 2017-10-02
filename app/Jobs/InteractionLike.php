@@ -143,18 +143,18 @@ class InteractionLike implements ShouldQueue {
                                                 break;
                                             }
                                         } else {
-                                            echo "[146] Exiting..."; 
+                                            echo "\n\n[146] Exiting...\n\n"; 
                                             return;
                                         }
                                     }
                                 } else {
-                                    echo "[151] Exiting..."; 
+                                    echo "\n\n[151] Exiting...\n\n"; 
                                     return;
                                 }
                             }
                         } while ($next_max_id !== NULL && $this->like_quota > 0);
                     } else {
-                        echo "[157] Exiting..."; 
+                        echo "\n\n[157] Exiting...\n\n"; 
                         return;
                     }
                 }
@@ -183,13 +183,13 @@ class InteractionLike implements ShouldQueue {
                                         }
                                     }
                                 } else {
-                                    echo "[186] Exiting..."; 
+                                    echo "\n\n[186] Exiting...\n\n"; 
                                     return;
                                 }
                             }
                         }
                     } else {
-                        echo "[192] Exiting..."; 
+                        echo "\n\n[192] Exiting...\n\n"; 
                         return;
                     }
                 }
@@ -261,12 +261,12 @@ class InteractionLike implements ShouldQueue {
                                                     continue;
                                                 }
                                             } else {
-                                                echo "[264] Exiting..."; 
+                                                echo "\n\n[264] Exiting...\n\n"; 
                                                 return;
                                             }
                                         }
                                     } else {
-                                        echo "[269] Exiting..."; 
+                                        echo "\n\n[269] Exiting...\n\n"; 
                                         return;
                                     }
                                 }
