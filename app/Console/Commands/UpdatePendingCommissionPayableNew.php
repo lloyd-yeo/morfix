@@ -101,7 +101,7 @@ class UpdatePendingCommissionPayableNew extends Command {
             $referral_charges = GetReferralChargesOfUser::fromView()
                     ->where('referrer_email', $user->email)
                     ->where('charge_created', '<', $end_date)
-                    ->where('charge_given', 0)
+                    ->where('commission_given', 0)
                     ->where('charge_refunded', 0)
                     ->orderBy('charge_created', 'desc')
                     ->get();
@@ -220,6 +220,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                     ->where('referrer_email', $user->email)
                     ->where('charge_created', '>=', $start_of_payout_month)
                     ->where('charge_created', '<', $this_month)
+                    ->where('commission_given', 0)
                     ->where('charge_refunded', 0)
                     ->orderBy('charge_created', 'desc')
                     ->get();
