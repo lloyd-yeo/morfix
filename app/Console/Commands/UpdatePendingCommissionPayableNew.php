@@ -42,6 +42,7 @@ class UpdatePendingCommissionPayableNew extends Command {
      */
     public function handle() {
         $users = array();
+        $tier = 0;
         if (NULL !== $this->argument("email")) {
             $time_start = microtime(true);
             $users = User::where('email', $this->argument("email"))
@@ -51,12 +52,12 @@ class UpdatePendingCommissionPayableNew extends Command {
 
 
             foreach ($users as $user) {
-
+                $tier = $user->tier;
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
                 $this->UpdateUserChargesPaid($user);    //update charges to paid
 
-                $this->UpdateUserPayableCommissions($user); //update user pending_commissions_payable
+                $this->UpdateUserPayableCommissions($user, $tier); //update user pending_commissions_payable
             }
 
             $time_end = microtime(true);
@@ -72,12 +73,12 @@ class UpdatePendingCommissionPayableNew extends Command {
             //Remove ->take(3) after verifying code
 
             foreach ($users as $user) {
-
+                $tier = $user->tier;
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
                 $this->UpdateUserChargesPaid($user);    //update charges to paid
 
-                $this->UpdateUserPayableCommissions($user); //update user pending_commissions_payable
+                $this->UpdateUserPayableCommissions($user, $tier); //update user pending_commissions_payable
             }
 
             $time_end = microtime(true);
@@ -129,7 +130,7 @@ class UpdatePendingCommissionPayableNew extends Command {
         }
     }
 
-    public function UpdateUserPayableCommissions($user) {
+    public function UpdateUserPayableCommissions($user, $tier) {
         $this_month = Carbon::now()->startOfMonth();
         $current_comms_stripe = 0;
         $current_comms_paypal = 0;
