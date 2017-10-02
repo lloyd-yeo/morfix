@@ -53,6 +53,7 @@ class UpdatePendingCommissionPayableNew extends Command {
 
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
+                Log::info("Retrieved user [" . $user->email . "] [" . $user->tier . "]\n");
                 $this->UpdateUserChargesPaid($user);    //update charges to paid
 
                 $this->UpdateUserPayableCommissions($user); //update user pending_commissions_payable
@@ -115,7 +116,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                         ->update(['testing_commission_given' => 1]);
                 //update test_commission_given to commission_given after verifying code 
             }
-            echo "updated testing_commission: " . $referral_charge->referred_email . " till $end_date \n";
+            echo "updated testing_commission: " . $user->email . " till $end_date \n";
 
             $referral_paypal_charges = PaypalCharges::where('referrer_email', $user->email)
                     ->where('time_stamp', '<', $end_date)
@@ -124,7 +125,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                     ->update(['testing_commission_given' => 1]);
         } else {
 
-            echo "User not paid in recent payout date \n";
+            echo "$user->email not paid in recent payout date \n";
         }
     }
 
@@ -216,7 +217,7 @@ class UpdatePendingCommissionPayableNew extends Command {
             echo "start of date of charges is " . $start_of_payout_month . "\n";
             echo "end of date of charges is before " . $this_month . "\n";
 
-            $referral_charges = GetReferralChargesOfUser::fromView()
+            $referral_stripe_charges = GetReferralChargesOfUser::fromView()
                     ->where('referrer_email', $user->email)
                     ->where('charge_created', '>=', $start_of_payout_month)
                     ->where('charge_created', '<', $this_month)
