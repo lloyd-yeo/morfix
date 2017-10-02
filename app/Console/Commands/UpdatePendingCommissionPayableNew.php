@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\GetReferralChargesOfUser;
 use App\StripeCharge;
+use App\PaypalCharges;
 
 class UpdatePendingCommissionPayableNew extends Command {
 
@@ -41,6 +42,7 @@ class UpdatePendingCommissionPayableNew extends Command {
      */
     public function handle() {
         $users = array();
+        $tier = 0;
         if (NULL !== $this->argument("email")) {
             $time_start = microtime(true);
             $users = User::where('email', $this->argument("email"))
@@ -50,12 +52,12 @@ class UpdatePendingCommissionPayableNew extends Command {
 
 
             foreach ($users as $user) {
-
+                $tier = $user->tier;
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
                 $this->UpdateUserChargesPaid($user);    //update charges to paid
 
-                $this->UpdateUserPayableCommissions($user); //update user pending_commissions_payable
+                $this->UpdateUserPayableCommissions($user, $tier); //update user pending_commissions_payable
             }
 
             $time_end = microtime(true);
@@ -71,12 +73,12 @@ class UpdatePendingCommissionPayableNew extends Command {
             //Remove ->take(3) after verifying code
 
             foreach ($users as $user) {
-
+                $tier = $user->tier;
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
                 $this->UpdateUserChargesPaid($user);    //update charges to paid
 
-                $this->UpdateUserPayableCommissions($user); //update user pending_commissions_payable
+                $this->UpdateUserPayableCommissions($user, $tier); //update user pending_commissions_payable
             }
 
             $time_end = microtime(true);
@@ -101,7 +103,7 @@ class UpdatePendingCommissionPayableNew extends Command {
             $referral_charges = GetReferralChargesOfUser::fromView()
                     ->where('referrer_email', $user->email)
                     ->where('charge_created', '<', $end_date)
-                    ->where('charge_given', 0)
+                    ->where('commission_given', 0)
                     ->where('charge_refunded', 0)
                     ->orderBy('charge_created', 'desc')
                     ->get();
@@ -115,7 +117,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                         ->update(['testing_commission_given' => 1]);
                 //update test_commission_given to commission_given after verifying code 
             }
-            echo "updated testing_commission: " . $referral_charge->referred_email . " till $end_date \n";
+            echo "updated testing_commission: " . $user->email . " till $end_date \n";
 
             $referral_paypal_charges = PaypalCharges::where('referrer_email', $user->email)
                     ->where('time_stamp', '<', $end_date)
@@ -124,11 +126,11 @@ class UpdatePendingCommissionPayableNew extends Command {
                     ->update(['testing_commission_given' => 1]);
         } else {
 
-            echo "User not paid in recent payout date \n";
+            echo "$user->email not paid in recent payout date \n";
         }
     }
 
-    public function UpdateUserPayableCommissions($user) {
+    public function UpdateUserPayableCommissions($user, $tier) {
         $this_month = Carbon::now()->startOfMonth();
         $current_comms_stripe = 0;
         $current_comms_paypal = 0;
@@ -216,10 +218,11 @@ class UpdatePendingCommissionPayableNew extends Command {
             echo "start of date of charges is " . $start_of_payout_month . "\n";
             echo "end of date of charges is before " . $this_month . "\n";
 
-            $referral_charges = GetReferralChargesOfUser::fromView()
+            $referral_stripe_charges = GetReferralChargesOfUser::fromView()
                     ->where('referrer_email', $user->email)
                     ->where('charge_created', '>=', $start_of_payout_month)
                     ->where('charge_created', '<', $this_month)
+                    ->where('commission_given', 0)
                     ->where('charge_refunded', 0)
                     ->orderBy('charge_created', 'desc')
                     ->get();
