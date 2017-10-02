@@ -159,7 +159,7 @@ class InstagramHelper {
         $hashtag_feed = NULL;
         try {
             $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
-        } catch (\Exception $ex) {
+        } catch (\InstagramAPI\Exception\NotFoundException $ex) {
             return NULL;
         }
         return $hashtag_feed;
