@@ -88,6 +88,10 @@ class InstagramHelper {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
             $message = "IncorrectPasswordException\n";
+        } catch (\InstagramAPI\Exception\ChallengeRequiredException $challengerequired_ex) {
+            $ig_profile->checkpoint_required = 1;
+            $ig_profile->save();
+            $message = "ChallengeRequiredException\n";
         }
         if (!$flag) {
             echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
@@ -154,8 +158,8 @@ class InstagramHelper {
     public static function getHashtagFeed(Instagram $instagram, $hashtag) {
         $hashtag_feed = NULL;
         try {
-            $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
-        } catch (\Exception $ex) {
+            $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+        } catch (\InstagramAPI\Exception\NotFoundException $ex) {
             return NULL;
         }
         return $hashtag_feed;

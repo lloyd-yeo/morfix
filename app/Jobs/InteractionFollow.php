@@ -111,7 +111,8 @@ class InteractionFollow implements ShouldQueue {
             } else {
                 echo "[" . $this->profile->insta_username . "] does not have enough <unfollow_quota> left. \n\n";
             }
-        } else if ($follow_mode === 0) { //follow segment
+        } 
+        else if ($follow_mode === 0) { //follow segment
             $throttle_limit = 40;
             $throttle_count = 0;
             //check quota first
@@ -157,7 +158,7 @@ class InteractionFollow implements ShouldQueue {
                     //use targeted hashtags
                     foreach ($this->targeted_hashtags as $target_hashtag) {
                         echo "[" . $this->profile->insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
-                        $hashtag_feed = InstagramHelper::getHashtagFeed($this->instagram, trim($target_hashtag));
+                        $hashtag_feed = InstagramHelper::getHashtagFeed($this->instagram, $target_hashtag);
                         if ($hashtag_feed !== NULL) {
                             foreach ($hashtag_feed->items as $item) {
                                 if ($throttle_limit < $throttle_count) {
@@ -210,10 +211,10 @@ class InteractionFollow implements ShouldQueue {
                         }
                     }
 
-                    $niche_hashtags = Niche::find($niche)->targetHashtags();
+                    $niche_hashtags = Niche::find($this->profile->niche)->targetHashtags();
                     foreach ($niche_hashtags as $target_hashtag) {
                         echo "[" . $this->profile->insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
-                        $hashtag_feed = InstagramHelper::getHashtagFeed($this->instagram, trim($target_hashtag));
+                        $hashtag_feed = InstagramHelper::getHashtagFeed($this->instagram, $target_hashtag);
                         if ($hashtag_feed !== NULL) {
                             foreach ($hashtag_feed->items as $item) {
                                 if ($throttle_limit < $throttle_count) {

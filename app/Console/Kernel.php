@@ -73,8 +73,12 @@ class Kernel extends ConsoleKernel {
         Commands\GenerateStripeReferralChargesCsv::class,
         Commands\RefreshStripeCustomerDetails::class,
         Commands\RefreshStripeSubscription::class,
+        Commands\RefreshInteractionsQuota::class,
         Commands\CarbonTester::class,
         Commands\CheckDuplicateCharges::class,
+        Commands\UpdateNextInteractionTime::class,
+        Commands\UpdateTrialActivation::class,
+        Commands\UpdateUserTargets::class,
     ];
 
     /**

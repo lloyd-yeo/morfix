@@ -135,24 +135,27 @@ class InteractionLike implements ShouldQueue {
 
                                     //Foreach media posted by the user.
                                     foreach ($user_items as $item) {
-                                        if ($this->checkDuplicateByMediaId($item)) {
-                                            continue;
-                                        }
                                         if ($this->like_quota > 0) {
+                                            if ($this->checkDuplicateByMediaId($item)) {
+                                                continue;
+                                            }
                                             if (!$this->like($user_to_like, $item)) {
                                                 break;
                                             }
                                         } else {
-                                            exit;
+                                            echo "\n\n[146] Exiting...\n\n"; 
+                                            return;
                                         }
                                     }
                                 } else {
-                                    exit;
+                                    echo "\n\n[151] Exiting...\n\n"; 
+                                    return;
                                 }
                             }
                         } while ($next_max_id !== NULL && $this->like_quota > 0);
                     } else {
-                        exit;
+                        echo "\n\n[157] Exiting...\n\n"; 
+                        return;
                     }
                 }
             } else {
@@ -162,6 +165,13 @@ class InteractionLike implements ShouldQueue {
                     if ($this->like_quota > 0) {
                         echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
                         //Get the feed from the targeted hashtag.
+
+                        if (empty(trim($target_hashtag->hashtag))) {
+                            $target_hashtag->invalid = 1;
+                            $target_hashtag->save();
+                            continue;
+                        }
+
                         $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                         foreach ($hashtag_feed->items as $item) {
                             $user_to_like = $item->user;
@@ -173,12 +183,14 @@ class InteractionLike implements ShouldQueue {
                                         }
                                     }
                                 } else {
-                                    exit;
+                                    echo "\n\n[186] Exiting...\n\n"; 
+                                    return;
                                 }
                             }
                         }
                     } else {
-                        exit;
+                        echo "\n\n[192] Exiting...\n\n"; 
+                        return;
                     }
                 }
             }
@@ -241,19 +253,21 @@ class InteractionLike implements ShouldQueue {
 
                                         //Foreach media posted by the user.
                                         foreach ($user_items as $item) {
-                                            if ($this->checkDuplicateByMediaId($item)) {
-                                                continue;
-                                            }
                                             if ($this->like_quota > 0) {
+                                                if ($this->checkDuplicateByMediaId($item)) {
+                                                    continue;
+                                                }
                                                 if (!$this->like($user_to_like, $item)) {
                                                     continue;
                                                 }
                                             } else {
-                                                exit;
+                                                echo "\n\n[264] Exiting...\n\n"; 
+                                                return;
                                             }
                                         }
                                     } else {
-                                        exit;
+                                        echo "\n\n[269] Exiting...\n\n"; 
+                                        return;
                                     }
                                 }
                             } while ($next_max_id !== NULL && $this->like_quota > 0);
@@ -277,6 +291,8 @@ class InteractionLike implements ShouldQueue {
                                                 continue;
                                             }
                                         }
+                                    } else {
+                                        return;
                                     }
                                 }
                             }
@@ -284,7 +300,7 @@ class InteractionLike implements ShouldQueue {
                     }
                 }
             } else {
-                exit;
+                return;
             }
         }
     }
@@ -317,7 +333,9 @@ class InteractionLike implements ShouldQueue {
             return false;
         } else if ($like_response->status == "ok") {
             try {
+                $this->like_quota = $this->like_quota - 1;
                 echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
+                echo("\n" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
                 $like_log = new InstagramProfileLikeLog;
                 $like_log->insta_username = $ig_profile->insta_username;
                 $like_log->target_username = $user_to_like->username;
@@ -325,7 +343,6 @@ class InteractionLike implements ShouldQueue {
                 $like_log->target_media_code = $item->getItemUrl();
                 $like_log->log = serialize($like_response);
                 if ($like_log->save()) {
-                    $this->like_quota--;
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addMinutes($this->speed_delay);
                     $ig_profile->auto_like_ban = 0;
                     $ig_profile->auto_like_ban_time = NULL;
@@ -452,7 +469,6 @@ class InteractionLike implements ShouldQueue {
             $target_username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
             if ($target_username->last_checked === NULL) {
                 $target_response = $instagram->people->getInfoById($target_username_id);
-                $target_username->last_checked = \Carbon\Carbon::now();
                 if ($target_response->user->follower_count < 10000) {
                     $target_username->insufficient_followers = 1;
                     echo "[" . $this->profile->insta_username . "] [" . $target_username->target_username . "] has insufficient followers.\n";
@@ -488,7 +504,7 @@ class InteractionLike implements ShouldQueue {
             $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(2);
             $ig_profile->save();
             echo "\n[$ig_username] has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
-            exit;
+            return;
         } else if ($ex instanceof \InstagramAPI\Exception\FeedbackRequiredException) {
             if ($ex->hasResponse()) {
                 $feedback_required_response = $ex->getResponse();
@@ -498,20 +514,20 @@ class InteractionLike implements ShouldQueue {
                     $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->save();
                     echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
-                    exit;
+                    return;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
                     echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
-                    exit;
+                    return;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
                     $ig_profile->next_like_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->auto_like_ban = 1;
                     $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(4);
                     $ig_profile->save();
                     echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
-                    exit;
+                    return;
                 }
             }
             $ig_profile->error_msg = $ex->getMessage();
@@ -536,7 +552,7 @@ class InteractionLike implements ShouldQueue {
             $ig_profile->auto_like_ban_time = \Carbon\Carbon::now()->addHours(2);
             $ig_profile->save();
             echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
-            exit;
+            return;
         }
 
         if ($ex->hasResponse()) {
