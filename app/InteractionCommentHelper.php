@@ -11,6 +11,7 @@ class InteractionCommentHelper{
     
     public static function unengaged($ig_profile, Instagram $instagram){
         $ig_username = $ig_profile->insta_username;
+        $engaged_user = NULL;
         try {
             $comments = InstagramProfileComment::where('insta_username', $ig_username)->get();
             if ($comments->isEmpty()) {
