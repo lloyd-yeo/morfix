@@ -34,12 +34,12 @@ class InteractionCommentHelper{
                 /*
                     Unengaged Likings
                 */
-                $engaged_user = InteractionCommentHelper::unEngagedLiking($ig_profile, $instagram);
+                $engaged_user = InteractionCommentHelper::unEngagedLiking($ig_profile, $instagram, $commentText);
             } else {
                 /*
                     Unengaged Followings
                 */
-                $engaged_user = InteractionCommentHelper::unEngagedFollowings($ig_profile, $instagram, $unengaged_followings);
+                $engaged_user = InteractionCommentHelper::unEngagedFollowings($ig_profile, $instagram, $unengaged_followings, $commentText);
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
             InteractionCommentHelper::handleInstragramException($ig_profile, $checkpt_ex, $engaged_user);
@@ -72,7 +72,7 @@ class InteractionCommentHelper{
         return $real_unengaged_followings_count;
     }
 
-    public static function unEngagedLiking($ig_profile, Instagram $instagram){
+    public static function unEngagedLiking($ig_profile, Instagram $instagram, $commentText){
         $ig_username = $ig_profile->insta_username;
         $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                             ->orderBy('date_liked', 'desc')
@@ -142,7 +142,7 @@ class InteractionCommentHelper{
         return $engaged_user;
     }
 
-    public static function unEngagedFollowings($ig_profile, Instagram $instagram, $unengaged_followings){
+    public static function unEngagedFollowings($ig_profile, Instagram $instagram, $unengaged_followings, $commentText){
         foreach ($unengaged_followings as $unengaged_following) {
             if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
                             ->where('target_username', $unengaged_following->follower_username)
