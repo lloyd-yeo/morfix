@@ -120,7 +120,7 @@ class InteractionFollow implements ShouldQueue {
                 echo "[" . $this->profile->insta_username . "] beginning following sequence.\n";
                 $this->initInstagramAPI($this->profile);
                 $use_hashtags = InstagramHelper::randomizeUseHashtags($this->instagram, $this->profile, $this->targeted_hashtags, $this->targeted_usernames);
-
+                
                 if ($use_hashtags == 0) {
                     //use targeted usernames
                     foreach ($this->targeted_usernames as $target_username) {
