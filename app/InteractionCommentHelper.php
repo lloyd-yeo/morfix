@@ -75,6 +75,7 @@ class InteractionCommentHelper{
 
     public static function unEngagedLiking($ig_profile, Instagram $instagram, $commentText){
         $ig_username = $ig_profile->insta_username;
+        $engaged_user = NULL;
         $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
                             ->orderBy('date_liked', 'desc')
                             ->take(20)
@@ -145,6 +146,7 @@ class InteractionCommentHelper{
 
     public static function unEngagedFollowings($ig_profile, Instagram $instagram, $unengaged_followings, $commentText){
         $ig_username = $ig_profile->insta_username;
+        $engaged_user = NULL;
         foreach ($unengaged_followings as $unengaged_following) {
             if (InstagramProfileCommentLog::where('insta_username', $unengaged_following->insta_username)
                             ->where('target_username', $unengaged_following->follower_username)
