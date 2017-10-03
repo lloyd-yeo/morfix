@@ -25,6 +25,7 @@ use App\Proxy;
 use App\DmJob;
 use App\Niche;
 use App\InstagramProfileMedia;
+use App\InstagramHelper;
 
 class RefreshIgProfile implements ShouldQueue {
 
