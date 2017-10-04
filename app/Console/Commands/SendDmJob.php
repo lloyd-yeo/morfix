@@ -20,7 +20,7 @@ class SendDmJob extends Command {
      *
      * @var string
      */
-    protected $signature = 'dm:send {email?}';
+    protected $signature = 'dm:send {email?} {queueasjob?}';
 
     /**
      * The console command description.
