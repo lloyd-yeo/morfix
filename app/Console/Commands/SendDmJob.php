@@ -12,6 +12,7 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\User;
+use App\InstagramHelper;
 
 class SendDmJob extends Command {
 
@@ -164,6 +165,7 @@ class SendDmJob extends Command {
                 }
             }
         }
+        
         exit();
 
 
