@@ -45,9 +45,11 @@ class InstagramHelper {
         $message = '';
         echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
 
-        InstagramHelper::verifyAndReassignProxy($ig_profile);
-
-        $instagram->setProxy($ig_profile->proxy);
+        if (!InstagramHelper::verifyAndReassignProxy($ig_profile)) {
+            return false;
+        } else {
+            $instagram->setProxy($ig_profile->proxy);
+        }
 
         echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 
@@ -116,6 +118,9 @@ class InstagramHelper {
             $ig_profile->save();
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
+            return true;
+        } else if ($ig_profile->invalid_proxy > 0) {
+            return false;
         }
     }
 
