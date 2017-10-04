@@ -44,6 +44,11 @@ class MigrateDmJob extends Command
             
             $this->line("Migrating logs for [" . $instagram_profile->insta_username . "]");
             
+            if (DmJob::where('insta_username', $instagram_profile->insta_username)->first() !== NULL) {
+                $this->info("Migrated logs before for [" . $instagram_profile->insta_username . "]");
+                continue;
+            }
+            
             $master_dm_jobs = DB::connection('mysql_master')
                     ->table('dm_job')
                     ->where('insta_username', $instagram_profile->insta_username)
