@@ -80,6 +80,7 @@ class Kernel extends ConsoleKernel {
         Commands\UpdateTrialActivation::class,
         Commands\UpdateUserTargets::class,
         Commands\MigrateDmJob::class,
+        Commands\ReassignProxy::class,
     ];
 
     /**
