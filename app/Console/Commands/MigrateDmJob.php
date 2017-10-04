@@ -42,6 +42,8 @@ class MigrateDmJob extends Command
     {
         foreach (InstagramProfile::all() as $instagram_profile) {
             
+            $this->line("Migrating logs for [" . $instagram_profile->insta_username . "]");
+            
             $master_dm_jobs = DB::connection('mysql_master')
                     ->table('dm_job')
                     ->where('insta_username', $instagram_profile->insta_username)
@@ -63,6 +65,8 @@ class MigrateDmJob extends Command
                 $dm_job->updated_at = $master_dm_job->updated_at;
                 $dm_job->save();
             }
+            
+            $this->line("Finished migrating logs for [" . $instagram_profile->insta_username . "]");
             
         }
     }
