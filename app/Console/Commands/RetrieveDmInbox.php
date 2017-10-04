@@ -56,12 +56,12 @@ class RetrieveDmInbox extends Command
 
                     if(sizeof($response) > 0){
                         $inbox = $response->inbox;
-                        $threads = json_decode($inbox->threads, true);
+                        $threads = $inbox->threads;
 
                         $i = 0;
                         foreach ($threads as $thread) {
                             $i++;
-                            echo "Index ".$i." \n". $thread['users']."\n\n\n";
+                            echo "Index ".$i." \n". json_encode($thread['users'])."\n\n\n";
                         }
                     }
                     else{
