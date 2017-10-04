@@ -61,8 +61,9 @@ class RetrieveDmInbox extends Command
                         $i = 0;
                         foreach ($threads as $thread) {
                             $i++;
-                            echo "Thread: [$i] \n";
+                            echo "\nThread: [$i] \n".json_encode($thread)."\n\n";
                             $this->users($thread->users);
+
                         }
                     }
                     else{
@@ -79,7 +80,7 @@ class RetrieveDmInbox extends Command
         $i = 0;
         foreach ($users as $user) {
             $i++;
-            echo "\t Username: $user->username \n\n"."\t".json_encode($user);
+            echo "\t Username: $user->username \n\n"."\t".json_encode($user)."\n";
         }
     }
 }
