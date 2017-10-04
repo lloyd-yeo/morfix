@@ -62,7 +62,7 @@ class SendDmJob extends Command {
                         continue;
                     }
 
-                    if (\Carbon\Carbon::now()->gte($ig_profile->last_sent_dm)) {
+                    if (\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($ig_profile->last_sent_dm))) {
                         $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
                         $job->onQueue('senddm');
                         dispatch($job);
@@ -88,7 +88,7 @@ class SendDmJob extends Command {
                         continue;
                     }
 
-                    if (\Carbon\Carbon::now()->gte($ig_profile->last_sent_dm)) {
+                    if (\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($ig_profile->last_sent_dm))) {
                         $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
                         $job->onQueue('senddm');
                         dispatch($job);
@@ -115,7 +115,7 @@ class SendDmJob extends Command {
                         continue;
                     }
 
-                    if (\Carbon\Carbon::now()->gte($ig_profile->last_sent_dm)) {
+                    if (\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($ig_profile->last_sent_dm))) {
                         $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
                         $job->onQueue('senddm');
                         dispatch($job);
