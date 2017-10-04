@@ -224,11 +224,11 @@ class InteractionFollowHelper {
                 if ($user_to_unfollow->save()) {
                     echo "[" . $ig_profile->insta_username . "] "
                     . "marked as unfollowed & updated log: "
-                    . $user_to_unfollow->log_id . " [" . $user_to_unfollow->follower_username . "\n\n";
+                    . $user_to_unfollow->log_id . " [" . $user_to_unfollow->follower_username . "]\n";
                     $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
                     $ig_profile->unfollow_quota = $ig_profile->unfollow_quota - 1;
                     if ($ig_profile->save()) {
-                        echo "[" . $ig_profile->insta_username . "] added $delay minutes of delay & new unfollow quota = " . $ig_profile->unfollow_quota;
+                        echo "[" . $ig_profile->insta_username . "] added $delay minutes of delay & new unfollow quota = " . $ig_profile->unfollow_quota . "\n\n";
                         return 1;
                     }
                 }
