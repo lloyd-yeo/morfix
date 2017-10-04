@@ -63,7 +63,11 @@ class MigrateDmJob extends Command
                 $dm_job->error_msg = $master_dm_job->error_msg;
                 $dm_job->success_msg = $master_dm_job->success_msg;
                 $dm_job->updated_at = $master_dm_job->updated_at;
-                $dm_job->save();
+                try {
+                    $dm_job->save();
+                } catch (Illuminate\Database\QueryException $query_ex) {
+                    continue;
+                }
             }
             
             $this->line("Finished migrating logs for [" . $instagram_profile->insta_username . "]");
