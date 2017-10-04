@@ -56,7 +56,7 @@ class RetrieveDmInbox extends Command
 
                     if(sizeof($response) > 0){
                         $inbox = $response->inbox;
-                        $threads = $inbox->threads;
+                        $threads = json_decode($inbox->threads, true);
 
                         $i = 0;
                         foreach ($threads as $thread) {
