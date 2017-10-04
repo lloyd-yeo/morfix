@@ -37,7 +37,8 @@ class InteractionFollow implements ShouldQueue {
     protected $instagram;
     protected $targeted_hashtags;
     protected $targeted_usernames;
-    protected $this->followed;
+    protected $followed;
+    
     /**
      * The number of times the job may be attempted.
      *
