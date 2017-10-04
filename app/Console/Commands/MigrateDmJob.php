@@ -70,7 +70,7 @@ class MigrateDmJob extends Command
                 $dm_job->updated_at = $master_dm_job->updated_at;
                 try {
                     $dm_job->save();
-                } catch (Illuminate\Database\QueryException $query_ex) {
+                } catch (\Illuminate\Database\QueryException $query_ex) {
                     continue;
                 }
             }
