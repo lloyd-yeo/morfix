@@ -50,6 +50,11 @@ class GetDm extends Command {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
                 foreach ($instagram_profiles as $ig_profile) {
+                    
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+                    
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
                     dispatch($job);
@@ -62,6 +67,11 @@ class GetDm extends Command {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
                 foreach ($instagram_profiles as $ig_profile) {
+                    
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+                    
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
                     dispatch($job);
@@ -75,6 +85,11 @@ class GetDm extends Command {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
                 foreach ($instagram_profiles as $ig_profile) {
+                    
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+                    
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
                     dispatch($job);
