@@ -38,7 +38,7 @@ class InteractionFollow implements ShouldQueue {
     protected $targeted_hashtags;
     protected $targeted_usernames;
     protected $followed;
-    
+
     /**
      * The number of times the job may be attempted.
      *
@@ -112,8 +112,7 @@ class InteractionFollow implements ShouldQueue {
             } else {
                 echo "[" . $this->profile->insta_username . "] does not have enough <unfollow_quota> left. \n\n";
             }
-        } 
-        else if ($follow_mode === 0) { //follow segment
+        } else if ($follow_mode === 0) { //follow segment
             $throttle_limit = 40;
             $throttle_count = 0;
             //check quota first
@@ -210,6 +209,12 @@ class InteractionFollow implements ShouldQueue {
                                 continue;
                             }
                         }
+                    }
+
+                    if ($this->followed === 0) {
+                        return;
+                    } else if ($this->followed === 1) {
+                        return;
                     }
 
                     $niche_hashtags = Niche::find($this->profile->niche)->targetHashtags();
