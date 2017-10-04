@@ -64,7 +64,7 @@ class GetDm extends Command
             }
             
         } else {
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE partition = 0 AND auto_dm_new_follower = 1)')
                     ->orderBy('user_id', 'desc')
                     ->get();
             
