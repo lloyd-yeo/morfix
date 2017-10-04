@@ -54,7 +54,7 @@ class RetrieveDmInbox extends Command
                 if (InstagramHelper::login($instagram, $ig_profile)) {
                     $response = $instagram->direct->getInbox();
 
-                    if(sizeof($inbox) > 0){
+                    if(sizeof($response) > 0){
                         $inbox = $response->inbox;
                         echo json_encode($inbox);
                     }
