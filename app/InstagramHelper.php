@@ -112,15 +112,12 @@ class InstagramHelper {
     }
 
     public static function verifyAndReassignProxy(InstagramProfile $ig_profile) {
-        if ($ig_profile->proxy === NULL) {
+        if ($ig_profile->proxy === NULL || $ig_profile->invalid_proxy > 0) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
             $ig_profile->save();
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
-            return true;
-        } else if ($ig_profile->invalid_proxy > 0) {
-            return false;
         }
     }
 
