@@ -52,27 +52,11 @@ class RetrieveDmInbox extends Command
                 $instagram = InstagramHelper::initInstagram();
 
                 if (InstagramHelper::login($instagram, $ig_profile)) {
-                    $inbox = $instagram->direct->getInbox();
+                    $response = $instagram->direct->getInbox();
 
                     if(sizeof($inbox) > 0){
-                        $threads = $inbox->inbox;
-                        $threads = $threads->threads;
-                        if(sizeof($threads) > 0){
-                            foreach ($threads as $thread) {
-                                $users = $thread->users;
-                                if(sizeof($users) > 0){
-                                    foreach ($users as $user) {
-                                        echo $user['username'].PHP_EOL;
-                                    }
-                                }
-                                else{
-                                    echo "Users is Empty".PHP_EOL;
-                                }
-                            }
-                        }
-                        else{
-                            echo "Thread is Empty".PHP_EOL;
-                        }
+                        $inbox = $response->inbox;
+                        echo json_encode($inbox);
                     }
                     else{
                         echo "Inbox is empty".PHP_EOL;
