@@ -46,6 +46,50 @@ class SendDmJob extends Command
      */
     public function handle() {
         
+        if ($this->argument("email") === NULL) { //master
+            $users = User::where('partition', 0)->get();
+            foreach ($users as $user) {
+                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                        ->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('senddm');
+                    dispatch($job);
+                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                }
+            }
+        } else if ($this->argument("email") === "slave") { //slave
+            $users = User::all();
+            foreach ($users as $user) {
+                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                        ->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('senddm');
+                    dispatch($job);
+                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                }
+            }
+        } else if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
+            $email = $this->argument("email");
+            $users = User::where('email', $email)->get();
+            foreach ($users as $user) {
+                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                        ->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    $job = new \App\Jobs\SendDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('senddm');
+                    dispatch($job);
+                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                }
+            }
+        } else if ($this->argument("email") !== NULL) {
+            $email = $this->argument("email");
+            //run job manually.
+        }
+        
+        exit();
+        
         $users = array();
         if (NULL !== $this->argument("email")) {
             $users = User::where('email', $this->argument("email"))
@@ -64,7 +108,7 @@ class SendDmJob extends Command
             }
             
         } else {
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE partition = 0 AND auto_dm_new_follower = 1)')
                     ->orderBy('user_id', 'desc')
                     ->get();
             
