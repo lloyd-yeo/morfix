@@ -65,7 +65,7 @@ class GetDm extends Command {
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
                     dispatch($job);
-                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                    $this->line("[GetDM] Queued Profile: " . $ig_profile->insta_username);
                 }
             }
         } else if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
@@ -78,7 +78,7 @@ class GetDm extends Command {
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
                     dispatch($job);
-                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                    $this->line("[GetDM] Queued Profile: " . $ig_profile->insta_username);
                 }
             }
         } else if ($this->argument("email") !== NULL) {
