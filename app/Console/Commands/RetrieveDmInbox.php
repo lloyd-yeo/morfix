@@ -55,11 +55,11 @@ class RetrieveDmInbox extends Command
                     $inbox = $instagram->direct->getInbox();
 
                     if(sizeof($inbox) > 0){
-                        $threads = $inbox["inbox"]['threads'];
+                        $threads = $inbox->inbox;
+                        $threads = $threads->threads;
                         if(sizeof($threads) > 0){
                             foreach ($threads as $thread) {
-                                $users = $thread['users'];
-
+                                $users = $thread->users;
                                 if(sizeof($users) > 0){
                                     foreach ($users as $user) {
                                         echo $user['username'].PHP_EOL;
