@@ -61,7 +61,7 @@ class RetrieveDmInbox extends Command
                         $i = 0;
                         foreach ($threads as $thread) {
                             $i++;
-                            echo "Index ".$i." \n". json_encode($thread['users'])."\n\n\n";
+                            echo "Index ".$i." \n". json_encode($thread)."\n\n\n";
                         }
                     }
                     else{
