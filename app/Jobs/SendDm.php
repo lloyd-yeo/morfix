@@ -171,7 +171,7 @@ class SendDm implements ShouldQueue {
                 $feedback_required_response = $ex->getResponse();
                 if (strpos($feedback_required_response->fullResponse->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
                     $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
-                    $ig_profile->temporary_ban = 1;
+                    $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->save();
                     echo "\n[$ig_username] was blocked & has last_sent_dm shifted forward to " . \Carbon\Carbon::now()->addHours(6)->toDateTimeString() . "\n";
                     return;
@@ -183,7 +183,7 @@ class SendDm implements ShouldQueue {
                     return;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
                     $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
-                    $ig_profile->temporary_ban = 1;
+                    $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->save();
                     echo "\n[$ig_username] is going too fast & last_sent_dm shifted forward to " . \Carbon\Carbon::now()->addHours(6)->toDateTimeString() . "\n";
                     return;
@@ -207,7 +207,7 @@ class SendDm implements ShouldQueue {
             $ig_profile->account_disabled = 1;
         } else if ($ex instanceof \InstagramAPI\Exception\ThrottledException) {
             $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
-            $ig_profile->temporary_ban = 1;
+            $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
             $ig_profile->save();
             echo "\n[$ig_username] got throttled & last_sent_dm shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
             return;
