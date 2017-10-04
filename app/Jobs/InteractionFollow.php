@@ -37,7 +37,7 @@ class InteractionFollow implements ShouldQueue {
     protected $instagram;
     protected $targeted_hashtags;
     protected $targeted_usernames;
-
+    protected $this->followed;
     /**
      * The number of times the job may be attempted.
      *
@@ -105,7 +105,7 @@ class InteractionFollow implements ShouldQueue {
                     if ($unfollowed === 2) {
                         continue;
                     } else if ($unfollowed <= 1) {
-                        break;
+                        return;
                     }
                 }
             } else {
@@ -135,18 +135,18 @@ class InteractionFollow implements ShouldQueue {
 
                         foreach ($users_to_follow as $user_to_follow) {
                             if ($throttle_limit < $throttle_count) {
-                                break;
+                                return;
                             }
 
                             $throttle_count++;
 
                             if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
-                                $followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
-                                if ($followed === 0) {
-                                    break;
-                                } else if ($followed === 1) {
-                                    break;
-                                } else if ($followed === 2) {
+                                $this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
+                                if ($this->followed === 0) {
+                                    return;
+                                } else if ($this->followed === 1) {
+                                    return;
+                                } else if ($this->followed === 2) {
                                     continue;
                                 }
                             } else {
@@ -162,17 +162,17 @@ class InteractionFollow implements ShouldQueue {
                         if ($hashtag_feed !== NULL) {
                             foreach ($hashtag_feed->items as $item) {
                                 if ($throttle_limit < $throttle_count) {
-                                    break;
+                                    return;
                                 }
                                 $throttle_count++;
                                 $user_to_follow = $item->user;
                                 if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
-                                    $followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
-                                    if ($followed === 0) {
-                                        break;
-                                    } else if ($followed === 1) {
-                                        break;
-                                    } else if ($followed === 2) {
+                                    $this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
+                                    if ($this->followed === 0) {
+                                        return;
+                                    } else if ($this->followed === 1) {
+                                        return;
+                                    } else if ($this->followed === 2) {
                                         continue;
                                     }
                                 } else {
@@ -193,16 +193,16 @@ class InteractionFollow implements ShouldQueue {
                         $users_to_follow = InstagramHelper::getTargetUsernameFollowers($this->instagram, $target_username, $username_id);
                         foreach ($users_to_follow as $user_to_follow) {
                             if ($throttle_limit < $throttle_count) {
-                                break;
+                                return;
                             }
                             $throttle_count++;
                             if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
-                                $followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
-                                if ($followed === 0) {
-                                    break;
-                                } else if ($followed === 1) {
-                                    break;
-                                } else if ($followed === 2) {
+                                $this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
+                                if ($this->followed === 0) {
+                                    return;
+                                } else if ($this->followed === 1) {
+                                    return;
+                                } else if ($this->followed === 2) {
                                     continue;
                                 }
                             } else {
@@ -218,17 +218,17 @@ class InteractionFollow implements ShouldQueue {
                         if ($hashtag_feed !== NULL) {
                             foreach ($hashtag_feed->items as $item) {
                                 if ($throttle_limit < $throttle_count) {
-                                    break;
+                                    return;
                                 }
                                 $throttle_count++;
                                 $user_to_follow = $item->user;
                                 if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
-                                    $followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
-                                    if ($followed === 0) {
-                                        break;
-                                    } else if ($followed === 1) {
-                                        break;
-                                    } else if ($followed === 2) {
+                                    $this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
+                                    if ($this->followed === 0) {
+                                        return;
+                                    } else if ($this->followed === 1) {
+                                        return;
+                                    } else if ($this->followed === 2) {
                                         continue;
                                     }
                                 } else {
