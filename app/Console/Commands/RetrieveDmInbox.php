@@ -56,7 +56,7 @@ class RetrieveDmInbox extends Command
 
                     if(sizeof($response) > 0){
                         $inbox = $response->inbox;
-                        echo json_encode($inbox);
+                        echo json_encode($inbox->threads);
                     }
                     else{
                         echo "Inbox is empty".PHP_EOL;
