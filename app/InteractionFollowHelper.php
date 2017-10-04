@@ -291,7 +291,7 @@ class InteractionFollowHelper {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->error_msg = $ex->getMessage();
         } else if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
-            
+            $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
         } else if ($ex instanceof \InstagramAPI\Exception\EndpointException) {
             if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 $ig_profile->error_msg = $ex->getMessage();
@@ -362,7 +362,7 @@ class InteractionFollowHelper {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->error_msg = $ex->getMessage();
         } else if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
-            
+            $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
         } else if ($ex instanceof \InstagramAPI\Exception\EndpointException) {
             if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 $ig_profile->error_msg = $ex->getMessage();

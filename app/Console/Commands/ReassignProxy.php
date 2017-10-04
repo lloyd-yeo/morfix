@@ -39,7 +39,7 @@ class ReassignProxy extends Command
      */
     public function handle()
     {
-        $profiles = InstagramProfile::where('invalid_proxy', 1)->get();
+        $profiles = InstagramProfile::where('invalid_proxy', '>', 3)->get();
         foreach ($profiles as $profile) {
             InstagramHelper::verifyAndReassignProxy($profile);
         }
