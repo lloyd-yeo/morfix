@@ -41,7 +41,9 @@ class ReassignProxy extends Command
     {
         $profiles = InstagramProfile::where('invalid_proxy', '>', 0)->get();
         foreach ($profiles as $profile) {
-            InstagramHelper::forceReassignProxy($profile);
+            if (InstagramHelper::forceReassignProxy($profile)) {
+                $this->line("[Proxy] Refreshed for " . $profile->insta_username);
+            }
         }
     }
 }

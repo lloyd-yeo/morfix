@@ -124,7 +124,11 @@ class InstagramHelper {
         $ig_profile->proxy = $proxy->proxy;
         $ig_profile->save();
         $proxy->assigned = $proxy->assigned + 1;
-        $proxy->save();
+        if ($proxy->save()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function getUserIdForName($instagram, $target_username) {
