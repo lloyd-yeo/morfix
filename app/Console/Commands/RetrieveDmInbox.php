@@ -79,7 +79,7 @@ class RetrieveDmInbox extends Command
         $i = 0;
         foreach ($users as $user) {
             $i++;
-            echo "\t Users: [$i] \n";
+            echo "\t Username: $user->username \n";
         }
     }
 }
