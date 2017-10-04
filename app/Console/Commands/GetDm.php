@@ -69,8 +69,7 @@ class GetDm extends Command
                     ->get();
             
             foreach ($users as $user) {
-                $instagram_profiles = InstagramProfile::where('email', $user->email)
-                                                        ->get();
+                $instagram_profiles = InstagramProfile::where('email', $user->email)->get();
                 foreach ($instagram_profiles as $ig_profile) {
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
