@@ -41,7 +41,7 @@ class RetrieveDmInbox extends Command
     public function handle()
     {
         if($this->argument("email") === NULL){
-            echo "Please enter an email address as an argument.";
+            echo "Please enter an email address as an argument.".PHP_EOL;
         }
         else{
             $instagram_profiles = InstagramProfile::where('email', $this->argument("email"))
@@ -55,15 +55,32 @@ class RetrieveDmInbox extends Command
                     $inbox = $instagram->direct->getInbox();
 
                     if(sizeof($inbox) > 0){
-                        echo json_encode($inbox[0]);
+                        $threads = $inbox["inbox"]['threads'];
+                        if(sizeof($threads) > 0){
+                            foreach ($threads as $thread) {
+                                $users = $thread['users'];
+
+                                if(sizeof($users) > 0){
+                                    foreach ($users as $user) {
+                                        echo $user['username'].PHP_EOL;
+                                    }
+                                }
+                                else{
+                                    echo "Users is Empty".PHP_EOL;
+                                }
+                            }
+                        }
+                        else{
+                            echo "Thread is Empty".PHP_EOL;
+                        }
                     }
                     else{
-                        echo "Inbox is empty";
+                        echo "Inbox is empty".PHP_EOL;
                     }
                 }
             }
             else
-                echo "Email Address was not found.";
+                echo "Email Address was not found.".PHP_EOL;
         }
     }
 }
