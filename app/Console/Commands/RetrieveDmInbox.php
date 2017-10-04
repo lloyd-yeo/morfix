@@ -61,7 +61,8 @@ class RetrieveDmInbox extends Command
                         $i = 0;
                         foreach ($threads as $thread) {
                             $i++;
-                            echo "Index ".$i." \n". json_encode($thread)."\n\n\n";
+                            echo "Thread: [$i] \n";
+                            $this->users($thread->users);
                         }
                     }
                     else{
@@ -71,6 +72,14 @@ class RetrieveDmInbox extends Command
             }
             else
                 echo "Email Address was not found.".PHP_EOL;
+        }
+    }
+
+    public function users($users){
+        $i = 0;
+        foreach ($users as $user) {
+            $i++;
+            echo "\t Users: [$i] \n";
         }
     }
 }
