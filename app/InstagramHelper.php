@@ -39,6 +39,7 @@ class InstagramHelper {
      * TRUE if the login was successful.
      * FALSE if the the login failed.
      */
+
     public static function login(Instagram $instagram, InstagramProfile $ig_profile) {
         $flag = false;
         $message = '';
@@ -63,10 +64,10 @@ class InstagramHelper {
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
 
             InstagramHelper::verifyAndReassignProxy($ig_profile);
-            
+
             $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
             $ig_profile->save();
-            
+
             $message = "NetworkException";
             try {
                 $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
@@ -74,7 +75,7 @@ class InstagramHelper {
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
                 $message .= " with InstagramException\n";
             }
-            
+
             dump($network_ex);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             
@@ -109,13 +110,21 @@ class InstagramHelper {
     }
 
     public static function verifyAndReassignProxy(InstagramProfile $ig_profile) {
-        if ($ig_profile->proxy === NULL || $ig_profile->invalid_proxy > 3) {
+        if ($ig_profile->proxy === NULL) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
             $ig_profile->save();
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
         }
+    }
+
+    public static function forceReassignProxy(InstagramProfile $ig_profile) {
+        $proxy = Proxy::inRandomOrder()->first();
+        $ig_profile->proxy = $proxy->proxy;
+        $ig_profile->save();
+        $proxy->assigned = $proxy->assigned + 1;
+        $proxy->save();
     }
 
     public static function getUserIdForName($instagram, $target_username) {
@@ -161,7 +170,7 @@ class InstagramHelper {
             return NULL;
         }
     }
-    
+
     public static function getHashtagFeed(Instagram $instagram, $hashtag) {
         $hashtag_feed = NULL;
         try {
