@@ -56,7 +56,13 @@ class RetrieveDmInbox extends Command
 
                     if(sizeof($response) > 0){
                         $inbox = $response->inbox;
-                        echo json_encode($inbox->threads);
+                        $threads = $inbox->threads;
+
+                        $i = 0;
+                        foreach ($threads as $thread) {
+                            $i++;
+                            echo "Index ".$i." \n";
+                        }
                     }
                     else{
                         echo "Inbox is empty".PHP_EOL;
