@@ -199,7 +199,6 @@ class InteractionLike implements ShouldQueue {
 
             if ($this->like_quota > 0) {
                 if ($this->profile->niche > 0) {
-
                     $niche = Niche::find($this->profile->niche);
                     $niche_targets = $niche->targetUsernames();
 

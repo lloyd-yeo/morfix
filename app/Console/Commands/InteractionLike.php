@@ -49,45 +49,6 @@ class InteractionLike extends Command {
         parent::__construct();
     }
 
-    private function dispatchJobsToEligibleUsers($users) {
-        foreach ($users as $user) {
-
-            if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
-
-                $instagram_profiles = InstagramProfile::where('auto_like', true)->where('user_id', $user->user_id)
-                        ->get();
-
-                foreach ($instagram_profiles as $ig_profile) {
-
-                    if (!InstagramHelper::validForInteraction($ig_profile)) {
-                        continue;
-                    }
-
-                    if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
-                        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
-                        continue;
-                    }
-
-                    if ($ig_profile->next_like_time === NULL) {
-                        $ig_profile->next_like_time = \Carbon\Carbon::now();
-                        $ig_profile->save();
-                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                        $job->onQueue("likes");
-                        dispatch($job);
-                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                    } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
-                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-                        $job->onQueue("likes");
-                        dispatch($job);
-                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                    }
-                }
-            } else {
-                $this->line("[" . $user->email . "] is not on Premium Tier or Free-Trial");
-            }
-        }
-    }
-
     /**
      * Execute the console command.
      *
@@ -95,7 +56,7 @@ class InteractionLike extends Command {
      */
     public function handle() {
 
-        if (NULL === $this->argument("email")) {
+        if (NULL === $this->argument("email")) { #master
 
             $this->line("[Likes Interaction Master] Beginning sequence to queue jobs...");
 
@@ -105,7 +66,6 @@ class InteractionLike extends Command {
                     ->get();
 
             $this->dispatchJobsToEligibleUsers($users);
-            
         } else if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
 
             $this->line("[Likes Interaction Email] Queueing job for [" . $this->argument("email") . "]");
@@ -113,9 +73,9 @@ class InteractionLike extends Command {
             $user = User::where('email', $this->argument("email"))->first();
 
             if ($user !== NULL) {
-                
+
                 if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
-                    
+
                     $instagram_profiles = InstagramProfile::where('auto_like', true)
                             ->where('user_id', $user->user_id)
                             ->get();
@@ -160,46 +120,101 @@ class InteractionLike extends Command {
                     ->get();
 
             $this->dispatchJobsToEligibleUsers($users);
+            
         } else {
 
-            $this->line("[Likes Interaction Email] Beginning sequence for [" . $this->argument("email") . "]");
+            $this->line("[Likes Interaction Email Manual] Beginning sequence for [" . $this->argument("email") . "]");
 
             $user = User::where('email', $this->argument("email"))->first();
 
             // microtime(true) returns the unix timestamp plus milliseconds as a float
             $starttime = microtime(true);
-
-            $this->line($user->user_id);
-
-            $instagram_profiles = InstagramProfile::where('auto_like', true)
-                    ->where('checkpoint_required', false)
-                    ->where('account_disabled', false)
-                    ->where('invalid_user', false)
-                    ->where('incorrect_pw', false)
-                    ->where('user_id', $user->user_id)
-                    ->get();
-
-            try {
-
-//                foreach ($instagram_profiles as $ig_profile) {
-//                    $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-//                    $job->onQueue('likes');
-//                    dispatch($job);
-//                    $this->line("queued profile: " . $ig_profile->insta_username);
-//                    $this->line("RETRIEVED: [" . $ig_profile->insta_username . "]\t" . $ig_profile->insta_pw . "\n");
-//                }
-
-                foreach ($instagram_profiles as $ig_profile) {
-                    $this->jobHandle($user, $ig_profile);
-                } //end loop for ig profile
-            } catch (\Exception $ex) {
-                $this->error($ex->getLine() . "\t" . $ex->getMessage());
+            
+            if ($user !== NULL) {
+                $this->dispatchManualJobToUser($user);
             }
 
             $endtime = microtime(true);
             $timediff = $endtime - $starttime;
 
             echo "\nThis run took: $timediff milliseconds.\n";
+        }
+    }
+
+    private function dispatchManualJobToUser($user) {
+        if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
+
+            $instagram_profiles = InstagramProfile::where('auto_like', true)->where('user_id', $user->user_id)
+                    ->get();
+
+            foreach ($instagram_profiles as $ig_profile) {
+
+                if (!InstagramHelper::validForInteraction($ig_profile)) {
+                    continue;
+                }
+
+                if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                    $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
+                    continue;
+                }
+
+                if ($ig_profile->next_like_time === NULL) {
+                    $ig_profile->next_like_time = \Carbon\Carbon::now();
+                    $ig_profile->save();
+                    $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue("likes");
+                    $job->onConnection('sync');
+                    dispatch($job);
+                    $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                    $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue("likes");
+                    $job->onConnection('sync');
+                    dispatch($job);
+                    $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                }
+            }
+        } else {
+            $this->line("[" . $user->email . "] is not on Premium Tier or Free-Trial");
+        }
+    }
+
+    private function dispatchJobsToEligibleUsers($users) {
+        foreach ($users as $user) {
+
+            if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
+
+                $instagram_profiles = InstagramProfile::where('auto_like', true)->where('user_id', $user->user_id)
+                        ->get();
+
+                foreach ($instagram_profiles as $ig_profile) {
+
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+
+                    if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
+                        continue;
+                    }
+
+                    if ($ig_profile->next_like_time === NULL) {
+                        $ig_profile->next_like_time = \Carbon\Carbon::now();
+                        $ig_profile->save();
+                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                        $job->onQueue("likes");
+                        dispatch($job);
+                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                    } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                        $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+                        $job->onQueue("likes");
+                        dispatch($job);
+                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                    }
+                }
+            } else {
+                $this->line("[" . $user->email . "] is not on Premium Tier or Free-Trial");
+            }
         }
     }
 
@@ -475,7 +490,7 @@ class InteractionLike extends Command {
                             //Get user because we need to check if they have been liked before.
                             $user_to_like = $item->user;
                             //Weird error, null user. Check to be safe.
-                            
+
                             if (is_null($user_to_like)) {
                                 $this->error("null user");
                                 continue;
