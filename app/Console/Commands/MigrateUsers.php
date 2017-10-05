@@ -146,11 +146,14 @@ class MigrateUsers extends Command {
         $user->paypal = $master_user->paypal;
         $user->last_pay_out_date = $master_user->last_pay_out_date;
         $user->partition = $master_user->partition;
-
-        if ($user->save()) {
-            $this->line("Imported [" . $user->email . "]");
-            return $user;
-        } else {
+        try {
+            if ($user->save()) {
+                $this->line("Imported [" . $user->email . "]");
+                return $user;
+            } else {
+                return NULL;
+            }
+        } catch (\Illuminate\Database\QueryException $query_ex) {
             return NULL;
         }
     }
@@ -227,11 +230,14 @@ class MigrateUsers extends Command {
         $ig_profile->total_comments = $master_instagram_profile->total_comments;
         $ig_profile->total_follows = $master_instagram_profile->total_follows;
         $ig_profile->total_unfollows = $master_instagram_profile->total_unfollows;
-
-        if ($ig_profile->save()) {
-            $this->line("Imported [" . $ig_profile->insta_username . "]");
-            return $ig_profile;
-        } else {
+        try {
+            if ($ig_profile->save()) {
+                $this->line("Imported [" . $ig_profile->insta_username . "]");
+                return $ig_profile;
+            } else {
+                return NULL;
+            }
+        } catch (\Illuminate\Database\QueryException $query_ex) {
             return NULL;
         }
     }
