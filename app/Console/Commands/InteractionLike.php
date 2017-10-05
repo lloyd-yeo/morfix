@@ -85,7 +85,7 @@ class InteractionLike extends Command {
                             continue;
                         }
 
-                        if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                        if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                             $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                             continue;
                         }
@@ -97,7 +97,7 @@ class InteractionLike extends Command {
                             $job->onQueue("likes");
                             dispatch($job);
                             $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                        } else if (\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                             $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
                             $job->onQueue("likes");
                             dispatch($job);
@@ -146,12 +146,15 @@ class InteractionLike extends Command {
                     ->get();
 
             foreach ($instagram_profiles as $ig_profile) {
-
+                
+                $this->line("[" . $ig_profile->insta_username . "] next_like_time [" . $ig_profile->next_like_time . "] [" . $ig_profile->like_quota . "]");
+                
                 if (!InstagramHelper::validForInteraction($ig_profile)) {
                     continue;
                 }
 
-                if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                if ($ig_profile->auto_like_ban == 1 && 
+                        \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                     $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                     continue;
                 }
@@ -164,13 +167,13 @@ class InteractionLike extends Command {
                     $job->onConnection('sync');
                     dispatch($job);
                     $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                } else if (\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                     $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue("likes");
                     $job->onConnection('sync');
                     dispatch($job);
                     $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                } else if (\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                } else if (\Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                     $this->line("[" . $ig_profile->insta_username . "] unable to queue because of next_like_time [Likes]");
                 }
             }
@@ -193,7 +196,7 @@ class InteractionLike extends Command {
                         continue;
                     }
 
-                    if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                    if ($ig_profile->auto_like_ban == 1 && \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                         $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                         continue;
                     }
@@ -205,7 +208,7 @@ class InteractionLike extends Command {
                         $job->onQueue("likes");
                         dispatch($job);
                         $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-                    } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                    } else if (\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                         $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
                         $job->onQueue("likes");
                         dispatch($job);
