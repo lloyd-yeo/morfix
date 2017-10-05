@@ -52,7 +52,10 @@ class SendDmJob extends Command {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();
                 foreach ($instagram_profiles as $ig_profile) {
-
+                    if ($ig_profile->auto_dm_new_follower == 0) {
+                        continue;
+                    }
+                    
                     if (!InstagramHelper::validForInteraction($ig_profile)) {
                         continue;
                     }
