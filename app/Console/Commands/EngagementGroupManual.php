@@ -151,6 +151,8 @@ class EngagementGroupManual extends Command {
                 continue;
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 continue;
+            } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+                continue;
             }
 
             var_dump($response);
