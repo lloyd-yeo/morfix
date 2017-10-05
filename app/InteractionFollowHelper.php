@@ -188,7 +188,7 @@ class InteractionFollowHelper {
             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
 
             if ($ig_profile->save()) {
-                echo "[" . $ig_profile->insta_username . "] TARGET USERNAME added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota;
+                echo "[" . $ig_profile->insta_username . "] TARGET USERNAME added $delay minutes of delay & new follow quota = " . $ig_profile->follow_quota . "\n";
             }
 
             $new_follow_log = new InstagramProfileFollowLog;
@@ -198,7 +198,7 @@ class InteractionFollowHelper {
             $new_follow_log->log = serialize($follow_resp);
             $new_follow_log->follow_success = 1;
             if ($new_follow_log->save()) {
-                echo "[" . $ig_profile->insta_username . "] added new follow log.";
+                echo "[" . $ig_profile->insta_username . "] added new follow log.\n";
             }
             echo "[" . $ig_profile->insta_username . "] followed [" . $user_to_follow->username . "].\n";
             return 1;
