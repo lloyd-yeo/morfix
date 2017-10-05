@@ -124,12 +124,14 @@ class UpdateUserTotalInteractionStatistics extends Command {
                 ->count();
         $ig_profile->daily_comments = $daily_comments;
 
-        $daily_follows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)
+        $daily_follows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                ->where('follow', 1)
                 ->whereDate('date_inserted', '=', Carbon::today()->toDateString())
                 ->count();
         $ig_profile->daily_follows = $daily_follows;
 
-        $daily_unfollows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)
+        $daily_unfollows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                ->where('unfollowed', 1)
                 ->whereDate('date_unfollowed', '=', Carbon::today()->toDateString())
                 ->count();
         $ig_profile->daily_unfollows = $daily_unfollows;
