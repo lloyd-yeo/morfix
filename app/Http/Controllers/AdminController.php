@@ -46,6 +46,11 @@ class AdminController extends Controller
             $user = User::where('email', $request->input('email'))->first();
             if ($user !== NULL) {
                 $user->tier = $request->input('tier');
+                
+                if ($request->input('tier') > 9) {
+                    $user->num_acct = 6;
+                }
+                
                 if ($user->save()) {
                     return Response::json(array("success" => true, 
                         'response' => "User tier updated!"));
