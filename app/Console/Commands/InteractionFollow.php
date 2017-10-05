@@ -178,10 +178,11 @@ class InteractionFollow extends Command {
                         }
                     } else {
                         foreach ($instagram_profiles as $ig_profile) {
+                            $this->line("[Follow Interactions] executing manually for " . $ig_profile->insta_username);
                             dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
                                             ->onQueue('follows')
                                             ->onConnection('sync'));
-                            $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+                            
                         }
                     }
                 }
