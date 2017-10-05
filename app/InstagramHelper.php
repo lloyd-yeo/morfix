@@ -175,6 +175,26 @@ class InstagramHelper {
             return NULL;
         }
     }
+    
+    public static function getTargetHashtagFeed(Instagram $instagram, $hashtag) {
+        $hashtag_feed = NULL;
+        try {
+            $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+//            dump($hashtag_feed);
+            return $hashtag_feed;
+        } catch (\InstagramAPI\Exception\NotFoundException $ex) {
+            $hashtag->invalid = 1;
+            $hashtag->save();
+            return NULL;
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+            $ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
+            if ($ig_profile !== NULL) {
+                $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+                $ig_profile->save();
+            }
+            return NULL;
+        }
+    }
 
     public static function getHashtagFeed(Instagram $instagram, $hashtag) {
         $hashtag_feed = NULL;
