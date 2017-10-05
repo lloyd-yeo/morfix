@@ -143,18 +143,18 @@ class InteractionLike implements ShouldQueue {
                                                 break;
                                             }
                                         } else {
-                                            echo "\n\n[146] Exiting...\n\n"; 
+                                            echo "\n\n[146] Exiting...\n\n";
                                             return;
                                         }
                                     }
                                 } else {
-                                    echo "\n\n[151] Exiting...\n\n"; 
+                                    echo "\n\n[151] Exiting...\n\n";
                                     return;
                                 }
                             }
                         } while ($next_max_id !== NULL && $this->like_quota > 0);
                     } else {
-                        echo "\n\n[157] Exiting...\n\n"; 
+                        echo "\n\n[157] Exiting...\n\n";
                         return;
                     }
                 }
@@ -171,25 +171,27 @@ class InteractionLike implements ShouldQueue {
                             $target_hashtag->save();
                             continue;
                         }
-
-                        $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
-                        foreach ($hashtag_feed->items as $item) {
-                            $user_to_like = $item->user;
-                            if (!$this->checkDuplicate($user_to_like)) {
-                                if ($this->like_quota > 0) {
-                                    if (!$this->checkDuplicateByMediaId($item)) {
-                                        if (!$this->like($user_to_like, $item)) {
-                                            continue;
+                        $hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $hashtag);
+                        #$hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
+                        if ($hashtag_feed !== NULL) {
+                            foreach ($hashtag_feed->items as $item) {
+                                $user_to_like = $item->user;
+                                if (!$this->checkDuplicate($user_to_like)) {
+                                    if ($this->like_quota > 0) {
+                                        if (!$this->checkDuplicateByMediaId($item)) {
+                                            if (!$this->like($user_to_like, $item)) {
+                                                continue;
+                                            }
                                         }
+                                    } else {
+                                        echo "\n\n[186] Exiting...\n\n";
+                                        return;
                                     }
-                                } else {
-                                    echo "\n\n[186] Exiting...\n\n"; 
-                                    return;
                                 }
                             }
                         }
                     } else {
-                        echo "\n\n[192] Exiting...\n\n"; 
+                        echo "\n\n[192] Exiting...\n\n";
                         return;
                     }
                 }
@@ -261,12 +263,12 @@ class InteractionLike implements ShouldQueue {
                                                     continue;
                                                 }
                                             } else {
-                                                echo "\n\n[264] Exiting...\n\n"; 
+                                                echo "\n\n[264] Exiting...\n\n";
                                                 return;
                                             }
                                         }
                                     } else {
-                                        echo "\n\n[269] Exiting...\n\n"; 
+                                        echo "\n\n[269] Exiting...\n\n";
                                         return;
                                     }
                                 }

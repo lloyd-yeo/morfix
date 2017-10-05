@@ -184,6 +184,12 @@ class InstagramHelper {
             return $hashtag_feed;
         } catch (\InstagramAPI\Exception\NotFoundException $ex) {
             return NULL;
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+            $ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
+            if ($ig_profile !== NULL) {
+                $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+            }
+            return NULL;
         }
     }
 

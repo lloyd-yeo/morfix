@@ -105,6 +105,7 @@ class InteractionLike extends Command {
                     ->get();
 
             $this->dispatchJobsToEligibleUsers($users);
+            
         } else if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
 
             $this->line("[Likes Interaction Email] Queueing job for [" . $this->argument("email") . "]");
@@ -112,7 +113,9 @@ class InteractionLike extends Command {
             $user = User::where('email', $this->argument("email"))->first();
 
             if ($user !== NULL) {
+                
                 if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
+                    
                     $instagram_profiles = InstagramProfile::where('auto_like', true)
                             ->where('user_id', $user->user_id)
                             ->get();
@@ -472,6 +475,7 @@ class InteractionLike extends Command {
                             //Get user because we need to check if they have been liked before.
                             $user_to_like = $item->user;
                             //Weird error, null user. Check to be safe.
+                            
                             if (is_null($user_to_like)) {
                                 $this->error("null user");
                                 continue;
