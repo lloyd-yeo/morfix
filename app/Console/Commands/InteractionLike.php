@@ -57,7 +57,6 @@ class InteractionLike extends Command {
     public function handle() {
 
         if (NULL === $this->argument("email")) { #master
-
             $this->line("[Likes Interaction Master] Beginning sequence to queue jobs...");
 
             $users = DB::table('user')
@@ -120,7 +119,6 @@ class InteractionLike extends Command {
                     ->get();
 
             $this->dispatchJobsToEligibleUsers($users);
-            
         } else {
 
             $this->line("[Likes Interaction Email Manual] Beginning sequence for [" . $this->argument("email") . "]");
@@ -129,7 +127,7 @@ class InteractionLike extends Command {
 
             // microtime(true) returns the unix timestamp plus milliseconds as a float
             $starttime = microtime(true);
-            
+
             if ($user !== NULL) {
                 $this->dispatchManualJobToUser($user);
             }
@@ -172,6 +170,8 @@ class InteractionLike extends Command {
                     $job->onConnection('sync');
                     dispatch($job);
                     $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+                } else if (\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_like_time))) {
+                    $this->line("[" . $ig_profile->insta_username . "] unable to queue because of next_like_time [Likes]");
                 }
             }
         } else {
