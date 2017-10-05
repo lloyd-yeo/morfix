@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (Auth::user()->user_tier > 1)
+                            @if (Auth::user()->tier > 1)
                             <div class="form-group">
                                 <div class="col-xs-12">
                                     <div class="form-material form-material-primary">
