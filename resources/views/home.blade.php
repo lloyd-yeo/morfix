@@ -145,6 +145,9 @@
                                         @if ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 || $ig_profile->feedback_required == 1)
                                             {{-- If error is there, show suspension --}}
                                             <td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i> Suspended due to profile errors</td>
+                                        @elseif ($ig_profile->auto_like_ban == 1)
+                                            {{-- If error is there, show suspension --}}
+                                           <td class='text-warning'><i class="fa fa-fw fa-info-circle"></i> <small>Throttled by Instagram Temporarily - Next Attempt at {{ Carbon\Carbon::parse($ig_profile->auto_like_ban_time)->toDayDateTimeString() }} (GMT +8)</small></td>
                                         @else
                                             {{-- If error isnt there, proceed as usual --}}
                                             <td class='text-success'><i class="fa fa-fw fa-check-square"></i> Healthy</td>
