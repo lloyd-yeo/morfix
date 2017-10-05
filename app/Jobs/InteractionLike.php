@@ -171,7 +171,7 @@ class InteractionLike implements ShouldQueue {
                             $target_hashtag->save();
                             continue;
                         }
-                        $hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $hashtag);
+                        $hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $target_hashtag);
                         #$hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                         if ($hashtag_feed !== NULL) {
                             foreach ($hashtag_feed->items as $item) {
