@@ -47,7 +47,7 @@ class InstagramHelper {
 
         InstagramHelper::verifyAndReassignProxy($ig_profile);
         $instagram->setProxy($ig_profile->proxy);
-        
+
         echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 
         try {
@@ -132,6 +132,12 @@ class InstagramHelper {
         }
     }
 
+    public static function getUserIdForNicheUsername($instagram, $target_username) {
+        $username_id = NULL;
+        $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+        return $username_id;
+    }
+
     public static function getUserIdForName($instagram, $target_username) {
         $username_id = NULL;
         try {
@@ -175,7 +181,7 @@ class InstagramHelper {
             return NULL;
         }
     }
-    
+
     public static function getTargetHashtagFeed(Instagram $instagram, $hashtag) {
         $hashtag_feed = NULL;
         try {

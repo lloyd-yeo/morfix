@@ -209,7 +209,7 @@ class InteractionLike implements ShouldQueue {
 
                             //Get followers of the target.
                             echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
-                            $target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
+                            $target_username_id = InstagramHelper::getUserIdForNicheUsername($instagram, $target_username);
                             if ($target_username_id === NULL) {
                                 continue;
                             }
@@ -464,7 +464,7 @@ class InteractionLike implements ShouldQueue {
         }
         return 0;
     }
-
+    
     public function checkValidTargetUsername($instagram, $target_username) {
         $target_username_id = NULL;
         try {
