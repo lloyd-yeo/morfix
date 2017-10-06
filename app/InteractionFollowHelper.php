@@ -42,7 +42,7 @@ class InteractionFollowHelper {
                 ->where('unfollowed', 0)
                 ->count();
 
-        echo "[" . $ig_profile->insta_username . "] number of follows: " . $followed_count . "\n";
+        echo "[" . $ig_profile->insta_username . "] [" . $ig_profile->follow_cycle . "] number of follows: " . $followed_count . "\n";
 
         if ($ig_profile->auto_follow === 1 && $ig_profile->auto_unfollow === 1) {
             if ($ig_profile->unfollow === 1) {
