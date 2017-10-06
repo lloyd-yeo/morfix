@@ -62,6 +62,7 @@ class RefreshInstagramProfile extends Command {
                 $this->line("[" . $user->email . "] user found & processing...");
                 $instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
                 foreach ($instagram_profiles as $ig_profile) {
+                    
 //                    if (!InstagramHelper::validForInteraction($ig_profile)) {
 //                        continue;
 //                    }

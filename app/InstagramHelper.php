@@ -53,6 +53,7 @@ class InstagramHelper {
         try {
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
+            
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
@@ -232,7 +233,7 @@ class InstagramHelper {
     public static function validForInteraction($ig_profile) {
         if ($ig_profile->checkpoint_required == 1) {
             echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
-            return false;
+//            return false;
         }
 
         if ($ig_profile->account_disabled == 1) {
