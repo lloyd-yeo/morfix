@@ -12,6 +12,7 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\User;
+use App\InstagramHelper;
 
 class RefreshInstagramProfile extends Command {
 
@@ -44,132 +45,34 @@ class RefreshInstagramProfile extends Command {
      * @return mixed
      */
     public function handle() {
-
-        if (NULL !== $this->argument("email")) {
-            $users = User::where('email', $this->argument("email"))->get();
-        } else {
-            $users = DB::table('user')
-                    ->whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
-                    ->orderBy('user_id', 'asc')
-                    ->get();
-        }
-        
-        if (NULL !== $this->argument("email")) {
+        if ($this->argument("email") === NULL) {
+            $users = User::where('active', 1)->get();
             foreach ($users as $user) {
-                
-                $instagram_profiles = InstagramProfile::where('checkpoint_required', false)
-                            ->where('account_disabled', false)
-                            ->where('invalid_user', false)
-                            ->where('incorrect_pw', false)
-                            ->where('user_id', $user->user_id)
-                            ->get();
-                
-                foreach ($instagram_profiles as $ig_profile) {
-                    
-                    $config = array();
-                    $config["storage"] = "mysql";
-                    $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
-                    $config["dbtablename"] = "instagram_sessions";
-
-                    $debug = false;
-                    $truncatedDebug = false;
-
-                    $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                    
-                    echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
-
-                    $ig_username = $ig_profile->insta_username;
-                    $ig_password = $ig_profile->insta_pw;
-
-                    if ($ig_profile->proxy === NULL) {
-                        $proxy = Proxy::inRandomOrder()->first();
-                        $ig_profile->proxy = $proxy->proxy;
-                        $ig_profile->error_msg = NULL;
-                        $ig_profile->save();
-                        $proxy->assigned = $proxy->assigned + 1;
-                        $proxy->save();
-                    }
-
-                    $instagram->setProxy($ig_profile->proxy);
-
-                    try {
-
-                        $login_response = $instagram->login($ig_username, $ig_password);
-                        $user_response = $instagram->people->getInfoById($ig_profile->insta_user_id);
-                        $instagram_user = $user_response->user;
-
-                        DB::update("UPDATE user_insta_profile "
-                                . "SET insta_username = ?, profile_full_name = ?, updated_at = NOW(), follower_count = ?, "
-                                . "num_posts = ?, insta_user_id = ?, profile_pic_url = ? WHERE insta_username = ?;", 
-                                [$instagram_user->username, $instagram_user->full_name, $instagram_user->follower_count, 
-                                    $instagram_user->media_count, $instagram_user->pk, $instagram_user->profile_pic_url, $ig_username]);
-
-                        $items = $instagram->timeline->getSelfUserFeed()->items;
-                        
-                        foreach ($items as $item) {
-
-                            try {
-                                $image_url = "";
-                                if (is_null($item->image_versions2)) {
-                                    //is carousel media
-                                    $image_url = $item->carousel_media[0]->image_versions2->candidates[0]->url;
-                                } else {
-                                    $image_url = $item->image_versions2->candidates[0]->url;
-                                }
-
-                                DB::
-                                        insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [$ig_username, $item->id, $image_url]);
-                            } catch (\ErrorException $e) {
-                                echo("ERROR: " . $e->getMessage());
-                                break;
-                            }
-                        }
-                    } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-                        echo($checkpoint_ex->getMessage());
-                        DB::update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
-                    } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-                        echo($network_ex->getMessage());
-                        DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$network_ex->getMessage(), $ig_profile->id]);
-                    } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-                        echo($endpoint_ex->getMessage());
-                        if (stripos(trim($endpoint_ex->getMessage()), "The username you entered doesn't appear to belong to an account. Please check your username and try again.") !== false) {
-                            $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-                            $instagram->login($ig_username, $ig_password);
-                            $resp = serialize($instagram->getUserInfoById($ig_profile->insta_user_id));
-                            DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$resp, $ig_profile->id]);
-                        } else {
-                            DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
-                        }
-                    } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-                        echo($incorrectpw_ex->getMessage());
-                        DB::update('update user_insta_profile set incorrect_pw = 1, error_msg = ? where id = ?;', [$incorrectpw_ex->getMessage(), $ig_profile->id]);
-                    } catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
-                        echo($accountdisabled_ex->getMessage());
-                        DB::update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$accountdisabled_ex->getMessage(), $ig_profile->id]);
-                    } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-                        echo($request_ex->getMessage());
-                        DB::update('update user_insta_profile set error_msg = ? where id = ?;', [$request_ex->getMessage(), $ig_profile->id]);
-                    }
-                    
-                }
-                
-            }
-            
-        } else {
-            foreach ($users as $user) {
-                $instagram_profiles = InstagramProfile::where('checkpoint_required', false)
-                        ->where('account_disabled', false)
-                        ->where('invalid_user', false)
-                        ->where('incorrect_pw', false)
-                        ->where('user_id', $user->user_id)
-                        ->get();
-
+                $instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
                 foreach ($instagram_profiles as $ig_profile) {
                     $job = new \App\Jobs\RefreshIgProfile(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('refresh');
                     dispatch($job);
-                    $this->line("queued profile: " . $ig_profile->insta_username);
+                    $this->line("[Refresh] Queued Profile: " . $ig_profile->insta_username);
                 }
+            }
+        } else {
+            $user = User::where('email', $this->argument("email"))->first();
+            if ($user !== NULL) {
+                $this->line("[" . $user->email . "] user found & processing...");
+                $instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+                    $job = new \App\Jobs\RefreshIgProfile(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('refresh');
+                    $job->onConnection('sync');
+                    $this->line("[Refresh] Queued Profile: " . $ig_profile->insta_username);
+                    dispatch($job);
+                }
+            } else {
+                $this->error("[" . $this->argument("email") . "] user not found.");
             }
         }
     }
