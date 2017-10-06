@@ -137,6 +137,7 @@ class InteractionFollow implements ShouldQueue {
                         foreach ($users_to_follow as $user_to_follow) {
 
                             if ($throttle_limit < $throttle_count) {
+                                echo "[" . $this->profile->insta_username . "] has been throttled.\n";
                                 return;
                             }
 
