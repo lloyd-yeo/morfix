@@ -157,7 +157,7 @@ class InteractionFollow implements ShouldQueue {
                                     continue;
                                 }
                             } else if (!$valid_user) {
-                                echo "\n[" . $user_to_follow->insta_username . "] is invalid.\n";
+                                echo "\n[" . $user_to_follow->username . "] is invalid.\n";
                                 continue;
                             }
                         }
