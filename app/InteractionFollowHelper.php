@@ -102,19 +102,24 @@ class InteractionFollowHelper {
             return false;
         }
         //Get extra info to make sure it fits user's criteria
-        $user_info = $instagram->people->getInfoById($user_to_follow->pk);
-        $user_to_follow = $user_info->user;
-        if ($user_to_follow->media_count == 0) {
-            echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: > 0 photos \n";
-            return false;
-        }
-        if ($ig_profile->follow_min_followers != 0 && $user_to_follow->follower_count < $ig_profile->follow_min_followers) {
-            echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: [" . $user_to_follow->follower_count . "] < [" . $ig_profile->follow_min_followers . "] \n";
-            return false;
-        }
-        if ($ig_profile->follow_max_followers != 0 && $user_to_follow->follower_count > $ig_profile->follow_max_followers) {
-            echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: [" . $user_to_follow->follower_count . "] > [" . $ig_profile->follow_max_followers . "] \n";
-            return false;
+        try {
+            $user_info = $instagram->people->getInfoById($user_to_follow->pk);
+            $user_to_follow = $user_info->user;
+            if ($user_to_follow->media_count == 0) {
+                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: > 0 photos \n";
+                return false;
+            }
+            if ($ig_profile->follow_min_followers != 0 && $user_to_follow->follower_count < $ig_profile->follow_min_followers) {
+                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: [" . $user_to_follow->follower_count . "] < [" . $ig_profile->follow_min_followers . "] \n";
+                return false;
+            }
+            if ($ig_profile->follow_max_followers != 0 && $user_to_follow->follower_count > $ig_profile->follow_max_followers) {
+                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: [" . $user_to_follow->follower_count . "] > [" . $ig_profile->follow_max_followers . "] \n";
+                return false;
+            }
+        } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $throttled_ex);
+            return 2;
         }
         return true;
     }
@@ -390,4 +395,5 @@ class InteractionFollowHelper {
 
         $ig_profile->save();
     }
+
 }

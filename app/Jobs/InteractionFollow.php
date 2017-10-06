@@ -125,6 +125,7 @@ class InteractionFollow implements ShouldQueue {
                 if ($use_hashtags == 0) {
                     //use targeted usernames
                     foreach ($this->targeted_usernames as $target_username) {
+
                         echo "[" . $this->profile->insta_username . "] using target username: " . $target_username->target_username . "\n";
                         $username_id = InstagramHelper::getUserIdForName($this->instagram, $target_username);
                         if ($username_id === NULL) {
@@ -134,13 +135,17 @@ class InteractionFollow implements ShouldQueue {
                         $users_to_follow = InstagramHelper::getTargetUsernameFollowers($this->instagram, $target_username, $username_id);
 
                         foreach ($users_to_follow as $user_to_follow) {
+
                             if ($throttle_limit < $throttle_count) {
                                 return;
                             }
 
                             $throttle_count++;
 
-                            if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
+                            $valid_user = InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow);
+                            if ($valid_user == 2) {
+                                return;
+                            } else if ($valid_user) {
                                 $this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
                                 if ($this->followed === 0) {
                                     return;
@@ -149,7 +154,7 @@ class InteractionFollow implements ShouldQueue {
                                 } else if ($this->followed === 2) {
                                     continue;
                                 }
-                            } else {
+                            } else if (!$valid_user) {
                                 continue;
                             }
                         }
