@@ -119,28 +119,28 @@ class InteractionFollowHelper {
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $checkpoint_ex);
-            return false;
+            return 2;
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $network_ex);
-            return false;
+            return 2;
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $endpoint_ex);
-            return false;
+            return 2;
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $incorrectpw_ex);
-            return false;
+            return 2;
         } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $feedback_ex);
-            return false;
+            return 2;
         } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $emptyresponse_ex);
-            return false;
+            return 2;
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $acctdisabled_ex);
-            return false;
+            return 2;
         } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $throttled_ex);
-            return false;
+            return 2;
         }
         return true;
     }
