@@ -75,8 +75,8 @@ class RefreshIgProfile implements ShouldQueue {
         }
         
         try {
-            $user_response = $this->instagram->people->getInfoById($this->profile->insta_user_id);
-            $instagram_user = $user_response->user;
+            
+            $instagram_user = InstagramHelper::getUserInfo($this->instagram, $this->profile);
 
             $this->profile->insta_username = $instagram_user->username;
             $this->profile->profile_full_name = $instagram_user->full_name;

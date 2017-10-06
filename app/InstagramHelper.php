@@ -149,6 +149,16 @@ class InstagramHelper {
         return $username_id;
     }
 
+    public static function getUserInfo($instagram, $ig_profile) {
+        try {
+            $user_response = $instagram->people->getInfoById($ig_profile->insta_user_id);
+            return $user_response->user;
+        } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
+            echo "[" . $ig_profile->insta_username . "] " . $insta_ex->getMessage() . "\n";
+            echo $insta_ex->getTraceAsString() . "\n";
+        }
+    }
+
     public static function getTargetUsernameFollowers($instagram, $target_username, $username_id) {
         $user_follower_response = $instagram->people->getFollowers($username_id);
         $users_to_follow = $user_follower_response->users;
