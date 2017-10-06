@@ -236,17 +236,17 @@ class InstagramHelper {
         }
 
         if ($ig_profile->account_disabled == 1) {
-            echo("\n[" . $ig_profile->account_disabled . "] account has been disabled.\n");
+            echo("\n[" . $ig_profile->insta_username . "] account has been disabled.\n");
             return false;
         }
 
         if ($ig_profile->invalid_user == 1) {
-            echo("\n[" . $ig_profile->invalid_user . "] is a invalid instagram user.\n");
+            echo("\n[" . $ig_profile->insta_username . "] is a invalid instagram user.\n");
             return false;
         }
 
         if ($ig_profile->incorrect_pw == 1) {
-            echo("\n[" . $ig_profile->incorrect_pw . "] is using an incorrect password.\n");
+            echo("\n[" . $ig_profile->insta_username . "] is using an incorrect password.\n");
             return false;
         }
 
