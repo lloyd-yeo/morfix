@@ -145,7 +145,7 @@ class InteractionFollow implements ShouldQueue {
                             $valid_user = InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow);
                             
                             if ($valid_user == 2) {
-                                echo "\n[" . $this->profile->insta_username . "] encountered an exception.\n";
+                                echo "[" . $this->profile->insta_username . "] encountered an exception.\n";
                                 return;
                             } else if ($valid_user) {
                                 $this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
