@@ -68,7 +68,7 @@ class RefreshIgProfile implements ShouldQueue {
     public function handle() {
         DB::reconnect();
         
-        echo($this->profile->insta_username . "\t" . $this->profile->insta_pw);
+        echo($this->profile->insta_username . "\t" . $this->profile->insta_pw . "\n\n");
         
         if (!$this->initInstagramAPI($this->profile)){
             return;
