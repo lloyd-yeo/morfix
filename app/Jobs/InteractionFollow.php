@@ -141,7 +141,7 @@ class InteractionFollow implements ShouldQueue {
                             }
 
                             $throttle_count++;
-
+                            $valid_user = 0;
                             $valid_user = InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow);
                             
                             if ($valid_user == 2) {
@@ -157,7 +157,7 @@ class InteractionFollow implements ShouldQueue {
                                     continue;
                                 }
                             } else if (!$valid_user) {
-                                echo "\n[" . $user_to_follow->username . "] is invalid.\n";
+                                echo "[" . $user_to_follow->username . "] is invalid.\n";
                                 continue;
                             }
                         }
