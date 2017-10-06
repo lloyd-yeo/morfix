@@ -102,7 +102,7 @@ class InteractionFollowHelper {
             return false;
         }
         //Get extra info to make sure it fits user's criteria
-        try {
+//        try {
             $user_info = $instagram->people->getInfoById($user_to_follow->pk);
             $user_to_follow = $user_info->user;
             if ($user_to_follow->media_count == 0) {
@@ -117,31 +117,31 @@ class InteractionFollowHelper {
                 echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: [" . $user_to_follow->follower_count . "] > [" . $ig_profile->follow_max_followers . "] \n";
                 return false;
             }
-        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $checkpoint_ex);
-            return 2;
-        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $network_ex);
-            return 2;
-        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $endpoint_ex);
-            return 2;
-        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $incorrectpw_ex);
-            return 2;
-        } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $feedback_ex);
-            return 2;
-        } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $emptyresponse_ex);
-            return 2;
-        } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $acctdisabled_ex);
-            return 2;
-        } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
-            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $throttled_ex);
-            return 2;
-        }
+//        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $checkpoint_ex);
+//            return 2;
+//        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $network_ex);
+//            return 2;
+//        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $endpoint_ex);
+//            return 2;
+//        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $incorrectpw_ex);
+//            return 2;
+//        } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $feedback_ex);
+//            return 2;
+//        } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $emptyresponse_ex);
+//            return 2;
+//        } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $acctdisabled_ex);
+//            return 2;
+//        } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+//            InteractionFollowHelper::handleFollowInstagramException($ig_profile, $throttled_ex);
+//            return 2;
+//        }
         return true;
     }
 
