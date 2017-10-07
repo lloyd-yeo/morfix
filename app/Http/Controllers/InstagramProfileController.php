@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
 use App\InstagramProfile;
+use App\InstagramHelper;
 use App\CreateInstagramProfileLog;
 use App\Proxy;
 use InstagramAPI\Instagram as Instagram;
@@ -45,15 +46,8 @@ class InstagramProfileController extends Controller {
         $profile_log->insta_pw = $ig_password;
         $profile_log->save();
 
-        $config = array();
-        $config["storage"] = "mysql";
-        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
-        $config["dbtablename"] = "instagram_sessions";
-
-        $debug = false;
-        $truncatedDebug = false;
-        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
+        $instagram = InstagramHelper::initInstagram();
+        
         $proxy = Proxy::inRandomOrder()->first();
 
         try {
@@ -65,9 +59,8 @@ class InstagramProfileController extends Controller {
             }
 
             $instagram->setProxy($proxy->proxy);
-            $instagram->setUser($ig_username, $ig_password);
             
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_username, $ig_password);
 
             $morfix_ig_profile = new InstagramProfile();
             $morfix_ig_profile->user_id = Auth::user()->user_id;
@@ -115,7 +108,12 @@ class InstagramProfileController extends Controller {
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             $profile_log->error_msg = $endpoint_ex->getMessage();
             $profile_log->save();
+//            dump($endpoint_ex);
             return Response::json(array("success" => false, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage()));
+        } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
+            $profile_log->error_msg = $challenge_required_ex->getMessage();
+            $profile_log->save();
+            return Response::json(array("success" => false, 'type' => 'checkpoint', 'response' => "Verification Required"));
         }
     }
 
@@ -232,8 +230,7 @@ class InstagramProfileController extends Controller {
 
             $instagram->setProxy($proxy);
             try {
-                $instagram->setUser($ig_username, $ig_password);
-                $explorer_response = $instagram->login();
+                $explorer_response = $instagram->login($ig_username, $ig_password);
                 $user_response = $instagram->getUserInfoByName($ig_username);
                 $instagram_user = $user_response->user;
 
@@ -279,10 +276,8 @@ class InstagramProfileController extends Controller {
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_profile->insta_username, $ig_profile->insta_pw);
-        
         try {
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $ig_profile->checkpoint_required = 0;
             $ig_profile->save();
             return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));
@@ -307,10 +302,9 @@ class InstagramProfileController extends Controller {
         $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
         
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_profile->insta_username, $password);
         
         try {
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_profile->insta_username, $ig_password);
             $ig_profile->incorrect_pw = 0;
             $ig_profile->save();
             return Response::json(array("success" => true, 'response' => 'Your profile has restored connectivity.'));

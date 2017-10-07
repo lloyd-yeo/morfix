@@ -106,8 +106,8 @@ class InteractionFollow extends Command {
             $users = User::where('email', $this->argument("email"))->get();
         } else {
             $this->info("[Follow Interaction] Queueing jobs for Master.");
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile) AND partition = 0')
-                    ->orderBy('user_id', 'asc')
+            $users = User::where('partition', 0)
+                    ->orderBy('user_id', 'ASC')
                     ->get();
         }
 
@@ -116,30 +116,75 @@ class InteractionFollow extends Command {
             $this->line($user->user_id);
 
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
-                            . 'AND checkpoint_required = 0 '
-                            . 'AND account_disabled = 0 '
-                            . 'AND invalid_user = 0 '
-                            . 'AND incorrect_pw = 0 '
-                            . 'AND (NOW() >= next_follow_time OR next_follow_time IS NULL) '
                             . 'AND user_id = ' . $user->user_id)->get();
 
+            //Queueing for Master & Slave without Email
             if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
                     foreach ($instagram_profiles as $ig_profile) {
-                        dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-                                        ->onQueue('follows'));
-                        $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+
+                        if (!InstagramHelper::validForInteraction($ig_profile)) {
+                            continue;
+                        }
+
+                        if ($ig_profile->auto_follow_ban == 1) {
+                            if ($ig_profile->auto_follow_ban_time !== NULL && $ig_profile->auto_follow_ban_time >= \Carbon\Carbon::now()) {
+                                $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
+                                continue;
+                            } else if ($ig_profile->auto_follow_ban_time === NULL) {
+                                $ig_profile->auto_follow_ban = 0;
+                                $ig_profile->auto_follow_ban_time = NULL;
+                                $ig_profile->save();
+                            }
+                        }
+
+                        if ($ig_profile->next_follow_time === NULL) {
+                            $ig_profile->next_follow_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                                            ->onQueue('follows'));
+                            $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                            dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                                            ->onQueue('follows'));
+                            $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+                        }
                     }
                 }
+                //Else, queueing for Email.
             } else {
-                if ($this->argument("queueasjob") === NULL) {
-                    foreach ($instagram_profiles as $ig_profile) {
-                        $this->jobHandle($ig_profile);
+                foreach ($instagram_profiles as $ig_profile) {
+
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
                     }
-                } else {
-                    dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-                                        ->onQueue('follows'));
-                    $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+
+                    if ($ig_profile->auto_follow_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
+                        continue;
+                    }
+                    if ($this->argument("queueasjob") !== NULL) {
+                        if ($ig_profile->next_follow_time === NULL) {
+                            $this->warn("[" . $ig_profile->insta_username . "] next_follow_time is NULL.");
+                            $ig_profile->next_follow_time = \Carbon\Carbon::now();
+                            $ig_profile->save();
+                            dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                                            ->onQueue('follows'));
+                            $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                            dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                                            ->onQueue('follows'));
+                            $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+                        }
+                    } else {
+                        foreach ($instagram_profiles as $ig_profile) {
+                            $this->line("[Follow Interactions] executing manually for " . $ig_profile->insta_username);
+                            dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+                                            ->onQueue('follows')
+                                            ->onConnection('sync'));
+                            
+                        }
+                    }
                 }
             }
         }
@@ -272,10 +317,9 @@ class InteractionFollow extends Command {
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_username, $ig_password);
 
         try {
-            $instagram->login();
+            $instagram->login($ig_username, $ig_password);
             echo "[$ig_username] logged in.\n";
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
 
@@ -285,7 +329,7 @@ class InteractionFollow extends Command {
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
             $instagram->setProxy($ig_profile->proxy);
-            $instagram->login();
+            $instagram->login($ig_username, $ig_password);
 
 //                    var_dump($network_ex);
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
@@ -484,9 +528,10 @@ class InteractionFollow extends Command {
         }
     }
 
-    private function useHashtag() {
+    private function useHashtag($ig_profile) {
         //start with targeted usernames/hashtags
         $use_hashtags = rand(0, 1);
+        $insta_username = $ig_profile->insta_username;
         echo "[" . $insta_username . "] random use hashtag: $use_hashtags\n";
         $target_hashtags = NULL;
         $target_usernames = NULL;
@@ -582,10 +627,9 @@ class InteractionFollow extends Command {
 
         //[LOGIN segment]
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_username, $ig_password);
 
         try {
-            $instagram->login();
+            $instagram->login($ig_username, $ig_password);
             echo "[$ig_username] logged in.\n";
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             $proxy = Proxy::inRandomOrder()->first();
@@ -594,7 +638,7 @@ class InteractionFollow extends Command {
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
             $instagram->setProxy($ig_profile->proxy);
-            $instagram->login();
+            $instagram->login($ig_username, $ig_password);
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
@@ -620,7 +664,7 @@ class InteractionFollow extends Command {
         //[End LOGIN]
 
 
-        $this->useHashtag();
+        $this->useHashtag($ig_profile);
         $use_hashtags = $this->use_hashtags;
         $target_hashtags = $this->target_hashtags;
         $target_usernames = $this->target_usernames;

@@ -15,6 +15,10 @@ class Kernel extends ConsoleKernel {
     protected $commands = [
         Commands\ImportInstagramSession::class,
         Commands\CheckInteractionsWorking::class,
+        Commands\UpdatePendingCommissionPayableNew::class,
+        Commands\UpdatePaypalCharges::class,
+        Commands\UpdateLastPaidFromCSV::class,
+        Commands\UpdateLastPaidFromCsv2::class,
         Commands\GetNewDmJob::class,
         Commands\GetDm::class,
         Commands\SendDmJob::class,
@@ -66,6 +70,18 @@ class Kernel extends ConsoleKernel {
         Commands\MigrateLikeLogs::class,
         Commands\MigrateComments::class,
         Commands\UpdateUserTotalInteractionStatistics::class,
+        Commands\GenerateStripeReferralChargesCsv::class,
+        Commands\RefreshStripeCustomerDetails::class,
+        Commands\RefreshStripeSubscription::class,
+        Commands\RefreshInteractionsQuota::class,
+        Commands\CarbonTester::class,
+        Commands\CheckDuplicateCharges::class,
+        Commands\UpdateNextInteractionTime::class,
+        Commands\UpdateTrialActivation::class,
+        Commands\UpdateUserTargets::class,
+        Commands\RetrieveDmInbox::class,
+        Commands\MigrateDmJob::class,
+        Commands\ReassignProxy::class,
     ];
 
     /**
@@ -77,7 +93,7 @@ class Kernel extends ConsoleKernel {
     protected function schedule(Schedule $schedule) {
         $schedule->command('interaction:like')->everyFiveMinutes();
         $schedule->command('interaction:comment')->everyFiveMinutes();
-        //$schedule->command('interaction:follow')->everyMinute();
+        $schedule->command('interaction:follow')->everyMinute();
         $schedule->command('dm:get')->hourly(); 
         $schedule->command('dm:send')->hourly();
         $schedule->command("engagement:add")->hourly();

@@ -79,10 +79,9 @@ class GetDm implements ShouldQueue {
         }
 
         $instagram->setProxy($ig_profile->proxy);
-        $instagram->setUser($ig_username, $ig_password);
 
         try {
-            $explorer_response = $instagram->login();
+            $explorer_response = $instagram->login($ig_username, $ig_password);
             $activity_response = $instagram->people->getRecentActivityInbox();
             $newest_timestamp = 0;
             

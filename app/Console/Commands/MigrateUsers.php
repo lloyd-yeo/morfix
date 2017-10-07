@@ -42,6 +42,11 @@ class MigrateUsers extends Command {
      */
     public function handle() {
 
+        DB::table('user')->delete();
+        DB::table('user_insta_profile')->delete();
+        DB::table('user_insta_target_username')->delete();
+        DB::table('user_insta_target_hashtag')->delete();
+
         $master_users = DB::connection('mysql_master')
                 ->table('user')
                 ->where('partition', $this->argument('partition'))
@@ -85,8 +90,6 @@ class MigrateUsers extends Command {
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
 
-                DB::table('user_insta_target_hashtag')->where('insta_username', $ig_profile->insta_username)->delete();
-                
                 foreach ($master_user_insta_target_hashtags as $master_user_insta_target_hashtag) {
                     $this->addNewInstagramProfileHashtag($master_user_insta_target_hashtag);
                 }
@@ -96,27 +99,18 @@ class MigrateUsers extends Command {
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
 
-                DB::table('user_insta_target_username')->where('insta_username', $ig_profile->insta_username)->delete();
-
                 foreach ($master_user_insta_target_usernames as $master_user_insta_target_username) {
                     $this->addNewInstagramProfileUsername($master_user_insta_target_username);
                 }
             }
         }
-        
+
         $this->call('migrate:comment', []);
-        
     }
 
     private function addNewUser($master_user) {
         //refresh user.
-        $user_ = User::find($master_user->user_id);
-
-        $user = $user_;
-        if ($user_ === NULL) {
-            $user = new User();
-        }
-
+        $user = new User();
         $user->user_id = $master_user->user_id;
         $user->email = $master_user->email;
         $user->password = $master_user->password;
@@ -152,10 +146,14 @@ class MigrateUsers extends Command {
         $user->paypal = $master_user->paypal;
         $user->last_pay_out_date = $master_user->last_pay_out_date;
         $user->partition = $master_user->partition;
-
-        if ($user->save()) {
-            return $user;
-        } else {
+        try {
+            if ($user->save()) {
+                $this->line("Imported [" . $user->email . "]");
+                return $user;
+            } else {
+                return NULL;
+            }
+        } catch (\Illuminate\Database\QueryException $query_ex) {
             return NULL;
         }
     }
@@ -163,13 +161,7 @@ class MigrateUsers extends Command {
     private function addNewInstagramProfile($master_instagram_profile) {
 
         //refresh user.
-        $profile = InstagramProfile::find($master_instagram_profile->id); #find
-        $ig_profile = $profile; #make $ig_profile the placeholder
-
-        if ($profile === NULL) {
-            $ig_profile = new InstagramProfile;
-        }
-
+        $ig_profile = new InstagramProfile;
         $ig_profile->id = $master_instagram_profile->id;
         $ig_profile->user_id = $master_instagram_profile->user_id;
         $ig_profile->email = $master_instagram_profile->email;
@@ -238,10 +230,14 @@ class MigrateUsers extends Command {
         $ig_profile->total_comments = $master_instagram_profile->total_comments;
         $ig_profile->total_follows = $master_instagram_profile->total_follows;
         $ig_profile->total_unfollows = $master_instagram_profile->total_unfollows;
-
-        if ($ig_profile->save()) {
-            return $ig_profile;
-        } else {
+        try {
+            if ($ig_profile->save()) {
+                $this->line("Imported [" . $ig_profile->insta_username . "]");
+                return $ig_profile;
+            } else {
+                return NULL;
+            }
+        } catch (\Illuminate\Database\QueryException $query_ex) {
             return NULL;
         }
     }
@@ -268,7 +264,11 @@ class MigrateUsers extends Command {
         $target_hashtag->insta_id = $master_user_insta_target_hashtag->insta_id;
         $target_hashtag->insta_username = $master_user_insta_target_hashtag->insta_username;
         $target_hashtag->hashtag = $master_user_insta_target_hashtag->hashtag;
-        $target_hashtag->save();
+        try {
+            $target_hashtag->save();
+        } catch (\Illuminate\Database\QueryException $query_ex) {
+            
+        }
     }
 
     private function addNewInstagramProfileUsername($master_user_insta_target_username) {
@@ -280,7 +280,11 @@ class MigrateUsers extends Command {
         $target_username->invalid = $master_user_insta_target_username->invalid;
         $target_username->insufficient_followers = $master_user_insta_target_username->insufficient_followers;
         $target_username->last_checked = $master_user_insta_target_username->last_checked;
-        $target_username->save();
+        try {
+            $target_username->save();
+        } catch (\Illuminate\Database\QueryException $query_ex) {
+            
+        }
     }
 
 }

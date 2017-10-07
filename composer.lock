@@ -740,16 +740,16 @@
         },
         {
             "name": "intervention/image",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Intervention/image.git",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3"
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/322a4ade249467179c50a3e50eda8760ff3af2a3",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/3603dbcc9a17d307533473246a6c58c31cf17919",
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
                 "shasum": ""
             },
             "require": {
@@ -806,7 +806,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2017-07-03T15:50:40+00:00"
+            "time": "2017-09-21T16:29:17+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1295,12 +1295,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "8661aafe61b183a61ce8f0055cc41d6d76d0fc34"
+                "reference": "3af853e3f04cad3ebec5ac547a2e82c1f154391d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/8661aafe61b183a61ce8f0055cc41d6d76d0fc34",
-                "reference": "8661aafe61b183a61ce8f0055cc41d6d76d0fc34",
+                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/3af853e3f04cad3ebec5ac547a2e82c1f154391d",
+                "reference": "3af853e3f04cad3ebec5ac547a2e82c1f154391d",
                 "shasum": ""
             },
             "require": {
@@ -1359,7 +1359,7 @@
                 "php",
                 "private"
             ],
-            "time": "2017-09-19T07:27:24+00:00"
+            "time": "2017-09-23T23:20:10+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1975,16 +1975,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e"
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
-                "reference": "0ef23d1b10cf1bc576e9d865a7e9c47982c5715e",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/45cffe822057a09e05f7bd09ec5fb88eeecd2334",
+                "reference": "45cffe822057a09e05f7bd09ec5fb88eeecd2334",
                 "shasum": ""
             },
             "require": {
@@ -2053,7 +2053,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2017-08-04T13:39:04+00:00"
+            "time": "2017-09-22T20:46:04+00:00"
         },
         {
             "name": "react/cache",
@@ -2476,16 +2476,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v5.2.1",
+            "version": "v5.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "8de523434a271db522b06187625c01e5e813b08b"
+                "reference": "661ea818d28b90b5f6537e9a91722d6cc6b91649"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/8de523434a271db522b06187625c01e5e813b08b",
-                "reference": "8de523434a271db522b06187625c01e5e813b08b",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/661ea818d28b90b5f6537e9a91722d6cc6b91649",
+                "reference": "661ea818d28b90b5f6537e9a91722d6cc6b91649",
                 "shasum": ""
             },
             "require": {
@@ -2527,7 +2527,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2017-09-14T19:39:00+00:00"
+            "time": "2017-09-20T18:00:35+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4308,16 +4308,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.21",
+            "version": "5.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db"
+                "reference": "10df877596c9906d4110b5b905313829043f2ada"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3b91adfb64264ddec5a2dee9851f354aa66327db",
-                "reference": "3b91adfb64264ddec5a2dee9851f354aa66327db",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/10df877596c9906d4110b5b905313829043f2ada",
+                "reference": "10df877596c9906d4110b5b905313829043f2ada",
                 "shasum": ""
             },
             "require": {
@@ -4386,7 +4386,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-21T08:11:54+00:00"
+            "time": "2017-09-24T07:23:38+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",

@@ -88,8 +88,7 @@ class GetNewDmJob extends Command {
                 }
                 
                 try {
-                    $instagram->setUser($ig_username, $ig_password);
-                    $explorer_response = $instagram->login();
+                    $explorer_response = $instagram->login($ig_username, $ig_password);
                     $activity_response = $instagram->getRecentActivity();
                     $newest_timestamp = 0;
                     foreach ($activity_response->old_stories as $story) {

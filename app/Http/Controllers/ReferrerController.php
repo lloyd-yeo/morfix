@@ -31,11 +31,6 @@ class ReferrerController extends Controller {
 
         $redir = $request->input("redir");
 
-//        if ($redir == "payment") {
-//            return view('vsl.payment', [
-//            ]);
-//        }
-
         if ($redir == "payment") {
             return redirect('https://upgrade.morfix.co/premium');
         } elseif ($redir == "home") {

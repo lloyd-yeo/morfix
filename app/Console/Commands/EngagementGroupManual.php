@@ -85,10 +85,10 @@ class EngagementGroupManual extends Command {
             }
 
             $instagram->setProxy($ig_profile->proxy);
-            $instagram->setUser($ig_username, $ig_password);
+            #$instagram->setUser($ig_username, $ig_password);
 
             try {
-                $explorer_response = $instagram->login();
+                $explorer_response = $instagram->login($ig_username, $ig_password);
             } catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
                 $ig_profile->invalid_user = 1;
                 $ig_profile->save();
@@ -113,6 +113,10 @@ class EngagementGroupManual extends Command {
                 continue;
             } catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
                 $ig_profile->invalid_user = 1;
+                $ig_profile->save();
+                continue;
+            } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_ex) {
+                $ig_profile->checkpoint_required = 1;
                 $ig_profile->save();
                 continue;
             }
@@ -146,6 +150,8 @@ class EngagementGroupManual extends Command {
             } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                 continue;
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
+                continue;
+            } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
                 continue;
             }
 

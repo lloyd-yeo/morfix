@@ -56,11 +56,8 @@
             <div class="col-sm-6 col-md-3">
                 <a class="block block-link-hover3 text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full text-modern">
-                        @if (Auth::user()->email == "gabriel@instaffiliates.com")
-                        <div class="h1 font-w700" data-toggle="countTo" data-to="64">64</div>
-                        @else
                         <div class="h1 font-w700" data-toggle="countTo" data-to="{{ count($referrals) }}">{{ count($referrals) }}</div>
-                        @endif
+                        
                     </div>
                     <div class="block-content block-content-full block-content-mini bg-gray-lighter text-muted font-w600">Active Affiliates</div>
                 </a>
@@ -262,6 +259,8 @@
                                 <td><label class="label label-info">Premium</label></td>
                                 @elseif ($invoice->subscription_id == "MX370")
                                 <td><label class="label label-danger">Pro</label></td>
+                                @elseif ($invoice->subscription_id == "MX297")
+                                <td><label class="label label-danger">Pro [One Time Offer]</label></td>
                                 @elseif ($invoice->subscription_id == "0297")
                                 <td><label class="label label-primary">Business</label></td>
                                 @elseif ($invoice->subscription_id == "MX970")
@@ -282,6 +281,8 @@
                                 <td><label class="label label-primary">$20</label></td>
                                 @elseif ($invoice->subscription_id == "MX370")
                                 <td><label class="label label-primary">$200</label></td>
+                                @elseif ($invoice->subscription_id == "MX297")
+                                <td><label class="label label-primary">$149</label></td>
                                 @elseif ($invoice->subscription_id == "0297")
                                 <td><label class="label label-primary">$50</label></td>
                                 @elseif ($invoice->subscription_id == "MX970")

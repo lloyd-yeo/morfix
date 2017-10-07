@@ -79,7 +79,15 @@ class UpdateUserTotalInteractionStatistics extends Command {
         $ig_profile->daily_follows = 0;
         $ig_profile->total_unfollows = $ig_profile->total_unfollows + $ig_profile->daily_unfollows;
         $ig_profile->daily_unfollows = 0;
-        $ig_profile->save();
+        
+        if ($ig_profile->save()) {
+            $this->line('[' . $ig_profile->insta_username . "]");
+            $this->line('[Total] [Likes: ' . $ig_profile->total_likes . '] '
+                    . '[Comments: ' . $ig_profile->total_comments . '] '
+                    . '[Follows: ' . $ig_profile->total_follows . '] '
+                    . '[Unfollows: ' . $ig_profile->total_comments . ']');
+        }
+        
         DB::connection('mysql_master')->table('user_insta_profile')
                 ->where('id', $ig_profile->id)
                 ->update(['daily_likes' => $ig_profile->daily_likes,
@@ -89,7 +97,19 @@ class UpdateUserTotalInteractionStatistics extends Command {
                           'total_likes' => $ig_profile->total_likes,
                           'total_comments' => $ig_profile->total_comments,
                           'total_follows' => $ig_profile->total_follows,
-                          'total_unfollows' => $ig_profile->total_unfollows]);
+                          'total_unfollows' => $ig_profile->total_unfollows,
+                          'auto_like_ban' => $ig_profile->auto_like_ban,
+                          'auto_like_ban_time' => $ig_profile->auto_like_ban_time,
+                          'auto_comment_ban' => $ig_profile->auto_comment_ban,
+                          'auto_comment_ban_time' => $ig_profile->auto_comment_ban_time,
+                          'next_comment_time' => $ig_profile->next_comment_time,
+                          'next_follow_time' => $ig_profile->next_follow_time,
+                          'next_like_time' => $ig_profile->next_like_time,
+                          'checkpoint_required' => $ig_profile->checkpoint_required,
+                          'account_disabled' => $ig_profile->account_disabled,
+                          'invalid_user' => $ig_profile->invalid_user,
+                          'incorrect_pw' => $ig_profile->incorrect_pw,
+                          'invalid_proxy' => $ig_profile->invalid_proxy]);
     }
     
     private function refreshDailyStats($ig_profile) {
@@ -104,12 +124,14 @@ class UpdateUserTotalInteractionStatistics extends Command {
                 ->count();
         $ig_profile->daily_comments = $daily_comments;
 
-        $daily_follows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)
+        $daily_follows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                ->where('follow', 1)
                 ->whereDate('date_inserted', '=', Carbon::today()->toDateString())
                 ->count();
         $ig_profile->daily_follows = $daily_follows;
 
-        $daily_unfollows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)
+        $daily_unfollows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                ->where('unfollowed', 1)
                 ->whereDate('date_unfollowed', '=', Carbon::today()->toDateString())
                 ->count();
         $ig_profile->daily_unfollows = $daily_unfollows;
@@ -134,13 +156,16 @@ class UpdateUserTotalInteractionStatistics extends Command {
                           'checkpoint_required' => $ig_profile->checkpoint_required,
                           'account_disabled' => $ig_profile->account_disabled,
                           'invalid_user' => $ig_profile->invalid_user,
-                          'incorrect_pw' => $ig_profile->incorrect_pw,
-                          'invalid_proxy' => $ig_profile->invalid_proxy,]);
+                          'incorrect_pw' => $ig_profile->incorrect_pw,]);
     }
 
     private function initialUpdateOfTotalStats($ig_profile) {
+        $master_total_likes = DB::connection('mysql_master')->table('user_insta_profile_like_log')
+                                ->where('insta_username', $ig_profile->insta_username)
+                                ->count();
+        
         $total_likes = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
-        $ig_profile->total_likes = $total_likes;
+        $ig_profile->total_likes = $master_total_likes + $total_likes;
 
         $total_likes_archived = LikeLogsArchive::where('insta_username', $ig_profile->insta_username)->count();
         $ig_profile->total_likes = $ig_profile->total_likes + $total_likes_archived;
@@ -150,32 +175,42 @@ class UpdateUserTotalInteractionStatistics extends Command {
                     Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s')])
                 ->count();
         $ig_profile->daily_likes = $daily_likes;
-
+        
+        $master_total_comments = DB::connection('mysql_master')->table('user_insta_profile_comment_log')
+                                ->where('insta_username', $ig_profile->insta_username)
+                                ->count();
         $total_comments = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
-        $ig_profile->total_comments = $total_comments;
+        $ig_profile->total_comments = $master_total_comments + $total_comments;
 
         $daily_comments = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_commented', [Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
                     Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s')])
                 ->count();
         $ig_profile->daily_comments = $daily_comments;
-
+        
+        $master_total_follows = DB::connection('mysql_master')->table('user_insta_profile_follow_log')
+                                ->where('insta_username', $ig_profile->insta_username)
+                                ->where('follow', 1)
+                                ->count();
         $total_follows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->where('follow', 1)
                 ->count();
-
-        $ig_profile->total_follows = $total_follows;
+        $ig_profile->total_follows = $master_total_follows + $total_follows;
 
         $daily_follows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_inserted', [Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
                     Carbon::now()->setTime(23, 59, 59)->format('Y-m-d H:i:s')])
                 ->count();
         $ig_profile->daily_follows = $daily_follows;
-
+        
+        $master_total_unfollows = DB::connection('mysql_master')->table('user_insta_profile_follow_log')
+                                ->where('insta_username', $ig_profile->insta_username)
+                                ->where('unfollowed', 1)
+                                ->count();
         $total_unfollows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->where('unfollowed', 1)
                 ->count();
-        $ig_profile->total_unfollows = $total_unfollows;
+        $ig_profile->total_unfollows = $master_total_unfollows + $total_unfollows;
 
         $daily_unfollows = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_unfollowed', [Carbon::now()->setTime(0, 0, 0)->format('Y-m-d H:i:s'),
