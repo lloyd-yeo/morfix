@@ -278,6 +278,11 @@ class InteractionComment extends Command {
                         echo("[ENDING] Request Exception: " . $request_ex->getMessage() . "\n");
                         var_dump($request_ex->getResponse());
                     }
+
+
+                    //            echo("request1 " . $request_ex->getMessage() . "\n");
+                    //            $ig_profile->error_msg = $request_ex->getMessage();
+                    //            $ig_profile->save(); 
                 }
             } else {
                 //echo "Unable to Login";

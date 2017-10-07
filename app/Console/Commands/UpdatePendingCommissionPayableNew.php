@@ -170,7 +170,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                 if ($referral_stripe_charge->subscription_id == "MX970" && $tier >= 22) {
                     $current_comms_stripe = $current_comms_stripe + 500;
                 } else if ($referral_stripe_charge->subscription_id == "MX297" && ($tier == 3 || $tier == 13)) {
-                    $current_comms_stripe = $current_comms_stripe + 118.8;
+                    $current_comms_stripe = $current_comms_stripe + 120;
                 }
             }
             echo "current_comms_stripe = " . $current_comms_stripe . "\n";
@@ -203,7 +203,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                 if ($referral_paypal1_charge->subscription_id == "MX970" && $tier >= 22) {
                     $current_comms_paypal = $current_comms_paypal + 500;
                 } else if ($referral_paypal1_charge->subscription_id == "MX297" && ($tier == 3 || $tier == 13)) {
-                    $current_comms_paypal = $current_comms_paypal + 118.8;
+                    $current_comms_paypal = $current_comms_paypal + 120;
                 }
             }
 
@@ -245,7 +245,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                 if ($referral_stripe_charge->subscription_id == "MX970" && $tier >= 22) {
                     $current_comms_stripe = $current_comms_stripe + 500;
                 } else if ($referral_stripe_charge->subscription_id == "MX297" && ($tier == 3 || $tier == 13)) {
-                    $current_comms_stripe = $current_comms_stripe + 118.8;
+                    $current_comms_stripe = $current_comms_stripe + 120;
                 }
             }
             echo "current_comms_stripe = " . $current_comms_stripe . "\n";
@@ -279,7 +279,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                 if ($referral_paypal1_charge->subscription_id == "MX970" && $tier >= 22) {
                     $current_comms_paypal = $current_comms_paypal + 500;
                 } else if ($referral_paypal1_charge->subscription_id == "MX297" && ($tier == 3 || $tier == 13)) {
-                    $current_comms_paypal = $current_comms_paypal + 118.8;
+                    $current_comms_paypal = $current_comms_paypal + 120;
                 }
             }
 

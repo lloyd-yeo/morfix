@@ -79,6 +79,7 @@ class Kernel extends ConsoleKernel {
         Commands\UpdateNextInteractionTime::class,
         Commands\UpdateTrialActivation::class,
         Commands\UpdateUserTargets::class,
+        Commands\RetrieveDmInbox::class,
         Commands\MigrateDmJob::class,
         Commands\ReassignProxy::class,
     ];
