@@ -47,6 +47,7 @@ class RefreshIgProfile implements ShouldQueue {
      * @var int
      */
     public $timeout = 180;
+    
     protected $profile;
     protected $instagram;
 
@@ -66,15 +67,16 @@ class RefreshIgProfile implements ShouldQueue {
      */
     public function handle() {
         DB::reconnect();
-
-        $this->instagram = $this->initInstagramAPI($this->profile);
-
-        echo($this->profile->insta_username . "\t" . $this->profile->insta_pw);
-
-
+        
+        echo($this->profile->insta_username . "\t" . $this->profile->insta_pw . "\n\n");
+        
+        if (!$this->initInstagramAPI($this->profile)){
+            return;
+        }
+        
         try {
-            $user_response = $this->instagram->people->getInfoById($this->profile->insta_user_id);
-            $instagram_user = $user_response->user;
+            
+            $instagram_user = InstagramHelper::getUserInfo($this->instagram, $this->profile);
 
             $this->profile->insta_username = $instagram_user->username;
             $this->profile->profile_full_name = $instagram_user->full_name;
@@ -134,9 +136,7 @@ class RefreshIgProfile implements ShouldQueue {
 
     public function initInstagramAPI($ig_profile) {
         $this->instagram = InstagramHelper::initInstagram();
-        if (!InstagramHelper::login($this->instagram, $ig_profile)) {
-            exit();
-        }
+        return InstagramHelper::login($this->instagram, $ig_profile);
     }
 
 }

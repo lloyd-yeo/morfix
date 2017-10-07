@@ -52,27 +52,52 @@ class RetrieveDmInbox extends Command
                 $instagram = InstagramHelper::initInstagram();
 
                 if (InstagramHelper::login($instagram, $ig_profile)) {
-                    $response = $instagram->direct->getInbox();
-
-                    if(sizeof($response) > 0){
-                        $inbox = $response->inbox;
-                        $threads = $inbox->threads;
-
-                        $i = 0;
-                        foreach ($threads as $thread) {
-                            $i++;
-                            echo "\nThread: [$i] \n".json_encode($thread)."\n\n";
-                            $this->users($thread->users);
-
-                        }
-                    }
-                    else{
-                        echo "Inbox is empty".PHP_EOL;
-                    }
+                    $test = 2;
+                    switch ($test) {
+                        case 1:
+                            $response = $instagram->direct->getInbox();
+                            $this->manageInboxResponse($response);
+                            break;
+                        case 2:
+                             $response = $instagram->direct->getVisualInbox();
+                             $this->manageVisualInboxResponse($response);
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }        
                 }
             }
             else
                 echo "Email Address was not found.".PHP_EOL;
+        }
+    }
+
+    public function manageInboxResponse($response){
+        if(sizeof($response) > 0){
+            $inbox = $response->inbox;
+            $threads = $inbox->threads;
+
+            $i = 0;
+            foreach ($threads as $thread) {
+                $i++;
+                echo "\nThread: [$i] \n".json_encode($thread)."\n\n";
+                $this->users($thread->users);
+
+            }
+        }
+        else{
+            echo "Inbox is empty".PHP_EOL;
+        }
+    }
+
+    public function manageVisualInboxResponse($response){
+        if(sizeof($response) > 0){
+            echo json_encode($response).PHP_EOL;
+        }
+        else{
+            echo "Inbox is empty".PHP_EOL;
         }
     }
 

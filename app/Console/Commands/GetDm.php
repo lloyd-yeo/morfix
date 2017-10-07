@@ -12,15 +12,16 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\User;
+use App\InstagramHelper;
 
-class GetDm extends Command
-{
+class GetDm extends Command {
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dm:get {email?}';
+    protected $signature = 'dm:get {email?} {queueasjob?}';
 
     /**
      * The console command description.
@@ -34,8 +35,7 @@ class GetDm extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -44,40 +44,63 @@ class GetDm extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-        $users = array();
-        if (NULL !== $this->argument("email")) {
-            $users = User::where('email', $this->argument("email"))
-                    ->orderBy('user_id', 'desc')
-                    ->get();
-            
+    public function handle() {
+        if ($this->argument("email") === NULL) { //master
+            $users = User::where('partition', 0)->get();
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
-                                                        ->get();
+                        ->get();
                 foreach ($instagram_profiles as $ig_profile) {
+                    
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+                    
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
                     dispatch($job);
-                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                    $this->line("[GetDM] Queued Profile: " . $ig_profile->insta_username);
                 }
             }
-            
-        } else {
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile WHERE auto_dm_new_follower = 1)')
-                    ->orderBy('user_id', 'desc')
-                    ->get();
-            
+        } else if ($this->argument("email") === "slave") { //slave
+            $users = User::all();
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
-                                                        ->get();
+                        ->get();
                 foreach ($instagram_profiles as $ig_profile) {
+                    
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+                    
                     $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
                     $job->onQueue('getdm');
                     dispatch($job);
-                    $this->line("Queued Profile: " . $ig_profile->insta_username);
+                    $this->line("[GetDM] Queued Profile: " . $ig_profile->insta_username);
                 }
             }
+        } else if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
+            $email = $this->argument("email");
+            $users = User::where('email', $email)->get();
+            foreach ($users as $user) {
+                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                        ->get();
+                foreach ($instagram_profiles as $ig_profile) {
+                    
+                    if (!InstagramHelper::validForInteraction($ig_profile)) {
+                        continue;
+                    }
+                    
+                    $job = new \App\Jobs\GetDm(\App\InstagramProfile::find($ig_profile->id));
+                    $job->onQueue('getdm');
+                    dispatch($job);
+                    $this->line("[GetDM] Queued Profile: " . $ig_profile->insta_username);
+                }
+            }
+        } else if ($this->argument("email") !== NULL) {
+            $email = $this->argument("email");
+            //run job manually.
         }
     }
+
 }

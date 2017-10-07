@@ -35,13 +35,17 @@ class InstagramHelper {
         return $instagram;
     }
 
+    /*
+     * TRUE if the login was successful.
+     * FALSE if the the login failed.
+     */
+
     public static function login(Instagram $instagram, InstagramProfile $ig_profile) {
         $flag = false;
         $message = '';
         echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
 
         InstagramHelper::verifyAndReassignProxy($ig_profile);
-
         $instagram->setProxy($ig_profile->proxy);
 
         echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
@@ -49,6 +53,7 @@ class InstagramHelper {
         try {
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
+            
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
@@ -60,6 +65,9 @@ class InstagramHelper {
 
             InstagramHelper::verifyAndReassignProxy($ig_profile);
 
+            $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+            $ig_profile->save();
+
             $message = "NetworkException";
             try {
                 $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
@@ -67,7 +75,7 @@ class InstagramHelper {
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
                 $message .= " with InstagramException\n";
             }
-            
+
             dump($network_ex);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             
@@ -102,13 +110,33 @@ class InstagramHelper {
     }
 
     public static function verifyAndReassignProxy(InstagramProfile $ig_profile) {
-        if ($ig_profile->proxy === NULL) {
+        if ($ig_profile->proxy === NULL || $ig_profile->invalid_proxy > 0) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
+            $ig_profile->invalid_proxy = 0;
             $ig_profile->save();
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
+            echo '[' . $ig_profile->insta_username . '] has been reassigned a proxy.' . "\n";
         }
+    }
+
+    public static function forceReassignProxy(InstagramProfile $ig_profile) {
+        $proxy = Proxy::inRandomOrder()->first();
+        $ig_profile->proxy = $proxy->proxy;
+        $ig_profile->save();
+        $proxy->assigned = $proxy->assigned + 1;
+        if ($proxy->save()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getUserIdForNicheUsername($instagram, $target_username) {
+        $username_id = NULL;
+        $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+        return $username_id;
     }
 
     public static function getUserIdForName($instagram, $target_username) {
@@ -120,6 +148,16 @@ class InstagramHelper {
             $target_username->save();
         }
         return $username_id;
+    }
+
+    public static function getUserInfo($instagram, $ig_profile) {
+        try {
+            $user_response = $instagram->people->getInfoById($ig_profile->insta_user_id);
+            return $user_response->user;
+        } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
+            echo "[" . $ig_profile->insta_username . "] " . $insta_ex->getMessage() . "\n";
+            echo $insta_ex->getTraceAsString() . "\n";
+        }
     }
 
     public static function getTargetUsernameFollowers($instagram, $target_username, $username_id) {
@@ -154,35 +192,62 @@ class InstagramHelper {
             return NULL;
         }
     }
-    
+
+    public static function getTargetHashtagFeed(Instagram $instagram, $hashtag) {
+        $hashtag_feed = NULL;
+        try {
+            $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+//            dump($hashtag_feed);
+            return $hashtag_feed;
+        } catch (\InstagramAPI\Exception\NotFoundException $ex) {
+            $hashtag->invalid = 1;
+            $hashtag->save();
+            return NULL;
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+            $ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
+            if ($ig_profile !== NULL) {
+                $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+                $ig_profile->save();
+            }
+            return NULL;
+        }
+    }
+
     public static function getHashtagFeed(Instagram $instagram, $hashtag) {
         $hashtag_feed = NULL;
         try {
             $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+//            dump($hashtag_feed);
+            return $hashtag_feed;
         } catch (\InstagramAPI\Exception\NotFoundException $ex) {
             return NULL;
+        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+            $ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
+            if ($ig_profile !== NULL) {
+                $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+            }
+            return NULL;
         }
-        return $hashtag_feed;
     }
 
     public static function validForInteraction($ig_profile) {
         if ($ig_profile->checkpoint_required == 1) {
             echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
-            return false;
+//            return false;
         }
 
         if ($ig_profile->account_disabled == 1) {
-            echo("\n[" . $ig_profile->account_disabled . "] account has been disabled.\n");
+            echo("\n[" . $ig_profile->insta_username . "] account has been disabled.\n");
             return false;
         }
 
         if ($ig_profile->invalid_user == 1) {
-            echo("\n[" . $ig_profile->invalid_user . "] is a invalid instagram user.\n");
+            echo("\n[" . $ig_profile->insta_username . "] is a invalid instagram user.\n");
             return false;
         }
 
         if ($ig_profile->incorrect_pw == 1) {
-            echo("\n[" . $ig_profile->incorrect_pw . "] is using an incorrect password.\n");
+            echo("\n[" . $ig_profile->insta_username . "] is using an incorrect password.\n");
             return false;
         }
 
