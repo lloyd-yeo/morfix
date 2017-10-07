@@ -58,8 +58,7 @@ class InteractionFollowHelper {
             } else if ($ig_profile->unfollow === 0) {
                 //If profile is on following cycle:
                 //Check if number of profiles unfollowed is more than or equal to the follow_cycle.
-                $random_var = rand(5, 10);
-                $follow_cycle = $ig_profile->follow_cycle + $random_var;
+                $follow_cycle = $ig_profile->follow_cycle;
                 if ($followed_count >= $follow_cycle) {
                     $ig_profile->unfollow = 1;
                     $ig_profile->save();
