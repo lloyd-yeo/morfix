@@ -1,15 +1,16 @@
 <?php
 
 namespace App;
+
 use App\InstagramProfileCommentLog;
 use App\InstagramProfileLikeLog;
 use App\InstagramProfileFollowLog;
 use App\InstagramProfileComment;
 use InstagramAPI\Instagram as Instagram;
 
-class InteractionCommentHelper{
-    
-    public static function unengaged($ig_profile, Instagram $instagram){
+class InteractionCommentHelper {
+
+    public static function unengaged($ig_profile, Instagram $instagram) {
         $ig_username = $ig_profile->insta_username;
         $engaged_user = NULL;
         try {
@@ -33,13 +34,13 @@ class InteractionCommentHelper{
 
             if ($real_unengaged_followings_count == 0) {
                 /*
-                    Unengaged Likings
-                */
+                  Unengaged Likings
+                 */
                 $engaged_user = InteractionCommentHelper::unEngagedLiking($ig_profile, $instagram, $commentText);
             } else {
                 /*
-                    Unengaged Followings
-                */
+                  Unengaged Followings
+                 */
                 $engaged_user = InteractionCommentHelper::unEngagedFollowings($ig_profile, $instagram, $unengaged_followings, $commentText);
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
@@ -56,7 +57,8 @@ class InteractionCommentHelper{
             InteractionCommentHelper::handleInstragramException($ig_profile, $request_ex, $engaged_user);
         }
     }
-    public static function realUnengagedFollowingsCounter($ig_profile, $unengaged_followings){
+
+    public static function realUnengagedFollowingsCounter($ig_profile, $unengaged_followings) {
         $ig_username = $ig_profile->insta_username;
 
         $real_unengaged_followings_count = 0;
@@ -73,13 +75,13 @@ class InteractionCommentHelper{
         return $real_unengaged_followings_count;
     }
 
-    public static function unEngagedLiking($ig_profile, Instagram $instagram, $commentText){
+    public static function unEngagedLiking($ig_profile, Instagram $instagram, $commentText) {
         $ig_username = $ig_profile->insta_username;
         $engaged_user = NULL;
         $unengaged_likings = InstagramProfileLikeLog::where('insta_username', $ig_username)
-                            ->orderBy('date_liked', 'desc')
-                            ->take(20)
-                            ->get();
+                ->orderBy('date_liked', 'desc')
+                ->take(20)
+                ->get();
 
         foreach ($unengaged_likings as $unengaged_liking) {
 
@@ -144,7 +146,7 @@ class InteractionCommentHelper{
         return $engaged_user;
     }
 
-    public static function unEngagedFollowings($ig_profile, Instagram $instagram, $unengaged_followings, $commentText){
+    public static function unEngagedFollowings($ig_profile, Instagram $instagram, $unengaged_followings, $commentText) {
         $ig_username = $ig_profile->insta_username;
         $engaged_user = NULL;
         foreach ($unengaged_followings as $unengaged_following) {
@@ -209,46 +211,41 @@ class InteractionCommentHelper{
         return $engaged_user;
     }
 
-    public static function handleInstragramException($ig_profile, $ex, $engaged_user){
+    public static function handleInstragramException($ig_profile, $ex, $engaged_user) {
         $ig_username = $ig_profile->insta_username;
         if ($ex instanceof \InstagramAPI\Exception\CheckpointRequiredException) {
-                    echo("checkpt1 " . $ex->getMessage() . "\n");
-                    $ig_profile->checkpoint_required = 1;
-                    $ig_profile->save();
-        }
-        else if($ex instanceof \InstagramAPI\Exception\IncorrectPasswordException) {
-                echo("incorrectpw1 " . $ex->getMessage() . "\n");
-                $ig_profile->incorrect_pw = 1;
-                $ig_profile->save();
-        }
-        else if($ex instanceof  \InstagramAPI\Exception\EndpointException) {
+            echo("checkpt1 " . $ex->getMessage() . "\n");
+            $ig_profile->checkpoint_required = 1;
+            $ig_profile->save();
+        } else if ($ex instanceof \InstagramAPI\Exception\IncorrectPasswordException) {
+            echo("incorrectpw1 " . $ex->getMessage() . "\n");
+            $ig_profile->incorrect_pw = 1;
+            $ig_profile->save();
+        } else if ($ex instanceof \InstagramAPI\Exception\EndpointException) {
 
-                if ($ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
-                    $comment_log = new InstagramProfileCommentLog;
-                    $comment_log->insta_username = $ig_username;
-                    $comment_log->target_username = $engaged_user;
-                    $comment_log->save();
-                } else if ($ex->getMessage() === "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
-                    $comment_log = new InstagramProfileCommentLog;
-                    $comment_log->insta_username = $ig_username;
-                    $comment_log->target_username = $engaged_user;
-                    $comment_log->save();
-                }
+            if ($ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
+                $comment_log = new InstagramProfileCommentLog;
+                $comment_log->insta_username = $ig_username;
+                $comment_log->target_username = $engaged_user;
+                $comment_log->save();
+            } else if ($ex->getMessage() === "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
+                $comment_log = new InstagramProfileCommentLog;
+                $comment_log->insta_username = $ig_username;
+                $comment_log->target_username = $engaged_user;
+                $comment_log->save();
+            }
 
-                echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
-        }
-        else if($ex instanceof \InstagramAPI\Exception\NetworkException) {
+            echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
+        } else if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
 
             echo("network1 " . $ex->getMessage() . "\n");
-        }
-        else if($ex instanceof  \InstagramAPI\Exception\AccountDisabledException) {
+        } else if ($ex instanceof \InstagramAPI\Exception\AccountDisabledException) {
 
             echo("acctdisabled1 " . $ex->getMessage() . "\n");
 
             $ig_profile->account_disabled = 1;
             $ig_profile->save();
-        }
-        else if($ex instanceof \InstagramAPI\Exception\RequestException) {
+        } else if ($ex instanceof \InstagramAPI\Exception\RequestException) {
             if ($ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
                 if ($ex->hasResponse()) {
                     $full_response = $ex->getResponse()->fullResponse;
@@ -270,4 +267,5 @@ class InteractionCommentHelper{
             $ig_profile->save();
         }
     }
+
 }
