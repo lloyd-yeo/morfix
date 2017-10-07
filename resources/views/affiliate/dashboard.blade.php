@@ -282,7 +282,7 @@
                                 @elseif ($invoice->subscription_id == "MX370")
                                 <td><label class="label label-primary">$200</label></td>
                                 @elseif ($invoice->subscription_id == "MX297")
-                                <td><label class="label label-primary">$149</label></td>
+                                <td><label class="label label-primary">$120</label></td>
                                 @elseif ($invoice->subscription_id == "0297")
                                 <td><label class="label label-primary">$50</label></td>
                                 @elseif ($invoice->subscription_id == "MX970")
