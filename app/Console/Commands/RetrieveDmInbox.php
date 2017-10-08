@@ -56,7 +56,7 @@ class RetrieveDmInbox extends Command
                     switch ($test) {
                         case 1:
                             $response = $instagram->direct->getInbox();
-                            $this->manageInboxResponse($response);
+                            $this->manageInboxResponse1($response);
                             break;
                         case 2:
                              $response = $instagram->direct->getVisualInbox();
@@ -65,7 +65,7 @@ class RetrieveDmInbox extends Command
                         case 3:
 
                             $response = $instagram->direct->getShareInbox();
-                            $this->manageShareInbox1($response);
+                            $this->manageShareInbox($response);
                             break;
                         default:
                             # code...
