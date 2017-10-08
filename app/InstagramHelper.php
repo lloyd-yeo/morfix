@@ -40,20 +40,21 @@ class InstagramHelper {
      * FALSE if the the login failed.
      */
 
-    public static function login(Instagram $instagram, InstagramProfile $ig_profile) {
+    public static function login(Instagram $instagram, InstagramProfile $ig_profile, $debug = 0) {
         $flag = false;
         $message = '';
-        echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
-
+        if ($debug = 1) {
+            echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
+        }
         InstagramHelper::verifyAndReassignProxy($ig_profile);
         $instagram->setProxy($ig_profile->proxy);
 
-        echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
-
+        if ($debug = 1) {
+            echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
+        }
         try {
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
-            
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
@@ -96,15 +97,15 @@ class InstagramHelper {
             $ig_profile->save();
             $message = "ChallengeRequiredException\n";
         }
-        if (!$flag) {
+        if (!$flag && $debug = 1) {
             echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
-        } else {
+        } else if ($flag && $debug = 1) {
             echo '[' . $ig_profile->insta_username . '] has been logged in.' . "\n";
         }
         return $flag;
     }
 
-    public static function verifyAndReassignProxy(InstagramProfile $ig_profile) {
+    public static function verifyAndReassignProxy(InstagramProfile $ig_profile, $debug = 0) {
         if ($ig_profile->proxy === NULL || $ig_profile->invalid_proxy > 0) {
             $proxy = Proxy::inRandomOrder()->first();
             $ig_profile->proxy = $proxy->proxy;
@@ -112,7 +113,9 @@ class InstagramHelper {
             $ig_profile->save();
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
-            echo '[' . $ig_profile->insta_username . '] has been reassigned a proxy.' . "\n";
+            if ($debug = 1) {
+                echo '[' . $ig_profile->insta_username . '] has been reassigned a proxy.' . "\n";
+            }
         }
     }
 
@@ -264,6 +267,5 @@ class InstagramHelper {
         echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
         return $use_hashtags;
     }
-    
 
 }

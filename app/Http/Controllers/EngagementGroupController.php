@@ -42,12 +42,43 @@ class EngagementGroupController extends Controller {
 //                    'email' => Auth::user()->email,
 //        ]);
 
-        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(Auth::user()->num_acct)->get();
+        $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
+                ->take(Auth::user()->num_acct)
+                ->get();
+        
+        $instagram = InstagramHelper::initInstagram();
         
         foreach ($instagram_profiles as $ig_profile) {
-            
+            if (InstagramHelper::login($instagram, $ig_profile)) {
+                $items = $instagram->timeline->getSelfUserFeed()->items;
+                foreach ($items as $item) {
+                    try {
+                        $image_url = "";
+                        if (is_null($item->image_versions2)) {
+                            //is carousel media
+                            $image_url = $item->carousel_media[0]->image_versions2->candidates[0]->url;
+                        } else {
+                            $image_url = $item->image_versions2->candidates[0]->url;
+                        }
+                        try {
+                            $new_profile_post = new InstagramProfileMedia;
+                            $new_profile_post->insta_username = $ig_profile->insta_username;
+                            $new_profile_post->media_id = $item->pk;
+                            $new_profile_post->image_url = $image_url;
+                            $new_profile_post->code = $item->code;
+                            $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->taken_at);
+                            $new_profile_post->save();
+                        } catch (\Exception $ex) {
+//                        echo $ex->getMessage();
+                        }
+                    } catch (\ErrorException $e) {
+                        $this->profile->error_msg = $e->getMessage();
+                        $this->profile->save();
+                    }
+                }
+            }
         }
-        
+
         return view('engagement-group.index', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
