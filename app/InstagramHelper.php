@@ -62,12 +62,9 @@ class InstagramHelper {
             $ig_profile->invalid_user = 1;
             $ig_profile->save();
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-
             $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
             $ig_profile->save();
-            
             InstagramHelper::verifyAndReassignProxy($ig_profile);
-
             $message = "NetworkException";
             try {
                 $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
@@ -75,8 +72,6 @@ class InstagramHelper {
             } catch (\InstagramAPI\Exception\InstagramException $login_ex) {
                 $message .= " with InstagramException\n";
             }
-
-            dump($network_ex);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
             
         } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
