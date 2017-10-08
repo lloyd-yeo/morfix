@@ -90,7 +90,7 @@ class RefreshIgProfile implements ShouldQueue {
             $items = $this->instagram->timeline->getSelfUserFeed()->items;
 
             foreach ($items as $item) {
-
+                dump($item);
                 try {
                     $image_url = "";
                     if (is_null($item->image_versions2)) {

@@ -146,14 +146,14 @@ class InteractionLike extends Command {
                     ->get();
 
             foreach ($instagram_profiles as $ig_profile) {
-                
+
                 $this->line("[" . $ig_profile->insta_username . "] next_like_time [" . $ig_profile->next_like_time . "] [" . $ig_profile->like_quota . "]");
-                
+
                 if (!InstagramHelper::validForInteraction($ig_profile)) {
                     continue;
                 }
 
-                if ($ig_profile->auto_like_ban == 1 && 
+                if ($ig_profile->auto_like_ban == 1 &&
                         \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
                     $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                     continue;
