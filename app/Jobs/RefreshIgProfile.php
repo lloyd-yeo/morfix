@@ -91,8 +91,10 @@ class RefreshIgProfile implements ShouldQueue {
 
             foreach ($items as $item) {
                 dump($item);
+                
                 try {
                     $image_url = "";
+                    
                     if (is_null($item->image_versions2)) {
                         //is carousel media
                         $image_url = $item->carousel_media[0]->image_versions2->candidates[0]->url;
@@ -103,12 +105,14 @@ class RefreshIgProfile implements ShouldQueue {
                     try {
                         $new_profile_post = new InstagramProfileMedia;
                         $new_profile_post->insta_username = $this->profile->insta_username;
-                        $new_profile_post->media_id = $item->id;
+                        $new_profile_post->media_id = $item->pk;
                         $new_profile_post->image_url = $image_url;
+                        $new_profile_post->code = $item->code;
                         $new_profile_post->save();
                     } catch (\Exception $ex) {
-                        
+                        $this->warning($ex->getMessage());
                     }
+                    
                 } catch (\ErrorException $e) {
                     $this->profile->error_msg = $e->getMessage();
                     $this->profile->save();
