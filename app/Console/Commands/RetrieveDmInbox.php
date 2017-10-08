@@ -52,11 +52,11 @@ class RetrieveDmInbox extends Command
                 $instagram = InstagramHelper::initInstagram();
 
                 if (InstagramHelper::login($instagram, $ig_profile)) {
-                    $test = 3;
+                    $test = 2;
                     switch ($test) {
                         case 1:
                             $response = $instagram->direct->getInbox();
-                            $this->manageInboxResponse($response);
+                            $this->manageInboxResponse1($response);
                             break;
                         case 2:
                              $response = $instagram->direct->getVisualInbox();
@@ -78,6 +78,14 @@ class RetrieveDmInbox extends Command
         }
     }
 
+    public function manageInboxResponse1($response){
+        if(sizeof($response) > 0){
+            echo json_encode($response).PHP_EOL;
+        }
+        else{
+            echo "Inbox is empty".PHP_EOL;
+        }
+    }
     public function manageInboxResponse($response){
         if(sizeof($response) > 0){
             $inbox = $response->inbox;
