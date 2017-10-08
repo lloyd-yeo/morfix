@@ -269,5 +269,6 @@ class InstagramHelper {
         echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
         return $use_hashtags;
     }
+    
 
 }

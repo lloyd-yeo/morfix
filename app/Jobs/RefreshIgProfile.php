@@ -90,11 +90,9 @@ class RefreshIgProfile implements ShouldQueue {
             $items = $this->instagram->timeline->getSelfUserFeed()->items;
 
             foreach ($items as $item) {
-                dump($item);
                 
                 try {
                     $image_url = "";
-                    
                     if (is_null($item->image_versions2)) {
                         //is carousel media
                         $image_url = $item->carousel_media[0]->image_versions2->candidates[0]->url;
@@ -111,7 +109,7 @@ class RefreshIgProfile implements ShouldQueue {
                         $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->taken_at);
                         $new_profile_post->save();
                     } catch (\Exception $ex) {
-                        echo $ex->getMessage();
+//                        echo $ex->getMessage();
                     }
                     
                 } catch (\ErrorException $e) {
