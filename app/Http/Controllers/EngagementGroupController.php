@@ -23,6 +23,7 @@ use App\InstagramProfileMedia;
 use Unicodeveloper\Emoji\Emoji;
 use Carbon\Carbon;
 use Response;
+use App\InstagramHelper;
 
 class EngagementGroupController extends Controller {
 
@@ -37,11 +38,16 @@ class EngagementGroupController extends Controller {
      */
     public function index() {
 
-        $exit_code = Artisan::call('ig:refresh', [
-                    'email' => Auth::user()->email,
-        ]);
+//        $exit_code = Artisan::call('ig:refresh', [
+//                    'email' => Auth::user()->email,
+//        ]);
 
         $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)->take(Auth::user()->num_acct)->get();
+        
+        foreach ($instagram_profiles as $ig_profile) {
+            
+        }
+        
         return view('engagement-group.index', [
             'user_ig_profiles' => $instagram_profiles,
         ]);
