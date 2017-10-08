@@ -65,7 +65,7 @@ class RetrieveDmInbox extends Command
                         case 3:
 
                             $response = $instagram->direct->getShareInbox();
-                            $this->manageShareInbox($response);
+                            $this->manageShareInbox1($response);
                             break;
                         default:
                             # code...
