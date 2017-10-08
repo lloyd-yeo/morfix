@@ -49,7 +49,7 @@ class EngagementGroupController extends Controller {
         $instagram = InstagramHelper::initInstagram();
         
         foreach ($instagram_profiles as $ig_profile) {
-            if (InstagramHelper::login($instagram, $ig_profile)) {
+            if (InstagramHelper::login($instagram, $ig_profile, 0)) {
                 $items = $instagram->timeline->getSelfUserFeed()->items;
                 foreach ($items as $item) {
                     try {

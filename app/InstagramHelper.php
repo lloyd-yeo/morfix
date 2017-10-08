@@ -40,7 +40,7 @@ class InstagramHelper {
      * FALSE if the the login failed.
      */
 
-    public static function login(Instagram $instagram, InstagramProfile $ig_profile, $debug = 0) {
+    public static function login(Instagram $instagram, InstagramProfile $ig_profile, $debug = 1) {
         $flag = false;
         $message = '';
         if ($debug = 1) {
