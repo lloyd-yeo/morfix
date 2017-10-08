@@ -110,7 +110,7 @@ class RefreshIgProfile implements ShouldQueue {
                         $new_profile_post->code = $item->code;
                         $new_profile_post->save();
                     } catch (\Exception $ex) {
-                        $this->warning($ex->getMessage());
+                        echo $ex->getMessage();
                     }
                     
                 } catch (\ErrorException $e) {
