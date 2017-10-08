@@ -43,15 +43,18 @@ class InstagramHelper {
     public static function login(Instagram $instagram, InstagramProfile $ig_profile, $debug = 1) {
         $flag = false;
         $message = '';
-        if ($debug = 1) {
+        
+        if ($debug == 1) {
             echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
         }
+        
         InstagramHelper::verifyAndReassignProxy($ig_profile);
         $instagram->setProxy($ig_profile->proxy);
 
-        if ($debug = 1) {
+        if ($debug == 1) {
             echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
         }
+        
         try {
             $explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
             $flag = true;
@@ -97,9 +100,9 @@ class InstagramHelper {
             $ig_profile->save();
             $message = "ChallengeRequiredException\n";
         }
-        if (!$flag && $debug = 1) {
+        if (!$flag && $debug == 1) {
             echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
-        } else if ($flag && $debug = 1) {
+        } else if ($flag && $debug == 1) {
             echo '[' . $ig_profile->insta_username . '] has been logged in.' . "\n";
         }
         return $flag;
