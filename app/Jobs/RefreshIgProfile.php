@@ -108,6 +108,7 @@ class RefreshIgProfile implements ShouldQueue {
                         $new_profile_post->media_id = $item->pk;
                         $new_profile_post->image_url = $image_url;
                         $new_profile_post->code = $item->code;
+                        $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->taken_at);
                         $new_profile_post->save();
                     } catch (\Exception $ex) {
                         echo $ex->getMessage();
