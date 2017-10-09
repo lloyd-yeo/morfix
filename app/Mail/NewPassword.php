@@ -40,7 +40,7 @@ class NewPassword extends Mailable
             $subject = '[Morfix] Your Premium account is ready!';
         }
         
-        return $this->view('email.signup.password')
+        return $this->view('email.signup.premium')
                     ->subject($subject)
                     ->with(['name' => $this->user->name, 
                         'email' => $this->user->email, 

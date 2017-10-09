@@ -1,3 +1,5 @@
+
+
 Hey {{ $name }}!
 
 @if ($mode === "free_trial")
