@@ -463,7 +463,7 @@
                                                     </div>
                                                   <!--[if (mso)|(IE)]></td><td style="width: 280px" valign="top"><![endif]-->
                                                     <div class="webversion" style="display: table-cell;Float: left;font-size: 12px;line-height: 19px;max-width: 280px;min-width: 139px; width: 139px;width: calc(14100% - 78680px);padding: 10px 0 5px 0;text-align: right;color: #adb3b9;font-family: sans-serif;">
-                                                        <p style="Margin-top: 0;Margin-bottom: 0;">No Images? <a style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #adb3b9;" href="http://morfix.createsend1.com/t/j-e-oydjkyk-l-y/">Click here</a></p>
+                                                        <p style="Margin-top: 0;Margin-bottom: 0;"></p>
                                                     </div>
                                                     <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
                                                 </div>
