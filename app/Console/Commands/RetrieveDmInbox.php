@@ -98,9 +98,11 @@ class RetrieveDmInbox extends Command
             $i = 0;
             foreach ($threads as $thread) {
                 $i++;
-                echo "\nThread_id: ".json_encode($thread->thread_id)."\n\n";
-                $threadResponse = $instagram->direct->getThread($thread->thread_id);
-                echo "\n\nThread Response".json_encode($threadResponse)."\n\n";
+                if($i == 1){
+                    echo "\nThread_id: ".json_encode($thread->thread_id)."\n\n";
+                    $threadResponse = $instagram->direct->getThread($thread->thread_id);
+                    $this->manageThread($threadResponse->thread);   
+                }
             }
         }
         else{
@@ -131,6 +133,12 @@ class RetrieveDmInbox extends Command
         foreach ($users as $user) {
             $i++;
             echo "\t Username: $user->username \n\n"."\t".json_encode($user)."\n";
+        }
+    }
+
+    public function manageThread($thread){
+        foreach ($thread as $key => $value) {
+            echo "\n\n\t".$key." => ".$value;
         }
     }
 }
