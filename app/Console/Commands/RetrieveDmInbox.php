@@ -162,12 +162,15 @@ class RetrieveDmInbox extends Command
                                 echo "\t\t\t".$k2." => ".json_encode($v2)."\n";
                             }
                         }
+
+                        echo "\n\n";
                     }
                     else{
                         echo  "\t\t".$k1." => ".json_encode($v1)."\n";
                     }
                     $j++;
                 }
+                echo "\n\n";
             }
             else{
                 echo "\t".$key." => ".json_encode($value)."\n";
