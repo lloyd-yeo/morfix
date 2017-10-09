@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
 use App\Mail\NewPremium;
+use App\ReferrerIp;
+use App\UserAffiliates;
 
 class NewPaidUser implements ShouldQueue {
 
@@ -32,7 +34,6 @@ class NewPaidUser implements ShouldQueue {
      * @var int
      */
     public $timeout = 60;
-    
     protected $email;
     protected $name;
     protected $ip;
@@ -44,12 +45,13 @@ class NewPaidUser implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct($email, $name, $ip, $plan_id, $subscription_id) {
+    public function __construct($email, $name, $ip, $plan_id, $subscription_id, $ip) {
         $this->email = $email;
         $this->name = $name;
         $this->ip = $ip;
         $this->plan_id = $plan_id;
         $this->subscription_id = $subscription_id;
+        $this->ip = $ip;
     }
 
     /**
@@ -92,6 +94,16 @@ class NewPaidUser implements ShouldQueue {
         }
 
         if ($user->save()) {
+
+            $referrer_ip = ReferrerIp::where('ip', $this->ip)->first();
+
+            if ($referrer_ip !== NULL) {
+                $referrer = $referrer_ip->referrer;
+                $user_affiliate = new UserAffiliates;
+                $user_affiliate->referrer = $referrer;
+                $user_affiliate->referred = $user->user_id;
+                $user_affiliate->save();
+            }
 
             echo $user;
 
