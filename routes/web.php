@@ -143,7 +143,7 @@ Route::post('/admin/interaction/like', 'AdminController@runInteractionLike');
 Route::post('/admin/interaction/comment', 'AdminController@runInteractionComment');
 
 Route::post('/stripe/charge/refunded', 'StripeWebhookController@chargeRefunded');
-Route::post('/stripe/invoice/paymentfailed');
+Route::post('/stripe/invoice/paymentfailed', 'StripeWebhookController@invoicePaymentFailed');
 
 /**
  * Routes for creation of Paypal Subscription plans.
