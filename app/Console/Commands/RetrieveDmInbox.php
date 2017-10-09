@@ -137,6 +137,8 @@ class RetrieveDmInbox extends Command
     }
 
     public function manageThread($thread){
-        echo "\t Length:".count($thread)."\n\n".json_encode($thread);
+        foreach ($thread as $key => $value) {
+            echo "\n\n\t".$key." => ".$value;
+        }
     }
 }
