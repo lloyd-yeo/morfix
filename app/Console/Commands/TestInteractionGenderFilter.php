@@ -41,7 +41,7 @@ class TestInteractionGenderFilter extends Command {
         if ($ig_profile !== NULL) {
             $instagram = InstagramHelper::initInstagram();
             if (InstagramHelper::login($instagram, $ig_profile)) {
-                dump($instagram->people->getInfoByName($this->argument('query')));
+                dump($instagram->people->get);
             }
         }
     }
