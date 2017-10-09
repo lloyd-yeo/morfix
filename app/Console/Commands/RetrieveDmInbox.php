@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use InstagramAPI\Instagram as Instagram;
 use App\InstagramHelper;
 use App\InstagramProfile;
+use App\DmInboxHelper;
 
 class RetrieveDmInbox extends Command
 {
@@ -100,7 +101,8 @@ class RetrieveDmInbox extends Command
                 $i++;
                 echo "\nThread_id: ".json_encode($thread->thread_id)."\n";
                 $threadResponse = $instagram->direct->getThread($thread->thread_id);
-                $this->manageThread($threadResponse->thread);   
+                //$this->manageThread($threadResponse->thread);   
+                $this->manageItems($threadResponse->thread);
             }
         }
         else{
@@ -175,6 +177,18 @@ class RetrieveDmInbox extends Command
             }
 
             $i++;
+        }
+    }
+
+    public function manageItems($thread){
+        $items = DmInboxHelper::extractItems($thread);
+        if(sizeof($items) > 0){
+            foreach ($items as $key => $value) {
+                echo $key." => ".json_encode($value)."\n";
+            }
+        }
+        else{
+            echo "Items is empty. \n";
         }
     }
 }
