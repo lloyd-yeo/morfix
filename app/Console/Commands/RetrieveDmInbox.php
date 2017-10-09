@@ -98,9 +98,7 @@ class RetrieveDmInbox extends Command
             $i = 0;
             foreach ($threads as $thread) {
                 $i++;
-                echo "\nThread: [$i] \n".json_encode($thread)."\n\n";
-                $this->users($thread->users);
-
+                echo "\nThread_id: ".json_encode($thread->thread_id)."\n\n";
             }
         }
         else{
