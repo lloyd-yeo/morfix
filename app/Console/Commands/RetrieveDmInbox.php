@@ -141,8 +141,8 @@ class RetrieveDmInbox extends Command
         $i = 0;
         foreach ($thread as $key => $value) {
             echo "\t".$key."\n";
-            if(sizeof($newThread[$i]) > 0){
-                $subArray = (object)$newThread[$i];
+            if(sizeof($newThread[$key]) > 0){
+                $subArray = (object)$newThread[$key];
                 foreach ($subArray as $k1 => $v1) {
                     echo "\t\t".$k1."\n";
                 }
