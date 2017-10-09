@@ -13,7 +13,7 @@ class TestInteractionGenderFilter extends Command
      *
      * @var string
      */
-    protected $signature = 'test:gender {insta_username}';
+    protected $signature = 'test:gender {insta_username} {query}';
 
     /**
      * The console command description.
@@ -42,7 +42,7 @@ class TestInteractionGenderFilter extends Command
         $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
         $instagram = InstagramHelper::initInstagram();
         if (InstagramHelper::login($instagram, $ig_profile)) {
-            dump($instagram->people->getInfoByName('theluxurymaker'));
+            dump($instagram->people->getInfoByName($this->argument('query')));
         }
     }
 }
