@@ -98,26 +98,24 @@ class NewPaidUser implements ShouldQueue {
 
             $referrer_ip = ReferrerIp::where('ip', $this->ip)->first();
 
-            if ($referrer_ip !== NULL) {
-                $referrer = $referrer_ip->referrer;
-                
-                if (UserAffiliates::where('referred', $user->user_id)->first() === NULL) {
-                    $user_affiliate = new UserAffiliates;
-                    $user_affiliate->referrer = $referrer;
-                    $user_affiliate->referred = $user->user_id;
-                    $user_affiliate->save();
-                    $referrer_user = User::where('user_id', $referrer)->first();
-                    if ($referrer_user !== NULL) {
-                        Mail::to($user->email)->send(new NewPremiumAffiliate($referrer_user, $user));
-                    }
-                }
-            }
-
             echo $user;
 
             if ($this->plan_id == "0137") {
                 //Premium
                 Mail::to($user->email)->send(new NewPremium($user));
+                if ($referrer_ip !== NULL) {
+                    $referrer = $referrer_ip->referrer;
+                    if (UserAffiliates::where('referred', $user->user_id)->first() === NULL) {
+                        $user_affiliate = new UserAffiliates;
+                        $user_affiliate->referrer = $referrer;
+                        $user_affiliate->referred = $user->user_id;
+                        $user_affiliate->save();
+                        $referrer_user = User::where('user_id', $referrer)->first();
+                        if ($referrer_user !== NULL) {
+                            Mail::to($user->email)->send(new NewPremiumAffiliate($referrer_user, $user));
+                        }
+                    }
+                }
             } else if ($this->plan_id == "0297") {
                 //Business
                 Mail::to($user->email)->send(new NewPremium($user));
