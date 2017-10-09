@@ -154,7 +154,7 @@ class InstagramHelper {
     public static function getUserInfo($instagram, $ig_profile) {
         try {
             $user_response = $instagram->people->getInfoById($ig_profile->insta_user_id);
-            return $user_response->user;
+            return $user_response->getUser();
         } catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
             echo "[" . $ig_profile->insta_username . "] " . $insta_ex->getMessage() . "\n";
             echo $insta_ex->getTraceAsString() . "\n";
@@ -163,7 +163,7 @@ class InstagramHelper {
 
     public static function getTargetUsernameFollowers($instagram, $target_username, $username_id) {
         $user_follower_response = $instagram->people->getFollowers($username_id);
-        $users_to_follow = $user_follower_response->users;
+        $users_to_follow = $user_follower_response->getUsers();
         return $users_to_follow;
     }
 
@@ -174,15 +174,15 @@ class InstagramHelper {
                 echo("\n" . "Null User - Target Username");
                 return NULL;
             }
-            return $instagram->timeline->getUserFeed($user_to_like->pk);
+            return $instagram->timeline->getUserFeed($user_to_like->getPk());
         } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
             echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
             if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
-                if (BlacklistedUsername::find($user_to_like->username) === NULL) {
+                if (BlacklistedUsername::find($user_to_like->getUsername()) === NULL) {
                     $blacklist_username = new BlacklistedUsername;
-                    $blacklist_username->username = $user_to_like->username;
+                    $blacklist_username->username = $user_to_like->getUsername();
                     $blacklist_username->save();
-                    echo("\n" . "Blacklisted: " . $user_to_like->username);
+                    echo("\n" . "Blacklisted: " . $user_to_like->getUsername());
                 } else {
                     return NULL;
                 }
@@ -269,6 +269,10 @@ class InstagramHelper {
 
         echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
         return $use_hashtags;
+    }
+    
+    public static function refreshUserMedia(Instagram $instagram, InstagramProfile $ig_profile) {
+        
     }
 
 }

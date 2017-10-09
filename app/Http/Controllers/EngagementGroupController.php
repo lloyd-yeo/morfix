@@ -2,28 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Artisan;
-use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use InstagramAPI\InstagramException as InstagramException;
-use App\User;
-use App\Niche;
-use App\EngagementGroupJob;
-use App\InstagramProfile;
-use App\InstagramProfileComment;
-use App\InstagramProfileTargetHashtag;
-use App\InstagramProfileTargetUsername;
-use App\InstagramProfileCommentLog;
-use App\InstagramProfileFollowLog;
-use App\InstagramProfileLikeLog;
-use App\InstagramProfileMedia;
-use Unicodeveloper\Emoji\Emoji;
-use Carbon\Carbon;
 use Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\EngagementGroupJob;
 use App\InstagramHelper;
+use App\InstagramProfile;
+use App\InstagramProfileMedia;
 
 class EngagementGroupController extends Controller {
 
@@ -38,16 +24,12 @@ class EngagementGroupController extends Controller {
      */
     public function index() {
 
-//        $exit_code = Artisan::call('ig:refresh', [
-//                    'email' => Auth::user()->email,
-//        ]);
-
         $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
                 ->take(Auth::user()->num_acct)
                 ->get();
-        
+
         $instagram = InstagramHelper::initInstagram();
-        
+
         foreach ($instagram_profiles as $ig_profile) {
             if (InstagramHelper::login($instagram, $ig_profile, 0)) {
                 $items = $instagram->timeline->getSelfUserFeed()->getItems();
@@ -56,9 +38,14 @@ class EngagementGroupController extends Controller {
                         $image_url = "";
                         if (is_null($item->getImageVersions2())) {
                             //is carousel media
-                            $image_url = $item->getCarouselMedia()[0]->getImageVersions2()->getCandidates()[0]->getUrl();
+                            $image_url = $item->getCarouselMedia()[0]
+                                    ->getImageVersions2()
+                                    ->getCandidates()[0]
+                                    ->getUrl();
                         } else {
-                            $image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
+                            $image_url = $item->getImageVersions2()
+                                    ->getCandidates()[0]
+                                    ->getUrl();
                         }
                         try {
                             $new_profile_post = new InstagramProfileMedia;
@@ -86,7 +73,9 @@ class EngagementGroupController extends Controller {
 
     public function profile(Request $request, $id) {
         $ig_profile = InstagramProfile::find($id);
-        $medias = InstagramProfileMedia::where('insta_username', $ig_profile->insta_username)->orderBy('created_at', 'desc')->get();
+        $medias = InstagramProfileMedia::where('insta_username', $ig_profile->insta_username)
+                ->orderBy('created_at', 'desc')
+                ->get();
         return view('engagement-group.profile', [
             'ig_profile' => $ig_profile,
             'medias' => $medias,
@@ -95,7 +84,6 @@ class EngagementGroupController extends Controller {
 
     public function schedule(Request $request, $media_id) {
         $user = User::where('email', Auth::user()->email)->first();
-
         if ($user->engagement_quota > 0) {
             $engagement_group_job = EngagementGroupJob::where('media_id', '=', $media_id)->first();
             if ($engagement_group_job === null) {

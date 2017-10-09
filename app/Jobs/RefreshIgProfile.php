@@ -78,35 +78,35 @@ class RefreshIgProfile implements ShouldQueue {
             
             $instagram_user = InstagramHelper::getUserInfo($this->instagram, $this->profile);
 
-            $this->profile->insta_username = $instagram_user->username;
-            $this->profile->profile_full_name = $instagram_user->full_name;
+            $this->profile->insta_username = $instagram_user->getUsername();
+            $this->profile->profile_full_name = $instagram_user->getFullName();
             $this->profile->updated_at = \Carbon\Carbon::now();
-            $this->profile->follower_count = $instagram_user->follower_count;
-            $this->profile->num_posts = $instagram_user->media_count;
-            $this->profile->insta_user_id = $instagram_user->pk;
-            $this->profile->profile_pic_url = $instagram_user->profile_pic_url;
+            $this->profile->follower_count = $instagram_user->getFollowerCount();
+            $this->profile->num_posts = $instagram_user->getMediaCount();
+            $this->profile->insta_user_id = $instagram_user->getPk();
+            $this->profile->profile_pic_url = $instagram_user->getProfilePicUrl();
             $this->profile->save();
 
-            $items = $this->instagram->timeline->getSelfUserFeed()->items;
+            $items = $this->instagram->timeline->getSelfUserFeed()->getItems();
 
             foreach ($items as $item) {
                 
                 try {
                     $image_url = "";
-                    if (is_null($item->image_versions2)) {
+                    if (is_null($item->getImageVersions2())) {
                         //is carousel media
-                        $image_url = $item->carousel_media[0]->image_versions2->candidates[0]->url;
+                        $image_url = $item->getCarouselMedia()[0]->getImageVersions2()->getCandidates()[0]->getUrl();
                     } else {
-                        $image_url = $item->image_versions2->candidates[0]->url;
+                        $image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
                     }
 
                     try {
                         $new_profile_post = new InstagramProfileMedia;
                         $new_profile_post->insta_username = $this->profile->insta_username;
-                        $new_profile_post->media_id = $item->pk;
+                        $new_profile_post->media_id = $item->getPk();
                         $new_profile_post->image_url = $image_url;
-                        $new_profile_post->code = $item->code;
-                        $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->taken_at);
+                        $new_profile_post->code = $item->getCode();
+                        $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->getTakenAt());
                         $new_profile_post->save();
                     } catch (\Exception $ex) {
 //                        echo $ex->getMessage();
