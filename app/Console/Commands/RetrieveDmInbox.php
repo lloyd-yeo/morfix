@@ -182,8 +182,12 @@ class RetrieveDmInbox extends Command
     public function manageItems($thread){
         $items = DmInboxHelper::extractItems($thread);
         if(sizeof($items) > 0){
-            foreach ($items as $key => $value) {
-                echo $key." => ".json_encode($value)."\n";
+            foreach ($items as $item) {
+                if($item->item_type == "text"){
+                    echo "item_id => ".$item->item_id."\n";
+                    echo "\t".$item->text."\n";
+                    echo "\t".date("d/m/Y h:i:s A", $item->timestamp)."\n\n";
+                }
             }
         }
         else{
