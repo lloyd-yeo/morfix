@@ -32,11 +32,10 @@ class NewPremiumAffiliate extends Mailable
      */
     public function build()
     {
-        $subject = '[Morfix] New Premium Affiliate!';
+        $subject = '[Morfix] More Cash!';
         return $this->view('email.affiliate.premium')
                         ->subject($subject)
-                        ->with(['name' => $this->user->name,
-                            'email' => $this->user->email,
-                            'password' => $this->user->password]); 
+                        ->with(['referrer_name' => $this->referrer->name,
+                            'referred_email' => $this->referred->email]); 
     }
 }
