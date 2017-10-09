@@ -37,8 +37,8 @@ class CarbonTester extends Command
      */
     public function handle()
     {
-        $date = "2017-09-06T12:52:51Z";
-        echo \Carbon\Carbon::createFromTimestamp($date)->toDateTimeString();
-        
+        #$date = "2017-09-06T12:52:51Z";
+        #echo \Carbon\Carbon::createFromTimestamp($date)->toDateTimeString();
+        #echo \Carbon\Carbon::createFromTimestamp(1326853478);
     }
 }
