@@ -140,7 +140,7 @@ class RetrieveDmInbox extends Command
         $newThread = (array)$thread;
         $i = 0;
         foreach ($thread as $key => $value) {
-            if(sizeof($newThread[$key]) > 1){
+            if(sizeof($newThread[$key]) >= 1){
                 if($i == 0){
                    echo "\t".$key."\n"; 
                 }
@@ -163,14 +163,14 @@ class RetrieveDmInbox extends Command
                             }
                         }
 
-                        echo "\n\n";
+                        echo "\n";
                     }
                     else{
                         echo  "\t\t".$k1." => ".json_encode($v1)."\n";
                     }
                     $j++;
                 }
-                echo "\n\n";
+                echo "\n";
             }
             else{
                 echo "\t".$key." => ".json_encode($value)."\n";
