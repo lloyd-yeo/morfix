@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
 use App\Mail\NewFreeTrial;
+use App\ReferrerIp;
+use App\UserAffiliates;
 
 class NewFreeTrialUser implements ShouldQueue {
 
@@ -68,7 +70,17 @@ class NewFreeTrialUser implements ShouldQueue {
             $user->tier = 1;
 
             if ($user->save()) {
-
+                
+                $referrer_ip = ReferrerIp::where('ip', $this->ip)->first();
+                
+                if ($referrer_ip !== NULL) {
+                    $referrer = $referrer_ip->referrer;
+                    $user_affiliate = new UserAffiliates;
+                    $user_affiliate->referrer = $referrer;
+                    $user_affiliate->referred = $user->user_id;
+                    $user_affiliate->save();
+                }
+                
                 echo $user;
 
                 Mail::to($user->email)->send(new NewFreeTrial($user));
