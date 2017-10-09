@@ -10,9 +10,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
-use App\Mail\NewPremium;
 use App\ReferrerIp;
 use App\UserAffiliates;
+use App\Mail\NewPremium;
+use App\Mail\NewPremiumAffiliate;
 
 class NewPaidUser implements ShouldQueue {
 
@@ -99,10 +100,17 @@ class NewPaidUser implements ShouldQueue {
 
             if ($referrer_ip !== NULL) {
                 $referrer = $referrer_ip->referrer;
-                $user_affiliate = new UserAffiliates;
-                $user_affiliate->referrer = $referrer;
-                $user_affiliate->referred = $user->user_id;
-                $user_affiliate->save();
+                
+                if (UserAffiliates::where('referred', $user->user_id)->first() === NULL) {
+                    $user_affiliate = new UserAffiliates;
+                    $user_affiliate->referrer = $referrer;
+                    $user_affiliate->referred = $user->user_id;
+                    $user_affiliate->save();
+                    $referrer_user = User::where('user_id', $referrer)->first();
+                    if ($referrer_user !== NULL) {
+                        Mail::to($user->email)->send(new NewPremiumAffiliate($referrer, $referred));
+                    }
+                }
             }
 
             echo $user;

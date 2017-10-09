@@ -84,6 +84,7 @@ class Kernel extends ConsoleKernel {
         Commands\ReassignProxy::class,
         Commands\SendPremiumEmail::class,
         Commands\SendFreeTrialEmail::class,
+        Commands\SendPremiumAffiliateEmail::class,
     ];
 
     /**
