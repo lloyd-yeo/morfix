@@ -137,10 +137,11 @@ class RetrieveDmInbox extends Command
     }
 
     public function manageThread($thread){
-        foreach ($thread as $key => $value) {
+        $newThread = (array)$thread;
+        foreach ($newThread as $key => $value) {
             echo "\t".$key."\n";
-            if(sizeof($thread['$key']) > 0){
-                $subArray = $thread['$key'];
+            if(sizeof($newThread['$key']) > 0){
+                $subArray = $newThread['$key'];
                 foreach ($subArray as $k1 => $v1) {
                     echo "\t\t".$k1."\n";
                 }
