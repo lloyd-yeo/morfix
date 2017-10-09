@@ -52,7 +52,7 @@ class RetrieveDmInbox extends Command
                 $instagram = InstagramHelper::initInstagram();
 
                 if (InstagramHelper::login($instagram, $ig_profile)) {
-                    $test = 3;
+                    $test = 4;
                     switch ($test) {
                         case 1:
                             $response = $instagram->direct->getInbox();
@@ -66,6 +66,10 @@ class RetrieveDmInbox extends Command
 
                             $response = $instagram->direct->getShareInbox();
                             $this->manageShareInbox($response);
+                            break;
+                        case 4:
+                            $response = $instagram->direct->getInbox();
+                            $this->manageInboxResponse($response);
                             break;
                         default:
                             # code...
