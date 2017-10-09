@@ -36,7 +36,7 @@ class NewPassword extends Mailable
         $subject = "";
         if ($this->mode == "free_trial") {
             $subject = '[Morfix] Your Free Trial account is ready!';
-            return $this->view('email.signup.password')
+            return $this->view('email.signup.freetrial')
                     ->subject($subject)
                     ->with(['name' => $this->user->name, 
                         'email' => $this->user->email, 
