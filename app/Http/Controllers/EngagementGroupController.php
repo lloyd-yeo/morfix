@@ -54,19 +54,19 @@ class EngagementGroupController extends Controller {
                 foreach ($items as $item) {
                     try {
                         $image_url = "";
-                        if (is_null($item->image_versions2)) {
+                        if (is_null($item->getImageVersions2())) {
                             //is carousel media
-                            $image_url = $item->carousel_media[0]->image_versions2->candidates[0]->url;
+                            $image_url = $item->getCarouselMedia()[0]->getImageVersions2()->getCandidates()[0]->getUrl();
                         } else {
-                            $image_url = $item->image_versions2->candidates[0]->url;
+                            $image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
                         }
                         try {
                             $new_profile_post = new InstagramProfileMedia;
                             $new_profile_post->insta_username = $ig_profile->insta_username;
-                            $new_profile_post->media_id = $item->pk;
+                            $new_profile_post->media_id = $item->getPk();
                             $new_profile_post->image_url = $image_url;
-                            $new_profile_post->code = $item->code;
-                            $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->taken_at);
+                            $new_profile_post->code = $item->getCode();
+                            $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->getTakenAt());
                             $new_profile_post->save();
                         } catch (\Exception $ex) {
 //                        echo $ex->getMessage();
