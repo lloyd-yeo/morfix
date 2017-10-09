@@ -6,8 +6,8 @@ use Illuminate\Console\Command;
 use App\InstagramProfile;
 use App\InstagramHelper;
 
-class TestInteractionGenderFilter extends Command
-{
+class TestInteractionGenderFilter extends Command {
+
     /**
      * The name and signature of the console command.
      *
@@ -27,8 +27,7 @@ class TestInteractionGenderFilter extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -37,12 +36,14 @@ class TestInteractionGenderFilter extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
-        $instagram = InstagramHelper::initInstagram();
-        if (InstagramHelper::login($instagram, $ig_profile)) {
-            dump($instagram->people->getInfoByName($this->argument('query')));
+        if ($ig_profile !== NULL) {
+            $instagram = InstagramHelper::initInstagram();
+            if (InstagramHelper::login($instagram, $ig_profile)) {
+                dump($instagram->people->getInfoByName($this->argument('query')));
+            }
         }
     }
+
 }
