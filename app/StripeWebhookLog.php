@@ -11,5 +11,4 @@ class StripeWebhookLog extends Model {
     public $timestamps = false;
     public $incrementing = false;
     
-
 }
