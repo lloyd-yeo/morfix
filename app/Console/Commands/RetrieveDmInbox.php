@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use InstagramAPI\Instagram as Instagram;
 use App\InstagramHelper;
 use App\InstagramProfile;
+use App\DmInboxHelper;
 
 class RetrieveDmInbox extends Command
 {
@@ -98,11 +99,9 @@ class RetrieveDmInbox extends Command
             $i = 0;
             foreach ($threads as $thread) {
                 $i++;
-                if($i == 1){
-                    echo "\nThread_id: ".json_encode($thread->thread_id)."\n";
-                    $threadResponse = $instagram->direct->getThread($thread->thread_id);
-                    $this->manageThread($threadResponse->thread);   
-                }
+                $threadResponse = $instagram->direct->getThread($thread->thread_id);
+                //$this->manageThread($threadResponse->thread);   
+                $this->manageItems($threadResponse->thread);
             }
         }
         else{
@@ -140,16 +139,59 @@ class RetrieveDmInbox extends Command
         $newThread = (array)$thread;
         $i = 0;
         foreach ($thread as $key => $value) {
-            echo "\t".$key."\n";
-            if(sizeof($newThread[$key]) > 0){
-                $subArray = (object)$newThread[$key];
-                foreach ($subArray as $k1 => $v1) {
-                    echo "\t\t".$k1."\n";
+            if(sizeof($newThread[$key]) >= 1){
+                if($i == 0){
+                   echo "\t".$key."\n"; 
                 }
+                $subObject = (object)$newThread[$key];
+                $subArray = (array)$subObject;
+                $j = 0;
+                foreach ($subObject as $k1 => $v1) {
+                    if(sizeof($subArray[$k1]) > 0){
+                        if($j == 0){
+                           echo "\t".$key."\n"; 
+                        }
+                        $subObject1 = (object) $subArray[$k1];
+                        $subArray1  = (array)$subObject1;
+                        foreach ($subObject1 as $k2 => $v2) {
+                            if(sizeof($subArray1[$k2]) > 1){
+                                //
+                            }
+                            else{
+                                echo "\t\t\t".$k2." => ".json_encode($v2)."\n";
+                            }
+                        }
+
+                        echo "\n";
+                    }
+                    else{
+                        echo  "\t\t".$k1." => ".json_encode($v1)."\n";
+                    }
+                    $j++;
+                }
+                echo "\n";
             }
-            else{}
+            else{
+                echo "\t".$key." => ".json_encode($value)."\n";
+            }
 
             $i++;
+        }
+    }
+
+    public function manageItems($thread){
+        $items = DmInboxHelper::extractItems($thread);
+        if(sizeof($items) > 0){
+            foreach ($items as $item) {
+                if($item->item_type == "text"){
+                    echo "item_id => ".$item->item_id."\n";
+                    echo "\t".$item->text."\n";
+                    echo "\t".date("d/m/Y h:i:s A", $item->timestamp)."\n\n";
+                }
+            }
+        }
+        else{
+            echo "Items is empty. \n";
         }
     }
 }
