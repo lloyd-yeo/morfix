@@ -100,7 +100,7 @@ class RetrieveDmInbox extends Command
                 $i++;
                 echo "\nThread_id: ".json_encode($thread->thread_id)."\n\n";
                 $threadResponse = $instagram->direct->getThread($thread->thread_id);
-                $this->manageThread($threadResponse);
+                $this->manageThread($threadResponse->thread);
             }
         }
         else{
