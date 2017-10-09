@@ -69,7 +69,7 @@ class RetrieveDmInbox extends Command
                             break;
                         case 4:
                             $response = $instagram->direct->getInbox();
-                            $this->manageInboxResponse($response);
+                            $this->manageInboxResponse($response, $instagram);
                             break;
                         default:
                             # code...
@@ -90,7 +90,7 @@ class RetrieveDmInbox extends Command
             echo "Inbox is empty".PHP_EOL;
         }
     }
-    public function manageInboxResponse($response){
+    public function manageInboxResponse($response, Instagram $instagram){
         if(sizeof($response) > 0){
             $inbox = $response->inbox;
             $threads = $inbox->threads;
@@ -99,6 +99,8 @@ class RetrieveDmInbox extends Command
             foreach ($threads as $thread) {
                 $i++;
                 echo "\nThread_id: ".json_encode($thread->thread_id)."\n\n";
+                $threadResponse = $instagram->direct->getThread($thread->thread_id);
+                echo "\n\nThread Response".json_encode($threadResponse)."\n\n";
             }
         }
         else{
