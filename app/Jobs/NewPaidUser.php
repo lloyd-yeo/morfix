@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
-use App\Mail\NewPassword;
+use App\Mail\NewPremium;
 
 class NewPaidUser implements ShouldQueue {
 
@@ -97,22 +97,22 @@ class NewPaidUser implements ShouldQueue {
 
             if ($this->plan_id == "0137") {
                 //Premium
-                Mail::to($user->email)->send(new NewPassword($user, "premium"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "0297") {
                 //Business
-                Mail::to($user->email)->send(new NewPassword($user, "business"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX370") {
                 //Pro
-                Mail::to($user->email)->send(new NewPassword($user, "pro"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX970") {
                 //Mastermind
-                Mail::to($user->email)->send(new NewPassword($user, "mastermind"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX670") {
                 //Mastermind OTO
-                Mail::to($user->email)->send(new NewPassword($user, "mastermind"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX297") {
                 //Pro OTO
-                Mail::to($user->email)->send(new NewPassword($user, "pro"));
+                Mail::to($user->email)->send(new NewPremium($user));
             }
 
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";

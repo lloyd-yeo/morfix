@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
-use App\Mail\NewPassword;
+use App\Mail\NewFreeTrial;
 
 class NewFreeTrialUser implements ShouldQueue {
 
@@ -71,7 +71,7 @@ class NewFreeTrialUser implements ShouldQueue {
 
                 echo $user;
 
-                Mail::to($user->email)->send(new NewPassword($user, "free_trial"));
+                Mail::to($user->email)->send(new NewFreeTrial($user));
 
                 $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
                 $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
