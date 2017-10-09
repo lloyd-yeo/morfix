@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><!--[if IE]><html xmlns="http://www.w3.org/1999/xhtml" class="ie"><![endif]--><!--[if !IE]><!--><html style="margin: 0;padding: 0;" xmlns="http://www.w3.org/1999/xhtml"><!--<![endif]--><head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title></title>
@@ -512,7 +511,7 @@ body{background-color:#fff}.logo a:hover,.logo a:focus{color:#859bb1 !important}
       <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
         <p class="size-14" style="Margin-top: 0;Margin-bottom: 0;font-family: sans-serif;font-size: 14px;line-height: 21px;text-align: left;" lang="x-size-14"><span class="font-sans-serif">&nbsp;</span></p><p class="size-14" style="Margin-top: 20px;Margin-bottom: 0;font-family: sans-serif;font-size: 14px;line-height: 21px;text-align: left;" lang="x-size-14"><span class="font-sans-serif"><span style="color:#18527c">Hey {{ $referrer_name }}!</span></span></p><p class="size-14" style="Margin-top: 20px;Margin-bottom: 0;font-family: sans-serif;font-size: 14px;line-height: 21px;text-align: left;" lang="x-size-14"><span class="font-sans-serif"><span style="color:#18527c">Congratulations! </span></span></p><p class="size-14" style="Margin-top: 20px;Margin-bottom: 0;font-family: sans-serif;font-size: 14px;line-height: 21px;text-align: left;" lang="x-size-14"><span class="font-sans-serif"><span 
 style="color:#18527c">You've just made&nbsp;$20!&nbsp;<br>
-Your referral&nbsp;[{{ $referred_email&nbsp;}}] has just subscribed to a <strong>Premium</strong> account!<br>
+Your referral&nbsp;[{{ $referred_email }}] has just subscribed to a <strong>Premium</strong> account!<br>
 <br>
 To view more information about your referrals&nbsp;you can simply click&nbsp;<a style="text-decoration: underline;transition: opacity 0.1s ease-in;color: #18527c;" href="https://app.morfix.co/affiliate">here</a>.</span></span></p><p class="size-14" style="Margin-top: 20px;Margin-bottom: 0;font-family: sans-serif;font-size: 14px;line-height: 21px;text-align: left;" lang="x-size-14"><span class="font-sans-serif"><span style="color:#18527c">Keep up the good work!<br>
 <strong>Morfix Team</strong></span></span></p><p class="size-14" style="Margin-top: 20px;Margin-bottom: 0;font-family: sans-serif;font-size: 14px;line-height: 21px;text-align: left;" lang="x-size-14"><span class="font-sans-serif">&nbsp;</span></p>
