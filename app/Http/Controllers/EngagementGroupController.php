@@ -50,7 +50,7 @@ class EngagementGroupController extends Controller {
         
         foreach ($instagram_profiles as $ig_profile) {
             if (InstagramHelper::login($instagram, $ig_profile, 0)) {
-                $items = $instagram->timeline->getSelfUserFeed()->items;
+                $items = $instagram->timeline->getSelfUserFeed()->getItems();
                 foreach ($items as $item) {
                     try {
                         $image_url = "";
