@@ -130,6 +130,8 @@ class EngagementGroup implements ShouldQueue {
                 $ig_profile->checkpoint_required = 1;
                 $ig_profile->save();
                 continue;
+            } catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
+                continue;
             }
 
             try {
@@ -161,6 +163,8 @@ class EngagementGroup implements ShouldQueue {
             } catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
                 continue;
             } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+                continue;
+            } catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
                 continue;
             }
 
