@@ -119,6 +119,8 @@ class EngagementGroupManual extends Command {
                 $ig_profile->checkpoint_required = 1;
                 $ig_profile->save();
                 continue;
+            } catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
+                continue;
             }
 
             try {

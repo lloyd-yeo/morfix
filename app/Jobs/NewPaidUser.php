@@ -10,7 +10,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use AWeberAPI;
 use App\User;
-use App\Mail\NewPassword;
+use App\ReferrerIp;
+use App\UserAffiliates;
+use App\Mail\NewPremium;
+use App\Mail\NewPremiumAffiliate;
 
 class NewPaidUser implements ShouldQueue {
 
@@ -32,7 +35,6 @@ class NewPaidUser implements ShouldQueue {
      * @var int
      */
     public $timeout = 60;
-    
     protected $email;
     protected $name;
     protected $ip;
@@ -44,12 +46,13 @@ class NewPaidUser implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct($email, $name, $ip, $plan_id, $subscription_id) {
+    public function __construct($email, $name, $ip, $plan_id, $subscription_id, $ip) {
         $this->email = $email;
         $this->name = $name;
         $this->ip = $ip;
         $this->plan_id = $plan_id;
         $this->subscription_id = $subscription_id;
+        $this->ip = $ip;
     }
 
     /**
@@ -93,26 +96,43 @@ class NewPaidUser implements ShouldQueue {
 
         if ($user->save()) {
 
+            $referrer_ip = ReferrerIp::where('ip', $this->ip)->first();
+
+            if ($referrer_ip !== NULL) {
+                $referrer = $referrer_ip->referrer;
+                
+                if (UserAffiliates::where('referred', $user->user_id)->first() === NULL) {
+                    $user_affiliate = new UserAffiliates;
+                    $user_affiliate->referrer = $referrer;
+                    $user_affiliate->referred = $user->user_id;
+                    $user_affiliate->save();
+                    $referrer_user = User::where('user_id', $referrer)->first();
+                    if ($referrer_user !== NULL) {
+                        Mail::to($user->email)->send(new NewPremiumAffiliate($referrer_user, $user));
+                    }
+                }
+            }
+
             echo $user;
 
             if ($this->plan_id == "0137") {
                 //Premium
-                Mail::to($user->email)->send(new NewPassword($user, "premium"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "0297") {
                 //Business
-                Mail::to($user->email)->send(new NewPassword($user, "business"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX370") {
                 //Pro
-                Mail::to($user->email)->send(new NewPassword($user, "pro"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX970") {
                 //Mastermind
-                Mail::to($user->email)->send(new NewPassword($user, "mastermind"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX670") {
                 //Mastermind OTO
-                Mail::to($user->email)->send(new NewPassword($user, "mastermind"));
+                Mail::to($user->email)->send(new NewPremium($user));
             } else if ($this->plan_id == "MX297") {
                 //Pro OTO
-                Mail::to($user->email)->send(new NewPassword($user, "pro"));
+                Mail::to($user->email)->send(new NewPremium($user));
             }
 
             $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
