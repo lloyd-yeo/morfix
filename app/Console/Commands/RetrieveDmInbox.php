@@ -159,18 +159,18 @@ class RetrieveDmInbox extends Command
                                 //
                             }
                             else{
-                                echo "\t\t\t".$k2." => ".$v2."\n";
+                                echo "\t\t\t".$k2." => ".$subArray1[$k2]."\n";
                             }
                         }
                     }
                     else{
-                        echo  "\t\t".$k1." => ".$v1."\n";
+                        echo  "\t\t".$k1." => ".$subArray[$k1]."\n";
                     }
                     $j++;
                 }
             }
             else{
-                echo "\t".$key." => ".$value."\n";
+                echo "\t".$key." => ".$newThread[$key]."\n";
             }
 
             $i++;
