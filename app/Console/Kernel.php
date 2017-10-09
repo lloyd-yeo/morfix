@@ -83,6 +83,7 @@ class Kernel extends ConsoleKernel {
         Commands\MigrateDmJob::class,
         Commands\ReassignProxy::class,
         Commands\SendPremiumEmail::class,
+        Commands\SendFreeTrialEmail::class,
     ];
 
     /**

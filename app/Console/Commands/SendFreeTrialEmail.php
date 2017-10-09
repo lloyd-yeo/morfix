@@ -14,7 +14,7 @@ class SendFreeTrialEmail extends Command
      *
      * @var string
      */
-    protected $signature = 'mail:premium {email}';
+    protected $signature = 'mail:freetrial {email}';
 
     /**
      * The console command description.
