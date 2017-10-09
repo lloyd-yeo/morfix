@@ -146,7 +146,7 @@ class RetrieveDmInbox extends Command
                 $subArray = (array)$subObject;
                 foreach ($subObject as $k1 => $v1) {
                     echo "\t\t".$k1."\n";
-                    if(sizeof($subArray[$k1]) > 1){
+                    if(sizeof($subArray[$k1]) > 0){
                         $subObject1 = (object) $subArray[$k1];
                         foreach ($subObject1 as $k2 => $v2) {
                             echo "\t\t\t".$k2."\n";
