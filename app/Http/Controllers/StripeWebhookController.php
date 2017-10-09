@@ -11,22 +11,22 @@ class StripeWebhookController extends Controller {
     public function chargeRefunded(Request $request) {
 
         \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
-        
-        $webhook_log = new StripeWebhookLog;
-        $webhook_log->log = $request->json();
-        $webhook_log->date_logged = Carbon::now();
-        $webhook_log->save();
+
+        StripeWebhookController::saveWebhookLog($request);
     }
 
     public function invoicePaymentFailed(Request $request) {
-        
+
         \Stripe\Stripe::setApiKey("sk_test_dAO7D2WkkUOHnuHgXBeti0KM");
-        
+
+        StripeWebhookController::saveWebhookLog($request);
+    }
+
+    public static function saveWebhookLog(Request $request) {
         $webhook_log = new StripeWebhookLog;
         $webhook_log->log = serialize($request->all());
-        $webhook_log->date_logged = Carbon::now();
+        $webhook_log->date_logged = Carbon::createFromTimestamp($request->input('created'));
         $webhook_log->save();
-        
     }
 
 }
