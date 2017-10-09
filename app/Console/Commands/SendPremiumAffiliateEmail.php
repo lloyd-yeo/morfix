@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Mail;
 use App\User;
 use App\Mail\NewPremiumAffiliate;
 
