@@ -52,7 +52,7 @@ class RetrieveDmInbox extends Command
                 $instagram = InstagramHelper::initInstagram();
 
                 if (InstagramHelper::login($instagram, $ig_profile)) {
-                    $test = 2;
+                    $test = 3;
                     switch ($test) {
                         case 1:
                             $response = $instagram->direct->getInbox();
