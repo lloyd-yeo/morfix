@@ -227,7 +227,7 @@ class InteractionFollowHelper {
         return 0;
     }
 
-    private static function follow_(FriendshipResponse $follow_resp, InstagramProfilen $ig_profile,
+    private static function follow_(FriendshipResponse $follow_resp, InstagramProfile $ig_profile,
                                     InstagramUser $user_to_follow, $delay) {
         if ($follow_resp->getFriendshipStatus()->getFollowing() == true) {
             $ig_profile->next_follow_time = Carbon::now()->addMinutes($delay);
