@@ -86,24 +86,24 @@ class InteractionFollowHelper {
         return $follow_mode;
     }
 
-    public static function isProfileValidForFollow($instagram, $ig_profile, $user_to_follow) {
+    public static function isProfileValidForFollow($instagram, $ig_profile, \InstagramAPI\Response\Model\User $user_to_follow) {
         //Check by default that user is valid to even retrieve extra info.
-        if ($user_to_follow->is_private) {
+        if ($user_to_follow->getIsPrivate()) {
             echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] is private.\n";
             return false;
-        } else if ($user_to_follow->has_anonymous_profile_picture) {
+        } else if ($user_to_follow->getHasAnonymousProfilePicture()) {
             echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] has no profile pic.\n";
             return false;
         } else if (InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-                        ->where('follower_id', $user_to_follow->pk)->count() > 0) {
+                        ->where('follower_id', $user_to_follow->getPk())->count() > 0) {
             //user exists aka duplicate
             echo "[" . $ig_profile->insta_username . "] has followed [$user_to_follow->username] before.\n";
             return false;
         }
         //Get extra info to make sure it fits user's criteria
 //        try {
-            $user_info = $instagram->people->getInfoById($user_to_follow->pk);
-            $user_to_follow = $user_info->user;
+            $user_info = $instagram->people->getInfoById($user_to_follow->getPk());
+            $user_to_follow = $user_info->getUser();
             if ($user_to_follow->media_count == 0) {
                 echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: > 0 photos \n";
                 return false;
@@ -152,7 +152,7 @@ class InteractionFollowHelper {
             $delay = InteractionFollowHelper::setSpeedDelay($ig_profile->speed);
             if ($ig_profile->unfollow_unfollowed == 1) { //only unfollow users that unfollowed me (i.e. followed_by = 0)
                 $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
-                if ($friendship->followed_by == true) {
+                if ($friendship->getFollowedBy() == true) {
                     echo "[" . $ig_profile->insta_username . "] is followed by "
                     . $user_to_unfollow->follower_username . "\n";
                     $user_to_unfollow->unfollowed = 1;
@@ -208,7 +208,7 @@ class InteractionFollowHelper {
     }
 
     private static function follow_($follow_resp, $ig_profile, $user_to_follow, $delay) {
-        if ($follow_resp->friendship_status->following == true) {
+        if ($follow_resp->getFriendshipStatus()->getFollowing() == true) {
             $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay);
             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
 
@@ -228,9 +228,9 @@ class InteractionFollowHelper {
             echo "[" . $ig_profile->insta_username . "] followed [" . $user_to_follow->username . "].\n";
             return 1;
         } else {
-            if ($follow_resp->friendship_status->is_private) {
+            if ($follow_resp->getFriendshipStatus()->isPrivate()) {
                 return 2;
-            } else if ($follow_resp->friendship_status->following == false) {
+            } else if ($follow_resp->getFriendshipStatus()->getFollowing() == false) {
                 $ig_profile->next_follow_time = \Carbon\Carbon::now()->addSeconds(180)->toDateTimeString();
                 $ig_profile->follow_quota = $ig_profile->follow_quota + 1;
                 $ig_profile->save();
@@ -243,7 +243,7 @@ class InteractionFollowHelper {
         //User didn't follow back, execute unfollow
         try {
             $resp = $instagram->people->unfollow($user_to_unfollow->follower_id);
-            if ($resp->friendship_status->following === false) {
+            if ($resp->getFriendshipStatus()->getFollowing() === false) {
                 $user_to_unfollow->unfollowed = 1;
                 $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
                 if ($user_to_unfollow->save()) {

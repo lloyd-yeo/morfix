@@ -44,17 +44,17 @@ class InteractionCommentHelper {
                 $engaged_user = InteractionCommentHelper::unEngagedFollowings($ig_profile, $instagram, $unengaged_followings, $commentText);
             }
         } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-            InteractionCommentHelper::handleInstragramException($ig_profile, $checkpt_ex, $engaged_user);
+            InteractionCommentHelper::handleInstagramException($ig_profile, $checkpt_ex, $engaged_user);
         } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-            InteractionCommentHelper::handleInstragramException($ig_profile, $incorrectpw_ex, $engaged_user);
+            InteractionCommentHelper::handleInstagramException($ig_profile, $incorrectpw_ex, $engaged_user);
         } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-            InteractionCommentHelper::handleInstragramException($ig_profile, $endpoint_ex, $engaged_user);
+            InteractionCommentHelper::handleInstagramException($ig_profile, $endpoint_ex, $engaged_user);
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-            InteractionCommentHelper::handleInstragramException($ig_profile, $network_ex, $engaged_user);
+            InteractionCommentHelper::handleInstagramException($ig_profile, $network_ex, $engaged_user);
         } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
-            InteractionCommentHelper::handleInstragramException($ig_profile, $acctdisabled_ex, $engaged_user);
+            InteractionCommentHelper::handleInstagramException($ig_profile, $acctdisabled_ex, $engaged_user);
         } catch (\InstagramAPI\Exception\RequestException $request_ex) {
-            InteractionCommentHelper::handleInstragramException($ig_profile, $request_ex, $engaged_user);
+            InteractionCommentHelper::handleInstagramException($ig_profile, $request_ex, $engaged_user);
         }
     }
 
@@ -114,7 +114,7 @@ class InteractionCommentHelper {
             }
 
             $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
-            $user_feed_items = $user_feed->items;
+            $user_feed_items = $user_feed->getItems();
 
             if (count($user_feed_items) > 0) {
                 foreach ($user_feed_items as $item) {
@@ -123,10 +123,10 @@ class InteractionCommentHelper {
                     $comment_log->insta_username = $ig_username;
                     $comment_log->target_username = $unengaged_liking->target_username;
                     $comment_log->target_insta_id = $user_instagram_id;
-                    $comment_log->target_media = $item->id;
+                    $comment_log->target_media = $item->getId();
                     $comment_log->save();
 
-                    $comment_resp = $instagram->media->comment($item->id, $commentText);
+                    $comment_resp = $instagram->media->comment($item->getId(), $commentText);
                     $comment_log->log = serialize($comment_resp);
                     if ($comment_log->save()) {
                         echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
@@ -179,7 +179,7 @@ class InteractionCommentHelper {
             }
 
             $user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
-            $user_feed_items = $user_feed->items;
+            $user_feed_items = $user_feed->getItems();
 
             if (count($user_feed_items) > 0) {
                 foreach ($user_feed_items as $item) {
@@ -188,9 +188,9 @@ class InteractionCommentHelper {
                     $comment_log->insta_username = $ig_username;
                     $comment_log->target_username = $unengaged_following->follower_username;
                     $comment_log->target_insta_id = $user_instagram_id;
-                    $comment_log->target_media = $item->id;
+                    $comment_log->target_media = $item->getId();
                     $comment_log->save();
-                    $comment_resp = $instagram->media->comment($item->id, $commentText);
+                    $comment_resp = $instagram->media->comment($item->getId(), $commentText);
                     $comment_log->log = serialize($comment_resp);
                     if ($comment_log->save()) {
                         echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
@@ -211,7 +211,7 @@ class InteractionCommentHelper {
         return $engaged_user;
     }
 
-    public static function handleInstragramException($ig_profile, $ex, $engaged_user) {
+    public static function handleInstagramException($ig_profile, $ex, $engaged_user) {
         $ig_username = $ig_profile->insta_username;
         if ($ex instanceof \InstagramAPI\Exception\CheckpointRequiredException) {
             echo("checkpt1 " . $ex->getMessage() . "\n");

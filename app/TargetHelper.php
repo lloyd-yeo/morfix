@@ -44,13 +44,13 @@ class TargetHelper {
                             $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
                         }
 
-                        $target_user_followings = $user_follower_response->users;
+                        $target_user_followings = $user_follower_response->getUsers();
 
                         echo "\n[$ig_username] requesting [$target_target_username] got us a list of [" . count($target_user_followings) . "] users. \n";
 
                         $duplicate = 0;
 
-                        $next_max_id = $user_follower_response->next_max_id;
+                        $next_max_id = $user_follower_response->getNextMaxId();
 
                         echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id;
 
@@ -62,32 +62,32 @@ class TargetHelper {
                             if ($like_quota > 0) {
 
                                 //Blacklisted username.
-                                $blacklisted_username = BlacklistedUsername::find($user_to_like->username);
+                                $blacklisted_username = BlacklistedUsername::find($user_to_like->getUsername());
                                 if ($blacklisted_username !== NULL) {
                                     continue;
                                 }
 
-                                echo("\n" . $user_to_like->username . "\t" . $user_to_like->pk);
+                                echo("\n" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
 
                                 //Check for duplicates.
                                 $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
-                                        ->where('target_username', $user_to_like->username)
+                                        ->where('target_username', $user_to_like->getUsername())
                                         ->first();
 
                                 //Duplicate = liked before.
                                 if (count($liked_users) > 0) {
-                                    echo("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                    echo("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
                                     continue;
                                 }
 
                                 //Check for duplicates.
                                 $liked_users = LikeLogsArchive::where('insta_username', $ig_username)
-                                        ->where('target_username', $user_to_like->username)
+                                        ->where('target_username', $user_to_like->getUsername())
                                         ->first();
 
                                 //Duplicate = liked before.
                                 if (count($liked_users) > 0) {
-                                    echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                                    echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
                                     continue;
                                 }
 
@@ -99,16 +99,16 @@ class TargetHelper {
                                         echo("\n" . "Null User - Target Username");
                                         continue;
                                     }
-                                    $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->pk);
+                                    $user_feed_response = $instagram->timeline->getUserFeed($user_to_like->getPk());
                                 } catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
 
                                     echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
 
                                     if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
                                         $blacklist_username = new BlacklistedUsername;
-                                        $blacklist_username->username = $user_to_like->username;
+                                        $blacklist_username->username = $user_to_like->getUsername();
                                         $blacklist_username->save();
-                                        echo("\n" . "Blacklisted: " . $user_to_like->username);
+                                        echo("\n" . "Blacklisted: " . $user_to_like->getUsername());
                                     }
                                     continue;
                                 } catch (\Exception $ex) {
@@ -117,11 +117,11 @@ class TargetHelper {
                                 }
 
                                 //Get the media posted by the user.
-                                $user_items = $user_feed_response->items;
+                                $user_items = $user_feed_response->getItems();
                                 //Foreach media posted by the user.
                                 foreach ($user_items as $item) {
 
-                                    if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
+                                    if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->getId())->count() > 0) {
                                         #duplicate. Liked before this photo with this id.
                                         continue;
                                     }
@@ -130,24 +130,24 @@ class TargetHelper {
 
                                         //Check for duplicates.
                                         $liked_logs = LikeLogsArchive::where('insta_username', $ig_username)
-                                                ->where('target_media', $item->id)
+                                                ->where('target_media', $item->getId())
                                                 ->first();
 
                                         //Duplicate = liked media before.
                                         if (count($liked_logs) > 0) {
-                                            echo("\n" . "Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->id . "]");
+                                            echo("\n" . "Duplicate Log [MEDIA] Found:\t[$ig_username] [" . $item->getId() . "]");
                                             continue;
                                         }
 
-                                        $like_response = $instagram->media->like($item->id);
+                                        $like_response = $instagram->media->like($item->getId());
 
                                         if ($like_response->status == "ok") {
                                             try {
                                                 echo("\n" . "[$ig_username] Liked " . serialize($like_response));
                                                 $like_log = new InstagramProfileLikeLog;
                                                 $like_log->insta_username = $ig_username;
-                                                $like_log->target_username = $user_to_like->username;
-                                                $like_log->target_media = $item->id;
+                                                $like_log->target_username = $user_to_like->getUsername();
+                                                $like_log->target_media = $item->getId();
                                                 $like_log->target_media_code = $item->getItemUrl();
                                                 $like_log->log = serialize($like_response);
                                                 $like_log->save();
@@ -189,16 +189,16 @@ class TargetHelper {
             $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
             #$hashtag_feed = $instagram->getHashtagFeed();
 
-            foreach ($hashtag_feed->items as $item) {
+            foreach ($hashtag_feed->getItems() as $item) {
 
-                if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
+                if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->getId())->count() > 0) {
                     #duplicate. Liked before this photo with this id.
                     continue;
                 }
 
                 $duplicate = 0;
 
-                $user_to_like = $item->user;
+                $user_to_like = $item->getUser();
 
                 if (is_null($user_to_like)) {
                     echo("\n" . "null user");
@@ -206,7 +206,8 @@ class TargetHelper {
                 }
 
                 $followed_users = DB::connection('mysql_old')
-                        ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", [$ig_username, $user_to_like->username]);
+                        ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", 
+                                [$ig_username, $user_to_like->getUsername()]);
 
                 foreach ($followed_users as $followed_user) {
                     $duplicate = 1;
@@ -224,12 +225,13 @@ class TargetHelper {
                         break;
                     }
 
-                    $like_response = $instagram->media->like($item->id);
+                    $like_response = $instagram->media->like($item->getId());
 
                     echo("\n" . "liked " . serialize($like_response));
 
                     DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
-                            . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_like->username, $item->id, $item->getItemUrl(), serialize($like_response)]);
+                            . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_like->getUsername(), $item->getId(), 
+                                $item->getItemUrl(), serialize($like_response)]);
                     $like_quota--;
                 }
 
@@ -259,9 +261,9 @@ class TargetHelper {
 
                 $hashtag_feed = $instagram->hashtag->getFeed(trim($target_hashtag->hashtag));
                 //Foreach post under this target hashtag
-                foreach ($hashtag_feed->items as $item) {
+                foreach ($hashtag_feed->getItems() as $item) {
                     //Get user because we need to check if they have been liked before.
-                    $user_to_like = $item->user;
+                    $user_to_like = $item->getUser();
                     //Weird error, null user. Check to be safe.
                     if (is_null($user_to_like)) {
                         echo("\n" . "null user");
@@ -270,34 +272,35 @@ class TargetHelper {
 
                     //Check for duplicates.
                     $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
-                            ->where('target_username', $user_to_like->username)
+                            ->where('target_username', $user_to_like->getUsername())
                             ->first();
 
                     //Duplicate = liked before.
                     if (count($liked_users) > 0) {
-                        echo("\n" . "duplicate log found:\t[$ig_username] [" . $user_to_like->username . "]");
+                        echo("\n" . "duplicate log found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
                         continue;
                     }
 
                     //Check for duplicates.
                     $liked_users = LikeLogsArchive::where('insta_username', $ig_username)
-                            ->where('target_username', $user_to_like->username)
+                            ->where('target_username', $user_to_like->getUsername())
                             ->first();
 
                     //Duplicate = liked before.
                     if (count($liked_users) > 0) {
-                        echo("\n" . "Duplicate Log Found:\t[$ig_username] [" . $user_to_like->username . "]");
+                        echo("\n" . "Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
                         continue;
                     }
 
                     if ($like_quota > 0) {
 
-                        if (InstagramProfileLikeLog::where('insta_username', $ig_username)->where('target_media', $item->id)->count() > 0) {
+                        if (InstagramProfileLikeLog::where('insta_username', $ig_username)
+                                ->where('target_media', $item->getId())->count() > 0) {
                             #duplicate. Liked before this photo with this id.
                             continue;
                         }
-                        echo("\n" . "[$ig_username] attemping to like: " . $item->id);
-                        $like_response = $instagram->media->like($item->id);
+                        echo("\n" . "[$ig_username] attemping to like: " . $item->getId());
+                        $like_response = $instagram->media->like($item->getId());
 
                         if (InteractionHelper::like($ig_username, $like_response, $user_to_like, $item) == true) {
                             $like_quota--;
