@@ -2,9 +2,12 @@
 
 namespace App;
 
+use InstagramAPI\Exception\AccountDisabledException;
 use InstagramAPI\Exception\CheckpointRequiredException;
 use InstagramAPI\Exception\EndpointException;
 use InstagramAPI\Exception\IncorrectPasswordException;
+use InstagramAPI\Exception\NetworkException;
+use InstagramAPI\Exception\RequestException;
 use InstagramAPI\Instagram as Instagram;
 
 class InteractionCommentHelper
@@ -52,11 +55,11 @@ class InteractionCommentHelper
 			InteractionCommentHelper::handleInstagramException($ig_profile, $incorrectpw_ex, $engaged_user);
 		} catch (EndpointException $endpoint_ex) {
 			InteractionCommentHelper::handleInstagramException($ig_profile, $endpoint_ex, $engaged_user);
-		} catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+		} catch (NetworkException $network_ex) {
 			InteractionCommentHelper::handleInstagramException($ig_profile, $network_ex, $engaged_user);
-		} catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+		} catch (AccountDisabledException $acctdisabled_ex) {
 			InteractionCommentHelper::handleInstagramException($ig_profile, $acctdisabled_ex, $engaged_user);
-		} catch (\InstagramAPI\Exception\RequestException $request_ex) {
+		} catch (RequestException $request_ex) {
 			InteractionCommentHelper::handleInstagramException($ig_profile, $request_ex, $engaged_user);
 		} catch (\Exception $ex) {
 			dump($ex);
@@ -105,7 +108,7 @@ class InteractionCommentHelper
 				$engaged_user = $unengaged_liking->target_username;
 				try {
 					$user_instagram_id = $instagram->people->getUserIdForName($unengaged_liking->target_username);
-				} catch (\InstagramAPI\Exception\RequestException $request_ex) {
+				} catch (RequestException $request_ex) {
 					if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
 						$comment_log = new InstagramProfileCommentLog;
 						$comment_log->insta_username = $ig_username;
@@ -172,7 +175,7 @@ class InteractionCommentHelper
 			try {
 				#$user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
 				$user_instagram_id = $instagram->people->getUserIdForName($unengaged_following->follower_username);
-			} catch (\InstagramAPI\Exception\RequestException $request_ex) {
+			} catch (RequestException $request_ex) {
 				if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
 					$comment_log = new InstagramProfileCommentLog;
 					$comment_log->insta_username = $ig_username;
@@ -251,18 +254,18 @@ class InteractionCommentHelper
 
 					echo("endpt1 " . $ex->getMessage() . "\n");
 				} else {
-					if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
+					if ($ex instanceof NetworkException) {
 
 						echo("network1 " . $ex->getMessage() . "\n");
 					} else {
-						if ($ex instanceof \InstagramAPI\Exception\AccountDisabledException) {
+						if ($ex instanceof AccountDisabledException) {
 
 							echo("acctdisabled1 " . $ex->getMessage() . "\n");
 
 							$ig_profile->account_disabled = 1;
 							$ig_profile->save();
 						} else {
-							if ($ex instanceof \InstagramAPI\Exception\RequestException) {
+							if ($ex instanceof RequestException) {
 								if ($ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
 									if ($ex->hasResponse()) {
 										$full_response = $ex->getResponse()->fullResponse;
