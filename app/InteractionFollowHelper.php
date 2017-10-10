@@ -108,7 +108,7 @@ class InteractionFollowHelper {
         } else if (InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                         ->where('follower_id', $user_to_follow->getPk())->count() > 0) {
             //user exists aka duplicate
-            echo "[" . $ig_profile->insta_username . "] has followed [$user_to_follow->getUsername()] before.\n";
+            echo "[" . $ig_profile->insta_username . "] has followed [" . $user_to_follow->getUsername() . "] before.\n";
             return false;
         }
         //Get extra info to make sure it fits user's criteria
