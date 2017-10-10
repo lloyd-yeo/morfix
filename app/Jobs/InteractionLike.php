@@ -10,7 +10,7 @@ use App\InteractionHelper;
 use App\LikeLogsArchive;
 use App\Niche;
 use App\TargetHelper;
-use Carbon as Carbon;
+use Carbon\Carbon as Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
