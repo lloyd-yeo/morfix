@@ -76,7 +76,7 @@ class InteractionLike implements ShouldQueue
 	protected $targeted_hashtags;
 	protected $targeted_usernames;
 	protected $speed_delay;
-	
+
 	/**
 	 * Create a new job instance.
 	 *
