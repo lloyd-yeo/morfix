@@ -21,7 +21,7 @@ class InteractionCommentHelper
 			$comments = InstagramProfileComment::where('insta_username', $ig_username)->get();
 
 			if ($comments->isEmpty()) {
-				exit();
+				return;
 			}
 			$comment = $comments->random();
 			echo($comment->comment . "\n");
