@@ -65,11 +65,18 @@ class InteractionLike implements ShouldQueue
 	 * @var int
 	 */
 	protected $like_quota;
+
+	/**
+	 * The Instagram API for the profile to interact with Instagram.
+	 *
+	 * @var Instagram
+	 */
+	protected $instagram;
+
 	protected $targeted_hashtags;
 	protected $targeted_usernames;
 	protected $speed_delay;
-	protected $instagram;
-
+	
 	/**
 	 * Create a new job instance.
 	 *
