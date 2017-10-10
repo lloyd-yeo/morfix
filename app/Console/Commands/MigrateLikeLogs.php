@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\InstagramProfile;
+use App\InstagramProfileLikeLog;
+use DB;
 use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
-use App\InstagramProfileLikeLog;
-use App\InstagramProfile;
-use DB;
 
 class MigrateLikeLogs extends Command {
 
@@ -44,7 +44,7 @@ class MigrateLikeLogs extends Command {
             $ig_profiles = InstagramProfile::orderBy('user_id', 'desc')->get();
 
             foreach ($ig_profiles as $ig_profile) {
-                DB::connection('mysql_master')
+                    DB::connection('mysql_master')
                         ->table('user_insta_profile_like_log')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->where('date_liked', '>', '2017-08-31 10:04:15')

@@ -35,15 +35,16 @@ class AddUserUpdate extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
         $type = $this->argument('type');
         $title = $this->argument('title');
         $content = $this->argument('content');
-        
+
         $users = User::all();
+
         foreach ($users as $user) {
             $update = new UserUpdate;
             $update->email = $user->email;

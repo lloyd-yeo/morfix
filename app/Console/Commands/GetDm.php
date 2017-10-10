@@ -2,17 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use InstagramAPI\InstagramException as InstagramException;
-use App\InstagramProfile;
-use App\CreateInstagramProfileLog;
-use App\Proxy;
-use App\DmJob;
-use App\User;
 use App\InstagramHelper;
+use App\InstagramProfile;
+use App\User;
+use Illuminate\Console\Command;
 
 class GetDm extends Command {
 
@@ -46,7 +39,7 @@ class GetDm extends Command {
      */
     public function handle() {
         if ($this->argument("email") === NULL) { //master
-            $users = User::where('partition', 0)->get();
+            $users = User::where('partition', '=', 0)->get();
             foreach ($users as $user) {
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                         ->get();

@@ -265,13 +265,13 @@
                                                 @else
                                                 <option value="Slow">Slow</option>
                                                 @endif
-                                                
+
                                                 @if ($ig_profile->speed == "Medium")
                                                 <option value="Medium" selected>Medium</option>
                                                 @else
                                                 <option value="Medium">Medium</option>
                                                 @endif
-                                                
+
                                                 @if ($ig_profile->speed == "Fast")
                                                 <option value="Fast" selected>Fast</option>
                                                 @else
