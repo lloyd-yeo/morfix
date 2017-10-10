@@ -2,8 +2,6 @@
 
 namespace App;
 
-use App\InstagramProfile;
-use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
 use InstagramAPI\Exception\AccountDisabledException;
 use InstagramAPI\Exception\CheckpointRequiredException;
