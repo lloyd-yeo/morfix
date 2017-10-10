@@ -2,37 +2,35 @@
 
 namespace App\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\DB;
-use App\InstagramProfile;
-use App\InstagramProfileTargetUsername;
-use App\InstagramProfileTargetHashtag;
-use App\EngagementJob;
 use App\BlacklistedUsername;
-use App\InstagramProfileLikeLog;
-use App\LikeLogsArchive;
-use App\Proxy;
-use App\Niche;
 use App\InstagramHelper;
+use App\InstagramProfile;
+use App\InstagramProfileLikeLog;
 use App\InteractionHelper;
+use App\LikeLogsArchive;
+use App\Niche;
 use App\TargetHelper;
 use Carbon as Carbon;
-use InstagramAPI\Response\Model\User as InstagramAPIUser;
-use InstagramAPI\Response\Model\Item as InstagramAPIItem;
-use InstagramAPI\Exception\InstagramException as InstagramException;
-use InstagramAPI\Exception\FeedbackRequiredException as FeedbackRequiredException;
-use InstagramAPI\Exception\CheckpointRequiredException as CheckpointRequiredException;
-use InstagramAPI\Exception\NetworkException as NetworkException;
-use InstagramAPI\Exception\EndpointException as EndpointException;
-use InstagramAPI\Exception\IncorrectPasswordException as IncorrectPasswordException;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use InstagramAPI\Exception\AccountDisabledException as AccountDisabledException;
+use InstagramAPI\Exception\CheckpointRequiredException as CheckpointRequiredException;
+use InstagramAPI\Exception\EndpointException as EndpointException;
+use InstagramAPI\Exception\FeedbackRequiredException as FeedbackRequiredException;
+use InstagramAPI\Exception\IncorrectPasswordException as IncorrectPasswordException;
+use InstagramAPI\Exception\InstagramException as InstagramException;
+use InstagramAPI\Exception\NetworkException as NetworkException;
 use InstagramAPI\Exception\ThrottledException as ThrottledException;
+use InstagramAPI\Instagram;
+use InstagramAPI\Response\Model\Item as InstagramAPIItem;
+use InstagramAPI\Response\Model\User as InstagramAPIUser;
 
-class InteractionLike implements ShouldQueue {
+class InteractionLike implements ShouldQueue
+{
 
     use Dispatchable,
         InteractsWithQueue,
@@ -52,22 +50,22 @@ class InteractionLike implements ShouldQueue {
      * @var int
      */
     public $timeout = 360;
-    
+
     /**
      * The App\InstagramProfile to automate Likes for.
-     * 
-     * @var InstagramProfile 
+     *
+     * @var InstagramProfile
      */
     protected $profile;
-    
+
     /**
      * The number of likes allocated for this run of the job.
      * This is generated randomly at the start of the job.
-     * 
-     * @var int 
+     *
+     * @var int
      */
     protected $like_quota;
-    
+
     protected $targeted_hashtags;
     protected $targeted_usernames;
     protected $speed_delay;
@@ -78,7 +76,8 @@ class InteractionLike implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct(InstagramProfile $profile) {
+    public function __construct(InstagramProfile $profile)
+    {
         $this->profile = $profile;
     }
 
@@ -87,7 +86,8 @@ class InteractionLike implements ShouldQueue {
      *
      * @return void
      */
-    public function handle() {
+    public function handle()
+    {
         DB::reconnect();
 
         $this->calcSpeedDelay($this->profile->speed);
@@ -331,31 +331,32 @@ class InteractionLike implements ShouldQueue {
     }
 
     /**
-     * 
+     *
      * @param InstagramAPIUser $user_to_like
      * @param InstagramAPIItem $item
      * @return boolean
      */
-    public function like(InstagramAPIUser $user_to_like, InstagramAPIItem $item) {
+    public function like(InstagramAPIUser $user_to_like, InstagramAPIItem $item)
+    {
         $ig_profile = $this->profile;
         $like_response = NULL;
         try {
             $like_response = $this->instagram->media->like($item->getId());
-        } catch (InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+        } catch (CheckpointRequiredException $checkpoint_ex) {
             $this->handleInstagramException($ig_profile, $checkpoint_ex);
-        } catch (InstagramAPI\Exception\NetworkException $network_ex) {
+        } catch (NetworkException $network_ex) {
             $this->handleInstagramException($ig_profile, $network_ex);
-        } catch (InstagramAPI\Exception\EndpointException $endpoint_ex) {
+        } catch (EndpointException $endpoint_ex) {
             $this->handleInstagramException($ig_profile, $endpoint_ex);
-        } catch (InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+        } catch (IncorrectPasswordException $incorrectpw_ex) {
             $this->handleInstagramException($ig_profile, $incorrectpw_ex);
-        } catch (InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+        } catch (FeedbackRequiredException $feedback_ex) {
             $this->handleInstagramException($ig_profile, $feedback_ex);
-        } catch (InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+        } catch (EmptyResponseException $emptyresponse_ex) {
             $this->handleInstagramException($ig_profile, $emptyresponse_ex);
-        } catch (InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+        } catch (AccountDisabledException $acctdisabled_ex) {
             $this->handleInstagramException($ig_profile, $acctdisabled_ex);
-        } catch (InstagramAPI\Exception\ThrottledException $throttled_ex) {
+        } catch (ThrottledException $throttled_ex) {
             $this->handleInstagramException($ig_profile, $throttled_ex);
         }
 
@@ -389,19 +390,20 @@ class InteractionLike implements ShouldQueue {
         return false;
     }
 
-    public function checkDuplicateByMediaId(InstagramAPIItem $item) {
+    public function checkDuplicateByMediaId(InstagramAPIItem $item)
+    {
         $ig_profile = $this->profile;
 
         if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
-                        ->where('target_media', $item->getId())->count() > 0) {
+                ->where('target_media', $item->getId())->count() > 0) {
             #duplicate. Liked before this photo with this id.
             return true;
         }
 
         //Check for duplicates.
         $liked_logs = LikeLogsArchive::where('insta_username', $ig_profile->insta_username)
-                ->where('target_media', $item->getId())
-                ->first();
+            ->where('target_media', $item->getId())
+            ->first();
 
         //Duplicate = liked media before.
         if ($liked_logs !== NULL) {
@@ -412,7 +414,8 @@ class InteractionLike implements ShouldQueue {
         return false;
     }
 
-    public function checkDuplicate(InstagramAPIUser $user_to_like) {
+    public function checkDuplicate(InstagramAPIUser $user_to_like)
+    {
 
         //Weird error, null user. Check to be safe.
         if ($user_to_like === NULL) {
@@ -422,32 +425,33 @@ class InteractionLike implements ShouldQueue {
 
         //Check for duplicates.
         $liked_user = InstagramProfileLikeLog::where('insta_username', $this->profile->insta_username)
-                ->where('target_username', $user_to_like->getUsername())
-                ->first();
+            ->where('target_username', $user_to_like->getUsername())
+            ->first();
 
         //Duplicate = liked before.
         if ($liked_user !== NULL) {
             echo("\n" . "[Current] Duplicate log found:\t[" . $this->profile->insta_username . "] "
-            . "[" . $user_to_like->getUsername() . "]");
+                . "[" . $user_to_like->getUsername() . "]");
             return true;
         }
 
         //Check for duplicates.
         $liked_user = LikeLogsArchive::where('insta_username', $this->profile->insta_username)
-                ->where('target_username', $user_to_like->getUsername())
-                ->first();
+            ->where('target_username', $user_to_like->getUsername())
+            ->first();
 
         //Duplicate = liked before.
         if ($liked_user !== NULL) {
             echo("\n" . "[Archive] Duplicate Log Found:\t[" . $this->profile->insta_username . "] "
-            . "[" . $user_to_like->getUsername() . "]");
+                . "[" . $user_to_like->getUsername() . "]");
             return true;
         }
 
         return false;
     }
 
-    public function checkBlacklistAndDuplicates(InstagramAPIUser $user_to_like, $page_count) {
+    public function checkBlacklistAndDuplicates(InstagramAPIUser $user_to_like, $page_count)
+    {
 
         $ig_profile = $this->profile;
         $ig_username = $ig_profile->insta_username;
@@ -464,8 +468,8 @@ class InteractionLike implements ShouldQueue {
 
         //Check for duplicates.
         $liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
-                ->where('target_username', $user_to_like->getUsername())
-                ->first();
+            ->where('target_username', $user_to_like->getUsername())
+            ->first();
 
         //Duplicate = liked before.
         if (count($liked_users) > 0) {
@@ -479,8 +483,8 @@ class InteractionLike implements ShouldQueue {
 
         //Check for duplicates.
         $liked_users_archive = LikeLogsArchive::where('insta_username', $ig_username)
-                ->where('target_username', $user_to_like->getUsername())
-                ->first();
+            ->where('target_username', $user_to_like->getUsername())
+            ->first();
 
         //Duplicate = liked before.
         if (count($liked_users_archive) > 0) {
@@ -495,7 +499,8 @@ class InteractionLike implements ShouldQueue {
         return 0;
     }
 
-    public function checkValidTargetUsername(\InstagramAPI\Instagram $instagram, $target_username) {
+    public function checkValidTargetUsername(Instagram $instagram, $target_username)
+    {
         $target_username_id = NULL;
         try {
             $target_username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
@@ -507,7 +512,7 @@ class InteractionLike implements ShouldQueue {
                 }
                 $target_username->save();
             }
-        } catch (InstagramAPI\Exception\InstagramException $insta_ex) {
+        } catch (InstagramException $insta_ex) {
             $target_username_id = NULL;
             $target_username->invalid = 1;
             $target_username->save();
@@ -517,7 +522,8 @@ class InteractionLike implements ShouldQueue {
         return $target_username_id;
     }
 
-    private function randomizeUseHashtags() {
+    private function randomizeUseHashtags()
+    {
         $use_hashtags = rand(0, 1);
         if ($use_hashtags == 1 && count($this->targeted_hashtags) == 0) {
             $use_hashtags = 0;
@@ -528,7 +534,8 @@ class InteractionLike implements ShouldQueue {
         return $use_hashtags;
     }
 
-    public function handleInstagramException(InstagramProfile $ig_profile, InstagramException $ex) {
+    public function handleInstagramException(InstagramProfile $ig_profile, InstagramException $ex)
+    {
         $this->like_quota = 0;
         $ig_username = $ig_profile->insta_username;
         dump($ex);
@@ -567,7 +574,7 @@ class InteractionLike implements ShouldQueue {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->error_msg = $ex->getMessage();
         } else if ($ex instanceof NetworkException) {
-            
+
         } else if ($ex instanceof EndpointException) {
             if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 $ig_profile->error_msg = $ex->getMessage();
@@ -596,7 +603,8 @@ class InteractionLike implements ShouldQueue {
         $ig_profile->save();
     }
 
-    private function calcSpeedDelay($speed) {
+    private function calcSpeedDelay($speed)
+    {
         $speed_delay = 3;
         if ($speed == "Fast") {
             $speed_delay = 1;
@@ -604,11 +612,13 @@ class InteractionLike implements ShouldQueue {
         $this->speed_delay = $speed_delay;
     }
 
-    public function getInstagram(): \InstagramAPI\Instagram {
+    public function getInstagram(): Instagram
+    {
         return $this->instagram;
     }
 
-    public function getProfile(): \App\InstagramProfile {
+    public function getProfile(): InstagramProfile
+    {
         return $this->profile;
     }
 

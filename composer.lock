@@ -1208,16 +1208,16 @@
         },
         {
             "name": "lazyjsonmapper/lazyjsonmapper",
-            "version": "v1.2.1",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SteveJobzniak/LazyJsonMapper.git",
-                "reference": "29dbfc10409fa0e482aedf198ac9f5a16bce6f1b"
+                "reference": "028c4221ec1316a1cc5b1cc418f7c45ad79e4565"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/29dbfc10409fa0e482aedf198ac9f5a16bce6f1b",
-                "reference": "29dbfc10409fa0e482aedf198ac9f5a16bce6f1b",
+                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/028c4221ec1316a1cc5b1cc418f7c45ad79e4565",
+                "reference": "028c4221ec1316a1cc5b1cc418f7c45ad79e4565",
                 "shasum": ""
             },
             "require": {
@@ -1250,7 +1250,7 @@
                 "development",
                 "json"
             ],
-            "time": "2017-10-08T23:44:29+00:00"
+            "time": "2017-10-09T18:36:30+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1341,12 +1341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "f9d614738b7abdffa2d4f30b130c0b20d88a76b8"
+                "reference": "5210fee95e1ade8f67c6adc0543c0e900de29f9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/f9d614738b7abdffa2d4f30b130c0b20d88a76b8",
-                "reference": "f9d614738b7abdffa2d4f30b130c0b20d88a76b8",
+                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/5210fee95e1ade8f67c6adc0543c0e900de29f9f",
+                "reference": "5210fee95e1ade8f67c6adc0543c0e900de29f9f",
                 "shasum": ""
             },
             "require": {
@@ -1359,7 +1359,7 @@
                 "ext-mbstring": "*",
                 "ext-zlib": "*",
                 "guzzlehttp/guzzle": "^6.2",
-                "lazyjsonmapper/lazyjsonmapper": "^1.2.1",
+                "lazyjsonmapper/lazyjsonmapper": "^1.2.3",
                 "php": ">=5.6",
                 "psr/log": "^1.0",
                 "react/event-loop": "^0.4.3",
@@ -1405,7 +1405,7 @@
                 "php",
                 "private"
             ],
-            "time": "2017-09-23 23:20:10"
+            "time": "2017-10-09 23:41:12"
         },
         {
             "name": "monolog/monolog",
@@ -3533,16 +3533,16 @@
         },
         {
             "name": "valga/fbns-react",
-            "version": "0.1.7",
+            "version": "0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/valga/fbns-react.git",
-                "reference": "db54c63ac9e244c28493c084695e3bf43ba9bf8c"
+                "reference": "4bbf513a8ffed7e0c9ca10776033d34515bb8b37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/valga/fbns-react/zipball/db54c63ac9e244c28493c084695e3bf43ba9bf8c",
-                "reference": "db54c63ac9e244c28493c084695e3bf43ba9bf8c",
+                "url": "https://api.github.com/repos/valga/fbns-react/zipball/4bbf513a8ffed7e0c9ca10776033d34515bb8b37",
+                "reference": "4bbf513a8ffed7e0c9ca10776033d34515bb8b37",
                 "shasum": ""
             },
             "require": {
@@ -3586,7 +3586,7 @@
                 "client",
                 "php"
             ],
-            "time": "2017-08-30T16:46:38+00:00"
+            "time": "2017-10-09T07:54:13+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

@@ -260,11 +260,18 @@
                                         <label class="col-xs-10 col-lg-10 col-lg-offset-1" for="follow-speed-select">Follow/Unfollow Speed</label>
                                         <div class="col-sm-12 col-lg-10 col-lg-offset-1">
                                             <select class="form-control" id="follow-speed-select" name="follow-speed" size="1">
+                                                @if ($ig_profile->speed == "Slow")
+                                                <option value="Slow" selected>Slow</option>
+                                                @else
+                                                <option value="Slow">Slow</option>
+                                                @endif
+                                                
                                                 @if ($ig_profile->speed == "Medium")
                                                 <option value="Medium" selected>Medium</option>
                                                 @else
                                                 <option value="Medium">Medium</option>
                                                 @endif
+                                                
                                                 @if ($ig_profile->speed == "Fast")
                                                 <option value="Fast" selected>Fast</option>
                                                 @else
