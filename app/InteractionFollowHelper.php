@@ -89,31 +89,31 @@ class InteractionFollowHelper {
     public static function isProfileValidForFollow($instagram, $ig_profile, \InstagramAPI\Response\Model\User $user_to_follow) {
         //Check by default that user is valid to even retrieve extra info.
         if ($user_to_follow->getIsPrivate()) {
-            echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] is private.\n";
+            echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->getUsername() . "] is private.\n";
             return false;
         } else if ($user_to_follow->getHasAnonymousProfilePicture()) {
-            echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] has no profile pic.\n";
+            echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->getUsername() . "] has no profile pic.\n";
             return false;
         } else if (InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                         ->where('follower_id', $user_to_follow->getPk())->count() > 0) {
             //user exists aka duplicate
-            echo "[" . $ig_profile->insta_username . "] has followed [$user_to_follow->username] before.\n";
+            echo "[" . $ig_profile->insta_username . "] has followed [$user_to_follow->getUsername()] before.\n";
             return false;
         }
         //Get extra info to make sure it fits user's criteria
 //        try {
             $user_info = $instagram->people->getInfoById($user_to_follow->getPk());
             $user_to_follow = $user_info->getUser();
-            if ($user_to_follow->media_count == 0) {
-                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: > 0 photos \n";
+            if ($user_to_follow->getMediaCount() == 0) {
+                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->getUsername() . "] does not meet requirement: > 0 photos \n";
                 return false;
             }
-            if ($ig_profile->follow_min_followers != 0 && $user_to_follow->follower_count < $ig_profile->follow_min_followers) {
-                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: [" . $user_to_follow->follower_count . "] < [" . $ig_profile->follow_min_followers . "] \n";
+            if ($ig_profile->follow_min_followers != 0 && $user_to_follow->getFollowerCount() < $ig_profile->follow_min_followers) {
+                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->getUsername() . "] does not meet requirement: [" . $user_to_follow->getFollowerCount() . "] < [" . $ig_profile->follow_min_followers . "] \n";
                 return false;
             }
-            if ($ig_profile->follow_max_followers != 0 && $user_to_follow->follower_count > $ig_profile->follow_max_followers) {
-                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->username . "] does not meet requirement: [" . $user_to_follow->follower_count . "] > [" . $ig_profile->follow_max_followers . "] \n";
+            if ($ig_profile->follow_max_followers != 0 && $user_to_follow->getFollowerCount() > $ig_profile->follow_max_followers) {
+                echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->getUsername() . "] does not meet requirement: [" . $user_to_follow->getFollowerCount() . "] > [" . $ig_profile->follow_max_followers . "] \n";
                 return false;
             }
 //        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
