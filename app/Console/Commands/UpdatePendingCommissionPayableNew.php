@@ -12,7 +12,7 @@ use App\PaypalCharges;
 
 class UpdatePendingCommissionPayableNew extends Command {
 
-    /**
+    /** 
      * The name and signature of the console command.
      *
      * @var string

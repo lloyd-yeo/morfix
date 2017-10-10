@@ -63,7 +63,7 @@ class UpdateLastPaidFromCSV extends Command {
                     $this->CalculateUserPendingCommissions($user,$paid_amount,$tier);
                     $user->paid_amount = $data[3];
                     $user->pending_commission_payable = 0;
-                    $user->all_time_commission = $user->all_time_commission - $data[3];
+                    $user->all_time_commission = $user->all_time_commission + $data[3];
                     $user->save();
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
                     echo "Updated [$current_email] last pay out amount to [$data[3]]\n";
