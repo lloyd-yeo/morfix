@@ -2,20 +2,15 @@
 
 namespace App\Jobs;
 
+use App\InstagramHelper;
+use App\InstagramProfile;
+use App\InteractionCommentHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use App\InstagramProfileComment;
-use App\InstagramProfileCommentLog;
-use App\InstagramProfileFollowLog;
-use App\InstagramProfileLikeLog;
-use App\Proxy;
-use App\EngagementJob;
-use App\InstagramHelper;
-use App\InteractionCommentHelper;
 
 class InteractionComment implements ShouldQueue {
 
@@ -45,7 +40,7 @@ class InteractionComment implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct(\App\InstagramProfile $profile) {
+    public function __construct(InstagramProfile $profile) {
         $this->profile = $profile;
     }
 

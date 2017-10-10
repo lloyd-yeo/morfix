@@ -6,6 +6,9 @@ use App\InstagramProfileCommentLog;
 use App\InstagramProfileLikeLog;
 use App\InstagramProfileFollowLog;
 use App\InstagramProfileComment;
+use InstagramAPI\Exception\CheckpointRequiredException;
+use InstagramAPI\Exception\EndpointException;
+use InstagramAPI\Exception\IncorrectPasswordException;
 use InstagramAPI\Instagram as Instagram;
 
 class InteractionCommentHelper {
@@ -15,6 +18,7 @@ class InteractionCommentHelper {
         $engaged_user = NULL;
         try {
             $comments = InstagramProfileComment::where('insta_username', $ig_username)->get();
+            
             if ($comments->isEmpty()) {
                 exit();
             }
@@ -23,6 +27,7 @@ class InteractionCommentHelper {
             $commentText = $comment->comment;
             $commented = false;
             $user_instagram_id = NULL;
+
             $unengaged_followings = InstagramProfileFollowLog::where('insta_username', $ig_username)
                     ->orderBy('date_inserted', 'desc')
                     ->take(20)
@@ -43,11 +48,11 @@ class InteractionCommentHelper {
                  */
                 $engaged_user = InteractionCommentHelper::unEngagedFollowings($ig_profile, $instagram, $unengaged_followings, $commentText);
             }
-        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+        } catch (CheckpointRequiredException $checkpt_ex) {
             InteractionCommentHelper::handleInstagramException($ig_profile, $checkpt_ex, $engaged_user);
-        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+        } catch (IncorrectPasswordException $incorrectpw_ex) {
             InteractionCommentHelper::handleInstagramException($ig_profile, $incorrectpw_ex, $engaged_user);
-        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+        } catch (EndpointException $endpoint_ex) {
             InteractionCommentHelper::handleInstagramException($ig_profile, $endpoint_ex, $engaged_user);
         } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
             InteractionCommentHelper::handleInstagramException($ig_profile, $network_ex, $engaged_user);
@@ -213,15 +218,15 @@ class InteractionCommentHelper {
 
     public static function handleInstagramException($ig_profile, $ex, $engaged_user) {
         $ig_username = $ig_profile->insta_username;
-        if ($ex instanceof \InstagramAPI\Exception\CheckpointRequiredException) {
+        if ($ex instanceof CheckpointRequiredException) {
             echo("checkpt1 " . $ex->getMessage() . "\n");
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
-        } else if ($ex instanceof \InstagramAPI\Exception\IncorrectPasswordException) {
+        } else if ($ex instanceof IncorrectPasswordException) {
             echo("incorrectpw1 " . $ex->getMessage() . "\n");
             $ig_profile->incorrect_pw = 1;
             $ig_profile->save();
-        } else if ($ex instanceof \InstagramAPI\Exception\EndpointException) {
+        } else if ($ex instanceof EndpointException) {
 
             if ($ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
                 $comment_log = new InstagramProfileCommentLog;
@@ -235,7 +240,7 @@ class InteractionCommentHelper {
                 $comment_log->save();
             }
 
-            echo("endpt1 " . $endpoint_ex->getMessage() . "\n");
+            echo("endpt1 " . $ex->getMessage() . "\n");
         } else if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
 
             echo("network1 " . $ex->getMessage() . "\n");
