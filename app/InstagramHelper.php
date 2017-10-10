@@ -4,21 +4,6 @@ namespace App;
 
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use InstagramAPI\InstagramException as InstagramException;
-use App\User;
-use App\InstagramProfile;
-use App\InstagramProfileComment;
-use App\InstagramProfileCommentLog;
-use App\InstagramProfileFollowLog;
-use App\InstagramProfileLikeLog;
-use App\InstagramProfileTargetHashtag;
-use App\InstagramProfileTargetUsername;
-use App\Niche;
-use App\NicheTarget;
-use App\CreateInstagramProfileLog;
-use App\Proxy;
-use App\DmJob;
 
 class InstagramHelper {
 
@@ -218,7 +203,6 @@ class InstagramHelper {
         $hashtag_feed = NULL;
         try {
             $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
-//            dump($hashtag_feed);
             return $hashtag_feed;
         } catch (\InstagramAPI\Exception\NotFoundException $ex) {
             return NULL;
