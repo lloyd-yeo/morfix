@@ -155,7 +155,7 @@ class InteractionFollowHelper {
         return true;
     }
 
-    public static function unfollow(InstagramProfile $ig_profile, Instagram $instagram, User $user_to_unfollow) {
+    public static function unfollow(InstagramProfile $ig_profile, Instagram $instagram, InstagramProfileFollowLog $user_to_unfollow) {
         //0 for unfollow failed
         //1 for unfollow succeeded
         //2 for unfollow false-succeeded (i.e. Marked as unfollowed)
