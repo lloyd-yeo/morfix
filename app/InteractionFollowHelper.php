@@ -14,6 +14,7 @@ use InstagramAPI\Exception\IncorrectPasswordException;
 use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Exception\ThrottledException;
 use InstagramAPI\Instagram;
+use InstagramAPI\Response\FriendshipResponse;
 use InstagramAPI\Response\Model\User as InstagramUser;
 
 class InteractionFollowHelper {
@@ -228,7 +229,8 @@ class InteractionFollowHelper {
         return 0;
     }
 
-    private static function follow_($follow_resp, $ig_profile, $user_to_follow, $delay) {
+    private static function follow_(FriendshipResponse $follow_resp, InstagramProfilen $ig_profile,
+                                    InstagramUser $user_to_follow, $delay) {
         if ($follow_resp->getFriendshipStatus()->getFollowing() == true) {
             $ig_profile->next_follow_time = Carbon::now()->addMinutes($delay);
             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
@@ -239,14 +241,14 @@ class InteractionFollowHelper {
 
             $new_follow_log = new InstagramProfileFollowLog;
             $new_follow_log->insta_username = $ig_profile->insta_username;
-            $new_follow_log->follower_username = $user_to_follow->username;
+            $new_follow_log->follower_username = $user_to_follow->getUsername();
             $new_follow_log->follower_id = $user_to_follow->getPk();
             $new_follow_log->log = serialize($follow_resp);
             $new_follow_log->follow_success = 1;
             if ($new_follow_log->save()) {
                 echo "[" . $ig_profile->insta_username . "] added new follow log.\n";
             }
-            echo "[" . $ig_profile->insta_username . "] followed [" . $user_to_follow->username . "].\n";
+            echo "[" . $ig_profile->insta_username . "] followed [" . $user_to_follow->getUsername() . "].\n";
             return 1;
         } else {
             if ($follow_resp->getFriendshipStatus()->isPrivate()) {
