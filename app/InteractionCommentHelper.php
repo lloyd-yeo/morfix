@@ -2,10 +2,6 @@
 
 namespace App;
 
-use App\InstagramProfileCommentLog;
-use App\InstagramProfileLikeLog;
-use App\InstagramProfileFollowLog;
-use App\InstagramProfileComment;
 use InstagramAPI\Exception\CheckpointRequiredException;
 use InstagramAPI\Exception\EndpointException;
 use InstagramAPI\Exception\IncorrectPasswordException;
@@ -62,6 +58,8 @@ class InteractionCommentHelper
 			InteractionCommentHelper::handleInstagramException($ig_profile, $acctdisabled_ex, $engaged_user);
 		} catch (\InstagramAPI\Exception\RequestException $request_ex) {
 			InteractionCommentHelper::handleInstagramException($ig_profile, $request_ex, $engaged_user);
+		} catch (\Exception $ex) {
+			dump($ex);
 		}
 	}
 
@@ -107,7 +105,6 @@ class InteractionCommentHelper
 				$engaged_user = $unengaged_liking->target_username;
 				try {
 					$user_instagram_id = $instagram->people->getUserIdForName($unengaged_liking->target_username);
-					#$user_instagram_id = $instagram->getUsernameId($unengaged_liking->target_username);
 				} catch (\InstagramAPI\Exception\RequestException $request_ex) {
 					if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
 						$comment_log = new InstagramProfileCommentLog;
@@ -126,27 +123,24 @@ class InteractionCommentHelper
 				$user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
 				$user_feed_items = $user_feed->getItems();
 
-				if (count($user_feed_items) > 0) {
-					foreach ($user_feed_items as $item) {
+				foreach ($user_feed_items as $item) {
+					$comment_log = new InstagramProfileCommentLog;
+					$comment_log->insta_username = $ig_username;
+					$comment_log->target_username = $unengaged_liking->target_username;
+					$comment_log->target_insta_id = $user_instagram_id;
+					$comment_log->target_media = $item->getId();
+					$comment_log->save();
 
-						$comment_log = new InstagramProfileCommentLog;
-						$comment_log->insta_username = $ig_username;
-						$comment_log->target_username = $unengaged_liking->target_username;
-						$comment_log->target_insta_id = $user_instagram_id;
-						$comment_log->target_media = $item->getId();
-						$comment_log->save();
-
-						$comment_resp = $instagram->media->comment($item->getId(), $commentText);
-						$comment_log->log = serialize($comment_resp);
-						if ($comment_log->save()) {
-							echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
-						}
-
-						$commented = TRUE;
-						$ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
-						$ig_profile->save();
-						break;
+					$comment_resp = $instagram->media->comment($item->getId(), $commentText);
+					$comment_log->log = serialize($comment_resp);
+					if ($comment_log->save()) {
+						echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
 					}
+
+					$commented = TRUE;
+					$ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+					$ig_profile->save();
+					break;
 				}
 
 				if ($commented) {
@@ -196,28 +190,27 @@ class InteractionCommentHelper
 			$user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
 			$user_feed_items = $user_feed->getItems();
 
-			if (count($user_feed_items) > 0) {
-				foreach ($user_feed_items as $item) {
+			foreach ($user_feed_items as $item) {
 
-					$comment_log = new InstagramProfileCommentLog;
-					$comment_log->insta_username = $ig_username;
-					$comment_log->target_username = $unengaged_following->follower_username;
-					$comment_log->target_insta_id = $user_instagram_id;
-					$comment_log->target_media = $item->getId();
-					$comment_log->save();
-					$comment_resp = $instagram->media->comment($item->getId(), $commentText);
-					$comment_log->log = serialize($comment_resp);
-					if ($comment_log->save()) {
-						echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
-					}
-
-					$commented = TRUE;
-					$ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
-					$ig_profile->save();
-
-					break;
+				$comment_log = new InstagramProfileCommentLog;
+				$comment_log->insta_username = $ig_username;
+				$comment_log->target_username = $unengaged_following->follower_username;
+				$comment_log->target_insta_id = $user_instagram_id;
+				$comment_log->target_media = $item->getId();
+				$comment_log->save();
+				$comment_resp = $instagram->media->comment($item->getId(), $commentText);
+				$comment_log->log = serialize($comment_resp);
+				if ($comment_log->save()) {
+					echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
 				}
+
+				$commented = TRUE;
+				$ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+				$ig_profile->save();
+
+				break;
 			}
+
 
 			if ($commented) {
 				break;
