@@ -117,6 +117,8 @@ class InteractionCommentHelper
 						$comment_log->save();
 					}
 					echo("[$ig_username] #Followings Failed to get username id: " . $request_ex->getMessage() . "\n");
+				} catch (\Exception $ex) {
+					dump($ex);
 				}
 
 				if ($user_instagram_id === NULL) {
@@ -173,7 +175,6 @@ class InteractionCommentHelper
 			$engaged_user = $unengaged_following->target_username;
 
 			try {
-				#$user_instagram_id = $instagram->getUsernameId($unengaged_following->follower_username);
 				$user_instagram_id = $instagram->people->getUserIdForName($unengaged_following->follower_username);
 			} catch (RequestException $request_ex) {
 				if ($request_ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
