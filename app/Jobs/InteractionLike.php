@@ -359,7 +359,6 @@ class InteractionLike implements ShouldQueue
 		try {
 			$like_response = $this->instagram->media->like($item->getId());
 
-
 			if ($like_response == NULL) {
 				return FALSE;
 			} else {
@@ -407,6 +406,8 @@ class InteractionLike implements ShouldQueue
 			$this->handleInstagramException($ig_profile, $acctdisabled_ex);
 		} catch (ThrottledException $throttled_ex) {
 			$this->handleInstagramException($ig_profile, $throttled_ex);
+		} catch (\Exception $ex) {
+			dump($ex);
 		}
 
 		return FALSE;
