@@ -80,15 +80,15 @@ class InteractionLike extends Command {
                         if ($ig_profile->next_like_time === NULL) {
                             $ig_profile->next_like_time = \Carbon\Carbon::now();
                             $ig_profile->save();
+	                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
                             $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
                             $job->onQueue("likes");
                             dispatch($job);
-                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
                         } else if (\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($ig_profile->next_like_time))) {
+	                        $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
                             $job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
                             $job->onQueue("likes");
                             dispatch($job);
-                            $this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
                         }
                     }
                 } else {

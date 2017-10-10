@@ -2,7 +2,19 @@
 
 namespace App;
 
+use App\InstagramProfile;
 use App\InstagramProfileFollowLog;
+use Carbon\Carbon;
+use InstagramAPI\Exception\AccountDisabledException;
+use InstagramAPI\Exception\CheckpointRequiredException;
+use InstagramAPI\Exception\EmptyResponseException;
+use InstagramAPI\Exception\EndpointException;
+use InstagramAPI\Exception\FeedbackRequiredException;
+use InstagramAPI\Exception\IncorrectPasswordException;
+use InstagramAPI\Exception\NetworkException;
+use InstagramAPI\Exception\ThrottledException;
+use InstagramAPI\Instagram;
+use InstagramAPI\Response\Model\User as InstagramUser;
 
 class InteractionFollowHelper {
 
@@ -86,7 +98,7 @@ class InteractionFollowHelper {
         return $follow_mode;
     }
 
-    public static function isProfileValidForFollow($instagram, $ig_profile, \InstagramAPI\Response\Model\User $user_to_follow) {
+    public static function isProfileValidForFollow(Instagram $instagram, InstagramProfile $ig_profile, InstagramUser $user_to_follow) {
         //Check by default that user is valid to even retrieve extra info.
         if ($user_to_follow->getIsPrivate()) {
             echo "[" . $ig_profile->insta_username . "] [" . $user_to_follow->getUsername() . "] is private.\n";
@@ -144,7 +156,7 @@ class InteractionFollowHelper {
         return true;
     }
 
-    public static function unfollow($ig_profile, $instagram, $user_to_unfollow) {
+    public static function unfollow(InstagramProfile $ig_profile, Instagram $instagram, User $user_to_unfollow) {
         //0 for unfollow failed
         //1 for unfollow succeeded
         //2 for unfollow false-succeeded (i.e. Marked as unfollowed)
@@ -156,7 +168,7 @@ class InteractionFollowHelper {
                     echo "[" . $ig_profile->insta_username . "] is followed by "
                     . $user_to_unfollow->follower_username . "\n";
                     $user_to_unfollow->unfollowed = 1;
-                    $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
+                    $user_to_unfollow->date_unfollowed = Carbon::now();
                     if ($user_to_unfollow->save()) {
                         echo "[" . $ig_profile->insta_username . "] marked as unfollowed & updated log as NULL: [" .
                         $user_to_unfollow->log_id . "] [" . $user_to_unfollow->follower_username . "]\n\n";
@@ -170,7 +182,7 @@ class InteractionFollowHelper {
             }
         } catch (\InstagramAPI\Exception\NotFoundException $notfound_ex) {
             $user_to_unfollow->unfollowed = 1;
-            $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
+            $user_to_unfollow->date_unfollowed = Carbon::now();
             if ($user_to_unfollow->save()) {
                 echo "[" . $ig_profile->insta_username . "] marked as unfollowed & updated log as NULL: [" .
                 $user_to_unfollow->log_id . "] [" . $user_to_unfollow->follower_username . "]\n\n";
@@ -179,29 +191,38 @@ class InteractionFollowHelper {
         }
     }
 
-    public static function follow($instagram, $ig_profile, $user_to_follow) {
-        //0 means following failed (break)
-        //1 means successfully followed (break)
-        //2 means the profile u tried to follow is private (continue)
+	/**
+	 *
+	 * This function is a wrapper for the original Follow method from the Instagram API to handle exceptions.
+	 * returns 0 when the following has failed. (break)
+	 * returns 1 when the $user_to_follow is successfully followed (break)
+	 * returns 2 when the $user_to_follow is private (continue)
+	 *
+	 * @param Instagram $instagram The Instagram API instance with the user logged in.
+	 * @param \App\InstagramProfile $ig_profile The Instagram Profile of the user.
+	 * @param InstagramUser $user_to_follow The Instagram API User Model to follow.
+	 * @return int
+	 */
+	public static function follow(Instagram $instagram, InstagramProfile $ig_profile, InstagramUser $user_to_follow) {
         $delay = InteractionFollowHelper::setSpeedDelay($ig_profile->speed);
         try {
-            $follow_resp = $instagram->people->follow($user_to_follow->pk);
+            $follow_resp = $instagram->people->follow($user_to_follow->getPk());
             return InteractionFollowHelper::follow_($follow_resp, $ig_profile, $user_to_follow, $delay);
-        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+        } catch (CheckpointRequiredException $checkpoint_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $checkpoint_ex);
-        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+        } catch (NetworkException $network_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $network_ex);
-        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+        } catch (EndpointException $endpoint_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $endpoint_ex);
-        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+        } catch (IncorrectPasswordException $incorrectpw_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $incorrectpw_ex);
-        } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+        } catch (FeedbackRequiredException $feedback_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $feedback_ex);
-        } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+        } catch (EmptyResponseException $emptyresponse_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $emptyresponse_ex);
-        } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+        } catch (AccountDisabledException $acctdisabled_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $acctdisabled_ex);
-        } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+        } catch (ThrottledException $throttled_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $throttled_ex);
         }
         return 0;
@@ -209,7 +230,7 @@ class InteractionFollowHelper {
 
     private static function follow_($follow_resp, $ig_profile, $user_to_follow, $delay) {
         if ($follow_resp->getFriendshipStatus()->getFollowing() == true) {
-            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay);
+            $ig_profile->next_follow_time = Carbon::now()->addMinutes($delay);
             $ig_profile->follow_quota = $ig_profile->follow_quota - 1;
 
             if ($ig_profile->save()) {
@@ -219,7 +240,7 @@ class InteractionFollowHelper {
             $new_follow_log = new InstagramProfileFollowLog;
             $new_follow_log->insta_username = $ig_profile->insta_username;
             $new_follow_log->follower_username = $user_to_follow->username;
-            $new_follow_log->follower_id = $user_to_follow->pk;
+            $new_follow_log->follower_id = $user_to_follow->getPk();
             $new_follow_log->log = serialize($follow_resp);
             $new_follow_log->follow_success = 1;
             if ($new_follow_log->save()) {
@@ -231,7 +252,7 @@ class InteractionFollowHelper {
             if ($follow_resp->getFriendshipStatus()->isPrivate()) {
                 return 2;
             } else if ($follow_resp->getFriendshipStatus()->getFollowing() == false) {
-                $ig_profile->next_follow_time = \Carbon\Carbon::now()->addSeconds(180)->toDateTimeString();
+                $ig_profile->next_follow_time = Carbon::now()->addSeconds(180)->toDateTimeString();
                 $ig_profile->follow_quota = $ig_profile->follow_quota + 1;
                 $ig_profile->save();
                 return 0;
@@ -245,12 +266,12 @@ class InteractionFollowHelper {
             $resp = $instagram->people->unfollow($user_to_unfollow->follower_id);
             if ($resp->getFriendshipStatus()->getFollowing() === false) {
                 $user_to_unfollow->unfollowed = 1;
-                $user_to_unfollow->date_unfollowed = \Carbon\Carbon::now();
+                $user_to_unfollow->date_unfollowed = Carbon::now();
                 if ($user_to_unfollow->save()) {
                     echo "[" . $ig_profile->insta_username . "] "
                     . "marked as unfollowed & updated log: "
                     . $user_to_unfollow->log_id . " [" . $user_to_unfollow->follower_username . "]\n";
-                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addMinutes($delay)->toDateTimeString();
+                    $ig_profile->next_follow_time = Carbon::now()->addMinutes($delay)->toDateTimeString();
                     $ig_profile->unfollow_quota = $ig_profile->unfollow_quota - 1;
                     if ($ig_profile->save()) {
                         echo "[" . $ig_profile->insta_username . "] added $delay minutes of delay & new unfollow quota = " . $ig_profile->unfollow_quota . "\n\n";
@@ -258,21 +279,21 @@ class InteractionFollowHelper {
                     }
                 }
             }
-        } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+        } catch (CheckpointRequiredException $checkpoint_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $checkpoint_ex, $user_to_unfollow);
-        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+        } catch (NetworkException $network_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $network_ex, $user_to_unfollow);
-        } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+        } catch (EndpointException $endpoint_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $endpoint_ex, $user_to_unfollow);
-        } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+        } catch (IncorrectPasswordException $incorrectpw_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $incorrectpw_ex, $user_to_unfollow);
-        } catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_ex) {
+        } catch (FeedbackRequiredException $feedback_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $feedback_ex, $user_to_unfollow);
-        } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
+        } catch (EmptyResponseException $emptyresponse_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $emptyresponse_ex, $user_to_unfollow);
-        } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
+        } catch (AccountDisabledException $acctdisabled_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $acctdisabled_ex, $user_to_unfollow);
-        } catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+        } catch (ThrottledException $throttled_ex) {
             InteractionFollowHelper::handleUnfollowInstagramException($ig_profile, $throttled_ex, $user_to_unfollow);
         }
         return 0;
@@ -282,42 +303,42 @@ class InteractionFollowHelper {
         $ig_username = $ig_profile->insta_username;
         dump($ex);
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
-            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(2);
+            $ig_profile->next_follow_time = Carbon::now()->addHours(2);
             $ig_profile->save();
-            echo "\n[$ig_username] has next_follow_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+            echo "\n[$ig_username] has next_follow_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
             exit;
-        } else if ($ex instanceof \InstagramAPI\Exception\FeedbackRequiredException) {
+        } else if ($ex instanceof FeedbackRequiredException) {
             if ($ex->hasResponse()) {
                 $feedback_required_response = $ex->getResponse();
                 if (strpos($feedback_required_response->fullResponse->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
-                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_unfollow_ban = 1;
-                    $ig_profile->auto_unfollow_ban_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->auto_unfollow_ban_time = Carbon::now()->addHours(4);
                     $ig_profile->save();
-                    echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+                    echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                     exit;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
-                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(1);
+                    $ig_profile->next_follow_time = Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
-                    echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+                    echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     exit;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
-                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_unfollow_ban = 1;
-                    $ig_profile->auto_unfollow_ban_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->auto_unfollow_ban_time = Carbon::now()->addHours(4);
                     $ig_profile->save();
-                    echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+                    echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     exit;
                 }
             }
             $ig_profile->error_msg = $ex->getMessage();
-        } else if ($ex instanceof \InstagramAPI\Exception\CheckpointRequiredException) {
+        } else if ($ex instanceof CheckpointRequiredException) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->error_msg = $ex->getMessage();
-        } else if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
+        } else if ($ex instanceof NetworkException) {
             $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
-        } else if ($ex instanceof \InstagramAPI\Exception\EndpointException) {
+        } else if ($ex instanceof EndpointException) {
             if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 $ig_profile->error_msg = $ex->getMessage();
             } else if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
@@ -327,16 +348,16 @@ class InteractionFollowHelper {
                 $user_to_unfollow->save();
                 exit();
             }
-        } else if ($ex instanceof \InstagramAPI\Exception\IncorrectPasswordException) {
+        } else if ($ex instanceof IncorrectPasswordException) {
             $ig_profile->incorrect_pw = 1;
-        } else if ($ex instanceof \InstagramAPI\Exception\AccountDisabledException) {
+        } else if ($ex instanceof AccountDisabledException) {
             $ig_profile->account_disabled = 1;
-        } else if ($ex instanceof \InstagramAPI\Exception\ThrottledException) {
-            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(2);
+        } else if ($ex instanceof ThrottledException) {
+            $ig_profile->next_follow_time = Carbon::now()->addHours(2);
             $ig_profile->auto_unfollow_ban = 1;
-            $ig_profile->auto_unfollow_ban_time = \Carbon\Carbon::now()->addHours(2);
+            $ig_profile->auto_unfollow_ban_time = Carbon::now()->addHours(2);
             $ig_profile->save();
-            echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+            echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
             exit;
         }
 
@@ -354,57 +375,57 @@ class InteractionFollowHelper {
         echo "[" . $ig_profile->insta_username . "] handling exception...\n";
         $ig_username = $ig_profile->insta_username;
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
-            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(2);
+            $ig_profile->next_follow_time = Carbon::now()->addHours(2);
             $ig_profile->save();
-            echo "\n[$ig_username] has next_follow_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+            echo "\n[$ig_username] has next_follow_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
             return;
-        } else if ($ex instanceof \InstagramAPI\Exception\FeedbackRequiredException) {
+        } else if ($ex instanceof FeedbackRequiredException) {
             if ($ex->hasResponse()) {
                 $feedback_required_response = $ex->getResponse();
                 if (strpos($feedback_required_response->fullResponse->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
-                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_follow_ban = 1;
-                    $ig_profile->auto_follow_ban_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->auto_follow_ban_time = Carbon::now()->addHours(4);
                     $ig_profile->save();
-                    echo "\n[$ig_username] was blocked & has next_follow_time shifted forward to " . \Carbon\Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+                    echo "\n[$ig_username] was blocked & has next_follow_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                     return;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
-                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(1);
+                    $ig_profile->next_follow_time = Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
-                    echo "\n[$ig_username] has invalid proxy & next_follow_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+                    echo "\n[$ig_username] has invalid proxy & next_follow_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     return;
                 } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
-                    $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_follow_ban = 1;
-                    $ig_profile->auto_follow_ban_time = \Carbon\Carbon::now()->addHours(4);
+                    $ig_profile->auto_follow_ban_time = Carbon::now()->addHours(4);
                     $ig_profile->save();
-                    echo "\n[$ig_username] is going too fast & next_follow_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+                    echo "\n[$ig_username] is going too fast & next_follow_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     return;
                 }
             }
             $ig_profile->error_msg = $ex->getMessage();
-        } else if ($ex instanceof \InstagramAPI\Exception\CheckpointRequiredException) {
+        } else if ($ex instanceof CheckpointRequiredException) {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->error_msg = $ex->getMessage();
-        } else if ($ex instanceof \InstagramAPI\Exception\NetworkException) {
+        } else if ($ex instanceof NetworkException) {
             $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
-        } else if ($ex instanceof \InstagramAPI\Exception\EndpointException) {
+        } else if ($ex instanceof EndpointException) {
             if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 $ig_profile->error_msg = $ex->getMessage();
             } else if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
                 $ig_profile->invalid_user = 1;
             }
-        } else if ($ex instanceof \InstagramAPI\Exception\IncorrectPasswordException) {
+        } else if ($ex instanceof IncorrectPasswordException) {
             $ig_profile->incorrect_pw = 1;
-        } else if ($ex instanceof \InstagramAPI\Exception\AccountDisabledException) {
+        } else if ($ex instanceof AccountDisabledException) {
             $ig_profile->account_disabled = 1;
-        } else if ($ex instanceof \InstagramAPI\Exception\ThrottledException) {
-            $ig_profile->next_follow_time = \Carbon\Carbon::now()->addHours(2);
+        } else if ($ex instanceof ThrottledException) {
+            $ig_profile->next_follow_time = Carbon::now()->addHours(2);
             $ig_profile->auto_follow_ban = 1;
-            $ig_profile->auto_follow_ban_time = \Carbon\Carbon::now()->addHours(2);
+            $ig_profile->auto_follow_ban_time = Carbon::now()->addHours(2);
             $ig_profile->save();
-            echo "\n[$ig_username] got throttled & next_follow_time shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+            echo "\n[$ig_username] got throttled & next_follow_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
             return;
         }
 
