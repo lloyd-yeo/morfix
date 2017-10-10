@@ -358,6 +358,39 @@ class InteractionLike implements ShouldQueue
 		$like_response = NULL;
 		try {
 			$like_response = $this->instagram->media->like($item->getId());
+
+
+			if ($like_response == NULL) {
+				return FALSE;
+			} else {
+				if ($like_response->getStatus() == "ok") {
+					try {
+						$this->like_quota = $this->like_quota - 1;
+						echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
+						echo("\n" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
+						$like_log = new InstagramProfileLikeLog;
+						$like_log->insta_username = $ig_profile->insta_username;
+						$like_log->target_username = $user_to_like->getUsername();
+						$like_log->target_media = $item->getId();
+						$like_log->target_media_code = $item->getItemUrl();
+						$like_log->log = serialize($like_response);
+						if ($like_log->save()) {
+							$ig_profile->next_like_time = Carbon::now()->addMinutes($this->speed_delay);
+							$ig_profile->auto_like_ban = 0;
+							$ig_profile->auto_like_ban_time = NULL;
+							$ig_profile->save();
+
+							return TRUE;
+						} else {
+							return FALSE;
+						}
+					} catch (\Exception $ex) {
+						echo "[" . $ig_profile->insta_username . "] saving error [target_username] " . $ex->getMessage() . "\n";
+
+						return FALSE;
+					}
+				}
+			}
 		} catch (CheckpointRequiredException $checkpoint_ex) {
 			$this->handleInstagramException($ig_profile, $checkpoint_ex);
 		} catch (NetworkException $network_ex) {
@@ -374,38 +407,6 @@ class InteractionLike implements ShouldQueue
 			$this->handleInstagramException($ig_profile, $acctdisabled_ex);
 		} catch (ThrottledException $throttled_ex) {
 			$this->handleInstagramException($ig_profile, $throttled_ex);
-		}
-
-		if ($like_response == NULL) {
-			return FALSE;
-		} else {
-			if ($like_response->getStatus() == "ok") {
-				try {
-					$this->like_quota = $this->like_quota - 1;
-					echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
-					echo("\n" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
-					$like_log = new InstagramProfileLikeLog;
-					$like_log->insta_username = $ig_profile->insta_username;
-					$like_log->target_username = $user_to_like->getUsername();
-					$like_log->target_media = $item->getId();
-					$like_log->target_media_code = $item->getItemUrl();
-					$like_log->log = serialize($like_response);
-					if ($like_log->save()) {
-						$ig_profile->next_like_time = Carbon::now()->addMinutes($this->speed_delay);
-						$ig_profile->auto_like_ban = 0;
-						$ig_profile->auto_like_ban_time = NULL;
-						$ig_profile->save();
-
-						return TRUE;
-					} else {
-						return FALSE;
-					}
-				} catch (\Exception $ex) {
-					echo "[" . $ig_profile->insta_username . "] saving error [target_username] " . $ex->getMessage() . "\n";
-
-					return FALSE;
-				}
-			}
 		}
 
 		return FALSE;
