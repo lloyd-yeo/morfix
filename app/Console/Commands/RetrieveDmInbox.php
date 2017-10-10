@@ -53,29 +53,7 @@ class RetrieveDmInbox extends Command
                 $instagram = InstagramHelper::initInstagram();
 
                 if (InstagramHelper::login($instagram, $ig_profile)) {
-                    $test = 4;
-                    switch ($test) {
-                        case 1:
-                            $response = $instagram->direct->getInbox();
-                            $this->manageInboxResponse1($response);
-                            break;
-                        case 2:
-                             $response = $instagram->direct->getVisualInbox();
-                             $this->manageVisualInboxResponse($response);
-                            break;
-                        case 3:
-
-                            $response = $instagram->direct->getShareInbox();
-                            $this->manageShareInbox($response);
-                            break;
-                        case 4:
-                            $response = $instagram->direct->getInbox();
-                            $this->manageInboxResponse($response, $instagram);
-                            break;
-                        default:
-                            # code...
-                            break;
-                    }        
+                       DmInboxHelper::getInbox($instagram);
                 }
             }
             else
