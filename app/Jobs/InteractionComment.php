@@ -60,12 +60,15 @@ class InteractionComment implements ShouldQueue {
             exit();
         }
 
-        $ig_username = $ig_profile->insta_username;
-
         $instagram = InstagramHelper::initInstagram();
 
         if (InstagramHelper::login($instagram, $ig_profile)) {
-            InteractionCommentHelper::unengaged($ig_profile, $instagram);
+
+            try {
+	            InteractionCommentHelper::unengaged($ig_profile, $instagram);
+            } catch (\Exception $ex) {
+            	dump($ex);
+            }
         }
     }
 
