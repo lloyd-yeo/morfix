@@ -42,10 +42,10 @@ class MigrateUsers extends Command {
      */
     public function handle() {
 
-        DB::table('user')->delete();
-        DB::table('user_insta_profile')->delete();
-        DB::table('user_insta_target_username')->delete();
-        DB::table('user_insta_target_hashtag')->delete();
+        DB::table('user')->truncate();
+        DB::table('user_insta_profile')->truncate();
+        DB::table('user_insta_target_username')->truncate();
+        DB::table('user_insta_target_hashtag')->truncate();
 
         $master_users = DB::connection('mysql_master')
                 ->table('user')

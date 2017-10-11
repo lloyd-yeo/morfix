@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use DB;
 use App\InstagramProfile;
 use App\InstagramProfileComment;
+use DB;
+use Illuminate\Console\Command;
 
 class MigrateComments extends Command
 {

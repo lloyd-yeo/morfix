@@ -96,6 +96,7 @@ class InteractionCommentHelper
 
 		foreach ($unengaged_likings as $unengaged_liking) {
 			try {
+
 				if (InstagramProfileCommentLog::where('insta_username', $unengaged_liking->insta_username)
 						->where('target_username', $unengaged_liking->target_username)
 						->count() > 0) {
@@ -125,6 +126,8 @@ class InteractionCommentHelper
 					continue;
 				}
 
+				echo "[" . $ig_username . "] retrieving feed of " . $unengaged_liking->target_username .
+					"[" . $user_instagram_id . "]\n";
 				$user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
 				$user_feed_items = $user_feed->getItems();
 
