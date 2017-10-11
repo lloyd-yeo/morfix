@@ -128,6 +128,7 @@ class InteractionCommentHelper
 
 				echo "[" . $ig_username . "] retrieving feed of " . $unengaged_liking->target_username .
 					"[" . $user_instagram_id . "]\n";
+
 				$user_feed = $instagram->timeline->getUserFeed($user_instagram_id);
 				$user_feed_items = $user_feed->getItems();
 
