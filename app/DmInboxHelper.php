@@ -49,7 +49,7 @@ class DmInboxHelper{
   }
 
   public static function manage($thread){
-    $threadArray = (array)$thread->objectData;
+    $threadArray = (array)$thread->objectData();
     foreach ($threadArray as $key => $value) {
       if($key == 'users' || $key == "inviter" || $key == "last_seen_at"){
         echo "\t $key \n";
