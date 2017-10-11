@@ -7,7 +7,7 @@ use App\InstagramProfile;
 
 class DmInboxHelper{
   public static function getInbox(Instagram $instagram){
-     $inbox = $instagram->direct->getInbox();
+     $response = $instagram->direct->getInbox();
      if(sizeof($response) > 0){
             $inbox = $response->inbox;
             $threads = $inbox->threads;
@@ -53,7 +53,7 @@ class DmInboxHelper{
 
   public static function displayIndexes($object){
       foreach ($object as $key => $value) {
-          echo "\t $key => ".json_encode($value)."\n";
+          echo "\t\t $key => ".json_encode($value)."\n";
       }
   }
 
