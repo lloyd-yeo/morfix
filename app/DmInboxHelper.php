@@ -15,8 +15,8 @@ class DmInboxHelper{
             foreach ($threads as $thread) {
                 $i++;
                 echo "\t Thread => $i\n";
-                $threadResponse = $instagram->direct->getThread($thread->thread_id);
-                DmInboxHelper::manage($threadResponse->thread);
+                $threadResponse = $instagram->direct->getThread($thread->getThreadId());
+                DmInboxHelper::manage($threadResponse->getThread());
             }
           return $response->getInbox();
          }
