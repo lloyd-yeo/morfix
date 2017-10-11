@@ -117,13 +117,11 @@ class InteractionComment extends Command {
             }
         } else if (NULL !== $this->argument("email")) {
             $this->info("Executing command for [" . $this->argument("email") . "]");
-
             $user = User::where("email", $this->argument("email"))->first();
             if ($user !== NULL) {
                 if ($user->tier > 1) {
                     $instagram_profiles = InstagramProfile::where('auto_comment', true)
                             ->where('email', $user->email)
-                            ->where('incorrect_pw', false)
                             ->get();
 
 	                foreach ($instagram_profiles as $ig_profile) {
