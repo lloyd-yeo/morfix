@@ -8,8 +8,8 @@ use App\InstagramProfile;
 class DmInboxHelper{
   public static function getInbox(Instagram $instagram){
      $response = $instagram->direct->getInbox();
-
-     if(isset($response['inbox'])){
+     $responseArray = (array)$response;
+     if(isset($responseArray['inbox'])){
         $inbox = $response->inbox;
         $threads = $inbox->threads;
         $i = 0;
