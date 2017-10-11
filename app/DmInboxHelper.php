@@ -17,7 +17,7 @@ public static function retrieve(Instagram $instagram){
           $i++;
           echo "\t Thread => $i\n";
           $threadResponse = $instagram->direct->getThread($thread->getThreadId());
-          DmInboxHelper::extractItems((array)$threadResponse->getThread());
+          DmInboxHelper::extract((array)$threadResponse->getThread());
       }
     return $response->getInbox();
    }
@@ -31,13 +31,21 @@ public static function retrieve(Instagram $instagram){
     return (array)$inbox->getThreads();
   }
 
+  public static function extract($thread){
+    DmInboxHelper::extractUsers($thread);
+    DmInboxHelper::extractItems($thread);
+  }
+
   public static function extractUsers($thread){
-    return (array)$thread->getUsers();
+    $users = (array)$thread->getUsers();
+    echo json_encode($users)."\n";
+    return $users;
   }
 
   public static function extractItems($thread){
-    echo json_encode($thread)."\n";
-    return (array)$thread->getItems();
+    $items = (array)$thread->getItems();
+    echo json_encode($items)."\n";
+    return $items;
   }
 
   public static function getThread(Instagram $instagram, $threadId){
