@@ -49,7 +49,7 @@ class DmInboxHelper{
   }
 
   public static function manage($thread){
-    $items = (object)$thread->getItems()
+    $items = (object)$thread->getItems();
     $items->printJson();
     // $threadArray = (array)$thread->objectData();
     // foreach ($threadArray as $key => $value) {
