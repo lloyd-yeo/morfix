@@ -8,10 +8,6 @@ use LazyJsonMapper\LazyJsonMapper;
 
 class DmInboxHelper extends LazyJsonMapper{
 
-   const JSON_PROPERTY_MAP = [
-        'items'         => 'item[]',
-  ];
-
   public static function retrieve(Instagram $instagram){
     try{
          $response = $instagram->direct->getInbox();
@@ -55,10 +51,8 @@ class DmInboxHelper extends LazyJsonMapper{
   }
 
   public static function manage($thread){
-    $items = $thread->getItems();
-    echo "\t\t Items\n";
-    $json = new DmInboxHelper($items);
-    $json->printJson();
+    $items = (array)$thread->getItems();
+    echo "\t\t Items\n".json_encode($items);
   }
 
   public static function getThread(Instagram $instagram, $threadId){
