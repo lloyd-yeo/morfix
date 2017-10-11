@@ -8,10 +8,12 @@ use App\InstagramProfile;
 class DmInboxHelper{
   public static function getInbox(Instagram $instagram){
      $response = $instagram->direct->getInbox();
+
      if(sizeof($response) > 0){
             $inbox = $response->inbox;
             $threads = $inbox->threads;
 
+            echo "\nHello";
             $i = 0;
             foreach ($threads as $thread) {
                 $i++;
