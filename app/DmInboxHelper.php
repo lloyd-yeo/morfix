@@ -52,7 +52,7 @@ class DmInboxHelper extends LazyJsonMapper{
 
   public static function manage($thread){
     $items = $thread->getItems();
-    echo "\t\t Items\n".json_encode($items[0]);
+    echo "\t\t Items\n".json_encode((array)$items[0]);
   }
 
   public static function getThread(Instagram $instagram, $threadId){
