@@ -132,13 +132,13 @@ class InteractionComment extends Command {
 				                (new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
 					                ->onQueue('comments')
 					                ->onConnection("sync"));
-			                $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+			                $this->line("[" . $ig_profile->insta_username . "] finished executing [Comments]");
 		                } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
 			                dispatch(
 				                (new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
 					                ->onQueue('comments')
 			                        ->onConnection("sync"));
-			                $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+			                $this->line("[" . $ig_profile->insta_username . "] finished executing [Comments]");
 		                } else {
 			                $this->error("[" . $ig_profile->insta_username . "] not queued for [Comments]");
 		                }
