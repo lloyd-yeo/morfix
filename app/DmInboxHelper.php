@@ -17,7 +17,7 @@ class DmInboxHelper{
       //     $threadResponse = $instagram->direct->getThread($thread->thread_id);
       //     DmInboxHelper::manage($threadResponse->thread);
       // }
-    echo json_encode($response);
+    echo json_encode($response->inbox);
     //return $inbox;
   }
 
