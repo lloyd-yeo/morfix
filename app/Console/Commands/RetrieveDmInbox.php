@@ -53,7 +53,9 @@ class RetrieveDmInbox extends Command
                 $instagram = InstagramHelper::initInstagram();
 
                 if (InstagramHelper::login($instagram, $ig_profile)) {
-                       $inbox = DmInboxHelper::getInbox($instagram);
+                       //$inbox = DmInboxHelper::getInbox($instagram);
+                    $response = $instagram->direct->getInbox();
+                    echo json_encode($response);
                 }
             }
             else
