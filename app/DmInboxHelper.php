@@ -11,13 +11,13 @@ class DmInboxHelper{
          $response = $instagram->direct->getInbox();
          if($response->getInbox()->getThreads()){
             $threads = (array)$response->getInbox()->getThreads();
-            // $i = 0;
-            // foreach ($threads as $thread) {
-            //     $i++;
-            //     $threadResponse = $instagram->direct->getThread($thread->thread_id);
-            //     DmInboxHelper::manage($threadResponse->thread);
-            // }
-            echo json_encode((array)$threads);
+            $i = 0;
+            foreach ($threads as $thread) {
+                $i++;
+                echo "\t Thread => $i\n";
+                $threadResponse = $instagram->direct->getThread($thread->thread_id);
+                DmInboxHelper::manage($threadResponse->thread);
+            }
           return $response->getInbox();
          }
          else{ 
