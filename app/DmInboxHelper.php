@@ -22,7 +22,7 @@ class DmInboxHelper{
           return $inbox;
          }
          else{ 
-          echo "\t Inbox is empty\n";
+          echo "\t Inbox is Empty.\n\n All Resuts => ".json_encode($responseArray);
           return null;
          }
     }catch (CheckpointRequiredException $ex) {
