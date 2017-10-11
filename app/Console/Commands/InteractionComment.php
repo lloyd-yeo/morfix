@@ -96,10 +96,14 @@ class InteractionComment extends Command {
                         if ($ig_profile->next_comment_time === NULL) {
                             $ig_profile->next_comment_time = \Carbon\Carbon::now();
                             $ig_profile->save();
-                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            dispatch(
+                            	(new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+		                            ->onQueue('comments'));
                             $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
                         } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
-                            dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                            dispatch(
+                            	(new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+		                            ->onQueue('comments'));
                             $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
                         } else {
                             $this->error("[" . $ig_profile->insta_username . "] not queued for [Comments]");
@@ -113,6 +117,7 @@ class InteractionComment extends Command {
             }
         } else if (NULL !== $this->argument("email")) {
             $this->info("Executing command for [" . $this->argument("email") . "]");
+
             $user = User::where("email", $this->argument("email"))->first();
             if ($user !== NULL) {
                 if ($user->tier > 1) {
@@ -121,7 +126,26 @@ class InteractionComment extends Command {
                             ->where('incorrect_pw', false)
                             ->get();
 
-                    $this->executeCommenting($instagram_profiles);
+	                foreach ($instagram_profiles as $ig_profile) {
+		                if ($ig_profile->next_comment_time === NULL) {
+			                $ig_profile->next_comment_time = \Carbon\Carbon::now();
+			                $ig_profile->save();
+			                dispatch(
+				                (new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+					                ->onQueue('comments')
+					                ->onConnection("sync"));
+			                $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+		                } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+			                dispatch(
+				                (new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+					                ->onQueue('comments')
+			                        ->onConnection("sync"));
+			                $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
+		                } else {
+			                $this->error("[" . $ig_profile->insta_username . "] not queued for [Comments]");
+		                }
+	                }
+
                 } else {
                     $this->info("[" . $user->email . "] is not on Premium tier or above.");
                 }
