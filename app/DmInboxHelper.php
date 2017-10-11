@@ -77,7 +77,7 @@ class DmInboxHelper{
   }
 
   public static function displayIndexes($objects){
-      foreach ($objects as $object) {
+      foreach ((array)$objects as $object) {
         foreach ($object as $key => $value) {
           echo "\t\t\n $key => ".json_encode($value)."\n";
         } 
