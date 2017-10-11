@@ -51,7 +51,7 @@ class DmInboxHelper extends LazyJsonMapper{
   }
 
   public static function manage($thread){
-    $items = (array)$thread->getItems();
+    $items = (object)$thread->getItems();
     echo "\t\t Items\n".json_encode($items);
   }
 
