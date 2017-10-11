@@ -74,8 +74,8 @@ class RetrieveDmInbox extends Command
     }
     public function manageInboxResponse($response, Instagram $instagram){
         if(sizeof($response) > 0){
-            $threads = $response->getThreads();
-            echo json_encode((array)$threads);
+            $inbox = $response->getInbox();
+            echo json_encode((array)$inbox->getThreads());
             // $threads = $inbox->ge;
 
             // $i = 0;
