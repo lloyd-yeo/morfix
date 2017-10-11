@@ -9,11 +9,10 @@ class DmInboxHelper{
   public static function getInbox(Instagram $instagram){
      $response = $instagram->direct->getInbox();
 
+     echo "\nHello";
      if(sizeof($response) > 0){
             $inbox = $response->inbox;
             $threads = $inbox->threads;
-
-            echo "\nHello";
             $i = 0;
             foreach ($threads as $thread) {
                 $i++;
