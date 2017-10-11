@@ -50,6 +50,7 @@ class DmInboxHelper{
 
   public static function manage($thread){
     $items = (array)$thread->getItems();
+    echo "\t\t Items\n";
     DmInboxHelper::displayIndexes($items);
     // $threadArray = (array)$thread->objectData();
     // foreach ($threadArray as $key => $value) {
@@ -75,9 +76,11 @@ class DmInboxHelper{
     return $threadResponse->thread;
   }
 
-  public static function displayIndexes($object){
-      foreach ($object as $key => $value) {
-          echo "\t\t $key => ".json_encode($value)."\n";
+  public static function displayIndexes($objects){
+      foreach ($objects as $object) {
+        foreach ($object as $key => $value) {
+          echo "\t\t\n $key => ".json_encode($value)."\n";
+        } 
       }
   }
 
