@@ -7,24 +7,46 @@ use App\InstagramProfile;
 
 class DmInboxHelper{
   public static function retrieve(Instagram $instagram){
-     $response = $instagram->direct->getInbox();
-     $responseArray = (array)$response;
-     if(isset($responseArray['inbox'])){
-        $inbox = $response->inbox;
-        $threads = $inbox->threads;
-        $i = 0;
-        foreach ($threads as $thread) {
-            $i++;
-            $threadResponse = $instagram->direct->getThread($thread->thread_id);
-            DmInboxHelper::manage($threadResponse->thread);
-        }
-      return $inbox;
-     }
-     else{ 
-      echo "\t Inbox is empty\n";
-      return null;
-     }
-      
+    try{
+         $response = $instagram->direct->getInbox();
+         $responseArray = (array)$response;
+         if(isset($responseArray['inbox'])){
+            $inbox = $response->inbox;
+            $threads = $inbox->threads;
+            $i = 0;
+            foreach ($threads as $thread) {
+                $i++;
+                $threadResponse = $instagram->direct->getThread($thread->thread_id);
+                DmInboxHelper::manage($threadResponse->thread);
+            }
+          return $inbox;
+         }
+         else{ 
+          echo "\t Inbox is empty\n";
+          return null;
+         }
+    }catch (CheckpointRequiredException $ex) {
+      DmInboxHelper::handleInstagramException($ex);
+      return false;
+    } catch (IncorrectPasswordException $ex) {
+      DmInboxHelper::handleInstagramException($ex);
+      return false;
+    } catch (EndpointException $ex) {
+      DmInboxHelper::handleInstagramException($ex);
+      return false;
+    } catch (NetworkException $ex) {
+      DmInboxHelper::handleInstagramException($ex);
+      return false;
+    } catch (AccountDisabledException $ex) {
+      DmInboxHelper::handleInstagramException($ex);
+      return false;
+    } catch (RequestException $ex) {
+      DmInboxHelper::handleInstagramException($ex);
+      return false;
+    } catch (\Exception $ex) {
+      DmInboxHelper::handleInstagramException($ex);
+      return false;
+    }
   }
 
   public static function manage($thread){
@@ -64,5 +86,9 @@ class DmInboxHelper{
 
   public static function extractUsers($thread){
     return $thread->users;
+  }
+
+  public static function handleInstagramException($ex){
+    echo "Error  => ".$ex->getMessage()."\n";
   }
 }
