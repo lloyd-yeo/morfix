@@ -9,15 +9,16 @@ class DmInboxHelper{
   public static function getInbox(Instagram $instagram){
      $response = $instagram->direct->getInbox();
 
-      $inbox = $response->inbox;
-      $threads = $inbox->threads;
-      $i = 0;
-      foreach ($threads as $thread) {
-          $i++;
-          $threadResponse = $instagram->direct->getThread($thread->thread_id);
-          DmInboxHelper::manage($threadResponse->thread);
-      }
-    return $inbox;
+      // $inbox = $response->inbox;
+      // $threads = $inbox->threads;
+      // $i = 0;
+      // foreach ($threads as $thread) {
+      //     $i++;
+      //     $threadResponse = $instagram->direct->getThread($thread->thread_id);
+      //     DmInboxHelper::manage($threadResponse->thread);
+      // }
+    echo json_encode($response);
+    //return $inbox;
   }
 
   public static function manage($thread){
