@@ -6,7 +6,7 @@ use App\InstagramHelper;
 use App\InstagramProfile;
 
 class DmInboxHelper{
-  public static function getInbox(Instagram $instagram){
+  public static function retrieve(Instagram $instagram){
      $response = $instagram->direct->getInbox();
      $responseArray = (array)$response;
      if(isset($responseArray['inbox'])){
