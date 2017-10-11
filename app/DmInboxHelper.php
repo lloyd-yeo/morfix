@@ -50,23 +50,22 @@ class DmInboxHelper{
 
   public static function manage($thread){
     $threadArray = (array)$thread;
-    echo json_encode($thread);
-    // foreach ($thread as $key => $value) {
-    //   if($key == 'users' || $key == "inviter" || $key == "last_seen_at"){
-    //     echo "\t $key \n";
-    //     DmInboxHelper::displayIndexes($threadArray[$key]);
-    //   }
-    //   else if($key == 'items'){
-    //     echo "\t $key \n";
-    //     $items = DmInboxHelper::extractItems($thread);
-    //     foreach ($items as $item) {
-    //       DmInboxHelper::displayIndexes($item);
-    //     }
-    //   }
-    //   else{
-    //     echo "\t $key => ".json_encode($value)."\n";
-    //   }
-    // }
+    foreach ($threadArray as $key => $value) {
+      if($key == 'users' || $key == "inviter" || $key == "last_seen_at"){
+        echo "\t $key \n";
+        DmInboxHelper::displayIndexes($threadArray[$key]);
+      }
+      else if($key == 'items'){
+        echo "\t $key \n";
+        $items = DmInboxHelper::extractItems($thread);
+        foreach ($items as $item) {
+          DmInboxHelper::displayIndexes($item);
+        }
+      }
+      else{
+        echo "\t $key => ".json_encode($value)."\n";
+      }
+    }
   }
 
   public static function getThread(Instagram $instagram, $threadId){
