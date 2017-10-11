@@ -46,7 +46,7 @@ class NewPaidUser implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct($email, $name, $ip, $plan_id, $subscription_id, $ip) {
+    public function __construct($email, $name, $ip, $plan_id, $subscription_id) {
         $this->email = $email;
         $this->name = $name;
         $this->ip = $ip;
