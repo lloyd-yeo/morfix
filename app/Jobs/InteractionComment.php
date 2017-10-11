@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use LazyJsonMapper\Exception\LazyUserOptionException;
 
 class InteractionComment implements ShouldQueue {
 
@@ -66,7 +67,7 @@ class InteractionComment implements ShouldQueue {
 
             try {
 	            InteractionCommentHelper::unengaged($ig_profile, $instagram);
-            } catch (\Exception $ex) {
+            } catch (LazyUserOptionException $ex) {
             	dump($ex);
             }
         }
