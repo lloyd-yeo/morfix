@@ -9,16 +9,16 @@ class DmInboxHelper{
   public static function retrieve(Instagram $instagram){
     try{
          $response = $instagram->direct->getInbox();
-         $responseArray = (array)$response;
-         if(isset($responseArray['threads'])){
-            $threads = $responseArray['threads'];
-            $i = 0;
-            foreach ($threads as $thread) {
-                $i++;
-                $threadResponse = $instagram->direct->getThread($thread->thread_id);
-                DmInboxHelper::manage($threadResponse->thread);
-            }
-          return $inbox;
+         if($response->getInbox()->getThreads()){
+            $threads = (array)$response->getInbox()->getThreads();
+            // $i = 0;
+            // foreach ($threads as $thread) {
+            //     $i++;
+            //     $threadResponse = $instagram->direct->getThread($thread->thread_id);
+            //     DmInboxHelper::manage($threadResponse->thread);
+            // }
+            echo json_encode((array)$threads);
+          return $response->getInbox();
          }
          else{ 
           echo "\t Inbox is Empty.\n\n All Resuts => ".json_encode($responseArray);
