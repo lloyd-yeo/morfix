@@ -4,8 +4,14 @@ namespace App;
 use InstagramAPI\Instagram as Instagram;
 use App\InstagramHelper;
 use App\InstagramProfile;
+use LazyJsonMapper\LazyJsonMapper;
 
-class DmInboxHelper{
+class DmInboxHelper extends LazyJsonMapper{
+
+   const JSON_PROPERTY_MAP = [
+        'items'         => 'item[]',
+  ];
+
   public static function retrieve(Instagram $instagram){
     try{
          $response = $instagram->direct->getInbox();
@@ -51,12 +57,13 @@ class DmInboxHelper{
   public static function manage($thread){
     $items = $thread->getItems();
     echo "\t\t Items\n";
-    $items->printJson();
+    $json = new DmInboxHelper(json_decode($items, true));
+    $json->printJson();
   }
 
   public static function getThread(Instagram $instagram, $threadId){
     $threadResponse = $instagram->direct->getThread($thread_id);
-    return $threadResponse->thread;
+    return $threadResponse->getThread();
   }
 
   public static function displayIndexes($objects){
@@ -66,14 +73,6 @@ class DmInboxHelper{
           echo "\t\t\t $key => ".json_encode($value)."\n";
         } 
       }
-  }
-
-  public static function extractItems($thread){
-    return $thread->items;
-  }
-
-  public static function extractUsers($thread){
-    return $thread->users;
   }
 
   public static function handleInstagramException($ex){
