@@ -10,9 +10,8 @@ class DmInboxHelper{
     try{
          $response = $instagram->direct->getInbox();
          $responseArray = (array)$response;
-         if(isset($responseArray['inbox'])){
-            $inbox = $response->inbox;
-            $threads = $inbox->threads;
+         if(isset($responseArray['threads'])){
+            $threads = $responseArray['threads'];
             $i = 0;
             foreach ($threads as $thread) {
                 $i++;
