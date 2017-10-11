@@ -74,16 +74,17 @@ class RetrieveDmInbox extends Command
     }
     public function manageInboxResponse($response, Instagram $instagram){
         if(sizeof($response) > 0){
-            $inbox = $response->inbox;
-            $threads = $inbox->threads;
+            $inbox = $response->getInbox();
+            echo json_encode($inbox);
+            // $threads = $inbox->ge;
 
-            $i = 0;
-            foreach ($threads as $thread) {
-                $i++;
-                $threadResponse = $instagram->direct->getThread($thread->thread_id);
-                //$this->manageThread($threadResponse->thread);   
-                $this->manageItems($threadResponse->thread);
-            }
+            // $i = 0;
+            // foreach ($threads as $thread) {
+            //     $i++;
+            //     $threadResponse = $instagram->direct->getThread($thread->thread_id);
+            //     //$this->manageThread($threadResponse->thread);   
+            //     $this->manageItems($threadResponse->thread);
+            // }
         }
         else{
             echo "Inbox is empty".PHP_EOL;

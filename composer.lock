@@ -1341,12 +1341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "5210fee95e1ade8f67c6adc0543c0e900de29f9f"
+                "reference": "bd262fe526b8ba8a8dcecef64679c098a6b12bfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/5210fee95e1ade8f67c6adc0543c0e900de29f9f",
-                "reference": "5210fee95e1ade8f67c6adc0543c0e900de29f9f",
+                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/bd262fe526b8ba8a8dcecef64679c098a6b12bfc",
+                "reference": "bd262fe526b8ba8a8dcecef64679c098a6b12bfc",
                 "shasum": ""
             },
             "require": {
@@ -1405,7 +1405,7 @@
                 "php",
                 "private"
             ],
-            "time": "2017-10-09 23:41:12"
+            "time": "2017-10-10T18:20:17+00:00"
         },
         {
             "name": "monolog/monolog",
