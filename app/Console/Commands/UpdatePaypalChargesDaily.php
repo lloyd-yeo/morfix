@@ -50,9 +50,11 @@ class UpdatePaypalChargesDaily extends Command {
         $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
         $this->apiContext->setConfig(config('paypal.settings'));
 
-        $users = PaypalAgreement::whereRaw('agreement_id IN (SELECT DISTINCT(agreement_id) FROM user_paypal_agreements)')
+        $users = PaypalAgreement::distinct()
                 ->orderBy('id', 'desc')
                 ->get();
+        //PaypalAgreement::whereRaw('agreement_id IN (SELECT DISTINCT(agreement_id) FROM user_paypal_agreements)')
+
         foreach ($users as $user) {
             $agreementId = $user->agreement_id;
 //                $agreementId = "I-EEL8GM4YVW3E";
@@ -67,7 +69,7 @@ class UpdatePaypalChargesDaily extends Command {
 
                     if ($result->status == "Created") {
                         if ($checktransactionid === NULL) {
-                            $this->CreateNewPaypalCharge($user, $result);
+                            $this->CreateNewPaypalCharge($user, $result, $agreementId);
                         }
                     }
                     if ($result->status == "Cancelled") {
@@ -75,7 +77,7 @@ class UpdatePaypalChargesDaily extends Command {
                                 ->where('status', $result->status)
                                 ->first();
                         if ($checkexist === NULL) {
-                            $this->CreateNewPaypalCharge($user, $result);
+                            $this->CreateNewPaypalCharge($user, $result, $agreementId);
                         }
                     }
                     if ($result->status == "Refunded") {
@@ -83,7 +85,7 @@ class UpdatePaypalChargesDaily extends Command {
                                 ->where('status', $result->status)
                                 ->first();
                         if ($checkexist === NULL) {
-                            $this->CreateNewPaypalCharge($user, $result);
+                            $this->CreateNewPaypalCharge($user, $result, $agreementId);
                         } else if ($checkexist !== NULL) {
                             $updatecharge = PaypalCharges::where('transaction_id', $result->transaction_id)
                                     ->where('status', "Completed")
@@ -95,7 +97,7 @@ class UpdatePaypalChargesDaily extends Command {
                                 ->where('status', $result->status)
                                 ->first();
                         if ($checkexist === NULL){
-                             $this->CreateNewPaypalCharge($user, $result);
+                             $this->CreateNewPaypalCharge($user, $result, $agreementId);
                         }
                     }
                 }
@@ -109,7 +111,7 @@ class UpdatePaypalChargesDaily extends Command {
         echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
     }
 
-    public function CreateNewPaypalCharge($user, $result) {
+    public function CreateNewPaypalCharge($user, $result, $agreementId) {
         $charge = new PaypalCharges;
         $charge->email = $user->email;
         $charge->agreement_id = $agreementId;
