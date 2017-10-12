@@ -51,7 +51,7 @@ public static function retrieve(Instagram $instagram){
 
   public static function extractIndexes($object){
     foreach ($object as $key => $value) {
-      echo "hello\n";
+      echo "\t\t$key\n";
     }
   }
 
