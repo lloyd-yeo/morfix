@@ -33,7 +33,7 @@ public static function retrieve(Instagram $instagram){
   }
 
   public static function extract($thread){
-    DmInboxHelper::extractUsers($thread);
+    DmInboxHelper::extractIndexes(DmInboxHelper::extractUsers($thread));
     DmInboxHelper::extractIndexes(DmInboxHelper::extractItems($thread));
   }
 
