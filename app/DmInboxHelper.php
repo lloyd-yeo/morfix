@@ -45,7 +45,7 @@ public static function retrieve(Instagram $instagram){
 
   public static function extractItems($thread){
     $items = $thread->getItems();
-    echo json_encode($items)."\n";
+    echo json_encode($items->text())."\n";
     return $items;
   }
 
