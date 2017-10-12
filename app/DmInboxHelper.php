@@ -18,7 +18,7 @@ public static function retrieve(Instagram $instagram){
           $i++;
           echo json_encode($thread)."\n\t Thread => $i\n";
           $threadResponse = $instagram->direct->getThread($thread->getThreadId());
-          //DmInboxHelper::extract((array)$threadResponse->getThread());
+          DmInboxHelper::extract($threadResponse->getThread());
       }
     return $response->getInbox();
    }
@@ -29,30 +29,29 @@ public static function retrieve(Instagram $instagram){
   }
 
   public static function extractThreads($inbox){
-    return (array)$inbox->getThreads();
+    return $inbox->getThreads();
   }
 
   public static function extract($thread){
-    echo json_encode($thread);
-    //DmInboxHelper::extractUsers($thread);
-    //DmInboxHelper::extractItems($thread);
+    DmInboxHelper::extractUsers($thread);
+    DmInboxHelper::extractItems($thread);
   }
 
   public static function extractUsers($thread){
-    $users = (array)$thread->getUsers();
+    $users = $thread->getUsers();
     echo json_encode($users)."\n";
     return $users;
   }
 
   public static function extractItems($thread){
-    $items = (array)$thread->getItems();
+    $items = $thread->getItems();
     echo json_encode($items)."\n";
     return $items;
   }
 
   public static function getThread(Instagram $instagram, $threadId){
     $threadResponse = $instagram->direct->getThread($thread_id);
-    return (array)$threadResponse->getThread();
+    return $threadResponse->getThread();
   }
 
   public static function handleInstagramException($ex){
