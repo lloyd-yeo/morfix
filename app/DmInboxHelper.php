@@ -13,11 +13,12 @@ public static function retrieve(Instagram $instagram){
    if($response->getInbox()->getThreads()){
       $threads = (array)$response->getInbox()->getThreads();
       $i = 0;
+
       foreach ($threads as $thread) {
           $i++;
-          echo "\t Thread => $i\n";
+          echo json_encode($thread)."\n\t Thread => $i\n";
           $threadResponse = $instagram->direct->getThread($thread->getThreadId());
-          DmInboxHelper::extract((array)$threadResponse->getThread());
+          //DmInboxHelper::extract((array)$threadResponse->getThread());
       }
     return $response->getInbox();
    }
