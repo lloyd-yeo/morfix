@@ -34,7 +34,7 @@ public static function retrieve(Instagram $instagram){
 
   public static function extract($thread){
     DmInboxHelper::extractUsers($thread);
-    DmInboxHelper::extractItems($thread);
+    DmInboxHelper::extractIndexes(DmInboxHelper::extractItems($thread));
   }
 
   public static function extractUsers($thread){
@@ -45,8 +45,14 @@ public static function retrieve(Instagram $instagram){
 
   public static function extractItems($thread){
     $items = $thread->getItems();
-    echo json_encode($items->text())."\n";
+    echo json_encode($items)."\n";
     return $items;
+  }
+
+  public static function extractIndexes($object){
+    foreach ($object as $key => $value) {
+      echo "hello\n";
+    }
   }
 
   public static function getThread(Instagram $instagram, $threadId){
