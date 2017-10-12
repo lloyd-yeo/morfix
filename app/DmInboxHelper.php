@@ -32,8 +32,9 @@ public static function retrieve(Instagram $instagram){
   }
 
   public static function extract($thread){
+    echo json_encode($thread);
     //DmInboxHelper::extractUsers($thread);
-    DmInboxHelper::extractItems($thread);
+    //DmInboxHelper::extractItems($thread);
   }
 
   public static function extractUsers($thread){
