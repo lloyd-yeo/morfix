@@ -115,14 +115,15 @@ class InteractionFollow extends Command {
 
             $this->line($user->user_id);
 
-            $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
-                            . 'AND user_id = ' . $user->user_id)->get();
+            $instagram_profiles = InstagramProfile::where('auto_follow', 1)
+	            ->orWhere('auto_unfollow', 1)
+	            ->where('user_id', $user->user_id)->get();
 
             //Queueing for Master & Slave without Email
             if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
-                    foreach ($instagram_profiles as $ig_profile) {
 
+                    foreach ($instagram_profiles as $ig_profile) {
                         if (!InstagramHelper::validForInteraction($ig_profile)) {
                             continue;
                         }
