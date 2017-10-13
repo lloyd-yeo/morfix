@@ -41,7 +41,7 @@ class InteractionFollow implements ShouldQueue
 	 *
 	 * @var int
 	 */
-	public $timeout = 480;
+	public $timeout = 80;
 
 	/**
 	 * Create a new job instance.

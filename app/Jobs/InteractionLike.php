@@ -49,7 +49,7 @@ class InteractionLike implements ShouldQueue
 	 *
 	 * @var int
 	 */
-	public $timeout = 360;
+	public $timeout = 80;
 
 	/**
 	 * The App\InstagramProfile to automate Likes for.
