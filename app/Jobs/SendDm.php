@@ -160,7 +160,6 @@ class SendDm implements ShouldQueue {
 
     private function handleInstagramException($ig_profile, $ex) {
         $ig_username = $ig_profile->insta_username;
-        dump($ex);
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
             $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
             $ig_profile->save();
@@ -168,20 +167,21 @@ class SendDm implements ShouldQueue {
             return;
         } else if ($ex instanceof \InstagramAPI\Exception\FeedbackRequiredException) {
             if ($ex->hasResponse()) {
-                $feedback_required_response = $ex->getResponse();
-                if (strpos($feedback_required_response->fullResponse->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
+	            $feedback_response = $ex->getResponse()->asArray();
+	            $feedback_msg = $feedback_response['feedback_message'];
+                if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
                     $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->save();
                     echo "\n[$ig_username] was blocked & has last_sent_dm shifted forward to " . \Carbon\Carbon::now()->addHours(6)->toDateTimeString() . "\n";
                     return;
-                } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
+                } else if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== false) {
                     $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
                     echo "\n[$ig_username] has invalid proxy & last_sent_dm shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     return;
-                } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
+                } else if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== false) {
                     $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->save();

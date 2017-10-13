@@ -380,8 +380,6 @@ class InteractionFollowHelper {
             echo "\n[$ig_username] has next_follow_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
             return;
         } else if ($ex instanceof FeedbackRequiredException) {
-	        $feedback_response = $ex->getResponse()->asArray();
-	        $feedback_msg = $feedback_response['feedback_message'];
             if ($ex->hasResponse()) {
 	            $feedback_response = $ex->getResponse()->asArray();
 	            $feedback_msg = $feedback_response['feedback_message'];
