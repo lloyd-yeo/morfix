@@ -575,7 +575,7 @@ class InteractionLike implements ShouldQueue
 	{
 		$this->like_quota = 0;
 		$ig_username = $ig_profile->insta_username;
-//		dump($ex);
+		dump($ex);
 
 		if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== FALSE) {
 			$ig_profile->next_like_time = Carbon::now()->addHours(2);
@@ -585,7 +585,7 @@ class InteractionLike implements ShouldQueue
 			return;
 		} else {
 			if ($ex instanceof FeedbackRequiredException) {
-				dump($ex->getResponse()->getObjectData());
+				dump($ex->getResponse());
 				if ($ex->hasResponse()) {
 //					dump($ex->getResponse()->_objectData);
 					$feedback_required_response = $ex->getResponse();
