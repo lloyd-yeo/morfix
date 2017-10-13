@@ -586,6 +586,7 @@ class InteractionLike implements ShouldQueue
 		} else {
 			if ($ex instanceof FeedbackRequiredException) {
 				dump($ex->getResponse()->asArray());
+				echo ("Exception as array\n\n");
 				if ($ex->hasResponse()) {
 //					dump($ex->getResponse()->_objectData);
 					$feedback_required_response = $ex->getResponse();
