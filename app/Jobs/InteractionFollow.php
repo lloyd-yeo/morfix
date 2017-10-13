@@ -2,29 +2,18 @@
 
 namespace App\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\DB;
-use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use InstagramAPI\InstagramException as InstagramException;
-use App\User;
-use App\InstagramProfile;
-use App\InstagramProfileFollowLog;
-use App\InstagramProfileTargetHashtag;
-use App\InstagramProfileTargetUsername;
-use App\Niche;
-use App\NicheTarget;
-use App\CreateInstagramProfileLog;
-use App\Proxy;
-use App\DmJob;
 use App\InstagramHelper;
+use App\InstagramProfileFollowLog;
 use App\InteractionFollowHelper;
+use App\Niche;
 use App\TargetHelper;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class InteractionFollow implements ShouldQueue
 {
@@ -150,13 +139,9 @@ class InteractionFollow implements ShouldQueue
 									}
 
 									$throttle_count++;
-									$valid_user = 0;
+									
 									$valid_user = InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow);
 
-									//                            if ($valid_user == 2) {
-									//                                echo "[" . $this->profile->insta_username . "] encountered an exception.\n";
-									//                                return;
-									//                            } else
 									if ($valid_user) {
 										$this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
 										if ($this->followed === 0) {
