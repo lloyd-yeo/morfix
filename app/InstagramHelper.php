@@ -84,6 +84,8 @@ class InstagramHelper {
             $ig_profile->checkpoint_required = 1;
             $ig_profile->save();
             $message = "ChallengeRequiredException\n";
+        } catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
+	        $flag = false;
         }
         if (!$flag && $debug == 1) {
             echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
