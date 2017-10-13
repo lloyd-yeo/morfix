@@ -243,7 +243,7 @@ class InteractionFollow implements ShouldQueue
 										echo "[" . $this->profile->insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
 										$hashtag_feed = InstagramHelper::getHashtagFeed($this->instagram, $target_hashtag);
 										if ($hashtag_feed !== NULL) {
-											foreach ($hashtag_feed->items as $item) {
+											foreach ($hashtag_feed->getItems() as $item) {
 												if ($throttle_limit < $throttle_count) {
 													return;
 												}
