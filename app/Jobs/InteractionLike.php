@@ -575,7 +575,7 @@ class InteractionLike implements ShouldQueue
 	{
 		$this->like_quota = 0;
 		$ig_username = $ig_profile->insta_username;
-//		dump($ex);
+		//		dump($ex);
 
 		if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== FALSE) {
 			$ig_profile->next_like_time = Carbon::now()->addHours(2);
@@ -585,12 +585,12 @@ class InteractionLike implements ShouldQueue
 			return;
 		} else {
 			if ($ex instanceof FeedbackRequiredException) {
-				dump($ex->getResponse()->asArray());
-				echo ("Exception as array\n\n");
+
+				echo("Exception as array\n\n");
 				if ($ex->hasResponse()) {
-//					dump($ex->getResponse()->_objectData);
-					$feedback_required_response = $ex->getResponse();
-					if (strpos($feedback_required_response->getHttpResponse()->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
+					$feedback_response = $ex->getResponse()->asArray();
+					$feedback_msg = $feedback_response['feedback_message'];
+					if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
 						$ig_profile->next_like_time = Carbon::now()->addHours(4);
 						$ig_profile->auto_like_ban = 1;
 						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(4);
@@ -599,7 +599,7 @@ class InteractionLike implements ShouldQueue
 
 						return;
 					} else {
-						if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== FALSE) {
+						if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== FALSE) {
 							$ig_profile->next_like_time = Carbon::now()->addHours(1);
 							$ig_profile->invalid_proxy = 1;
 							$ig_profile->save();
@@ -607,7 +607,7 @@ class InteractionLike implements ShouldQueue
 
 							return;
 						} else {
-							if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== FALSE) {
+							if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== FALSE) {
 								$ig_profile->next_like_time = Carbon::now()->addHours(4);
 								$ig_profile->auto_like_ban = 1;
 								$ig_profile->auto_like_ban_time = Carbon::now()->addHours(4);
