@@ -2,23 +2,16 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Database\Query\Builder;
-use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use InstagramAPI\InstagramException as InstagramException;
-use App\User;
+use App\InstagramHelper;
 use App\InstagramProfile;
 use App\InstagramProfileComment;
 use App\InstagramProfileCommentLog;
 use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
-use App\CreateInstagramProfileLog;
-use App\Proxy;
-use App\DmJob;
-use App\InstagramHelper;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class InteractionComment extends Command {
 
@@ -70,12 +63,12 @@ class InteractionComment extends Command {
 
                 foreach ($instagram_profiles as $ig_profile) {
                     if ($ig_profile->next_comment_time === NULL) {
-                        $ig_profile->next_comment_time = \Carbon\Carbon::now();
+                        $ig_profile->next_comment_time = Carbon::now();
                         $ig_profile->save();
-                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                        dispatch((new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
                         $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
-                    } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
-                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                    } else if (Carbon::now()->gte(new Carbon($ig_profile->next_comment_time))) {
+                        dispatch((new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
                         $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
                     } else {
                         $this->error("[" . $ig_profile->insta_username . "] not queued for [Comments]");
@@ -94,15 +87,15 @@ class InteractionComment extends Command {
 
                     foreach ($instagram_profiles as $ig_profile) {
                         if ($ig_profile->next_comment_time === NULL) {
-                            $ig_profile->next_comment_time = \Carbon\Carbon::now();
+                            $ig_profile->next_comment_time = Carbon::now();
                             $ig_profile->save();
                             dispatch(
-                            	(new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+                            	(new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))
 		                            ->onQueue('comments'));
                             $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
-                        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+                        } else if (Carbon::now()->gte(new Carbon($ig_profile->next_comment_time))) {
                             dispatch(
-                            	(new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+                            	(new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))
 		                            ->onQueue('comments'));
                             $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
                         } else {
@@ -126,16 +119,16 @@ class InteractionComment extends Command {
 
 	                foreach ($instagram_profiles as $ig_profile) {
 		                if ($ig_profile->next_comment_time === NULL) {
-			                $ig_profile->next_comment_time = \Carbon\Carbon::now();
+			                $ig_profile->next_comment_time = Carbon::now();
 			                $ig_profile->save();
 			                dispatch(
-				                (new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+				                (new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))
 					                ->onQueue('comments')
 					                ->onConnection("sync"));
 			                $this->line("[" . $ig_profile->insta_username . "] finished executing [Comments]");
-		                } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
+		                } else if (Carbon::now()->gte(new Carbon($ig_profile->next_comment_time))) {
 			                dispatch(
-				                (new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))
+				                (new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))
 					                ->onQueue('comments')
 			                        ->onConnection("sync"));
 			                $this->line("[" . $ig_profile->insta_username . "] finished executing [Comments]");
@@ -166,18 +159,18 @@ class InteractionComment extends Command {
                         continue;
                     }
                     
-                    if ($ig_profile->auto_comment_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->auto_comment_ban_time))) {
+                    if ($ig_profile->auto_comment_ban == 1 && !Carbon::now()->lt(new Carbon($ig_profile->auto_comment_ban_time))) {
                         $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
                         continue;
                     }
 
                     if ($ig_profile->next_comment_time === NULL) {
-                        $ig_profile->next_comment_time = \Carbon\Carbon::now();
+                        $ig_profile->next_comment_time = Carbon::now();
                         $ig_profile->save();
-                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                        dispatch((new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
                         $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
-                    } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_comment_time))) {
-                        dispatch((new \App\Jobs\InteractionComment(\App\InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
+                    } else if (Carbon::now()->gte(new Carbon($ig_profile->next_comment_time))) {
+                        dispatch((new \App\Jobs\InteractionComment(InstagramProfile::find($ig_profile->id)))->onQueue('comments'));
                         $this->line("[" . $ig_profile->insta_username . "] queued for [Comments]");
                     }
                 }
@@ -289,8 +282,8 @@ class InteractionComment extends Command {
 
                             if ($full_response->spam === true) {
                                 $ig_profile->auto_comment_ban = 1;
-                                $ig_profile->auto_comment_ban_time = \Carbon\Carbon::now()->addHours(6);
-                                $ig_profile->next_comment_time = \Carbon\Carbon::now()->addHours(6);
+                                $ig_profile->auto_comment_ban_time = Carbon::now()->addHours(6);
+                                $ig_profile->next_comment_time = Carbon::now()->addHours(6);
                                 if ($ig_profile->save()) {
                                     echo("[" . $ig_profile->username . "] commenting has been banned till " . $ig_profile->auto_comment_ban_time);
                                 }
@@ -388,7 +381,7 @@ class InteractionComment extends Command {
                             echo("[$ig_username] has commented on [" . $item->getItemUrl() . "]\n");
                         }
                         $commented = true;
-                        $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+                        $ig_profile->next_comment_time = Carbon::now()->addMinutes(rand(10, 12));
                         $ig_profile->auto_comment_ban = 0;
                         $ig_profile->auto_comment_ban_time = NULL;
                         $ig_profile->save();
@@ -469,7 +462,7 @@ class InteractionComment extends Command {
                     }
 
                     $commented = true;
-                    $ig_profile->next_comment_time = \Carbon\Carbon::now()->addMinutes(rand(10, 12));
+                    $ig_profile->next_comment_time = Carbon::now()->addMinutes(rand(10, 12));
                     $ig_profile->auto_comment_ban = 0;
                     $ig_profile->auto_comment_ban_time = NULL;
                     $ig_profile->save();

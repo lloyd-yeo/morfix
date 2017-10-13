@@ -44,11 +44,6 @@ class MigrateFollowLogs extends Command {
 
             foreach ($ig_profiles as $ig_profile) {
 
-//                $master_follow_logs = DB::connection('mysql_master')
-//                        ->table('user_insta_profile_follow_log')
-//                        ->where('insta_username', $ig_profile->insta_username)
-//                        ->get();
-
                 DB::connection('mysql_master')->table('user_insta_profile_follow_log')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->where('date_inserted', '>', '2017-08-31 10:06:20')->orderBy('date_inserted', 'desc')->chunk(100000, function ($master_follow_logs) {

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use DB;
 use Illuminate\Console\Command;
 
 class UpdateTrialActivation extends Command

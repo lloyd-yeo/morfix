@@ -60,7 +60,6 @@ class InteractionComment implements ShouldQueue {
         $instagram = InstagramHelper::initInstagram();
 
         if (InstagramHelper::login($instagram, $ig_profile)) {
-
             try {
 	            InteractionCommentHelper::unengaged($ig_profile, $instagram);
             } catch (LazyUserOptionException $ex) {
