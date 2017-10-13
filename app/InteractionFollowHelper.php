@@ -309,21 +309,22 @@ class InteractionFollowHelper {
             exit;
         } else if ($ex instanceof FeedbackRequiredException) {
             if ($ex->hasResponse()) {
-                $feedback_required_response = $ex->getResponse();
-                if (strpos($feedback_required_response->fullResponse->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
+	            $feedback_response = $ex->getResponse()->asArray();
+	            $feedback_msg = $feedback_response['feedback_message'];
+                if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
                     $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_unfollow_ban = 1;
                     $ig_profile->auto_unfollow_ban_time = Carbon::now()->addHours(4);
                     $ig_profile->save();
                     echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                     exit;
-                } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
+                } else if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== false) {
                     $ig_profile->next_follow_time = Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
                     echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     exit;
-                } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
+                } else if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== false) {
                     $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_unfollow_ban = 1;
                     $ig_profile->auto_unfollow_ban_time = Carbon::now()->addHours(4);
@@ -371,7 +372,6 @@ class InteractionFollowHelper {
     }
 
     public static function handleFollowInstagramException($ig_profile, $ex) {
-        dump($ex);
         echo "[" . $ig_profile->insta_username . "] handling exception...\n";
         $ig_username = $ig_profile->insta_username;
         if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== false) {
@@ -380,22 +380,25 @@ class InteractionFollowHelper {
             echo "\n[$ig_username] has next_follow_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
             return;
         } else if ($ex instanceof FeedbackRequiredException) {
+	        $feedback_response = $ex->getResponse()->asArray();
+	        $feedback_msg = $feedback_response['feedback_message'];
             if ($ex->hasResponse()) {
-                $feedback_required_response = $ex->getResponse();
-                if (strpos($feedback_required_response->fullResponse->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
+	            $feedback_response = $ex->getResponse()->asArray();
+	            $feedback_msg = $feedback_response['feedback_message'];
+                if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== false) {
                     $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_follow_ban = 1;
                     $ig_profile->auto_follow_ban_time = Carbon::now()->addHours(4);
                     $ig_profile->save();
                     echo "\n[$ig_username] was blocked & has next_follow_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
                     return;
-                } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like your profile contains a link that is not allowed') !== false) {
+                } else if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== false) {
                     $ig_profile->next_follow_time = Carbon::now()->addHours(1);
                     $ig_profile->invalid_proxy = 1;
                     $ig_profile->save();
                     echo "\n[$ig_username] has invalid proxy & next_follow_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     return;
-                } else if (strpos($feedback_required_response->fullResponse->feedback_message, 'It looks like you were misusing this feature by going too fast') !== false) {
+                } else if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== false) {
                     $ig_profile->next_follow_time = Carbon::now()->addHours(4);
                     $ig_profile->auto_follow_ban = 1;
                     $ig_profile->auto_follow_ban_time = Carbon::now()->addHours(4);
