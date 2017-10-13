@@ -578,7 +578,7 @@ class InteractionLike implements ShouldQueue
 		//		dump($ex);
 
 		if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== FALSE) {
-			$ig_profile->next_like_time = Carbon::now()->addHours(2);
+			$ig_profile->next_like_time = Carbon::now()->addMinutes(15);
 			$ig_profile->save();
 			echo "\n[$ig_username] has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
 
@@ -589,16 +589,16 @@ class InteractionLike implements ShouldQueue
 					$feedback_response = $ex->getResponse()->asArray();
 					$feedback_msg = $feedback_response['feedback_message'];
 					if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
-						$ig_profile->next_like_time = Carbon::now()->addHours(4);
+						$ig_profile->next_like_time = Carbon::now()->addHours(2);
 						$ig_profile->auto_like_ban = 1;
-						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(4);
+						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 						$ig_profile->save();
 						echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
 
 						return;
 					} else {
 						if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== FALSE) {
-							$ig_profile->next_like_time = Carbon::now()->addHours(1);
+							$ig_profile->next_like_time = Carbon::now()->addMinutes(15);
 							$ig_profile->invalid_proxy = 1;
 							$ig_profile->save();
 							echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
@@ -606,9 +606,9 @@ class InteractionLike implements ShouldQueue
 							return;
 						} else {
 							if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== FALSE) {
-								$ig_profile->next_like_time = Carbon::now()->addHours(4);
+								$ig_profile->next_like_time = Carbon::now()->addHours(2);
 								$ig_profile->auto_like_ban = 1;
-								$ig_profile->auto_like_ban_time = Carbon::now()->addHours(4);
+								$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 								$ig_profile->save();
 								echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
 
