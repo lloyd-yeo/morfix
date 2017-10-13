@@ -585,9 +585,9 @@ class InteractionLike implements ShouldQueue
 			return;
 		} else {
 			if ($ex instanceof FeedbackRequiredException) {
-
+				dump($ex->getResponse());
 				if ($ex->hasResponse()) {
-					dump($ex->getResponse()->_objectData);
+//					dump($ex->getResponse()->_objectData);
 					$feedback_required_response = $ex->getResponse();
 					if (strpos($feedback_required_response->getHttpResponse()->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
 						$ig_profile->next_like_time = Carbon::now()->addHours(4);
