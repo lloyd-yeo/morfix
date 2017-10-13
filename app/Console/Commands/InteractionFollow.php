@@ -124,6 +124,7 @@ class InteractionFollow extends Command {
                 if ($user->tier > 1 || $user->trial_activation == 1) {
 
                     foreach ($instagram_profiles as $ig_profile) {
+                    	$this->line($ig_profile->insta_username . " " . $ig_profile->insta_pw);
                         if (!InstagramHelper::validForInteraction($ig_profile)) {
                             continue;
                         }
