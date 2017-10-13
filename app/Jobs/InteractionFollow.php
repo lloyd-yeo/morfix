@@ -248,7 +248,7 @@ class InteractionFollow implements ShouldQueue
 													return;
 												}
 												$throttle_count++;
-												$user_to_follow = $item->user;
+												$user_to_follow = $item->getUser();
 												if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
 													$this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
 													if ($this->followed === 0) {
