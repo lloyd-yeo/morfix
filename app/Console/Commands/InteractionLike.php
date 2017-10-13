@@ -170,9 +170,14 @@ class InteractionLike extends Command
 						dispatch($job);
 						$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
 					} else {
-						if (Carbon::now()->lt(Carbon::parse($ig_profile->next_like_time))) {
-							$this->line("[" . $ig_profile->insta_username . "] unable to queue because of next_like_time [Likes]");
-						}
+						$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+						$job->onQueue("likes");
+						$job->onConnection('sync');
+						dispatch($job);
+						$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
+//						if (Carbon::now()->lt(Carbon::parse($ig_profile->next_like_time))) {
+//							$this->line("[" . $ig_profile->insta_username . "] unable to queue because of next_like_time [Likes]");
+//						}
 					}
 				}
 			}
