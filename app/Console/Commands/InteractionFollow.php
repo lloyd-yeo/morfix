@@ -89,16 +89,6 @@ class InteractionFollow extends Command
 	 */
 	public function handle()
 	{
-
-		/*
-		  - Get users if email argument is not Null
-		  - Get users if email argument is Null in whereRaw
-		  - Loop Users
-		  - get instagram_profiles
-		  - if email argument is null & tier is 1 and activation is 1
-		  - dispatch InteractionFollow Job
-		  - else, call handle again(Recursion)
-		 */
 		$users = NULL;
 
 		if ($this->argument("email") == "slave") {
@@ -120,9 +110,11 @@ class InteractionFollow extends Command
 
 			$this->line($user->user_id);
 
-			$instagram_profiles = InstagramProfile::where('auto_follow', 1)
-				->orWhere('auto_unfollow', 1)
-				->where('user_id', $user->user_id)->get();
+			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)
+				->where(function ($query) {
+					$query->where('auto_follow', 1)
+						->orWhere('auto_unfollow', 1);
+				})->get();
 
 			//Queueing for Master & Slave without Email
 			if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
