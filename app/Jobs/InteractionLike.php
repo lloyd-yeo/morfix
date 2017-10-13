@@ -25,7 +25,7 @@ use InstagramAPI\Exception\IncorrectPasswordException as IncorrectPasswordExcept
 use InstagramAPI\Exception\InstagramException as InstagramException;
 use InstagramAPI\Exception\NetworkException as NetworkException;
 use InstagramAPI\Exception\ThrottledException as ThrottledException;
-use InstagramAPI\Instagram;
+use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\Response\Model\Item as InstagramItem;
 use InstagramAPI\Response\Model\User as InstagramUser;
 
@@ -576,6 +576,7 @@ class InteractionLike implements ShouldQueue
 		$this->like_quota = 0;
 		$ig_username = $ig_profile->insta_username;
 		dump($ex);
+
 		if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== FALSE) {
 			$ig_profile->next_like_time = Carbon::now()->addHours(2);
 			$ig_profile->save();
@@ -584,9 +585,11 @@ class InteractionLike implements ShouldQueue
 			return;
 		} else {
 			if ($ex instanceof FeedbackRequiredException) {
+
 				if ($ex->hasResponse()) {
+					dump($ex->getResponse()->_objectData);
 					$feedback_required_response = $ex->getResponse();
-					if (strpos($feedback_required_response->fullResponse->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
+					if (strpos($feedback_required_response->getHttpResponse()->feedback_message, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
 						$ig_profile->next_like_time = Carbon::now()->addHours(4);
 						$ig_profile->auto_like_ban = 1;
 						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(4);
