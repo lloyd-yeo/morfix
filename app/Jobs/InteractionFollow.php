@@ -139,7 +139,7 @@ class InteractionFollow implements ShouldQueue
 									}
 
 									$throttle_count++;
-									
+
 									$valid_user = InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow);
 
 									if ($valid_user) {
@@ -170,12 +170,12 @@ class InteractionFollow implements ShouldQueue
 									echo "[" . $this->profile->insta_username . "] using hashtag: " . $target_hashtag->hashtag . "\n";
 									$hashtag_feed = InstagramHelper::getHashtagFeed($this->instagram, $target_hashtag);
 									if ($hashtag_feed !== NULL) {
-										foreach ($hashtag_feed->items as $item) {
+										foreach ($hashtag_feed->getItems() as $item) {
 											if ($throttle_limit < $throttle_count) {
 												return;
 											}
 											$throttle_count++;
-											$user_to_follow = $item->user;
+											$user_to_follow = $item->getUser();
 											if (InteractionFollowHelper::isProfileValidForFollow($this->instagram, $this->profile, $user_to_follow)) {
 												$this->followed = InteractionFollowHelper::follow($this->instagram, $this->profile, $user_to_follow);
 												if ($this->followed === 0) {
