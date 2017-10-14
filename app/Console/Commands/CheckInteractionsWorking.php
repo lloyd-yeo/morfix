@@ -57,12 +57,12 @@ class CheckInteractionsWorking extends Command
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
-
+                $tier = $user->tier;
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
-                    $this->checkIgProfile($ig_profile);
+                    $this->checkIgProfile($ig_profile, $tier);
                 }
             }
             $time_end = microtime(true);
@@ -78,11 +78,12 @@ class CheckInteractionsWorking extends Command
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
+                $tier = $user->tier;
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
-                    $this->checkIgProfile($ig_profile);
+                    $this->checkIgProfile($ig_profile, $tier);
                 }
             }
             $time_end = microtime(true);
@@ -104,9 +105,9 @@ class CheckInteractionsWorking extends Command
 
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
-
+                $tier = $user->tier;
                 foreach ($instagram_profiles as $ig_profile) {
-                    $this->checkIgProfile($ig_profile);
+                    $this->checkIgProfile($ig_profile, $tier);
                 }
             }
 
@@ -116,7 +117,7 @@ class CheckInteractionsWorking extends Command
         }
     }
 
-    public function checkIgProfile($ig_profile)
+    public function checkIgProfile($ig_profile, $tier)
     {
 
         $from = Carbon::now()->subHours(3)->toDateTimeString();
@@ -199,10 +200,11 @@ class CheckInteractionsWorking extends Command
 
         if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
             $ig_profile->auto_interactions_working = 0;
-            if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0) {
+            if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0 && $tier > 1) {
                 $profile = new UserInteractionFailed;
                 $profile->email = $ig_profile->email;
                 $profile->insta_username = $ig_profile->insta_username;
+                $profile->tier = $tier;
                 $profile->save();
 
             }
