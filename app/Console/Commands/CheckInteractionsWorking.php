@@ -53,8 +53,7 @@ class CheckInteractionsWorking extends Command
         if ($this->argument("email") == "slave") {
 
             $users = User::all();
-            $count = 0;
-
+            $updatedcount = 0;
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
@@ -63,7 +62,7 @@ class CheckInteractionsWorking extends Command
 
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier, $count);
+                    $this->checkIgProfile($ig_profile, $tier, $updatedcount);
                 }
             }
             $time_end = microtime(true);
@@ -74,8 +73,9 @@ class CheckInteractionsWorking extends Command
             $users = User::where('email', $this->argument("email"))
                 ->orderBy('user_id', 'desc')
                 ->get();
+            $updatedcount = 0;
 
-            $count = 0;
+
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
@@ -85,7 +85,7 @@ class CheckInteractionsWorking extends Command
 
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier, $count);
+                    $this->checkIgProfile($ig_profile, $tier, $updatedcount);
                 }
             }
             $time_end = microtime(true);
@@ -101,7 +101,7 @@ class CheckInteractionsWorking extends Command
                 ->get();
 
             $count = 0;
-
+            $updatedcount = 0;
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
@@ -110,7 +110,8 @@ class CheckInteractionsWorking extends Command
                     ->get();
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier, $count);
+                    $this->checkIgProfile($ig_profile, $tier, $updatedcount);
+                    $count += $updatedcount;
                 }
             }
             if($count >= 1){
@@ -123,7 +124,7 @@ class CheckInteractionsWorking extends Command
         }
     }
 
-    public function checkIgProfile($ig_profile, $tier, $count)
+    public function checkIgProfile($ig_profile, $tier, $updatedcount)
     {
 
         $from = Carbon::now()->subHours(3)->toDateTimeString();
@@ -214,7 +215,7 @@ class CheckInteractionsWorking extends Command
                     $profile->insta_username = $ig_profile->insta_username;
                     $profile->tier = $tier;
                     $profile->save();
-                    $count += 1;
+                    $updatedcount = 1;
                 }
             }
         } else if ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
@@ -234,7 +235,7 @@ class CheckInteractionsWorking extends Command
                 'auto_comment_working' => $ig_profile->auto_comment_working,
                 'auto_follow_working' => $ig_profile->auto_follow_working,
                 'auto_interactions_working' => $ig_profile->auto_interactions_working]);
-        return $count;
+        return $updatedcount;
     }
 
 }
