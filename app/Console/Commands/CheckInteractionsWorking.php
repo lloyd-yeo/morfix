@@ -91,7 +91,8 @@ class CheckInteractionsWorking extends Command
         } else {
             $time_start = microtime(true);
 
-            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile) AND partition = 0')
+            $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
+                ->where('partition',0)
                 ->orderBy('user_id', 'desc')
                 ->take(5)
                 ->get();

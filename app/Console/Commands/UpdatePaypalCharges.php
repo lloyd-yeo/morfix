@@ -53,6 +53,7 @@ class UpdatePaypalCharges extends Command {
         $users = PaypalAgreement::whereRaw('agreement_id IN (SELECT DISTINCT(agreement_id) FROM user_paypal_agreements)')
                 ->orderBy('id', 'desc')
                 ->get();
+
         foreach ($users as $user) {
             $agreementId = $user->agreement_id;
 //                $agreementId = "I-EEL8GM4YVW3E";
