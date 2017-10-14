@@ -53,6 +53,7 @@ class CheckInteractionsWorking extends Command
         if ($this->argument("email") == "slave") {
 
             $users = User::all();
+            $count = 0;
 
             foreach ($users as $user) {
 
@@ -61,9 +62,8 @@ class CheckInteractionsWorking extends Command
                     ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
-
                     $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier);
+                    $this->checkIgProfile($ig_profile, $tier, $count);
                 }
             }
             $time_end = microtime(true);
@@ -75,6 +75,7 @@ class CheckInteractionsWorking extends Command
                 ->orderBy('user_id', 'desc')
                 ->get();
 
+            $count = 0;
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
@@ -83,9 +84,8 @@ class CheckInteractionsWorking extends Command
                     ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
-
                     $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier);
+                    $this->checkIgProfile($ig_profile, $tier, $count);
                 }
             }
             $time_end = microtime(true);
@@ -100,6 +100,7 @@ class CheckInteractionsWorking extends Command
                 ->take(50)
                 ->get();
 
+            $count = 0;
 
             foreach ($users as $user) {
 
@@ -109,17 +110,20 @@ class CheckInteractionsWorking extends Command
                     ->get();
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier);
+                    $this->checkIgProfile($ig_profile, $tier, $count);
                 }
             }
-
+            if($count >= 1){
+                //notify how many updated
+                echo $count . 'profile are not working';
+            }
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
             echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
         }
     }
 
-    public function checkIgProfile($ig_profile, $tier)
+    public function checkIgProfile($ig_profile, $tier, $count)
     {
 
         $from = Carbon::now()->subHours(3)->toDateTimeString();
@@ -203,12 +207,15 @@ class CheckInteractionsWorking extends Command
         if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
             $ig_profile->auto_interactions_working = 0;
             if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0 && $tier > 1) {
-                $profile = new UserInteractionFailed;
-                $profile->email = $ig_profile->email;
-                $profile->insta_username = $ig_profile->insta_username;
-                $profile->tier = $tier;
-                $profile->save();
-
+                $check_exist = UserInteractionFailed::where('email',$ig_profile->email)->first();
+                if ($check_exist === NULL) {
+                    $profile = new UserInteractionFailed;
+                    $profile->email = $ig_profile->email;
+                    $profile->insta_username = $ig_profile->insta_username;
+                    $profile->tier = $tier;
+                    $profile->save();
+                    $count += 1;
+                }
             }
         } else if ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
             $ig_profile->auto_interactions_working = 1;
@@ -227,6 +234,7 @@ class CheckInteractionsWorking extends Command
                 'auto_comment_working' => $ig_profile->auto_comment_working,
                 'auto_follow_working' => $ig_profile->auto_follow_working,
                 'auto_interactions_working' => $ig_profile->auto_interactions_working]);
+        return $count;
     }
 
 }
