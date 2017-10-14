@@ -231,71 +231,97 @@ class InteractionCommentHelper
 	public static function handleInstagramException($ig_profile, $ex, $engaged_user)
 	{
 		$ig_username = $ig_profile->insta_username;
-		if ($ex instanceof CheckpointRequiredException) {
-			echo("checkpt1 " . $ex->getMessage() . "\n");
-			$ig_profile->checkpoint_required = 1;
-			$ig_profile->save();
-		} else {
-			if ($ex instanceof IncorrectPasswordException) {
-				echo("incorrectpw1 " . $ex->getMessage() . "\n");
-				$ig_profile->incorrect_pw = 1;
-				$ig_profile->save();
-			} else {
-				if ($ex instanceof EndpointException) {
 
-					if ($ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found.") {
-						$comment_log = new InstagramProfileCommentLog;
-						$comment_log->insta_username = $ig_username;
-						$comment_log->target_username = $engaged_user;
-						$comment_log->save();
+		if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== FALSE) {
+			$ig_profile->next_comment_time = Carbon::now()->addMinutes(15);
+			$ig_profile->save();
+			echo "\n[$ig_username] has next_comment_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+
+			return;
+		} else {
+			if ($ex instanceof FeedbackRequiredException) {
+				if ($ex->hasResponse()) {
+					$feedback_response = $ex->getResponse()->asArray();
+					$feedback_msg = $feedback_response['feedback_message'];
+					if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
+						$ig_profile->next_comment_time = Carbon::now()->addMinutes(30);
+						$ig_profile->auto_comment_ban = 1;
+						$ig_profile->auto_comment_ban_time = Carbon::now()->addMinutes(30);
+						$ig_profile->save();
+						echo "\n[$ig_username] was blocked & has next_comment_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+
+						return;
 					} else {
-						if ($ex->getMessage() === "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
-							$comment_log = new InstagramProfileCommentLog;
-							$comment_log->insta_username = $ig_username;
-							$comment_log->target_username = $engaged_user;
-							$comment_log->save();
+						if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== FALSE) {
+							$ig_profile->next_comment_time = Carbon::now()->addMinutes(15);
+							$ig_profile->invalid_proxy = 1;
+							$ig_profile->save();
+							echo "\n[$ig_username] has invalid proxy & next_comment_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+
+							return;
+						} else {
+							if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== FALSE) {
+								$ig_profile->next_comment_time = Carbon::now()->addMinutes(30);
+								$ig_profile->auto_comment_ban = 1;
+								$ig_profile->auto_comment_ban_time = Carbon::now()->addMinutes(30);
+								$ig_profile->save();
+								echo "\n[$ig_username] is going too fast & next_comment_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+
+								return;
+							}
 						}
 					}
-
-					echo("endpt1 " . $ex->getMessage() . "\n");
+				}
+				$ig_profile->error_msg = $ex->getMessage();
+			} else {
+				if ($ex instanceof CheckpointRequiredException) {
+					$ig_profile->checkpoint_required = 1;
+					$ig_profile->error_msg = $ex->getMessage();
 				} else {
 					if ($ex instanceof NetworkException) {
 
-						echo("network1 " . $ex->getMessage() . "\n");
 					} else {
-						if ($ex instanceof AccountDisabledException) {
+						if ($ex instanceof EndpointException) {
 
-							echo("acctdisabled1 " . $ex->getMessage() . "\n");
+							if ($ex->getMessage() === "InstagramAPI\Response\UserInfoResponse: User not found." ||
+								$ex->getMessage() === "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
+								$comment_log = new InstagramProfileCommentLog;
+								$comment_log->insta_username = $ig_username;
+								$comment_log->target_username = $engaged_user;
+								$comment_log->save();
+							}
 
-							$ig_profile->account_disabled = 1;
-							$ig_profile->save();
 						} else {
-							if ($ex instanceof RequestException) {
-								if ($ex->getMessage() === "InstagramAPI\Response\CommentResponse: Feedback required.") {
-									if ($ex->hasResponse()) {
-										$full_response = $ex->getResponse()->fullResponse;
-
-										if ($full_response->spam === TRUE) {
-											$ig_profile->auto_comment_ban = 1;
-											$ig_profile->auto_comment_ban_time = \Carbon\Carbon::now()->addHours(6);
-											$ig_profile->next_comment_time = \Carbon\Carbon::now()->addHours(6);
-											if ($ig_profile->save()) {
-												echo("[" . $ig_profile->username . "] commenting has been banned till " . $ig_profile->auto_comment_ban_time);
-											}
-										}
-									}
+							if ($ex instanceof IncorrectPasswordException) {
+								$ig_profile->incorrect_pw = 1;
+							} else {
+								if ($ex instanceof AccountDisabledException) {
+									$ig_profile->account_disabled = 1;
 								} else {
-									echo("[ENDING] Request Exception: " . $ex->getMessage() . "\n");
-									var_dump($ex->getResponse());
+									if ($ex instanceof ThrottledException) {
+										$ig_profile->next_comment_time = Carbon::now()->addMinutes(30);
+										$ig_profile->auto_comment_ban = 1;
+										$ig_profile->auto_comment_ban_time = Carbon::now()->addMinutes(30);
+										$ig_profile->save();
+										echo "\n[$ig_username] got throttled & next_comment_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+
+										return;
+									}
 								}
-								$ig_profile->error_msg = $ex->getMessage();
-								$ig_profile->save();
 							}
 						}
 					}
 				}
 			}
 		}
+
+		if ($ex->hasResponse()) {
+			dump($ex->getResponse());
+		} else {
+			echo("\nThis exception has no response.\n");
+		}
+
+		$ig_profile->save();
 	}
 
 }
