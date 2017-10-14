@@ -97,7 +97,7 @@ class CheckInteractionsWorking extends Command
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                 ->where('partition', 0)
                 ->orderBy('user_id', 'desc')
-                ->take(5)
+                ->take(50)
                 ->get();
 
 
