@@ -57,11 +57,12 @@ class CheckInteractionsWorking extends Command
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
-                $tier = $user->tier;
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
+
+                    $tier = $user->tier;
                     $this->checkIgProfile($ig_profile, $tier);
                 }
             }
@@ -78,11 +79,12 @@ class CheckInteractionsWorking extends Command
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
-                $tier = $user->tier;
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
+
+                    $tier = $user->tier;
                     $this->checkIgProfile($ig_profile, $tier);
                 }
             }
@@ -93,7 +95,7 @@ class CheckInteractionsWorking extends Command
             $time_start = microtime(true);
 
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
-                ->where('partition',0)
+                ->where('partition', 0)
                 ->orderBy('user_id', 'desc')
                 ->take(5)
                 ->get();
@@ -105,8 +107,8 @@ class CheckInteractionsWorking extends Command
 
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
-                $tier = $user->tier;
                 foreach ($instagram_profiles as $ig_profile) {
+                    $tier = $user->tier;
                     $this->checkIgProfile($ig_profile, $tier);
                 }
             }
@@ -210,8 +212,8 @@ class CheckInteractionsWorking extends Command
             }
         } else if ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
             $ig_profile->auto_interactions_working = 1;
-            $check = UserInteractionFailed::where('insta_username',$ig_profile->insta_username)->first();
-            if ($check !== NULL){
+            $check = UserInteractionFailed::where('insta_username', $ig_profile->insta_username)->first();
+            if ($check !== NULL) {
                 $check->destroy();
             }
 
