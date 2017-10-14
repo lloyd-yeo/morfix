@@ -202,7 +202,7 @@ class CheckInteractionsWorking extends Command
             if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0) {
                 $profile = new UserInteractionFailed;
                 $profile->email = $ig_profile->email;
-                $profile->insta_username = $ig_profile->user_insta_profile;
+                $profile->insta_username = $ig_profile->insta_username;
                 $profile->save();
 
             }
