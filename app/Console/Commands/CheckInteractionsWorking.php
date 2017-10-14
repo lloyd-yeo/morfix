@@ -110,8 +110,8 @@ class CheckInteractionsWorking extends Command
                     ->get();
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier, $updatedcount);
-                    $count += $updatedcount;
+                    $count = $count + $this->checkIgProfile($ig_profile, $tier, $updatedcount);
+                    
                 }
             }
             if($count >= 1){
@@ -220,6 +220,7 @@ class CheckInteractionsWorking extends Command
             }
         } else if ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
             $ig_profile->auto_interactions_working = 1;
+            $updatedcount = 0;
             $check = UserInteractionFailed::where('insta_username', $ig_profile->insta_username)->first();
             if ($check !== NULL) {
                 $check->destroy();
