@@ -117,14 +117,15 @@ class CheckInteractionsWorking extends Command
             if($count >= 1){
                 //notify how many updated
                 $from = Carbon::now()->subMinute(15)->toDateTimeString();
-                $failed_profiles = UserInteractionFailed::orderby('id','desc')
+                $failed_profiles = UserInteractionFailed::where('timestamp', '>', $from)
+                    ->orderby('id','desc')
                     ->take($count)
                     ->get();
 
                 event(new UserInteractionsFailed($failed_profiles));
                 echo '$count =:' . $count . ' and UserInteractionsFailed event called' . "\n";
-                dump ($failed_profiles);
-            }
+                dump ($from);
+
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
             echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
@@ -221,7 +222,7 @@ class CheckInteractionsWorking extends Command
                     $profile->email = $ig_profile->email;
                     $profile->insta_username = $ig_profile->insta_username;
                     $profile->tier = $tier;
-                    $profile->timestamp = Carbon::now()->toDateString();
+                    $profile->timestamp = Carbon::now()->toDateTimeString();
                     $profile->save();
                     $updatedcount = 1;
                 }
