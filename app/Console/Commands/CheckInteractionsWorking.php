@@ -117,7 +117,7 @@ class CheckInteractionsWorking extends Command
             if($count >= 1){
                 //notify how many updated
                 event(new UserInteractionsFailed($count));
-                //echo $count . ' profile are not working';
+                echo '$count =:' . $count . ' and UserInteractionsFailed event called';
             }
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
