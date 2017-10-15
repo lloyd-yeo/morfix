@@ -5,6 +5,8 @@ namespace App\Listeners;
 use App\Events\UserInteractionsFailed;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\UserInteractionFailed;
+use Carbon\Carbon;
 
 class LogInteractionsFailed
 {
@@ -26,6 +28,16 @@ class LogInteractionsFailed
      */
     public function handle(UserInteractionsFailed $event)
     {
-        echo $event->ig_profile->email . 'not working';
+        $from = Carbon::now()->subMinute(15)->toDateTimeString();
+        $to = Carbon::now()->toDateTimeString();
+        $notifyusers = UserInteractionFailed::whereBetween('timestamp', array($from, $to))
+                                        ->take($event->count)
+                                        ->get();
+        if ($notifyusers !== null){
+            foreach($notifyusers as $notifyuser){
+                $notifyuser->notified = 1;
+            }
+        }
+
     }
 }

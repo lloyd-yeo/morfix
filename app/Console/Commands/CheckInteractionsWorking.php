@@ -10,7 +10,7 @@ use App\InstagramProfileLikeLog;
 use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Events\UserInteractionsFailed;
+use App\Events\UserInteractionsFailed;
 use App\UserInteractionFailed;
 
 class CheckInteractionsWorking extends Command
@@ -111,12 +111,13 @@ class CheckInteractionsWorking extends Command
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
                     $count = $count + $this->checkIgProfile($ig_profile, $tier, $updatedcount);
-                    
+
                 }
             }
             if($count >= 1){
                 //notify how many updated
-                echo $count . 'profile are not working';
+                event(new UserInteractionsFailed($count));
+                //echo $count . ' profile are not working';
             }
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
@@ -214,6 +215,7 @@ class CheckInteractionsWorking extends Command
                     $profile->email = $ig_profile->email;
                     $profile->insta_username = $ig_profile->insta_username;
                     $profile->tier = $tier;
+                    $profile->timestamp = Carbon::now()->toDateString();
                     $profile->save();
                     $updatedcount = 1;
                 }
