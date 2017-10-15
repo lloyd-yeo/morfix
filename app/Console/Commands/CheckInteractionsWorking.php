@@ -116,7 +116,7 @@ class CheckInteractionsWorking extends Command
             }
             if($count >= 1){
                 //notify how many updated
-                Event::fire(new UserInteractionsFailed($count));
+                event(new UserInteractionsFailed($count));
                 echo '$count =:' . $count . ' and UserInteractionsFailed event called';
             }
             $time_end = microtime(true);
