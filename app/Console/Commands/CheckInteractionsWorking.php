@@ -122,7 +122,8 @@ class CheckInteractionsWorking extends Command
                     ->get();
 
                 event(new UserInteractionsFailed($failed_profiles));
-                echo '$count =:' . $count . ' and UserInteractionsFailed event called';
+                echo '$count =:' . $count . ' and UserInteractionsFailed event called\n';
+                dump ($failed_profiles);
             }
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);

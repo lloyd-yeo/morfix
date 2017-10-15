@@ -31,7 +31,6 @@ class LogInteractionsFailed
         if (!empty($event->failed_profiles))
         {
             foreach($event->failed_profiles as $failed_profile){
-                $from = Carbon::now()->subMinute(15)->toDateTimeString();
                 $update = UserInteractionFailed::where('insta_username' , $failed_profile->insta_username)
                     ->first();
                 if($update !== NULL){
