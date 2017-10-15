@@ -14,15 +14,15 @@ use App\InstagramProfile;
 class UserInteractionsFailed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $ig_profile;
+    public $count;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(InstagramProfile $ig_profile)
+    public function __construct($count)
     {
-        $this->ig_profile = $ig_profile;
+        $this->count = $count;
     }
 
     /**

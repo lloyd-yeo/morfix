@@ -26,6 +26,6 @@ class LogInteractionsFailed
      */
     public function handle(UserInteractionsFailed $event)
     {
-        echo $event->ig_profile->email . 'not working';
+        echo $event->count . ' profiles are not working';
     }
 }
