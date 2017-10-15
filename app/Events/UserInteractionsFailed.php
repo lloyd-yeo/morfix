@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\UserInteractionFailed;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -21,7 +22,7 @@ class UserInteractionsFailed
      *
      * @return void
      */
-    public function __construct(InstagramProfile $failed_profiles)
+    public function __construct(UserInteractionFailed $failed_profiles)
     {
         $this->failed_profiles = $failed_profiles;
     }
