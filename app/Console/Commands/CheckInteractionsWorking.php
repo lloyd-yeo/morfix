@@ -10,7 +10,7 @@ use App\InstagramProfileLikeLog;
 use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Events\UserInteractionsFailed;
+use App\Events\UserInteractionsFailed;
 use App\UserInteractionFailed;
 
 class CheckInteractionsWorking extends Command
