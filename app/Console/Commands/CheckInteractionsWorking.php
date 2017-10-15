@@ -215,7 +215,7 @@ class CheckInteractionsWorking extends Command
                     $profile->email = $ig_profile->email;
                     $profile->insta_username = $ig_profile->insta_username;
                     $profile->tier = $tier;
-                    $profile->timestamp = Carbon::now();
+                    $profile->timestamp = Carbon::now()->toDateString();
                     $profile->save();
                     $updatedcount = 1;
                 }
