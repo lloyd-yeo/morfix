@@ -116,7 +116,12 @@ class CheckInteractionsWorking extends Command
             }
             if($count >= 1){
                 //notify how many updated
-                event(new UserInteractionsFailed($count));
+                $from = Carbon::now()->subMinute(15)->toDateTimeString();
+                $to = Carbon::now()->toDateTimeString();
+                $failed_profiles = UserInteractionFailed::whereBetween('timestamp', array($from, $to))
+                    ->first();
+
+                event(new UserInteractionsFailed($failed_profiles));
                 echo '$count =:' . $count . ' and UserInteractionsFailed event called';
             }
             $time_end = microtime(true);

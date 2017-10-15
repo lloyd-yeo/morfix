@@ -9,19 +9,21 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+Use App\InstagramProfile;
+
 
 class UserInteractionsFailed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $count;
+    public $failed_profiles;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($count)
+    public function __construct(InstagramProfile $failed_profiles)
     {
-        $this->count = $count;
+        $this->failed_profiles = $failed_profiles;
     }
 
     /**

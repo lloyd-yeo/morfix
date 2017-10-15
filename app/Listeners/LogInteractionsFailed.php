@@ -28,14 +28,11 @@ class LogInteractionsFailed
      */
     public function handle(UserInteractionsFailed $event)
     {
-        $from = Carbon::now()->subMinute(15)->toDateTimeString();
-        $to = Carbon::now()->toDateTimeString();
-        $notifyusers = UserInteractionFailed::whereBetween('timestamp', array($from, $to))
-                                        ->take($event->count)
-                                        ->get();
-        if ($notifyusers !== null){
-            foreach($notifyusers as $notifyuser){
-                $notifyuser->notified = 1;
+
+        if (!empty($event->failed_profiles))
+        {
+            foreach($event->failed_profiles as $failed_profile){
+                $failed_profile->notified = 1;
             }
         }
 
