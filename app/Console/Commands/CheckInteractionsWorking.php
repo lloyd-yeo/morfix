@@ -111,12 +111,12 @@ class CheckInteractionsWorking extends Command
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
                     $count = $count + $this->checkIgProfile($ig_profile, $tier, $updatedcount);
-                    
+
                 }
             }
             if($count >= 1){
                 //notify how many updated
-                echo $count . 'profile are not working';
+                echo $count . ' profile are not working';
             }
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
@@ -214,6 +214,7 @@ class CheckInteractionsWorking extends Command
                     $profile->email = $ig_profile->email;
                     $profile->insta_username = $ig_profile->insta_username;
                     $profile->tier = $tier;
+                    $profile->timestamp = Carbon::now();
                     $profile->save();
                     $updatedcount = 1;
                 }
