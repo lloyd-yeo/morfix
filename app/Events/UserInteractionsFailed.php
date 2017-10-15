@@ -10,7 +10,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-Use App\InstagramProfile;
+use Illuminate\Database\Eloquent\Collection;
 
 
 class UserInteractionsFailed
@@ -22,7 +22,7 @@ class UserInteractionsFailed
      *
      * @return void
      */
-    public function __construct(UserInteractionFailed $failed_profiles)
+    public function __construct(Collection $failed_profiles)
     {
         $this->failed_profiles = $failed_profiles;
     }
