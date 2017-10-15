@@ -10,7 +10,7 @@ use App\InstagramProfileLikeLog;
 use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Events\UserInteractionsFailed;
+use App\Events\UsersInteractionsFailed;
 use App\UserInteractionFailed;
 
 class CheckInteractionsWorking extends Command
@@ -122,7 +122,7 @@ class CheckInteractionsWorking extends Command
                     ->take($count)
                     ->get();
 
-                event(new UserInteractionsFailed($failed_profiles));
+                event(new UsersInteractionsFailed($failed_profiles));
                 echo '$count =:' . $count . ' and UserInteractionsFailed event called' . "\n";
 
             }
