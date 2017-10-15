@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Facades\DB;
+use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Instagram as Instagram;
 
 class InstagramHelper {
@@ -23,6 +24,18 @@ class InstagramHelper {
         $instagram = new Instagram($debug, $truncatedDebug, $config);
 
         return $instagram;
+    }
+
+    public static function getFollowersViaProfileId(Instagram $instagram, InstagramProfile $ig_profile, $target_username_id, $next_max_id) {
+    	try {
+		    $user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
+		    return $user_follower_response;
+	    } catch (NetworkException $network_ex) {
+		    $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+		    $ig_profile->save();
+		    InstagramHelper::verifyAndReassignProxy($ig_profile);
+			return NULL;
+	    }
     }
 
     /*
@@ -55,7 +68,7 @@ class InstagramHelper {
         } catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
             $ig_profile->invalid_user = 1;
             $ig_profile->save();
-        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+        } catch (NetworkException $network_ex) {
             $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
             $ig_profile->save();
             InstagramHelper::verifyAndReassignProxy($ig_profile);
@@ -196,7 +209,7 @@ class InstagramHelper {
             $hashtag->invalid = 1;
             $hashtag->save();
             return NULL;
-        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+        } catch (NetworkException $network_ex) {
             $ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
             if ($ig_profile !== NULL) {
                 $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
@@ -213,7 +226,7 @@ class InstagramHelper {
             return $hashtag_feed;
         } catch (\InstagramAPI\Exception\NotFoundException $ex) {
             return NULL;
-        } catch (\InstagramAPI\Exception\NetworkException $network_ex) {
+        } catch (NetworkException $network_ex) {
             $ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
             if ($ig_profile !== NULL) {
                 $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;

@@ -122,6 +122,8 @@ class InteractionLike implements ShouldQueue
 						$target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
 						if ($target_username_id === NULL) {
 							continue;
+						} else {
+							echo("\n" . "[$ig_username] Retrieved Target Id: " . $target_username_id . "\n");
 						}
 
 						$target_target_username = $target_username->target_username;
@@ -132,7 +134,11 @@ class InteractionLike implements ShouldQueue
 
 						do {
 							echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
-
+							$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
+							if ($user_follower_response === NULL) {
+								echo("\n" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "\n");
+								continue;
+							}
 							$user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
 							$target_user_followings = $user_follower_response->getUsers();
 							$next_max_id = $user_follower_response->getNextMaxId();
@@ -624,7 +630,9 @@ class InteractionLike implements ShouldQueue
 					$ig_profile->error_msg = $ex->getMessage();
 				} else {
 					if ($ex instanceof NetworkException) {
-
+						$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+						$ig_profile->save();
+						InstagramHelper::verifyAndReassignProxy($ig_profile);
 					} else {
 						if ($ex instanceof EndpointException) {
 							if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
