@@ -33,6 +33,7 @@ class LogInteractionsFailed
         {
             foreach($event->failed_profiles as $failed_profile){
                 $failed_profile->notified = 1;
+                $failed_profile->save();
             }
         }
 
