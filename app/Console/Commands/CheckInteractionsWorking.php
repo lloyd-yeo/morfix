@@ -117,7 +117,7 @@ class CheckInteractionsWorking extends Command
             if($count >= 1){
                 //notify how many updated
                 $from = Carbon::now()->subMinute(15)->toDateTimeString();
-                $failed_profiles = UserInteractionFailed::whereBetween('timestamp' , '>', $from)
+                $failed_profiles = UserInteractionFailed::where('timestamp' , '>', $from)
                     ->first();
 
                 event(new UserInteractionsFailed($failed_profiles));
