@@ -9,9 +9,14 @@ class InstagramHelper {
 
     public static function initInstagram() {
         $config = array();
-        $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
+//        $config["storage"] = "mysql";
+//        $config['pdo'] = DB::connection('mysql_igsession')->getPdo();
+	    $config["storage"] = "mysql";
         $config["dbtablename"] = "instagram_sessions";
-        $config["storage"] = "mysql";
+	    $config["dbusername"] = env('DB_USERNAME_3', 'root');
+	    $config["dbpassword"] = env('DB_PASSWORD_3', 'inst@ffiliates123');
+	    $config["dbhost"] = env('DB_HOST_3', '52.221.60.235');
+	    $config["dbname"] = env('DB_DATABASE_3', 'morfix');
 
         $debug = false;
         $truncatedDebug = false;
