@@ -75,7 +75,9 @@ class GetDm implements ShouldQueue
 				if ($story->getType() === 3) {
 					$story_arr = $story->asArray();
 					$story_args = $story_arr['args'];
+
 					dump($story_args);
+
 					$story_args_timestamp = $story_args['timestamp'];
 					$recipient_insta_id = $story_args['profile_id'];
 
@@ -98,10 +100,6 @@ class GetDm implements ShouldQueue
 					if ($existing_dm_jobs > 0) {
 						echo("\n[$ig_username] Dm job exists!");
 						$job_exists = 1;
-						break;
-					}
-
-					if ($job_exists) {
 						break;
 					}
 
