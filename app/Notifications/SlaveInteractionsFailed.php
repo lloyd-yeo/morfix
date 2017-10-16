@@ -39,9 +39,14 @@ class SlaveInteractionsFailed extends Notification
 
     public function toTelegram($users)
     {
-        return TelegramMessage::create()
-            ->to('-253338893')
-            ->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
+
+        $option['parse_mode'] = 'HTML';
+//
+        $telegram_msg = TelegramMessage::create();
+        $telegram_msg->to('-253338893');
+        $telegram_msg->options($option);
+        $telegram_msg->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
+        return $telegram_msg;
     }
 
     /**
