@@ -119,7 +119,6 @@ class GetDm extends Command
 						} else {
 							$this->error("[$email] User is not found.");
 						}
-
 					}
 				}
 			}
