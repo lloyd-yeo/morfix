@@ -69,7 +69,7 @@ class CheckInteractionsWorking extends Command
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
-                $instagram_profiles = DB::connection('connection_name')->table('user_insta_profile')
+                $instagram_profiles = DB::connection($connection_name)->table('user_insta_profile')
                     ->where('email', $user->email)
                     ->get();
                 if (!empty($instagram_profiles)) {
