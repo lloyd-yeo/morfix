@@ -84,7 +84,6 @@ class InteractionsController extends Controller {
                     ->whereDate('date_unfollowed', '=', Carbon::today()->toDateString())
                     ->count();
         } else {
-
 	        $connection_name = Helper::getConnection(Auth::user()->partition);
 
 	        $likes_done_today = DB::connection($connection_name)->table('user_insta_profile_like_log')
@@ -103,11 +102,6 @@ class InteractionsController extends Controller {
 		        ->where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)
 		        ->whereDate('date_unfollowed', '=', Carbon::today()->toDateString())
 		        ->count();
-
-//            $likes_done_today = $ig_profile->daily_likes;
-//            $comments_done_today = $ig_profile->daily_comments;
-//            $follows_done_today = $ig_profile->daily_follows;
-//            $unfollows_done_today = $ig_profile->daily_unfollows;
         }
         
         $niches = Niche::all();

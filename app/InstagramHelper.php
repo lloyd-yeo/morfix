@@ -38,6 +38,7 @@ class InstagramHelper {
 	    }
     }
 
+
     /*
      * TRUE if the login was successful.
      * FALSE if the the login failed.

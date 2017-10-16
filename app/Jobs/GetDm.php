@@ -2,19 +2,14 @@
 
 namespace App\Jobs;
 
+use App\InstagramHelper;
+use App\Proxy;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use InstagramAPI\Instagram as Instagram;
-use InstagramAPI\SettingsAdapter as SettingsAdapter;
-use InstagramAPI\InstagramException as InstagramException;
-use App\InstagramProfile;
-use App\CreateInstagramProfileLog;
-use App\Proxy;
-use App\DmJob;
 
 class GetDm implements ShouldQueue {
 
@@ -60,25 +55,12 @@ class GetDm implements ShouldQueue {
         $ig_username = $ig_profile->insta_username;
         $ig_password = $ig_profile->insta_pw;
         $user = $ig_profile->owner();
-        
-        $config = array();
-        $config["storage"] = "mysql";
-        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
-        $config["dbtablename"] = "instagram_sessions";
-        
-        $debug = false;
-        $truncatedDebug = false;
-        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
-        if ($ig_profile->proxy === NULL) {
-            $proxy = Proxy::inRandomOrder()->first();
-            $ig_profile->proxy = $proxy->proxy;
-            $ig_profile->save();
-            $proxy->assigned = $proxy->assigned + 1;
-            $proxy->save();
+        $instagram = InstagramHelper::initInstagram();
+
+        if (!InstagramHelper::login($instagram, $ig_profile)) {
+        	return;
         }
-
-        $instagram->setProxy($ig_profile->proxy);
 
         try {
             $explorer_response = $instagram->login($ig_username, $ig_password);

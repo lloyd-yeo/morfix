@@ -598,6 +598,7 @@ class InteractionLike implements ShouldQueue
 						$ig_profile->next_like_time = Carbon::now()->addHours(2);
 						$ig_profile->auto_like_ban = 1;
 						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
+
 						$ig_profile->save();
 						echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
 
@@ -677,11 +678,20 @@ class InteractionLike implements ShouldQueue
 
 	private function calcSpeedDelay($speed)
 	{
-		$speed_delay = 3;
-		if ($speed == "Fast") {
-			$speed_delay = 1;
+		switch ($speed) {
+			case "Fast":
+				$this->speed_delay = 2;
+				break;
+			case "Medium":
+				$this->speed_delay = 4;
+				break;
+			case "Slow":
+				$this->speed_delay = 6;
+				break;
+			default:
+				$this->speed_delay = 6;
+				break;
 		}
-		$this->speed_delay = $speed_delay;
 	}
 
 	public function getInstagram(): Instagram
