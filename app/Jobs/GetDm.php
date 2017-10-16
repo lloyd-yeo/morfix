@@ -59,7 +59,7 @@ class GetDm implements ShouldQueue
 		$ig_profile = $this->profile;
 		$ig_username = $ig_profile->insta_username;
 		$user = $ig_profile->owner();
-
+		$current_profile_timestamp = $ig_profile->recent_activity_timestamp;
 		$instagram = InstagramHelper::initInstagram();
 
 		if (!InstagramHelper::login($instagram, $ig_profile)) {
@@ -86,7 +86,7 @@ class GetDm implements ShouldQueue
 						$newest_timestamp = $story_args_timestamp;
 						$ig_profile->recent_activity_timestamp = $newest_timestamp;
 						if ($ig_profile->save()) {
-							echo "[$ig_profile->username] has recent_activity_timestamp changed to " . $newest_timestamp . "\n";
+							echo "[$ig_username] has recent_activity_timestamp changed to " . $newest_timestamp . "\n";
 						}
 					}
 
@@ -100,12 +100,14 @@ class GetDm implements ShouldQueue
 					$job_exists = 0;
 
 					if ($existing_dm_jobs > 0) {
-						echo("\n[$ig_username] Dm job exists!");
+						echo("\n[$ig_username] [$recipient_insta_id] DM job exists!");
 						$job_exists = 1;
 						break;
+					} else {
+						echo("\n[$ig_username] [$recipient_insta_id] DM job doesn't exists!");
 					}
 
-					if (floatval($ig_profile->recent_activity_timestamp) < floatval($story_args_timestamp)) {
+					if (floatval($current_profile_timestamp) < floatval($story_args_timestamp)) {
 
 						#echo("queue as new dm");
 						$user_info_response = $instagram->people->getInfoById($recipient_insta_id);
