@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\UserInteractionsFailed;
+use App\Events\UsersInteractionsFailed;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\UserInteractionFailed;
 
-class LogInteractionsFailed
+class LogUsersInteractionsFailed
 {
     /**
      * Create the event listener.
@@ -22,12 +22,11 @@ class LogInteractionsFailed
     /**
      * Handle the event.
      *
-     * @param  UserInteractionsFailed  $event
+     * @param  UsersInteractionsFailed  $event
      * @return void
      */
-    public function handle(UserInteractionsFailed $event)
+    public function handle(UsersInteractionsFailed $event)
     {
-
         if (!empty($event->failed_profiles))
         {
             foreach($event->failed_profiles as $failed_profile){

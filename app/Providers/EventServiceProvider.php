@@ -13,9 +13,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\UserInteractionsFailed' => [
-            'App\Listeners\LogInteractionsFailed',
+        'App\Events\UsersInteractionsFailed' => [
+            'App\Listeners\LogUsersInteractionsFailed',
         ],
+        'App\Events\UserInteractionsFailed' => [
+            'App\Listeners\LogUserInteractionsFailed'
+        ]
     ];
 
     /**
