@@ -38,7 +38,7 @@ class InteractionsFailed extends Notification
      */
     public function toTelegram($users)
     {
-        echo "reached here";
+
         $option['parse_mode'] = 'HTML';
 //
         $telegram_msg = TelegramMessage::create();
