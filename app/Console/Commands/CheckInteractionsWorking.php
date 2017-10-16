@@ -11,7 +11,7 @@ use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Events\UsersInteractionsFailed;
-use App\Events\SLaveUsersInteractionsFailed;
+use App\Events\SlaveUsersInteractionsFailed;
 use App\UserInteractionFailed;
 use App\Helper;
 

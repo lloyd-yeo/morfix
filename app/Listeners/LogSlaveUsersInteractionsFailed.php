@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SLaveUsersInteractionsFailed;
+use App\Events\SlaveUsersInteractionsFailed;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Notification;
@@ -23,10 +23,10 @@ class LogSlaveUsersInteractionsFailed
     /**
      * Handle the event.
      *
-     * @param  SLaveUsersInteractionsFailed $event
+     * @param  SlaveUsersInteractionsFailed $event
      * @return void
      */
-    public function handle(SLaveUsersInteractionsFailed $event)
+    public function handle(SlaveUsersInteractionsFailed $event)
     {
         if (!empty($event->failed_profiles)) {
 

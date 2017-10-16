@@ -11,7 +11,7 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Database\Eloquent\Collection;
 
-class SLaveUsersInteractionsFailed
+class SlaveUsersInteractionsFailed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $failed_profiles;
