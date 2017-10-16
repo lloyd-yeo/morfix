@@ -14,14 +14,16 @@ class EngagementGroupFailed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $media_id;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($media_id)
     {
-        //
+        $this->media_id = $media_id;
     }
 
     /**

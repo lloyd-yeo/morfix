@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\EngagementGroupFailed;
 use App\InstagramHelper;
 use App\InstagramProfile;
 use App\InstagramProfileComment;
@@ -10,7 +11,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
 
 class EngagementGroup implements ShouldQueue
 {
@@ -39,7 +39,7 @@ class EngagementGroup implements ShouldQueue
 	 */
 	protected $comments_to_give;
 
-	protected $mediaId;
+	protected $media_id;
 	protected $ig_profile_id;
 	protected $comment;
 
@@ -48,9 +48,9 @@ class EngagementGroup implements ShouldQueue
 	 *
 	 * @return void
 	 */
-	public function __construct($mediaId, $ig_profile_id, $comment = 1)
+	public function __construct($media_id, $ig_profile_id, $comment = 1)
 	{
-		$this->mediaId = $mediaId;
+		$this->media_id = $media_id;
 		$this->ig_profile_id = $ig_profile_id;
 		$this->comment = $comment;
 		$this->comments_to_give = 100;
@@ -71,7 +71,7 @@ class EngagementGroup implements ShouldQueue
 			->where('invalid_proxy', 0)
 			->get();
 
-		$mediaId = $this->mediaId;
+		$mediaId = $this->media_id;
 
 		$default_comments = array();
 		$default_comments[] = "That is really insta-worthy.";
@@ -139,9 +139,17 @@ class EngagementGroup implements ShouldQueue
 			} catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
 				continue;
 			}
-
-
 		}
+	}
+
+	/**
+	 * Handle a job failure.
+	 *
+	 * @return void
+	 */
+	public function failed()
+	{
+		event(new EngagementGroupFailed($this->media_id));
 	}
 
 }
