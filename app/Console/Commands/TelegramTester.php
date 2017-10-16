@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use Notification;
+use App\UserInteractionFailed;
+use App\Notifications\InteractionsFailed;
+
+class TelegramTester extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'telegram:tester';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $userss = array();
+        $testers = UserInteractionFailed::take(6)->get();
+        foreach($testers as $tester){
+            $userss[] = $tester->email;
+
+        }
+        if (count($userss) < 30) {
+            $users = implode("\n", $userss);
+            Notification::send($users, new InteractionsFailed($users));
+        }
+        else{
+            if ($i % 30 == 0){
+                $userssliced = array_slice($userss,0,30);
+                $users = implode("\n", $userss);
+                Notification::send($users, new InteractionsFailed($users));
+                $i += 1;
+            }
+        }
+    }
+}

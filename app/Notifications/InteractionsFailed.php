@@ -39,8 +39,8 @@ class InteractionsFailed extends Notification
     public function toTelegram($users)
     {
         return TelegramMessage::create()
-            ->to('-253338893')
-            ->content($users->email .' -> Interactions failed');
+            ->to('-276000398')
+            ->content($users);
     }
 
     /**
