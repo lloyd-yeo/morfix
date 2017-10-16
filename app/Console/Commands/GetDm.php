@@ -102,6 +102,7 @@ class GetDm extends Command
 						if ($user !== NULL) {
 
 							$instagram_profiles = InstagramProfile::where('email', $user->email)
+								->where('auto_dm_new_follower', 1)
 								->get();
 
 							foreach ($instagram_profiles as $ig_profile) {
