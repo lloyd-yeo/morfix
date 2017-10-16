@@ -231,7 +231,7 @@ class CheckInteractionsWorking extends Command
             $updatedcount = 0;
             $check = UserInteractionFailed::where('insta_username', $ig_profile->insta_username)->first();
             if ($check !== NULL) {
-                $check->destroy();
+                $check->delete();
             }
 
         }
