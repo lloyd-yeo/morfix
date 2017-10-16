@@ -58,7 +58,6 @@ class GetDm implements ShouldQueue
 
 		$ig_profile = $this->profile;
 		$ig_username = $ig_profile->insta_username;
-		$ig_password = $ig_profile->insta_pw;
 		$user = $ig_profile->owner();
 
 		$instagram = InstagramHelper::initInstagram();
@@ -69,17 +68,19 @@ class GetDm implements ShouldQueue
 
 		try {
 			$activity_response = $instagram->people->getRecentActivityInbox();
-			dump($activity_response);
+
+//			dump($activity_response);
+
 			$newest_timestamp = 0;
 
 			foreach ($activity_response->getOldStories() as $story) {
 
-				$story_args = $story->getArgs();
-				$story_args_timestamp = $story->getArgs()->getTimestamp();
+				if ($story->getType() === 3) {
+					dump($story);
+					$story_args = $story->getArgs();
+					$story_args_timestamp = $story->getArgs()->getTimestamp();
 
-				if ($story->getType() == 3) {
-
-					if ($newest_timestamp == 0) {
+					if ($newest_timestamp === 0) {
 						//update instagram profile's timestamp here.
 						$newest_timestamp = $story_args_timestamp;
 						$ig_profile->recent_activity_timestamp = $newest_timestamp;
