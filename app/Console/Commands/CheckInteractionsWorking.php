@@ -11,6 +11,7 @@ use App\InstagramProfileFollowLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Events\UsersInteractionsFailed;
+use App\Events\SLaveUsersInteractionsFailed;
 use App\UserInteractionFailed;
 use App\Helper;
 
@@ -76,7 +77,7 @@ class CheckInteractionsWorking extends Command
                     ->take($count)
                     ->get();
 
-                event(new UsersInteractionsFailed($failed_profiles));
+                event(new SlaveUsersInteractionsFailed($failed_profiles));
                 echo '$count =:' . $count . ' and UserInteractionsFailed event called' . "\n";
 
             }
@@ -87,6 +88,7 @@ class CheckInteractionsWorking extends Command
 
             $users = User::where('email', $this->argument("email"))
                 ->orderBy('user_id', 'desc')
+                ->take(200)
                 ->get();
             $updatedcount = 0;
 
