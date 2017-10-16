@@ -85,7 +85,9 @@ class GetDm implements ShouldQueue
 						//update instagram profile's timestamp here.
 						$newest_timestamp = $story_args_timestamp;
 						$ig_profile->recent_activity_timestamp = $newest_timestamp;
-						$ig_profile->save();
+						if ($ig_profile->save()) {
+							echo "[$ig_profile->username] has recent_activity_timestamp changed to " . $newest_timestamp . "\n";
+						}
 					}
 
 					$new_follower_template = $ig_profile->insta_new_follower_template;
