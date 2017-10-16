@@ -64,11 +64,19 @@ class HomeController extends Controller
 			}
 			$ranking++;
 		}
-
-		$instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
+		$instagram_profiles = array();
+		if (Auth::user()->partition === 0) {
+			$instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
 				->take($current_user->num_acct)
 				->get();
+		} else {
+			$connection_name = Helper::getConnection(Auth::user()->partition);
 
+			$instagram_profiles = DB::connection($connection_name)->table('user_insta_profile')
+				->where('email', Auth::user()->email)
+				->take($current_user->num_acct)
+				->get();
+		}
 		$new_profile_follower_analysis = array();
 		$new_profile_follower_analysis_label = array();
 		$new_follower_count = array();
