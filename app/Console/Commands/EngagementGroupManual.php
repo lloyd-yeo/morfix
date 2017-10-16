@@ -39,6 +39,17 @@ class EngagementGroupManual extends Command {
      */
     public function handle() {
 
+	    $mediaId = $this->argument('media_id');
+	    $comment = $this->argument('comment');
+
+	    $job = new \App\Jobs\EngagementGroup($mediaId, NULL, $comment);
+	    $this->line("$mediaId queued for [Engagement] with Comments? [$comment]");
+	    $job->onQueue("engagementgroup");
+	    $job->onConnection('sync');
+	    dispatch($job);
+
+	    return;
+
         $ig_profiles = InstagramProfile::where('checkpoint_required', 0)
                 ->where('account_disabled', 0)
                 ->where('invalid_user', 0)
@@ -46,7 +57,7 @@ class EngagementGroupManual extends Command {
                 ->where('invalid_proxy', 0)
                 ->get();
 
-        $mediaId = $this->argument('media_id');
+
 
         $default_comments = array();
         $default_comments[] = "That is really insta-worthy.";
