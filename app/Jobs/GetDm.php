@@ -76,9 +76,11 @@ class GetDm implements ShouldQueue
 			foreach ($activity_response->getOldStories() as $story) {
 
 				if ($story->getType() === 3) {
-					dump($story->asArray());
-					$story_args = $story->getArgs();
-					$story_args_timestamp = $story->getArgs()->getTimestamp();
+					$story_arr = $story->asArray();
+
+					$story_args = $story_arr['args'];
+					$story_args_timestamp = $story_args['timestamp'];
+					$recipient_insta_id = $story_args['profile_id'];
 
 					if ($newest_timestamp === 0) {
 						//update instagram profile's timestamp here.
@@ -91,7 +93,7 @@ class GetDm implements ShouldQueue
 					$follow_up_template = $ig_profile->follow_up_message;
 
 					$existing_dm_jobs = DmJob::where('insta_username', $ig_username)
-						->where('recipient_insta_id', $story_args->getProfileId())
+						->where('recipient_insta_id', $recipient_insta_id)
 						->count();
 
 					$job_exists = 0;
@@ -109,7 +111,7 @@ class GetDm implements ShouldQueue
 					if (floatval($ig_profile->recent_activity_timestamp) < floatval($story_args_timestamp)) {
 
 						#echo("queue as new dm");
-						$user_info_response = $instagram->people->getInfoById($story_args->getProfileId());
+						$user_info_response = $instagram->people->getInfoById($recipient_insta_id);
 						$new_follower = $user_info_response->getUser();
 						#echo($new_follower->full_name);
 
@@ -143,7 +145,8 @@ class GetDm implements ShouldQueue
 								$selected_opt = $string_to_replace;
 							}
 
-							$string_replacement = str_replace("\${" . $string_to_replace . "}", $selected_opt, $string_replacement);
+							$string_replacement = str_replace("\${" . $string_to_replace . "}",
+								$selected_opt, $string_replacement);
 						}
 
 						echo $string_replacement . "\n\n";
