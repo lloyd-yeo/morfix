@@ -68,9 +68,6 @@ class GetDm implements ShouldQueue
 
 		try {
 			$activity_response = $instagram->people->getRecentActivityInbox();
-
-//			dump($activity_response);
-
 			$newest_timestamp = 0;
 
 			foreach ($activity_response->getOldStories() as $story) {
@@ -78,6 +75,7 @@ class GetDm implements ShouldQueue
 				if ($story->getType() === 3) {
 					$story_arr = $story->asArray();
 					$story_args = $story_arr['args'];
+					dump($story_args);
 					$story_args_timestamp = $story_args['timestamp'];
 					$recipient_insta_id = $story_args['profile_id'];
 
