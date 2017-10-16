@@ -64,6 +64,7 @@ class GetDm extends Command
 				foreach ($users as $user) {
 					$instagram_profiles = InstagramProfile::where('email', $user->email)
 						->get();
+
 					foreach ($instagram_profiles as $ig_profile) {
 
 						if (!InstagramHelper::validForInteraction($ig_profile)) {
