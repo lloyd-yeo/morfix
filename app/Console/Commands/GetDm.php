@@ -115,9 +115,7 @@ class GetDm extends Command
 								$job->onQueue('getdm');
 								$job->onConnection('sync');
 								dispatch($job);
-
 							}
-
 						} else {
 							$this->error("[$email] User is not found.");
 						}
