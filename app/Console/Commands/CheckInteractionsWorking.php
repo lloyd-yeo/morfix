@@ -88,7 +88,7 @@ class CheckInteractionsWorking extends Command
 
             $users = User::where('email', $this->argument("email"))
                 ->orderBy('user_id', 'desc')
-                ->take(200)
+                ->take(50)
                 ->get();
             $updatedcount = 0;
 
