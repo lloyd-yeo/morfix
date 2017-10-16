@@ -55,10 +55,9 @@ class CheckInteractionsWorking extends Command
         if ($this->argument("email") == "slave") {
             $time_start = microtime(true);
 
-            $connection_name = Helper::getConnection(Auth::user()->partition);
 
-            $users = DB::connections($connection_name)->table('user')
-                ->where('tier', '>', 1)
+            $users = User::where('tier', '>', 1)
+                ->where('partition', '>', 0)
                 ->orderBy('user_id', 'desc')
                 ->get();
 
@@ -66,16 +65,19 @@ class CheckInteractionsWorking extends Command
             $updatedcount = 0;
             foreach ($users as $user) {
 
+                $connection_name = Helper::getConnection($user->partition);
+
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
-                $instagram_profiles = InstagramProfile::where('email', $user->email)
+                $instagram_profiles = DB::connection('connection_name')->table('user_insta_profile')
+                    ->where('email', $user->email)
                     ->get();
                 if (!empty($instagram_profiles)) {
                     foreach ($instagram_profiles as $ig_profile) {
                         $tier = $user->tier;
                         $partition = $user->partition;
                         if ($partition > 0) {
-                            $count = $count + $this->checkSlaveIgProfile($ig_profile, $tier, $updatedcount);
+                            $count = $count + $this->checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $user);
                         }
                     }
                 }
@@ -272,13 +274,12 @@ class CheckInteractionsWorking extends Command
         return $updatedcount;
     }
 
-    public function checkSlaveIgProfile($ig_profile, $tier, $updatedcount)
+    public function checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $user)
     {
         $from = Carbon::now()->subHours(3)->toDateTimeString();
         $to = Carbon::now()->toDateTimeString();
 
-        $connection_name = Helper::getConnection(Auth::user()->partition);
-
+        $connection_name = Helper::getConnection($user->partition);
 
         $user_like = DB::connection($connection_name)->table('user_insta_profile_like_log')
             ->where('insta_username', $ig_profile->insta_username)
