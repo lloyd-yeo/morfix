@@ -76,7 +76,7 @@ class GetDm implements ShouldQueue
 			foreach ($activity_response->getOldStories() as $story) {
 
 				if ($story->getType() === 3) {
-					dump($story);
+					dump($story->asArray());
 					$story_args = $story->getArgs();
 					$story_args_timestamp = $story->getArgs()->getTimestamp();
 
