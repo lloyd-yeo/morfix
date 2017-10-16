@@ -24,7 +24,7 @@ class DmInboxHelper extends LazyJsonMapper
 
 			return $response->getInbox();
 		} else {
-			echo "\t Inbox is Empty.\n\n All Resuts => " . json_encode($responseArray);
+			echo "\t Inbox is Empty.\n\n All Resuts => " . json_encode($response);
 
 			return NULL;
 		}
