@@ -38,9 +38,18 @@ class InteractionsFailed extends Notification
      */
     public function toTelegram($users)
     {
-        return TelegramMessage::create()
-            ->to('-276000398')
-            ->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
+        echo "reached here";
+        $option['parse_mode'] = 'HTML';
+//
+        $telegram_msg = TelegramMessage::create();
+        $telegram_msg->to('-276000398');
+        $telegram_msg->options($option);
+        $telegram_msg->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
+        return $telegram_msg;
+//        return TelegramMessage::create()
+//            ->to('-276000398')
+//            ->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users)
+//
     }
 
     /**

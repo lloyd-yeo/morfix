@@ -53,7 +53,9 @@ class TelegramTester extends Command
 
             $users = implode("\n", $userss);
             Notification::send($users, new InteractionsFailed($users));
+
             unset($userss);
+
         }
 //		$userss = array();
 //		$testers = UserInteractionFailed::take(6)->get();
