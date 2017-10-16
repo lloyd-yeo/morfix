@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\InstagramHelper;
 use App\InstagramProfile;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,6 +32,12 @@ class EngagementGroup implements ShouldQueue
 	 * @var int
 	 */
 	public $timeout = 7200;
+
+	/**
+	 * @var int The number of comments to give out.
+	 */
+	protected $comments_to_give;
+
 	protected $mediaId;
 	protected $igProfileId;
 	protected $comment;
@@ -45,6 +52,7 @@ class EngagementGroup implements ShouldQueue
 		$this->mediaId = $mediaId;
 		$this->igProfileId = $igProfileId;
 		$this->comment = $comment;
+		$this->comments_to_give = 100;
 	}
 
 	/**
@@ -85,58 +93,9 @@ class EngagementGroup implements ShouldQueue
 				}
 			}
 
-			$ig_username = $ig_profile->insta_username;
-			$ig_password = $ig_profile->insta_pw;
-
-			$config = array();
-			$config["storage"] = "mysql";
-			$config["pdo"] = DB::connection('mysql_igsession')->getPdo();
-			$config["dbtablename"] = "instagram_sessions";
-
-			$debug = FALSE;
-			$truncatedDebug = FALSE;
-			$instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-			if ($ig_profile->proxy === NULL) {
-				$proxy = Proxy::inRandomOrder()->first();
-				$ig_profile->proxy = $proxy->proxy;
-				$ig_profile->save();
-				$proxy->assigned = $proxy->assigned + 1;
-				$proxy->save();
-			}
-
-			$instagram->setProxy($ig_profile->proxy);
-
-			try {
-				$explorer_response = $instagram->login($ig_username, $ig_password);
-			} catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
-				$ig_profile->invalid_user = 1;
-				$ig_profile->save();
-				continue;
-			} catch (\InstagramAPI\Exception\NetworkException $network_ex) {
-				continue;
-			} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-				$ig_profile->checkpoint_required = 1;
-				$ig_profile->save();
-				continue;
-			} catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-				continue;
-			} catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
-				continue;
-			} catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
-				$ig_profile->incorrect_pw = 1;
-				$ig_profile->save();
-				continue;
-			} catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-				$ig_profile->incorrect_pw = 1;
-				$ig_profile->save();
-				continue;
-			} catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_ex) {
-				$ig_profile->checkpoint_required = 1;
-				$ig_profile->save();
-				continue;
-			} catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
-				continue;
+			$instagram = InstagramHelper::initInstagram();
+			if (!InstagramHelper::login($instagram, $ig_profile)) {
+				return;
 			}
 
 			try {
@@ -148,10 +107,11 @@ class EngagementGroup implements ShouldQueue
 					if ($this->comment === 1) {
 						if ($ig_profile->auto_comment === 1) {
 							$comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
-							if (count($comments) > 0) {
+							if (count($comments) > 0 && $this->comments_to_give > 0) {
 								$comment = $comments->random();
 								if (!empty($comment->comment)) {
 									$instagram->media->comment($mediaId, $comment->comment);
+									$this->comments_to_give--;
 								}
 							}
 						}
