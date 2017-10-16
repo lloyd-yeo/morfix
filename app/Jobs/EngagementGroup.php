@@ -33,6 +33,7 @@ class EngagementGroup implements ShouldQueue
 	public $timeout = 7200;
 	protected $mediaId;
 	protected $igProfileId;
+	protected $comment;
 
 	/**
 	 * Create a new job instance.
@@ -158,7 +159,7 @@ class EngagementGroup implements ShouldQueue
 				}
 
 				dump($response);
-				
+
 			} catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
 				continue;
 			} catch (\InstagramAPI\Exception\NetworkException $network_ex) {
