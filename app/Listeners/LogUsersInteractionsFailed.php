@@ -5,7 +5,8 @@ namespace App\Listeners;
 use App\Events\UsersInteractionsFailed;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\UserInteractionFailed;
+use Notification;
+use App\Notifications\InteractionsFailed;
 
 class LogUsersInteractionsFailed
 {
@@ -30,12 +31,8 @@ class LogUsersInteractionsFailed
         if (!empty($event->failed_profiles))
         {
             foreach($event->failed_profiles as $failed_profile){
-                $update = UserInteractionFailed::where('insta_username' , $failed_profile->insta_username)
-                    ->first();
-                if($update !== NULL){
-                    $update->notified = 1;
-                    $update->save();
-                }
+                $users = $failed_profile;
+                Notification::send($users, new InteractionsFailed($users));
             }
         }
 

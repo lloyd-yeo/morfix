@@ -180,6 +180,8 @@ return [
         Laravel\Cashier\CashierServiceProvider::class,
         Unicodeveloper\Emoji\EmojiServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+
+        NotificationChannels\Telegram\TelegramServiceProvider::class,
     ],
 
     /*
