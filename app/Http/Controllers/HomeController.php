@@ -10,6 +10,7 @@ use App\User;
 use App\InstagramProfile;
 use App\UserUpdate;
 use App\UserAffiliates;
+use App\Helper;
 
 class HomeController extends Controller
 {
