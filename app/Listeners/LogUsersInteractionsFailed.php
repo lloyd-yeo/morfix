@@ -33,7 +33,7 @@ class LogUsersInteractionsFailed
 
 
 
-            $failed_profiles_chunks = $event->failed_profiles->chunk(5);
+            $failed_profiles_chunks = $event->failed_profiles->chunk(2);
 
             foreach ($failed_profiles_chunks as $failed_profiles_chunk) {
 
