@@ -98,7 +98,7 @@ class CheckInteractionsWorking extends Command
         } else if (NULL !== $this->argument("email")) {
 
             $time_start = microtime(true);
-            
+
             $users = User::where('email', $this->argument("email"))
                 ->orderBy('user_id', 'desc')
                 ->get();
@@ -388,4 +388,4 @@ class CheckInteractionsWorking extends Command
     }
 }
 
-}
+
