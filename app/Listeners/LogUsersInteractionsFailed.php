@@ -30,10 +30,40 @@ class LogUsersInteractionsFailed
     {
         if (!empty($event->failed_profiles))
         {
-            foreach($event->failed_profiles as $failed_profile){
-                $users = $failed_profile;
+
+
+
+            $failed_profiles_chunks = $event->failed_profiles->chunk(5);
+
+            foreach ($failed_profiles_chunks as $failed_profiles_chunk) {
+
+                foreach ($failed_profiles_chunk as $failed_profile) {
+                    $userss[] = $failed_profile->insta_username;
+//
+                }
+
+                $users = implode("\n", $userss);
                 Notification::send($users, new InteractionsFailed($users));
+                unset($userss);
             }
+
+
+            //        if (count($userss) < 30) {
+            //            $users = implode("\n", $userss);
+            //            Notification::send($users, new InteractionsFailed($users));
+            //        }
+            //        else{
+            //            if ($i % 30 == 0){
+            //                $userssliced = array_slice($userss,0,30);
+            //                $users = implode("\n", $userss);
+            //                Notification::send($users, new InteractionsFailed($users));
+            //                $i += 1;
+            //            }
+            //        }
+//            foreach($event->failed_profiles as $failed_profile){
+//                $users = $failed_profile;
+//                Notification::send($users, new InteractionsFailed($users));
+//            }
         }
 
     }

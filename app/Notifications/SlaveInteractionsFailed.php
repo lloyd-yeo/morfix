@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
-class InteractionsFailed extends Notification
+class SlaveInteractionsFailed extends Notification
 {
     use Queueable;
 
@@ -25,7 +25,7 @@ class InteractionsFailed extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -36,17 +36,18 @@ class InteractionsFailed extends Notification
     /**
      *Send Telegram message to group chat
      */
+
     public function toTelegram($users)
     {
         return TelegramMessage::create()
-            ->to('-276000398')
+            ->to('-253338893')
             ->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
