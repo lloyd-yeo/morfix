@@ -39,7 +39,7 @@ class InteractionsFailed extends Notification
     public function toTelegram($users)
     {
         return TelegramMessage::create()
-            ->to('-276000398')
+            ->to('-253338893')
             ->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
     }
 
