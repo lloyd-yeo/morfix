@@ -63,7 +63,7 @@ class CheckInteractionsWorking extends Command
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
-                if ($instagram_profiles !== NULL) {
+                if (!empty($instagram_profiles)) {
                     foreach ($instagram_profiles as $ig_profile) {
                         $tier = $user->tier;
                         $partition = $user->partition;
