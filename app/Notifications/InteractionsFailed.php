@@ -38,18 +38,20 @@ class InteractionsFailed extends Notification
      */
     public function toTelegram($users)
     {
-        echo "reached here";
+	    $date_time = Carbon::now()->toDateTimeString();
+	    $text = "<b>[INTERACTIONS FAILURE]</b>\n\n"
+		    . "***** Failure Report *****\n\n"
+		    . "Number of users: " . count($users) . "\n"
+		    . "List of users affected:\n\n"
+		    . $users . "\n\n"
+		    . "Date/Time: " . $date_time . "\n\n"
+		    . "";
         $option['parse_mode'] = 'HTML';
-//
         $telegram_msg = TelegramMessage::create();
         $telegram_msg->to('-253338893');
         $telegram_msg->options($option);
-        $telegram_msg->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
+        $telegram_msg->content($text);
         return $telegram_msg;
-//        return TelegramMessage::create()
-//            ->to('-276000398')
-//            ->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users)
-//
     }
 
     /**

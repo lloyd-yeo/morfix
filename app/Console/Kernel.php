@@ -87,6 +87,7 @@ class Kernel extends ConsoleKernel {
         Commands\SendFreeTrialEmail::class,
         Commands\SendPremiumAffiliateEmail::class,
         Commands\TestInteractionGenderFilter::class,
+	    Commands\TestFailedEngagementGroupNotification::class,
     ];
 
     /**
