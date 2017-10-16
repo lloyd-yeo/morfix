@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\SlaveUsersInteractionsFailed' => [
             'App\Listeners\LogSlaveUsersInteractionsFailed',
+        ],
+        'App\Events\EngagementGroupFailed' => [
+	        'App\Listeners\LogEngagementGroupFailed',
         ]
     ];
 
