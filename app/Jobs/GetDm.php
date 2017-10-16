@@ -97,14 +97,11 @@ class GetDm implements ShouldQueue
 						->where('recipient_insta_id', $recipient_insta_id)
 						->count();
 
-					$job_exists = 0;
-
 					if ($existing_dm_jobs > 0) {
 						echo("\n[$ig_username] [$recipient_insta_id] DM job exists!\n\n");
-						$job_exists = 1;
 						break;
 					} else {
-						echo("\n[$ig_username] [$recipient_insta_id] DM job doesn't exists!");
+						echo("\n[$ig_username] [$recipient_insta_id] DM job doesn't exists!\n\n");
 					}
 
 					if (floatval($current_profile_timestamp) < floatval($story_args_timestamp)) {
