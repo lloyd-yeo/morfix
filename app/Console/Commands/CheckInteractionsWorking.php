@@ -55,7 +55,7 @@ class CheckInteractionsWorking extends Command
 
         if ($this->argument("email") == "slave") {
 
-            $users = User::all();
+            $users = User::where('tier', '>', 1)->get();
             $updatedcount = 0;
             $count = 0;
             foreach ($users as $user) {
@@ -63,18 +63,19 @@ class CheckInteractionsWorking extends Command
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
                 $instagram_profiles = InstagramProfile::where('email', $user->email)
                     ->get();
-
-                foreach ($instagram_profiles as $ig_profile) {
-                    $tier = $user->tier;
-                    $partition = $user->partition;
-                    $count = $count + $this->checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $partition);
+                if ($instagram_profiles !== NULL) {
+                    foreach ($instagram_profiles as $ig_profile) {
+                        $tier = $user->tier;
+                        $partition = $user->partition;
+                        $count = $count + $this->checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $partition);
+                    }
                 }
             }
-            if($count >= 1){
+            if ($count >= 1) {
                 //notify how many updated
                 $from = Carbon::now()->subMinute(15)->toDateTimeString();
                 $failed_profiles = UserInteractionFailed::where('timestamp', '>', $from)
-                    ->orderby('id','desc')
+                    ->orderby('id', 'desc')
                     ->take($count)
                     ->get();
 
@@ -131,11 +132,11 @@ class CheckInteractionsWorking extends Command
 
                 }
             }
-            if($count >= 1){
+            if ($count >= 1) {
                 //notify how many updated
                 $from = Carbon::now()->subMinute(15)->toDateTimeString();
                 $failed_profiles = UserInteractionFailed::where('timestamp', '>', $from)
-                    ->orderby('id','desc')
+                    ->orderby('id', 'desc')
                     ->take($count)
                     ->get();
 
@@ -233,7 +234,7 @@ class CheckInteractionsWorking extends Command
         if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
             $ig_profile->auto_interactions_working = 0;
             if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0 && $tier > 1) {
-                $check_exist = UserInteractionFailed::where('email',$ig_profile->email)->first();
+                $check_exist = UserInteractionFailed::where('email', $ig_profile->email)->first();
                 if ($check_exist === NULL) {
                     $profile = new UserInteractionFailed;
                     $profile->email = $ig_profile->email;
@@ -260,7 +261,8 @@ class CheckInteractionsWorking extends Command
         return $updatedcount;
     }
 
-    public function checkSlaveIgProfile ($ig_profile, $tier, $updatedcount, $partition){
+    public function checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $partition)
+    {
         $from = Carbon::now()->subHours(3)->toDateTimeString();
         $to = Carbon::now()->toDateTimeString();
 
@@ -350,7 +352,7 @@ class CheckInteractionsWorking extends Command
             if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
                 $ig_profile->auto_interactions_working = 0;
                 if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0 && $tier > 1) {
-                    $check_exist = UserInteractionFailed::where('email',$ig_profile->email)->first();
+                    $check_exist = UserInteractionFailed::where('email', $ig_profile->email)->first();
                     if ($check_exist === NULL) {
                         $profile = new UserInteractionFailed;
                         $profile->email = $ig_profile->email;
