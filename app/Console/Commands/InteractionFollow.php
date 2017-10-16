@@ -95,7 +95,17 @@ class InteractionFollow extends Command
 			$this->info("[Follow Interaction] Queueing jobs for Slave.");
 			$users = User::all();
 		} else {
-			if (NULL !== $this->argument("email")) {
+			if ($this->argument("email") === "ig") {
+				$ig_profile = InstagramProfile::where('insta_username', $this->argument("queueasjob"))->first();
+				if ($ig_profile !== NULL) {
+					$this->line("[Follow Interactions] executing manually for " . $ig_profile->insta_username);
+					dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+						->onQueue('follows')
+						->onConnection('sync'));
+				} else {
+					$this->error("[" . $this->argument("queueasjob") . "] is not a valid IG profile.");
+				}
+			} else if (NULL !== $this->argument("email")) {
 				$this->info("[Follow Interaction] Manually executing follow for " . $this->argument("email"));
 				$users = User::where('email', $this->argument("email"))->get();
 			} else {
