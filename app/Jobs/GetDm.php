@@ -100,7 +100,7 @@ class GetDm implements ShouldQueue
 					$job_exists = 0;
 
 					if ($existing_dm_jobs > 0) {
-						echo("\n[$ig_username] [$recipient_insta_id] DM job exists!");
+						echo("\n[$ig_username] [$recipient_insta_id] DM job exists!\n\n");
 						$job_exists = 1;
 						break;
 					} else {
