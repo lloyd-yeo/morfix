@@ -40,7 +40,7 @@ class InteractionsFailed extends Notification
     {
         return TelegramMessage::create()
             ->to('-276000398')
-            ->content("SELECT &#42; FROM insta_affiliate.user_interaction_failed where insta_username &#61; ' '\n" . $users);
+            ->content("SELECT * FROM insta_affiliate.user_interaction_failed where insta_username = ' '\n" . $users);
     }
 
     /**

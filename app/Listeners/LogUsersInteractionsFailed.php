@@ -38,7 +38,7 @@ class LogUsersInteractionsFailed
                 ->take($num_profiles)
                 ->get();
 
-    
+
             $failed_profiles_chunks = $new_failed_profiles->chunk(2);
 
             foreach ($failed_profiles_chunks as $failed_profiles_chunk) {
