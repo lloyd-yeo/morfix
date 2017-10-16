@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\InstagramHelper;
 use App\InstagramProfile;
+use App\InstagramProfileComment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -39,7 +40,7 @@ class EngagementGroup implements ShouldQueue
 	protected $comments_to_give;
 
 	protected $mediaId;
-	protected $igProfileId;
+	protected $ig_profile_id;
 	protected $comment;
 
 	/**
@@ -47,10 +48,10 @@ class EngagementGroup implements ShouldQueue
 	 *
 	 * @return void
 	 */
-	public function __construct($mediaId, $igProfileId, $comment = 1)
+	public function __construct($mediaId, $ig_profile_id, $comment = 1)
 	{
 		$this->mediaId = $mediaId;
-		$this->igProfileId = $igProfileId;
+		$this->ig_profile_id = $ig_profile_id;
 		$this->comment = $comment;
 		$this->comments_to_give = 100;
 	}
@@ -87,8 +88,8 @@ class EngagementGroup implements ShouldQueue
 
 		foreach ($ig_profiles as $ig_profile) {
 
-			if ($this->igProfileId !== NULL) {
-				if ($ig_profile->id === $this->igProfileId) {
+			if ($this->ig_profile_id !== NULL) {
+				if ($ig_profile->id === $this->ig_profile_id) {
 					continue;
 				}
 			}
@@ -106,7 +107,8 @@ class EngagementGroup implements ShouldQueue
 				} else {
 					if ($this->comment === 1) {
 						if ($ig_profile->auto_comment === 1) {
-							$comments = \App\InstagramProfileComment::where('insta_username', $ig_profile->insta_username)->get();
+							$comments = InstagramProfileComment::where('insta_username', $ig_profile->insta_username)
+								->get();
 							if (count($comments) > 0 && $this->comments_to_give > 0) {
 								$comment = $comments->random();
 								if (!empty($comment->comment)) {

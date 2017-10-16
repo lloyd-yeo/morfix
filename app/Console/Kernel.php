@@ -21,7 +21,6 @@ class Kernel extends ConsoleKernel {
         Commands\UpdatePaypalChargesDaily::class,
         Commands\UpdateLastPaidFromCSV::class,
         Commands\UpdateLastPaidFromCsv2::class,
-        Commands\GetNewDmJob::class,
         Commands\GetDm::class,
         Commands\SendDmJob::class,
         Commands\InteractionComment::class,
