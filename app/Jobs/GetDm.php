@@ -68,8 +68,8 @@ class GetDm implements ShouldQueue
 		}
 
 		try {
-			$explorer_response = $instagram->login($ig_username, $ig_password);
 			$activity_response = $instagram->people->getRecentActivityInbox();
+			dump($activity_response);
 			$newest_timestamp = 0;
 
 			foreach ($activity_response->getOldStories() as $story) {
