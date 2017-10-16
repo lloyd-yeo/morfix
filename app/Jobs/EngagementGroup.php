@@ -156,6 +156,9 @@ class EngagementGroup implements ShouldQueue
 						}
 					}
 				}
+
+				dump($response);
+				
 			} catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
 				continue;
 			} catch (\InstagramAPI\Exception\NetworkException $network_ex) {
@@ -174,7 +177,7 @@ class EngagementGroup implements ShouldQueue
 				continue;
 			}
 
-			var_dump($response);
+
 		}
 	}
 
