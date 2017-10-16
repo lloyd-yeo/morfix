@@ -77,12 +77,11 @@ class GetDm implements ShouldQueue
 
 				if ($story->getType() === 3) {
 					$story_arr = $story->asArray();
-
 					$story_args = $story_arr['args'];
 					$story_args_timestamp = $story_args['timestamp'];
 					$recipient_insta_id = $story_args['profile_id'];
 
-					if ($newest_timestamp === 0) {
+					if ($newest_timestamp == 0) {
 						//update instagram profile's timestamp here.
 						$newest_timestamp = $story_args_timestamp;
 						$ig_profile->recent_activity_timestamp = $newest_timestamp;
