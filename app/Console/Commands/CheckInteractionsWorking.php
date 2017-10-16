@@ -88,7 +88,6 @@ class CheckInteractionsWorking extends Command
 
             $users = User::where('email', $this->argument("email"))
                 ->orderBy('user_id', 'desc')
-                ->take(50)
                 ->get();
             $updatedcount = 0;
 
@@ -114,6 +113,7 @@ class CheckInteractionsWorking extends Command
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
                 ->where('partition', 0)
                 ->where('tier', '>', 1)
+                ->take(10)
                 ->orderBy('user_id', 'desc')
                 ->get();
 
