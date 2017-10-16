@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Notification;
 use App\Notifications\InteractionsFailed;
 use App\UserInteractionFailed;
+use Carbon\Carbon;
 
 class LogUsersInteractionsFailed
 {
