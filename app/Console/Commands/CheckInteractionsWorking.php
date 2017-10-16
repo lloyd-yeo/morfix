@@ -97,6 +97,8 @@ class CheckInteractionsWorking extends Command
             echo '<b>Total Execution Time:</b> ' . $execution_time . ' Seconds' . "\n";
         } else if (NULL !== $this->argument("email")) {
 
+            $time_start = microtime(true);
+            
             $users = User::where('email', $this->argument("email"))
                 ->orderBy('user_id', 'desc')
                 ->get();
