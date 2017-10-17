@@ -47,14 +47,18 @@ class SettingsController extends Controller
 		} else {
 			//Remove all active subscription
 			Auth::user()->deleteStripeSubscriptions();
-			$subscriptions_ = array();
+			$subscriptions_ = NULL;
 			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
 			foreach ($user_stripe_details as $user_stripe_detail) {
 				$user_stripe_id = $user_stripe_detail->stripe_id;
 				$subscriptions_listings = Subscription::all(array( 'customer' => $user_stripe_id ));
 
 				$subscriptions = collect($subscriptions_listings->data);
-				$subscriptions_->merge($subscriptions);
+				if ($subscriptions_ === NULL) {
+					$subscriptions_ = $subscriptions;
+				} else {
+					$subscriptions_->merge($subscriptions);
+				}
 				foreach ($subscriptions as $subscription) {
 					//The Invoices under this subscription
 					$invoice_listings = Invoice::all(array( "subscription" => $subscription->id ));
