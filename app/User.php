@@ -110,5 +110,4 @@ class User extends Authenticatable {
 			return InstagramProfile::where('email', $this->email)->get();
 	    }
     }
-    
 }

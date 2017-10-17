@@ -239,7 +239,6 @@ class InstagramHelper {
     public static function validForInteraction($ig_profile) {
         if ($ig_profile->checkpoint_required == 1) {
             echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
-//            return false;
         }
 
         if ($ig_profile->account_disabled == 1) {
