@@ -52,15 +52,15 @@ class SettingsController extends Controller
 			foreach ($user_stripe_details as $user_stripe_detail) {
 				$user_stripe_id = $user_stripe_detail->stripe_id;
 				$subscriptions_listings = Subscription::all(array( 'customer' => $user_stripe_id ));
-				
-				dump($subscriptions_listings);
 
-				$subscriptions = collect($subscriptions_listings->data);
-				if ($subscriptions_ === NULL) {
-					$subscriptions_ = $subscriptions;
-				} else {
-					$subscriptions_->merge($subscriptions);
-				}
+//				dump($subscriptions_listings);
+//
+//				$subscriptions = collect($subscriptions_listings->data);
+//				if ($subscriptions_ === NULL) {
+//					$subscriptions_ = $subscriptions;
+//				} else {
+//					$subscriptions_->merge($subscriptions);
+//				}
 
 				foreach ($subscriptions as $subscription) {
 					//The Invoices under this subscription
