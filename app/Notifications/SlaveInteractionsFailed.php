@@ -42,7 +42,7 @@ class SlaveInteractionsFailed extends Notification
     {
 
         $date_time = Carbon::now()->toDateTimeString();
-        $text = "<b>[INTERACTIONS FAILURE][SLAVE]</b>\n\n"
+        $text = "<b>[INTERACTIONS FAILURE - SLAVE]</b>\n\n"
             . "***** Failure Report *****\n\n"
             . "Number of users: " . $count . "\n"
             . "List of users affected:\n\n"

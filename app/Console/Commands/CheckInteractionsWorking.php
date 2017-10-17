@@ -32,6 +32,7 @@ class CheckInteractionsWorking extends Command
      * @var string
      */
     protected $description = 'Update users who have working interactions';
+    protected $failed_profiles;
 
     /**
      * Create a new command instance.
@@ -41,6 +42,7 @@ class CheckInteractionsWorking extends Command
     public function __construct()
     {
         parent::__construct();
+        $this->failed_profiles = collect();
     }
 
     /**
@@ -132,7 +134,6 @@ class CheckInteractionsWorking extends Command
                 ->get();
 
             $count = 0;
-            $updatedcount = 0;
             foreach ($users as $user) {
 
                 echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
@@ -141,20 +142,18 @@ class CheckInteractionsWorking extends Command
                     ->get();
                 foreach ($instagram_profiles as $ig_profile) {
                     $tier = $user->tier;
-                    $count = $count + $this->checkIgProfile($ig_profile, $tier, $updatedcount);
+                    $failed_profile = $this->checkIgProfile($ig_profile, $tier);
+                    if ($failed_profile) {
+                        $this->failed_profiles->push($failed_profile);
+                    }
 
                 }
             }
-            if ($count >= 1) {
+            if ($this->failed_profiles->isNotEmpty()) {
                 //notify how many updated
-                $from = Carbon::now()->subMinute(15)->toDateTimeString();
-                $failed_profiles = UserInteractionFailed::where('timestamp', '>', $from)
-                    ->orderby('id', 'desc')
-                    ->take($count)
-                    ->get();
 
-                event(new UsersInteractionsFailed($failed_profiles));
-                echo '$count =:' . $count . ' and UserInteractionsFailed event called' . "\n";
+                event(new UsersInteractionsFailed($this->failed_profiles));
+                echo '$count: ' . $this->failed_profiles->count() . ' and UserInteractionsFailed event called' . "\n";
 
             }
             $time_end = microtime(true);
@@ -163,9 +162,9 @@ class CheckInteractionsWorking extends Command
         }
     }
 
-    public function checkIgProfile($ig_profile, $tier, $updatedcount)
+    public function checkIgProfile($ig_profile, $tier)
     {
-
+        $updated = false;
         $from = Carbon::now()->subHours(3)->toDateTimeString();
         $to = Carbon::now()->toDateTimeString();
 
@@ -246,7 +245,8 @@ class CheckInteractionsWorking extends Command
 
         if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
             $ig_profile->auto_interactions_working = 0;
-            if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0 && $tier > 1) {
+            $ig_profile->save();
+            if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0) {
                 $check_exist = UserInteractionFailed::where('email', $ig_profile->email)->first();
                 if ($check_exist === NULL) {
                     $profile = new UserInteractionFailed;
@@ -256,23 +256,26 @@ class CheckInteractionsWorking extends Command
                     $profile->partition = 0;
                     $profile->timestamp = Carbon::now()->toDateTimeString();
                     $profile->save();
-                    $updatedcount = 1;
+                    return $profile;
+                } else {
+                    return NULL;
                 }
+
+            } else {
+                return NULL;
             }
+
         } else if ($ig_profile->auto_comment_working === 1 && $ig_profile->auto_like_working === 1 && $ig_profile->auto_follow_working === 1) {
             $ig_profile->auto_interactions_working = 1;
-            $updatedcount = 0;
+            $ig_profile->save();
             $check = UserInteractionFailed::where('insta_username', $ig_profile->insta_username)->first();
             if ($check !== NULL) {
                 $check->delete();
             }
-
+            return NULL;
         }
 
-        $ig_profile->save();
 
-
-        return $updatedcount;
     }
 
     public function checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $user)
@@ -282,7 +285,7 @@ class CheckInteractionsWorking extends Command
 
         $connection_name = Helper::getConnection($user->partition);
         $main_ig_profile = InstagramProfile::where('insta_username', $ig_profile->insta_username)
-                            ->first();
+            ->first();
 
         $user_like = DB::connection($connection_name)->table('user_insta_profile_like_log')
             ->where('insta_username', $ig_profile->insta_username)
