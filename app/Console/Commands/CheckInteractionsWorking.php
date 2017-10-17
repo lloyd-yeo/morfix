@@ -240,6 +240,7 @@ class CheckInteractionsWorking extends Command
             echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
             $partition = $user->partition;
+
             if ($partition !== $current_partition) {
                 $current_partition = $partition;
                 if ($this->failed_profiles->isNotEmpty()) {
@@ -250,8 +251,11 @@ class CheckInteractionsWorking extends Command
                     $this->failed_profiles = collect();
                 }
             }
+			echo "[" . $user->email . "] retrieving profiles...\n";
             $instagram_profiles = InstagramProfile::where('email', $user->email)
                 ->get();
+	        echo "[" . $user->email . "] retrieved " . $instagram_profiles->count() . "\n";
+	        
             foreach ($instagram_profiles as $ig_profile) {
                 $tier = $user->tier;
                 $failed_profile = $this->checkIgProfile($ig_profile, $tier, $partition);
