@@ -93,7 +93,7 @@ class CheckInteractionsWorking extends Command
         $user_unfollow = NULL;
 
         if ($partition > 0) {
-        	echo "[" . $ig_profile . "] retrieving slave connection PDO\n";
+        	echo "[" . $ig_profile->insta_username . "] retrieving slave connection PDO\n";
             $connection_name = Helper::getConnection($partition);
 
             $user_like = DB::connection($connection_name)->table('user_insta_profile_like_log')
@@ -117,7 +117,7 @@ class CheckInteractionsWorking extends Command
                 ->first();
 
         } elseif ($partition === 0) {
-	        echo "[" . $ig_profile . "] on Master\n";
+	        echo "[" . $ig_profile->insta_username . "] on Master\n";
             $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_liked', array($from, $to))
                 ->first();
