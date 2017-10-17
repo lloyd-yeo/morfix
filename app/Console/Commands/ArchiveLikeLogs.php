@@ -53,7 +53,7 @@ class ArchiveLikeLogs extends Command
 	public function handle()
 	{
 		$size = $this->argument('size');
-		$seed_size = 12235776;
+		$seed_size = 16354776;
 		while ($seed_size < $size) {
 
 			$seed_size = $seed_size + 1000;
