@@ -88,6 +88,7 @@ class Kernel extends ConsoleKernel {
         Commands\SendPremiumAffiliateEmail::class,
         Commands\TestInteractionGenderFilter::class,
 	    Commands\TestFailedEngagementGroupNotification::class,
+	    Commands\UpdateMasterInstagramProfileErrorFlags::class,
     ];
 
     /**
