@@ -73,6 +73,7 @@ class InteractionLike implements ShouldQueue
 	 */
 	protected $instagram;
 
+	protected $time_start;
 	protected $targeted_hashtags;
 	protected $targeted_usernames;
 	protected $speed_delay;
@@ -94,6 +95,7 @@ class InteractionLike implements ShouldQueue
 	 */
 	public function handle()
 	{
+		$this->time_start = microtime(TRUE);
 		DB::reconnect();
 
 		$this->calcSpeedDelay($this->profile->speed);
@@ -182,12 +184,14 @@ class InteractionLike implements ShouldQueue
 											}
 										} else {
 											echo "\n\n[146] Exiting...\n\n";
+											$this->printElapsedTime($this->time_start, $ig_profile);
 
 											return;
 										}
 									}
 								} else {
 									echo "\n\n[151] Exiting...\n\n";
+									$this->printElapsedTime($this->time_start, $ig_profile);
 
 									return;
 								}
@@ -195,6 +199,7 @@ class InteractionLike implements ShouldQueue
 						} while ($next_max_id !== NULL && $this->like_quota > 0);
 					} else {
 						echo "\n\n[157] Exiting...\n\n";
+						$this->printElapsedTime($this->time_start, $ig_profile);
 
 						return;
 					}
@@ -225,6 +230,7 @@ class InteractionLike implements ShouldQueue
 										}
 									} else {
 										echo "\n\n[186] Exiting...\n\n";
+										$this->printElapsedTime($this->time_start, $ig_profile);
 
 										return;
 									}
@@ -233,6 +239,7 @@ class InteractionLike implements ShouldQueue
 						}
 					} else {
 						echo "\n\n[192] Exiting...\n\n";
+						$this->printElapsedTime($this->time_start, $ig_profile);
 
 						return;
 					}
@@ -306,13 +313,16 @@ class InteractionLike implements ShouldQueue
 													continue;
 												}
 											} else {
+
 												echo "\n\n[264] Exiting...\n\n";
+												$this->printElapsedTime($this->time_start, $ig_profile);
 
 												return;
 											}
 										}
 									} else {
 										echo "\n\n[269] Exiting...\n\n";
+										$this->printElapsedTime($this->time_start, $ig_profile);
 
 										return;
 									}
@@ -339,6 +349,8 @@ class InteractionLike implements ShouldQueue
 											}
 										}
 									} else {
+										$this->printElapsedTime($this->time_start, $ig_profile);
+
 										return;
 									}
 								}
@@ -347,9 +359,12 @@ class InteractionLike implements ShouldQueue
 					}
 				}
 			} else {
+				$this->printElapsedTime($this->time_start, $this->profile);
+
 				return;
 			}
 		}
+		$this->printElapsedTime($this->time_start, $ig_profile);
 	}
 
 	/**
@@ -702,6 +717,20 @@ class InteractionLike implements ShouldQueue
 	public function getProfile(): InstagramProfile
 	{
 		return $this->profile;
+	}
+
+	/**
+	 * @param $time_start
+	 * @param $ig_profile
+	 */
+	private function printElapsedTime($time_start, $ig_profile): void
+	{
+		$time_end = microtime(TRUE);
+		$duration = ($time_end - $time_start);
+		$hours = (int)($duration / 60 / 60);
+		$minutes = (int)($duration / 60) - $hours * 60;
+		$seconds = (int)$duration - $hours * 60 * 60 - $minutes * 60;
+		$this->line("[" . $ig_profile->insta_username . "] elapsed time " . $seconds . " seconds.");
 	}
 
 }
