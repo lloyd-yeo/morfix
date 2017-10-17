@@ -44,7 +44,7 @@ class EngagementGroupFailed extends Notification
 	/**
 	 *Send Telegram message to group chat
 	 */
-	public function toTelegram($media_id)
+	public function toTelegram($extra_variable)
 	{
 		$failed_media_meta = InstagramProfileMedia::where('media_id', $this->media_id)->first();
 
