@@ -39,7 +39,7 @@ class InteractionsFailed extends Notification
     public function toTelegram($users)
     {
 	    $date_time = Carbon::now()->toDateTimeString();
-	    $text = "<b>[INTERACTIONS FAILURE]</b>\n\n"
+	    $text = "<b>[INTERACTIONS FAILURE][MAIN]</b>\n\n"
 		    . "***** Failure Report *****\n\n"
 		    . "Number of users: " . count($users) . "\n"
 		    . "List of users affected:\n\n"
