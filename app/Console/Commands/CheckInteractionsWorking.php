@@ -120,18 +120,22 @@ class CheckInteractionsWorking extends Command
         } elseif ($partition === 0) {
 	        echo "[" . $ig_profile->insta_username . "] on Master\n";
 
+	        echo "[" . $ig_profile->insta_username . "] retrieving logs from LikeLog\n";
             $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_liked', array($from, $to))
                 ->first();
 
+	        echo "[" . $ig_profile->insta_username . "] retrieving logs from CommentLog\n";
             $user_comment = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_commented', array($from, $to))
                 ->first();
 
+	        echo "[" . $ig_profile->insta_username . "] retrieving logs from FollowLog\n";
             $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_inserted', array($from, $to))
                 ->first();
 
+	        echo "[" . $ig_profile->insta_username . "] retrieving logs from UnfollowLog\n";
             $user_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_unfollowed', array($from, $to))
                 ->first();
