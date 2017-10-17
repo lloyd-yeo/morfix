@@ -53,36 +53,42 @@ class ArchiveLikeLogs extends Command
 	public function handle()
 	{
 		$size = $this->argument('size');
+		$seed_size = 4609776;
+		while ($seed_size < $size) {
 
-		echo "Archiving results with log_id <= $size...\n";
-		DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, 
+			$seed_size = $seed_size + 100000;
+
+			echo "Archiving results with log_id <= $seed_size...\n";
+			DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, 
                 target_media, target_media_code, log, date_liked) 
                 SELECT insta_username, target_username, target_media, target_media_code, log, date_liked 
                 FROM user_insta_profile_like_log 
-                WHERE log_id <= ?;', [ $size ]);
-		echo "Archiving success!\n";
+                WHERE log_id <= ?;', [ $seed_size ]);
+			echo "Archiving success!\n";
 
-		echo "Deleting from current table...\n";
-		InstagramProfileLikeLog::where('log_id', '<=', $size)->delete();
-		InstagramProfileLikeLog::where('log_id', '<=', $size)->chunk(3000, function ($like_logs) {
+			echo "Deleting from current table...\n";
+			InstagramProfileLikeLog::where('log_id', '<=', $seed_size)->delete();
+			InstagramProfileLikeLog::where('log_id', '<=', $seed_size)->chunk(3000, function ($like_logs) {
 
-			foreach ($like_logs as $like_log) {
-//				$archive = new LikeLogsArchive;
-//				$archive->insta_username = $like_log->insta_username;
-//				$archive->target_username = $like_log->target_username;
-//				$archive->target_media = $like_log->target_media;
-//				$archive->target_media_code = $like_log->target_media_code;
-//				$archive->log = $like_log->log;
-//				$archive->date_liked = $like_log->date_liked;
-//				if ($archive->save()) {
-//					echo "Saving archive #" . $archive->log_id . "\n";
-//				}
+				foreach ($like_logs as $like_log) {
+					//				$archive = new LikeLogsArchive;
+					//				$archive->insta_username = $like_log->insta_username;
+					//				$archive->target_username = $like_log->target_username;
+					//				$archive->target_media = $like_log->target_media;
+					//				$archive->target_media_code = $like_log->target_media_code;
+					//				$archive->log = $like_log->log;
+					//				$archive->date_liked = $like_log->date_liked;
+					//				if ($archive->save()) {
+					//					echo "Saving archive #" . $archive->log_id . "\n";
+					//				}
 
-				echo "Removing: " . $like_log->log_id . "\n";
-				$like_log->delete();
-			}
-		});
-		echo "Deleting complete!\n";
+					echo "Removing: " . $like_log->log_id . "\n";
+					$like_log->delete();
+				}
+			});
+			echo "Deleting complete!\n";
+		}
+
 	}
 
 }
