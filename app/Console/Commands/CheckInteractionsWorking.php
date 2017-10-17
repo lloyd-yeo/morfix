@@ -54,73 +54,16 @@ class CheckInteractionsWorking extends Command
     {
 
 
-        if ($this->argument("email") == "slave") {
-            $time_start = microtime(true);
-
-
-            $users = User::where('tier', '>', 1)
-                ->where('partition', '>', 0)
-                ->orderBy('user_id', 'desc')
-                ->get();
-
-            $count = 0;
-            $updatedcount = 0;
-            foreach ($users as $user) {
-
-                $connection_name = Helper::getConnection($user->partition);
-
-                echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
-
-                $instagram_profiles = DB::connection($connection_name)->table('user_insta_profile')
-                    ->where('email', $user->email)
-                    ->get();
-                if (!empty($instagram_profiles)) {
-                    foreach ($instagram_profiles as $ig_profile) {
-                        $tier = $user->tier;
-                        $partition = $user->partition;
-                        if ($partition > 0) {
-                            $count = $count + $this->checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $user);
-                        }
-                    }
-                }
-            }
-            if ($count >= 1) {
-                //notify how many updated
-                $from = Carbon::now()->subMinute(15)->toDateTimeString();
-                $failed_profiles = UserInteractionFailed::where('timestamp', '>', $from)
-                    ->orderby('id', 'desc')
-                    ->take($count)
-                    ->get();
-
-                event(new SlaveUsersInteractionsFailed($failed_profiles));
-                echo '$count =:' . $count . ' and UserInteractionsFailed event called' . "\n";
-
-            }
-            $time_end = microtime(true);
-            $execution_time = ($time_end - $time_start);
-            echo '<b>Total Execution Time:</b> ' . $execution_time . ' Seconds' . "\n";
-        } else if (NULL !== $this->argument("email")) {
+        if (NULL !== $this->argument("email")) {
 
             $time_start = microtime(true);
 
             $users = User::where('email', $this->argument("email"))
-                ->orderBy('user_id', 'desc')
+                ->orderBy('partition', 'desc')
                 ->get();
-            $updatedcount = 0;
 
+            $this->updateUserProfileWorking($users);
 
-            foreach ($users as $user) {
-
-                echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
-
-                $instagram_profiles = InstagramProfile::where('email', $user->email)
-                    ->get();
-
-                foreach ($instagram_profiles as $ig_profile) {
-                    $tier = $user->tier;
-                    $this->checkIgProfile($ig_profile, $tier, $updatedcount);
-                }
-            }
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
             echo '<b>Total Execution Time:</b> ' . $execution_time . ' Seconds' . "\n";
@@ -128,61 +71,67 @@ class CheckInteractionsWorking extends Command
             $time_start = microtime(true);
 
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user_insta_profile)')
-                ->where('partition', 0)
                 ->where('tier', '>', 1)
-                ->orderBy('user_id', 'desc')
+                ->orderBy('partition', 'asc')
                 ->get();
 
-            $count = 0;
-            foreach ($users as $user) {
-
-                echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
-
-                $instagram_profiles = InstagramProfile::where('email', $user->email)
-                    ->get();
-                foreach ($instagram_profiles as $ig_profile) {
-                    $tier = $user->tier;
-                    $failed_profile = $this->checkIgProfile($ig_profile, $tier);
-                    if ($failed_profile) {
-                        $this->failed_profiles->push($failed_profile);
-                    }
-
-                }
-            }
-            if ($this->failed_profiles->isNotEmpty()) {
-                //notify how many updated
-
-                event(new UsersInteractionsFailed($this->failed_profiles));
-                echo '$count: ' . $this->failed_profiles->count() . ' and UserInteractionsFailed event called' . "\n";
-
-            }
+            $this->updateUserProfileWorking($users);
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
             echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
         }
     }
 
-    public function checkIgProfile($ig_profile, $tier)
+    public function checkIgProfile($ig_profile, $tier, $partition)
     {
         $updated = false;
         $from = Carbon::now()->subHours(3)->toDateTimeString();
         $to = Carbon::now()->toDateTimeString();
+        $user_like = NULL;
+        $user_comment = NULL;
+        $user_follow = NULL;
+        $user_unfollow = NULL;
 
-        $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_liked', array($from, $to))
-            ->first();
+        if ($partition > 0) {
+            $connection_name = Helper::getConnection($partition);
 
-        $user_comment = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_commented', array($from, $to))
-            ->first();
+            $user_like = DB::connection($connection_name)->table('user_insta_profile_like_log')
+                ->where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_liked', array($from, $to))
+                ->first();
 
-        $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_inserted', array($from, $to))
-            ->first();
+            $user_comment = DB::connection($connection_name)->table('user_insta_profile_comment_log')
+                ->where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_commented', array($from, $to))
+                ->first();
 
-        $user_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_unfollowed', array($from, $to))
-            ->first();
+            $user_follow = DB::connection($connection_name)->table('user_insta_profile_follow_log')
+                ->where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_inserted', array($from, $to))
+                ->first();
+
+            $user_unfollow = DB::connection($connection_name)->table('user_insta_profile_follow_log')
+                ->where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_unfollowed', array($from, $to))
+                ->first();
+
+        } elseif ($partition === 0) {
+            $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_liked', array($from, $to))
+                ->first();
+
+            $user_comment = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_commented', array($from, $to))
+                ->first();
+
+            $user_follow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_inserted', array($from, $to))
+                ->first();
+
+            $user_unfollow = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)
+                ->whereBetween('date_unfollowed', array($from, $to))
+                ->first();
+        }
 
         if (is_null($user_like) && $ig_profile->auto_like == 1) {
             $ig_profile->auto_like_working = 0;
@@ -278,122 +227,48 @@ class CheckInteractionsWorking extends Command
 
     }
 
-    public function checkSlaveIgProfile($ig_profile, $tier, $updatedcount, $user)
+    /**
+     * @param $users
+     */
+    public function updateUserProfileWorking($users)
     {
-        $from = Carbon::now()->subHours(3)->toDateTimeString();
-        $to = Carbon::now()->toDateTimeString();
+        $current_partition = 0;
+        foreach ($users as $user) {
 
-        $connection_name = Helper::getConnection($user->partition);
-        $main_ig_profile = InstagramProfile::where('insta_username', $ig_profile->insta_username)
-            ->first();
+            echo "Retrieved user [" . $user->email . "] [" . $user->tier . "]\n";
 
-        $user_like = DB::connection($connection_name)->table('user_insta_profile_like_log')
-            ->where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_liked', array($from, $to))
-            ->first();
+            $partition = $user->partition;
+            if ($partition !== $current_partition) {
+                $current_partition = $partition;
+                if ($this->failed_profiles->isNotEmpty()) {
+                    //notify how many updated
 
-        $user_comment = DB::connection($connection_name)->table('user_insta_profile_comment_log')
-            ->where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_commented', array($from, $to))
-            ->first();
-
-        $user_follow = DB::connection($connection_name)->table('user_insta_profile_follow_log')
-            ->where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_inserted', array($from, $to))
-            ->first();
-
-        $user_unfollow = DB::connection($connection_name)->table('user_insta_profile_follow_log')
-            ->where('insta_username', $ig_profile->insta_username)
-            ->whereBetween('date_unfollowed', array($from, $to))
-            ->first();
-
-        if (is_null($user_like) && $main_ig_profile->auto_like == 1) {
-            $main_ig_profile->auto_like_working = 0;
-            echo "[" . $main_ig_profile->insta_username . "] Updated like info to 0\n";
-        }
-
-        if (!is_null($user_like) || $main_ig_profile->auto_like == 0) {
-            $main_ig_profile->auto_like_working = 1;
-            echo "[" . $main_ig_profile->insta_username . "] Updated like info to 1\n";
-        }
-
-        if (is_null($user_comment) && $main_ig_profile->auto_comment == 1) {
-            $main_ig_profile->auto_comment_working = 0;
-            echo "[" . $main_ig_profile->insta_username . "] Updated comment info to 0 \n";
-        }
-
-        if (!is_null($user_comment) || $main_ig_profile->auto_comment == 0) {
-            $main_ig_profile->auto_comment_working = 1;
-            echo "[" . $main_ig_profile->insta_username . "] Updated comment info to 1 \n";
-        }
-
-        if ($main_ig_profile->auto_follow == 0 && $main_ig_profile->auto_unfollow == 0) { #User turned off auto follow & auto unfollow
-            $main_ig_profile->auto_follow_working = 1;
-            echo "[" . $main_ig_profile->insta_username . "] didn't turn on Auto-Follow/Unfollow \n";
-        } else {
-            if ($main_ig_profile->auto_follow == 1 && $main_ig_profile->auto_unfollow == 0) {
-                #turn on Auto-Follow only
-                if (!is_null($user_follow)) {
-                    #If there are follow logs in the past 3 hours then it's work$iging.
-                    #user_follow is first() of past 3 hour follow logs.
-                    $main_ig_profile->auto_follow_working = 1;
-                    echo "[" . $main_ig_profile->insta_username . "] Updated follow info \n";
-                } else {
-                    $main_ig_profile->auto_follow_working = 0;
-                    echo "[" . $main_ig_profile->insta_username . "] Updated follow info \n";
-                }
-            } else if ($main_ig_profile->auto_unfollow == 1 && $main_ig_profile->auto_follow == 0) {
-                #turn on Auto-Unfollow only
-                if (!is_null($user_unfollow)) {
-                    #If there are unfollow logs in the past 3 hours then it's working.
-                    #$user_unfollow is first() of past 3 hour unfollow logs.
-                    $main_ig_profile->auto_follow_working = 1;
-                    echo "[" . $main_ig_profile->insta_username . "] Updated follow info \n";
-                } else {
-                    $main_ig_profile->auto_follow_working = 0;
-                    echo "[" . $main_ig_profile->insta_username . "] Updated follow info \n";
-                }
-            } else {
-                #turn on Both
-                if ((!is_null($user_follow) || !is_null($user_unfollow))) {
-                    #If there are follow logs or unfollow logs in the past 3 hours then it's working.
-                    $main_ig_profile->auto_follow_working = 1;
-                    echo "[" . $main_ig_profile->insta_username . "] Updated follow info \n";
-                } else {
-                    $main_ig_profile->auto_follow_working = 0;
-                    echo "[" . $main_ig_profile->insta_username . "] Updated follow info \n";
+                    event(new UsersInteractionsFailed($this->failed_profiles));
+                    echo '$count: ' . $this->failed_profiles->count() . ' and UserInteractionsFailed event called' . "\n";
+                    $this->failed_profiles = collect();
                 }
             }
-        }
-
-        if ($main_ig_profile->auto_comment_working === 0 || $main_ig_profile->auto_like_working === 0 || $main_ig_profile->auto_follow_working === 0) {
-            $main_ig_profile->auto_interactions_working = 0;
-            if ($main_ig_profile->incorrect_pw === 0 && $main_ig_profile->checkpoint_required === 0 && $main_ig_profile->auto_follow_ban === 0 && $main_ig_profile->auto_like_ban === 0 && $main_ig_profile->auto_comment_ban === 0 && $tier > 1) {
-                $check_exist = UserInteractionFailed::where('email', $main_ig_profile->email)->first();
-                if ($check_exist === NULL) {
-                    $profile = new UserInteractionFailed;
-                    $profile->email = $main_ig_profile->email;
-                    $profile->insta_username = $main_ig_profile->insta_username;
-                    $profile->tier = $tier;
-                    $profile->partition = $user->partition;
-                    $profile->timestamp = Carbon::now()->toDateTimeString();
-                    $profile->save();
-                    $updatedcount = 1;
+            $instagram_profiles = InstagramProfile::where('email', $user->email)
+                ->get();
+            foreach ($instagram_profiles as $ig_profile) {
+                $tier = $user->tier;
+                $failed_profile = $this->checkIgProfile($ig_profile, $tier, $partition);
+                if ($failed_profile) {
+                    $this->failed_profiles->push($failed_profile);
                 }
-            }
-        } else if ($main_ig_profile->auto_comment_working === 1 && $main_ig_profile->auto_like_working === 1 && $main_ig_profile->auto_follow_working === 1) {
-            $main_ig_profile->auto_interactions_working = 1;
-            $updatedcount = 0;
-            $check = UserInteractionFailed::where('insta_username', $main_ig_profile->insta_username)->first();
-            if ($check !== NULL) {
-                $check->delete();
             }
 
         }
+        if ($this->failed_profiles->isNotEmpty()) {
+            //notify how many updated
 
-        $main_ig_profile->save();
-        return $updatedcount;
+            event(new UsersInteractionsFailed($this->failed_profiles));
+            echo '$count: ' . $this->failed_profiles->count() . ' and UserInteractionsFailed event called' . "\n";
+            $this->failed_profiles = collect();
+        }
     }
+
+
 }
 
 

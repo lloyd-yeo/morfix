@@ -25,7 +25,7 @@ class InteractionsFailed extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -36,16 +36,22 @@ class InteractionsFailed extends Notification
     /**
      *Send Telegram message to group chat
      */
-    public function toTelegram($users, $count)
+    public function toTelegram($users, $count, $partition)
     {
-	    $date_time = Carbon::now()->toDateTimeString();
-	    $text = "<b>[INTERACTIONS FAILURE][MAIN]</b>\n\n"
-		    . "***** Failure Report *****\n\n"
-		    . "Number of users: " . $count . "\n"
-		    . "List of users affected:\n\n"
-		    . $users . "\n\n"
-		    . "Date/Time: " . $date_time . "\n\n"
-		    . "";
+        $date_time = Carbon::now()->toDateTimeString();
+        $partition_name = "";
+        if ($partition === 0) {
+            $partition_name = "Master";
+        } else {
+            $partition_name = "Slave - " . $partition;
+        }
+        $text = "<b>[INTERACTIONS FAILURE][$partition_name]</b>\n\n"
+            . "***** Failure Report *****\n\n"
+            . "Number of users: " . $count . "\n"
+            . "List of users affected:\n\n"
+            . $users . "\n\n"
+            . "Date/Time: " . $date_time . "\n\n"
+            . "";
         $option['parse_mode'] = 'HTML';
         $telegram_msg = TelegramMessage::create();
         $telegram_msg->to('-253338893');
@@ -57,7 +63,7 @@ class InteractionsFailed extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
