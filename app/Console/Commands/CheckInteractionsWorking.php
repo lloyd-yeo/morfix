@@ -85,7 +85,7 @@ class CheckInteractionsWorking extends Command
     public function checkIgProfile($ig_profile, $tier, $partition)
     {
         $updated = false;
-        $from = Carbon::now()->subHours(3)->toDateTimeString();
+        $from = Carbon::now()->subHours(2)->toDateTimeString();
         $to = Carbon::now()->toDateTimeString();
         $user_like = NULL;
         $user_comment = NULL;
