@@ -53,10 +53,10 @@ class ArchiveLikeLogs extends Command
 	public function handle()
 	{
 		$size = $this->argument('size');
-		$seed_size = 4609776;
+		$seed_size = 12235776;
 		while ($seed_size < $size) {
 
-			$seed_size = $seed_size + 3000;
+			$seed_size = $seed_size + 1000;
 
 			echo "Archiving results with log_id <= $seed_size...\n";
 			DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, 
