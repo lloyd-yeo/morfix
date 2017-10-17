@@ -39,9 +39,9 @@ class LogSlaveUsersInteractionsFailed
                     $userss[] = $failed_profile->insta_username;
 //
                 }
-
+                $count = count($userss);
                 $users = implode("\n", $userss);
-                Notification::send($users, new SlaveInteractionsFailed($users));
+                Notification::send($users, new SlaveInteractionsFailed($users, $count));
                 unset($userss);
             }
 
