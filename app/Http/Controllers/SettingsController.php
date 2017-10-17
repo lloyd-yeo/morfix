@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\PaymentLog;
+use App\StripeActiveSubscription;
 use App\StripeDetail;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
-use App\User;
-use App\InstagramProfile;
-use App\Niche;
-use App\InstagramProfileComment;
-use App\InstagramProfileTargetHashtag;
-use App\InstagramProfileTargetUsername;
-use App\StripeActiveSubscription;
-use App\PaymentLog;
 use Stripe\Invoice;
-use Stripe\Stripe as Stripe;
 use Stripe\Subscription;
 
 class SettingsController extends Controller
