@@ -59,6 +59,7 @@ class SettingsController extends Controller
 				} else {
 					$subscriptions_->merge($subscriptions);
 				}
+
 				foreach ($subscriptions as $subscription) {
 					//The Invoices under this subscription
 					$invoice_listings = Invoice::all(array( "subscription" => $subscription->id ));
@@ -84,6 +85,8 @@ class SettingsController extends Controller
 
 			$invoices_ = Invoice::all(array( 'limit' => 100, 'customer' => Auth::user()->stripe_id ));
 		}
+
+		dump($subscriptions_);
 
 		return view('settings.index', [
 			'subscriptions' => $subscriptions_,
