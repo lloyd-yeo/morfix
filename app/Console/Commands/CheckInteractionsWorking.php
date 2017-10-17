@@ -253,6 +253,7 @@ class CheckInteractionsWorking extends Command
                     $profile->email = $ig_profile->email;
                     $profile->insta_username = $ig_profile->insta_username;
                     $profile->tier = $tier;
+                    $profile->partition = 0;
                     $profile->timestamp = Carbon::now()->toDateTimeString();
                     $profile->save();
                     $updatedcount = 1;
@@ -371,6 +372,7 @@ class CheckInteractionsWorking extends Command
                     $profile->email = $main_ig_profile->email;
                     $profile->insta_username = $main_ig_profile->insta_username;
                     $profile->tier = $tier;
+                    $profile->partition = $user->partition;
                     $profile->timestamp = Carbon::now()->toDateTimeString();
                     $profile->save();
                     $updatedcount = 1;
