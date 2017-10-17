@@ -11,15 +11,20 @@ use NotificationChannels\Telegram\TelegramMessage;
 class InteractionsFailed extends Notification
 {
     use Queueable;
+    protected $users;
+    protected $count;
+    protected $partition;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($users, $count, $partition)
     {
-        //
+        $this->users = $users;
+        $this->count = $count;
+        $this->partition = $partition;
     }
 
     /**
@@ -36,20 +41,20 @@ class InteractionsFailed extends Notification
     /**
      *Send Telegram message to group chat
      */
-    public function toTelegram($users, $count, $partition)
+    public function toTelegram()
     {
         $date_time = Carbon::now()->toDateTimeString();
         $partition_name = "";
-        if ($partition === 0) {
+        if ($this->partition === 0) {
             $partition_name = "Master";
         } else {
-            $partition_name = "Slave - " . $partition;
+            $partition_name = "Slave - " . $this->partition;
         }
         $text = "<b>[INTERACTIONS FAILURE][$partition_name]</b>\n\n"
             . "***** Failure Report *****\n\n"
-            . "Number of users: " . $count . "\n"
+            . "Number of users: " . $this->count . "\n"
             . "List of users affected:\n\n"
-            . $users . "\n\n"
+            . $this->users . "\n\n"
             . "Date/Time: " . $date_time . "\n\n"
             . "";
         $option['parse_mode'] = 'HTML';

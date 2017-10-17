@@ -195,21 +195,23 @@ class CheckInteractionsWorking extends Command
         if ($ig_profile->auto_comment_working === 0 || $ig_profile->auto_like_working === 0 || $ig_profile->auto_follow_working === 0) {
             $ig_profile->auto_interactions_working = 0;
             $ig_profile->save();
-            if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0) {
-                $check_exist = UserInteractionFailed::where('email', $ig_profile->email)->first();
-                if ($check_exist === NULL) {
-                    $profile = new UserInteractionFailed;
-                    $profile->email = $ig_profile->email;
-                    $profile->insta_username = $ig_profile->insta_username;
-                    $profile->tier = $tier;
-                    $profile->partition = 0;
-                    $profile->timestamp = Carbon::now()->toDateTimeString();
-                    $profile->save();
-                    return $profile;
-                } else {
-                    return NULL;
-                }
+            if ($ig_profile->incorrect_pw === 0 && $ig_profile->checkpoint_required === 0 && $ig_profile->account_disabled === 0 && $ig_profile->invalid_user === 0) {
+                if ($ig_profile->auto_follow_ban === 0 && $ig_profile->auto_like_ban === 0 && $ig_profile->auto_comment_ban === 0) {
+                    $check_exist = UserInteractionFailed::where('email', $ig_profile->email)->first();
+                    if ($check_exist === NULL) {
+                        $profile = new UserInteractionFailed;
+                        $profile->email = $ig_profile->email;
+                        $profile->insta_username = $ig_profile->insta_username;
+                        $profile->tier = $tier;
+                        $profile->partition = 0;
+                        $profile->timestamp = Carbon::now()->toDateTimeString();
+                        $profile->save();
+                        return $profile;
+                    } else {
+                        return NULL;
+                    }
 
+                }
             } else {
                 return NULL;
             }
