@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable as Billable;
-use App\StripeActiveSubscription;
+use App\Helper;
 
 class User extends Authenticatable {
     
@@ -101,4 +101,14 @@ class User extends Authenticatable {
         }
     }
 
+    public function getInstagramProfiles() {
+    	$partition = $this->partition;
+    	if ($partition > 0) {
+			$connection_name = Helper::getConnection($partition);
+			return DB::connection($connection_name)->table("user_insta_profile")->where('email', $this->email)->get();
+	    } else {
+			return InstagramProfile::where('email', $this->email)->get();
+	    }
+    }
+    
 }

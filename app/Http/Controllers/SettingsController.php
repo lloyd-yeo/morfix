@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\PaymentLog;
+use App\StripeActiveSubscription;
 use App\StripeDetail;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Response;
-use App\User;
-use App\InstagramProfile;
-use App\Niche;
-use App\InstagramProfileComment;
-use App\InstagramProfileTargetHashtag;
-use App\InstagramProfileTargetUsername;
-use App\StripeActiveSubscription;
-use App\PaymentLog;
 use Stripe\Invoice;
-use Stripe\Stripe as Stripe;
 use Stripe\Subscription;
 
 class SettingsController extends Controller
@@ -53,15 +46,6 @@ class SettingsController extends Controller
 				$user_stripe_id = $user_stripe_detail->stripe_id;
 				$subscriptions_listings = Subscription::all(array( 'customer' => $user_stripe_id ));
 
-//				dump($subscriptions_listings);
-//
-//				$subscriptions = collect($subscriptions_listings->data);
-//				if ($subscriptions_ === NULL) {
-//					$subscriptions_ = $subscriptions;
-//				} else {
-//					$subscriptions_->merge($subscriptions);
-//				}
-
 				foreach ($subscriptions as $subscription) {
 					//The Invoices under this subscription
 					$invoice_listings = Invoice::all(array( "subscription" => $subscription->id ));
@@ -88,10 +72,8 @@ class SettingsController extends Controller
 			$invoices_ = Invoice::all(array( 'limit' => 100, 'customer' => Auth::user()->stripe_id ));
 		}
 
-		dump($subscriptions_);
-
 		return view('settings.index', [
-			'subscriptions' => $subscriptions_,
+			'subscriptions' => $subscriptions,
 			'invoices'      => $invoices,
 			'invoices_'     => $invoices_,
 		]);
