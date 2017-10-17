@@ -35,9 +35,9 @@ class LogUsersInteractionsFailed
 					$userss[] = $failed_profile->insta_username;
 					//
 				}
-
+                $count = count($userss);
 				$users = implode("\n", $userss);
-				Notification::send($users, new InteractionsFailed($users));
+				Notification::send($users, new InteractionsFailed($users, $count));
 				unset($userss);
 			}
 

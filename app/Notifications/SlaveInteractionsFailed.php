@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
+use Carbon\Carbon;
 
 class SlaveInteractionsFailed extends Notification
 {
@@ -37,13 +38,13 @@ class SlaveInteractionsFailed extends Notification
      *Send Telegram message to group chat
      */
 
-    public function toTelegram($users)
+    public function toTelegram($users, $count)
     {
 
         $date_time = Carbon::now()->toDateTimeString();
         $text = "<b>[INTERACTIONS FAILURE][SLAVE]</b>\n\n"
             . "***** Failure Report *****\n\n"
-            . "Number of users: " . count($users) . "\n"
+            . "Number of users: " . $count . "\n"
             . "List of users affected:\n\n"
             . $users . "\n\n"
             . "Date/Time: " . $date_time . "\n\n"
