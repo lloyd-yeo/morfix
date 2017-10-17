@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Collection;
 class UserInteractionsFailed
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public $failed_profiles;
     /**
      * Create a new event instance.
