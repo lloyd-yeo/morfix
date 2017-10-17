@@ -56,7 +56,7 @@ class ArchiveLikeLogs extends Command
 		$seed_size = 4609776;
 		while ($seed_size < $size) {
 
-			$seed_size = $seed_size + 200000;
+			$seed_size = $seed_size + 3000;
 
 			echo "Archiving results with log_id <= $seed_size...\n";
 			DB::insert('INSERT IGNORE INTO user_insta_profile_like_log_archive (insta_username, target_username, 
