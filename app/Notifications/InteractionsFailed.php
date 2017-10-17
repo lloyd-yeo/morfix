@@ -47,11 +47,11 @@ class InteractionsFailed extends Notification
         $date_time = Carbon::now()->toDateTimeString();
         $partition_name = "";
         if ($this->partition === 0) {
-            $partition_name = "Master";
+            $partition_name = "MASTER";
         } else {
-            $partition_name = "Slave - " . $this->partition;
+            $partition_name = "SLAVE - " . $this->partition;
         }
-        $text = "<b>[INTERACTIONS FAILURE][$partition_name]</b>\n\n"
+        $text = "<b>[INTERACTIONS FAILURE - $partition_name]</b>\n\n"
             . "***** Failure Report *****\n\n"
             . "Number of users: " . $this->count . "\n"
             . "List of users affected:\n\n"
