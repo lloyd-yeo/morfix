@@ -94,6 +94,7 @@ class CheckInteractionsWorking extends Command
 
         if ($partition > 0) {
         	echo "[" . $ig_profile->insta_username . "] retrieving slave connection PDO\n";
+
             $connection_name = Helper::getConnection($partition);
 
             $user_like = DB::connection($connection_name)->table('user_insta_profile_like_log')
@@ -118,6 +119,7 @@ class CheckInteractionsWorking extends Command
 
         } elseif ($partition === 0) {
 	        echo "[" . $ig_profile->insta_username . "] on Master\n";
+
             $user_like = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                 ->whereBetween('date_liked', array($from, $to))
                 ->first();
@@ -135,6 +137,7 @@ class CheckInteractionsWorking extends Command
                 ->first();
         }
 
+	    echo "[" . $ig_profile->insta_username . "] examining Auto-Like\n";
         if (is_null($user_like) && $ig_profile->auto_like == 1) {
             $ig_profile->auto_like_working = 0;
             echo "[" . $ig_profile->insta_username . "] Updated like info to 0\n";
@@ -145,6 +148,7 @@ class CheckInteractionsWorking extends Command
             echo "[" . $ig_profile->insta_username . "] Updated like info to 1\n";
         }
 
+	    echo "[" . $ig_profile->insta_username . "] examining Auto-Comment\n";
         if (is_null($user_comment) && $ig_profile->auto_comment == 1) {
             $ig_profile->auto_comment_working = 0;
             echo "[" . $ig_profile->insta_username . "] Updated comment info to 0 \n";
@@ -154,7 +158,7 @@ class CheckInteractionsWorking extends Command
             $ig_profile->auto_comment_working = 1;
             echo "[" . $ig_profile->insta_username . "] Updated comment info to 1 \n";
         }
-
+	    echo "[" . $ig_profile->insta_username . "] examining Auto-Follow/Unfollow\n";
         if ($ig_profile->auto_follow == 0 && $ig_profile->auto_unfollow == 0) { #User turned off auto follow & auto unfollow
             $ig_profile->auto_follow_working = 1;
             echo "[" . $ig_profile->insta_username . "] didn't turn on Auto-Follow/Unfollow \n";
