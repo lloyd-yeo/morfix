@@ -57,16 +57,27 @@ class InteractionLike extends Command
 		} else {
 
 			if ($this->argument("email") === "ig") {
+				$time_start = microtime(true);
+
 				$ig_profile = InstagramProfile::where('insta_username', $this->argument("queueasjob"))->first();
 				if ($ig_profile !== NULL) {
+					$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
 					$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
 					$job->onQueue("likes");
 					$job->onConnection('sync');
 					dispatch($job);
-					$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
 				} else {
 					$this->error("[" . $this->argument("queueasjob") . "] is not a valid IG profile.");
 				}
+				$time_end = microtime(true);
+
+				$duration = ($time_end - $time_start);
+
+				$hours = (int)($duration/60/60);
+				$minutes = (int)($duration/60)-$hours*60;
+				$seconds = (int)$duration-$hours*60*60-$minutes*60;
+
+				$this->line("[" . $ig_profile->insta_username . "] elapsed time " . $seconds . " seconds.");
 			} else {
 				if ($this->argument("email") !== NULL && $this->argument("queueasjob") !== NULL) {
 
