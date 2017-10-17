@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\InstagramProfile;
 use Illuminate\Console\Command;
+use DB;
 
 class UpdateMasterInstagramProfileErrorFlags extends Command
 {
