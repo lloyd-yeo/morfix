@@ -314,6 +314,48 @@
             "time": "2017-09-17T15:09:14+00:00"
         },
         {
+            "name": "corneltek/getoptionkit",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c9s/GetOptionKit.git",
+                "reference": "995607ddf4fc90ebdb4a7d58fe972d581ad8495f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c9s/GetOptionKit/zipball/995607ddf4fc90ebdb4a7d58fe972d581ad8495f",
+                "reference": "995607ddf4fc90ebdb4a7d58fe972d581ad8495f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GetOptionKit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yo-An Lin",
+                    "email": "yoanlin93@gmail.com"
+                }
+            ],
+            "description": "Powerful command-line option toolkit",
+            "homepage": "http://github.com/c9s/GetOptionKit",
+            "time": "2017-06-30T14:54:48+00:00"
+        },
+        {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
             "source": {
@@ -1316,25 +1358,29 @@
         },
         {
             "name": "lazyjsonmapper/lazyjsonmapper",
-            "version": "v1.2.3",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SteveJobzniak/LazyJsonMapper.git",
-                "reference": "028c4221ec1316a1cc5b1cc418f7c45ad79e4565"
+                "reference": "3f2294856ffe5eccca08ee7287ffdcfdab6714df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/028c4221ec1316a1cc5b1cc418f7c45ad79e4565",
-                "reference": "028c4221ec1316a1cc5b1cc418f7c45ad79e4565",
+                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/3f2294856ffe5eccca08ee7287ffdcfdab6714df",
+                "reference": "3f2294856ffe5eccca08ee7287ffdcfdab6714df",
                 "shasum": ""
             },
             "require": {
+                "corneltek/getoptionkit": "2.*",
                 "php": ">=5.6"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.7.1",
-                "phpunit/phpunit": "^6.0"
+                "phpunit/phpunit": "6.*"
             },
+            "bin": [
+                "bin/lazydoctor"
+            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1358,7 +1404,7 @@
                 "development",
                 "json"
             ],
-            "time": "2017-10-09T18:36:30+00:00"
+            "time": "2017-10-14T10:23:53+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1449,12 +1495,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "bd262fe526b8ba8a8dcecef64679c098a6b12bfc"
+                "reference": "70f34222ec5cf9d9874d779ccb8c24a2f4ef17c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/bd262fe526b8ba8a8dcecef64679c098a6b12bfc",
-                "reference": "bd262fe526b8ba8a8dcecef64679c098a6b12bfc",
+                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/70f34222ec5cf9d9874d779ccb8c24a2f4ef17c6",
+                "reference": "70f34222ec5cf9d9874d779ccb8c24a2f4ef17c6",
                 "shasum": ""
             },
             "require": {
@@ -1513,7 +1559,7 @@
                 "php",
                 "private"
             ],
-            "time": "2017-10-10 18:20:17"
+            "time": "2017-10-13T23:41:47+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2014,16 +2060,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.11",
+            "version": "v0.8.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "b193cd020e8c6b66cea6457826ae005e94e6d2c0"
+                "reference": "1502354ebc70d59d8e3a87c325b0eb78a79da25b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/b193cd020e8c6b66cea6457826ae005e94e6d2c0",
-                "reference": "b193cd020e8c6b66cea6457826ae005e94e6d2c0",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/1502354ebc70d59d8e3a87c325b0eb78a79da25b",
+                "reference": "1502354ebc70d59d8e3a87c325b0eb78a79da25b",
                 "shasum": ""
             },
             "require": {
@@ -2083,7 +2129,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-07-29T19:30:02+00:00"
+            "time": "2017-10-14T17:14:13+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -2437,16 +2483,16 @@
         },
         {
             "name": "react/stream",
-            "version": "v0.7.3",
+            "version": "v0.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/stream.git",
-                "reference": "5cc7bec91dc3f6ad123a81602489b82fdb180090"
+                "reference": "5c7db5261b3cc7e11b8ba765bed8ba31ee745f5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/stream/zipball/5cc7bec91dc3f6ad123a81602489b82fdb180090",
-                "reference": "5cc7bec91dc3f6ad123a81602489b82fdb180090",
+                "url": "https://api.github.com/repos/reactphp/stream/zipball/5c7db5261b3cc7e11b8ba765bed8ba31ee745f5c",
+                "reference": "5c7db5261b3cc7e11b8ba765bed8ba31ee745f5c",
                 "shasum": ""
             },
             "require": {
@@ -2482,7 +2528,7 @@
                 "stream",
                 "writable"
             ],
-            "time": "2017-08-05T09:16:09+00:00"
+            "time": "2017-10-11T17:58:46+00:00"
         },
         {
             "name": "ringcentral/psr7",
@@ -2686,16 +2732,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v5.2.3",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "9e8d565e991ca82c91d708b281063cefd69d7b2c"
+                "reference": "d102a355d8c2e1a00d68659e9b51fb6f63aaa957"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/9e8d565e991ca82c91d708b281063cefd69d7b2c",
-                "reference": "9e8d565e991ca82c91d708b281063cefd69d7b2c",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/d102a355d8c2e1a00d68659e9b51fb6f63aaa957",
+                "reference": "d102a355d8c2e1a00d68659e9b51fb6f63aaa957",
                 "shasum": ""
             },
             "require": {
@@ -2737,7 +2783,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2017-09-27T20:35:23+00:00"
+            "time": "2017-10-11T16:41:44+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3223,16 +3269,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
                 "shasum": ""
             },
             "require": {
@@ -3244,7 +3290,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -3278,7 +3324,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-14T15:44:48+00:00"
+            "time": "2017-10-11T12:05:26+00:00"
         },
         {
             "name": "symfony/process",
@@ -4518,16 +4564,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.22",
+            "version": "5.7.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada"
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/10df877596c9906d4110b5b905313829043f2ada",
-                "reference": "10df877596c9906d4110b5b905313829043f2ada",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/78532d5269d984660080d8e0f4c99c5c2ea65ffe",
+                "reference": "78532d5269d984660080d8e0f4c99c5c2ea65ffe",
                 "shasum": ""
             },
             "require": {
@@ -4596,7 +4642,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-09-24T07:23:38+00:00"
+            "time": "2017-10-15T06:13:55+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
