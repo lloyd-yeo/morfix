@@ -65,6 +65,15 @@ class InstagramProfileController extends Controller {
 	        $profile_log->error_msg = $explorer_response->asJson();
 	        $profile_log->save();
 
+	        $explorer_response_as_assoc_array = $explorer_response->asJson(1);
+	        if ($explorer_response_as_assoc_array["status"] == "fail") {
+	        	if (array_key_exists("two_factory_required", $explorer_response_as_assoc_array)) {
+	        		if ($explorer_response_as_assoc_array["two_factory_required"]) {
+				        return Response::json(array("success" => false, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection."));
+			        }
+		        }
+	        }
+
             $morfix_ig_profile = new InstagramProfile();
             $morfix_ig_profile->user_id = Auth::user()->user_id;
             $morfix_ig_profile->email = Auth::user()->email;
@@ -120,8 +129,7 @@ class InstagramProfileController extends Controller {
             $profile_log->save();
             return Response::json(array("success" => false, 'type' => 'checkpoint', 'response' => "Verification Required"));
         } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
-        	dump($loginrequired_ex);
-//	        return Response::json(array("success" => false, 'type' => 'enndpoint', 'response' => $loginrequired_ex->));
+	        return Response::json(array("success" => false, 'type' => 'endpoint', 'response' => "Error establishing connection with this account."));
         }
     }
 
