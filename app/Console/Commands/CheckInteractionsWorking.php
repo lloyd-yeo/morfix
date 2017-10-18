@@ -277,7 +277,7 @@ class CheckInteractionsWorking extends Command
         }
         if ($this->failed_profiles->isNotEmpty()) {
             //notify how many updated
-
+            dump ($this->failed_profiles);
             event(new UsersInteractionsFailed($this->failed_profiles));
             echo '$count: ' . $this->failed_profiles->count() . ' and UserInteractionsFailed event called' . "\n";
             $this->failed_profiles = collect();
