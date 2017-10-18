@@ -96,7 +96,7 @@ class EngagementGroup implements ShouldQueue
 
 			$instagram = InstagramHelper::initInstagram();
 			if (!InstagramHelper::login($instagram, $ig_profile)) {
-				return;
+				continue;
 			}
 
 			try {
