@@ -215,6 +215,19 @@ class CheckInteractionsWorking extends Command
                         $profile->tier = $tier;
                         $profile->partition = $partition;
                         $profile->timestamp = Carbon::now()->toDateTimeString();
+                        $profile->failure_message = "";
+                        if ($ig_profile->auto_like_working === 0){
+                            $profile->failure_message = $profile->failure_message . " + [L]";
+                        }
+                        if ($ig_profile->auto_comment_working === 0){
+                            $profile->failure_message = $profile->failure_message . " + [C]";
+                        }
+                        if ($ig_profile->auto_follow_working === 0){
+                            $profile->failure_message = $profile->failure_message . " + [F]";
+                        }
+                        if ($ig_profile->auto_unfollow_working === 0){
+                            $profile->failure_message = $profile->failure_message . " + [U]";
+                        }
                         $profile->save();
                         return $profile;
                     } else {

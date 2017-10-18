@@ -33,7 +33,7 @@ class LogUsersInteractionsFailed
             foreach ($failed_profiles_chunks as $failed_profiles_chunk) {
 
                 foreach ($failed_profiles_chunk as $failed_profile) {
-                    $users_array[] = $failed_profile->insta_username;
+                    $users_array[] = $failed_profile->insta_username . $failed_profile->failure_message;
                 }
                 $count = count($users_array);
                 $users = implode("\n", $users_array);
