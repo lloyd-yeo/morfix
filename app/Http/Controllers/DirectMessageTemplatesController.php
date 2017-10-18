@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\InstagramProfile;
 use App\DmJob;
+use App\Helper;
 use Response;
 
 class DirectMessageTemplatesController extends Controller
