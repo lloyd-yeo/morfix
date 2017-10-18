@@ -27,6 +27,7 @@ class LogUsersInteractionsFailed
     public function handle(UsersInteractionsFailed $event)
     {
         if (!empty($event->failed_profiles)) {
+            $partition = $event->failed_profiles->first()->partition;
             $failed_profiles_chunks = $event->failed_profiles->chunk(35);
 
             foreach ($failed_profiles_chunks as $failed_profiles_chunk) {
@@ -35,7 +36,6 @@ class LogUsersInteractionsFailed
                     $users_array[] = $failed_profile->insta_username;
                 }
                 $count = count($users_array);
-                $partition = $event->failed_profiles->first()->partition;
                 $users = implode("\n", $users_array);
                 Notification::send($users, new InteractionsFailed($users, $count, $partition));
                 unset($users_array);
