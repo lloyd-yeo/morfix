@@ -119,6 +119,9 @@ class InstagramProfileController extends Controller {
             $profile_log->error_msg = $challenge_required_ex->getMessage();
             $profile_log->save();
             return Response::json(array("success" => false, 'type' => 'checkpoint', 'response' => "Verification Required"));
+        } catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+        	dump($loginrequired_ex);
+//	        return Response::json(array("success" => false, 'type' => 'enndpoint', 'response' => $loginrequired_ex->));
         }
     }
 
