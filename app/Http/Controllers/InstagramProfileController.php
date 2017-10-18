@@ -60,7 +60,10 @@ class InstagramProfileController extends Controller {
 
             $instagram->setProxy($proxy->proxy);
             
-            $explorer_response = $instagram->login($ig_username, $ig_password);
+	        $explorer_response = $instagram->login($ig_username, $ig_password);
+
+	        $profile_log->error_msg = $explorer_response->asJson();
+	        $profile_log->save();
 
             $morfix_ig_profile = new InstagramProfile();
             $morfix_ig_profile->user_id = Auth::user()->user_id;
@@ -69,14 +72,17 @@ class InstagramProfileController extends Controller {
             $morfix_ig_profile->insta_pw = $ig_password;
             $morfix_ig_profile->proxy = $proxy->proxy;
             
-            $profile_log->error_msg = "Profile successfully created.";
-            $profile_log->save();
+
             
             $proxy->assigned = $proxy->assigned + 1;
             $proxy->save();
 
             $user_response = $instagram->people->getInfoByName($ig_username);
             $instagram_user = $user_response->getUser();
+
+	        $profile_log->error_msg = "Profile successfully created.";
+	        $profile_log->save();
+
             $morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
             $morfix_ig_profile->save();
             
