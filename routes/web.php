@@ -54,6 +54,13 @@ Route::post('/profile/ig/changepassword', 'InstagramProfileController@changePass
 
 Route::get('/dm', 'DirectMessageController@index');
 
+
+Route::post('/dm/thread/create', 'DirectThreadController@create');
+Route::post('/dm/thread/retrieve', 'DirectThreadController@retrieve');
+Route::post('/dm/thread/update', 'DirectThreadController@update');
+Route::post('/dm/thread/delete', 'DirectThreadController@delete');
+Route::get('/dm/thread/test', 'DirectThreadController@test');
+
 Route::get('/dm/templates/{id}', 'DirectMessageTemplatesController@index');
 
 Route::post('/dm/templates/save/greeting/{id}', 'DirectMessageTemplatesController@saveGreetingTemplate');

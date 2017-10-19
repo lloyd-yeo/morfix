@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DmThread;
+use App\DmJob;
 
 class DirectThreadController extends MorfixController
 {
   function __construct(){
-    $this->model = new DmThread();
+    $this->model = new DmJob();
   }
+
 }

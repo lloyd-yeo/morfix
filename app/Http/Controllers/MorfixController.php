@@ -15,75 +15,94 @@ class MorfixController extends Controller
     Website: www.morfix.co
   */
     protected $model = null;
-    protected $condition = array();
+    protected $notRequiredTableColumn = array();
+    protected $foreignTable = array();
+    protected $tableResult = null;
     protected $response = array(
       "result" => null,
       "error"  => array()
     );
 
+    public function test(){
+      return "Welcome to MorfixController!";
+    }
+
+    public function response(){
+      if($this->tableResult){
+        $this->response['result'] = $this->tableResult;
+      }else{
+        ///
+      }
+      return json_encode($this->response);
+    }
+
     public function create(Request $request){
       $request = $request->all();
       $requirements = $this->checkRequirements();
       if($requirements["flag"] == true){
-        $this->insertDB($request);  
+        $this->insertDB($request);
       }else{
-        $response = $this->requirementsErrorMessage($requirements['response']);
+        $this->requirementsErrorMessage($requirements['response']);
       }
+      return $this->response();
     }
 
     public function retrieve(Request $request){
       $request = $request->all();
       $requirements = $this->checkRequirements();
-      if($requirements["flag"] == true){
-        $this->insertDB($this->condition, $this->order, $this->limit);  
+      $tableRequirement = $this->checkTableRequirements($request);
+      if($requirements["flag"] == true && $tableRequirement['flag'] == true){
+        $this->retrieveDB($tableRequirement['condition'], $tableRequirement['order'], $tableRequirement['limit']);  
       }else{
-        $response = $this->requirementsErrorMessage($requirements['response']);
+        $this->requirementsErrorMessage($requirements['response']);
       }
+      return $this->response();
     }
 
     public function update(Request $request){
       $request = $request->all();
       $requirements = $this->checkRequirements();
       if($requirements['flag'] == true){
-        $response = $this->updateDB($request);  
+        $this->updateDB($request);  
       }else{
         return $this->requirementsErrorMessage($requirements['response']);
-      }   
+      }
+      return $this->response();
     }
 
     public function delete(Request $request){
       $request = $request->all();
       $requirements = $this->checkRequirements();
       if($requirements['flag'] == true){
-        $response = $this->deleteDB($request);  
+        $this->deleteDB($request);  
       }else{
-        return $this->requirementsErrorMessage($requirements['response']);
-      }   
+        $this->requirementsErrorMessage($requirements['response']);
+      }
+      return $this->response();  
     }
 
     public function insertDB($request){
       return $this->model->insert($request);
     }
 
-    public function retrieveDB($condition, $order = NULL, $limit = NULL){
-      $result = null;
+    public function retrieveDB($condition = null, $order = NULL, $limit = NULL){
       if($condition && $order && $limit){
-        $result = $this->model->where($condition)->whereNull('deleted_at')->orderBy($order)->limit($limit)->get();
+        $this->tableResult = $this->model->where($condition)->orderBy($order)->limit($limit)->get();
       }
       else if(($condition && $order) && $limit == null) {
-        $result =  $this->model->where($condition)->whereNull('deleted_at')->orderBy($order)->get();
+        $this->tableResult =  $this->model->where($condition)->orderBy($order)->get();
       }
       else if(($condition && $limit) && $order == null) {
-        $result =  $this->model->where($condition)->whereNull('deleted_at')->limit($limit)->get();
+        $this->tableResult =  $this->model->where($condition)->limit($limit)->get();
       }
       else if($condition && $order == null && $limit == null){
-        $result =  $this->model->where($condition)->whereNull('deleted_at')->get();
-      }else if($condition == null){
-        $result =  $this->model->whereNull('deleted_at')->orderBy($order[0], $order[1])->get();
+        $this->tableResult =  $this->model->where($condition)->get();
+      }else if($condition == null && $order == null && $limit){
+        $this->tableResult =  $this->model->limit($limit)->get();
       }
       else{
+        $this->tableResult = $this->model->get();
       }
-      return json_decode($result, true);
     }
 
     public function updateDB($request){
@@ -96,17 +115,45 @@ class MorfixController extends Controller
 
     public function checkRequirements(){
       $response = [
-        "flag"      => null,
+        "flag"      => true,
         "response"  => null
+      ];  
+      if($this->model == null){
+        $response['flag'] = false;
+        $response['response'] = "model_is_null";
+      }
+      return $response;
+    }
+
+    public function checkTableRequirements($request){
+      $response = [
+        "flag"          => null,
+        'condition'     => null,
+        'order'         => null,
+        'limit'         => null
       ];
+      if(isset($request['condition'])){
+         $response['flag'] = false;
+      }
+      if(isset($request['order'])){
+         $response['flag'] = false;
+      }
+      if(isset($request['limit'])){
+        if(is_int(intval($request['limit'])) == true){
+          $response['flag'] = true;
+          $response['limit'] = intval($request['limit']);
+        }else{
+          $response['flag'] = false;
+        }
+      }else{$response['flag'] = false;}
       return $response;
     }
 
     public function requirementsErrorMessage($response){
       switch ($response) {
-        case 'model':
+        case 'model_is_null':
           return $this->response["error"] = array(
-                    "status"  => 1000,
+                    "status"  => 100,
                     "message" => "Model is required"
                   );
           break;
@@ -116,7 +163,5 @@ class MorfixController extends Controller
       }
       return $this->response;
     }
-    public function responseHandler($response){
-      return $response;
-    }
+  
 }
