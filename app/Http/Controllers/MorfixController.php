@@ -100,7 +100,7 @@ class MorfixController extends Controller
     public function requirementsErrorMessage($response){
       switch ($response) {
         case 'model':
-          return $response["error"] = array(
+          return $this->response["error"] = array(
                     "status"  => 1000,
                     "message" => "Model is required"
                   );
@@ -109,6 +109,7 @@ class MorfixController extends Controller
           # code...
           break;
       }
+      return $this->response;
     }
     public function responseHandler($response){
       return $response;
