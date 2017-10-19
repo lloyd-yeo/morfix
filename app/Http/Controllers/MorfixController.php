@@ -35,7 +35,7 @@ class MorfixController extends Controller
       $request = $request->all();
       $requirements = $this->checkRequirements();
       if($requirements["flag"] == true){
-        $this->insertDB($this->condition, $this->order, $this->limit, $this->sort);  
+        $this->insertDB($this->condition, $this->order, $this->limit);  
       }else{
         $response = $this->requirementsErrorMessage($requirements['response']);
       }
@@ -65,15 +65,20 @@ class MorfixController extends Controller
       return $this->model->insert($request);
     }
 
-    public function retrieveDB($condition, $order = NULL, $limit = NULL, $sort = NULL){
+    public function retrieveDB($condition, $order = NULL, $limit = NULL){
       $result = null;
-      if($condition && $order){
-        $result = $this->model->where($condition)->whereNull('deleted_at')->orderBy($order[0], $order[1])->get();
+      if($condition && $order && $limit){
+        $result = $this->model->where($condition)->whereNull('deleted_at')->orderBy($order)->limit($limit)->get();
       }
-      else if($condition && $order == null){
+      else if(($condition && $order) && $limit == null) {
+        $result =  $this->model->where($condition)->whereNull('deleted_at')->orderBy($order)->get();
+      }
+      else if(($condition && $limit) && $order == null) {
+        $result =  $this->model->where($condition)->whereNull('deleted_at')->limit($limit)->get();
+      }
+      else if($condition && $order == null && $limit == null){
         $result =  $this->model->where($condition)->whereNull('deleted_at')->get();
-      }
-      else if($condition == null && $order){
+      }else if($condition == null){
         $result =  $this->model->whereNull('deleted_at')->orderBy($order[0], $order[1])->get();
       }
       else{
