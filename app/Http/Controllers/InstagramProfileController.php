@@ -64,9 +64,7 @@ class InstagramProfileController extends Controller
 			}
 
 			$instagram->setProxy($proxy->proxy);
-
 			$explorer_response = $instagram->login($ig_username, $ig_password);
-
 			if ($explorer_response !== NULL) {
 				$profile_log->error_msg = $explorer_response->asJson();
 				$profile_log->save();
