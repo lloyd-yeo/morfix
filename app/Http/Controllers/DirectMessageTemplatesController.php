@@ -124,10 +124,26 @@ class DirectMessageTemplatesController extends Controller
 		$instagram_profile->follow_up_message = $template_message;
 
 		$response = "There has been an error with the server. Please contact live support.";
+
+		$dm_jobs = NULL;
+		$connection_name = Helper::getConnectionName(Auth::user()->partition);
 		if ($instagram_profile->save()) {
-			$dm_jobs = DmJob::where('insta_username', $instagram_profile->insta_username)
-				->where('fulfilled', 0)
-				->where('follow_up_order', 1)->get();
+
+			if (Auth::user()->partition > 0) {
+				$dm_jobs = DB::connection($connection_name)->table('dm_job')
+					->where('insta_username', $instagram_profile->insta_username)
+					->where('fulfilled', 0)
+					->where('follow_up_order', 1)->get();
+
+				DB::connection($connection_name)->table('user_insta_profile')
+					->where('insta_username', $instagram_profile->insta_username)
+					->update([ 'follow_up_message' => $template_message ]);
+
+			} else {
+				$dm_jobs = DmJob::where('insta_username', $instagram_profile->insta_username)
+					->where('fulfilled', 0)
+					->where('follow_up_order', 1)->get();
+			}
 
 			foreach ($dm_jobs as $dm_job) {
 				$new_follower_template = $instagram_profile->follow_up_message;
@@ -150,8 +166,15 @@ class DirectMessageTemplatesController extends Controller
 				}
 
 				$new_message = mb_convert_encoding($new_message, "UTF8");
-				$dm_job->message = $new_message;
-				$dm_job->save();
+
+				if (Auth::user()->partition > 0) {
+					DB::connection($connection_name)->table('dm_job')
+						->where('job_id', $dm_job->job_id)
+						->update([ 'message' => $new_message ]);
+				} else {
+					$dm_job->message = $new_message;
+					$dm_job->save();
+				}
 			}
 
 			$response = "Your follow-up template has been saved!";
