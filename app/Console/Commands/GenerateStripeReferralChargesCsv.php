@@ -133,6 +133,8 @@ class GenerateStripeReferralChargesCsv extends Command {
                     $eligible = "Yes";
                 } else if ($referral_charge->subscription_id == "MX370" && ($users[$referrer_email]["pro"] == 1)) {
                     $eligible = "Yes";
+                } else if ($referral_charge->subscription_id == "MX297" && ($users[$referrer_email]["pro"] == 1)) {
+	                $eligible = "Yes";
                 }
             }
 
@@ -143,6 +145,8 @@ class GenerateStripeReferralChargesCsv extends Command {
                 $amt_to_payout = 50;
             } else if ($referral_charge->subscription_id == "MX370") {
                 $amt_to_payout = 200;
+            } else if ($referral_charge->subscription_id == "MX297") {
+	            $amt_to_payout = 120;
             }
 
             $this->line($referrer_email . "," .
