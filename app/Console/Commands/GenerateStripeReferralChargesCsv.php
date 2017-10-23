@@ -40,10 +40,11 @@ class GenerateStripeReferralChargesCsv extends Command {
      * @return mixed
      */
     public function handle() {
+    	$date_to_retrieve_from = "2017-10-01 00:00:00";
         $users = array();
         $user_payout_comms = array();
         $user_payouts = array();
-        $referral_charges = DB::select('SELECT 
+        $referral_charges = DB::select("SELECT 
                                 u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
                                 u.tier, rc.referred_email, 
                                 rc.charge_id, rc.invoice_id, 
@@ -51,8 +52,8 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 rc.commission_calc, rc.commission_given, u.vip
                                 FROM `user` u, get_referral_charges_of_user rc 
                                 WHERE rc.referrer_email = u.email
-                                AND rc.charge_created < "2017-09-01 00:00:00"
-                                ORDER BY referrer_email ASC, charge_created DESC;');
+                                AND rc.charge_created < '$date_to_retrieve_from'
+                                ORDER BY referrer_email ASC, charge_created DESC;");
         foreach ($referral_charges as $referral_charge) {
             $referrer_email = $referral_charge->referrer_email;
             $referrer_last_payout_date = \Carbon\Carbon::now()->subYear();
