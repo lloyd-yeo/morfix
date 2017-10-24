@@ -32,9 +32,9 @@
                         </div>
                         <div class="block-content">
                             <ul class="nav-users push">
-                                @include('dm.thread.thread)
-                                @include('dm.thread.thread)
-                                @include('dm.thread.thread)
+                                @include('dm.thread.thread')
+                                @include('dm.thread.thread')
+                                @include('dm.thread.thread')
                             </ul>
                         </div>
                     </div>
