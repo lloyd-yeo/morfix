@@ -152,6 +152,9 @@ Route::post('/admin/interaction/comment', 'AdminController@runInteractionComment
 Route::post('/stripe/charge/refunded', 'StripeWebhookController@chargeRefunded');
 Route::post('/stripe/invoice/paymentfailed', 'StripeWebhookController@invoicePaymentFailed');
 
+Route::get('/dm/thread', 'DirectThreadController@index');
+Route::get('/dm/thread/{id}', 'DirectThreadController@show');
+
 /**
  * Routes for creation of Paypal Subscription plans.
  */

@@ -15,13 +15,13 @@ class MorfixController extends Controller
 	  Website: www.morfix.co
 	*/
 	protected $model = NULL;
-	protected $notRequiredTableColumn = array();
-	protected $foreignTable = array();
+	protected $notRequiredTableColumn = [];
+	protected $foreignTable = [];
 	protected $tableResult = NULL;
-	protected $response = array(
+	protected $response = [
 		"result" => NULL,
-		"error"  => array(),
-	);
+		"error"  => [],
+	];
 
 	public function test()
 	{
@@ -41,7 +41,7 @@ class MorfixController extends Controller
 
 	public function create(Request $request)
 	{
-		$request = $request->all();
+		$request      = $request->all();
 		$requirements = $this->checkRequirements();
 		if ($requirements["flag"] == TRUE) {
 			$this->insertDB($request);
@@ -54,8 +54,8 @@ class MorfixController extends Controller
 
 	public function retrieve(Request $request)
 	{
-		$request = $request->all();
-		$requirements = $this->checkRequirements();
+		$request          = $request->all();
+		$requirements     = $this->checkRequirements();
 		$tableRequirement = $this->checkTableRequirements($request);
 		if ($requirements["flag"] == TRUE && $tableRequirement['flag'] == TRUE) {
 			$this->retrieveDB($tableRequirement['condition'], $tableRequirement['order'], $tableRequirement['limit']);
@@ -68,7 +68,7 @@ class MorfixController extends Controller
 
 	public function update(Request $request)
 	{
-		$request = $request->all();
+		$request      = $request->all();
 		$requirements = $this->checkRequirements();
 		if ($requirements['flag'] == TRUE) {
 			$this->updateDB($request);
@@ -81,7 +81,7 @@ class MorfixController extends Controller
 
 	public function delete(Request $request)
 	{
-		$request = $request->all();
+		$request      = $request->all();
 		$requirements = $this->checkRequirements();
 		if ($requirements['flag'] == TRUE) {
 			$this->deleteDB($request);
@@ -139,7 +139,7 @@ class MorfixController extends Controller
 			"response" => NULL,
 		];
 		if ($this->model == NULL) {
-			$response['flag'] = FALSE;
+			$response['flag']     = FALSE;
 			$response['response'] = "model_is_null";
 		}
 
@@ -162,7 +162,7 @@ class MorfixController extends Controller
 		}
 		if (isset($request['limit'])) {
 			if (is_int(intval($request['limit'])) == TRUE) {
-				$response['flag'] = TRUE;
+				$response['flag']  = TRUE;
 				$response['limit'] = intval($request['limit']);
 			} else {
 				$response['flag'] = FALSE;
@@ -178,10 +178,10 @@ class MorfixController extends Controller
 	{
 		switch ($response) {
 			case 'model_is_null':
-				return $this->response["error"] = array(
+				return $this->response["error"] = [
 					"status"  => 100,
 					"message" => "Model is required",
-				);
+				];
 				break;
 			default:
 				# code...
