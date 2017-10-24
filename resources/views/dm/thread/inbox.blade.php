@@ -32,33 +32,9 @@
                         </div>
                         <div class="block-content">
                             <ul class="nav-users push">
-                                <li>
-                                    <a href="base_pages_profile.html">
-                                        <img class="img-avatar" src="assets/img/avatars/avatar8.jpg" alt="">
-                                        <i class="fa fa-circle text-success"></i> Megan Dean
-                                        <div class="font-w400 text-muted">
-                                            <small>Web Designer</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="base_pages_profile.html">
-                                        <img class="img-avatar" src="assets/img/avatars/avatar14.jpg" alt="">
-                                        <i class="fa fa-circle text-success"></i> Joshua Munoz
-                                        <div class="font-w400 text-muted">
-                                            <small>Graphic Designer</small>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="base_pages_profile.html">
-                                        <img class="img-avatar" src="assets/img/avatars/avatar2.jpg" alt="">
-                                        <i class="fa fa-circle text-success"></i> Amanda Powell
-                                        <div class="font-w400 text-muted">
-                                            <small>Photographer</small>
-                                        </div>
-                                    </a>
-                                </li>
+                                @include('dm.thread.thread);
+                                @include('dm.thread.thread);
+                                @include('dm.thread.thread);
                             </ul>
                         </div>
                     </div>
