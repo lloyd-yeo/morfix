@@ -56,7 +56,7 @@ Route::get('/dm', 'DirectMessageController@index');
 
 
 Route::post('/dm/thread/create', 'DirectThreadController@create');
-Route::post('/dm/thread/retrieve', 'DirectThreadController@retrieve');
+Route::get('/dm/thread/retrieve/{id}', 'DirectThreadController@retrieve');
 Route::post('/dm/thread/update', 'DirectThreadController@update');
 Route::post('/dm/thread/delete', 'DirectThreadController@delete');
 Route::get('/dm/thread/test', 'DirectThreadController@test');
