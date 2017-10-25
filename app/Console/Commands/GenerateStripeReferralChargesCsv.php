@@ -16,7 +16,7 @@ class GenerateStripeReferralChargesCsv extends Command {
      *
      * @var string
      */
-    protected $signature = 'csv:generatestripereferralcharges {email?}';
+    protected $signature = 'csv:generatestripereferralcharges {email?} {debug?}';
 
     /**
      * The console command description.
@@ -142,6 +142,9 @@ class GenerateStripeReferralChargesCsv extends Command {
                         $users[$referrer_email]["pro"] = 1;
                     }
                 }
+				if ($this->argument("debug") !== NULL) {
+                    dump($users[$referrer_email]);
+				}
             }
 
             $eligible = "No";
