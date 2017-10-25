@@ -45,6 +45,8 @@ class GenerateStripeReferralChargesCsv extends Command {
         $user_payout_comms = array();
         $user_payouts = array();
 
+
+
 	    $sql_stmt = "SELECT 
                                 u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
                                 u.tier, rc.referred_email, 
