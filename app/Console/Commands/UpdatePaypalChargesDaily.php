@@ -53,11 +53,9 @@ class UpdatePaypalChargesDaily extends Command {
         $users = PaypalAgreement::distinct()
                 ->orderBy('id', 'desc')
                 ->get();
-        //PaypalAgreement::whereRaw('agreement_id IN (SELECT DISTINCT(agreement_id) FROM user_paypal_agreements)')
 
         foreach ($users as $user) {
             $agreementId = $user->agreement_id;
-//                $agreementId = "I-EEL8GM4YVW3E";
             $params = array('start_date' => date('Y-m-d', strtotime('-15 years')), 'end_date' => date('Y-m-d', strtotime('+30 days')));
             try {
                 $results = Agreement::searchTransactions($agreementId, $params, $this->apiContext)->agreement_transaction_list;

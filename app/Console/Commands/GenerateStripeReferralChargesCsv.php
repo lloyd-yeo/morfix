@@ -16,7 +16,7 @@ class GenerateStripeReferralChargesCsv extends Command {
      *
      * @var string
      */
-    protected $signature = 'csv:generatestripereferralcharges';
+    protected $signature = 'csv:generatestripereferralcharges {email?}';
 
     /**
      * The console command description.
@@ -44,7 +44,8 @@ class GenerateStripeReferralChargesCsv extends Command {
         $users = array();
         $user_payout_comms = array();
         $user_payouts = array();
-        $referral_charges = DB::select("SELECT 
+
+	    $sql_stmt = "SELECT 
                                 u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
                                 u.tier, rc.referred_email, 
                                 rc.charge_id, rc.invoice_id, 
@@ -53,11 +54,31 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 FROM `user` u, get_referral_charges_of_user rc 
                                 WHERE rc.referrer_email = u.email
                                 AND rc.charge_created < '$date_to_retrieve_from'
-                                ORDER BY referrer_email ASC, charge_created DESC;");
+                                ORDER BY referrer_email ASC, charge_created DESC;";
+
+        if ($this->argument('email') !== NULL) {
+        	$email = $this->argument('email');
+	        $sql_stmt = "SELECT 
+                                u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
+                                u.tier, rc.referred_email, 
+                                rc.charge_id, rc.invoice_id, 
+                                rc.subscription_id, rc.charge_paid, rc.charge_refunded,
+                                rc.commission_calc, rc.commission_given, u.vip
+                                FROM `user` u, get_referral_charges_of_user rc 
+                                WHERE rc.referrer_email = u.email
+                                AND rc.referrer_email = '$email'
+                                AND rc.charge_created < '$date_to_retrieve_from'
+                                ORDER BY referrer_email ASC, charge_created DESC;";
+        }
+
+
+        $referral_charges = DB::select($sql_stmt);
+
         foreach ($referral_charges as $referral_charge) {
             $referrer_email = $referral_charge->referrer_email;
             $referrer_last_payout_date = \Carbon\Carbon::now()->subYear();
             $charge_created_date = \Carbon\Carbon::parse($referral_charge->charge_created);
+
             if ($referral_charge->last_pay_out_date !== NULL) {
                 $referrer_last_payout_date = \Carbon\Carbon::parse($referral_charge->last_pay_out_date);
                 if ($charge_created_date->year < $referrer_last_payout_date->year) {
