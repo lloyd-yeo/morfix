@@ -249,7 +249,7 @@ class InteractionFollowHelper {
             echo "[" . $ig_profile->insta_username . "] followed [" . $user_to_follow->getUsername() . "].\n";
             return 1;
         } else {
-            if ($follow_resp->getFriendshipStatus()->isPrivate()) {
+            if ($follow_resp->getFriendshipStatus()->getIsPrivate()) {
                 return 2;
             } else if ($follow_resp->getFriendshipStatus()->getFollowing() == false) {
                 $ig_profile->next_follow_time = Carbon::now()->addSeconds(180)->toDateTimeString();
