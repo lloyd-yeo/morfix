@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\DmJob;
+use Illuminate\Http\Request;
+use App\DmThread;
 
 class DirectThreadController extends MorfixController
 {
 	function __construct()
-	{
-		$this->model = new DmJob();
-	}
-
+  {
+      $this->model = new DmThread();
+  }
+	
 	/**
 	 * Display a listing of the resource.
 	 *
