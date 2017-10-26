@@ -221,13 +221,23 @@ class InteractionLike extends Command
 						$ig_profile->next_like_time = Carbon::now();
 						$ig_profile->save();
 						$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-						$job->onQueue("likes");
+
+						if ($user->tier > 1) {
+							$job->onQueue("likes");
+						} else {
+							$job->onQueue("likestrial");
+						}
+
 						dispatch($job);
 						$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
 					} else {
 						if (Carbon::now()->gte(Carbon::parse($ig_profile->next_like_time))) {
 							$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-							$job->onQueue("likes");
+							if ($user->tier > 1) {
+								$job->onQueue("likes");
+							} else {
+								$job->onQueue("likestrial");
+							}
 							dispatch($job);
 							$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
 						}

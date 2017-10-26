@@ -56,7 +56,7 @@ Route::get('/dm', 'DirectMessageController@index');
 
 
 Route::post('/dm/thread/create', 'DirectThreadController@create');
-Route::get('/dm/thread/retrieve/{id}', 'DirectThreadController@retrieve');
+Route::post('/dm/thread/retrieve', 'DirectThreadController@retrieve');
 Route::post('/dm/thread/update', 'DirectThreadController@update');
 Route::post('/dm/thread/delete', 'DirectThreadController@delete');
 Route::get('/dm/thread/test', 'DirectThreadController@test');
@@ -151,6 +151,9 @@ Route::post('/admin/interaction/comment', 'AdminController@runInteractionComment
 
 Route::post('/stripe/charge/refunded', 'StripeWebhookController@chargeRefunded');
 Route::post('/stripe/invoice/paymentfailed', 'StripeWebhookController@invoicePaymentFailed');
+
+Route::get('/dm/thread', 'DirectThreadController@index');
+Route::get('/dm/thread/{id}', 'DirectThreadController@show');
 
 /**
  * Routes for creation of Paypal Subscription plans.
