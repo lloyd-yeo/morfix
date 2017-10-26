@@ -100,6 +100,8 @@ class InstagramProfileController extends Controller
 			$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
 			$morfix_ig_profile->save();
 
+
+
 			DB::update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;",
 				[ $instagram_user->getFollowerCount(), $instagram_user->getMediaCount(), $instagram_user->getPk(), $ig_username ]);
 

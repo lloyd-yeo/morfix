@@ -98,7 +98,8 @@ class DirectMessageTemplatesController extends Controller
 				$new_message = mb_convert_encoding($new_message, "UTF8");
 
 				if (Auth::user()->partition > 0) {
-					DmJob::where('job_id', $dm_job->job_id)
+					$connection_name = Helper::getConnection(Auth::user()->partition);
+					DB::connection($connection_name)->table('dm_job')->where('job_id', $dm_job->job_id)
 						->update([ 'message' => $new_message ]);
 				} else {
 					$dm_job->message = $new_message;
