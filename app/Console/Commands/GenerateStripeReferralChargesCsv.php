@@ -202,7 +202,7 @@ class GenerateStripeReferralChargesCsv extends Command {
         }
 
         $paypal_charges = PaypalCharges::where('status', 'Completed')
-                ->where('time_stamp', '<', '2017-09-01 00:00:00')
+                ->where('time_stamp', '<', '2017-10-01 00:00:00')
                 ->orderBy('email', 'desc')
                 ->get();
 
