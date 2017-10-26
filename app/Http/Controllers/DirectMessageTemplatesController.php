@@ -60,7 +60,7 @@ class DirectMessageTemplatesController extends Controller
 				$dm_jobs = DB::connection($connection_name)->table('dm_job')
 					->where('insta_username', $instagram_profile->insta_username)
 					->where('fulfilled', 0)
-					->where('follow_up_order', 0)->get();
+					->where('follow_up_order', 0)->orderBy('job_id', 'asc')->get();
 
 				DB::connection($connection_name)->table('user_insta_profile')
 					->where('insta_username', $instagram_profile->insta_username)
