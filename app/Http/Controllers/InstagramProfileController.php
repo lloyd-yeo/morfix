@@ -312,6 +312,13 @@ class InstagramProfileController extends Controller
 			$ig_profile->checkpoint_required = 0;
 			$ig_profile->save();
 
+			if (Auth::user()->partition > 0) {
+				$connection_name = Helper::getConnection(Auth::user()->partition);
+
+				DB::connection($connection_name)->table('user_insta_profile')->where('id', $ig_profile->id)
+					->update([ 'checkpoint_required' => 0 ]);
+			}
+
 			return Response::json(array( "success" => TRUE, 'response' => 'Your profile has restored connectivity.' ));
 		} catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
 			return Response::json(array( "success" => FALSE, 'response' => 'Unable to connect to your profile, please retry.' ));
