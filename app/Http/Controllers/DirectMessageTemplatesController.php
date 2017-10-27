@@ -60,7 +60,7 @@ class DirectMessageTemplatesController extends Controller
 				$dm_jobs = DB::connection($connection_name)->table('dm_job')
 					->where('insta_username', $instagram_profile->insta_username)
 					->where('fulfilled', 0)
-					->where('follow_up_order', 0)->get();
+					->where('follow_up_order', 0)->orderBy('job_id', 'asc')->get();
 
 				DB::connection($connection_name)->table('user_insta_profile')
 					->where('insta_username', $instagram_profile->insta_username)
@@ -98,7 +98,8 @@ class DirectMessageTemplatesController extends Controller
 				$new_message = mb_convert_encoding($new_message, "UTF8");
 
 				if (Auth::user()->partition > 0) {
-					DmJob::where('job_id', $dm_job->job_id)
+					$connection_name = Helper::getConnection(Auth::user()->partition);
+					DB::connection($connection_name)->table('dm_job')->where('job_id', $dm_job->job_id)
 						->update([ 'message' => $new_message ]);
 				} else {
 					$dm_job->message = $new_message;

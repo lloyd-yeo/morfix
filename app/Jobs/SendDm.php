@@ -182,7 +182,8 @@ class SendDm implements ShouldQueue {
                     echo "\n[$ig_username] has invalid proxy & last_sent_dm shifted forward to " . \Carbon\Carbon::now()->addHours(1)->toDateTimeString() . "\n";
                     return;
                 } else if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== false) {
-                    $ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
+                    dump($ex);
+                	$ig_profile->last_sent_dm = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->temporary_ban = \Carbon\Carbon::now()->addHours(6);
                     $ig_profile->save();
                     echo "\n[$ig_username] is going too fast & last_sent_dm shifted forward to " . \Carbon\Carbon::now()->addHours(6)->toDateTimeString() . "\n";

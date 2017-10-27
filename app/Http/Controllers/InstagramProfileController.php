@@ -100,6 +100,8 @@ class InstagramProfileController extends Controller
 			$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
 			$morfix_ig_profile->save();
 
+
+
 			DB::update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;",
 				[ $instagram_user->getFollowerCount(), $instagram_user->getMediaCount(), $instagram_user->getPk(), $ig_username ]);
 
@@ -309,6 +311,13 @@ class InstagramProfileController extends Controller
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 			$ig_profile->checkpoint_required = 0;
 			$ig_profile->save();
+
+			if (Auth::user()->partition > 0) {
+				$connection_name = Helper::getConnection(Auth::user()->partition);
+
+				DB::connection($connection_name)->table('user_insta_profile')->where('id', $ig_profile->id)
+					->update([ 'checkpoint_required' => 0 ]);
+			}
 
 			return Response::json(array( "success" => TRUE, 'response' => 'Your profile has restored connectivity.' ));
 		} catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
