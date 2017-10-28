@@ -9,32 +9,53 @@
     b, strong{
         font-weight: 700;
     }
-    p{
-        font-size: 23px;
+    
+    .fa{
+       color: rgb(64, 167, 255);
+       padding-right: 10px;
     }
-    #top-view{
+    .top-view{
         background: url('https://images.clickfunnels.com/da/2232508e0e11e7a6eb05778a2544c0/vsl-bg-dark.jpg');
         text-align: center;
         color: #fff;
     }
-    #top-view img{
+    .top-view img{
         height: 150px;
     }
-    #top-view h1{
+    .top-view h1{
         font-weight: 700;
         font-size:48px;
     }
-     #lead-div{
+    .top-view p{
+        font-size: 23px;
+    }
+    .lead{
          background: url('https://images.clickfunnels.com/e0/9298103db411e68974d5a01d1d5c10/bluegrad.jpg');
          height:150px;
          width: 100%;
          color: #fff;
          text-align: center;
      }
-    #lead-div h1{
+    .lead h1{
         font-size: 45px;
         font-weight: 700;
         padding-top: 40px;
+    }
+
+    .lead-details p{
+        font-size: 18px;
+        text-align: left;
+        margin-top: 10px;
+    }
+
+    .lead-details h1{
+        font-size: 32px;
+        font-weight: 700;
+        padding: 50px 0 20px 0;
+    }
+    .header{
+        font-size: 25px;
+        font-weight: 700;
     }
     button{
         background: rgb(234, 155, 0);

@@ -1047,16 +1047,16 @@
         },
         {
             "name": "laravel/cashier",
-            "version": "v7.0.11",
+            "version": "v7.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/cashier.git",
-                "reference": "d563114d19eb49307c13c4e33a30b7f87309f311"
+                "reference": "f5323837a9ff0d660cd28e4f05dc25d1a1580898"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/cashier/zipball/d563114d19eb49307c13c4e33a30b7f87309f311",
-                "reference": "d563114d19eb49307c13c4e33a30b7f87309f311",
+                "url": "https://api.github.com/repos/laravel/cashier/zipball/f5323837a9ff0d660cd28e4f05dc25d1a1580898",
+                "reference": "f5323837a9ff0d660cd28e4f05dc25d1a1580898",
                 "shasum": ""
             },
             "require": {
@@ -1108,7 +1108,7 @@
                 "laravel",
                 "stripe"
             ],
-            "time": "2017-07-07T20:18:05+00:00"
+            "time": "2017-10-19T12:37:44+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1358,16 +1358,16 @@
         },
         {
             "name": "lazyjsonmapper/lazyjsonmapper",
-            "version": "v1.3.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SteveJobzniak/LazyJsonMapper.git",
-                "reference": "3f2294856ffe5eccca08ee7287ffdcfdab6714df"
+                "reference": "3f9a1ccf5ef62b6754bea9a53253cde0d9ef5609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/3f2294856ffe5eccca08ee7287ffdcfdab6714df",
-                "reference": "3f2294856ffe5eccca08ee7287ffdcfdab6714df",
+                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/3f9a1ccf5ef62b6754bea9a53253cde0d9ef5609",
+                "reference": "3f9a1ccf5ef62b6754bea9a53253cde0d9ef5609",
                 "shasum": ""
             },
             "require": {
@@ -1404,7 +1404,7 @@
                 "development",
                 "json"
             ],
-            "time": "2017-10-14T10:23:53+00:00"
+            "time": "2017-10-26T17:07:16+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1495,12 +1495,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "70f34222ec5cf9d9874d779ccb8c24a2f4ef17c6"
+                "reference": "dddcdf31c509105f37c7edf9de5e0fede2030b74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/70f34222ec5cf9d9874d779ccb8c24a2f4ef17c6",
-                "reference": "70f34222ec5cf9d9874d779ccb8c24a2f4ef17c6",
+                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/dddcdf31c509105f37c7edf9de5e0fede2030b74",
+                "reference": "dddcdf31c509105f37c7edf9de5e0fede2030b74",
                 "shasum": ""
             },
             "require": {
@@ -1513,17 +1513,18 @@
                 "ext-mbstring": "*",
                 "ext-zlib": "*",
                 "guzzlehttp/guzzle": "^6.2",
-                "lazyjsonmapper/lazyjsonmapper": "^1.2.3",
+                "lazyjsonmapper/lazyjsonmapper": "^1.5.0",
                 "php": ">=5.6",
                 "psr/log": "^1.0",
                 "react/event-loop": "^0.4.3",
                 "react/promise": "^2.5",
                 "react/socket": "^0.8",
-                "valga/fbns-react": "^0.1.7"
+                "valga/fbns-react": "^0.1.8"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.7.1",
                 "monolog/monolog": "^1.23",
+                "phpunit/phpunit": "^5.7 || ^6.2",
                 "react/http": "^0.7.2"
             },
             "suggest": {
@@ -1559,7 +1560,7 @@
                 "php",
                 "private"
             ],
-            "time": "2017-10-13T23:41:47+00:00"
+            "time": "2017-10-27T13:29:24+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2060,16 +2061,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.12",
+            "version": "v0.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "1502354ebc70d59d8e3a87c325b0eb78a79da25b"
+                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/1502354ebc70d59d8e3a87c325b0eb78a79da25b",
-                "reference": "1502354ebc70d59d8e3a87c325b0eb78a79da25b",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
+                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
                 "shasum": ""
             },
             "require": {
@@ -2129,7 +2130,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-10-14T17:14:13+00:00"
+            "time": "2017-10-19T06:13:20+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -2436,16 +2437,16 @@
         },
         {
             "name": "react/socket",
-            "version": "v0.8.4",
+            "version": "v0.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/socket.git",
-                "reference": "ce2b577c2d69ee071c3f9e552942c320caa87e0a"
+                "reference": "d169d1ed24e39bf182781d72ddd224dbbd449aa8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/socket/zipball/ce2b577c2d69ee071c3f9e552942c320caa87e0a",
-                "reference": "ce2b577c2d69ee071c3f9e552942c320caa87e0a",
+                "url": "https://api.github.com/repos/reactphp/socket/zipball/d169d1ed24e39bf182781d72ddd224dbbd449aa8",
+                "reference": "d169d1ed24e39bf182781d72ddd224dbbd449aa8",
                 "shasum": ""
             },
             "require": {
@@ -2458,8 +2459,8 @@
                 "react/stream": "^1.0 || ^0.7.1"
             },
             "require-dev": {
-                "clue/block-react": "^1.1",
-                "phpunit/phpunit": "~4.8"
+                "clue/block-react": "^1.2",
+                "phpunit/phpunit": "^5.0 || ^4.8"
             },
             "type": "library",
             "autoload": {
@@ -2479,7 +2480,7 @@
                 "reactphp",
                 "stream"
             ],
-            "time": "2017-09-16T17:16:49+00:00"
+            "time": "2017-10-23T21:45:58+00:00"
         },
         {
             "name": "react/stream",
@@ -2732,16 +2733,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v5.3.0",
+            "version": "v5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "d102a355d8c2e1a00d68659e9b51fb6f63aaa957"
+                "reference": "a523748f2db82beacfac7b22e0642e326aa3be64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/d102a355d8c2e1a00d68659e9b51fb6f63aaa957",
-                "reference": "d102a355d8c2e1a00d68659e9b51fb6f63aaa957",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/a523748f2db82beacfac7b22e0642e326aa3be64",
+                "reference": "a523748f2db82beacfac7b22e0642e326aa3be64",
                 "shasum": ""
             },
             "require": {
@@ -2783,7 +2784,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2017-10-11T16:41:44+00:00"
+            "time": "2017-10-27T16:27:13+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -4064,37 +4065,40 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.6.1",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102"
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/8e6e04167378abf1ddb4d3522d8755c5fd90d102",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "doctrine/collections": "1.*",
-                "phpunit/phpunit": "~4.1"
+                "doctrine/collections": "^1.0",
+                "doctrine/common": "^2.6",
+                "phpunit/phpunit": "^4.1"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "DeepCopy\\": "src/DeepCopy/"
-                }
+                },
+                "files": [
+                    "src/DeepCopy/deep_copy.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Create deep copies (clones) of your objects",
-            "homepage": "https://github.com/myclabs/DeepCopy",
             "keywords": [
                 "clone",
                 "copy",
@@ -4102,7 +4106,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-04-12T18:52:22+00:00"
+            "time": "2017-10-19T19:58:43+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
