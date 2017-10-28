@@ -18,10 +18,10 @@
     <h1>How Does it Work?</h1>
 </div>
 <div class="row lead-details">
-    <div class="col-sm-6 text-center">
+    <div class="col-sm-5 col-sm-offset-1 text-center">
         <img src="https://images.clickfunnels.com/ba/f6a8708e0411e786129d44e814c9e9/function-auto-dm-promo.png" height="500" >
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-5">
         <span class="title"><h1>Get Your New Follower</h1></span>
         <span>
             <span class="header"><li class="fa fa-envelope"></li>Automated Direct Message</span>
@@ -39,7 +39,8 @@
     </div>
 </div>
 <div class="row lead-details">
-    <div class="col-sm-6">
+
+    <div class="col-sm-5">
         <span class="title"><h1>Gain Followers, Likes & Comments</h1></span>
         <span>
             <span class="header"><li class="fa fa-street-view"></li>Define Your Audience</span>
@@ -55,15 +56,15 @@
         </span>
         <button>Join Now</button>
     </div>
-    <div class="col-sm-6 text-center">
+    <div class="col-sm-4 text-center">
         <img src="https://images.clickfunnels.com/a7/94ffb08e0511e786129d44e814c9e9/function-follow-unfollow-promo.png" height="500">
     </div>
 </div>
 <div class="row lead-details">
-    <div class="col-sm-6 text-center">
+    <div class="col-sm-5 col-sm-offset-1 text-center">
         <img src="https://images.clickfunnels.com/bb/bc1b508e0411e799d6c772327af0cf/function-post-scheduling-promo.png" height="500">
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-5">
         <span class="title"><h1>Save Time With No Limits Scheduling</h1><span>
         <span>
             <span class="header"><li class="fa_prepended fa fa-paper-plane-o"></li>Plan, Schedule & Post</span>
@@ -89,32 +90,40 @@
 <div class="row lead">
     <h1>Spy on what our users think!</h1>
 </div>
-<div class="row">
+<div class="row samples">
     <img src="#"/>
     <button>Click Here To Get Started!</button>
 </div>
 <div class="row lead">
     <h1>When you sign up, you'll get...</h1>
 </div>
-<div class="row">
-    <div>
-        <span>
-            <li class="fa fa-instagram"></li>Automated Follower's Growth
+<div class="row lead-action">
+    <div class="row">
+        <span class="action-item col-sm-3 col-sm-offset-1 text-center">
+            <img src="https://images.clickfunnels.com/53/1c074085da11e7a5a07b843e99965e/vsl-feature-1.png" height="100">
+            <h1>Automated Follower's Growth</h1>
         </span>
-        <span>
-            <li class="fa fa-instagram"></li>Automated Direct Messages
+        <span class="action-item col-sm-4 text-center">
+            <img src="https://images.clickfunnels.com/53/196f3085da11e7a6e9ff60d57f1d47/vsl-feature-2.png" height="100">
+            <h1>Automated Direct Messages</h1>
         </span>
-        <span>
-            <li class="fa fa-instagram"></li>Scheduled Post + Content Created For You!
+        <span class="action-item col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/53/9e7db085da11e7add6132fe9311df7/vsl-feature-3.png" height="100">
+            <h1>Scheduled Post + Content Created For You!</h1>
         </span>
-        <span>
-            <li class="fa fa-instagram"></li>Access to Secret Group Community
+    </div>
+    <div class="row">
+        <span class="action-item col-sm-3 col-sm-3 col-sm-offset-1 text-center">
+            <img src="https://images.clickfunnels.com/92/2ac25085da11e78a3819e6a59ba44b/vsl-feature-4.png" height="100">
+            <h1>Access to Secret Group Community</h1>
         </span>
-        <span>
-            <li class="fa fa-instagram"></li>Instagram Trainings
+        <span class="action-item col-sm-4 text-center">
+            <img src="https://images.clickfunnels.com/53/1ec66085da11e79faf65f49eb022ec/vsl-feature-5.png" height="100">
+            <h1>Instagram Trainings</h1>
         </span>
-        <span>
-            <li class="fa fa-instagram"></li>Sales & Affiliate Marketing Training
+        <span class="action-item col-sm-3 text-center" >
+            <img src="https://images.clickfunnels.com/53/37f3b085da11e7a6ff71c9c1bdab7d/vsl-feature-6.png" height="100">
+            <h1>Sales & Affiliate Marketing Training</h1>
         </span>
     </div>
     <button>Click Here To Get Started!</button>
