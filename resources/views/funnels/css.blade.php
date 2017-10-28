@@ -35,7 +35,12 @@
     }
     .top-view button{
         width: 80%;
-        margin: 50px 10% 50px 10%;
+        margin: 10px 10% 50px 10%;
+    }
+    iframe{
+        width: 60%;
+        height: 450;
+        margin: 0 20% 0 20%;
     }
     .lead{
          background: url('https://images.clickfunnels.com/e0/9298103db411e68974d5a01d1d5c10/bluegrad.jpg');

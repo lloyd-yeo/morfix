@@ -11,7 +11,11 @@
             HUGE AUTOMATED INCOME ON <br />
             SOCIAL MEDIA EVEN IF YOU HAVE <br />
             NO EXPERIENCE</h1>
-        <span>Video</span><br />
+        <div>
+            <iframe src="https://player.vimeo.com/video/198823397?autoplay=1&title=0&byline=0&wmode=transparent" frameborder="0" allowfullscreen wmode="opaque"> 
+            </iframe>
+        </div>
+        <br />
         <button>Click Here To Get Started!</button>
 </div>
 <div class="row lead" >
