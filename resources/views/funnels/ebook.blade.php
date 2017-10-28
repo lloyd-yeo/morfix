@@ -91,36 +91,34 @@
 </div>
 <div class="row feedback">
     <div class="row">
-        <span class="col-sm-3 text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/5c/51d96085cc11e7a6e9ff60d57f1d47/IMG_1830.png"/>
         </span>
 
-        <span class="col-sm-3 text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/8a/58d9e085d011e78a3819e6a59ba44b/IMG_1825.png"/>
         </span>
 
-        <span class="col-sm-3 text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/ac/8fb9e085d811e780decfb4f9414e86/IMG_1741.png"/>
         </span>
 
-        <span class="col-sm-3 text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4  col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/ac/d8d0d085d811e7817dc3b3ea870a52/IMG_1820.png"/>
         </span>
-    </div>
-    <div class="row">
-        <span class="col-sm-3 text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4  col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/ac/de00f085d811e79faf65f49eb022ec/IMG_1828.png"/>
         </span>
 
-        <span class="col-sm-3 text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/ac/b2f95085d811e7add6132fe9311df7/IMG_1822.png"/>
         </span>
 
-        <span class="col-sm-3  text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4  col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/ac/7972c085d811e78a3819e6a59ba44b/IMG_1829.jpg"/>
         </span>
         
-        <span class="col-sm-3 text-center">
+        <span class="col-xs-12 col-sm-6 col-md-4 col-lg-3 text-center">
             <img src="https://images.clickfunnels.com/ac/bdf5d085d811e781571b5497e975e2/IMG_1823.png"/>
         </span>
     </div>
