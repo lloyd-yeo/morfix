@@ -66,7 +66,7 @@ class DmInboxHelper extends LazyJsonMapper
 
 	public static function getThread(Instagram $instagram, $threadId)
 	{
-		$threadResponse = $instagram->direct->getThread($thread_id);
+		$threadResponse = $instagram->direct->getThread($threadId);
 
 		return $threadResponse->getThread();
 	}
