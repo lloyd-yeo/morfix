@@ -7,7 +7,8 @@
         width: 100%;
     }
     .row div{
-        margin: 50px 0 50px 0;
+        margin-top: 50px;
+        margin-bottom: 50px;
     }
     b, strong{
         font-weight: 700;
@@ -34,7 +35,7 @@
     }
     .top-view button{
         width: 80%;
-        margin: 0 10% 0 10%;
+        margin: 50px 10% 50px 10%;
     }
     .lead{
          background: url('https://images.clickfunnels.com/e0/9298103db411e68974d5a01d1d5c10/bluegrad.jpg');
@@ -72,15 +73,25 @@
         font-size: 25px;
         font-weight: 700;
         color: rgb(217, 83, 79);
+        margin: 20px 0 20px 0;
     }
 
     .lead-action .action-item{
         width: 25%;
         height: 200px;
     }
-    .lead-action button, .samples button{
+
+    .feedback{
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+    .lead-action button, .feedback button{
         width: 80%;
-        margin: 0 10% 0 10%;
+        margin: 50px 10% 50px 10%;
+    }
+    .feedback img{
+        height: 400px;
+        margin-top: 50px;
     }
 
     button{
@@ -97,5 +108,18 @@
     button:hover, .button:hover{
         background: #c18000 !important;
         text-decoration: none;
+    }
+
+    .footer{
+        background: url('https://images.clickfunnels.com/e0/9298103db411e68974d5a01d1d5c10/bluegrad.jpg');
+        height:125px;
+        width: 100%;
+        color: #fff;
+    }
+    .footer span{
+        margin-top: 50px;
+        float: left;
+        padding-left: 10%;
+        padding-right: 10%;
     }
 </style>

@@ -39,8 +39,7 @@
     </div>
 </div>
 <div class="row lead-details">
-
-    <div class="col-sm-5">
+    <div class="col-sm-5 col-sm-offset-1">
         <span class="title"><h1>Gain Followers, Likes & Comments</h1></span>
         <span>
             <span class="header"><li class="fa fa-street-view"></li>Define Your Audience</span>
@@ -90,24 +89,57 @@
 <div class="row lead">
     <h1>Spy on what our users think!</h1>
 </div>
-<div class="row samples">
-    <img src="#"/>
+<div class="row feedback">
+    <div class="row">
+        <span class="col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/5c/51d96085cc11e7a6e9ff60d57f1d47/IMG_1830.png"/>
+        </span>
+
+        <span class="col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/8a/58d9e085d011e78a3819e6a59ba44b/IMG_1825.png"/>
+        </span>
+
+        <span class="col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/ac/8fb9e085d811e780decfb4f9414e86/IMG_1741.png"/>
+        </span>
+
+        <span class="col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/ac/d8d0d085d811e7817dc3b3ea870a52/IMG_1820.png"/>
+        </span>
+    </div>
+    <div class="row">
+        <span class="col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/ac/de00f085d811e79faf65f49eb022ec/IMG_1828.png"/>
+        </span>
+
+        <span class="col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/ac/b2f95085d811e7add6132fe9311df7/IMG_1822.png"/>
+        </span>
+
+        <span class="col-sm-3  text-center">
+            <img src="https://images.clickfunnels.com/ac/7972c085d811e78a3819e6a59ba44b/IMG_1829.jpg"/>
+        </span>
+        
+        <span class="col-sm-3 text-center">
+            <img src="https://images.clickfunnels.com/ac/bdf5d085d811e781571b5497e975e2/IMG_1823.png"/>
+        </span>
+    </div>
     <button>Click Here To Get Started!</button>
 </div>
 <div class="row lead">
     <h1>When you sign up, you'll get...</h1>
 </div>
-<div class="row lead-action">
+<div class="row lead-action text-center">
     <div class="row">
-        <span class="action-item col-sm-3 col-sm-offset-1 text-center">
+        <span class="action-item col-sm-3 col-sm-offset-1">
             <img src="https://images.clickfunnels.com/53/1c074085da11e7a5a07b843e99965e/vsl-feature-1.png" height="100">
             <h1>Automated Follower's Growth</h1>
         </span>
-        <span class="action-item col-sm-4 text-center">
+        <span class="action-item col-sm-4">
             <img src="https://images.clickfunnels.com/53/196f3085da11e7a6e9ff60d57f1d47/vsl-feature-2.png" height="100">
             <h1>Automated Direct Messages</h1>
         </span>
-        <span class="action-item col-sm-3 text-center">
+        <span class="action-item col-sm-3">
             <img src="https://images.clickfunnels.com/53/9e7db085da11e7add6132fe9311df7/vsl-feature-3.png" height="100">
             <h1>Scheduled Post + Content Created For You!</h1>
         </span>
@@ -128,7 +160,7 @@
     </div>
     <button>Click Here To Get Started!</button>
 </div>
-<div class="row lead" >
+<div class="row footer" >
     <span>Morfix 2016-2017</span>
-    <span>Privacy Policy - Terms of Service</span>
+    <span class="pull-right">Privacy Policy - Terms of Service</span>
 </div>
