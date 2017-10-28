@@ -127,4 +127,56 @@
         padding-left: 10%;
         padding-right: 10%;
     }
+
+/*---------------------------------------------------------
+
+                  RESPONSIVE HANDLER
+
+-----------------------------------------------------------*/
+
+
+/*-------------- Small Screen for Mobile Phones  --------------*/
+@media screen (min-width: 768px), screen and (max-width: 991px){
+
+}
+
+/*-------------- Extra Small Screen for Mobile Phones --------------*/
+@media (max-width: 767px){
+    .top-view h1{
+        font-size: 32px;
+    }
+    iframe{
+        width: 90%;
+        height: 200;
+        margin: 0 5% 0 5%;
+    }
+    .top-view button{
+        margin: 0 5% 0 5%;
+        width: 90%;
+    }
+
+    .lead{
+        height: 200px;
+    }
+    .lead h1{
+        padding-top: 30px;
+    }
+    button{
+        font-size: 25px !important;
+        border-radius: 5px;
+        margin: 0 5% 0 5%;
+        width: 90%;
+    }
+
+    #lead-button{
+        height: 100px !important;
+    }
+
+    .footer span{
+        margin-top: 50px !important;
+        float: left;
+        padding: 0px !important;
+    }
+}
+
 </style>

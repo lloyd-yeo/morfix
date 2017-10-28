@@ -3,13 +3,13 @@
 <link rel="stylesheet" media="screen" href="https://www.clickfunnel.com/assets/lander.css">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7COswald:400,700%7CDroid+Sans:400,700%7CRoboto:400,700%7CLato:400,700%7CPT+Sans:400,700%7CSource+Sans+Pro:400,700%7CNoto+Sans:400,700%7CPT+Sans:400,700%7CUbuntu:400,700%7CBitter:400,700%7CPT+Serif:400,700%7CRokkitt:400,700%7CDroid+Serif:400,700%7CRaleway:400,700%7CInconsolata:400,700" rel="stylesheet" type="text/css">
-<div class="row top-view">
+<div class="row top-view text-center">
     <p><b><strong>*Exclusive Video* <br />Your e-book has been sent to your email! Watch the video below before we take it down! </strong></b></p>
+        <img src="https://images.clickfunnels.com/a1/2623e0870f11e792710fe3ef34c906/MX-Morfix-White.png" /> 
         <br />
-        <img src="https://images.clickfunnels.com/a1/2623e0870f11e792710fe3ef34c906/MX-Morfix-White.png" />
-        <h1>DISCOVER HOW TO CREATE <br />
-            HUGE AUTOMATED INCOME ON <br />
-            SOCIAL MEDIA EVEN IF YOU HAVE <br />
+        <h1 class="col-xs-12 col-sm-12 col-md-10 col-lg-8 col-lg-offset-2 col-md-offset-1">DISCOVER HOW TO CREATE
+            HUGE AUTOMATED INCOME ON
+            SOCIAL MEDIA EVEN IF YOU HAVE
             NO EXPERIENCE</h1>
         <div>
             <iframe src="https://player.vimeo.com/video/198823397?autoplay=1&title=0&byline=0&wmode=transparent" frameborder="0" allowfullscreen wmode="opaque"> 
@@ -126,7 +126,7 @@
             <img src="https://images.clickfunnels.com/ac/bdf5d085d811e781571b5497e975e2/IMG_1823.png"/>
         </span>
     </div>
-    <button>Click Here To Get Started!</button>
+    <button id="lead-button">Click Here To Get Started!</button>
 </div>
 <div class="row lead">
     <h1>When you sign up, you'll get...</h1>
@@ -160,7 +160,7 @@
             <h1>Sales & Affiliate Marketing Training</h1>
         </span>
     </div>
-    <button>Click Here To Get Started!</button>
+    <button id="lead-button">Click Here To Get Started!</button>
 </div>
 <div class="row footer" >
     <span>Morfix 2016-2017</span>
