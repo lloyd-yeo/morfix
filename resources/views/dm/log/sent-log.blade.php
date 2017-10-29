@@ -1,5 +1,5 @@
 <tr>
-    <td class="text-center">{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
+    {{--<td class="text-center">{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>--}}
     <td class="text-center">
         @if ($dm_job->fulfilled == 0)
         <label class="label label-primary">Pending</label>
