@@ -127,7 +127,7 @@ class DirectMessageTemplatesController extends Controller
 		$response = "There has been an error with the server. Please contact live support.";
 
 		$dm_jobs = NULL;
-		$connection_name = Helper::getConnectionName(Auth::user()->partition);
+		$connection_name = Helper::getConnection(Auth::user()->partition);
 		if ($instagram_profile->save()) {
 
 			if (Auth::user()->partition > 0) {
