@@ -138,6 +138,11 @@ class EngagementGroup implements ShouldQueue
 				continue;
 			} catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
 				continue;
+			} catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {
+				$ig_profile->next_like_time = \Carbon\Carbon::now()->addHour(1);
+				$ig_profile->next_comment_time = \Carbon\Carbon::now()->addHour(1);
+				$ig_profile->save();
+				continue;
 			}
 		}
 	}
