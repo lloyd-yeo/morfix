@@ -106,9 +106,11 @@ class EngagementGroup implements ShouldQueue
 
 				} else {
 					if ($this->comment === 1) {
+						echo ("[" . $ig_profile->insta_username . "] has turned on Auto-Comment");
 						if ($ig_profile->auto_comment === 1) {
 							$comments = InstagramProfileComment::where('insta_username', $ig_profile->insta_username)
 								->get();
+
 							dump($comments);
 							if (count($comments) > 0 && $this->comments_to_give > 0) {
 								$comment = $comments->random();
