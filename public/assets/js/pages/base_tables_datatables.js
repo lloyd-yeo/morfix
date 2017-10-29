@@ -47,7 +47,7 @@ var BaseTableDatatables = function() {
     // Init full DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableDirectMessageJob = function() {
         jQuery('.js-dataTable-dmJob').dataTable({
-            columnDefs: [ { orderable: false, targets: [ 5 ] } ],
+            columnDefs: [ { orderable: false, targets: [ 4 ] } ],
             pageLength: 10,
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
