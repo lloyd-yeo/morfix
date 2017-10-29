@@ -36,7 +36,7 @@
                     <table class="table table-bordered table-striped js-dataTable-dmJob">
                         <thead>
                             <tr>
-                                <th class="text-center"><i class="fa fa-clock-o"></i> Date To Send (GMT+8)</th>
+                                {{--<th class="text-center"><i class="fa fa-clock-o"></i> Date To Send (GMT+8)</th>--}}
                                 <th class="text-center">Fulfilled</th>
                                 <th class="text-center">Recipient</th>
                                 <th class="text-center">Recipient Full Name</th>
@@ -47,7 +47,7 @@
                         <tbody>
                             @foreach ($pending_dm_jobs as $dm_job)
                             <tr id='dm-{{ $dm_job->job_id }}'>
-                                <td class="text-center">{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>
+                                {{--<td class="text-center">{{ Carbon\Carbon::parse($dm_job->time_to_send)->toDayDateTimeString() }}</td>--}}
                                 <td class="text-center">
                                     @if ($dm_job->fulfilled == 0)
                                     <label class="label label-primary">Pending</label>
