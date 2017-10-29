@@ -155,6 +155,9 @@ Route::post('/stripe/invoice/paymentfailed', 'StripeWebhookController@invoicePay
 Route::get('/dm/thread', 'DirectThreadController@index');
 Route::get('/dm/thread/{id}', 'DirectThreadController@show');
 
+
+Route::get('/funnels/ebook', 'FunnelsController@show');
+Route::get('/funnels/test', 'FunnelsController@test');
 /**
  * Routes for creation of Paypal Subscription plans.
  */

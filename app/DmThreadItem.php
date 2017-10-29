@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class DmThreadItem extends MorfixModel
 {
-    protected $table = "direct_thread_item";
+    protected $table = "dm_thread_item";
 }
