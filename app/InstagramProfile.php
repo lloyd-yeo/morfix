@@ -7,7 +7,7 @@ use App\User;
 
 class InstagramProfile extends Model
 {
-    protected $primaryKey = 'id'; 
+    protected $primaryKey = 'id';
     protected $table = "user_insta_profile";
     
     /**
