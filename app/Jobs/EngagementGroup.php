@@ -112,7 +112,10 @@ class EngagementGroup implements ShouldQueue
 							if (count($comments) > 0 && $this->comments_to_give > 0) {
 								$comment = $comments->random();
 								if (!empty($comment->comment)) {
-									$instagram->media->comment($mediaId, $comment->comment);
+									$comment_resp = $instagram->media->comment($mediaId, $comment->comment);
+
+									dump($comment_resp);
+
 									$this->comments_to_give--;
 								}
 							}
