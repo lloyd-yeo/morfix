@@ -63,7 +63,7 @@ class EngagementGroup implements ShouldQueue
 	 */
 	public function handle()
 	{
-
+		echo "Turn on commenting? " . $this->comment;
 		$ig_profiles = InstagramProfile::where('checkpoint_required', 0)
 			->where('account_disabled', 0)
 			->where('invalid_user', 0)
@@ -106,7 +106,9 @@ class EngagementGroup implements ShouldQueue
 
 				} else {
 					if ($this->comment === 1) {
+
 						echo ("[" . $ig_profile->insta_username . "] has turned on Auto-Comment");
+
 						if ($ig_profile->auto_comment === 1) {
 							$comments = InstagramProfileComment::where('insta_username', $ig_profile->insta_username)
 								->get();
