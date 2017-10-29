@@ -123,7 +123,7 @@ class EngagementGroup implements ShouldQueue
 					}
 				}
 
-				dump($response);
+//				dump($response);
 
 			} catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
 				continue;
