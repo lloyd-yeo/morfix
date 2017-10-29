@@ -111,6 +111,7 @@ class EngagementGroup implements ShouldQueue
 								->get();
 							if (count($comments) > 0 && $this->comments_to_give > 0) {
 								$comment = $comments->random();
+								dump($comment);
 								if (!empty($comment->comment)) {
 									$comment_resp = $instagram->media->comment($mediaId, $comment->comment);
 
