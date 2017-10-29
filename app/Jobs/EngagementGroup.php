@@ -63,7 +63,7 @@ class EngagementGroup implements ShouldQueue
 	 */
 	public function handle()
 	{
-		echo "[Job] Turn on commenting? " . $this->comment . "<br/>";
+		echo "[Job] Turn on commenting? " . $this->comment . "\n";
 
 		$ig_profiles = InstagramProfile::where('checkpoint_required', 0)
 			->where('account_disabled', 0)
@@ -104,10 +104,12 @@ class EngagementGroup implements ShouldQueue
 				$response = $instagram->media->like($mediaId);
 
 				if ($ig_profile->owner()->trial_activation === 1) {
-					echo "[" . $ig_profile->insta_username . "] owner is on Free-Trial<br/>";
+					echo "[" . $ig_profile->insta_username . "] owner is on Free-Trial\n";
 				} else {
+					echo "[" . $ig_profile->insta_username . "] owner is NOT on Free-Trial\n";
+
 					if ($this->comment === 1) {
-						echo ("[" . $ig_profile->insta_username . "] has turned on Auto-Comment<br/>");
+						echo ("[" . $ig_profile->insta_username . "] has turned on Auto-Comment\n");
 
 						if ($ig_profile->auto_comment === 1) {
 							$comments = InstagramProfileComment::where('insta_username', $ig_profile->insta_username)
