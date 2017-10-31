@@ -112,7 +112,7 @@ class NewPaidUser implements ShouldQueue {
                         $user_affiliate->save();
                         $referrer_user = User::where('user_id', $referrer)->first();
                         if ($referrer_user !== NULL) {
-                            Mail::to($user->email)->send(new NewPremiumAffiliate($referrer_user, $user));
+                            Mail::to($referrer_user->email)->send(new NewPremiumAffiliate($referrer_user, $user));
                         }
                     }
                 }
