@@ -53,4 +53,20 @@ class NewPremiumAffiliate extends Mailable
 			->with([ 'referrer_name'  => $this->referrer->name,
 			         'referred_email' => $this->referred->email ]);
 	}
+
+	private function asJSON($data)
+	{
+		$json = json_encode($data);
+		$json = preg_replace('/(["\]}])([,:])(["\[{])/', '$1$2 $3', $json);
+
+		return $json;
+	}
+
+
+	private function asString($data)
+	{
+		$json = $this->asJSON($data);
+
+		return wordwrap($json, 76, "\n   ");
+	}
 }
