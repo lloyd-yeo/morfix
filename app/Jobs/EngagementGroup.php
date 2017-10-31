@@ -109,7 +109,7 @@ class EngagementGroup implements ShouldQueue
 					echo "[" . $ig_profile->insta_username . "] owner is NOT on Free-Trial\n";
 
 					if ($this->comment == 1) {
-						
+
 						echo ("[" . $ig_profile->insta_username . "] has turned on Auto-Comment\n");
 
 						if ($ig_profile->auto_comment == 1) {
