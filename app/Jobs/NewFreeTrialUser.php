@@ -91,7 +91,6 @@ class NewFreeTrialUser implements ShouldQueue {
 	                }
 
                 }
-                
 
 
                 Mail::to($user->email)->send(new NewFreeTrial($user));
