@@ -79,6 +79,10 @@ class NewFreeTrialUser implements ShouldQueue {
                     $user_affiliate->referrer = $referrer;
                     $user_affiliate->referred = $user->user_id;
                     $user_affiliate->save();
+	                $referrer_user = User::find($referrer);
+	                if ($referrer_user !== NULL) {
+		                Mail::to($referrer_user->email)->send(new NewPremiumAffiliate($referrer_user, $user));
+	                }
                 }
                 
                 echo $user;
