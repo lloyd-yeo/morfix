@@ -71,10 +71,12 @@ class NewFreeTrialUser implements ShouldQueue {
             $user->tier = 1;
 
             if ($user->save()) {
-                
+	            echo $user . "\n\n";
+
                 $referrer_ip = ReferrerIp::where('ip', $this->ip)->first();
                 
                 if ($referrer_ip !== NULL) {
+
                     $referrer = $referrer_ip->referrer;
                     $user_affiliate = new UserAffiliates;
                     $user_affiliate->referrer = $referrer;
@@ -82,12 +84,15 @@ class NewFreeTrialUser implements ShouldQueue {
                     $user_affiliate->save();
 
 	                $referrer_user = User::find($referrer);
+	                echo "[Referrer] for [" . $user->email . "] ";
+	                echo $referrer_user;
 	                if ($referrer_user !== NULL) {
 		                Mail::to($referrer_user->email)->send(new NewFreeTrialAffiliate($referrer_user, $user));
 	                }
+
                 }
                 
-                echo $user;
+
 
                 Mail::to($user->email)->send(new NewFreeTrial($user));
 
