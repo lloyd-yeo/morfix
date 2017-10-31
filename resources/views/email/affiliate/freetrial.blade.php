@@ -489,7 +489,7 @@
 
 									<div style="Margin-left: 20px;Margin-right: 20px;Margin-top: 20px;">
 										<div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
-											<h2 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #e31212;font-size: 26px;line-height: 34px;font-family: sans-serif;text-align: center;"><span class="font-sans-serif">YOU JUST MADE MONEY!</span></h2>
+											<h2 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #e31212;font-size: 26px;line-height: 34px;font-family: sans-serif;text-align: center;"><span class="font-sans-serif">NEW FREE-TRIAL REFERRAL!</span></h2>
 										</div>
 									</div>
 
