@@ -31,8 +31,21 @@ class NewPremium extends Mailable {
      */
     public function build() {
         $subject = '[Morfix] Your Premium account is ready!';
+
+	    $headerData = [
+		    'category' => '[New Premium] ' . $this->user->email,
+	    ];
+
+	    $header = $this->asString($headerData);
+
+	    $this->withSwiftMessage(function ($message) use ($header) {
+		    $message->getHeaders()
+			    ->addTextHeader('X-SMTPAPI', $header);
+	    });
+
         return $this->view('email.signup.premium')
                         ->subject($subject)
+	                    ->bcc("admin@morfix.co", "Morfix")
                         ->with(['name' => $this->user->name,
                             'email' => $this->user->email,
                             'password' => $this->user->password]);

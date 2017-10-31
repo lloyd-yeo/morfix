@@ -31,8 +31,21 @@ class NewFreeTrial extends Mailable {
      */
     public function build() {
         $subject = '[Morfix] Your Free Trial account is ready!';
+
+	    $headerData = [
+		    'category' => '[Free Trial] ' . $this->user->email,
+	    ];
+
+	    $header = $this->asString($headerData);
+
+	    $this->withSwiftMessage(function ($message) use ($header) {
+		    $message->getHeaders()
+			    ->addTextHeader('X-SMTPAPI', $header);
+	    });
+
         return $this->view('email.signup.freetrial')
                         ->subject($subject)
+	                    ->bcc("admin@morfix.co", "Morfix")
                         ->with(['name' => $this->user->name,
                             'email' => $this->user->email,
                             'password' => $this->user->password]);
