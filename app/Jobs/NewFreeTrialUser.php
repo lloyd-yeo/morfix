@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\NewFreeTrialAffiliate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -79,9 +80,10 @@ class NewFreeTrialUser implements ShouldQueue {
                     $user_affiliate->referrer = $referrer;
                     $user_affiliate->referred = $user->user_id;
                     $user_affiliate->save();
+
 	                $referrer_user = User::find($referrer);
 	                if ($referrer_user !== NULL) {
-		                Mail::to($referrer_user->email)->send(new NewPremiumAffiliate($referrer_user, $user));
+		                Mail::to($referrer_user->email)->send(new NewFreeTrialAffiliate($referrer_user, $user));
 	                }
                 }
                 
