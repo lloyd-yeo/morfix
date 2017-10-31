@@ -10,33 +10,47 @@ use App\User;
 
 class NewPremiumAffiliate extends Mailable
 {
-    use Queueable, SerializesModels;
-    
-    public $referrer;
-    public $referred;
-    
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct(User $referrer, User $referred)
-    {
-        $this->referrer = $referrer;
-        $this->referred = $referred;
-    }
+	use Queueable, SerializesModels;
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        $subject = '[Morfix] More Cash!';
-        return $this->view('email.affiliate.premium')
-                        ->subject($subject)
-                        ->with(['referrer_name' => $this->referrer->name,
-                            'referred_email' => $this->referred->email]); 
-    }
+	public $referrer;
+	public $referred;
+
+	/**
+	 * Create a new message instance.
+	 *
+	 * @return void
+	 */
+	public function __construct(User $referrer, User $referred)
+	{
+		$this->referrer = $referrer;
+		$this->referred = $referred;
+	}
+
+	/**
+	 * Build the message.
+	 *
+	 * @return $this
+	 */
+	public function build()
+	{
+		$subject = '[Morfix] More Cash!';
+
+		$headerData = [
+			'category' => '[Premium Affiliate] ' . $this->referrer->email,
+		];
+
+		$header = $this->asString($headerData);
+
+		$this->withSwiftMessage(function ($message) use ($header) {
+			$message->getHeaders()
+				->addTextHeader('X-SMTPAPI', $header);
+		});
+
+
+		return $this->view('email.affiliate.premium')
+			->subject($subject)
+			->bcc("admin@morfix.co", "Morfix")
+			->with([ 'referrer_name'  => $this->referrer->name,
+			         'referred_email' => $this->referred->email ]);
+	}
 }
