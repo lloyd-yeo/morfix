@@ -46,7 +46,6 @@ class NewPremiumAffiliate extends Mailable
 				->addTextHeader('X-SMTPAPI', $header);
 		});
 
-
 		return $this->view('email.affiliate.premium')
 			->subject($subject)
 			->bcc("admin@morfix.co", "Morfix")
