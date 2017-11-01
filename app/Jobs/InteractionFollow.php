@@ -124,6 +124,7 @@ class InteractionFollow implements ShouldQueue
 
 								echo "[" . $this->profile->insta_username . "] using target username: " . $target_username->target_username . "\n";
 								$username_id = InstagramHelper::getUserIdForName($this->instagram, $target_username);
+
 								if ($username_id === NULL) {
 									continue;
 								}

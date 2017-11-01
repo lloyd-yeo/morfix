@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\Exception\NetworkException;
+use InstagramAPI\Exception\NotFoundException;
 use InstagramAPI\Instagram as Instagram;
 
 class InstagramHelper {
@@ -149,7 +150,7 @@ class InstagramHelper {
         $username_id = NULL;
         try {
             $username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
-        } catch (\InstagramAPI\Exception\NotFoundException $not_found_ex) {
+        } catch (NotFoundException $not_found_ex) {
             $target_username->invalid = 1;
             $target_username->save();
         }
@@ -205,7 +206,7 @@ class InstagramHelper {
             $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
 //            dump($hashtag_feed);
             return $hashtag_feed;
-        } catch (\InstagramAPI\Exception\NotFoundException $ex) {
+        } catch (NotFoundException $ex) {
             $hashtag->invalid = 1;
             $hashtag->save();
             return NULL;
@@ -224,13 +225,15 @@ class InstagramHelper {
         try {
             $hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
             return $hashtag_feed;
-        } catch (\InstagramAPI\Exception\NotFoundException $ex) {
+        } catch (NotFoundException $ex) {
+        	dump($ex);
             return NULL;
         } catch (NetworkException $network_ex) {
             $ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
             if ($ig_profile !== NULL) {
                 $ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
             }
+	        dump($network_ex);
             return NULL;
         }
     }
