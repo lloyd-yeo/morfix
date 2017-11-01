@@ -90,6 +90,10 @@ class SettingsController extends Controller
 		]);
 	}
 
+	public function cancelPaypalAgreement(Request $request) {
+		$agreement_id = $request->input('agreement_id');
+	}
+
 	public function cancelSubscription($sub_id)
 	{
 		\Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");

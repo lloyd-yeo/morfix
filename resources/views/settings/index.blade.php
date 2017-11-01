@@ -186,7 +186,7 @@
                     <h3 class="block-title">Paypal</h3>
                 </div>
                 <div class="block-content">
-                    <button id="cancel-paypal-btn" data-agreement-id="{{ $agreement_id }}">Cancel Paypal Subscription</button>
+                    <button id="cancel-paypal-btn" class="btn" data-agreement-id="{{ $agreement_id }}">Cancel Paypal Subscription</button>
                 </div>
             </div>
             @endif
