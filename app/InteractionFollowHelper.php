@@ -206,6 +206,7 @@ class InteractionFollowHelper {
         $delay = InteractionFollowHelper::setSpeedDelay($ig_profile->speed);
         try {
             $follow_resp = $instagram->people->follow($user_to_follow->getPk());
+            dump($follow_resp);
             return InteractionFollowHelper::follow_($follow_resp, $ig_profile, $user_to_follow, $delay);
         } catch (CheckpointRequiredException $checkpoint_ex) {
             InteractionFollowHelper::handleFollowInstagramException($ig_profile, $checkpoint_ex);
