@@ -185,7 +185,7 @@
                 <div class="block-header">
                     <h3 class="block-title">Paypal</h3>
                 </div>
-                <div class="block-content">
+                <div class="block-content" style="padding-bottom: 50px;">
                     <button id="cancel-paypal-btn" class="btn" data-agreement-id="{{ $agreement_id }}">Cancel Paypal Subscription</button>
                 </div>
             </div>
