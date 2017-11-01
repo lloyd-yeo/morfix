@@ -253,7 +253,19 @@ class InteractionFollowHelper {
             if ($follow_resp->getFriendshipStatus()->getIsPrivate()) {
                 return 2;
             } else if ($follow_resp->getFriendshipStatus()->getFollowing() == false) {
-                $ig_profile->next_follow_time = Carbon::now()->addSeconds(180)->toDateTimeString();
+
+                if ($ig_profile->auto_follow_ban == 2) { //Considered throttled.
+	                $ig_profile->next_follow_time = Carbon::now()->addHours(4)->toDateTimeString();
+	                $ig_profile->auto_follow_ban = 1;
+	                $ig_profile->auto_follow_ban_time = Carbon::now()->addHours(4);
+	                echo "[" . $ig_profile->insta_username . "] failed to follow again & is banned for the next 4 hours.\n";
+                } else { //Might not be throttling, just a flash-ban
+	                $ig_profile->next_follow_time = Carbon::now()->addMinutes(30)->toDateTimeString();
+	                $ig_profile->auto_follow_ban = 2;
+	                $ig_profile->auto_follow_ban_time = Carbon::now()->addMinutes(30);
+	                echo "[" . $ig_profile->insta_username . "] failed to follow & flash-banned for 30 minutes.\n";
+                }
+
                 $ig_profile->follow_quota = $ig_profile->follow_quota + 1;
                 $ig_profile->save();
                 return 0;
