@@ -155,6 +155,7 @@ Route::post('/stripe/invoice/paymentfailed', 'StripeWebhookController@invoicePay
 Route::get('/dm/thread', 'DirectThreadController@index');
 Route::get('/dm/thread/{id}', 'DirectThreadController@show');
 
+Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgreement');
 
 Route::get('/funnels/ebook', 'FunnelsController@show');
 Route::get('/funnels/test', 'FunnelsController@test');

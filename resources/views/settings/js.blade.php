@@ -15,7 +15,7 @@ $(".cancel-paypal-btn").on("click", function(){
         $.ajax({
             async: false,
             type: "POST",
-            url: "/paypal/subscription/cancel/",
+            url: "/paypal/subscription/cancel",
             dataType: "json",
             data: { agreement_id: $agreement_id },
             success: function (data) {
