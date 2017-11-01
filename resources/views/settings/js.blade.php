@@ -10,7 +10,24 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+$(".cancel-paypal-btn").on("click", function(){
+        var $agreement_id = $(this).attr("data-agreement-id");
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/paypal/subscription/cancel/",
+            dataType: "json",
+            data: { agreement_id: $agreement_id },
+            success: function (data) {
+                if (data.success === true) {
+                    alert('Your subscription has been cancelled!');
+                } else {
 
+                }
+            }
+        });
+
+});
 $(".btn-cancel-subscription").on("click", function(){ 
     var $sub_id = $(this).attr("data-sub-id");
     

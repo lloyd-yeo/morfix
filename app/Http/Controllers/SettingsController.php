@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Response;
 use Stripe\Invoice;
 use Stripe\Subscription;
+use App\PaypalAgreement;
 
 class SettingsController extends Controller
 {
@@ -72,10 +73,20 @@ class SettingsController extends Controller
 			$invoices_ = Invoice::all(array( 'limit' => 100, 'customer' => Auth::user()->stripe_id ));
 		}
 
+		$agreement_id = "";
+
+		if (Auth::user()->paypal == 1) {
+			$agreements = PaypalAgreement::where('email', Auth::user()->email)->get();
+			foreach ($agreements as $agreement) {
+				$agreement_id = $agreement->agreement_id;
+			}
+		}
+
 		return view('settings.index', [
 			'subscriptions' => $subscriptions,
 			'invoices'      => $invoices,
 			'invoices_'     => $invoices_,
+			'agreement_id'  => $agreement_id,
 		]);
 	}
 

@@ -179,6 +179,17 @@
                     </table>
                 </div>
             </div>
+
+            @if (Auth::user()->paypal == 1)
+            <div class="block">
+                <div class="block-header">
+                    <h3 class="block-title">Paypal</h3>
+                </div>
+                <div class="block-content">
+                    <button id="cancel-paypal-btn" data-agreement-id="{{ $agreement_id }}">Cancel Paypal Subscription</button>
+                </div>
+            </div>
+            @endif
             <!-- END Dynamic Table Full -->
 
 
