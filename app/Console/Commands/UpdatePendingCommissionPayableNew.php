@@ -24,7 +24,7 @@ class UpdatePendingCommissionPayableNew extends Command {
      *
      * @var string
      */
-    protected $description = 'Update payable commissions for everyone in the csv, and everyone not in';
+    protected $description = '(STEP 2) Update payable commissions for everyone in the csv, and everyone not in';
 
     /**
      * Create a new command instance.

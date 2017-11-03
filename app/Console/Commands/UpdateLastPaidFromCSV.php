@@ -24,7 +24,7 @@ class UpdateLastPaidFromCSV extends Command {
      *
      * @var string
      */
-    protected $description = 'updating when the user last paid from a csv file';
+    protected $description = '(STEP 1) updating when the user last paid from a csv file';
 
     /**
      * Create a new command instance.
@@ -41,11 +41,11 @@ class UpdateLastPaidFromCSV extends Command {
      * @return mixed
      */
     public function handle() {
-        $path = app_path('september-payout.csv');
+        $path = app_path('october-payout.csv');
         $file = fopen($path, "r");
 
         $current_email = "";
-        $last_pay_out_coms_date = "2017-09-25 00:00:00";
+        $last_pay_out_coms_date = "2017-10-25 00:00:00";
         $paid_amount =0;
         $tier = 0;
             
@@ -56,17 +56,17 @@ class UpdateLastPaidFromCSV extends Command {
 
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
-                if ($data[3] > 50 && !empty($data[1]) && $data[4] == 'Eligible') {
+                if ($data[2] > 50 && !empty($data[1]) && $data[4] == 'PAID') {
                     $tier = $user->tier;
                     $user->last_pay_out_date = $last_pay_out_coms_date;
                     $this->UpdateUserChargesPaid($user);
                     $this->CalculateUserPendingCommissions($user,$paid_amount,$tier);
-                    $user->paid_amount = $data[3];
+                    $user->paid_amount = $data[2];
                     $user->pending_commission_payable = 0;
-                    $user->all_time_commission = $user->all_time_commission + $data[3];
+                    $user->all_time_commission = $user->all_time_commission + $data[2];
                     $user->save();
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
-                    echo "Updated [$current_email] last pay out amount to [$data[3]]\n";
+                    echo "Updated [$current_email] last pay out amount to [$data[2]]\n";
                     echo "Updated [$current_email] pending commission to to [$user->pending_commission]\n";
                     $paid_amount = 0;
                     $tier = 0;
