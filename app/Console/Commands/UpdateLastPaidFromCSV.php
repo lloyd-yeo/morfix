@@ -62,8 +62,8 @@ class UpdateLastPaidFromCSV extends Command {
                     $this->UpdateUserChargesPaid($user);
                     $this->CalculateUserPendingCommissions($user,$paid_amount,$tier);
                     $user->paid_amount = $data[2];
-                    $user->pending_commission_payable = 0;
-                    $user->all_time_commission = $user->all_time_commission + $data[2];
+                    $user->testing_pending_commission_payable = 0;
+                    $user->testing_all_time_commission = $user->all_time_commission + $data[2];
                     $user->save();
                     echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
                     echo "Updated [$current_email] last pay out amount to [$data[2]]\n";
@@ -78,7 +78,7 @@ class UpdateLastPaidFromCSV extends Command {
     }
 
     public function UpdateUserChargesPaid($user) {
-        $recent_pay_out_date = Carbon::create(2017, 9, 25, 0, 0, 0, 'Asia/Singapore');
+        $recent_pay_out_date = Carbon::create(2017, 10, 25, 0, 0, 0, 'Asia/Singapore');
 //        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
         if ($user->last_pay_out_date == $recent_pay_out_date) {
