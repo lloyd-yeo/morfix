@@ -55,8 +55,8 @@ class InteractionFollowHelper {
 
         echo "[" . $ig_profile->insta_username . "] [" . $ig_profile->follow_cycle . "] number of follows: " . $followed_count . "\n";
 
-        if ($ig_profile->auto_follow === 1 && $ig_profile->auto_unfollow === 1) {
-            if ($ig_profile->unfollow === 1) {
+        if ($ig_profile->auto_follow == 1 && $ig_profile->auto_unfollow == 1) {
+            if ($ig_profile->unfollow == 1) {
                 //If profile is on unfollowing cycle:
                 //If there are profile(s) to unfollow, set mode to 1.
                 if ($followed_count > 0) {
@@ -66,7 +66,7 @@ class InteractionFollowHelper {
                     $ig_profile->unfollow = 0;
                     $ig_profile->save();
                 }
-            } else if ($ig_profile->unfollow === 0) {
+            } else if ($ig_profile->unfollow == 0) {
                 //If profile is on following cycle:
                 //Check if number of profiles unfollowed is more than or equal to the follow_cycle.
                 $follow_cycle = $ig_profile->follow_cycle;
@@ -76,11 +76,11 @@ class InteractionFollowHelper {
                     $follow_mode = 1;
                 }
             }
-        } else if ($ig_profile->auto_follow === 0 && $ig_profile->auto_unfollow === 1) {
+        } else if ($ig_profile->auto_follow == 0 && $ig_profile->auto_unfollow == 1) {
 
             if ($followed_count > 0) {
                 $follow_mode = 1;
-            } else if ($followed_count === 0) {
+            } else if ($followed_count == 0) {
                 $follow_mode = 2;
             }
 
