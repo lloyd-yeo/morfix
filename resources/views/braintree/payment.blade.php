@@ -55,7 +55,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<a href="#" class="btn btn-danger btn-block btn-lg">Sign Up</a>
+							<a href="#" style="background-color: rgb(212, 60, 60);" class="btn btn-block btn-lg">Sign Up</a>
 						</div>
 					</div>
 
@@ -85,7 +85,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<a href="#" class="btn btn-danger btn-block btn-lg bgcolor border-color">Sign Up</a>
+							<a href="#" style="background-color: rgb(212, 60, 60);" class="btn btn-block btn-lg">Sign Up</a>
 						</div>
 					</div>
 
@@ -110,7 +110,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<a href="#" class="btn btn-danger btn-block btn-lg">Sign Up</a>
+							<a href="#" style="background-color: #2B71B4;" class="btn btn-block btn-lg">Sign Up</a>
 						</div>
 					</div>
 
