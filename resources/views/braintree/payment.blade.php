@@ -40,10 +40,10 @@
 
 					<div class="pricing-box">
 						<div class="pricing-title">
-							<h3>Premium</h3>
+							<h3 style="color: rgb(212, 60, 60);">Premium</h3>
 						</div>
 						<div class="pricing-price">
-							<span class="price-unit">&dollar;</span>7<span class="price-tenure">/mo</span>
+							<span class="price-unit">&dollar;</span>37<span class="price-tenure">/mo</span>
 						</div>
 						<div class="pricing-features">
 							<ul>
@@ -65,10 +65,10 @@
 
 					<div class="pricing-box best-price">
 						<div class="pricing-title">
-							<h3>Pro</h3>
+							<h3 style="color: rgb(212, 60, 60);">Pro</h3>
 							<span>Most Savings</span>
 						</div>
-						<div class="pricing-price">
+						<div class="pricing-price" style="color: rgb(212, 60, 60);">
 							<span class="price-unit">&dollar;</span>370<span class="price-tenure">/yr</span>
 						</div>
 						<div class="pricing-features">
@@ -97,7 +97,7 @@
 						<div class="pricing-title">
 							<h3>Business</h3>
 						</div>
-						<div class="pricing-price">
+						<div class="pricing-price" style="color: #3C71AF;">
 							<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
 						</div>
 						<div class="pricing-features">
