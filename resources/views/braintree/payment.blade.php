@@ -51,7 +51,6 @@
 @endsection
 
 @section('js')
-	<script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
 	<script>
         var button = document.querySelector('#submit-button');
 
