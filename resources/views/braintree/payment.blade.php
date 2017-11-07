@@ -23,7 +23,14 @@
 			<form onsubmit="return false;">
 				<input type="hidden" name="plan" value="0137test">
 				<div id="dropin-container"></div>
-				<button class="btn btn-success" id="submit-button"></button>
+				<button class="btn btn-success text-white" id="submit-button" style='
+                       background-color:rgb(212, 60, 60);
+                       padding: 10px 50px;
+                       font-weight: 600;
+                       font-size: 15px;
+                       border: solid 1px #D3D3D3;
+                       text-align: center;
+                       text-transform: uppercase;'>Upgrade Now!</button>
 			</form>
 
 			{{--<div class="row font-s13">--}}
