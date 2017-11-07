@@ -65,9 +65,7 @@
             authorization: '{{ $client_token }}',
             container: '#dropin-container',
             paypal: {
-                flow: 'checkout',
-                amount: 37.00,
-                currency: 'USD'
+                flow: 'vault',
             },
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
