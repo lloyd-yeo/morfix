@@ -159,6 +159,8 @@ Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgree
 
 Route::get('/funnels/ebook', 'FunnelsController@show');
 Route::get('/funnels/test', 'FunnelsController@test');
+
+Route::get('/braintree', 'BraintreeController@payment');
 /**
  * Routes for creation of Paypal Subscription plans.
  */
