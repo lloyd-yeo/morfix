@@ -22,10 +22,7 @@
 
 			<form onsubmit="return false;">
 				<input type="hidden" name="plan" value="0137test">
-				<script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"
-				        data-braintree-dropin-authorization="CLIENT_AUTHORIZATION"
-				        data-card.cardholder-name.required="true"
-				></script>
+				<div id="dropin-container"></div>
 				<button class="btn btn-success" id="submit-button">Pay!</button>
 			</form>
 
