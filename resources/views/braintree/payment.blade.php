@@ -93,7 +93,8 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<button class="btn btn-success text-white upgrade-btn" data-toggle="modal" data-target=".bs-example-modal-sm" data-plan="0137test" style='
+							<button class="btn btn-success text-white upgrade-btn" data-toggle="modal"
+							        data-target=".upgrade-modal" data-plan="0137test" style='
                        background-color:rgb(212, 60, 60);
                        padding: 10px 50px;
                        font-weight: 600;
@@ -140,16 +141,30 @@
 				</div>
 			</div>
 
-			<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal fade upgrade-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+			     aria-hidden="true">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-body">
 						<div class="modal-content">
 							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Payment</h4>
 							</div>
 							<div class="modal-body">
-								<p class="nobottommargin">Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+								<form onsubmit="return false;">
+									<input type="hidden" name="plan" value="0137test">
+									<div id="dropin-container"></div>
+									<button class="btn btn-success text-white" id="submit-button" style='
+			                    background-color:rgb(212, 60, 60);
+			                    padding: 10px 50px;
+			                    font-weight: 600;
+			                    font-size: 15px;
+			                    border: solid 1px #D3D3D3;
+			                    text-align: center;
+			                    text-transform: uppercase;'>Upgrade Now!
+									</button>
+								</form>
 							</div>
 						</div>
 					</div>
