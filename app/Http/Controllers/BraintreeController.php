@@ -15,6 +15,6 @@ class BraintreeController extends Controller
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 		$clientToken = Braintree_ClientToken::generate();
 		dump($clientToken);
-		return view('funnels.ebook');
+		return view('braintree.payment');
 	}
 }
