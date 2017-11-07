@@ -19,9 +19,10 @@
 		</div>
 
 		<div class="content content-boxed">
-
-			<div id="dropin-container"></div>
-
+			<form>
+				<div id="dropin-container"></div>
+				<button class="btn btn-success" id="submit-button">Pay!</button>
+			</form>
 			{{--<div class="row font-s13">--}}
 				{{--@if (Auth::user()->vip == 1)--}}
 					{{--@include('braintree.table.premium')--}}
