@@ -19,6 +19,6 @@ class BraintreeController extends Controller
 	public function payment(Request $request) {
 		$clientToken = Braintree_ClientToken::generate();
 		dump($clientToken);
-		return $clientToken;
+		return view('funnels.ebook');
 	}
 }
