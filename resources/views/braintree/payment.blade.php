@@ -6,7 +6,7 @@
 
 @section('content')
 	<main id="main-container">
-		<div id="dropin-container"></div>
+
 		<div class="content bg-gray-lighter">
 			<div class="row items-push">
 				<div class="col-sm-7">
@@ -19,6 +19,7 @@
 		</div>
 
 		<div class="content content-boxed">
+			<div id="dropin-container"></div>
 			<div class="row font-s13">
 				@if (Auth::user()->vip == 1)
 					@include('braintree.table.premium')
