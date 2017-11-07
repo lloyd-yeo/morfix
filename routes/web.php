@@ -28,6 +28,8 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 Route::get('/interactions', 'InteractionsController@index');
 
+Route::get('/braintree', 'BraintreeController@payment');
+
 Route::get('/interactions/{id}', 'InteractionsController@edit');
 Route::post('/interactions/like/{id}', 'InteractionsController@toggleLike');
 Route::post('/interactions/comment/{id}', 'InteractionsController@toggleComment');
@@ -53,7 +55,6 @@ Route::post('/profile/ig/checkpoint', 'InstagramProfileController@clearCheckpoin
 Route::post('/profile/ig/changepassword', 'InstagramProfileController@changePassword');
 
 Route::get('/dm', 'DirectMessageController@index');
-
 
 Route::post('/dm/thread/create', 'DirectThreadController@create');
 Route::post('/dm/thread/retrieve', 'DirectThreadController@retrieve');
@@ -159,8 +160,6 @@ Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgree
 
 Route::get('/funnels/ebook', 'FunnelsController@show');
 Route::get('/funnels/test', 'FunnelsController@test');
-
-Route::get('/braintree', 'BraintreeController@payment');
 
 /**
  * Routes for creation of Paypal Subscription plans.
