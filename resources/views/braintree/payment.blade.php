@@ -56,7 +56,6 @@
 @section('js')
 	<script>
         var button = document.querySelector('#submit-button');
-
         braintree.dropin.create({
             authorization: '{{ $client_token }}',
             container: '#dropin-container'
@@ -64,6 +63,7 @@
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
                     // Submit payload.nonce to your server
+	                console.log(payload.nonce);
                 });
             });
         });
