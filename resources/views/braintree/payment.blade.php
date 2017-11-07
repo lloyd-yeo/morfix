@@ -71,7 +71,7 @@
                 flow: 'vault',
                 buttonStyle: {
                     size: 'small',
-                    color: 'gold',
+                    color: 'blue',
                     shape: 'pill',
                     label: 'buynow'
                 },
