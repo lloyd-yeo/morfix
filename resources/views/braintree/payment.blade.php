@@ -70,10 +70,12 @@
             paypal: {
                 flow: 'vault',
                 buttonStyle: {
-                  style: {
-                      color: 'blue',
-	                  label: 'buynow',
-                  },
+                    style: {
+                        size: 'small',
+                        color: 'gold',
+                        shape: 'pill',
+                        label: 'buynow'
+                    },
                 },
             },
             card: {
