@@ -13,8 +13,7 @@ class BraintreeController extends Controller
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
-		$clientToken = Braintree_ClientToken::generate();
-		dump($clientToken);
-		return view('braintree.payment');
+		$client_token = Braintree_ClientToken::generate();
+		return view('braintree.payment', ['client_token' => $client_token]);
 	}
 }
