@@ -31,7 +31,8 @@
 		<div class="content content-boxed">
 
 			<div class="fancy-title title-dotted-border title-center">
-				<h3 style="background-color: #f5f5f5;">Elevate Your Instagram Profile Now!</h3>
+				<h3 style="background-color: #f5f5f5;">
+					<i class="fa fa-instagram"></i>Elevate Your Instagram Pressence Now!</h3>
 			</div>
 			<div class="pricing bottommargin clearfix">
 
