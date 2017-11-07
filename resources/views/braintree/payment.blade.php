@@ -17,7 +17,6 @@
 
 @section('content')
 	<main id="main-container">
-
 		<div class="content bg-gray-lighter">
 			<div class="row items-push">
 				<div class="col-sm-7">
@@ -32,7 +31,7 @@
 		<div class="content content-boxed">
 
 			<div class="fancy-title title-dotted-border title-center">
-				<h3 style="background-color: #f5f5f5;">3 Columns</h3>
+				<h3 style="background-color: #f5f5f5;">Upgrade Now!</h3>
 			</div>
 			<div class="pricing bottommargin clearfix">
 
