@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-	<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic"
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic"
 	      rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="canvas/css/bootstrap.css" type="text/css"/>
 	<link rel="stylesheet" href="canvas/style.css" type="text/css"/>
@@ -156,7 +156,7 @@
 									<input type="hidden" name="plan" value="0137test">
 									<div id="dropin-container"></div>
 									<button class="btn btn-success text-white" id="submit-button" style='
-			                    background-color:rgb(212, 60, 60);
+			                    background-color:#3C71AF;
 			                    padding: 10px 50px;
 			                    font-weight: 600;
 			                    font-size: 15px;
