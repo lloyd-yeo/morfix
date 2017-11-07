@@ -22,7 +22,10 @@
 
 			<form onsubmit="return false;">
 				<input type="hidden" name="plan" value="0137test">
-				<div id="dropin-container"></div>
+				<script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"
+				        data-braintree-dropin-authorization="CLIENT_AUTHORIZATION"
+				        data-card.cardholder-name.required="true"
+				></script>
 				<button class="btn btn-success" id="submit-button">Pay!</button>
 			</form>
 
@@ -66,6 +69,12 @@
             container: '#dropin-container',
             paypal: {
                 flow: 'vault',
+                buttonStyle: {
+                  style: {
+                      color: 'blue',
+	                  label: 'buynow',
+                  },
+                },
             },
             card: {
                 cardholderName: {
