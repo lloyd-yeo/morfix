@@ -55,8 +55,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<a href="#" style="background-color: rgb(212, 60, 60);" class="btn btn-block btn-lg">
-								<button class="btn btn-success text-white" id="submit-button" style='
+							<button class="btn btn-success text-white" id="submit-button" style='
                        background-color:rgb(212, 60, 60);
                        padding: 10px 50px;
                        font-weight: 600;
@@ -64,8 +63,7 @@
                        border: solid 1px #D3D3D3;
                        text-align: center;
                        text-transform: uppercase;'>Upgrade Now!
-								</button>
-							</a>
+							</button>
 						</div>
 					</div>
 
@@ -128,8 +126,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<a href="#" style="background-color: #2B71B4; color:white;" class="btn btn-block btn-lg">
-								<button class="btn btn-success text-white" id="submit-button" style='
+							<button class="btn btn-success text-white" id="submit-button" style='
 				                       background-color:#3C71AF;
 				                       padding: 10px 50px;
 				                       font-weight: 600;
@@ -137,8 +134,7 @@
 				                       border: solid 1px #D3D3D3;
 				                       text-align: center;
 				                       text-transform: uppercase;'>Upgrade Now!
-								</button>
-							</a>
+							</button>
 						</div>
 					</div>
 
