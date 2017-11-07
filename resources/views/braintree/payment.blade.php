@@ -6,6 +6,7 @@
 
 @section('content')
 	<main id="main-container">
+		<div id="dropin-container"></div>
 		<div class="content bg-gray-lighter">
 			<div class="row items-push">
 				<div class="col-sm-7">
@@ -51,4 +52,18 @@
 
 @section('js')
 	<script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
+	<script>
+        var button = document.querySelector('#submit-button');
+
+        braintree.dropin.create({
+            authorization: '{{ $client_token }}',
+            container: '#dropin-container'
+        }, function (createErr, instance) {
+            button.addEventListener('click', function () {
+                instance.requestPaymentMethod(function (err, payload) {
+                    // Submit payload.nonce to your server
+                });
+            });
+        });
+	</script>
 @endsection
