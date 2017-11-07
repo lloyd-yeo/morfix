@@ -70,7 +70,8 @@
                     size: 'small',
                     color: 'blue',
                     shape: 'pill',
-                    label: 'buynow'
+                    label: 'buynow',
+	                branding: true,
                 },
             },
             card: {
