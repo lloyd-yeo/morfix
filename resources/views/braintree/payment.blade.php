@@ -32,7 +32,7 @@
 
 			<div class="fancy-title title-dotted-border title-center">
 				<h3 style="background-color: #f5f5f5;">
-					<i class="fa fa-instagram"></i>Elevate Your Instagram Pressence Now!</h3>
+					<i class="fa fa-instagram"></i> Elevate Your Instagram Pressence Now!</h3>
 			</div>
 			<div class="pricing bottommargin clearfix">
 
@@ -55,7 +55,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<button class="btn btn-success text-white" id="submit-button" style='
+							<button class="btn btn-success upgrade-btn" data-plan="0137" style='
                        background-color:rgb(212, 60, 60);
                        padding: 10px 50px;
                        font-weight: 600;
@@ -93,7 +93,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<button class="btn btn-success text-white" id="submit-button" style='
+							<button class="btn btn-success text-white upgrade-btn" data-toggle="modal" data-target=".bs-example-modal-sm" data-plan="0137test" style='
                        background-color:rgb(212, 60, 60);
                        padding: 10px 50px;
                        font-weight: 600;
@@ -126,7 +126,7 @@
 							</ul>
 						</div>
 						<div class="pricing-action">
-							<button class="btn btn-success text-white" id="submit-button" style='
+							<button class="btn btn-success text-white upgrade-btn" data-plan="0297" style='
 				                       background-color:#3C71AF;
 				                       padding: 10px 50px;
 				                       font-weight: 600;
@@ -137,24 +137,24 @@
 							</button>
 						</div>
 					</div>
-
 				</div>
-
 			</div>
 
-			<form onsubmit="return false;">
-				<input type="hidden" name="plan" value="0137test">
-				<div id="dropin-container"></div>
-				<button class="btn btn-success text-white" id="submit-button" style='
-                       background-color:rgb(212, 60, 60);
-                       padding: 10px 50px;
-                       font-weight: 600;
-                       font-size: 15px;
-                       border: solid 1px #D3D3D3;
-                       text-align: center;
-                       text-transform: uppercase;'>Upgrade Now!
-				</button>
-			</form>
+			<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-body">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+							</div>
+							<div class="modal-body">
+								<p class="nobottommargin">Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			{{--<div class="row font-s13">--}}
 			{{--@if (Auth::user()->vip == 1)--}}
