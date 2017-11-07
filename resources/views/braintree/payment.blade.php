@@ -60,9 +60,15 @@
 @section('js')
 	<script>
         var button = document.querySelector('#submit-button');
+
         braintree.dropin.create({
             authorization: '{{ $client_token }}',
-            container: '#dropin-container'
+            container: '#dropin-container',
+            paypal: {
+                flow: 'checkout',
+                amount: 37.00,
+                currency: 'USD'
+            },
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
