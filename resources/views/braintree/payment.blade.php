@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="content content-boxed">
-			<form>
+			<form onsubmit="return false;">
 				<div id="dropin-container"></div>
 				<button class="btn btn-success" id="submit-button">Pay!</button>
 			</form>
