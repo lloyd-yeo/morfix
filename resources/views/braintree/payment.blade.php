@@ -67,6 +67,11 @@
             paypal: {
                 flow: 'vault',
             },
+            card: {
+                cardholderName: {
+                    required: true
+                }
+            }
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
