@@ -31,7 +31,7 @@
 		<div class="content content-boxed">
 
 			<div class="fancy-title title-dotted-border title-center">
-				<h3 style="background-color: #f5f5f5;">Upgrade Now!</h3>
+				<h3 style="background-color: #f5f5f5;">Elevate Your Instagram Profile Now!</h3>
 			</div>
 			<div class="pricing bottommargin clearfix">
 
@@ -39,10 +39,10 @@
 
 					<div class="pricing-box">
 						<div class="pricing-title">
-							<h3>Starter</h3>
+							<h3>Premium</h3>
 						</div>
 						<div class="pricing-price">
-							<span class="price-unit">&euro;</span>7<span class="price-tenure">/mo</span>
+							<span class="price-unit">&dollar;</span>7<span class="price-tenure">/mo</span>
 						</div>
 						<div class="pricing-features">
 							<ul>
@@ -64,11 +64,11 @@
 
 					<div class="pricing-box best-price">
 						<div class="pricing-title">
-							<h3>Professional</h3>
-							<span>Most Popular</span>
+							<h3>Pro</h3>
+							<span>Most Savings</span>
 						</div>
 						<div class="pricing-price">
-							<span class="price-unit">&euro;</span>12<span class="price-tenure">/mo</span>
+							<span class="price-unit">&dollar;</span>370<span class="price-tenure">/yr</span>
 						</div>
 						<div class="pricing-features">
 							<ul>
@@ -97,7 +97,7 @@
 							<h3>Business</h3>
 						</div>
 						<div class="pricing-price">
-							<span class="price-unit">&euro;</span>19<span class="price-tenure">/mo</span>
+							<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
 						</div>
 						<div class="pricing-features">
 							<ul>
