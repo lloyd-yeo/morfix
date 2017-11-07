@@ -205,7 +205,7 @@
 @section('js')
 	<script>
         var button = document.querySelector('#submit-button');
-
+		var $plan = "0137";
         braintree.dropin.create({
             authorization: '{{ $client_token }}',
             container: '#dropin-container',
@@ -231,6 +231,11 @@
                     console.log(payload.nonce);
                 });
             });
+        });
+
+        $(".upgrade-btn").on("click", function(){
+            $plan = $(this).data('plan');
+            console.log($plan);
         });
 	</script>
 @endsection
