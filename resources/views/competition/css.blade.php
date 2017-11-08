@@ -1,30 +1,7 @@
 <style>
-    body{
-        margin: 0px !important;
-    }
-
-    /* COMMON */
-    .row{
-    	width: 80%;
-    	float: left;
-    	margin: 0 10% 0 10% !important;
-    }
-
-    .btn{
-    	height: 35px;
-    }
-    #title{
-    	width: 50%;
-    	text-align: left !important;
-    }
-    small{
-    	font-style: italic;
-    	font-size: 85%;
-    }
 
     .countdown{
     	height: 400px;
-    	background: #000;
     	color: #fff;
     }
 
@@ -39,14 +16,18 @@
     	font-size:100px;
     }
 
-     /* ANNOUNCEMENTS  */
+    /*  STATISTICS */
+    .statistics{
+    	min-height: 125px;
+    	overflow: hidden;
+    }
+
+    /* ANNOUNCEMENTS  */
     .announcements{
     	height: 500px;
-    	background: #aaa;
     }
 
      .ranking{
-    	background: #000;
     	height: 500px;
     }
 
@@ -58,7 +39,7 @@
    
 
    /*  RESOURCES */
-   
+
 
    /*   FOOTER  */
 
