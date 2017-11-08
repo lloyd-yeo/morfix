@@ -228,7 +228,8 @@
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
                     // Submit payload.nonce to your server
-                    console.log(payload.nonce);
+                    // console.log(payload.nonce);
+
                 });
             });
         });
@@ -237,5 +238,6 @@
             $plan = $(this).data('plan');
             console.log($plan);
         });
+
 	</script>
 @endsection
