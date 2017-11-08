@@ -1,7 +1,7 @@
 @include('competition.css')
 @extends('layouts.app')
 @section('sidebar')
-@include('sidebar', ['page' => 'faq'])
+@include('sidebar', ['page' => 'competition'])
 @endsection
 
 @section('content')
