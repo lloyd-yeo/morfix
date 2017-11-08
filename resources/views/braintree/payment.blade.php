@@ -35,27 +35,26 @@
 					<i class="fa fa-instagram"></i> Elevate Your Instagram Pressence Now!</h3>
 			</div>
 			<div class="pricing bottommargin clearfix">
-
-				<div class="col-sm-4">
-
-					<div class="pricing-box">
-						<div class="pricing-title">
-							<h3>Premium</h3>
-						</div>
-						<div class="pricing-price" style="color: rgb(212, 60, 60);">
-							<span class="price-unit">&dollar;</span>37<span class="price-tenure">/mo</span>
-						</div>
-						<div class="pricing-features">
-							<ul>
-								<li><strong>Full</strong> Access</li>
-								<li><i class="icon-code"></i> Source Files</li>
-								<li><strong>100</strong> User Accounts</li>
-								<li><strong>1 Year</strong> License</li>
-								<li>Phone &amp; Email Support</li>
-							</ul>
-						</div>
-						<div class="pricing-action">
-							<button class="btn btn-success upgrade-btn" data-plan="0137" style='
+				@if (Auth::user()->tier == 1)
+					<div class="col-sm-4">
+						<div class="pricing-box">
+							<div class="pricing-title">
+								<h3>Premium</h3>
+							</div>
+							<div class="pricing-price" style="color: rgb(212, 60, 60);">
+								<span class="price-unit">&dollar;</span>37<span class="price-tenure">/mo</span>
+							</div>
+							<div class="pricing-features">
+								<ul>
+									<li><strong>Full</strong> Access</li>
+									<li><i class="icon-code"></i> Source Files</li>
+									<li><strong>100</strong> User Accounts</li>
+									<li><strong>1 Year</strong> License</li>
+									<li>Phone &amp; Email Support</li>
+								</ul>
+							</div>
+							<div class="pricing-action">
+								<button class="btn btn-success upgrade-btn" data-plan="0137" style='
                        background-color:rgb(212, 60, 60);
                        padding: 10px 50px;
                        font-weight: 600;
@@ -63,38 +62,37 @@
                        border: solid 1px #D3D3D3;
                        text-align: center;
                        text-transform: uppercase;'>Upgrade Now!
-							</button>
+								</button>
+							</div>
 						</div>
+
 					</div>
 
-				</div>
-
-				<div class="col-sm-4">
-
-					<div class="pricing-box best-price">
-						<div class="pricing-title">
-							<h3>Pro</h3>
-							<span>Most Savings</span>
-						</div>
-						<div class="pricing-price" style="color: rgb(212, 60, 60);">
-							<span class="price-unit">&dollar;</span>370<span class="price-tenure">/yr</span>
-						</div>
-						<div class="pricing-features">
-							<ul>
-								<li><strong>Full</strong> Access</li>
-								<li><i class="icon-code"></i> Source Files</li>
-								<li><strong>1000</strong> User Accounts</li>
-								<li><strong>2 Years</strong> License</li>
-								<li><i class="icon-star3"></i>
-									<i class="icon-star3"></i>
-									<i class="icon-star3"></i>
-									<i class="icon-star3"></i>
-									<i class="icon-star3"></i></li>
-							</ul>
-						</div>
-						<div class="pricing-action">
-							<button class="btn btn-success text-white upgrade-btn" data-toggle="modal"
-							        data-target=".upgrade-modal" data-plan="0137test" style='
+					<div class="col-sm-4">
+						<div class="pricing-box best-price">
+							<div class="pricing-title">
+								<h3>Pro</h3>
+								<span>Most Savings</span>
+							</div>
+							<div class="pricing-price" style="color: rgb(212, 60, 60);">
+								<span class="price-unit">&dollar;</span>370<span class="price-tenure">/yr</span>
+							</div>
+							<div class="pricing-features">
+								<ul>
+									<li><strong>Full</strong> Access</li>
+									<li><i class="icon-code"></i> Source Files</li>
+									<li><strong>1000</strong> User Accounts</li>
+									<li><strong>2 Years</strong> License</li>
+									<li><i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i></li>
+								</ul>
+							</div>
+							<div class="pricing-action">
+								<button class="btn btn-success text-white upgrade-btn" data-toggle="modal"
+								        data-target=".upgrade-modal" data-plan="0137test" style='
                        background-color:rgb(212, 60, 60);
                        padding: 10px 50px;
                        font-weight: 600;
@@ -102,32 +100,31 @@
                        border: solid 1px #D3D3D3;
                        text-align: center;
                        text-transform: uppercase;'>Upgrade Now!
-							</button>
+								</button>
+							</div>
 						</div>
 					</div>
+				@elseif (Auth::user()->tier == 2)
+					<div class="col-sm-4">
 
-				</div>
-
-				<div class="col-sm-4">
-
-					<div class="pricing-box">
-						<div class="pricing-title">
-							<h3>Business</h3>
-						</div>
-						<div class="pricing-price" style="color: #3C71AF;">
-							<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
-						</div>
-						<div class="pricing-features">
-							<ul>
-								<li><strong>Full</strong> Access</li>
-								<li><i class="icon-code"></i> Source Files</li>
-								<li><strong>500</strong> User Accounts</li>
-								<li><strong>3 Years</strong> License</li>
-								<li>Phone &amp; Email Support</li>
-							</ul>
-						</div>
-						<div class="pricing-action">
-							<button class="btn btn-success text-white upgrade-btn" data-plan="0297" style='
+						<div class="pricing-box">
+							<div class="pricing-title">
+								<h3>Business</h3>
+							</div>
+							<div class="pricing-price" style="color: #3C71AF;">
+								<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
+							</div>
+							<div class="pricing-features">
+								<ul>
+									<li><strong>Full</strong> Access</li>
+									<li><i class="icon-code"></i> Source Files</li>
+									<li><strong>500</strong> User Accounts</li>
+									<li><strong>3 Years</strong> License</li>
+									<li>Phone &amp; Email Support</li>
+								</ul>
+							</div>
+							<div class="pricing-action">
+								<button class="btn btn-success text-white upgrade-btn" data-plan="0297" style='
 				                       background-color:#3C71AF;
 				                       padding: 10px 50px;
 				                       font-weight: 600;
@@ -135,10 +132,16 @@
 				                       border: solid 1px #D3D3D3;
 				                       text-align: center;
 				                       text-transform: uppercase;'>Upgrade Now!
-							</button>
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
+				@endif
+
+
+
+
+
 			</div>
 
 			<div class="modal fade upgrade-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
@@ -156,13 +159,13 @@
 									<input type="hidden" name="plan" value="0137test">
 									<div id="dropin-container"></div>
 									<button class="btn btn-success text-white" id="submit-button" style='
-			                    background-color:#3C71AF;
-			                    padding: 10px 50px;
-			                    font-weight: 600;
-			                    font-size: 15px;
-			                    border: solid 1px #D3D3D3;
-			                    text-align: center;
-			                    text-transform: uppercase;'>Upgrade Now!
+						                    background-color:#3C71AF;
+						                    padding: 10px 50px;
+						                    font-weight: 600;
+						                    font-size: 15px;
+						                    border: solid 1px #D3D3D3;
+						                    text-align: center;
+						                    text-transform: uppercase;'>Upgrade Now!
 									</button>
 								</form>
 							</div>

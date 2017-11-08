@@ -182,6 +182,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         NotificationChannels\Telegram\TelegramServiceProvider::class,
+        Way\Generators\GeneratorsServiceProvider::class,
+        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
     ],
 
     /*
