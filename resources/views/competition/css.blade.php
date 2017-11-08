@@ -34,7 +34,7 @@
     /* REFERRAL  */
 
     .referral{
-    	background: #ddd !important;
+    	
     }
    
 
