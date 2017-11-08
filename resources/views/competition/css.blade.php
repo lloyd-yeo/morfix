@@ -57,5 +57,16 @@
     }
    
 
+   /*  RESOURCES */
+   
+
+   /*   FOOTER  */
+
+    .footer span{
+        margin-top: 50px !important;
+        float: left;
+        padding: 0px !important;
+    }
+
 
 </style>

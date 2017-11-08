@@ -82,12 +82,14 @@
     </div>
     <div class="row">
     	<div class="resource">
-    		<a href="#">Files Here</a>
-    	</div>
-    	<div class="terms">
-    		<a href="#">Terms and Conditions</a>
+    		<div  class="block-header">
+          <h3 class="block-title"><i class="fa fa-bars"></i> RESOURCES</h3>
+      	</div>
     	</div>
     </div>
-    
+    <div class="row footer">
+    	<span>Morfix 2016-2017</span>
+   		<span class="pull-right">Terms and Conditions</span>
+    </div>
 </div>
 
