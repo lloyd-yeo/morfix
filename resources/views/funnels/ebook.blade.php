@@ -1637,102 +1637,10 @@
 		</style>
 	</div>
 	<style id="custom-css"></style>
-	<div id="fb-root"></div>
-	<script>(function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=246441615530259&version=v2.0";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-	<input type="hidden" value="16322898" id="page-id">
-	<input type="hidden" value="16322898" id="root-id">
-	<input type="hidden" value="core" id="variant-check">
-	<input type="hidden" value="1095240" id="user-id">
 	<script src="https://www.clickfunnel.com/assets/lander.js"></script>
 	<!--[if lt IE 9]>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js'></script>
 	<![endif]-->
-	<form target="_parent" data-cf-form-action="true" action="https://signup.morfix.co/ebookmmo16322898" method="post"
-	      id="cfAR" style="display:none">
-		<span data-cf-form-fields="true"></span>
-		<input id="cf_contact_name" name="contact[name]" data-cf-form-field="name" placeholder="name"
-		       data-stripe="name">
-		<input id="cf_contact_first_name" name="contact[first_name]" data-cf-form-field="first_name"
-		       placeholder="first_name" data-recurly="first_name">
-		<input id="cf_contact_last_name" name="contact[last_name]" data-cf-form-field="last_name"
-		       placeholder="last_name" data-recurly="last_name">
-		<input id="cf_contact_email" name="contact[email]" data-cf-form-field="email" placeholder="email">
-		<input id="cf_contact_phone" name="contact[phone]" data-cf-form-field="phone" placeholder="phone"
-		       data-recurly="phone">
-		<input id="cf_contact_address" name="contact[address]" data-cf-form-field="address" placeholder="address"
-		       data-stripe="address_line1" data-recurly="address1">
-		<input id="cf_contact_city" name="contact[city]" data-cf-form-field="city" placeholder="city"
-		       data-stripe="address_city" data-recurly="city">
-		<input id="cf_contact_state" name="contact[state]" data-cf-form-field="state" placeholder="state"
-		       data-stripe="address_state" data-recurly="state">
-		<input id="cf_contact_country" name="contact[country]" data-cf-form-field="country" placeholder="country"
-		       data-stripe="address_country" data-recurly="country">
-		<input id="cf_contact_zip" name="contact[zip]" data-cf-form-field="zip" placeholder="ZIP"
-		       data-stripe="address_zip" data-recurly="postal_code">
-		<input id="cf_contact_shipping_address" name="contact[shipping_address]" data-cf-form-field="shipping_address"
-		       placeholder="shipping_address" data-stripe="shipping_address">
-		<input id="cf_contact_shipping_city" name="contact[shipping_city]" data-cf-form-field="shipping_city"
-		       placeholder="shipping_city" data-stripe="shipping_city">
-		<input id="cf_contact_shipping_state" name="contact[shipping_state]" data-cf-form-field="shipping_state"
-		       placeholder="shipping_state" data-stripe="shipping_state">
-		<input id="cf_contact_shipping_country" name="contact[shipping_country]" data-cf-form-field="shipping_country"
-		       placeholder="shipping_country" data-stripe="shipping_country">
-		<input id="cf_contact_shipping_zip" name="contact[shipping_zip]" data-cf-form-field="shipping_zip"
-		       placeholder="shipping_ZIP" data-stripe="shipping_zip">
-		<input id="cf_contact_vat_number" name="contact[vat_number]" data-cf-form-field="vat_number"
-		       data-recurly="vat_number">
-		<input id="cf_contact_affiliate_id" name="contact[affiliate_id]" data-cf-form-field="affiliate_id"
-		       data-param="affiliate_id">
-		<input id="cf_contact_cf_affiliate_id" name="contact[cf_affiliate_id]" data-cf-form-field="cf_affiliate_id"
-		       data-param="cf_affiliate_id">
-		<input id="cf_cf_affiliate_id" name="cf_affiliate_id" data-param="cf_affiliate_id">
-		<input id="cf_contact_affiliate_aff_sub" name="contact[aff_sub]" data-cf-form-field="aff_sub"
-		       data-param="aff_sub">
-		<input id="cf_contact_affiliate_aff_sub2" name="contact[aff_sub2]" data-cf-form-field="aff_sub2"
-		       data-param="aff_sub2">
-		<input id="utm_source" name="utm_source" data-cf-form-field="utm_source" data-param="utm_source">
-		<input id="utm_medium" name="utm_medium" data-cf-form-field="utm_medium" data-param="utm_medium">
-		<input id="utm_campaign" name="utm_campaign" data-cf-form-field="utm_campaign" data-param="utm_campaign">
-		<input id="utm_term" name="utm_term" data-cf-form-field="utm_term" data-param="utm_term">
-		<input id="utm_content" name="utm_content" data-cf-form-field="utm_content" data-param="utm_content">
-		<input id="cf_uvid" name="cf_uvid" data-cf-form-field="cf_uvid">
-		<input type="text" name="webinar_delay" id="webinar_delay" placeholder="Webinar Delay">
-		<span data-cf-product-template="true">
-<input type="radio" name="purchase[product_id]" value="" data-storage="false">
-<input type="checkbox" name="purchase[product_ids][]" value="" data-storage="false">
-</span>
-		<input name="purchase[taxamo_transaction_key]" data-storage="false">
-		<input id="cf_contact_number" data-stripe="number" data-storage="false" data-recurly="number">
-		<input id="cf_contact_month" data-stripe="exp-month" data-storage="" data-recurly="month">
-		<input id="cf_contact_year" data-stripe="exp-year" data-storage="" data-recurly="year">
-		<input id="cf_contact_cvc" data-stripe="cvc" data-storage="false" data-recurly="cvv">
-		<input type="hidden" name="purchase[payment_method_nonce]" data-storage="false">
-		<input type="submit">
-		<input name="contact[cart_affiliate_id]" value="" type="hidden" style="display:none;" data-param="affiliate">
-	</form>
-	<span class="countdown-time" style="display:none;"></span>
-	<span class="webinar-last-time" style="display:none;"></span>
-	<span class="webinar-ext" style="display:none;"></span>
-	<span class="webinar-ot" style="display:none;"></span>
-	<span class="contact-created" style="display:none;"></span>
-	<div class="otoloading" style="display: none;">
-		<div class="otoloadingtext">
-			<h2>Working...</h2>
-			<div><i class="fa fa-spinner fa-spin"></i></div>
-		</div>
-	</div>
-	<script type="text/javascript">
-        document.createElement('video');
-        document.createElement('audio');
-        document.createElement('track');
-	</script>
 	<style>
 		#IntercomDefaultWidget {
 			display: none
