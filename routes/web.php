@@ -162,7 +162,8 @@ Route::get('/funnels/ebook', 'FunnelsController@show');
 Route::get('/funnels/test', 'FunnelsController@test');
 
 Route::get('/competition', 'CompetitionController@show');
-Route::get('/competitors', 'CompetitionController@getCompetitors');
+Route::get('/competition/timer','CompetitionController@getTime');
+Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
 
 /**
  * Routes for creation of Paypal Subscription plans.

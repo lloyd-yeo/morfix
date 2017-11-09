@@ -3,7 +3,6 @@
 @section('sidebar')
 @include('sidebar', ['page' => 'competition'])
 @endsection
-
 @section('content')
 <main id="main-container" style="padding-top: 10px;">
 	<div class="bg-video" data-vide-bg="assets/img/videos/hero_tech" data-vide-options="posterType: jpg, position: 50% 75%" style="position: relative;">
@@ -16,9 +15,9 @@
     <div>
        <div class="row countdown text-center">
 	    		<span class="date">
-	    			Duration: {{$month}} {{$start_date}} - {{$end_date}}, {{$year}}
+	    			Duration: {{$month}} {{$startDate}} - {{$endDate}}, {{$year}}
 	    		</span>
-	    		<span class="timer">12:00:00</span>
+	    		<span class="timer"></span>
 	    </div>
     </div>
 		</div>
@@ -102,11 +101,22 @@
 	    			<td>Tier</td>
 	    		</thead>
 	    		<tbody>
-	    			<tr>
-	    				<td>Sample</td>
-	    				<td>Sample@gmail.com</td>
-	    				<td>1</td>
-	    			</tr>
+	    			@if(sizeof($competitors) <= 0) 
+		    			@foreach($competitors as $competitor)
+		    			<tr>
+		    				<td>$competitor->username</td>
+		    				<td>$competitor->email</td>
+		    				<td>$competitor->tier</td>
+		    				<td>$competitor->pending_commission_payable</td>
+		    			</tr>
+		    			@endforeach
+		    		@else
+		    			<tr class="text-danger">
+		    				<td>NULL</td>
+		    				<td>NULL</td>
+		    				<td>NULL</td>
+		    			</tr>
+		    		@endif
 	    		</tbody>
 	    	</table>
 	    </div>
@@ -126,5 +136,6 @@
 
 @section('js')
 @include('dashboard.js')
+@include('competition.js')
 @endsection
 
