@@ -31,18 +31,6 @@
 			[data-timed-style='fade']{display:none}[data-timed-style='scale']{display:none}
 		</style>
 		<link rel='icon' type='image/png' href='https://images.clickfunnels.com/39/6f318081bd11e7bfc0b157cb2b69f4/mx-black-crop.png'></link>
-		<script>
-            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-                document,'script','https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1138478499605046');
-            fbq('track', 'PageView');
-		</script>
-		<noscript><img height="1" width="1" style="display:none"
-		               src="https://www.facebook.com/tr?id=1138478499605046&ev=PageView&noscript=1"
-			/></noscript>
 
 
 		<script>
@@ -55,63 +43,6 @@
             ga('send', 'pageview');
 		</script>
 
-		<script>
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window, document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '139115763368341');
-            fbq('track', 'PageView');
-		</script>
-		<noscript><img height="1" width="1" style="display:none"
-		               src="https://www.facebook.com/tr?id=139115763368341&ev=PageView&noscript=1"
-			/></noscript>
-
-
-		<script>   !function(f,b,e,v,n,t,s)   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?   n.callMethod.apply(n,arguments):n.queue.push(arguments)};   if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';   n.queue=[];t=b.createElement(e);t.async=!0;   t.src=v;s=b.getElementsByTagName(e)[0];   s.parentNode.insertBefore(t,s)}(window, document,'script',   'https://connect.facebook.net/en_US/fbevents.js');   fbq('init', '1409647862673143');   fbq('track', 'PageView'); </script> <noscript><img height="1" width="1" style="display:none"   src="https://www.facebook.com/tr?id=1409647862673143&ev=PageView&noscript=1" /></noscript>
-		<script>
-            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-                document,'script','https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1138478499605046');
-            fbq('track', 'PageView');
-		</script>
-		<noscript><img height="1" width="1" style="display:none"
-		               src="https://www.facebook.com/tr?id=1138478499605046&ev=PageView&noscript=1"
-			/></noscript>
-
-
-		<script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-88362519-1', 'auto');
-            ga('send', 'pageview');
-		</script>
-
-		<script>
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t,s)}(window, document,'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '139115763368341');
-            fbq('track', 'PageView');
-		</script>
-		<noscript><img height="1" width="1" style="display:none"
-		               src="https://www.facebook.com/tr?id=139115763368341&ev=PageView&noscript=1"
-			/></noscript>
 	</head>
 	<body data-affiliate-param="affiliate_id">
 	<svg xmlns="http://www.w3.org/2000/svg" style="display: none !important">
