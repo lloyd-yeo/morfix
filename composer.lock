@@ -1767,16 +1767,16 @@
         },
         {
             "name": "lazyjsonmapper/lazyjsonmapper",
-            "version": "v1.5.0",
+            "version": "v1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SteveJobzniak/LazyJsonMapper.git",
-                "reference": "3f9a1ccf5ef62b6754bea9a53253cde0d9ef5609"
+                "reference": "aba7e1953e4a58b969cfb1385268b7864b3ddcf7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/3f9a1ccf5ef62b6754bea9a53253cde0d9ef5609",
-                "reference": "3f9a1ccf5ef62b6754bea9a53253cde0d9ef5609",
+                "url": "https://api.github.com/repos/SteveJobzniak/LazyJsonMapper/zipball/aba7e1953e4a58b969cfb1385268b7864b3ddcf7",
+                "reference": "aba7e1953e4a58b969cfb1385268b7864b3ddcf7",
                 "shasum": ""
             },
             "require": {
@@ -1813,7 +1813,7 @@
                 "development",
                 "json"
             ],
-            "time": "2017-10-26T17:07:16+00:00"
+            "time": "2017-10-30T21:26:51+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1904,12 +1904,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "dddcdf31c509105f37c7edf9de5e0fede2030b74"
+                "reference": "5baf68b24203405b3ad4e23a2962c55d28b6ed2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/dddcdf31c509105f37c7edf9de5e0fede2030b74",
-                "reference": "dddcdf31c509105f37c7edf9de5e0fede2030b74",
+                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/5baf68b24203405b3ad4e23a2962c55d28b6ed2c",
+                "reference": "5baf68b24203405b3ad4e23a2962c55d28b6ed2c",
                 "shasum": ""
             },
             "require": {
@@ -1931,7 +1931,7 @@
                 "valga/fbns-react": "^0.1.8"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.7.1",
+                "friendsofphp/php-cs-fixer": "^2.8.0",
                 "monolog/monolog": "^1.23",
                 "phpunit/phpunit": "^5.7 || ^6.2",
                 "react/http": "^0.7.2"
@@ -1969,7 +1969,7 @@
                 "php",
                 "private"
             ],
-            "time": "2017-10-27 13:29:24"
+            "time": "2017-11-06T13:03:21+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2051,7 +2051,7 @@
         },
         {
             "name": "mtdowling/cron-expression",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mtdowling/cron-expression.git",
@@ -2148,16 +2148,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v3.1.1",
+            "version": "v3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "a1e8e1a30e1352f118feff1a8481066ddc2f234a"
+                "reference": "08131e7ff29de6bb9f12275c7d35df71f25f4d89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/a1e8e1a30e1352f118feff1a8481066ddc2f234a",
-                "reference": "a1e8e1a30e1352f118feff1a8481066ddc2f234a",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/08131e7ff29de6bb9f12275c7d35df71f25f4d89",
+                "reference": "08131e7ff29de6bb9f12275c7d35df71f25f4d89",
                 "shasum": ""
             },
             "require": {
@@ -2195,7 +2195,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2017-09-02T17:10:46+00:00"
+            "time": "2017-11-04T11:48:34+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2470,16 +2470,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.13",
+            "version": "v0.8.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d"
+                "reference": "91e53c16560bdb8b9592544bb38429ae00d6baee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
-                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/91e53c16560bdb8b9592544bb38429ae00d6baee",
+                "reference": "91e53c16560bdb8b9592544bb38429ae00d6baee",
                 "shasum": ""
             },
             "require": {
@@ -2539,7 +2539,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2017-10-19T06:13:20+00:00"
+            "time": "2017-11-04T16:06:49+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -3142,16 +3142,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v5.5.0",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "a523748f2db82beacfac7b22e0642e326aa3be64"
+                "reference": "0922533c9db11292c7a0aeafc27638f8f31b7fb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/a523748f2db82beacfac7b22e0642e326aa3be64",
-                "reference": "a523748f2db82beacfac7b22e0642e326aa3be64",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/0922533c9db11292c7a0aeafc27638f8f31b7fb6",
+                "reference": "0922533c9db11292c7a0aeafc27638f8f31b7fb6",
                 "shasum": ""
             },
             "require": {
@@ -3193,7 +3193,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2017-10-27T16:27:13+00:00"
+            "time": "2017-10-31T18:52:25+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
