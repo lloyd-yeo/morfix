@@ -1,6 +1,6 @@
 @include('funnels.css')
 
-<link rel="stylesheet" media="screen" href="https://www.clickfunnel.com/assets/lander.css">
+<link rel="stylesheet" media="screen" href="{{ asset('assets/css/clickfunnel-lander.css') }}">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7COswald:400,700%7CDroid+Sans:400,700%7CRoboto:400,700%7CLato:400,700%7CPT+Sans:400,700%7CSource+Sans+Pro:400,700%7CNoto+Sans:400,700%7CPT+Sans:400,700%7CUbuntu:400,700%7CBitter:400,700%7CPT+Serif:400,700%7CRokkitt:400,700%7CDroid+Serif:400,700%7CRaleway:400,700%7CInconsolata:400,700" rel="stylesheet" type="text/css">
 <div class="row top-view text-center">
