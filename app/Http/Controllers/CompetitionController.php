@@ -28,15 +28,35 @@ class CompetitionController extends Controller
     	$end = Carbon::create(2017, 11, 15, 8,2,4, 'Asia/Singapore');
     	$time = $end->diffInSeconds($current);
     	$seconds = $time % 60;
-			$time = ($time - $seconds) / 60;
-			$minutes = $time % 60;
-			$hours = (($time - $minutes) / 60) % 24;
-			$days = intval((($time  / 60) / 24));
-			$secondsString = ($seconds >= 10) ? $seconds : '0'.$seconds;
-			$minutesString = ($minutes >= 10) ? $minutes : '0'.$minutes;
-			$hoursString = ($hours >= 10) ? $hours : '0'.$hours;
-    	$timer = $days."D ".$hoursString.':'.$minutesString.':'.$secondsString;
-    	return $timer;
+		$time = ($time - $seconds) / 60;
+		$minutes = $time % 60;
+		$hours = (($time - $minutes) / 60) % 24;
+		$days = intval((($time  / 60) / 24));
+		// $secondsString = ($seconds >= 10) ? $seconds : '0'.$seconds;
+		// $minutesString = ($minutes >= 10) ? $minutes : '0'.$minutes;
+		// $hoursString = ($hours >= 10) ? $hours : '0'.$hours;
+  //   	$timer = $days."D ".$hoursString.':'.$minutesString.':'.$secondsString;
+    	return $this->manageTime($days, $hours, $minutes, $seconds);
+    }
+
+    public function manageTime($days, $hours,$minutes, $seconds){
+        $time = null;
+            if($days > 2){
+                $time = $days. ' days left';
+            }
+            else if($days <=2 && $hours >= 1){
+                $time = $hours. " hours left";
+            }
+            else if($hours < 1 && $minutes >= 1){
+                $time = $minutes. ' minutes left';
+            }
+            else if($minutes < 1 && $seconds >= 1){
+                $time = $seconds. ' seconds left';
+            }
+            else{
+                $time = 'Competition has ended';
+            }
+        return $time;
     }
 
 
