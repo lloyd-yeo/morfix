@@ -2,7 +2,7 @@
 <html lang="en"
       class="clickfunnels-com bgCover wf-proximanova-i4-active wf-proximanova-i7-active wf-proximanova-n4-active wf-proximanova-n7-active wf-active wf-proximanova-n3-active wf-proximanova-i3-active wf-proximanovasoft-n4-active wf-proximanovasoft-n7-active gr__app_clickfunnels_com "
       style="overflow: initial;">
-	<head data-next-url="" data-this-url="https://signup.morfix.co/ebookmmo16322898">
+	<head>
 		<meta charset="UTF-8">
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
@@ -14,27 +14,12 @@
 		<meta class="metaTagTop" property="og:image"
 		      content="https://images.clickfunnels.com/39/6f318081bd11e7bfc0b157cb2b69f4/mx-black-crop.png"
 		      id="social-image">
-		<meta property="og:title" content="Welcome to Morfix!">
-		<meta property="og:description" content="Morfix VSL">
-		<meta property="og:url" content="https://signup.morfix.co/ebookmmo16322898">
-		<meta property="og:type" content="website">
-		<link rel="stylesheet" media="screen" href="https://www.clickfunnel.com/assets/lander.css">
+
+		<link rel="stylesheet" media="screen" href="{{ asset('assets/css/clickfunnel-lander.css') }}">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7COswald:400,700%7CDroid+Sans:400,700%7CRoboto:400,700%7CLato:400,700%7CPT+Sans:400,700%7CSource+Sans+Pro:400,700%7CNoto+Sans:400,700%7CPT+Sans:400,700%7CUbuntu:400,700%7CBitter:400,700%7CPT+Serif:400,700%7CRokkitt:400,700%7CDroid+Serif:400,700%7CRaleway:400,700%7CInconsolata:400,700"
 		      rel="stylesheet" type="text/css">
-		<meta property="cf:funnel_id"
-		      content="bzlzUzR5M1VRYUxBWjFadGt0YTJTQT09LS1WcHdDNDhURGd3aVduME1Rc0FrSFVnPT0=--9f50ee5dff3b5f85f7014fabaa88918c2dcfe449">
-		<meta property="cf:page_id"
-		      content="LzBXdndCcExBUFRDVHNlSVJwRjIvUT09LS1CeHlEaGI5cFNuTFhUTHdpUXk4eHhRPT0=--d1a613ba4ca5d64695fbc69afeb7350b62a3cbe7">
-		<meta property="cf:funnel_step_id"
-		      content="a0FvZWI3MVcybElCSWxFcU5qelNNUT09LS0rVlZmMm85NHNFWHRlZ1FsMVRrWHJRPT0=--2a69796ae8bcb7af7a5c6493d910214e87ebda74">
-		<meta property="cf:user_id"
-		      content="RTYzK293REJ5V2FZbS9MbDcvQWN5UT09LS14OG9WQkJJajhLZEhDMytVM0pFYUZ3PT0=--58c1fb83eea45f809e87b7ecd1599f3b94c54bbe">
-		<meta property="cf:page_code" content="MTYzMjI4OTg=">
-		<meta property="cf:mode_id" content="0">
-		<meta property="cf:time_zone" content="UTC">
-		<meta property="cf:app_domain" content="app.clickfunnels.com">
-		<script src="https://www.clickfunnel.com/assets/userevents/application.js"></script>
+
 		<script>(function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
                 i[r] = i[r] || function () {
@@ -47,6 +32,7 @@
             })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-51074959-1', 'auto', {'name': 'cftracker'});
             ga('cftracker.send', 'pageview', 'user-page');</script>
+
 		<style>
 			[data-timed-style='fade'] {
 				display: none
@@ -56,8 +42,10 @@
 				display: none
 			}
 		</style>
+
 		<link rel='icon' type='image/png'
 		      href='https://images.clickfunnels.com/39/6f318081bd11e7bfc0b157cb2b69f4/mx-black-crop.png'></link>
+
 		<script>
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
@@ -74,27 +62,10 @@
             ga('create', 'UA-88362519-1', 'auto');
             ga('send', 'pageview');
 		</script>
-
 	</head>
-	<body data-affiliate-param="affiliate_id">
-	<svg xmlns="http://www.w3.org/2000/svg" style="display: none !important">
-		<filter id="grayscale">
-			<fecolormatrix type="matrix"
-			               values="0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0"></fecolormatrix>
-		</filter>
-	</svg>
+
+	<body>
 	<div class="containerWrapper">
-		<textarea id="tracking-body-top" style="display: none !important"></textarea>
-		<input type="hidden" id="submit-form-action" value="redirect-url" data-url="#" data-ar-service=""
-		       data-ar-list="" data-webhook="">
-		<div class="nodoHiddenFormFields hide">
-			<input type="hidden" id="elHidden1" class="elInputHidden elInput" name="ad">
-			<input type="hidden" id="elHidden2" class="elInputHidden elInput" name="tag">
-			<input type="hidden" id="elHidden3" class="elInputHidden elInput" name="">
-			<input type="hidden" id="elHidden4" class="elInputHidden elInput" name="">
-			<input type="hidden" id="elHidden5" class="elInputHidden elInput" name="">
-		</div>
-		<div class="nodoCustomHTML hide"></div>
 		<div class="modalBackdropWrapper"
 		     style="background-color: rgba(0, 0, 0, 0.4); height: 100%; display: none;"></div>
 		<div class="container containerModal midContainer noTopMargin padding40-top padding40-bottom padding40H  noBorder borderSolid border3px cornersAll radius10 shadow0 bgNoRepeat emptySection"
@@ -156,15 +127,6 @@
 									</div>
 									<div><b>NO EXPERIENCE</b></div>
 								</div>
-								<grammarly-btn>
-									<div data-reactroot=""
-									     class="_e725ae-textarea_btn _e725ae-show _e725ae-anonymous _e725ae-field_hovered"
-									     style="z-index: 2; transform: translate(1040px, 190px);">
-										<div class="_e725ae-transform_wrap">
-											<div title="Protected by Grammarly" class="_e725ae-status"></div>
-										</div>
-									</div>
-								</grammarly-btn>
 							</div>
 							<div class="de elVideoWrapper de-video-block elMargin0 ui-droppable padding0 elVideoWidth75 hiddenElementTools de-editable"
 							     id="tmp_video-20809" data-de-type="video" data-de-editing="false" data-title="video"
@@ -294,7 +256,7 @@
 								     contenteditable="false" data-gramm_id="33039e52-cf14-ee47-a96c-bbcfddd160a1"
 								     data-gramm="true" spellcheck="false" data-gramm_editor="true">Morfix
 									<g class="gr_ gr_30 gr-alert gr_spell gr_inline_cards gr_run_anim ContextualSpelling ins-del multiReplace"
-									   id="30" data-gr-id="30">Teamw
+									   id="30" data-gr-id="30">Team
 									</g>
 								                                                                   will send a
 								                                                                   personalized Direct
@@ -302,15 +264,6 @@
 								                                                                   settings to your new
 								                                                                   followers.
 								</div>
-								<grammarly-btn>
-									<div data-reactroot=""
-									     class="_e725ae-textarea_btn _e725ae-show _e725ae-minimized _e725ae-minimize_transition _e725ae-errors _e725ae-has_errors _e725ae-anonymous _e725ae-field_hovered"
-									     style="z-index: 2; transform: translate(512px, 30px);">
-										<div class="_e725ae-transform_wrap">
-											<div title="Found 1 error in text" class="_e725ae-status">1</div>
-										</div>
-									</div>
-								</grammarly-btn>
 							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-75485"
 							     data-de-type="headline" data-de-editing="false" data-title="sub-headline"
@@ -438,15 +391,6 @@
 								                                                                   their attention to
 								                                                                   your profile.
 								</div>
-								<grammarly-btn>
-									<div data-reactroot=""
-									     class="_e725ae-textarea_btn _e725ae-show _e725ae-minimized _e725ae-minimize_transition _e725ae-anonymous _e725ae-field_hovered"
-									     style="z-index: 2; transform: translate(512px, 55px);">
-										<div class="_e725ae-transform_wrap">
-											<div title="Protected by Grammarly" class="_e725ae-status"></div>
-										</div>
-									</div>
-								</grammarly-btn>
 							</div>
 							<div class="de elBTN elMargin0 elAlign_center ui-droppable elButtonBlock de-editable"
 							     id="button-35184-175-131" data-de-type="button" data-de-editing="false"
@@ -558,15 +502,6 @@
 										</div>
 									</div>
 								</div>
-								<grammarly-btn>
-									<div data-reactroot=""
-									     class="_e725ae-textarea_btn _e725ae-show _e725ae-minimized _e725ae-minimize_transition _e725ae-anonymous _e725ae-field_hovered"
-									     style="z-index: 2; transform: translate(512px, 105px);">
-										<div class="_e725ae-transform_wrap">
-											<div title="Protected by Grammarly" class="_e725ae-status"></div>
-										</div>
-									</div>
-								</grammarly-btn>
 							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-75485-160"
 							     data-de-type="headline" data-de-editing="false" data-title="sub-headline"
@@ -604,15 +539,6 @@
 												style="color: inherit;">hashtags in your first comment when posting your content.</span>
 									</div>
 								</div>
-								<grammarly-btn>
-									<div data-reactroot=""
-									     class="_e725ae-textarea_btn _e725ae-show _e725ae-minimized _e725ae-minimize_transition _e725ae-errors _e725ae-has_errors _e725ae-anonymous _e725ae-field_hovered"
-									     style="z-index: 2; transform: translate(512px, 130px);">
-										<div class="_e725ae-transform_wrap">
-											<div title="Found 2 errors in text" class="_e725ae-status">2</div>
-										</div>
-									</div>
-								</grammarly-btn>
 							</div>
 							<div class="de elBTN elMargin0 elAlign_center ui-droppable elButtonBlock de-editable"
 							     id="button-35184-175-156" data-de-type="button" data-de-editing="false"
@@ -642,7 +568,7 @@
 		     style='padding-top: 40px; padding-bottom: 40px; outline: none; background-color: rgb(248, 248, 248); background-image: url("https://images.clickfunnels.com/e0/9298103db411e68974d5a01d1d5c10/bluegrad.jpg");'
 		     data-trigger="none" data-animate="fade" data-delay="500">
 			<div class="containerInner ui-sortable">
-				<div class="row bgCover  noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
+				<div class="row bgCover noBorder borderSolid border3px cornersAll radius0 shadow0 P0-top P0-bottom P0H noTopMargin"
 				     id="row--12211" data-trigger="none" data-animate="fade" data-delay="500" data-title="1 column row"
 				     style="padding-top: 20px; padding-bottom: 20px; margin: 0px; outline: none;">
 					<div id="col-full-163" class="col-md-12 innerContent col_left" data-col="full" data-trigger="none"
@@ -1110,537 +1036,18 @@
 		<div class="dropZoneForSections ui-droppable" style="display: none;">
 			<div class="dropIconr"><i class="fa fa-plus"></i></div>
 		</div>
-		<style id="button_style_button-21829">#button-21829 .elButtonFlat:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-21829 .elButtonBottomBorder:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-21829 .elButtonSubtle:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-21829 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(217, 83, 79)), color-stop(1, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-			}
-
-			#button-21829 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(217, 83, 79)), color-stop(0, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-			}
-
-			#button-21829 .elButtonBorder {
-				border: 3px solid rgb(217, 83, 79) !important;
-				color: rgb(217, 83, 79) !important;
-			}
-
-			#button-21829 .elButtonBorder:hover {
-				background-color: rgb(217, 83, 79) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="button_style_button-59763">#button-59763 .elButtonFlat:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-59763 .elButtonBottomBorder:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-59763 .elButtonSubtle:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-59763 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(217, 83, 79)), color-stop(1, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-			}
-
-			#button-59763 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(217, 83, 79)), color-stop(0, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-			}
-
-			#button-59763 .elButtonBorder {
-				border: 3px solid rgb(217, 83, 79) !important;
-				color: rgb(217, 83, 79) !important;
-			}
-
-			#button-59763 .elButtonBorder:hover {
-				background-color: rgb(217, 83, 79) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="button_style_button-29282">#button-29282 .elButtonFlat:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-29282 .elButtonBottomBorder:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-29282 .elButtonSubtle:hover {
-				background-color: #d2322d !important;
-			}
-
-			#button-29282 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(217, 83, 79)), color-stop(1, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 0%, #d2322d 100%);
-			}
-
-			#button-29282 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(217, 83, 79)), color-stop(0, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 100%, #d2322d 0%);
-			}
-
-			#button-29282 .elButtonGradient2 {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(217, 83, 79)), color-stop(1, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 30%, #d2322d 80%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 30%, #d2322d 80%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 30%, #d2322d 80%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 30%, #d2322d 80%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 30%, #d2322d 80%);
-			}
-
-			#button-29282 .elButtonGradient2:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(217, 83, 79)), color-stop(0, #d2322d));
-				background-image: -o-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 30%);
-				background-image: -moz-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 30%);
-				background-image: -webkit-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 30%);
-				background-image: -ms-linear-gradient(bottom, rgb(217, 83, 79) 100%, #d2322d 30%);
-				background-image: linear-gradient(to bottom, rgb(217, 83, 79) 100%, #d2322d 30%);
-			}
-
-			#button-29282 .elButtonBorder {
-				border: 3px solid rgb(217, 83, 79) !important;
-				color: rgb(217, 83, 79) !important;
-			}
-
-			#button-29282 .elButtonBorder:hover {
-				background-color: rgb(217, 83, 79) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="bold_style_headline-96996">#headline-96996 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-55223">#headline-55223 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-26092">#headline-26092 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-55223-146">#headline-55223-146 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-96996-176">#headline-96996-176 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-48345">#headline-48345 .elHeadline b {
-				color: rgb(255, 255, 255);
-			}</style>
-		<style id="bold_style_headline-26092-130">#headline-26092-130 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="button_style_tmp_button-35601">#tmp_button-35601 .elButtonFlat:hover {
-				background-color: #c18000 !important;
-			}
-
-			#tmp_button-35601 .elButtonBottomBorder:hover {
-				background-color: #c18000 !important;
-			}
-
-			#tmp_button-35601 .elButtonSubtle:hover {
-				background-color: #c18000 !important;
-			}
-
-			#tmp_button-35601 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-			}
-
-			#tmp_button-35601 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-			}
-
-			#tmp_button-35601 .elButtonGradient2 {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-			}
-
-			#tmp_button-35601 .elButtonGradient2:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-			}
-
-			#tmp_button-35601 .elButtonBorder {
-				border: 3px solid rgb(234, 155, 0) !important;
-				color: rgb(234, 155, 0) !important;
-			}
-
-			#tmp_button-35601 .elButtonBorder:hover {
-				background-color: rgb(234, 155, 0) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="button_style_button-35184-175">#button-35184-175 .elButtonFlat:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175 .elButtonBottomBorder:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175 .elButtonSubtle:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-			}
-
-			#button-35184-175 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-			}
-
-			#button-35184-175 .elButtonGradient2 {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-			}
-
-			#button-35184-175 .elButtonGradient2:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-			}
-
-			#button-35184-175 .elButtonBorder {
-				border: 3px solid rgb(234, 155, 0) !important;
-				color: rgb(234, 155, 0) !important;
-			}
-
-			#button-35184-175 .elButtonBorder:hover {
-				background-color: rgb(234, 155, 0) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="button_style_button-35184-175-131">#button-35184-175-131 .elButtonFlat:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175-131 .elButtonBottomBorder:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175-131 .elButtonSubtle:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175-131 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-			}
-
-			#button-35184-175-131 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-			}
-
-			#button-35184-175-131 .elButtonGradient2 {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-			}
-
-			#button-35184-175-131 .elButtonGradient2:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-			}
-
-			#button-35184-175-131 .elButtonBorder {
-				border: 3px solid rgb(234, 155, 0) !important;
-				color: rgb(234, 155, 0) !important;
-			}
-
-			#button-35184-175-131 .elButtonBorder:hover {
-				background-color: rgb(234, 155, 0) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="button_style_button-35184-175-156">#button-35184-175-156 .elButtonFlat:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175-156 .elButtonBottomBorder:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175-156 .elButtonSubtle:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-35184-175-156 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-			}
-
-			#button-35184-175-156 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-			}
-
-			#button-35184-175-156 .elButtonGradient2 {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-			}
-
-			#button-35184-175-156 .elButtonGradient2:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-			}
-
-			#button-35184-175-156 .elButtonBorder {
-				border: 3px solid rgb(234, 155, 0) !important;
-				color: rgb(234, 155, 0) !important;
-			}
-
-			#button-35184-175-156 .elButtonBorder:hover {
-				background-color: rgb(234, 155, 0) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="button_style_button-87767">#button-87767 .elButtonFlat:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-87767 .elButtonBottomBorder:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-87767 .elButtonSubtle:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-87767 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-			}
-
-			#button-87767 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-			}
-
-			#button-87767 .elButtonGradient2 {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-			}
-
-			#button-87767 .elButtonGradient2:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-			}
-
-			#button-87767 .elButtonBorder {
-				border: 3px solid rgb(234, 155, 0) !important;
-				color: rgb(234, 155, 0) !important;
-			}
-
-			#button-87767 .elButtonBorder:hover {
-				background-color: rgb(234, 155, 0) !important;
-				color: #FFF !important;
-			}
-		</style>
-		<style id="bold_style_headline-10009">#headline-10009 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-39905">#headline-39905 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-10009-169">#headline-10009-169 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-39905-184">#headline-39905-184 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-10009-163">#headline-10009-163 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="bold_style_headline-39905-101">#headline-39905-101 .elHeadline b {
-				color: rgb(217, 83, 79);
-			}</style>
-		<style id="button_style_button-55303">#button-55303 .elButtonFlat:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-55303 .elButtonBottomBorder:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-55303 .elButtonSubtle:hover {
-				background-color: #c18000 !important;
-			}
-
-			#button-55303 .elButtonGradient {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 0%, #c18000 100%);
-			}
-
-			#button-55303 .elButtonGradient:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 0%);
-			}
-
-			#button-55303 .elButtonGradient2 {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(234, 155, 0)), color-stop(1, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 30%, #c18000 80%);
-			}
-
-			#button-55303 .elButtonGradient2:hover {
-				background-image: -webkit-gradient(linear, left top, left bottom, color-stop(1, rgb(234, 155, 0)), color-stop(0, #c18000));
-				background-image: -o-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -moz-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -webkit-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: -ms-linear-gradient(bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-				background-image: linear-gradient(to bottom, rgb(234, 155, 0) 100%, #c18000 30%);
-			}
-
-			#button-55303 .elButtonBorder {
-				border: 3px solid rgb(234, 155, 0) !important;
-				color: rgb(234, 155, 0) !important;
-			}
-
-			#button-55303 .elButtonBorder:hover {
-				background-color: rgb(234, 155, 0) !important;
-				color: #FFF !important;
-			}
-		</style>
+		@include('funnels.custom-css');
 	</div>
 	<style id="custom-css"></style>
 	<script src="https://www.clickfunnel.com/assets/lander.js"></script>
 	<!--[if lt IE 9]>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js'></script>
 	<![endif]-->
+	{{--<script type="text/javascript">--}}
+        {{--document.createElement('video');--}}
+        {{--document.createElement('audio');--}}
+        {{--document.createElement('track');--}}
+	{{--</script>--}}
 	<style>
 		#IntercomDefaultWidget {
 			display: none
@@ -1658,5 +1065,6 @@
 			padding-top: 0
 		}
 	</style>
+	<script type="text/javascript" src="https://app.clickfunnels.com/assets/pushcrew.js"></script>
 	</body>
 </html>
