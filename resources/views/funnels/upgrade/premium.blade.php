@@ -272,7 +272,6 @@
 	<script>
         var button = document.querySelector('#submit-button');
 
-        var $plan = "0137test";
         braintree.dropin.create({
             authorization: '{{ $client_token }}',
             container: '#dropin-container',
