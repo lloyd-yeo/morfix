@@ -118,18 +118,34 @@
 									<select class="elOrderProductOptionsSelect form-control"><option>Display Your Products</option></select>
 								</div>
 							</div>
-							{{--<div class="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-29080" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; cursor: pointer; outline: none;" aria-disabled="false">--}}
-								{{--<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 elFont_raleway hsSize27" style="text-align: left;" data-bold="inherit" contenteditable="false"><b>--}}
-										{{--Your New Account Details</b></div>--}}
-							{{--</div>--}}
-							<form id="payment-form" action="/payment/upgrade/premium" method="POST">
+							<div class="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-29080" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; cursor: pointer; outline: none;" aria-disabled="false">
+								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 elFont_raleway hsSize27" style="text-align: left;" data-bold="inherit" contenteditable="false"><b>
+										Your New Account Details</b></div>
+							</div>
+							<form id="payment-form" action="/funnels/payment/premium" method="POST">
 								<input id="payment-nonce" name="payment-nonce" type="hidden"/>
+								<input id="plan" name="plan" type="hidden"/>
+								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-21612" data-de-type="input" data-de-editing="false" data-title="input form" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; display: block; outline: none; cursor: pointer;" type="email" aria-disabled="false">
+									<input type="text" placeholder="Your Email Address..." name="email" class="elInput elInput100 elInputBG1 elInputBR5 elInputIRight required1 elInputIEmail elInputIColor elAlign_left elInputStyle1 elInputMid" data-type="extra">
+								</div>
+
+								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-18039" data-de-type="input" data-de-editing="false" data-title="input" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" type="password" style="margin-top: 10px; outline: none; cursor: pointer;" aria-disabled="false">
+									<input id="password-tbx" type="password" placeholder="Your Password Here..." name="password" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
+								</div>
+
+								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-18039" data-de-type="input" data-de-editing="false" data-title="input" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" type="password" style="margin-top: 10px; outline: none; cursor: pointer;" aria-disabled="false">
+									<input id="password-2-tbx" type="password" placeholder="Confirm Password..." name="password2" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
+								</div>
+
+								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-18039" data-de-type="input" data-de-editing="false" data-title="input" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" type="name" style="margin-top: 10px; outline: none; cursor: pointer;" aria-disabled="false">
+									<input type="text" placeholder="Your Name Here..." name="name" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
+								</div>
 							</form>
-							{{--<div class="de elSeperator elMargin0 ui-droppable de-editable" id="tmp_divider-16343" data-de-type="divider" data-de-editing="false" data-title="Divider" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; outline: none; cursor: pointer;" aria-disabled="false">--}}
-								{{--<div class="elDivider elDividerColor2 elDividerStyle3">--}}
-									{{--<div class="elDividerInner"></div>--}}
-								{{--</div>--}}
-							{{--</div>--}}
+							<div class="de elSeperator elMargin0 ui-droppable de-editable" id="tmp_divider-16343" data-de-type="divider" data-de-editing="false" data-title="Divider" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; outline: none; cursor: pointer;" aria-disabled="false">
+								<div class="elDivider elDividerColor2 elDividerStyle3">
+									<div class="elDividerInner"></div>
+								</div>
+							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-24973" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; cursor: pointer; outline: none; display: block;" aria-disabled="false">
 								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 elFont_raleway hsSize27" style="text-align: left;" data-bold="inherit" contenteditable="false"><b>
 										Payment Details</b>
@@ -259,7 +275,6 @@
         $(document).ready(function(){
 
 	        @if(session()->has('error'))
-		        alert("{{ session('error') }}")
 	        @endif
 
         });
