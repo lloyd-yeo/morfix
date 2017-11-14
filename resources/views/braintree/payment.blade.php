@@ -32,7 +32,7 @@
 
 			<div class="fancy-title title-dotted-border title-center">
 				<h3 style="background-color: #f5f5f5;">
-					<i class="fa fa-instagram"></i> Elevate Your Instagram Pressence Now!</h3>
+					<i class="fa fa-instagram"></i> Elevate Your Instagram Presence Now!</h3>
 			</div>
 			<div class="pricing bottommargin clearfix">
 				@if (Auth::user()->tier == 1)
@@ -83,10 +83,16 @@
 							</div>
 							<div class="pricing-features">
 								<ul>
-									<li><strong>Full</strong> Access</li>
-									<li><i class="icon-code"></i> Source Files</li>
-									<li><strong>1000</strong> User Accounts</li>
-									<li><strong>2 Years</strong> License</li>
+									<li>2 months of <strong>FREE</strong> Premium functions</li>
+									<li><strong>No</strong> Morfix.co branding</li>
+									<li>Full Speed</li>
+									<li><strong>High</strong> Priority Support</li>
+									<li>Instagram Affiliate Training</li>
+									<li>Auto Interaction (Like, Comment Follow, Unfollow)</li>
+									<li>Greet New Followers With Direct Message</li>
+									<li>Unlimited Scheduled Posts</li>
+									<li>First Comment Function</li>
+									<li><strong>Private</strong> Facebook Group</li>
 									<li><i class="icon-star3"></i>
 										<i class="icon-star3"></i>
 										<i class="icon-star3"></i>
