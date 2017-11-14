@@ -14,13 +14,34 @@ class CompetitionController extends Controller
     			"startDate"	=> 1,
     			"endDate"		=> 5,
     			"year"			=> 2017,
-    			"competitors"	=> $this->getCompetitors()
+    			"competitors"	=> $this->getCompetitors(),
+                "ranking"       => $this->getRanking()
     	]);
     }
 
     public function getCompetitors(){
     	$response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')->where('tier', '>', '1')->where('pending_commission_payable','>','0')->orderBy('pending_commission_payable','DESC');
     	return $response;
+    }
+
+    public function getRanking(){
+        $current_user = Auth::user();
+
+        $leaderboard_alltime = DB::select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
+                        GROUP BY email, name
+                        ORDER BY total_comms DESC LIMIT 10;");
+
+        $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take(10)->get();
+
+        $leaderboard_alltime_ranking = "UNRANKED";
+
+        $ranking = 1;
+        foreach ($leaderboard_alltime as $leaderboard_rankers) {
+            if ($leaderboard_rankers->email == Auth::user()->email) {
+                $leaderboard_alltime_ranking = "#" . $ranking;
+            }
+            $ranking++;
+        }
     }
 
     public function getTime(){
@@ -59,7 +80,7 @@ class CompetitionController extends Controller
         return $time;
     }
 
-    
+
 
 
 }
