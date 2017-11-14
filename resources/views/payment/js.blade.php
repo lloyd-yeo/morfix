@@ -1,6 +1,7 @@
 <script src="{{ asset('assets/js/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-<script src="https://checkout.stripe.com/checkout.js"></script>
+{{--<script type="text/javascript" src="https://js.stripe.com/v2/"></script>--}}
+{{--<script src="https://checkout.stripe.com/checkout.js"></script>--}}
+
 <script>
 $.ajaxSetup({
     headers: {
