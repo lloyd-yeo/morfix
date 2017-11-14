@@ -204,11 +204,15 @@ class PaymentController extends Controller
 			if ($sub_result->success) {
 
 				if ($referrer !== NULL) {
-					//Send referrer Premium congrats email
+					//Send referrer Pro congrats email
 				}
 
-				$user->tier = 3;
+				#$user->tier = 3;
+
+				$add_on_tier = (int) ($user->tier / 10);
+				$user->tier = $add_on_tier + 3;
 				$user->save();
+
 				$request->session()->flash('payment', 'Congratulations! You are now on Pro!');
 
 				return redirect('/upgrade/business')->with('upsell', TRUE);
