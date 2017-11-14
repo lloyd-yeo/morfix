@@ -118,7 +118,7 @@
 				@elseif (Auth::user()->tier == 2)
 					<div class="col-sm-4">
 						<div class="pricing-box">
-							<div class="pricing-title">
+							<div class="pricing-title best-price">
 								<h3>Business</h3>
 							</div>
 							<div class="pricing-price" style="color: #3C71AF;">
@@ -126,11 +126,10 @@
 							</div>
 							<div class="pricing-features">
 								<ul>
-									<li><strong>Full</strong> Access</li>
-									<li><i class="icon-code"></i> Source Files</li>
-									<li><strong>500</strong> User Accounts</li>
-									<li><strong>3 Years</strong> License</li>
-									<li>Phone &amp; Email Support</li>
+									<li><strong>5 </strong> more Instagram Accounts with all the Premium functions!</li>
+									<li><i class="icon-users"></i> Gain access to our Auto-Engagement community</li>
+									<li>Send follow up Direct Messages<strong> automatically</strong></li>
+									<li><strong>EXCLUSIVE </strong> access to our Full Suite of Business Advance Training Videos</li>
 								</ul>
 							</div>
 							<div class="pricing-action">
