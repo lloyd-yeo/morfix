@@ -36,7 +36,7 @@
 			</div>
 			<div class="pricing bottommargin clearfix">
 				@if (Auth::user()->tier == 1)
-					<div class="col-sm-4">
+					<div class="col-sm-offset-2 col-sm-4">
 						<div class="pricing-box">
 							<div class="pricing-title">
 								<h3>Premium</h3>
@@ -116,7 +116,7 @@
 					</div>
 
 				@elseif (Auth::user()->tier == 2)
-					<div class="col-sm-4">
+					<div class="col-sm-offset-2 col-sm-4">
 						<div class="pricing-box best-price">
 							<div class="pricing-title">
 								<h3>Business</h3>
