@@ -163,55 +163,65 @@ class PaymentController extends Controller
 		if (!$upsell) {
 
 			$plan = "MX370test";
+			$user = User::find(Auth::user()->user_id);
+			if ($user->braintree_id === NULL) {
 
-			$result = Braintree_Customer::create([
-				'firstName'          => Auth::user()->name,
-				'email'              => Auth::user()->email,
-				'paymentMethodNonce' => $nonce,
-			]);
-
-			if ($result->success) {
-
-				$user               = User::find(Auth::user()->user_id);
-				$user->braintree_id = $result->customer->id;
-				$user->save();
-
-				//Add as referrer
-				$referrer       = NULL;
-				$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
-				if ($user_affiliate !== NULL) {
-					$referrer = User::find($user_affiliate->referrer);
-				}
-
-				$sub_result = Braintree_Subscription::create([
-					'paymentMethodToken' => $result->customer->paymentMethods[0]->token,
-					'merchantAccountId'  => 'morfixUSD',
-					'planId'             => $plan,
+				$result = Braintree_Customer::create([
+					'firstName'          => Auth::user()->name,
+					'email'              => Auth::user()->email,
+					'paymentMethodNonce' => $nonce,
 				]);
 
-				if ($sub_result->success) {
-
-					if ($referrer !== NULL) {
-						//Send referrer Premium congrats email
-					}
-
-					$user->tier = 3;
+				if ($result->success) {
+					$user->braintree_id = $result->customer->id;
 					$user->save();
-					$request->session()->flash('payment', 'Congratulations! You are now on Pro!');
-
-					return redirect('/upgrade/business')->with('upsell', TRUE);
 				} else {
 					//Redirect back to Premium page. Let user know of error.
 					$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
 
 					return back()->withInput();
 				}
+
+			}
+
+			//Add as referrer
+			$referrer       = NULL;
+			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+			if ($user_affiliate !== NULL) {
+				$referrer = User::find($user_affiliate->referrer);
+			}
+
+			$customer = Braintree_Customer::find($user->braintree_id);
+
+			$sub_result = Braintree_Subscription::create([
+				'paymentMethodToken' => $customer->paymentMethods[0]->token,
+				'merchantAccountId'  => 'morfixUSD',
+				'planId'             => $plan,
+			]);
+
+			if ($sub_result->success) {
+
+				if ($referrer !== NULL) {
+					//Send referrer Pro congrats email
+				}
+
+				#$user->tier = 3;
+
+				$add_on_tier = (int)($user->tier / 10);
+				$user->tier  = $add_on_tier + 3;
+				$user->save();
+
+				$request->session()->flash('payment', 'Congratulations! You are now on Pro!');
+
+				return redirect('/upgrade/business')->with('upsell', TRUE);
 			} else {
 				//Redirect back to Premium page. Let user know of error.
 				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
 
 				return back()->withInput();
 			}
+
+
 		} else {
 			$plan = 'MX297test';
 
@@ -235,13 +245,32 @@ class PaymentController extends Controller
 		}
 	}
 
-	public function upgradeBusinessPayment(Request $request) {
+	public function upgradeBusinessPayment(Request $request)
+	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
+		$plan = '0297test';
 
+		$user               = User::find(Auth::user()->user_id);
+		$braintree_id       = $user->braintree_id;
+		$braintree_customer = Braintree_Customer::find($braintree_id);
+
+		$sub_result = Braintree_Subscription::create([
+			'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
+			'merchantAccountId'  => 'morfixUSD',
+			'planId'             => $plan,
+		]);
+
+		if ($sub_result->success) {
+			$user->num_acct = 6;
+			$user->tier     = $user->tier + 10;
+			$user->save();
+
+			return view('payment.upgrade.confirmation');
+		}
 	}
 
 	public function index(Request $request)
