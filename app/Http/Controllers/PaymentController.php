@@ -163,8 +163,8 @@ class PaymentController extends Controller
 		if (!$upsell) {
 
 			$plan = "MX370test";
-
-			if (Auth::user()->braintree_id === NULL) {
+			$user = User::find(Auth::user()->user_id);
+			if ($user->braintree_id === NULL) {
 
 				$result = Braintree_Customer::create([
 					'firstName'          => Auth::user()->name,
@@ -173,8 +173,6 @@ class PaymentController extends Controller
 				]);
 
 				if ($result->success) {
-
-					$user               = User::find(Auth::user()->user_id);
 					$user->braintree_id = $result->customer->id;
 					$user->save();
 				} else {
@@ -193,7 +191,7 @@ class PaymentController extends Controller
 				$referrer = User::find($user_affiliate->referrer);
 			}
 
-			$customer = Braintree_Customer::find(Auth::user()->braintree_id);
+			$customer = Braintree_Customer::find($user->braintree_id);
 
 			$sub_result = Braintree_Subscription::create([
 				'paymentMethodToken' => $customer->paymentMethods[0]->token,
@@ -209,8 +207,8 @@ class PaymentController extends Controller
 
 				#$user->tier = 3;
 
-				$add_on_tier = (int) ($user->tier / 10);
-				$user->tier = $add_on_tier + 3;
+				$add_on_tier = (int)($user->tier / 10);
+				$user->tier  = $add_on_tier + 3;
 				$user->save();
 
 				$request->session()->flash('payment', 'Congratulations! You are now on Pro!');
