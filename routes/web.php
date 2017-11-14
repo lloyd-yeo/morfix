@@ -85,8 +85,8 @@ Route::get('/affiliate', 'AffiliateController@index');
 Route::post('/affiliate/save/paypal/{id}', 'AffiliateController@savePaypalEmail');
 Route::post('/affiliate/save/pixel', 'AffiliateController@savePixel');
 
-Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
-Route::get('/payment', 'PaymentController@index');
+#Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
+#Route::get('/payment', 'PaymentController@index');
 
 Route::get('/training/{type}', 'TrainingVideoController@index');
 Route::get('/engagement-group', 'EngagementGroupController@index');

@@ -101,7 +101,7 @@ class PaymentController extends Controller
 				$user->tier = 2;
 				$user->save();
 
-				return redirect('home');
+				return redirect('/home');
 			} else {
 				//Redirect back to Premium page. Let user know of error.
 				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
