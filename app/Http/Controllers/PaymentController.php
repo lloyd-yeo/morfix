@@ -12,6 +12,8 @@ use Auth;
 use AWeberAPI;
 use Braintree_ClientToken;
 use Braintree_Configuration;
+use Braintree_Customer;
+use Braintree_Subscription;
 use Cookie;
 use Illuminate\Http\Request;
 use PayPal\Api\Agreement;
