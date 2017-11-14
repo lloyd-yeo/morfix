@@ -118,43 +118,18 @@
 									<select class="elOrderProductOptionsSelect form-control"><option>Display Your Products</option></select>
 								</div>
 							</div>
-							<div class="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-29080" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; cursor: pointer; outline: none;" aria-disabled="false">
-								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 elFont_raleway hsSize27" style="text-align: left;" data-bold="inherit" contenteditable="false"><b>
-										Your New Account Details</b></div>
-							</div>
-							<form id="payment-form" action="/funnels/payment/premium" method="POST">
+							{{--<form id="payment-form" action="/upgrade/premium" method="POST">--}}
+							<form id="payment-form" action="/upgrade/premium" method="POST">
 								<input id="payment-nonce" name="payment-nonce" type="hidden"/>
-								<input id="plan" name="plan" type="hidden"/>
-								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-21612" data-de-type="input" data-de-editing="false" data-title="input form" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; display: block; outline: none; cursor: pointer;" type="email" aria-disabled="false">
-									<input type="text" placeholder="Your Email Address..." name="email" class="elInput elInput100 elInputBG1 elInputBR5 elInputIRight required1 elInputIEmail elInputIColor elAlign_left elInputStyle1 elInputMid" data-type="extra">
-								</div>
-
-								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-18039" data-de-type="input" data-de-editing="false" data-title="input" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" type="password" style="margin-top: 10px; outline: none; cursor: pointer;" aria-disabled="false">
-									<input id="password-tbx" type="password" placeholder="Your Password Here..." name="password" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
-								</div>
-
-								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-18039" data-de-type="input" data-de-editing="false" data-title="input" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" type="password" style="margin-top: 10px; outline: none; cursor: pointer;" aria-disabled="false">
-									<input id="password-2-tbx" type="password" placeholder="Confirm Password..." name="password2" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
-								</div>
-
-								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-18039" data-de-type="input" data-de-editing="false" data-title="input" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" type="name" style="margin-top: 10px; outline: none; cursor: pointer;" aria-disabled="false">
-									<input type="text" placeholder="Your Name Here..." name="name" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
-								</div>
 							</form>
-							<div class="de elSeperator elMargin0 ui-droppable de-editable" id="tmp_divider-16343" data-de-type="divider" data-de-editing="false" data-title="Divider" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; outline: none; cursor: pointer;" aria-disabled="false">
-								<div class="elDivider elDividerColor2 elDividerStyle3">
-									<div class="elDividerInner"></div>
-								</div>
-							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-24973" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; cursor: pointer; outline: none; display: block;" aria-disabled="false">
 								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 elFont_raleway hsSize27" style="text-align: left;" data-bold="inherit" contenteditable="false"><b>
 										Payment Details</b>
-								<br/>
+									<br/>
 								</div>
 							</div>
 
 							<form onsubmit="return false;" style="margin-top:20px;">
-								<input type="hidden" name="plan" value="0137test">
 								<div id="dropin-container"></div>
 
 								<a href="https://www.braintreegateway.com/merchants/4x5qk4ggmgf9t5vw/verified" target="_blank">
@@ -255,9 +230,9 @@
 		<style id="bold_style_tmp_headline1-84637">#tmp_headline1-84637 .elHeadline b{color:rgb(255,255,255);}</style>
 		<style id="button_style_tmp_button-31077">#tmp_button-31077 .elButtonFlat:hover{background-color:#0fa10b!important;}#tmp_button-31077 .elButtonBottomBorder:hover{background-color:#0fa10b!important;}#tmp_button-31077 .elButtonSubtle:hover{background-color:#0fa10b!important;}#tmp_button-31077 .elButtonGradient{background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,rgb(19,199,14)),color-stop(1,#0fa10b));background-image:-o-linear-gradient(bottom,rgb(19,199,14) 0%,#0fa10b 100%);background-image:-moz-linear-gradient(bottom,rgb(19,199,14) 0%,#0fa10b 100%);background-image:-webkit-linear-gradient(bottom,rgb(19,199,14) 0%,#0fa10b 100%);background-image:-ms-linear-gradient(bottom,rgb(19,199,14) 0%,#0fa10b 100%);background-image:linear-gradient(to bottom,rgb(19,199,14) 0%,#0fa10b 100%);}#tmp_button-31077 .elButtonGradient:hover{background-image:-webkit-gradient(linear,left top,left bottom,color-stop(1,rgb(19,199,14)),color-stop(0,#0fa10b));background-image:-o-linear-gradient(bottom,rgb(19,199,14) 100%,#0fa10b 0%);background-image:-moz-linear-gradient(bottom,rgb(19,199,14) 100%,#0fa10b 0%);background-image:-webkit-linear-gradient(bottom,rgb(19,199,14) 100%,#0fa10b 0%);background-image:-ms-linear-gradient(bottom,rgb(19,199,14) 100%,#0fa10b 0%);background-image:linear-gradient(to bottom,rgb(19,199,14) 100%,#0fa10b 0%);}#tmp_button-31077 .elButtonBorder{border:3px solid rgb(19,199,14)!important;color:rgb(19,199,14)!important;}#tmp_button-31077 .elButtonBorder:hover{background-color:rgb(19,199,14)!important;color:#FFF!important;}</style>
 	</div>=
-	<!--[if lt IE 9]>
+	      <!--[if lt IE 9]>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
-	<![endif]-->
+	      <![endif]-->
 	<span class="countdown-time" style="display:none;"></span>
 	<span class="webinar-last-time" style="display:none;"></span>
 	<span class="webinar-ext" style="display:none;"></span>
@@ -274,8 +249,9 @@
 
         $(document).ready(function(){
 
-	        @if(session()->has('error'))
-	        @endif
+			@if(session()->has('error'))
+            alert("{{ session('error') }}")
+			@endif
 
         });
 
@@ -301,14 +277,8 @@
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
                     // Submit payload.nonce to your server
-					$pw = $("#password-tbx").val();
-					$pw2 = $("#password-2-tbx").val();
-					if ($pw == $pw2) {
-                        $("#payment-nonce").val(payload.nonce);
-                        $("#payment-form").submit();
-					} else {
-					    alert("Your passwords do not match. Please try again.");
-					}
+                    $("#payment-nonce").val(payload.nonce);
+                    $("#payment-form").submit();
                 });
             });
         });

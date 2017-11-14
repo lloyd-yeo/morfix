@@ -85,8 +85,8 @@ Route::get('/affiliate', 'AffiliateController@index');
 Route::post('/affiliate/save/paypal/{id}', 'AffiliateController@savePaypalEmail');
 Route::post('/affiliate/save/pixel', 'AffiliateController@savePixel');
 
-Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
-Route::get('/payment', 'PaymentController@index');
+#Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
+#Route::get('/payment', 'PaymentController@index');
 
 Route::get('/training/{type}', 'TrainingVideoController@index');
 Route::get('/engagement-group', 'EngagementGroupController@index');
@@ -111,18 +111,7 @@ Route::post('/dm/logs/clear/{insta_id}', 'DirectMessageLogsController@cancelAllP
 
 Route::post('/webhooks/paypal', 'PaypalWebhookController@listen');
 
-#Route::get('/subscribe/paypal', 'PaypalController@paypalRedirect');
-Route::get('/subscribe/paypal/premium', 'PaypalController@paypalRedirectPremium');
-Route::get('/subscribe/paypal/pro', 'PaypalController@paypalRedirectPro');
-Route::get('/subscribe/paypal/business', 'PaypalController@paypalRedirectBusiness');
-Route::get('/subscribe/paypal/mastermind', 'PaypalController@paypalRedirectMastermind');
 
-
-#Route::get('/subscribe/paypal/return', 'PaypalController@paypalReturn');
-Route::get('/subscribe/paypal/return/premium', 'PaypalController@paypalReturnPremium');
-Route::get('/subscribe/paypal/return/pro', 'PaypalController@paypalReturnPro');
-Route::get('/subscribe/paypal/return/business', 'PaypalController@paypalReturnBusiness');
-Route::get('/subscribe/paypal/return/mastermind', 'PaypalController@paypalReturnMastermind');
 
 Route::get('/new/subscribe/paypal/return/premium', 'PaymentController@paypalReturnPremium');
 Route::get('/new/subscribe/paypal/return/pro', 'PaymentController@paypalReturnPro');
@@ -160,11 +149,25 @@ Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgree
 
 Route::get('/funnels/ebook', 'FunnelsController@show');
 Route::get('/funnels/test', 'FunnelsController@test');
-Route::get('/funnels/upgrade/premium', function() { return view('funnels.upgrade.premium'); });
+
+Route::get('/funnels/upgrade/premium', 'BraintreeController@funnelPremium');
+Route::get('/funnels/upgrade/pro', 'BraintreeController@funnelPro');
+Route::get('/funnels/upgrade/business', 'BraintreeController@funnelBusiness');
+Route::get('/funnels/upgrade/confirmation', 'BraintreeController@funnelConfirmation');
+
+Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
+Route::post('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
+Route::post('/funnels/payment/pro', 'BraintreeController@funnelPaymentPro');
 
 Route::get('/competition', 'CompetitionController@show');
 Route::get('/competition/timer','CompetitionController@getTime');
 Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
+
+Route::get('/upgrade/premium', 'PaymentController@upgradePremium');
+Route::post('/upgrade/premium', 'PaymentController@upgradePremiumPayment');
+Route::get('/upgrade/pro', 'PaymentController@upgradePro');
+Route::post('/upgrade/pro', 'PaymentController@upgradeProPayment');
+Route::get('/upgrade/business', 'PaymentController@upgradeBusiness');
 
 /**
  * Routes for creation of Paypal Subscription plans.
