@@ -36,7 +36,7 @@
 			</div>
 			<div class="pricing bottommargin clearfix">
 				@if (Auth::user()->tier == 1)
-					<div class="col-sm-offset-2 col-sm-4">
+					<div class="col-sm-offset-1 col-sm-4">
 						<div class="pricing-box">
 							<div class="pricing-title">
 								<h3>Premium</h3>
@@ -72,7 +72,7 @@
 
 					</div>
 
-					<div class="col-sm-4">
+					<div class="col-sm-offset-1 col-sm-4">
 						<div class="pricing-box best-price">
 							<div class="pricing-title">
 								<h3>Pro</h3>
@@ -116,7 +116,124 @@
 					</div>
 
 				@elseif (Auth::user()->tier == 2)
+					<div class="col-sm-offset-1 col-sm-4">
+						<div class="pricing-box best-price">
+							<div class="pricing-title">
+								<h3>Pro</h3>
+								<span>Most Savings</span>
+							</div>
+							<div class="pricing-price" style="color: rgb(212, 60, 60);">
+								<span class="price-unit">&dollar;</span>370<span class="price-tenure">/yr</span>
+							</div>
+							<div class="pricing-features">
+								<ul>
+									<li>2 months of <strong>FREE</strong> Premium functions</li>
+									<li><strong>No</strong> Morfix.co branding</li>
+									<li>Full Speed</li>
+									<li><strong>High</strong> Priority Support</li>
+									<li>Instagram Affiliate Training</li>
+									<li>Auto Interaction (Like, Comment Follow, Unfollow)</li>
+									<li>Greet New Followers With Direct Message</li>
+									<li>Unlimited Scheduled Posts</li>
+									<li>First Comment Function</li>
+									<li><strong>Private</strong> Facebook Group</li>
+									<li><i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i></li>
+								</ul>
+							</div>
+							<div class="pricing-action">
+								<button class="btn btn-success text-white upgrade-btn" data-toggle="modal"
+								        data-target=".upgrade-modal" data-plan="0137test" style='
+                       background-color:rgb(212, 60, 60);
+                       padding: 10px 50px;
+                       font-weight: 600;
+                       font-size: 15px;
+                       border: solid 1px #D3D3D3;
+                       text-align: center;
+                       text-transform: uppercase;'>Upgrade Now!
+								</button>
+							</div>
+						</div>
+					</div>
 
+					<div class="col-sm-offset-1 col-sm-4">
+						<div class="pricing-box best-price">
+							<div class="pricing-title">
+								<h3>Business Add-On</h3>
+								<span>Go Viral whenever you want</span>
+							</div>
+							<div class="pricing-price" style="color: #3C71AF;">
+								<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
+							</div>
+							<div class="pricing-features">
+								<ul>
+									<li><strong>5 </strong> more Instagram Accounts with all the Premium functions!</li>
+									<li><i class="icon-users"></i> Gain access to our Auto-Engagement community</li>
+									<li>Send follow up Direct Messages<strong> automatically</strong></li>
+									<li><strong>EXCLUSIVE </strong> access to our Full Suite of Business Advance Training Videos</li>
+									<li><i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i></li>
+								</ul>
+							</div>
+							<div class="pricing-action">
+								<button class="btn btn-success text-white upgrade-btn" data-plan="0297" style='
+				                       background-color:#3C71AF;
+				                       padding: 10px 50px;
+				                       font-weight: 600;
+				                       font-size: 15px;
+				                       border: solid 1px #D3D3D3;
+				                       text-align: center;
+				                       text-transform: uppercase;'>Upgrade Now!
+								</button>
+							</div>
+						</div>
+					</div>
+
+				@elseif (Auth::user()->tier == 3)
+
+					<div class="col-sm-offset-4 col-sm-4">
+						<div class="pricing-box best-price">
+							<div class="pricing-title">
+								<h3>Business Add-On</h3>
+								<span>Go Viral whenever you want</span>
+							</div>
+							<div class="pricing-price" style="color: #3C71AF;">
+								<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
+							</div>
+							<div class="pricing-features">
+								<ul>
+									<li><strong>5 </strong> more Instagram Accounts with all the Premium functions!</li>
+									<li><i class="icon-users"></i> Gain access to our Auto-Engagement community</li>
+									<li>Send follow up Direct Messages<strong> automatically</strong></li>
+									<li><strong>EXCLUSIVE </strong> access to our Full Suite of Business Advance Training Videos</li>
+									<li><i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i></li>
+								</ul>
+							</div>
+							<div class="pricing-action">
+								<button class="btn btn-success text-white upgrade-btn" data-plan="0297" style='
+				                       background-color:#3C71AF;
+				                       padding: 10px 50px;
+				                       font-weight: 600;
+				                       font-size: 15px;
+				                       border: solid 1px #D3D3D3;
+				                       text-align: center;
+				                       text-transform: uppercase;'>Upgrade Now!
+								</button>
+							</div>
+						</div>
+					</div>
+
+				@elseif (Auth::user()->tier == 12)
 
 					<div class="col-sm-offset-1 col-sm-4">
 						<div class="pricing-box best-price">
@@ -164,14 +281,15 @@
 					<div class="col-sm-offset-1 col-sm-4">
 						<div class="pricing-box best-price">
 							<div class="pricing-title">
-								<h3>Business</h3>
-								<span>Go Viral whenever you want</span>
+								<h3>Mastermind Add-On</h3>
+								<span>Save on your Business Subscription!</span>
 							</div>
 							<div class="pricing-price" style="color: #3C71AF;">
-								<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
+								<span class="price-unit">&dollar;</span>970<span class="price-tenure">/yr</span>
 							</div>
 							<div class="pricing-features">
 								<ul>
+									<li>2 months of <strong>FREE</strong> Business Subscription</li>
 									<li><strong>5 </strong> more Instagram Accounts with all the Premium functions!</li>
 									<li><i class="icon-users"></i> Gain access to our Auto-Engagement community</li>
 									<li>Send follow up Direct Messages<strong> automatically</strong></li>
@@ -196,6 +314,7 @@
 							</div>
 						</div>
 					</div>
+
 				@endif
 
 			</div>
