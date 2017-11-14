@@ -165,7 +165,7 @@ Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
 
 Route::get('/upgrade/premium', 'PaymentController@upgradePremium');
 Route::post('/upgrade/premium', 'PaymentController@upgradePremiumPayment');
-Route::get('/upgrade/pro', 'PaymentController@upgradePremiumPro');
+Route::get('/upgrade/pro', 'PaymentController@upgradePro');
 
 /**
  * Routes for creation of Paypal Subscription plans.

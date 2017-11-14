@@ -67,7 +67,11 @@ class PaymentController extends Controller
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 		$client_token = Braintree_ClientToken::generate();
 
-		return view('payment.upgrade.pro', [ 'client_token' => $client_token ]);
+		if ($request->session()->has('upsell')) {
+			return view('payment.upgrade.pro', [ 'client_token' => $client_token ]);
+		} else {
+			return view('payment.upgrade.pro', [ 'client_token' => $client_token ]);
+		}
 	}
 
 	public function upgradePremiumPayment(Request $request)
