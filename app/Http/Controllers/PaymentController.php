@@ -74,6 +74,21 @@ class PaymentController extends Controller
 		}
 	}
 
+	public function upgradeBusiness(Request $request)
+	{
+		Braintree_Configuration::environment('production');
+		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+		$client_token = Braintree_ClientToken::generate();
+
+		if ($request->session()->has('upsell')) {
+			return view('payment.upgrade.funnel.business');
+		} else {
+			return view('payment.upgrade.business', [ 'client_token' => $client_token ]);
+		}
+	}
+
 	public function upgradePremiumPayment(Request $request)
 	{
 		Braintree_Configuration::environment('production');
@@ -118,7 +133,8 @@ class PaymentController extends Controller
 				$user->tier = 2;
 				$user->save();
 				$request->session()->flash('payment', 'Congratulations! You are now on Premium!');
-				return redirect('/upgrade/pro')->with('upsell', true);
+
+				return redirect('/upgrade/pro')->with('upsell', TRUE);
 			} else {
 				//Redirect back to Premium page. Let user know of error.
 				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
@@ -133,6 +149,100 @@ class PaymentController extends Controller
 		}
 	}
 
+	public function upgradeProPayment(Request $request)
+	{
+		Braintree_Configuration::environment('production');
+		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
+		$upsell = $request->input('upsell', FALSE);
+		$nonce  = $request->input("payment-nonce");
+
+		//Not upsell
+		if (!$upsell) {
+
+			$plan = "MX370test";
+
+			$result = Braintree_Customer::create([
+				'firstName'          => Auth::user()->name,
+				'email'              => Auth::user()->email,
+				'paymentMethodNonce' => $nonce,
+			]);
+
+			if ($result->success) {
+
+				$user               = User::find(Auth::user()->user_id);
+				$user->braintree_id = $result->customer->id;
+				$user->save();
+
+				//Add as referrer
+				$referrer       = NULL;
+				$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+				if ($user_affiliate !== NULL) {
+					$referrer = User::find($user_affiliate->referrer);
+				}
+
+				$sub_result = Braintree_Subscription::create([
+					'paymentMethodToken' => $result->customer->paymentMethods[0]->token,
+					'merchantAccountId'  => 'morfixUSD',
+					'planId'             => $plan,
+				]);
+
+				if ($sub_result->success) {
+
+					if ($referrer !== NULL) {
+						//Send referrer Premium congrats email
+					}
+
+					$user->tier = 3;
+					$user->save();
+					$request->session()->flash('payment', 'Congratulations! You are now on Pro!');
+
+					return redirect('/upgrade/business')->with('upsell', TRUE);
+				} else {
+					//Redirect back to Premium page. Let user know of error.
+					$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
+
+					return back()->withInput();
+				}
+			} else {
+				//Redirect back to Premium page. Let user know of error.
+				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
+
+				return back()->withInput();
+			}
+		} else {
+			$plan = 'MX297test';
+
+			$user = User::find(Auth::user()->user_id);
+
+			$braintree_id       = $user->braintree_id;
+			$braintree_customer = Braintree_Customer::find($braintree_id);
+
+			$sub_result = Braintree_Subscription::create([
+				'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
+				'merchantAccountId'  => 'morfixUSD',
+				'planId'             => $plan,
+			]);
+
+			if ($sub_result->success) {
+				$user->tier = 3;
+				$user->save();
+
+				return redirect('/upgrade/business')->with('upsell', TRUE);
+			}
+		}
+	}
+
+	public function upgradeBusinessPayment(Request $request) {
+		Braintree_Configuration::environment('production');
+		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
+
+	}
 
 	public function index(Request $request)
 	{
