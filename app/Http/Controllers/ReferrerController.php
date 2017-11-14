@@ -31,6 +31,15 @@ class ReferrerController extends Controller {
 
         $redir = $request->input("redir");
 
+        switch ($redir) {
+	        case "payment":
+		        return redirect('https://upgrade.morfix.co/premium');
+		        break;
+	        case "home":
+		        return redirect('https://morfix.co');
+		        break;
+        }
+
         if ($redir == "payment") {
             return redirect('https://upgrade.morfix.co/premium');
         } elseif ($redir == "home") {
@@ -53,7 +62,7 @@ class ReferrerController extends Controller {
             return redirect('https://signup.morfix.co/vsl-mlm');
         } elseif ($redir == "ebook") {
 //            return redirect('https://signup.morfix.co/ebookmmo');
-            return redirect('/funnels/ebook');
+            return redirect('/ebook');
         } elseif ($redir == "online") {
             return redirect('https://signup.morfix.co/vsl-online');
         } else {

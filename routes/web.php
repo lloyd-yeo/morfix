@@ -147,9 +147,6 @@ Route::get('/dm/thread/{id}', 'DirectThreadController@show');
 
 Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgreement');
 
-Route::get('/funnels/ebook', 'FunnelsController@show');
-Route::get('/funnels/test', 'FunnelsController@test');
-
 Route::get('/funnels/upgrade/premium', 'BraintreeController@funnelPremium');
 Route::get('/funnels/upgrade/pro', 'BraintreeController@funnelPro');
 Route::get('/funnels/upgrade/business', 'BraintreeController@funnelBusiness');
@@ -163,6 +160,23 @@ Route::get('/competition', 'CompetitionController@show');
 Route::get('/competition/timer','CompetitionController@getTime');
 Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
 
+/**
+ * Funnels
+ */
+Route::get('/ebook', 'FunnelsController@ebook');
+Route::get('/online', 'FunnelsController@vsl');
+Route::get('/reverse-commission', 'FunnelsController@rcvsl');
+Route::get('/motor-club-of-america', 'FunnelsController@mcavsl');
+Route::get('/digital-altitude', 'FunnelsController@davsl');
+Route::get('/online-sales-pro', 'FunnelsController@ospvsl');
+Route::get('/make-money-online', 'FunnelsController@mmovsl');
+Route::get('/tool', 'FunnelsController@tool');
+Route::get('/mlm', 'FunnelsController@mlmvsl');
+Route::get('/online', 'FunnelsController@vsl');
+
+/**
+ * Braintree Upgrades when User is already registered.
+ */
 Route::get('/upgrade/premium', 'PaymentController@upgradePremium');
 Route::post('/upgrade/premium', 'PaymentController@upgradePremiumPayment');
 Route::get('/upgrade/pro', 'PaymentController@upgradePro');
