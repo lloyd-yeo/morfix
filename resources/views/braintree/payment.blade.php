@@ -353,9 +353,7 @@
 							</div>
 						</div>
 					</div>
-
 				@endif
-
 			</div>
 
 			<div class="modal fade upgrade-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
