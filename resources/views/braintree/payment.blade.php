@@ -83,7 +83,7 @@
 							</div>
 							<div class="pricing-features">
 								<ul>
-									<li>2 months of <strong>FREE</strong> Premium functions</li>
+									<li>2 months of <strong>FREE</strong> Premium Subscription</li>
 									<li><strong>No</strong> Morfix.co branding</li>
 									<li>Full Speed</li>
 									<li><strong>High</strong> Priority Support</li>
@@ -127,7 +127,7 @@
 							</div>
 							<div class="pricing-features">
 								<ul>
-									<li>2 months of <strong>FREE</strong> Premium functions</li>
+									<li>2 months of <strong>FREE</strong> Premium Subscription</li>
 									<li><strong>No</strong> Morfix.co branding</li>
 									<li>Full Speed</li>
 									<li><strong>High</strong> Priority Support</li>
@@ -246,7 +246,7 @@
 							</div>
 							<div class="pricing-features">
 								<ul>
-									<li>2 months of <strong>FREE</strong> Premium functions</li>
+									<li>2 months of <strong>FREE</strong> Premium Subscription</li>
 									<li><strong>No</strong> Morfix.co branding</li>
 									<li>Full Speed</li>
 									<li><strong>High</strong> Priority Support</li>
