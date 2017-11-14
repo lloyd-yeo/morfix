@@ -300,7 +300,6 @@
 					$pw2 = $("#password-2-tbx").val();
 					if ($pw == $pw2) {
                         $("#payment-nonce").val(payload.nonce);
-                        $("#plan").val($plan);
                         $("#payment-form").submit();
 					} else {
 					    alert("Your passwords do not match. Please try again.");
