@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Auth;
 class CompetitionController extends Controller
 {
 
+    protected $startDate = null;
     public function show(){
+        $this->startDate = Carbon::create(2017, 10, 01, 8,2,4, 'Asia/Singapore');
         $analysis = $this->getAnalysis();
         $igProfiles = $this->getInstagramProfiles();
     	return view('competition.index', [
@@ -43,35 +45,74 @@ class CompetitionController extends Controller
     }
 
     public function getRanking(){
-        $current_user = Auth::user();
+        $currentUser = Auth::user();
+        $ranking = NULL;
+        /*
+            1. Get All new Users
+            2. Loop for new users and get referrals
+        */
+        $myTotalReferral = $this->getTotalReferral();
+        if($myTotalReferral > 0){
+            $rankingCompetitionResult = $this->getNewProfilesByRanking('>=', $this->startDate);
 
-        $leaderboard_alltime = DB::select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
-                        GROUP BY email, name
-                        ORDER BY total_comms DESC LIMIT 10;");
-
-        $leaderboard_weekly = User::orderBy('pending_commission', 'desc')->take(10)->get();
-
-        $leaderboard_alltime_ranking = "UNRANKED";
-
-        $ranking = 1;
-        foreach ($leaderboard_alltime as $leaderboard_rankers) {
-            if ($leaderboard_rankers->email == Auth::user()->email) {
-                $leaderboard_alltime_ranking = "#" . $ranking;
+            $rank = 0;
+            foreach ($rankingCompetitionResult as $result) {
+                echo json_encode($result);
+                $rank++;
+                if($result->referrer == $currentUser->user_id){
+                    break;
+                }
             }
-            $ranking++;
+            if($rank > 10){
+                $ranking = "UNRANKED";
+            }
+            else{
+                $ranking = $rank;
+            }
+        }else{
+            $ranking = "UNRANKED";
         }
-
         return $ranking;
     }
 
     public function getDailyReferral(){
-        $referrar = 0;
-        return $referrar;
+        $newProfiles = $this->getNewProfilesByDate('>=', Carbon::today());
+        return $this->getReferral($newProfiles);
     }
 
     public function getTotalReferral(){
+        $newProfiles = $this->getNewProfilesByDate('>=', $this->startDate);
+        return $this->getReferral($newProfiles);
+    }
+
+    public function getReferral($newProfiles){
         $referrar = 0;
+        $currentUser = Auth::user();
+        foreach ($newProfiles as $newProfile) {
+            $userAffiliate = UserAffiliates::where('referrer', '=', $currentUser->user_id)
+                            ->where('referred', '=', $newProfile->user_id)
+                            ->limit(1)
+                            ->get();
+            if(sizeof($userAffiliate) >= 1){
+                $referrar++;
+            }
+        }
         return $referrar;
+    }
+
+    public function getNewProfilesByRanking($clause, $date){
+        $response =  DB::select("SELECT ua.referrer, count(ua.referrer) as total
+                            FROM user AS u
+                            LEFT JOIN user_affiliate AS ua 
+                            ON ua.referred = u.user_id
+                            where u.created_at >= '2017-11-10 00:00:00' AND u.tier > 1
+                            GROUP BY ua.referrer
+                            ORDER BY total DESC
+                            ;");
+        return $response;
+    }
+    public function getNewProfilesByDate($clause, $date){
+        return User::whereDate('created_at', $clause, $date)->where('tier', '>', '1')->get();
     }
 
     public function getAnalysis(){
