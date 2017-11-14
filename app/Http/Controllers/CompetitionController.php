@@ -19,7 +19,10 @@ class CompetitionController extends Controller
     }
 
     public function getCompetitors(){
-    	$response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')->where('tier', '>', '1')->where('pending_commission_payable','>','0')->orderBy('pending_commission_payable','DESC');
+    	$response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')
+	                    ->where('tier', '>', '1')
+	                    ->where('pending_commission_payable','>','0')
+	                    ->orderBy('pending_commission_payable','DESC');
     	return $response;
     }
 
