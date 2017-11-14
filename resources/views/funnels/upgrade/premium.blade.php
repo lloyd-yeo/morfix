@@ -138,7 +138,7 @@
 								</div>
 
 								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-18039" data-de-type="input" data-de-editing="false" data-title="input" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" type="name" style="margin-top: 10px; outline: none; cursor: pointer;" aria-disabled="false">
-									<input type="text" placeholder="Your Name Here..." name="first_name" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
+									<input type="text" placeholder="Your Name Here..." name="name" class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput required1" data-type="extra">
 								</div>
 							</form>
 							<div class="de elSeperator elMargin0 ui-droppable de-editable" id="tmp_divider-16343" data-de-type="divider" data-de-editing="false" data-title="Divider" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; outline: none; cursor: pointer;" aria-disabled="false">

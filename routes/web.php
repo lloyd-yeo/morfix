@@ -160,8 +160,13 @@ Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgree
 
 Route::get('/funnels/ebook', 'FunnelsController@show');
 Route::get('/funnels/test', 'FunnelsController@test');
+
 Route::get('/funnels/upgrade/premium', 'BraintreeController@funnelPremium');
+Route::get('/funnels/upgrade/pro', 'BraintreeController@funnelPro');
+
 Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
+Route::get('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
+Route::get('/funnels/payment/pro', 'BraintreeController@funnelPaymentPro');
 
 Route::get('/competition', 'CompetitionController@show');
 Route::get('/competition/timer','CompetitionController@getTime');
