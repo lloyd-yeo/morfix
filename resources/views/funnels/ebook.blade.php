@@ -17,15 +17,6 @@
 		<link rel="stylesheet" media="screen" href="https://www.clickfunnel.com/assets/lander.css">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7COswald:400,700%7CDroid+Sans:400,700%7CRoboto:400,700%7CLato:400,700%7CPT+Sans:400,700%7CSource+Sans+Pro:400,700%7CNoto+Sans:400,700%7CPT+Sans:400,700%7CUbuntu:400,700%7CBitter:400,700%7CPT+Serif:400,700%7CRokkitt:400,700%7CDroid+Serif:400,700%7CRaleway:400,700%7CInconsolata:400,700" rel="stylesheet" type="text/css">
-		<meta property="cf:funnel_id" content="QTdCZFZmWmtnenpPQ2NJTFNCWkFhQT09LS0wWDNheTc5N0NqUlVVSkljd211Mm9RPT0=--66ad89a36971b62ee8293be332e77ac8035651b5">
-		<meta property="cf:page_id" content="aEdma2RXd3I5eWQyZ3UzU3Q2OHFadz09LS1yMlh5OWJnd29uL3JZWXBZdXhKUlZBPT0=--289a121581e91c6e90d78034756b534353ffdd8e">
-		<meta property="cf:funnel_step_id" content="UVZCV2ZJQzY2aWlqRys2OWpoa0IrQT09LS10K1dQL09IdTlEckZ4dzR6bGtwSkxBPT0=--1ed083adae2446229e76b6a1b367113cf4ee4878">
-		<meta property="cf:user_id" content="ZG5Gd3d3ZFdOblBIMEYrNGVabE0wQT09LS0wamVmb1FnaWExWUFIdVdIRHduSTFRPT0=--385615eb7128604271aa130ab755d7a1d7ba05f8">
-		<meta property="cf:page_code" content="MTYzMjA5NjY=">
-		<meta property="cf:mode_id" content="1">
-		<meta property="cf:time_zone" content="UTC">
-		<meta property="cf:app_domain" content="app.clickfunnels.com">
-		<script src="https://www.clickfunnel.com/assets/userevents/application.js"></script>
 		<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-51074959-1','auto',{'name':'cftracker'});ga('cftracker.send','pageview','user-page');</script>
 		<style>
 			[data-timed-style='fade']{display:none}[data-timed-style='scale']{display:none}
