@@ -105,7 +105,7 @@ class CompetitionController extends Controller
                             FROM user AS u
                             LEFT JOIN user_affiliate AS ua 
                             ON ua.referred = u.user_id
-                            where u.created_at >= '2017-11-10 00:00:00' AND u.tier > 1
+                            where u.created_at >= '$date' AND u.tier > 1
                             GROUP BY ua.referrer
                             ORDER BY total DESC
                             ;");
