@@ -165,13 +165,13 @@ Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
  */
 Route::get('/ebook', 'FunnelsController@ebook');
 Route::get('/online', 'FunnelsController@vsl');
-Route::get('/reverse-commission', 'FunnelsController@rcvsl');
-Route::get('/motor-club-of-america', 'FunnelsController@mcavsl');
-Route::get('/digital-altitude', 'FunnelsController@davsl');
-Route::get('/online-sales-pro', 'FunnelsController@ospvsl');
-Route::get('/make-money-online', 'FunnelsController@mmovsl');
-Route::get('/tool', 'FunnelsController@tool');
-Route::get('/mlm', 'FunnelsController@mlmvsl');
+Route::get('/reverse-commission', 'FunnelsController@rcVsl');
+Route::get('/motor-club-of-america', 'FunnelsController@mcaVsl');
+Route::get('/digital-altitude', 'FunnelsController@daVsl');
+Route::get('/online-sales-pro', 'FunnelsController@ospVsl');
+Route::get('/make-money-online', 'FunnelsController@mmoVsl');
+Route::get('/tool', 'FunnelsController@toolVsl');
+Route::get('/mlm', 'FunnelsController@mlmVsl');
 Route::get('/online', 'FunnelsController@vsl');
 
 /**
