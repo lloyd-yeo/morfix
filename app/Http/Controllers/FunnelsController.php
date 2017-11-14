@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class FunnelsController extends Controller
 {
-    public function show(){
+    public function ebook(){
         return view('funnels.ebook');
     }
 
