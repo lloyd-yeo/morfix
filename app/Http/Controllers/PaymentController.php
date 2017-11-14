@@ -59,6 +59,17 @@ class PaymentController extends Controller
 		return view('payment.upgrade.premium', [ 'client_token' => $client_token ]);
 	}
 
+	public function upgradePro(Request $request)
+	{
+		Braintree_Configuration::environment('production');
+		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+		$client_token = Braintree_ClientToken::generate();
+
+		return view('payment.upgrade.pro', [ 'client_token' => $client_token ]);
+	}
+
 	public function upgradePremiumPayment(Request $request)
 	{
 		Braintree_Configuration::environment('production');
@@ -102,8 +113,8 @@ class PaymentController extends Controller
 
 				$user->tier = 2;
 				$user->save();
-
-				return redirect('/home');
+				$request->session()->flash('payment', 'Congratulations! You are now on Premium!');
+				return redirect('/upgrade/pro')->with('upsell', true);
 			} else {
 				//Redirect back to Premium page. Let user know of error.
 				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
