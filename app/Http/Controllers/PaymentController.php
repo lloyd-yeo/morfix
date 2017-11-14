@@ -96,7 +96,7 @@ class PaymentController extends Controller
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-		$plan  = "0137test";
+		$plan  = "0137";
 		$nonce = $request->input("payment-nonce");
 
 		$result = Braintree_Customer::create([
@@ -111,7 +111,7 @@ class PaymentController extends Controller
 			$user->braintree_id = $result->customer->id;
 			$user->save();
 
-			//Add as referrer
+			//Get referrer
 			$referrer       = NULL;
 			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
 			if ($user_affiliate !== NULL) {
@@ -128,6 +128,8 @@ class PaymentController extends Controller
 
 				if ($referrer !== NULL) {
 					//Send referrer Premium congrats email
+					$referrer->pending_commission = $referrer->pending_commission + 20;
+					$referrer->save();
 				}
 
 				$user->tier = 2;
@@ -162,7 +164,7 @@ class PaymentController extends Controller
 		//Not upsell
 		if (!$upsell) {
 
-			$plan = "MX370test";
+			$plan = "MX370";
 			$user = User::find(Auth::user()->user_id);
 			if ($user->braintree_id === NULL) {
 
@@ -184,7 +186,7 @@ class PaymentController extends Controller
 
 			}
 
-			//Add as referrer
+			//Get referrer
 			$referrer       = NULL;
 			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
 			if ($user_affiliate !== NULL) {
@@ -203,6 +205,8 @@ class PaymentController extends Controller
 
 				if ($referrer !== NULL) {
 					//Send referrer Pro congrats email
+					$referrer->pending_commission = $referrer->pending_commission + 200;
+					$referrer->save();
 				}
 
 				#$user->tier = 3;
@@ -221,9 +225,8 @@ class PaymentController extends Controller
 				return back()->withInput();
 			}
 
-
 		} else {
-			$plan = 'MX297test';
+			$plan = 'MX297';
 
 			$user = User::find(Auth::user()->user_id);
 
@@ -240,6 +243,19 @@ class PaymentController extends Controller
 				$user->tier = 3;
 				$user->save();
 
+				//Get referrer
+				$referrer       = NULL;
+				$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+				if ($user_affiliate !== NULL) {
+					$referrer = User::find($user_affiliate->referrer);
+				}
+
+				if ($referrer !== NULL) {
+					//Send referrer Pro congrats email
+					$referrer->pending_commission = $referrer->pending_commission + 150;
+					$referrer->save();
+				}
+
 				return redirect('/upgrade/business')->with('upsell', TRUE);
 			}
 		}
@@ -252,7 +268,7 @@ class PaymentController extends Controller
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-		$plan = '0297test';
+		$plan = '0297';
 
 		$user               = User::find(Auth::user()->user_id);
 		$braintree_id       = $user->braintree_id;
