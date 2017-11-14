@@ -11,7 +11,7 @@ class FunnelsController extends Controller
     }
 
     public function vsl(){
-
+	    return view('funnels.onlinevsl');
     }
 
     public function rcVsl(){
