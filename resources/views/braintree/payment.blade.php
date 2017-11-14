@@ -46,11 +46,15 @@
 							</div>
 							<div class="pricing-features">
 								<ul>
-									<li><strong>Full</strong> Access</li>
-									<li><i class="icon-code"></i> Source Files</li>
-									<li><strong>100</strong> User Accounts</li>
-									<li><strong>1 Year</strong> License</li>
-									<li>Phone &amp; Email Support</li>
+									<li><strong>No</strong> Morfix.co branding</li>
+									<li>Full Speed</li>
+									<li><strong>High</strong> Priority Support</li>
+									<li>Instagram Affiliate Training</li>
+									<li>Auto Interaction (Like, Comment Follow, Unfollow)</li>
+									<li>Greet New Followers With Direct Message</li>
+									<li>Unlimited Scheduled Posts</li>
+									<li>First Comment Function</li>
+									<li><strong>Private</strong> Facebook Group</li>
 								</ul>
 							</div>
 							<div class="pricing-action">
@@ -137,10 +141,6 @@
 						</div>
 					</div>
 				@endif
-
-
-
-
 
 			</div>
 

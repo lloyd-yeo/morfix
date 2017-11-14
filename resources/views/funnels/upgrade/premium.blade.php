@@ -272,6 +272,14 @@
 	<script>
         var button = document.querySelector('#submit-button');
 
+        $(document).ready(function(){
+
+	        @if(session()->has('error'))
+		        alert("{{ session('error') }}")
+	        @endif
+
+        });
+
         braintree.dropin.create({
             authorization: '{{ $client_token }}',
             container: '#dropin-container',
@@ -294,8 +302,6 @@
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
                     // Submit payload.nonce to your server
-                    // console.log(payload.nonce);
-
 					$pw = $("#password-tbx").val();
 					$pw2 = $("#password-2-tbx").val();
 					if ($pw == $pw2) {
