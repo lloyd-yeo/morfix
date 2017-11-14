@@ -15,31 +15,31 @@ class FunnelsController extends Controller
     }
 
     public function rcVsl(){
-
+	    return view('funnels.rcvsl');
     }
 
 	public function mcaVsl(){
-
+		return view('funnels.mcavsl');
 	}
 
 	public function daVsl(){
-
+		return view('funnels.davsl');
 	}
 
 	public function ospVsl(){
-
+		return view('funnels.ospvsl');
 	}
 
 	public function mmoVsl(){
-
+		return view('funnels.mmovsl');
 	}
 
 	public function toolVsl(){
-
+		return view('funnels.toolvsl');
 	}
 
 	public function mlmVsl(){
-
+		return view('funnels.mlmvsl');
 	}
 
 }
