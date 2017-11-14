@@ -117,9 +117,10 @@
 
 				@elseif (Auth::user()->tier == 2)
 					<div class="col-sm-4">
-						<div class="pricing-box">
-							<div class="pricing-title best-price">
+						<div class="pricing-box best-price">
+							<div class="pricing-title">
 								<h3>Business</h3>
+								<span>Go Viral whenever you want</span>
 							</div>
 							<div class="pricing-price" style="color: #3C71AF;">
 								<span class="price-unit">&dollar;</span>97<span class="price-tenure">/mo</span>
@@ -130,6 +131,11 @@
 									<li><i class="icon-users"></i> Gain access to our Auto-Engagement community</li>
 									<li>Send follow up Direct Messages<strong> automatically</strong></li>
 									<li><strong>EXCLUSIVE </strong> access to our Full Suite of Business Advance Training Videos</li>
+									<li><i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i>
+										<i class="icon-star3"></i></li>
 								</ul>
 							</div>
 							<div class="pricing-action">
