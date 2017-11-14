@@ -79,8 +79,8 @@
 							<div class="de elMargin0 clearfix elScreenshot_right ui-droppable elFeatureImage_70_30 de-editable" id="tmp_featureimage-56652" data-de-type="featureimage" data-de-editing="false" data-title="Image Feature" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="outline: none; cursor: pointer; display: block;" aria-disabled="false">
 								<div class="elScreenshot_text">
 									<div class="elScreenshot_text_padding">
-										<h3 class="ne elScreenshot_text_headline ssHeadlineSize2" contenteditable="false"><b>Morfix Pro ($37/month)</b></h3>
-										<div class="ne elScreenshot_text_body ssBodySize1" contenteditable="false" data-gramm_id="89f8b0ed-e8cf-5b7e-cb96-83a6bae97179" data-gramm="true" spellcheck="false" data-gramm_editor="true">Upgrade to Morfix Pro NOW to enjoy the full benefits of Morfix</div>
+										<h3 class="ne elScreenshot_text_headline ssHeadlineSize2" contenteditable="false"><b>Morfix Pro ($370/year)</b></h3>
+										<div class="ne elScreenshot_text_body ssBodySize1" contenteditable="false" data-gramm_id="89f8b0ed-e8cf-5b7e-cb96-83a6bae97179" data-gramm="true" spellcheck="false" data-gramm_editor="true">Upgrade to Morfix Pro NOW to gain access to the 6-figure Instagram System Training Videos!</div>
 										<grammarly-btn><div data-reactroot="" class="_e725ae-textarea_btn _e725ae-show _e725ae-minimized _e725ae-minimize_transition _e725ae-field_hovered" style="z-index: 2; transform: translate(649px, 62px);"><div class="_e725ae-transform_wrap"><div title="Protected by Grammarly" class="_e725ae-status"> </div></div></div></grammarly-btn>
 									</div>
 								</div>
