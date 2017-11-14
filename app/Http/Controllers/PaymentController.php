@@ -241,7 +241,24 @@ class PaymentController extends Controller
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
+		$plan = '0297test';
 
+		$user               = User::find(Auth::user()->user_id);
+		$braintree_id       = $user->braintree_id;
+		$braintree_customer = Braintree_Customer::find($braintree_id);
+
+		$sub_result = Braintree_Subscription::create([
+			'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
+			'merchantAccountId'  => 'morfixUSD',
+			'planId'             => $plan,
+		]);
+
+		if ($sub_result->success) {
+			$user->num_acct = 6;
+			$user->tier     = $user->tier + 10;
+			$user->save();
+			return view('payment.upgrade.confirmation');
+		}
 	}
 
 	public function index(Request $request)
