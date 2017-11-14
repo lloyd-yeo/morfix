@@ -47,6 +47,22 @@ class BraintreeController extends Controller
 		return view('funnels.upgrade.pro', [ 'client_token' => $client_token ]);
 	}
 
+	public function funnelBusiness(Request $request)
+	{
+		Braintree_Configuration::environment('production');
+		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+		$client_token = Braintree_ClientToken::generate();
+
+		return view('funnels.upgrade.business', [ 'client_token' => $client_token ]);
+	}
+
+	public function funnelConfirmation(Request $request)
+	{
+		return view('funnels.upgrade.confirmation');
+	}
+
 	public function funnelPaymentPremium(Request $request)
 	{
 		Braintree_Configuration::environment('production');
@@ -74,12 +90,14 @@ class BraintreeController extends Controller
 
 		if ($result->success) {
 
-			$user               = new User;
-			$user->email        = $email;
-			$user->password     = $password;
-			$user->name         = $name;
-			$user->tier         = 1;
-			$user->braintree_id = $result->customer->id;
+			$user                   = new User;
+			$user->email            = $email;
+			$user->password         = $password;
+			$user->name             = $name;
+			$user->tier             = 1;
+			$user->num_acct         = 1;
+			$user->trial_activation = 2;
+			$user->braintree_id     = $result->customer->id;
 			$user->save();
 
 			//Add as referrer
@@ -132,9 +150,9 @@ class BraintreeController extends Controller
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-		$plan = 'MX370';
+		$plan = 'MX297test';
 
-		$user = NULL;
+		$user = User::find(Auth::user()->user_id);
 
 		$braintree_id       = $user->braintree_id;
 		$braintree_customer = Braintree_Customer::find($braintree_id);
@@ -146,30 +164,10 @@ class BraintreeController extends Controller
 		]);
 
 		if ($sub_result->success) {
-			$tier        = $user->tier;
-			$add_on_tier = (int)($tier / 10);
-			$tier        = $add_on_tier + 3;
-			$user->tier  = $tier;
-
+			$user->tier = 3;
 			$user->save();
+			return redirect('funnels/upgrade/business');
 		}
-
-		//
-		//		$user = User::where('email', 'ywz.lloyd@gmail.com');
-		//		$braintree_id = $user->braintree_id;
-		//		$braintree_customer = Braintree_Customer::find($braintree_id);
-		//
-		//		$sub_result = Braintree_Subscription::create([
-		//			'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
-		//			'merchantAccountId'  => 'morfixUSD',
-		//			'planId'             => $plan
-		//		]);
-		//
-		//		if ($sub_result->success) {
-		//			$user->tier = $user->tier + 10;
-		//			$user->save();
-		//		}
-
 	}
 
 	public function funnelPaymentBusiness(Request $request)
@@ -179,9 +177,9 @@ class BraintreeController extends Controller
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-		$plan = '0297';
+		$plan = '0297test';
 
-		$user               = User::where('email', 'ywz.lloyd@gmail.com');
+		$user               = User::find(Auth::user()->user_id);
 		$braintree_id       = $user->braintree_id;
 		$braintree_customer = Braintree_Customer::find($braintree_id);
 
@@ -195,6 +193,7 @@ class BraintreeController extends Controller
 			$user->num_acct = 6;
 			$user->tier     = $user->tier + 10;
 			$user->save();
+			return view('funnels.upgrade.confirmation');
 		}
 
 	}
