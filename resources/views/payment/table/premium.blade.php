@@ -55,7 +55,7 @@
                     </p>
                 </div>
                 <div style='padding-top: 0px; padding-bottom: 20px;'>
-                    <a id="premium-btn" href='https://upgrade.morfix.co/premium' target="_blank" class="text-white" style='
+                    <a id="premium-btn" href='/upgrade/premium' target="_blank" class="text-white" style='
                        background-color:rgb(212, 60, 60); 
                        padding: 10px 50px;
                        font-weight: 600; 
@@ -66,11 +66,6 @@
                         UPGRADE
                     </a>
                 </div>
-                <!-- PayPal Logo -->
-<!--                <a href="{{ url('subscribe/paypal/premium') }}">
-                    <img src="https://www.paypalobjects.com/webstatic/en_AU/i/buttons/btn_paywith_primary_s.png" alt="Pay with PayPal" />
-                </a>-->
-                <!-- PayPal Logo -->
             </div>
         </div>
     </div>

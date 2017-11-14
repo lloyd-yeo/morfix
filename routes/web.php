@@ -111,18 +111,7 @@ Route::post('/dm/logs/clear/{insta_id}', 'DirectMessageLogsController@cancelAllP
 
 Route::post('/webhooks/paypal', 'PaypalWebhookController@listen');
 
-#Route::get('/subscribe/paypal', 'PaypalController@paypalRedirect');
-Route::get('/subscribe/paypal/premium', 'PaypalController@paypalRedirectPremium');
-Route::get('/subscribe/paypal/pro', 'PaypalController@paypalRedirectPro');
-Route::get('/subscribe/paypal/business', 'PaypalController@paypalRedirectBusiness');
-Route::get('/subscribe/paypal/mastermind', 'PaypalController@paypalRedirectMastermind');
 
-
-#Route::get('/subscribe/paypal/return', 'PaypalController@paypalReturn');
-Route::get('/subscribe/paypal/return/premium', 'PaypalController@paypalReturnPremium');
-Route::get('/subscribe/paypal/return/pro', 'PaypalController@paypalReturnPro');
-Route::get('/subscribe/paypal/return/business', 'PaypalController@paypalReturnBusiness');
-Route::get('/subscribe/paypal/return/mastermind', 'PaypalController@paypalReturnMastermind');
 
 Route::get('/new/subscribe/paypal/return/premium', 'PaymentController@paypalReturnPremium');
 Route::get('/new/subscribe/paypal/return/pro', 'PaymentController@paypalReturnPro');
@@ -173,6 +162,8 @@ Route::post('/funnels/payment/pro', 'BraintreeController@funnelPaymentPro');
 Route::get('/competition', 'CompetitionController@show');
 Route::get('/competition/timer','CompetitionController@getTime');
 Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
+
+Route::get('/upgrade/premium', 'PaymentController@upgradePremium');
 
 /**
  * Routes for creation of Paypal Subscription plans.
