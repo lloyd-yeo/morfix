@@ -28,7 +28,7 @@
                        data-placement="top" title="Commissions that will be paid out the 25th of this month" type="button"></i>
                 </small>
             </div>
-            <span class="h2 text-moneygreen animated flipInX" >5</span>
+            <span class="h2 text-moneygreen animated flipInX" >{{$dailyReferral}}</span>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">TOTAL REFERRAL</div>
@@ -37,12 +37,12 @@
                        data-placement="top" title="Commissions that will be paid out the 25th of this month" type="button"></i>
                 </small>
             </div>
-            <span class="h2 text-moneygreen animated flipInX" >10</span>
+            <span class="h2 text-moneygreen animated flipInX" >{{$totalReferral}}</span>
         </div>
         <div class="col-xs-6 col-sm-6 col-lg-4">
             <div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-trophy"></i> All Time</small></div>
-            <span class="h2 font-w300 text-modern animated flipInX">RANK #</span>
+            <span class="h2 font-w300 text-modern animated flipInX">{{$ranking}}</span>
         </div>
 	    </div>
 	    <div class="row">
@@ -75,15 +75,15 @@
 	    <div class="row">
 	    	 <div class="referral">
 	            <div class="block">
-	                <div id="follower-chart-header" class="block-header">
+	                <div id="follower-chart-header-{{ $igProfiles->id }}" class="block-header">
 	                    <h3 class="block-title"><i class="fa fa-instagram"></i> YOUR REFERRAL CHART</h3>
 	                </div>
 
 	                <div class="block-content block-content-full bg-gray-lighter text-center chart-container">
 	                    <!--Chart.js Charts (initialized in js/pages/base_pages_dashboard.js), for more examples you can check out http://www.chartjs.org/docs/--> 
-	                    <div id="follower-count-chart-" style="height: 374px;" >
-	                        <canvas class="follower-count-chart-lines" data-csv="" data-label=""></canvas>
-	                    </div>
+	                    <div id="follower-count-chart-{{ $igProfiles->id }}" style="height: 374px;" >
+                            <canvas class="follower-count-chart-lines" data-csv="{{ $analysis[$igProfiles->insta_username] }}" data-label="{{ $analysisLabel[$igProfiles->insta_username] }}"></canvas>
+                        </div>
 	                </div>
 	            </div>
 	        </div>   
