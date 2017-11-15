@@ -593,7 +593,7 @@
 				</div>
 			</div>
 		</div>
-		<form id="submit-form" method="POST" action="/funnels/payment/pro">
+		<form id="submit-form" method="POST" action="/purchase/pro">
 
 		</form>
 		<div class="dropZoneForSections ui-droppable" style="display: none;"><div class="dropIconr"><i class="fa fa-plus"></i></div></div>

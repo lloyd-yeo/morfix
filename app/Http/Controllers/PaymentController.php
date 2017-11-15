@@ -111,13 +111,6 @@ class PaymentController extends Controller
 			$user->braintree_id = $result->customer->id;
 			$user->save();
 
-			//Get referrer
-			$referrer       = NULL;
-			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
-			if ($user_affiliate !== NULL) {
-				$referrer = User::find($user_affiliate->referrer);
-			}
-
 			$sub_result = Braintree_Subscription::create([
 				'paymentMethodToken' => $result->customer->paymentMethods[0]->token,
 				'merchantAccountId'  => 'morfixUSD',
@@ -126,10 +119,19 @@ class PaymentController extends Controller
 
 			if ($sub_result->success) {
 
+				//Get referrer
+				$referrer       = NULL;
+				$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+				if ($user_affiliate !== NULL) {
+					$referrer = User::find($user_affiliate->referrer);
+				}
+
 				if ($referrer !== NULL) {
 					//Send referrer Premium congrats email
-					$referrer->pending_commission = $referrer->pending_commission + 20;
-					$referrer->save();
+					if ($referrer->tier > 1) {
+						$referrer->pending_commission = $referrer->pending_commission + 20;
+						$referrer->save();
+					}
 				}
 
 				$user->tier = 2;
@@ -205,8 +207,10 @@ class PaymentController extends Controller
 
 				if ($referrer !== NULL) {
 					//Send referrer Pro congrats email
-					$referrer->pending_commission = $referrer->pending_commission + 200;
-					$referrer->save();
+					if ($referrer->tier % 10 == 3) {
+						$referrer->pending_commission = $referrer->pending_commission + 200;
+						$referrer->save();
+					}
 				}
 
 				#$user->tier = 3;
@@ -252,8 +256,10 @@ class PaymentController extends Controller
 
 				if ($referrer !== NULL) {
 					//Send referrer Pro congrats email
-					$referrer->pending_commission = $referrer->pending_commission + 150;
-					$referrer->save();
+					if ($referrer->tier % 10 == 3) {
+						$referrer->pending_commission = $referrer->pending_commission + 150;
+						$referrer->save();
+					}
 				}
 
 				return redirect('/upgrade/business')->with('upsell', TRUE);
@@ -284,6 +290,21 @@ class PaymentController extends Controller
 			$user->num_acct = 6;
 			$user->tier     = $user->tier + 10;
 			$user->save();
+
+			//Get referrer & add commissions
+			$referrer       = NULL;
+			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+			if ($user_affiliate !== NULL) {
+				$referrer = User::find($user_affiliate->referrer);
+			}
+
+			if ($referrer !== NULL) {
+				//Send referrer Pro congrats email
+				if ($referrer->tier / 10 > 0) {
+					$referrer->pending_commission = $referrer->pending_commission + 50;
+					$referrer->save();
+				}
+			}
 
 			return view('payment.upgrade.confirmation');
 		}

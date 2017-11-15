@@ -122,7 +122,7 @@
 								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 elFont_raleway hsSize27" style="text-align: left;" data-bold="inherit" contenteditable="false"><b>
 										Your New Account Details</b></div>
 							</div>
-							<form id="payment-form" action="/funnels/payment/premium" method="POST">
+							<form id="payment-form" action="/purchase/premium" method="POST">
 								<input id="payment-nonce" name="payment-nonce" type="hidden"/>
 								<input id="plan" name="plan" type="hidden"/>
 								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable" id="tmp_input-21612" data-de-type="input" data-de-editing="false" data-title="input form" data-ce="false" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; display: block; outline: none; cursor: pointer;" type="email" aria-disabled="false">

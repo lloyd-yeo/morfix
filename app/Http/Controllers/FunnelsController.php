@@ -65,14 +65,14 @@ class FunnelsController extends Controller
 		return view('funnels.upgrade.confirmation');
 	}
 
-	public function funnelPaymentPremium(Request $request)
+	public function paymentPremium(Request $request)
 	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-		$plan     = "0137test";
+		$plan     = "0137";
 		$nonce    = $request->input("payment-nonce");
 		$name     = $request->input("name");
 		$email    = $request->input("email");
@@ -92,17 +92,18 @@ class FunnelsController extends Controller
 
 		if ($result->success) {
 
-			$user                   = new User;
-			$user->email            = $email;
-			$user->password         = $password;
-			$user->name             = $name;
-			$user->tier             = 1;
-			$user->num_acct         = 1;
-			$user->trial_activation = 2;
-			$user->braintree_id     = $result->customer->id;
+			$user                     = new User;
+			$user->email              = $email;
+			$user->password           = $password;
+			$user->name               = $name;
+			$user->tier               = 1;
+			$user->num_acct           = 1;
+			$user->trial_activation   = 2;
+			$user->braintree_id       = $result->customer->id;
+			$user->verification_token = bin2hex(random_bytes(18));
 			$user->save();
 
-			//Add as referrer
+			//Add referrer
 			$referrer = Cookie::get('referrer');
 			if ($referrer !== NULL) {
 				$user_affiliate           = new UserAffiliates;
@@ -121,8 +122,44 @@ class FunnelsController extends Controller
 
 			if ($sub_result->success) {
 
+				$consumerKey    = "AkAxBcK3kI1q0yEfgw4R4c77";
+				$consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
+
+				$aweber  = new AWeberAPI($consumerKey, $consumerSecret);
+				$account = $aweber->getAccount("AgI2J88WjcAhUkFlCn3OwzLx", "wdX1JHuuhIFm9AEiJt3SVUdM5S7Z8lAE7UKmP29P");
+
+				foreach ($account->lists as $offset => $list) {
+
+					$list_id = $list->id;
+
+					if ($list_id != 4485376 OR $list_id != 4631962) {
+						continue;
+					}
+
+					# create a subscriber
+					$params = [
+						'email'                             => $email,
+						'name'                              => $name,
+						'ip_address'                        => $request->ip(),
+						'ad_tracking'                       => 'morfix_registration',
+						'last_followup_message_number_sent' => 1,
+						'misc_notes'                        => 'MorifX Registration Page',
+					];
+
+					try {
+						$subscribers    = $list->subscribers;
+						$new_subscriber = $subscribers->create($params);
+					}
+					catch (AWeberAPIException $ex) {
+					}
+				}
+
 				if ($referrer !== NULL) {
 					//Send referrer Premium congrats email
+					if ($referrer->tier > 1) {
+						$referrer->pending_commission = $referrer->pending_commission + 20;
+						$referrer->save();
+					}
 				}
 
 				$user->tier = 2;
@@ -145,14 +182,14 @@ class FunnelsController extends Controller
 
 	}
 
-	public function funnelPaymentPro(Request $request)
+	public function paymentPro(Request $request)
 	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-		$plan = 'MX297test';
+		$plan = 'MX297';
 
 		$user = User::find(Auth::user()->user_id);
 
@@ -168,18 +205,34 @@ class FunnelsController extends Controller
 		if ($sub_result->success) {
 			$user->tier = 3;
 			$user->save();
+
+			//Get referrer & add commissions
+			$referrer       = NULL;
+			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+			if ($user_affiliate !== NULL) {
+				$referrer = User::find($user_affiliate->referrer);
+			}
+
+			if ($referrer !== NULL) {
+				//Send referrer Pro congrats email
+				if ($referrer->tier % 10 == 3) {
+					$referrer->pending_commission = $referrer->pending_commission + 150;
+					$referrer->save();
+				}
+			}
+
 			return redirect('business');
 		}
 	}
 
-	public function funnelPaymentBusiness(Request $request)
+	public function paymentBusiness(Request $request)
 	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-		$plan = '0297test';
+		$plan = '0297';
 
 		$user               = User::find(Auth::user()->user_id);
 		$braintree_id       = $user->braintree_id;
@@ -195,6 +248,22 @@ class FunnelsController extends Controller
 			$user->num_acct = 6;
 			$user->tier     = $user->tier + 10;
 			$user->save();
+
+			//Get referrer & add commissions
+			$referrer       = NULL;
+			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+			if ($user_affiliate !== NULL) {
+				$referrer = User::find($user_affiliate->referrer);
+			}
+
+			if ($referrer !== NULL) {
+				//Send referrer Pro congrats email
+				if ($referrer->tier / 10 > 0) {
+					$referrer->pending_commission = $referrer->pending_commission + 50;
+					$referrer->save();
+				}
+			}
+
 			return view('funnels.upgrade.confirmation');
 		}
 

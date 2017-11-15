@@ -174,8 +174,12 @@ Route::get('/mlm', 'FunnelsController@mlmVsl');
  */
 Route::get('/premium', 'FunnelsController@purchasePremium');
 Route::get('/pro', 'FunnelsController@purchasePro');
-Route::get('/business', 'BraintreeController@purchaseBusiness');
-Route::get('/purchase-confirmation', 'BraintreeController@purchaseConfirmation');
+Route::get('/business', 'FunnelsController@purchaseBusiness');
+Route::get('/purchase-confirmation', 'FunnelsController@purchaseConfirmation');
+
+Route::post('/purchase/premium', 'FunnelsController@paymentPremium');
+Route::post('/purchase/pro', 'FunnelsController@paymentPro');
+Route::post('/purchase/business', 'FunnelsController@paymentBusiness');
 
 Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
 Route::post('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
