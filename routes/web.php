@@ -164,6 +164,7 @@ Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
  * Funnels
  */
 Route::get('/ebook', 'FunnelsController@ebook');
+Route::get('/ebook-video', 'FunnelsController@ebookVsl');
 Route::get('/online', 'FunnelsController@vsl');
 Route::get('/reverse-commission', 'FunnelsController@rcVsl');
 Route::get('/motor-club-of-america', 'FunnelsController@mcaVsl');
