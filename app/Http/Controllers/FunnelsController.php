@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use AWeberAPI;
+use AWeberAPIException;
 
 class FunnelsController extends Controller
 {
