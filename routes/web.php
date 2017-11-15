@@ -111,8 +111,6 @@ Route::post('/dm/logs/clear/{insta_id}', 'DirectMessageLogsController@cancelAllP
 
 Route::post('/webhooks/paypal', 'PaypalWebhookController@listen');
 
-
-
 Route::get('/new/subscribe/paypal/return/premium', 'PaymentController@paypalReturnPremium');
 Route::get('/new/subscribe/paypal/return/pro', 'PaymentController@paypalReturnPro');
 
@@ -147,10 +145,15 @@ Route::get('/dm/thread/{id}', 'DirectThreadController@show');
 
 Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgreement');
 
-Route::get('/funnels/upgrade/premium', 'BraintreeController@funnelPremium');
-Route::get('/funnels/upgrade/pro', 'BraintreeController@funnelPro');
-Route::get('/funnels/upgrade/business', 'BraintreeController@funnelBusiness');
-Route::get('/funnels/upgrade/confirmation', 'BraintreeController@funnelConfirmation');
+#Route::get('/funnels/upgrade/premium', 'BraintreeController@funnelPremium');
+#Route::get('/funnels/upgrade/pro', 'BraintreeController@funnelPro');
+#Route::get('/funnels/upgrade/business', 'BraintreeController@funnelBusiness');
+#Route::get('/funnels/upgrade/confirmation', 'BraintreeController@funnelConfirmation');
+
+Route::get('/premium', 'BraintreeController@funnelPremium');
+Route::get('/pro', 'BraintreeController@funnelPro');
+Route::get('/business', 'BraintreeController@funnelBusiness');
+Route::get('/purchase-confirmation', 'BraintreeController@funnelConfirmation');
 
 Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
 Route::post('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
@@ -173,7 +176,6 @@ Route::get('/online-sales-pro', 'FunnelsController@ospVsl');
 Route::get('/make-money-online', 'FunnelsController@mmoVsl');
 Route::get('/tool', 'FunnelsController@toolVsl');
 Route::get('/mlm', 'FunnelsController@mlmVsl');
-Route::get('/online', 'FunnelsController@vsl');
 
 /**
  * Braintree Upgrades when User is already registered.

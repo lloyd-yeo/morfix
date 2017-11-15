@@ -99,7 +99,7 @@
 							     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
 							     style="margin-top: 30px; display: block; outline: none; cursor: pointer;"
 							     aria-disabled="false" data-elbuttontype="1">
-								<a href="https://app.morfix.co/funnels/upgrade/premium"
+								<a href="/premium"
 								   class="elButton elButtonColor1 elButtonBottomBorder elButtonSize3 elButtonFull elBtnVP_10 elBtnHP_0 ea-buttonPulseGlow"
 								   style="color: rgb(255, 255, 255); background-color: rgb(234, 155, 0); font-size: 25px;">
 									<span class="elButtonMain"><i class="fa      fa_prepended"></i> Click Here To Get Started! <i
@@ -246,7 +246,7 @@
 							     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
 							     style="margin-top: 30px; display: block; outline: none; cursor: pointer;"
 							     aria-disabled="false" data-elbuttontype="1">
-								<a href="https://app.morfix.co/funnels/upgrade/premium"
+								<a href="/premium"
 								   class="elButton elButtonColor1 elButtonBottomBorder elButtonSize3 elBtnHP_00 elButtonFull elBtnVP_10 elBTNone elButtonCorner00 ea-buttonPulseGlow"
 								   style="color: rgb(255, 255, 255); background-color: rgb(234, 155, 0); font-size: 26px;"
 								   id="undefined-120-1028">
@@ -348,7 +348,7 @@
 							     data-delay="500"
 							     style="margin-top: 30px; display: block; outline: none; cursor: pointer;"
 							     aria-disabled="false" data-elbuttontype="1">
-								<a href="https://app.morfix.co/funnels/upgrade/premium"
+								<a href="/premium"
 								   class="elButton elButtonColor1 elButtonBottomBorder elButtonSize3 elBtnHP_00 elButtonFull elBtnVP_10 elBTNone elButtonCorner00 ea-buttonPulseGlow"
 								   style="color: rgb(255, 255, 255); background-color: rgb(234, 155, 0); font-size: 26px;"
 								   id="undefined-120-1028-478">
@@ -496,7 +496,7 @@
 							     data-delay="500"
 							     style="margin-top: 30px; display: block; outline: none; cursor: pointer;"
 							     aria-disabled="false" data-elbuttontype="1">
-								<a href="https://app.morfix.co/funnels/upgrade/premium"
+								<a href="/premium"
 								   class="elButton elButtonColor1 elButtonBottomBorder elButtonSize3 elBtnHP_00 elButtonFull elBtnVP_10 elBTNone elButtonCorner00 ea-buttonPulseGlow"
 								   style="color: rgb(255, 255, 255); background-color: rgb(234, 155, 0); font-size: 26px;"
 								   id="undefined-120-1028-547">
@@ -680,7 +680,7 @@
 							     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
 							     style="margin-top: 30px; display: block; outline: none; cursor: pointer;"
 							     aria-disabled="false" data-elbuttontype="1">
-								<a href="https://app.morfix.co/funnels/upgrade/premium"
+								<a href="/premium"
 								   class="elButton elButtonColor1 elButtonBottomBorder elButtonSize3 elBtnHP_00 elButtonFull elBtnVP_10 elBTNone elButtonCorner00 ea-buttonPulseGlow"
 								   style="color: rgb(255, 255, 255); background-color: rgb(234, 155, 0); font-size: 26px;"
 								   id="undefined-120-1028-547-206">
@@ -922,7 +922,7 @@
 							     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
 							     style="margin-top: 30px; display: block; outline: none; cursor: pointer;"
 							     aria-disabled="false" data-elbuttontype="1">
-								<a href="https://app.morfix.co/funnels/upgrade/premium"
+								<a href="/premium"
 								   class="elButton elButtonColor1 elButtonBottomBorder elButtonSize3 elBtnHP_00 elButtonFull elBtnVP_10 elBTNone elButtonCorner00 ea-buttonPulseGlow"
 								   style="color: rgb(255, 255, 255); background-color: rgb(234, 155, 0); font-size: 26px;"
 								   id="undefined-120-1028-547-206-184">
