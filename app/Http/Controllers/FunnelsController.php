@@ -129,7 +129,7 @@ class FunnelsController extends Controller
 				$user->save();
 				Auth::loginUsingId($user->user_id, TRUE);
 
-				return redirect('funnels/upgrade/pro');
+				return redirect('pro');
 			} else {
 				//Redirect back to Premium page. Let user know of error.
 				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
@@ -168,7 +168,7 @@ class FunnelsController extends Controller
 		if ($sub_result->success) {
 			$user->tier = 3;
 			$user->save();
-			return redirect('funnels/upgrade/business');
+			return redirect('business');
 		}
 	}
 

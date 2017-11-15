@@ -148,7 +148,7 @@
 							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="tmp_headline1-20807-140" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 30px; cursor: pointer; outline: none; display: block;" aria-disabled="false">
 								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 hsSize18" style="text-align: center; font-size: 14px;" data-bold="inherit" contenteditable="false">
-									<u><a href="/funnels/upgrade/confirmation" id="link-2111-337" class="" target="_self">No Thank You -  I do not want my page to go viral</a></u>
+									<u><a href="/purchase-confirmation" id="link-2111-337" class="" target="_self">No Thank You -  I do not want my page to go viral</a></u>
 								</div>
 							</div>
 						</div>
@@ -400,7 +400,7 @@
 							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-37438" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 30px; cursor: pointer; outline: none; display: block;" aria-disabled="false">
 								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 hsSize18" style="text-align: center; font-size: 15px;" data-bold="inherit" contenteditable="false">
-									<a href="/funnels/upgrade/confirmation" id="link-2111-337-831" class="" target="_self"><u>No Thank You,  I do not want my page to go viral  - Continue to Checkout Page</u></a>
+									<a href="/purchase-confirmation" id="link-2111-337-831" class="" target="_self"><u>No Thank You,  I do not want my page to go viral  - Continue to Checkout Page</u></a>
 								</div>
 							</div>
 						</div>
@@ -460,7 +460,7 @@
 							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-25031" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 30px; cursor: pointer; outline: none; display: block;" aria-disabled="false">
 								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 hsSize18" style="text-align: center; font-size: 15px;" data-bold="inherit" contenteditable="false">
-									<a href="/funnels/upgrade/confirmation" id="link-2111-337-831-1154" class="" target="_self"><u>No Thank You, I do not want my page to go viral - Continue to Checkout Page</u></a>
+									<a href="/purchase-confirmation" id="link-2111-337-831-1154" class="" target="_self"><u>No Thank You, I do not want my page to go viral - Continue to Checkout Page</u></a>
 								</div>
 							</div>
 						</div>
@@ -563,7 +563,7 @@
 							</div>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-72533" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 30px; cursor: pointer; outline: none; display: block;" aria-disabled="false">
 								<div class="ne elHeadline lh3 elMargin0 elBGStyle0 hsTextShadow0 hsSize18" style="text-align: center; font-size: 15px;" data-bold="inherit" contenteditable="false">
-									<a href="/funnels/upgrade/confirmation" id="link-2111-337-831-1154-455" class="" target="_self"><u>No Thank You,I do not want my page to go viral - Continue to Checkout Page</u></a>
+									<a href="/purchase-confirmation" id="link-2111-337-831-1154-455" class="" target="_self"><u>No Thank You,I do not want my page to go viral - Continue to Checkout Page</u></a>
 								</div>
 							</div>
 						</div>
