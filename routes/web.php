@@ -150,6 +150,9 @@ Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgree
 #Route::get('/funnels/upgrade/business', 'BraintreeController@funnelBusiness');
 #Route::get('/funnels/upgrade/confirmation', 'BraintreeController@funnelConfirmation');
 
+#Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
+#Route::post('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
+#Route::post('/funnels/payment/pro', 'BraintreeController@funnelPaymentPro');
 
 Route::get('/competition', 'CompetitionController@show');
 Route::get('/competition/timer','CompetitionController@getTime');
@@ -181,9 +184,6 @@ Route::post('/purchase/premium', 'FunnelsController@paymentPremium');
 Route::post('/purchase/pro', 'FunnelsController@paymentPro');
 Route::post('/purchase/business', 'FunnelsController@paymentBusiness');
 
-Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
-Route::post('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
-Route::post('/funnels/payment/pro', 'BraintreeController@funnelPaymentPro');
 
 /**
  * Braintree Upgrades when User is already registered.

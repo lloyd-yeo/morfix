@@ -33,41 +33,68 @@ class ReferrerController extends Controller {
 
         switch ($redir) {
 	        case "payment":
-		        return redirect('https://upgrade.morfix.co/premium');
+		        return redirect('premium');
 		        break;
 	        case "home":
 		        return redirect('https://morfix.co');
 		        break;
+	        case "vsl":
+		        return redirect('online');
+	        	break;
+	        case "davsl":
+		        return redirect('digital-altitude');
+	        	break;
+	        case "ospvsl":
+		        return redirect('online-sales-pro');
+	        	break;
+	        case "mmovsl":
+		        return redirect('make-money-online');
+	        	break;
+	        case "tool":
+		        return redirect('tool');
+	        	break;
+	        case "ebook":
+		        return redirect('ebook');
+	        	break;
+	        case "mlmvsl":
+		        return redirect('mlm');
+	        	break;
+	        case "online":
+		        return redirect('online');
+	        	break;
+	        default:
+		        return redirect('https://morfix.co');
+	        	break;
         }
 
-        if ($redir == "payment") {
-            return redirect('https://upgrade.morfix.co/premium');
-        } elseif ($redir == "home") {
-            return redirect('https://morfix.co');
-        } elseif ($redir == "vsl") {
-            return redirect('https://signup.morfix.co/vsl-online');
-        } elseif ($redir == "rcvsl") {
-            return redirect('https://signup.morfix.co/vsl-rc');
-        } elseif ($redir == "mcavsl") {
-            return redirect('https://signup.morfix.co/mca-vsl');
-        } elseif ($redir == "davsl") {
-            return redirect('https://signup.morfix.co/vsl-da');
-        } elseif ($redir == "ospvsl") {
-            return redirect('https://signup.morfix.co/vsl-osp');
-        } elseif ($redir == "mmovsl") {
-            return redirect('https://signup.morfix.co/vsl-mmo');
-        } elseif ($redir == "tool") {
-            return redirect('https://signup.morfix.co/vsl-tool');
-        } elseif ($redir == "mlmvsl") {
-            return redirect('https://signup.morfix.co/vsl-mlm');
-        } elseif ($redir == "ebook") {
-//            return redirect('https://signup.morfix.co/ebookmmo');
-            return redirect('/ebook');
-        } elseif ($redir == "online") {
-            return redirect('https://signup.morfix.co/vsl-online');
-        } else {
-            return redirect('https://morfix.co');
-        }
+//        if ($redir == "payment") {
+//            return redirect('https://upgrade.morfix.co/premium');
+//        } elseif ($redir == "home") {
+//            return redirect('https://morfix.co');
+//        } elseif ($redir == "vsl") {
+//            return redirect('https://signup.morfix.co/vsl-online');
+//        } elseif ($redir == "rcvsl") {
+//            return redirect('https://signup.morfix.co/vsl-rc');
+//        } elseif ($redir == "mcavsl") {
+//            return redirect('https://signup.morfix.co/mca-vsl');
+//        } elseif ($redir == "davsl") {
+//            return redirect('https://signup.morfix.co/vsl-da');
+//        } elseif ($redir == "ospvsl") {
+//            return redirect('https://signup.morfix.co/vsl-osp');
+//        } elseif ($redir == "mmovsl") {
+//            return redirect('https://signup.morfix.co/vsl-mmo');
+//        } elseif ($redir == "tool") {
+//            return redirect('https://signup.morfix.co/vsl-tool');
+//        } elseif ($redir == "mlmvsl") {
+//            return redirect('https://signup.morfix.co/vsl-mlm');
+//        } elseif ($redir == "ebook") {
+////            return redirect('https://signup.morfix.co/ebookmmo');
+//            return redirect('/ebook');
+//        } elseif ($redir == "online") {
+//            return redirect('https://signup.morfix.co/vsl-online');
+//        } else {
+//            return redirect('https://morfix.co');
+//        }
     }
 
 }
