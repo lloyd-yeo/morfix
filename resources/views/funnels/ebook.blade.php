@@ -277,7 +277,7 @@
 									</div>
 								</grammarly-btn>
 							</div>
-							<form>
+							<form method="post" action="/ebook-video">
 								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable"
 								     id="input-82965" data-de-type="input" data-de-editing="false" data-title="input"
 								     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
@@ -813,30 +813,33 @@
 									</div>
 								</grammarly-btn>
 							</div>
-							<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable"
-							     id="input-82965-167" data-de-type="input" data-de-editing="false" data-title="input"
-							     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
-							     type="first_name"
-							     style="margin-top: 30px; outline: none; cursor: pointer; display: block;"
-							     data-element-theme="customized" aria-disabled="false"><input type="text"
-							                                                                  placeholder="Your First Name Here..."
-							                                                                  name="first_name"
-							                                                                  class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput elInputBold required1"
-							                                                                  data-type="extra"
-							                                                                  style="">
-							</div>
-							<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable"
-							     id="tmp_input-47130-120-184-100-135" data-de-type="input" data-de-editing="false"
-							     data-title="input" data-ce="false" data-trigger="none" data-animate="fade"
-							     data-delay="500" type="email"
-							     style="margin-top: 30px; outline: none; cursor: pointer; display: block;"
-							     data-element-theme="customized" aria-disabled="false"><input type="text"
-							                                                                  placeholder="Your Email Address Here..."
-							                                                                  name="email"
-							                                                                  class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput elInputBold required1"
-							                                                                  data-type="extra"
-							                                                                  style="">
-							</div>
+							<form method="post" action="/ebook-video">
+								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable"
+								     id="input-82965-167" data-de-type="input" data-de-editing="false"
+								     data-title="input"
+								     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
+								     type="first_name"
+								     style="margin-top: 30px; outline: none; cursor: pointer; display: block;"
+								     data-element-theme="customized" aria-disabled="false"><input type="text"
+								                                                                  placeholder="Your First Name Here..."
+								                                                                  name="first_name"
+								                                                                  class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput elInputBold required1"
+								                                                                  data-type="extra"
+								                                                                  style="">
+								</div>
+								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable"
+								     id="tmp_input-47130-120-184-100-135" data-de-type="input" data-de-editing="false"
+								     data-title="input" data-ce="false" data-trigger="none" data-animate="fade"
+								     data-delay="500" type="email"
+								     style="margin-top: 30px; outline: none; cursor: pointer; display: block;"
+								     data-element-theme="customized" aria-disabled="false"><input type="text"
+								                                                                  placeholder="Your Email Address Here..."
+								                                                                  name="email"
+								                                                                  class="elInput elInput100 elAlign_left elInputMid elInputStyl0 elInputBG1 elInputBR5 elInputI0 elInputIBlack elInputIRight ceoinput elInputBold required1"
+								                                                                  data-type="extra"
+								                                                                  style="">
+								</div>
+							</form>
 							<div class="de elBTN elAlign_center elMargin0 ui-droppable de-editable"
 							     id="tmp_button-32943-175-152-137-118-123" data-de-type="button" data-de-editing="false"
 							     data-title="button" data-ce="false" data-trigger="none" data-animate="fade"
