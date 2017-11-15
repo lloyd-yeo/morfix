@@ -32,7 +32,8 @@ class CompetitionController extends Controller
                 "analysis"      => $analysis['analysis'],
                 "analysisLabel" => $analysis['analysisLabel'],
                 "followerCount" => $analysis['followerCount'],
-                "igProfiles"    => $igProfiles[0]
+                "igProfiles"    => $igProfiles[0],
+                "competition_leaderboard" => $this->getNewProfilesByRanking('>=', $this->startDate)
     	]);
     }
 
@@ -101,13 +102,14 @@ class CompetitionController extends Controller
     }
 
     public function getNewProfilesByRanking($clause, $date){
-        $response =  DB::select("SELECT ua.referrer, count(ua.referrer) as total
+        $response =  DB::select("SELECT u.name, ua.referrer, count(ua.referrer) as total
                             FROM user AS u
                             LEFT JOIN user_affiliate AS ua 
                             ON ua.referred = u.user_id
-                            where u.created_at >= '$date' AND u.tier > 1
-                            GROUP BY ua.referrer
+                            where date(u.created_at) >= '$date' AND u.tier > 1
+                            GROUP BY ua.referrer, u.name
                             ORDER BY total DESC
+                            LIMIT 10
                             ;");
         return $response;
     }
@@ -201,7 +203,7 @@ class CompetitionController extends Controller
 
     public function getTime(){
     	$current = Carbon::now();
-    	$end = Carbon::create(2017, 11, 15, 8,2,4, 'Asia/Singapore');
+    	$end = Carbon::create(2017, 11, 20, 8,2,4, 'Asia/Singapore');
     	$time = $end->diffInSeconds($current);
     	$seconds = $time % 60;
 		$time = ($time - $seconds) / 60;

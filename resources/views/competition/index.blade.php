@@ -64,13 +64,7 @@
                 </div>
                 <!-- END News -->
 	    	</div>
-	    	<div class="col-lg-4 ranking">
-	        	<div class="block">
-	        				<div class="block-header">
-	                    <h3 class="block-title"><i class="fa fa-trophy"></i> RANKING</h3>
-	                </div>
-	        	</div>
-	      </div>
+	    	@include('competition.ranking')
 	    </div>
 	    <div class="row">
 	    	 <div class="referral">
