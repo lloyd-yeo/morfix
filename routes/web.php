@@ -150,14 +150,6 @@ Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgree
 #Route::get('/funnels/upgrade/business', 'BraintreeController@funnelBusiness');
 #Route::get('/funnels/upgrade/confirmation', 'BraintreeController@funnelConfirmation');
 
-Route::get('/premium', 'BraintreeController@funnelPremium');
-Route::get('/pro', 'BraintreeController@funnelPro');
-Route::get('/business', 'BraintreeController@funnelBusiness');
-Route::get('/purchase-confirmation', 'BraintreeController@funnelConfirmation');
-
-Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
-Route::post('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
-Route::post('/funnels/payment/pro', 'BraintreeController@funnelPaymentPro');
 
 Route::get('/competition', 'CompetitionController@show');
 Route::get('/competition/timer','CompetitionController@getTime');
@@ -176,6 +168,18 @@ Route::get('/online-sales-pro', 'FunnelsController@ospVsl');
 Route::get('/make-money-online', 'FunnelsController@mmoVsl');
 Route::get('/tool', 'FunnelsController@toolVsl');
 Route::get('/mlm', 'FunnelsController@mlmVsl');
+
+/**
+ * Funnel Purchase Pages
+ */
+Route::get('/premium', 'FunnelsController@purchasePremium');
+Route::get('/pro', 'FunnelsController@purchasePro');
+Route::get('/business', 'BraintreeController@purchaseBusiness');
+Route::get('/purchase-confirmation', 'BraintreeController@purchaseConfirmation');
+
+Route::post('/funnels/payment/premium', 'BraintreeController@funnelPaymentPremium');
+Route::post('/funnels/payment/business', 'BraintreeController@funnelPaymentBusiness');
+Route::post('/funnels/payment/pro', 'BraintreeController@funnelPaymentPro');
 
 /**
  * Braintree Upgrades when User is already registered.
