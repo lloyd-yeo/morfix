@@ -41,8 +41,8 @@ class FunnelsController extends Controller
 				$subscribers    = $list->subscribers;
 				$new_subscriber = $subscribers->create($params);
 			}
-			catch (Exception $ex) {
-				$error_msg = $ex->getMessage();
+			catch (AWeberAPIException $ex) {
+
 			}
 		}
 
