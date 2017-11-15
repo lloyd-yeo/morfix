@@ -277,7 +277,7 @@
 									</div>
 								</grammarly-btn>
 							</div>
-							<form method="post" action="/ebook-video">
+							<form class="submit-form-1" method="post" action="/ebook-video">
 								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable"
 								     id="input-82965" data-de-type="input" data-de-editing="false" data-title="input"
 								     data-ce="false" data-trigger="none" data-animate="fade" data-delay="500"
@@ -311,7 +311,7 @@
 							     data-element-theme="customized" data-elbuttontype="1" aria-disabled="false"
 							     data-hide-on="">
 								<a href="#submit-form"
-								   class="elButton elButtonSize1 elButtonColor1 elButtonRounded elButtonPadding2 elBtnVP_10 elButtonCorner3 elBtnHP_25 elBTN_b_1 elButtonShadowN1 elButtonTxtColor1 elButtonFull"
+								   class="submit-form-1-btn elButton elButtonSize1 elButtonColor1 elButtonRounded elButtonPadding2 elBtnVP_10 elButtonCorner3 elBtnHP_25 elBTN_b_1 elButtonShadowN1 elButtonTxtColor1 elButtonFull"
 								   style="color: rgb(255, 255, 255); background: rgb(228, 58, 44); font-size: 20px;"
 								   id="undefined-312-714"><span class="elButtonMain"><i class="fa  fa_prepended"></i> Send It To Me Now! <i
 												class="fa fa_appended "></i></span> <span class="elButtonSub"></span>
@@ -813,7 +813,7 @@
 									</div>
 								</grammarly-btn>
 							</div>
-							<form method="post" action="/ebook-video">
+							<form class="submit-form" method="post" action="/ebook-video">
 								<div class="de elInputWrapper de-input-block elAlign_center elMargin0 ui-droppable de-editable"
 								     id="input-82965-167" data-de-type="input" data-de-editing="false"
 								     data-title="input"
@@ -848,7 +848,7 @@
 							     data-element-theme="customized" data-elbuttontype="1" aria-disabled="false"
 							     data-hide-on="">
 								<a href="#submit-form"
-								   class="elButton elButtonSize1 elButtonColor1 elButtonRounded elButtonPadding2 elBtnVP_10 elButtonCorner3 elBtnHP_25 elBTN_b_1 elButtonShadowN1 elButtonTxtColor1 elButtonFull"
+								   class="submit-form-btn elButton elButtonSize1 elButtonColor1 elButtonRounded elButtonPadding2 elBtnVP_10 elButtonCorner3 elBtnHP_25 elBTN_b_1 elButtonShadowN1 elButtonTxtColor1 elButtonFull"
 								   style="color: rgb(255, 255, 255); background: rgb(228, 58, 44); font-size: 20px;"
 								   id="undefined-312-714-535"><span class="elButtonMain"><i
 												class="fa  fa_prepended"></i> Send It To Me Now! <i
@@ -1046,5 +1046,16 @@
 			padding-top: 0
 		}
 	</style>
+
+	<script>
+		$(".submit-form-btn").on("click", function(){
+			$(".submit-form").submit();
+		});
+
+        $(".submit-form-1-btn").on("click", function(){
+            $(".submit-form-1").submit();
+        });
+	</script>
+
 	</body>
 </html>
