@@ -291,11 +291,6 @@
                     label: 'buynow',
                     branding: true,
                 },
-            },
-            card: {
-                cardholderName: {
-                    required: true
-                }
             }
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
