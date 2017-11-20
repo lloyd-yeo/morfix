@@ -81,7 +81,9 @@ class SendDm implements ShouldQueue {
             return;
         } else {
             echo "[$insta_username] retrieved job...\n";
+
             if (trim($dm_job->message) == "") {
+            	echo "DM Job is Empty\n";
                 return;
             }
         }
