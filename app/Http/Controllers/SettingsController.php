@@ -42,7 +42,7 @@ class SettingsController extends Controller
 			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
 			foreach ($user_stripe_details as $user_stripe_detail) {
 				$stripe_id   = $user_stripe_detail->stripe_id;
-				$active_subs = StripeActiveSubscription::where('stripe_id', $stripe_id)->where('status', '!=', 'canceled')->get();
+				$active_subs = StripeActiveSubscription::where('stripe_id', $stripe_id)->get();
 				foreach ($active_subs as $active_sub) {
 					$subscriptions[] = Subscription::retrieve($active_sub->stripe_subscription_id);
 				}
