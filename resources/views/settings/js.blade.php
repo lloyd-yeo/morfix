@@ -53,6 +53,7 @@ $(".btn-cancel-subscription").on("click", function(){
                 },
                 success: function (data) {
                     if (data.success === true) {
+                        window.open('/cancellation','_blank');
                         resolve()
                     } else {
                         
@@ -68,6 +69,7 @@ $(".btn-cancel-subscription").on("click", function(){
           title: 'Cancelled!',
           text: 'We have cancelled your subscription.'
         });
+
     });
 });
 

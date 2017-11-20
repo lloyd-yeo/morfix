@@ -134,6 +134,10 @@ class SettingsController extends Controller
 		$subscription = Subscription::retrieve($sub_id);
 		$subscription->cancel([ 'at_period_end' => TRUE ]);
 
+		$active_sub = StripeActiveSubscription::where('stripe_subscription_id', $sub_id)->first();
+		$active_sub->status = 'canceled';
+		$active_sub->save();
+
 		return Response::json([ "success" => TRUE, 'message' => "Your subscription has been cancelled." ]);
 	}
 
