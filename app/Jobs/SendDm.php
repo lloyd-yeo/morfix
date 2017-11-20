@@ -91,6 +91,7 @@ class SendDm implements ShouldQueue {
         //Mark job as fulfilled (2) when the person has turned off follow-up-messaging 
         //and the message is a follow-up.
         if ($ig_profile->auto_dm_delay == 0 && $dm_job->follow_up_order == 1) {
+	        echo "Profile auto_dm_delay is 0 AND DM Job has follow up order of 1.\n";
             $dm_job->fulfilled = 2;
             $dm_job->save();
             return;
