@@ -109,6 +109,7 @@ class PaymentController extends Controller
 
 			$user               = User::find(Auth::user()->user_id);
 			$user->braintree_id = $result->customer->id;
+
 			$user->save();
 
 			$sub_result = Braintree_Subscription::create([
@@ -118,6 +119,10 @@ class PaymentController extends Controller
 			]);
 
 			if ($sub_result->success) {
+
+				if ($user->tier == 1 && $user->trial_upgrade == 0) {
+					$user->trial_upgrade = 1;
+				}
 
 				//Get referrer
 				$referrer       = NULL;
@@ -204,6 +209,10 @@ class PaymentController extends Controller
 			]);
 
 			if ($sub_result->success) {
+
+				if ($user->trial_upgrade > 0) {
+					$user->trial_upgrade = 1;
+				}
 
 				if ($referrer !== NULL) {
 					//Send referrer Pro congrats email
