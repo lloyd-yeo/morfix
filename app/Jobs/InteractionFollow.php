@@ -91,7 +91,7 @@ class InteractionFollow implements ShouldQueue
 
 					foreach ($users_to_unfollow as $user_to_unfollow) {
 
-						echo "[" . $this->profile->insta_username . "] retrieved: "
+						echo "[U][" . $this->profile->insta_username . "] retrieved: "
 							. $user_to_unfollow->follower_username . "\n";
 
 						$unfollowed = InteractionFollowHelper::unfollow($this->profile, $this->instagram, $user_to_unfollow);
