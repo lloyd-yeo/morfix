@@ -26,49 +26,38 @@
 
 		<div class="content content-boxed">
 			<!-- Dynamic Table Full -->
-			<div class="block">
-				<div class="block-header">
-					<ul class="block-options">
-						<li>
-							<button type="button"><i class="si si-settings"></i></button>
-						</li>
-					</ul>
-					<h3 class="block-title">Mailer</h3>
-				</div>
-				<div class="block-content">
-					<form class="form-horizontal" action="/mail/send/active" method="post" onsubmit="return false;">
-						<div class="form-group">
-							<div class="col-xs-12">
-								<!-- SimpleMDE Editor (js-simplemde class is initialized in App() -> uiHelperSimpleMDE()) -->
-								<!-- For more info and examples you can check out https://github.com/NextStepWebs/simplemde-markdown-editor -->
-								<h2 class="content-heading">SimpleMDE</h2>
-								<div class="block">
-									<div class="block-header">
-										<ul class="block-options">
-											<li>
-												<button type="button"><i class="si si-settings"></i></button>
-											</li>
-										</ul>
-										<h3 class="block-title">Markdown Editor</h3>
+			<form class="form-horizontal" action="/mail/send/active" method="post" onsubmit="return false;">
+				<div class="form-group">
+					<div class="col-xs-12">
+						<!-- SimpleMDE Editor (js-simplemde class is initialized in App() -> uiHelperSimpleMDE()) -->
+						<!-- For more info and examples you can check out https://github.com/NextStepWebs/simplemde-markdown-editor -->
+						<h2 class="content-heading">Mail to Active/Paying Users</h2>
+						<div class="block">
+							<div class="block-header">
+								<ul class="block-options">
+									<li>
+										<button type="button"><i class="si si-mail"></i></button>
+									</li>
+								</ul>
+								<h3 class="block-title">Mailers</h3>
+							</div>
+							<div class="block-content">
+								<form class="form-horizontal" action="/mailer/send/active" method="post"
+								      onsubmit="return false;">
+									<div class="form-group">
+										<div class="col-xs-12">
+											<!-- SimpleMDE Container -->
+											<textarea class="js-simplemde" id="simplemde" name="simplemde">Type your content here!</textarea>
+										</div>
 									</div>
-									<div class="block-content">
-										<form class="form-horizontal" action="/mailer/send/active" method="post"
-										      onsubmit="return false;">
-											<div class="form-group">
-												<div class="col-xs-12">
-													<!-- SimpleMDE Container -->
-													<textarea class="js-simplemde" id="simplemde" name="simplemde">Hello SimpleMDE!</textarea>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
-								<!-- END SimpleMDE Editor -->
+								</form>
 							</div>
 						</div>
-					</form>
+						<!-- END SimpleMDE Editor -->
+					</div>
 				</div>
-			</div>
+			</form>
+		</div>
 
 		</div>
 
