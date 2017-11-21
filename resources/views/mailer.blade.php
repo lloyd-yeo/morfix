@@ -31,7 +31,7 @@
 					<div class="col-xs-12">
 						<!-- SimpleMDE Editor (js-simplemde class is initialized in App() -> uiHelperSimpleMDE()) -->
 						<!-- For more info and examples you can check out https://github.com/NextStepWebs/simplemde-markdown-editor -->
-						<h2 class="content-heading">Mail to Active/Paying Users</h2>
+						{{--<h2 class="content-heading">Send Mails</h2>--}}
 						<div class="block">
 							<div class="block-header">
 								<ul class="block-options">
@@ -39,7 +39,7 @@
 										<button type="button"><i class="si si-mail"></i></button>
 									</li>
 								</ul>
-								<h3 class="block-title">Mailers</h3>
+								<h3 class="block-title">Send Mail to Active/Paying Affiliates</h3>
 							</div>
 							<div class="block-content">
 								<form class="form-horizontal" action="/mailer/send/active" method="post"
