@@ -3,6 +3,8 @@
 
 @section('css')
 	@include('settings.css')
+	<link rel="stylesheet" href="{{ asset('assets/js/plugins/summernote/summernote.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/js/plugins/simplemde/simplemde.min.css') }}">
 @endsection
 
 @section('sidebar')
