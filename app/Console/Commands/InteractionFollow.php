@@ -132,7 +132,7 @@ class InteractionFollow extends Command {
 	                        $ig_profile->save();
                         }
 
-                        if ($ig_profile->auto_follow_ban == 1 && !\Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+                        if ($ig_profile->auto_follow_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
                             $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
                             continue;
                         }
