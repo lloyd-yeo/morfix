@@ -118,5 +118,18 @@
 @endsection
 
 @section('js')
-	@include('settings.js')
+	<script src="{{ asset('assets/js/plugins/simplemde/simplemde.min.js') }}"></script>
+	
+	<script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        jQuery(function () {
+            // Init page helpers (Summernote + CKEditor + SimpleMDE plugins)
+            App.initHelpers(['simplemde']);
+        });
+	</script>
 @endsection
