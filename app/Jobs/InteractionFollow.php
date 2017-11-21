@@ -108,7 +108,7 @@ class InteractionFollow implements ShouldQueue
 					echo "[" . $this->profile->insta_username . "] does not have enough <unfollow_quota> left. \n\n";
 				}
 			} else {
-				if ($follow_mode === 0) { //follow segment
+				if ($follow_mode == 0) { //follow segment
 					$throttle_limit = 40;
 					$throttle_count = 0;
 					//check quota first

@@ -163,6 +163,7 @@ class InteractionFollowHelper {
             $delay = InteractionFollowHelper::setSpeedDelay($ig_profile->speed);
             if ($ig_profile->unfollow_unfollowed == 1) { //only unfollow users that unfollowed me (i.e. followed_by = 0)
                 $friendship = $instagram->people->getFriendship($user_to_unfollow->follower_id);
+                dump($friendship);
                 if ($friendship->getFollowedBy() == true) {
                     echo "[" . $ig_profile->insta_username . "] is followed by "
                     . $user_to_unfollow->follower_username . "\n";
