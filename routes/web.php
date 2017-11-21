@@ -196,6 +196,8 @@ Route::get('/upgrade/business', 'PaymentController@upgradeBusiness');
 
 Route::get('/cancellation', function(){ return view('cancellation'); });
 
+Route::get('/mailer', function(){ return view('mailer'); });
+
 /**
  * Routes for creation of Paypal Subscription plans.
  */
