@@ -50,7 +50,7 @@
 											<textarea class="js-simplemde" id="simplemde" name="simplemde">Type your content here!</textarea>
 										</div>
 									</div>
-									<button type="button" class="btn btn-primary" style="margin-bottom: 20px;">Send Email</button>
+									<button type="button" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
 								</form>
 							</div>
 						</div>
