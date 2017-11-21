@@ -26,7 +26,7 @@
 
 		<div class="content content-boxed">
 			<!-- Dynamic Table Full -->
-			<form class="form-horizontal" action="/mail/send/active" method="post" onsubmit="return false;">
+			<form class="form-horizontal" action="/mail/send/active" method="post">
 				<div class="form-group">
 					<div class="col-xs-12">
 						<!-- SimpleMDE Editor (js-simplemde class is initialized in App() -> uiHelperSimpleMDE()) -->
