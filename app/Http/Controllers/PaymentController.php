@@ -80,12 +80,54 @@ class PaymentController extends Controller
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
 		$client_token = Braintree_ClientToken::generate();
 
 		if ($request->session()->has('upsell')) {
 			return view('payment.upgrade.funnel.business');
 		} else {
-			return view('payment.upgrade.business', [ 'client_token' => $client_token ]);
+			return view('payment.upgrade.funnel.business');
+			$user = User::find(Auth::user()->user_id);
+
+			if ($user->braintree_id != NULL) {
+				$plan = '0297';
+
+				$braintree_id       = $user->braintree_id;
+				$braintree_customer = Braintree_Customer::find($braintree_id);
+
+				$sub_result = Braintree_Subscription::create([
+					'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
+					'merchantAccountId'  => 'morfixUSD',
+					'planId'             => $plan,
+				]);
+
+				if ($sub_result->success) {
+					$user->num_acct = 6;
+					$user->tier     = $user->tier + 10;
+					$user->save();
+
+					//Get referrer & add commissions
+					$referrer       = NULL;
+					$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+					if ($user_affiliate !== NULL) {
+						$referrer = User::find($user_affiliate->referrer);
+					}
+
+					if ($referrer !== NULL) {
+						//Send referrer Business congrats email
+						if ($referrer->tier / 10 > 0) {
+							$referrer->pending_commission = $referrer->pending_commission + 50;
+							$referrer->save();
+						}
+					}
+
+					return view('payment.upgrade.confirmation');
+				}
+
+			} else {
+				return view('payment.upgrade.business', [ 'client_token' => $client_token ]);
+			}
+
 		}
 	}
 
