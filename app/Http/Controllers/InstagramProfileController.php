@@ -355,7 +355,7 @@ class InstagramProfileController extends Controller
 		$instagram->setProxy($ig_profile->proxy);
 
 		try {
-			$explorer_response        = $instagram->login($ig_profile->insta_username, $ig_password);
+			$explorer_response        = $instagram->login($ig_profile->insta_username, $password);
 			$ig_profile->incorrect_pw = 0;
 			$ig_profile->save();
 

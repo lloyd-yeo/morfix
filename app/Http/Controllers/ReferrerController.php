@@ -16,8 +16,9 @@ class ReferrerController extends Controller {
         $referrer_ip = new ReferrerIp;
 
         if ($request->referrer) {
-            Cookie::forget('referrer');
-            $cookieJar->queue(cookie()->forever('referrer', $request->referrer));
+            Cookie::forget('morfix_referrer');
+
+            $cookieJar->queue(cookie()->forever('morfix_referrer', $request->referrer));
             if (ReferrerIp::where('ip', $request->ip())->first() === NULL) { //doesn't exists
                 $referrer_ip->referrer = $request->referrer;
                 $referrer_ip->ip = $request->ip();

@@ -104,7 +104,7 @@ class FunnelsController extends Controller
 			$user->save();
 
 			//Add referrer
-			$referrer = Cookie::get('referrer');
+			$referrer = Cookie::get('morfix_referrer');
 			if ($referrer !== NULL) {
 				$user_affiliate           = new UserAffiliates;
 				$user_affiliate->referrer = $referrer;
