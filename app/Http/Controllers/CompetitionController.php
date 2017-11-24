@@ -16,9 +16,11 @@ class CompetitionController extends Controller
 {
 
     protected $startDate = null;
+    protected $endDate = null;
     public function show(){
-        $this->startDate = Carbon::create(2017, 10, 01, 8,2,4, 'Asia/Singapore');
-        $analysis = $this->getAnalysis();
+        $this->startDate = Carbon::create(2017, 11, 15, 8,2,4, 'Asia/Singapore');
+        $this->endDate = Carbon::create(2017, 11, 23, 8,2,4, 'Asia/Singapore');
+        $analysis = $this->getAnalysis($this->startDate, $this->endDate);
         $igProfiles = $this->getInstagramProfiles();
     	return view('competition.index', [
     			"month"			=> "December",
@@ -31,9 +33,9 @@ class CompetitionController extends Controller
                 "totalReferral" => $this->getTotalReferral(),
                 "analysis"      => $analysis['analysis'],
                 "analysisLabel" => $analysis['analysisLabel'],
-                "followerCount" => $analysis['followerCount'],
+                "referralCount" => $analysis['referralCount'],
                 "igProfiles"    => $igProfiles[0],
-                "competition_leaderboard" => $this->getNewProfilesByRanking('>=', $this->startDate)
+                "competition_leaderboard" => $this->getNewProfilesByRankingLimit('>=', $this->startDate)
     	]);
     }
 
@@ -109,64 +111,67 @@ class CompetitionController extends Controller
                             where date(u.created_at) >= '$date' AND u.tier > 1
                             GROUP BY ua.referrer, u.name
                             ORDER BY total DESC
+                            ;");
+        return $response;
+    }
+
+    public function getNewProfilesByRankingLimit($clause, $date){
+        $response =  DB::select("SELECT u.name, ua.referrer, count(ua.referrer) as total
+                            FROM user AS u
+                            LEFT JOIN user_affiliate AS ua 
+                            ON ua.referred = u.user_id
+                            where date(u.created_at) >= '$date' AND u.tier > 1
+                            GROUP BY ua.referrer, u.name
+                            ORDER BY total DESC
                             LIMIT 10
                             ;");
         return $response;
     }
+
     public function getNewProfilesByDate($clause, $date){
         return User::whereDate('created_at', $clause, $date)->where('tier', '>', '1')->get();
     }
 
-    public function getAnalysis(){
-        $new_profile_follower_analysis = array();
-        $new_profile_follower_analysis_label = array();
-        $new_follower_count = array();
-        $instagram_profiles = $this->getInstagramProfiles();
-        foreach ($instagram_profiles as $ig_profile) {
+    public function getAnalysis($startDate, $endDate){
+        $new_referral_analysis = array();
+        $new_referral_analysis_label = array();
+        $new_referral_count = array();
+        $currentUser = Auth::user();
+        $referrals = DB::select("SELECT date(u.created_at) as date, count(u.created_at) as total
+                                FROM user_affiliate AS ua
+                                LEFT JOIN user AS u 
+                                ON u.user_id = ua.referred
+                                where date(u.created_at) between '$startDate' AND '$endDate' AND ua.referrer = '$currentUser->user_id'
+                                GROUP BY date(u.created_at)
+                                ORDER BY date(u.created_at) DESC
+                                ");
 
-            $follower_analysis = DB::select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;",
-                [ $ig_profile->insta_username ]);
-            $analysis_csv = "";
-            $analysis_date_csv = "";
-
-            $new_follower = NULL;
-            $new_follower_2 = NULL;
-            $new_follower_diff = 0;
-
-            foreach ($follower_analysis as $analysis) {
-
-                if ($new_follower == NULL) {
-                    $new_follower_diff = $new_follower;
-                    $new_follower = $analysis->follower_count;
-                } else {
-                    if ($new_follower_2 == NULL) {
-                        $new_follower_diff = $new_follower - $analysis->follower_count;
-                        $new_follower_2 = $analysis->follower_count;
-                    }
-                }
-                $analysis_csv = $analysis->follower_count . "," . $analysis_csv;
-                $analysis_date = date_create($analysis->date);
-                $analysis_date_formatted = date_format($analysis_date, "d M");
-                $analysis_date_csv = $analysis_date_formatted . "," . $analysis_date_csv;
-            }
-
-            if ($analysis_csv != "") {
-                $analysis_csv = substr($analysis_csv, 0, -1);
-            }
-
-            if ($analysis_date_csv != "") {
-                $analysis_date_csv = substr($analysis_date_csv, 0, -1);
-            }
-
-            $new_profile_follower_analysis[$ig_profile->insta_username] = $analysis_csv;
-            $new_profile_follower_analysis_label[$ig_profile->insta_username] = $analysis_date_csv;
-            $new_follower_count[$ig_profile->insta_username] = $new_follower_diff;
+        $analysis_csv = "";
+        $analysis_date_csv = "";
+        $sum = intval(0);
+        foreach ($referrals as $analysis) {
+            $sum += $analysis->total;
+            $analysis_csv = $sum. "," . $analysis_csv;
+            $analysis_date = date_create($analysis->date);
+            $analysis_date_formatted = date_format($analysis_date, "d M");
+            $analysis_date_csv = $analysis_date_formatted . "," . $analysis_date_csv;
         }
 
+        if ($analysis_csv != "") {
+            $analysis_csv = substr($analysis_csv, 0, -1);
+        }
+
+        if ($analysis_date_csv != "") {
+            $analysis_date_csv = substr($analysis_date_csv, 0, -1);
+        }
+
+        $new_referral_analysis = $analysis_csv;
+        $new_referral_analysis_label = $analysis_date_csv;
+        //$new_referral_count= $new_referral_diff;
         return array(
-            "analysis"  => $new_profile_follower_analysis,
-            "analysisLabel" => $new_profile_follower_analysis_label,
-            "followerCount" => $new_follower_count
+            "analysis"  => $new_referral_analysis,
+            "analysisLabel" => $new_referral_analysis_label,
+            "referralCount" => $new_referral_count
         );
     }
 

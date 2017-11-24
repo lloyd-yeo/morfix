@@ -76,7 +76,7 @@
 	                <div class="block-content block-content-full bg-gray-lighter text-center chart-container">
 	                    <!--Chart.js Charts (initialized in js/pages/base_pages_dashboard.js), for more examples you can check out http://www.chartjs.org/docs/--> 
 	                    <div id="follower-count-chart-{{ $igProfiles->id }}" style="height: 374px;" >
-                            <canvas class="follower-count-chart-lines" data-csv="{{ $analysis[$igProfiles->insta_username] }}" data-label="{{ $analysisLabel[$igProfiles->insta_username] }}"></canvas>
+                            <canvas class="follower-count-chart-lines" data-csv="{{ $analysis }}" data-label="{{ $analysisLabel }}"></canvas>
                         </div>
 	                </div>
 	            </div>
