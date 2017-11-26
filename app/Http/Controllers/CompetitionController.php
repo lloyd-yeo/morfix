@@ -28,6 +28,7 @@ class CompetitionController extends Controller
 	    $this->competitors = $this->getCompetitors();
 
         $igProfiles = $this->getInstagramProfiles();
+
     	return view('competition.index', [
     			"month"			=> "December",
     			"startDate"	=> 4,
@@ -133,7 +134,7 @@ class CompetitionController extends Controller
 		$start_date = $this->startDate;
 		$end_date = $this->endDate;
 
-    	foreach ($this->competitors as $competitor) {
+    	foreach ($this->getCompetitors() as $competitor) {
 			$referrer_id = $competitor->user_id;
 			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
 									FROM user_affiliate ua, user referred_user, user referrer
