@@ -25,8 +25,6 @@ class CompetitionController extends Controller
 		$this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
 		$this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59);
 
-		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
-
 		$competitors = $this->getCompetitors();
 
 		$leaderboard_entries = $this->getNewProfilesByRankingLimit();
@@ -45,6 +43,10 @@ class CompetitionController extends Controller
 		if (!$in_leaderboard) {
 			$ranking = count($competitors);
 		}
+		
+		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
+
+
 
 		$daily_referrals = $this->getDailyReferral();
 
@@ -218,7 +220,7 @@ class CompetitionController extends Controller
 		$referrer_id = Auth::user()->user_id;
 		$analysis_csv = "";
 		$analysis_date_csv = "";
-		
+
 		while ($startDate->lt($endDate)) {
 			$start_date = $startDate;
 			$end_date = $startDate;
