@@ -237,9 +237,9 @@ class CompetitionController extends Controller
 
 			foreach ($response as $resp) {
 				$analysis_csv = $resp->referrals . "," . $analysis_csv;
-				$analysis_date           = date_create($start_date->toDateTimeString());
+				$analysis_date           = date_create($start_date);
 				$analysis_date_formatted = date_format($analysis_date, "d M");
-				$analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
+				$analysis_date_csv       = $analysis_date_csv. "," . $analysis_date_formatted;
 			}
 
 			$startDate = $startDate->addDays(1);
