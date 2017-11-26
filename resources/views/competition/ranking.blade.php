@@ -15,9 +15,6 @@
                         <div class="tab-pane active" id="btabs-alt-static-justified-weekly">
                             <table class="table table-borderless remove-margin-b remove-margin-t font-s13">
                                 <tbody>
-                                    @php
-                                        dump($competition_leaderboard);
-                                    @endphp
                                     @foreach ($competition_leaderboard as $user)
                                         @if ($loop->iteration == 1)
                                         <tr class='bg-modern-lighter'>
@@ -40,6 +37,7 @@
                                             </td>
                                             <td><i class='text-primary si si-badge'></i></td>
                                         </tr>
+                                        @elseif ($loop->iteration > 10)
                                         @else
                                         <tr>
                                             <td class="font-w600">
