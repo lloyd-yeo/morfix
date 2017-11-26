@@ -18,14 +18,16 @@ class CompetitionController extends Controller
     protected $startDate = null;
     protected $endDate = null;
     public function show(){
+
         $this->startDate = Carbon::create(2017, 11, 15, 8,2,4, 'Asia/Singapore');
         $this->endDate = Carbon::create(2017, 11, 23, 8,2,4, 'Asia/Singapore');
+
         $analysis = $this->getAnalysis($this->startDate, $this->endDate);
         $igProfiles = $this->getInstagramProfiles();
     	return view('competition.index', [
     			"month"			=> "December",
-    			"startDate"	=> 1,
-    			"endDate"		=> 5,
+    			"startDate"	=> 4,
+    			"endDate"		=> 10,
     			"year"			=> 2017,
     			"competitors"	=> $this->getCompetitors(),
                 "ranking"       => $this->getRanking(),
@@ -55,6 +57,7 @@ class CompetitionController extends Controller
             2. Loop for new users and get referrals
         */
         $myTotalReferral = $this->getTotalReferral();
+
         if($myTotalReferral > 0){
             $rankingCompetitionResult = $this->getNewProfilesByRanking('>=', $this->startDate);
 
@@ -66,12 +69,13 @@ class CompetitionController extends Controller
                     break;
                 }
             }
-            if($rank > 10){
-                $ranking = "UNRANKED";
-            }
-            else{
-                $ranking = $rank;
-            }
+            $ranking = $rank;
+//            if($rank > 10){
+//                $ranking = "UNRANKED";
+//            }
+//            else{
+//                $ranking = $rank;
+//            }
         }else{
             $ranking = "UNRANKED";
         }
@@ -89,7 +93,7 @@ class CompetitionController extends Controller
     }
 
     public function getReferral($newProfiles){
-        $referrar = 0;
+        $referrals = 0;
         $currentUser = Auth::user();
         foreach ($newProfiles as $newProfile) {
             $userAffiliate = UserAffiliates::where('referrer', '=', $currentUser->user_id)
@@ -97,10 +101,10 @@ class CompetitionController extends Controller
                             ->limit(1)
                             ->get();
             if(sizeof($userAffiliate) >= 1){
-                $referrar++;
+                $referrals++;
             }
         }
-        return $referrar;
+        return $referrals;
     }
 
     public function getNewProfilesByRanking($clause, $date){
