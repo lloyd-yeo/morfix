@@ -42,7 +42,11 @@
         <div class="col-xs-6 col-sm-6 col-lg-4">
             <div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-trophy"></i> All Time</small></div>
-            <span class="h2 font-w300 text-modern animated flipInX">{{$ranking}}</span>
+	        @if ($ranking == 1)
+		        <span class="h2 font-w300 text-modern animated flipInX">#1</span>
+			@else
+			@endif
+
         </div>
 	    </div>
 	    <div class="row">
