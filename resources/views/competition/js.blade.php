@@ -186,7 +186,6 @@ jQuery(function () {
                 // Init Datatables
                 bsDataTables();
                 initDataTableFullPagination();
-                initDataTableFullPaginationFreeTrial();
             }
         };
     }();
