@@ -50,10 +50,13 @@ class CompetitionController extends Controller
 
 		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
 
+		$total_referrals = $this->getTotalReferral();
 
 		$daily_referrals = $this->getDailyReferral();
 
 		$igProfiles = $this->getInstagramProfiles();
+
+
 
 		return view('competition.index', [
 			"month"                   => "December",
@@ -63,7 +66,7 @@ class CompetitionController extends Controller
 			"competitors"             => $competitors,
 			"ranking"                 => $ranking,
 			"dailyReferral"           => count($daily_referrals),
-			"totalReferral"           => $this->getTotalReferral(),
+			"totalReferral"           => count($total_referrals),
 			"analysis"                => $analysis['analysis'],
 			"analysisLabel"           => $analysis['analysisLabel'],
 			"igProfiles"              => $igProfiles[0],
