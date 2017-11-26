@@ -22,28 +22,28 @@
                                         @if ($loop->iteration == 1)
                                         <tr class='bg-modern-lighter'>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
                                             </td>
                                             <td><i class='text-primary fa fa-trophy'></i></td>
                                         </tr>
                                         @elseif ($loop->iteration == 2)
                                         <tr>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
                                             </td>
                                             <td><i class='text-primary fa fa-diamond'></i></td>
                                         </tr>
                                         @elseif ($loop->iteration == 3)
                                         <tr>
                                             <td class="font-w700">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
                                             </td>
                                             <td><i class='text-primary si si-badge'></i></td>
                                         </tr>
                                         @else
                                         <tr>
                                             <td class="font-w600">
-                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user->name }}</span>
+                                                <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
                                             </td>
                                         </tr>
                                         @endif
