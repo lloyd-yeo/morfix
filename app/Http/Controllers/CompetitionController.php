@@ -43,7 +43,7 @@ class CompetitionController extends Controller
 		if (!$in_leaderboard) {
 			$ranking = count($competitors);
 		}
-		
+
 		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
 
 
@@ -237,7 +237,7 @@ class CompetitionController extends Controller
 
 			foreach ($response as $resp) {
 				$analysis_csv = $resp->referrals . "," . $analysis_csv;
-				$analysis_date           = date_create($start_date);
+				$analysis_date           = date_create($start_date->toDateTimeString());
 				$analysis_date_formatted = date_format($analysis_date, "d M");
 				$analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
 			}
