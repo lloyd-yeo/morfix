@@ -153,7 +153,7 @@ class CompetitionController extends Controller
 	    }
 
 	    $competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals')->values()->all();
-
+		dump($competitor_stats_collection);
         return $competitor_stats_collection;
     }
 
