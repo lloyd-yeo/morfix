@@ -46,7 +46,8 @@
         </div>
 	    </div>
 	    <div class="row">
-	    	<div class="col-lg-8 announcements">
+		    @include('competition.ranking')
+	    	<div class="col-lg-4 announcements">
 	    		<!-- News -->
                 <div class="block">
                     <div class="block-header">
@@ -64,7 +65,7 @@
                 </div>
                 <!-- END News -->
 	    	</div>
-	    	@include('competition.ranking')
+
 	    </div>
 	    <div class="row">
 	    	 <div class="referral">
