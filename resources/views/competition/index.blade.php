@@ -47,7 +47,7 @@
 	    </div>
 	    <div class="row">
 		    @include('competition.ranking')
-	    	<div class="col-lg-4 announcements">
+	    	<div class="col-lg-6 announcements">
 	    		<!-- News -->
                 <div class="block">
                     <div class="block-header">
