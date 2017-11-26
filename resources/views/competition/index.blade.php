@@ -130,14 +130,16 @@
 												<td>Premium</td>
 											@elseif ($referral->tier == 3)
 												<td>Pro</td>
+											@elseif ($referral->tier == 13)
+												<td>Business & Pro</td>
 											@elseif ($referral->tier == 11)
 												<td>Business</td>
 											@elseif ($referral->tier == 12)
-												<td>Business</td>
+												<td>Business & Premium</td>
 											@elseif ($referral->tier == 22)
-												<td>Mastermind</td>
+												<td>Mastermind & Premium</td>
 											@elseif ($referral->tier == 23)
-												<td>Mastermind</td>
+												<td>Mastermind & Pro</td>
 											@endif
 											<td>{{ $referral->created_at }}</td>
 											@if ($referral->paypal === 1)
