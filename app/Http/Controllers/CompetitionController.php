@@ -152,7 +152,7 @@ class CompetitionController extends Controller
 		$start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
 		$end_date   = Carbon::create(2017, 9, 30, 23, 59, 59, 'Asia/Singapore');
 
-		$affiliates_total = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+		$affiliates_total = DB::select("SELECT referred_user.*
 									FROM user_affiliate ua, user referred_user
 									WHERE ua.referrer = $referrer_id
 									AND referred_user.user_id = ua.referred
