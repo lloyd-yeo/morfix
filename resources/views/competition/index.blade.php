@@ -110,8 +110,8 @@
 					<td>Tier</td>
 					</thead>
 					<tbody>
-					@if(sizeof($total_referrals) > 0)
-						@foreach($total_referrals as $referral)
+					@if(sizeof($allReferrals) > 0)
+						@foreach($allReferrals as $referral)
 							<tr>
 								<td>{{ $referral->email }}</td>
 								@if ($referral->tier == 2)
