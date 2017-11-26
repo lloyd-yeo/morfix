@@ -33,7 +33,8 @@ class CompetitionController extends Controller
 		$in_leaderboard = FALSE;
 
 		foreach ($leaderboard_entries as $leaderboard_entry) {
-			if ($leaderboard_entry["email"] == Auth::user()->email) {
+			dump($leaderboard_entry);
+			if ($leaderboard_entry['email'] == Auth::user()->email) {
 				$in_leaderboard = TRUE;
 				break;
 			}
