@@ -43,8 +43,13 @@
             <div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
             <div class="text-muted animated fadeIn"><small><i class="si si-trophy"></i> All Time</small></div>
 	        @if ($ranking == 1)
-		        <span class="h2 font-w300 text-modern animated flipInX">#1</span>
-			@else
+		        <span class="h2 font-w300 text-modern animated flipInX">FIRST PLACE!</span>
+			@elseif ($ranking == 2)
+		        <span class="h2 font-w300 text-modern animated flipInX">SECOND PLACE!</span>
+	        @elseif ($ranking == 3)
+		        <span class="h2 font-w300 text-modern animated flipInX">THIRD PLACE!</span>
+	        @else
+		        <span class="h2 font-w300 text-modern animated flipInX">#{{ $ranking }}</span>
 			@endif
 
         </div>

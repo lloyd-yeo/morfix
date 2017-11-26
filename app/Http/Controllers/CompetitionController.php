@@ -33,6 +33,7 @@ class CompetitionController extends Controller
 
 		$ranking = 1;
 		$in_leaderboard = false;
+
 		foreach ($leaderboard_entries as $leaderboard_entry) {
 			if ($leaderboard_entry["email"] == Auth::user()->email) {
 				$in_leaderboard = true;
@@ -40,6 +41,7 @@ class CompetitionController extends Controller
 			}
 			$ranking++;
 		}
+
 		if (!$in_leaderboard) {
 			$ranking = count($competitors);
 		}
@@ -202,6 +204,7 @@ class CompetitionController extends Controller
 		$new_referral_analysis_label = [];
 		$new_referral_count          = [];
 		$currentUser                 = Auth::user();
+
 		$referrals                   = DB::select("SELECT date(u.created_at) as date, count(u.created_at) as total
                                 FROM user_affiliate AS ua
                                 LEFT JOIN user AS u 
