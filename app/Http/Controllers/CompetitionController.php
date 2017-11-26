@@ -141,7 +141,8 @@ class CompetitionController extends Controller
 									WHERE ua.referrer = $referrer_id
 									AND referred_user.user_id = ua.referred
 									AND DATE(referred_user.created_at) >= '$start_date'
-									AND DATE(referred_user.created_at) <= '$end_date';");
+									AND DATE(referred_user.created_at) <= '$end_date'
+									AND referred_user.tier > 1;");
 
 			foreach ($response as $affiliate_referrals) {
 				$competitor_stats_array[] = array(
@@ -150,9 +151,9 @@ class CompetitionController extends Controller
 				);
 			}
 	    }
-		dump($competitor_stats_array);
+
 	    $competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals');
-		dump($competitor_stats_collection);
+
         return $competitor_stats_collection;
     }
 
