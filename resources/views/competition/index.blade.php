@@ -100,6 +100,54 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="block-content block-content-full">
+					<table class="table table-bordered table-striped js-dataTable-full-pagination">
+						<thead>
+						<tr>
+							<th>Email</th>
+							<th class="hidden-xs">User Tier</th>
+							<th>Join Date</th>
+							<th>Payment Source</th>
+						</tr>
+						</thead>
+						<tbody>
+						@foreach ($allReferrals as $key => $referral)
+							@if ($referral->tier > 1)
+								@if ($key%2 == 0)
+									<tr role="row" class="even">
+								@else
+									<tr role="row" class="odd">
+										@endif
+										<td class="font-w600">{{ $referral->email }}</td>
+										@if ($referral->tier == 2)
+											<td>Premium</td>
+										@elseif ($referral->tier == 3)
+											<td>Pro</td>
+										@elseif ($referral->tier == 11)
+											<td>Business</td>
+										@elseif ($referral->tier == 12)
+											<td>Business</td>
+										@elseif ($referral->tier == 22)
+											<td>Mastermind</td>
+										@elseif ($referral->tier == 23)
+											<td>Mastermind</td>
+										@endif
+										<td>{{ $referral->created_at }}</td>
+										@if ($referral->paypal === 1)
+											<td><img style="height: 20px;" src="{{ asset('assets/img/logo/paypal-logo.png') }}" /></td>
+										@else
+											<td><img style="height: 20px;" src="{{ asset('assets/img/logo/credit-card.png') }}" /></td>
+										@endif
+									</tr>
+								@endif
+								@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="block-header">
 					<h3 class="block-title"><i class="fa fa-address-card"></i> LIST OF REFERRALS</h3>
