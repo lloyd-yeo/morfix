@@ -133,7 +133,13 @@ class CompetitionController extends Controller
 		$start_date = $this->startDate;
 		$end_date = $this->endDate;
     	foreach ($this->competitors as $competitor) {
-
+			echo("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+									FROM user_affiliate ua, user referred_user, user referrer
+									WHERE ua.referrer = $competitor->user_id
+									AND referred_user.user_id = ua.referred
+									AND DATE(referred_user.created_at) >= $start_date
+									AND DATE(referred_user.created_at) <= $end_date;");
+			
 			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
 									FROM user_affiliate ua, user referred_user, user referrer
 									WHERE ua.referrer = $competitor->user_id
