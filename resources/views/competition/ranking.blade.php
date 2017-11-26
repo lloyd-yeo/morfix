@@ -15,10 +15,10 @@
                         <div class="tab-pane active" id="btabs-alt-static-justified-weekly">
                             <table class="table table-borderless remove-margin-b remove-margin-t font-s13">
                                 <tbody>
+                                    @php
+                                        dump($competition_leaderboard);
+                                    @endphp
                                     @foreach ($competition_leaderboard as $user)
-                                        @php
-                                            dump($user);
-                                        @endphp
                                         @if ($loop->iteration == 1)
                                         <tr class='bg-modern-lighter'>
                                             <td class="font-w700">
