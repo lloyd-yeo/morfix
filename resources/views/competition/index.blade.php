@@ -28,7 +28,7 @@
                        data-placement="top" title="Commissions that will be paid out the 25th of this month" type="button"></i>
                 </small>
             </div>
-            <span class="h2 text-moneygreen animated flipInX" >{{$dailyReferral}}</span>
+            <span class="h2 text-moneygreen animated flipInX" >{{ $dailyReferral }}</span>
         </div>
         <div class="col-xs-6 col-sm-2 col-lg-2">
             <div class="font-w700 text-gray-darker animated fadeIn">TOTAL REFERRAL</div>
@@ -51,7 +51,6 @@
 	        @else
 		        <span class="h2 font-w300 text-modern animated flipInX">#{{ $ranking }}</span>
 			@endif
-
         </div>
 	    </div>
 	    <div class="row">
