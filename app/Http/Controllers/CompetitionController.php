@@ -149,7 +149,7 @@ class CompetitionController extends Controller
 				);
 			}
 	    }
-
+		dump($competitor_stats_array);
 	    $competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals');
 		dump($competitor_stats_collection);
         return $competitor_stats_collection;
