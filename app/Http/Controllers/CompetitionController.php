@@ -149,7 +149,7 @@ class CompetitionController extends Controller
 
 			foreach ($response as $affiliate_referrals) {
 				$competitor_stats_array[] = array(
-					'name' => $affiliate_referrals->name,
+					'name' => $competitor->name,
 					'referrals' => $affiliate_referrals->referrals,
 				);
 			}
