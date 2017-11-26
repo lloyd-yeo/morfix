@@ -20,7 +20,7 @@ class CompetitionController extends Controller
 
     public function show(){
 
-        $this->startDate = Carbon::create(2017, 11, 15, 8, 2, 4, 'Asia/Singapore');
+        $this->startDate = Carbon::create(2017, 11, 01, 8, 2, 4, 'Asia/Singapore');
         $this->endDate = Carbon::create(2017, 11, 30, 8, 2, 4, 'Asia/Singapore');
 
         $analysis = $this->getAnalysis($this->startDate, $this->endDate);
