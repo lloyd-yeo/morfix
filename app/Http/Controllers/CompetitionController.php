@@ -145,10 +145,12 @@ class CompetitionController extends Controller
 									AND referred_user.tier > 1;");
 
 			foreach ($response as $affiliate_referrals) {
-				$competitor_stats_array[] = array(
-					'name' => $competitor->name,
-					'referrals' => $affiliate_referrals->referrals,
-				);
+				if ($affiliate_referrals->referrals > 0) {
+					$competitor_stats_array[] = array(
+						'name' => $competitor->name,
+						'referrals' => $affiliate_referrals->referrals,
+					);
+				}
 			}
 	    }
 
