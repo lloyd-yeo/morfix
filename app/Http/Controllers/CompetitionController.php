@@ -119,11 +119,11 @@ class CompetitionController extends Controller
 	{
 		$referrer_id = Auth::user()->user_id;
 
-		$start_date = Carbon::today()->setTime(0, 0, 0, 0)->toDateTimeString();
-		$end_date   = Carbon::today()->setTime(23, 59, 59, 59)->toDateTimeString();
+		$start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
+		$end_date   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
 		#test
-		$start_date = Carbon::create(2017, 9, 01, 0, 0, 0, 'Asia/Singapore');
-		$end_date   = Carbon::create(2017, 9, 02, 23, 59, 59, 'Asia/Singapore');
+		$start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
+		$end_date   = Carbon::create(2017, 9, 2, 23, 59, 59, 'Asia/Singapore');
 
 		$affiliates_today = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
 									FROM user_affiliate ua, user referred_user
