@@ -21,7 +21,7 @@ class CompetitionController extends Controller
 	public function __construct() {
 		$this->middleware('auth');
 	}
-	
+
 	public function show()
 	{
 
@@ -242,7 +242,13 @@ class CompetitionController extends Controller
 				$analysis_csv = $resp->referrals . "," . $analysis_csv;
 				$analysis_date           = date_create($start_date);
 				$analysis_date_formatted = date_format($analysis_date, "d M");
-				$analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
+
+				if ($analysis_date_csv == "") {
+					$analysis_date_csv = $analysis_date_formatted;
+				} else {
+					$analysis_date_csv  = $analysis_date_csv . "," . $analysis_date_formatted;
+				}
+
 			}
 
 			$startDate = $startDate->addDays(1);
