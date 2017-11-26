@@ -41,7 +41,7 @@ class CompetitionController extends Controller
                 "analysisLabel" => $analysis['analysisLabel'],
                 "referralCount" => $analysis['referralCount'],
                 "igProfiles"    => $igProfiles[0],
-                "competition_leaderboard" => $this->getNewProfilesByRankingLimit('>=', $this->startDate)
+                "competition_leaderboard" => $this->getNewProfilesByRankingLimit()
     	]);
     }
 
@@ -89,6 +89,8 @@ class CompetitionController extends Controller
     }
 
     public function getDailyReferral(){
+//        $newProfiles = $this->getNewProfilesByDate('>=', Carbon::today());
+//        return $this->getReferral($newProfiles);
         $newProfiles = $this->getNewProfilesByDate('>=', Carbon::today());
         return $this->getReferral($newProfiles);
     }
@@ -125,7 +127,7 @@ class CompetitionController extends Controller
         return $response;
     }
 
-    public function getNewProfilesByRankingLimit($clause, $date){
+    public function getNewProfilesByRankingLimit(){
 
 	    $competitor_stats_array = array();
 
@@ -145,7 +147,7 @@ class CompetitionController extends Controller
 	    }
 
 	    $competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals');
-
+		dump($competitor_stats_collection);
         return $competitor_stats_collection;
     }
 
