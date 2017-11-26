@@ -131,7 +131,7 @@ class CompetitionController extends Controller
 	    $competitor_stats_array = array();
 		$start_date = $this->startDate;
 		$end_date = $this->endDate;
-	    dump($this->getCompetitors());
+		
     	foreach ($this->getCompetitors() as $competitor) {
 
 			$referrer_id = $competitor->user_id;
