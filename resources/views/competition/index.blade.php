@@ -1,8 +1,11 @@
-@include('competition.css')
 @extends('layouts.app')
+@section('css')
+	@include('competition.css')
+@endsection
 @section('sidebar')
 	@include('sidebar', ['page' => 'competition'])
 @endsection
+
 @section('content')
 	<main id="main-container" style="padding-top: 10px;">
 		<div class="bg-video" data-vide-bg="assets/img/videos/hero_tech"
