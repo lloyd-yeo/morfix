@@ -18,7 +18,8 @@ class CompetitionController extends Controller
 	protected $startDate = NULL;
 	protected $endDate = NULL;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->middleware('auth');
 	}
 
@@ -48,7 +49,6 @@ class CompetitionController extends Controller
 		}
 
 		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
-
 
 
 		$daily_referrals = $this->getDailyReferral();
@@ -143,8 +143,8 @@ class CompetitionController extends Controller
 	public function getTotalReferral()
 	{
 		$referrer_id = Auth::user()->user_id;
-		$start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
-		$this->endDate   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
+		$start_date  = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
+		//		$this->endDate = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
 		#test
 		$start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
 		$end_date   = Carbon::create(2017, 9, 30, 23, 59, 59, 'Asia/Singapore');
@@ -156,6 +156,7 @@ class CompetitionController extends Controller
 									AND DATE(referred_user.created_at) >= '$start_date'
 									AND DATE(referred_user.created_at) <= '$end_date'
 									AND referred_user.tier > 1;");
+
 		return $affiliates_total;
 	}
 
@@ -232,15 +233,15 @@ class CompetitionController extends Controller
 
 	public function getAnalysis(Carbon $startDate, Carbon $endDate)
 	{
-		$referrer_id = Auth::user()->user_id;
-		$analysis_csv = "";
+		$referrer_id       = Auth::user()->user_id;
+		$analysis_csv      = "";
 		$analysis_date_csv = "";
 
 		while ($startDate->lt($endDate)) {
 			$start_date = $startDate;
-			$end_date = $startDate;
-			$start_date = $start_date->setTime(0, 0,0)->toDateTimeString();
-			$end_date = $end_date->setTime(23,59,59)->toDateTimeString();
+			$end_date   = $startDate;
+			$start_date = $start_date->setTime(0, 0, 0)->toDateTimeString();
+			$end_date   = $end_date->setTime(23, 59, 59)->toDateTimeString();
 
 			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
 									FROM user_affiliate ua, user referred_user
@@ -251,14 +252,14 @@ class CompetitionController extends Controller
 									AND referred_user.tier > 1;");
 
 			foreach ($response as $resp) {
-				$analysis_csv = $resp->referrals . "," . $analysis_csv;
+				$analysis_csv            = $resp->referrals . "," . $analysis_csv;
 				$analysis_date           = date_create($start_date);
 				$analysis_date_formatted = date_format($analysis_date, "d M");
 
 				if ($analysis_date_csv == "") {
 					$analysis_date_csv = $analysis_date_formatted;
 				} else {
-					$analysis_date_csv  = $analysis_date_csv . "," . $analysis_date_formatted;
+					$analysis_date_csv = $analysis_date_csv . "," . $analysis_date_formatted;
 				}
 
 			}
@@ -268,28 +269,28 @@ class CompetitionController extends Controller
 
 		$new_referral_analysis       = [];
 		$new_referral_analysis_label = [];
-//		$new_referral_count          = [];
-		$currentUser                 = Auth::user();
+		//		$new_referral_count          = [];
+		$currentUser = Auth::user();
 
-//		$referrals = DB::select("SELECT date(u.created_at) as date, count(u.created_at) as total
-//                                FROM user_affiliate AS ua
-//                                LEFT JOIN user AS u
-//                                ON u.user_id = ua.referred
-//                                where date(u.created_at) between '$startDate' AND '$endDate' AND ua.referrer = '$currentUser->user_id'
-//                                GROUP BY date(u.created_at)
-//                                ORDER BY date(u.created_at) DESC
-//                                ");
+		//		$referrals = DB::select("SELECT date(u.created_at) as date, count(u.created_at) as total
+		//                                FROM user_affiliate AS ua
+		//                                LEFT JOIN user AS u
+		//                                ON u.user_id = ua.referred
+		//                                where date(u.created_at) between '$startDate' AND '$endDate' AND ua.referrer = '$currentUser->user_id'
+		//                                GROUP BY date(u.created_at)
+		//                                ORDER BY date(u.created_at) DESC
+		//                                ");
 
-//		$analysis_csv      = "";
-//		$analysis_date_csv = "";
-//		$sum               = intval(0);
-//		foreach ($referrals as $analysis) {
-//			$sum                     += $analysis->total;
-//			$analysis_csv            = $sum . "," . $analysis_csv;
-//			$analysis_date           = date_create($analysis->date);
-//			$analysis_date_formatted = date_format($analysis_date, "d M");
-//			$analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
-//		}
+		//		$analysis_csv      = "";
+		//		$analysis_date_csv = "";
+		//		$sum               = intval(0);
+		//		foreach ($referrals as $analysis) {
+		//			$sum                     += $analysis->total;
+		//			$analysis_csv            = $sum . "," . $analysis_csv;
+		//			$analysis_date           = date_create($analysis->date);
+		//			$analysis_date_formatted = date_format($analysis_date, "d M");
+		//			$analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
+		//		}
 
 		if ($analysis_csv != "") {
 			$analysis_csv = substr($analysis_csv, 0, -1);
@@ -306,7 +307,7 @@ class CompetitionController extends Controller
 		return [
 			"analysis"      => $new_referral_analysis,
 			"analysisLabel" => $new_referral_analysis_label,
-//			"referralCount" => $new_referral_count,
+			//			"referralCount" => $new_referral_count,
 		];
 	}
 
