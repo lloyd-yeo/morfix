@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Auth;
 
 class CompetitionController extends Controller
 {
-
 	protected $startDate = NULL;
 	protected $endDate = NULL;
 
+	public function __construct() {
+		$this->middleware('auth');
+	}
+	
 	public function show()
 	{
 
@@ -33,7 +36,6 @@ class CompetitionController extends Controller
 		$in_leaderboard = FALSE;
 
 		foreach ($leaderboard_entries as $leaderboard_entry) {
-			dump($leaderboard_entry);
 			if ($leaderboard_entry['email'] == Auth::user()->email) {
 				$in_leaderboard = TRUE;
 				break;
