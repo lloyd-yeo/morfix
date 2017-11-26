@@ -104,7 +104,8 @@
 			<div class="row">
 				<div class="block-content block-content-full">
 					<table class="table table-bordered table-striped js-dataTable-full-pagination">
-						<thead>
+
+						<thead class="bg-primary">
 						<tr>
 							<th>Email</th>
 							<th class="hidden-xs">User Tier</th>
@@ -112,6 +113,7 @@
 							<th>Payment Source</th>
 						</tr>
 						</thead>
+
 						<tbody>
 						@foreach ($allReferrals as $key => $referral)
 							@if ($referral->tier > 1)
