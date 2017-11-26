@@ -37,7 +37,7 @@
                        data-placement="top" title="Commissions that will be paid out the 25th of this month" type="button"></i>
                 </small>
             </div>
-            <span class="h2 text-moneygreen animated flipInX" >{{$totalReferral}}</span>
+            <span class="h2 text-moneygreen animated flipInX" >{{ $totalReferral }}</span>
         </div>
         <div class="col-xs-6 col-sm-6 col-lg-4">
             <div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
