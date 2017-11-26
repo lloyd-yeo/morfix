@@ -142,22 +142,21 @@ class CompetitionController extends Controller
 
 	public function getTotalReferral()
 	{
-//		$newProfiles = $this->getNewProfilesByDate('>=', $this->startDate);
-		
 		$referrer_id = Auth::user()->user_id;
+		$start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
+		$this->endDate   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
 		#test
 		$start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
 		$end_date   = Carbon::create(2017, 9, 30, 23, 59, 59, 'Asia/Singapore');
 
-		$affiliates_today = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+		$affiliates_total = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
 									FROM user_affiliate ua, user referred_user
 									WHERE ua.referrer = $referrer_id
 									AND referred_user.user_id = ua.referred
 									AND DATE(referred_user.created_at) >= '$start_date'
 									AND DATE(referred_user.created_at) <= '$end_date'
 									AND referred_user.tier > 1;");
-
-//		return $this->getReferral($newProfiles);
+		return $affiliates_total;
 	}
 
 	public function getReferral($newProfiles)
