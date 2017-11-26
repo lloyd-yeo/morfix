@@ -17,19 +17,23 @@ class CompetitionController extends Controller
 
     protected $startDate = null;
     protected $endDate = null;
+    protected $competitors = null;
+
     public function show(){
 
-        $this->startDate = Carbon::create(2017, 11, 15, 8,2,4, 'Asia/Singapore');
-        $this->endDate = Carbon::create(2017, 11, 30, 8,2,4, 'Asia/Singapore');
+        $this->startDate = Carbon::create(2017, 11, 15, 8, 2, 4, 'Asia/Singapore');
+        $this->endDate = Carbon::create(2017, 11, 30, 8, 2, 4, 'Asia/Singapore');
 
         $analysis = $this->getAnalysis($this->startDate, $this->endDate);
+	    $this->competitors = $this->getCompetitors();
+
         $igProfiles = $this->getInstagramProfiles();
     	return view('competition.index', [
     			"month"			=> "December",
     			"startDate"	=> 4,
     			"endDate"		=> 10,
     			"year"			=> 2017,
-    			"competitors"	=> $this->getCompetitors(),
+    			"competitors"	=> $this->competitors,
                 "ranking"       => $this->getRanking(),
                 "dailyReferral" => $this->getDailyReferral(),
                 "totalReferral" => $this->getTotalReferral(),
@@ -122,16 +126,27 @@ class CompetitionController extends Controller
     }
 
     public function getNewProfilesByRankingLimit($clause, $date){
-        $response =  DB::select("SELECT u.name, ua.referrer, count(ua.referrer) as total
-                            FROM user AS u
-                            LEFT JOIN user_affiliate AS ua 
-                            ON ua.referred = u.user_id
-                            where date(u.created_at) >= '$date' AND u.tier > 1
-                            GROUP BY ua.referrer, u.name
-                            ORDER BY total DESC
-                            LIMIT 10
-                            ;");
-        return $response;
+
+	    $competitor_stats_array = array();
+
+    	foreach ($this->competitors as $competitor) {
+			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+									FROM user_affiliate ua, user referred_user, user referrer
+									WHERE ua.referrer = $competitor->user_id
+									AND referred_user.user_id = ua.referred
+									AND DATE(referred_user.created_at) >= $this->startDate
+									AND DATE(referred_user.created_at) <= $this->endDate;");
+
+		    $competitor_stats_array[] = array(
+		        'name' => $competitor->name,
+		        'referrals' => $response->referrals,
+		    );
+
+	    }
+
+	    $competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals');
+
+        return $competitor_stats_collection;
     }
 
     public function getNewProfilesByDate($clause, $date){
