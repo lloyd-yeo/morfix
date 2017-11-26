@@ -17,7 +17,6 @@ class CompetitionController extends Controller
 
     protected $startDate = null;
     protected $endDate = null;
-    protected $competitors = null;
 
     public function show(){
 
@@ -25,7 +24,6 @@ class CompetitionController extends Controller
         $this->endDate = Carbon::create(2017, 11, 30, 8, 2, 4, 'Asia/Singapore');
 
         $analysis = $this->getAnalysis($this->startDate, $this->endDate);
-	    $this->competitors = $this->getCompetitors();
 
         $igProfiles = $this->getInstagramProfiles();
 
@@ -34,7 +32,7 @@ class CompetitionController extends Controller
     			"startDate"	=> 4,
     			"endDate"		=> 10,
     			"year"			=> 2017,
-    			"competitors"	=> $this->competitors,
+    			"competitors"	=> $this->getCompetitors(),
                 "ranking"       => $this->getRanking(),
                 "dailyReferral" => $this->getDailyReferral(),
                 "totalReferral" => $this->getTotalReferral(),
@@ -133,8 +131,9 @@ class CompetitionController extends Controller
 	    $competitor_stats_array = array();
 		$start_date = $this->startDate;
 		$end_date = $this->endDate;
-
+	    dump($this->getCompetitors());
     	foreach ($this->getCompetitors() as $competitor) {
+
 			$referrer_id = $competitor->user_id;
 			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
 									FROM user_affiliate ua, user referred_user, user referrer
@@ -142,7 +141,7 @@ class CompetitionController extends Controller
 									AND referred_user.user_id = ua.referred
 									AND DATE(referred_user.created_at) >= $start_date
 									AND DATE(referred_user.created_at) <= $end_date;");
-		    dump($response);
+
 
 			foreach ($response as $affiliate_referrals) {
 				$competitor_stats_array[] = array(
