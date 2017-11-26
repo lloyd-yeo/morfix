@@ -142,7 +142,7 @@ class CompetitionController extends Controller
 									AND referred_user.user_id = ua.referred
 									AND DATE(referred_user.created_at) >= $start_date
 									AND DATE(referred_user.created_at) <= $end_date;");
-		    dd($response);
+		    dump($response);
 
 			foreach ($response as $affiliate_referrals) {
 				$competitor_stats_array[] = array(
@@ -153,7 +153,7 @@ class CompetitionController extends Controller
 	    }
 
 	    $competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals');
-		dump($competitor_stats_collection);
+
         return $competitor_stats_collection;
     }
 
