@@ -61,7 +61,6 @@ class CompetitionController extends Controller
 			"totalReferral"           => $this->getTotalReferral(),
 			"analysis"                => $analysis['analysis'],
 			"analysisLabel"           => $analysis['analysisLabel'],
-			"referralCount"           => $analysis['referralCount'],
 			"igProfiles"              => $igProfiles[0],
 			"competition_leaderboard" => $leaderboard_entries,
 		]);
