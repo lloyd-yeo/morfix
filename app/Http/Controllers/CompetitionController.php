@@ -20,7 +20,7 @@ class CompetitionController extends Controller
     public function show(){
 
         $this->startDate = Carbon::create(2017, 11, 15, 8,2,4, 'Asia/Singapore');
-        $this->endDate = Carbon::create(2017, 11, 23, 8,2,4, 'Asia/Singapore');
+        $this->endDate = Carbon::create(2017, 11, 30, 8,2,4, 'Asia/Singapore');
 
         $analysis = $this->getAnalysis($this->startDate, $this->endDate);
         $igProfiles = $this->getInstagramProfiles();
@@ -62,13 +62,15 @@ class CompetitionController extends Controller
             $rankingCompetitionResult = $this->getNewProfilesByRanking('>=', $this->startDate);
 
             $rank = 0;
+
             foreach ($rankingCompetitionResult as $result) {
-                echo json_encode($result);
+//                echo json_encode($result);
                 $rank++;
                 if($result->referrer == $currentUser->user_id){
                     break;
                 }
             }
+
             $ranking = $rank;
 //            if($rank > 10){
 //                $ranking = "UNRANKED";
