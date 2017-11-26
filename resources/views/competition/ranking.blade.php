@@ -16,6 +16,9 @@
                             <table class="table table-borderless remove-margin-b remove-margin-t font-s13">
                                 <tbody>
                                     @foreach ($competition_leaderboard as $user)
+                                        @php
+                                            dump($user);
+                                        @endphp
                                         @if ($loop->iteration == 1)
                                         <tr class='bg-modern-lighter'>
                                             <td class="font-w700">
