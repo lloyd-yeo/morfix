@@ -132,6 +132,7 @@ class CompetitionController extends Controller
 	    $competitor_stats_array = array();
 		$start_date = $this->startDate;
 		$end_date = $this->endDate;
+
     	foreach ($this->competitors as $competitor) {
 			dump("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
 									FROM user_affiliate ua, user referred_user, user referrer
@@ -146,7 +147,8 @@ class CompetitionController extends Controller
 									AND referred_user.user_id = ua.referred
 									AND DATE(referred_user.created_at) >= $start_date
 									AND DATE(referred_user.created_at) <= $end_date;");
-
+		    dump($response);
+		    
 			foreach ($response as $affiliate_referrals) {
 				$competitor_stats_array[] = array(
 					'name' => $competitor->name,
