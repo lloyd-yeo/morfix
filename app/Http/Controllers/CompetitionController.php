@@ -22,8 +22,8 @@ class CompetitionController extends Controller
 	public function show()
 	{
 
-		$this->startDate = Carbon::create(2017, 9, 01, 0, 0, 0, 'Asia/Singapore');
-		$this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59, 'Asia/Singapore');
+		$this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
+		$this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59);
 
 		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
 
@@ -218,7 +218,7 @@ class CompetitionController extends Controller
 		$referrer_id = Auth::user()->user_id;
 		$analysis_csv = "";
 		$analysis_date_csv = "";
-
+		
 		while ($startDate->lt($endDate)) {
 			$start_date = $startDate;
 			$end_date = $startDate;
