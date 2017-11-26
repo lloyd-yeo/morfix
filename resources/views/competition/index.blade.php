@@ -110,7 +110,7 @@
 						<h3 class="block-title"><i class="fa fa-users"></i> LIST OF REFERRALS</h3>
 					</div>
 					<div class="block-content block-content-full">
-						<table class="table table-bordered table-striped js-dataTable-full-pagination">
+						<table class="table table-bordered table-striped js-dataTable-full-pagination-competition">
 							<thead class="bg-primary">
 							<tr>
 								<th>Email</th>
