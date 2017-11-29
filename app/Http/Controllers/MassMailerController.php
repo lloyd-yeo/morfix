@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Mail;
 use App\User;
 use App\Mail\CustomEmail;
+use Auth;
 
 class MassMailerController extends Controller
 {
