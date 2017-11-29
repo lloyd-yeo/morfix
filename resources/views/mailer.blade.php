@@ -42,6 +42,9 @@
 								{{--<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post">           --}}
 									<div class="form-group">
 										<div class="col-xs-12">
+											<input type="text" id="subject-text" name="subject">
+										</div>
+										<div class="col-xs-12">
 											<!-- SimpleMDE Container -->
 											<textarea class="js-simplemde" id="simplemde" name="text">Type your content here!</textarea>
 										</div>
