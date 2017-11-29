@@ -75,7 +75,7 @@
         });
 
         $("#send-email-btn").on("click", function(){
-            $("mailer-form").submit();
+            $("#mailer-form").submit();
         });
 
         jQuery(function () {
