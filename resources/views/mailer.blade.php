@@ -39,7 +39,7 @@
 								<h3 class="block-title">Send Mail to Active/Paying Affiliates</h3>
 							</div>
 							<div class="block-content">
-								<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post">
+								{{--<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post">           --}}
 									<div class="form-group">
 										<div class="col-xs-12">
 											<!-- SimpleMDE Container -->
@@ -47,7 +47,7 @@
 										</div>
 									</div>
 									<button id="send-email-btn" type="submit" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
-								</form>
+								{{--</form> --}}
 							</div>
 						</div>
 						<!-- END SimpleMDE Editor -->
