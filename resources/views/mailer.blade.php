@@ -42,7 +42,7 @@
 								<h3 class="block-title">Send Mail to Active/Paying Affiliates</h3>
 							</div>
 							<div class="block-content">
-								<form class="form-horizontal" action="/mailer/send/active" method="post"
+								<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post"
 								      onsubmit="return false;">
 									<div class="form-group">
 										<div class="col-xs-12">
@@ -50,7 +50,7 @@
 											<textarea class="js-simplemde" id="simplemde" name="simplemde">Type your content here!</textarea>
 										</div>
 									</div>
-									<button type="button" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
+									<button id="send-email-btn" type="button" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
 								</form>
 							</div>
 						</div>
@@ -72,6 +72,10 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $("#send-email-btn").on("click", function(){
+            $("mailer-form").submit();
         });
 
         jQuery(function () {
