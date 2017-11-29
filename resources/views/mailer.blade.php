@@ -26,12 +26,9 @@
 
 		<div class="content content-boxed">
 			<!-- Dynamic Table Full -->
-			<form class="form-horizontal" action="/mail/send/active" method="post">
+			<form class="form-horizontal" method="post">
 				<div class="form-group">
 					<div class="col-xs-12">
-						<!-- SimpleMDE Editor (js-simplemde class is initialized in App() -> uiHelperSimpleMDE()) -->
-						<!-- For more info and examples you can check out https://github.com/NextStepWebs/simplemde-markdown-editor -->
-						{{--<h2 class="content-heading">Send Mails</h2>--}}
 						<div class="block">
 							<div class="block-header">
 								<ul class="block-options">
@@ -42,15 +39,14 @@
 								<h3 class="block-title">Send Mail to Active/Paying Affiliates</h3>
 							</div>
 							<div class="block-content">
-								<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post"
-								      onsubmit="return false;">
+								<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post">
 									<div class="form-group">
 										<div class="col-xs-12">
 											<!-- SimpleMDE Container -->
 											<textarea class="js-simplemde" id="simplemde" name="simplemde">Type your content here!</textarea>
 										</div>
 									</div>
-									<button id="send-email-btn" type="button" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
+									<button id="send-email-btn" type="submit" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
 								</form>
 							</div>
 						</div>
@@ -72,10 +68,6 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        });
-
-        $("#send-email-btn").on("click", function(){
-            $("#mailer-form").submit();
         });
 
         jQuery(function () {
