@@ -11,16 +11,14 @@ use Auth;
 class MassMailerController extends Controller
 {
     public function sendEmailToActiveUsers(Request $request) {
-
     	$subject = $request->subject;
     	$text = $request->text;
 
-	    Mail::to("ywz.lloyd@gmail.com")->send(new CustomEmail($subject, $text, Auth::user()->email));
-
-//    	return $text;
-
-//	    Mail::send(['text' => 'email.custom'], [ 'text' => $request->input("text") ], function ($message) {
-//		    $message->to('ywz.lloyd@gmail.com');
-//	    });
+    	$active_users = User::where("tier", '>', 1)
+	                        ->orderBy('created_at', 'desc')
+	                        ->get();
+		foreach ($active_users as $active_user) {
+			Mail::to($active_user)->send(new CustomEmail($subject, $text, Auth::user()->email));
+		}
     }
 }
