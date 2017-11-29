@@ -8,7 +8,7 @@
 @endsection
 
 @section('sidebar')
-	@include('sidebar', ['page' => 'settings'])
+	@include('sidebar', ['page' => 'mailer'])
 @endsection
 
 @section('content')
