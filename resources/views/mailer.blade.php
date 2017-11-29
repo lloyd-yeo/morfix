@@ -40,20 +40,25 @@
 							</div>
 							<div class="block-content">
 								{{--<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post">           --}}
-									<div class="form-group">
-										<div class="col-xs-12">
-											<label>
-												Subject:
-											</label>
-											<input class="form-control" type="text" id="subject-text" name="subject">
-										</div>
-										<br/>
-										<div class="col-xs-12">
-											<!-- SimpleMDE Container -->
-											<textarea class="js-simplemde" id="simplemde" name="text">Type your content here!</textarea>
-										</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label>
+											Subject:
+										</label>
+										<input class="form-control" type="text" id="subject-text" name="subject">
 									</div>
-									<button id="send-email-btn" type="submit" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
+								</div>
+								<div class="form-group">
+
+									<div class="col-xs-12">
+										<!-- SimpleMDE Container -->
+										<textarea class="js-simplemde" id="simplemde" name="text">Type your content here!</textarea>
+									</div>
+								</div>
+
+								<button id="send-email-btn" type="submit" class="btn btn-primary pull-right"
+								        style="margin-bottom: 20px;">Send Email
+								</button>
 								{{--</form> --}}
 							</div>
 						</div>
