@@ -43,7 +43,7 @@
 									<div class="form-group">
 										<div class="col-xs-12">
 											<!-- SimpleMDE Container -->
-											<textarea class="js-simplemde" id="simplemde" name="simplemde">Type your content here!</textarea>
+											<textarea class="js-simplemde" id="simplemde" name="text">Type your content here!</textarea>
 										</div>
 									</div>
 									<button id="send-email-btn" type="submit" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
