@@ -26,7 +26,7 @@
 
 		<div class="content content-boxed">
 			<!-- Dynamic Table Full -->
-			<form class="form-horizontal" method="post">
+			<form class="form-horizontal" action="/mailer/send/active" method="post">
 				<div class="form-group">
 					<div class="col-xs-12">
 						<div class="block">
