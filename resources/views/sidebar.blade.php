@@ -40,9 +40,9 @@
                     @if (Auth::user()->admin == 1)
                         <li>
                             @if ($page == 'mailer')
-                                <a class="active" href="/mailer"><i class="si si-mail"></i><span class="sidebar-mini-hide">Administrative Mailer</span></a>
+                                <a class="active" href="/mailer"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Administrative Mailer</span></a>
                             @else
-                                <a href="/mailer"><i class="si si-mail"></i><span class="sidebar-mini-hide">Administrative Mailer</span></a>
+                                <a href="/mailer"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Administrative Mailer</span></a>
                             @endif
                         </li>
                     @endif

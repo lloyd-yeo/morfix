@@ -17,7 +17,7 @@
 			<div class="row items-push">
 				<div class="col-sm-7">
 					<h1 class="page-heading">
-						<i class="si si-mailer"></i> Mailer
+						<i class="si si-envelope"></i> Mailer
 						<small> Administrative Mailer</small>
 					</h1>
 				</div>
@@ -33,7 +33,7 @@
 							<div class="block-header">
 								<ul class="block-options">
 									<li>
-										<button type="button"><i class="si si-mail"></i></button>
+										<button type="button"><i class="si si-envelope"></i></button>
 									</li>
 								</ul>
 								<h3 class="block-title">Send Mail to Active/Paying Affiliates</h3>
