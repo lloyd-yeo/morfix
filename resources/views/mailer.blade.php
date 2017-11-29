@@ -47,6 +47,7 @@
 											</label>
 											<input class="form-control" type="text" id="subject-text" name="subject">
 										</div>
+										<br/>
 										<div class="col-xs-12">
 											<!-- SimpleMDE Container -->
 											<textarea class="js-simplemde" id="simplemde" name="text">Type your content here!</textarea>
