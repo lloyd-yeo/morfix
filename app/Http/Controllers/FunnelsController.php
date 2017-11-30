@@ -236,7 +236,9 @@ class FunnelsController extends Controller
 
 		$user               = User::find(Auth::user()->user_id);
 		$braintree_id       = $user->braintree_id;
+
 		$braintree_customer = Braintree_Customer::find($braintree_id);
+
 
 		$sub_result = Braintree_Subscription::create([
 			'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
