@@ -7,6 +7,7 @@ use AWeberAPI;
 use AWeberAPIException;
 use App\User;
 use App\UserAffiliates;
+use App\UserUpdate;
 use Auth;
 use Braintree_ClientToken;
 use Braintree_Configuration;
@@ -159,6 +160,19 @@ class FunnelsController extends Controller
 					if ($referrer->tier > 1) {
 						$referrer->pending_commission = $referrer->pending_commission + 20;
 						$referrer->save();
+
+						//Do a new referral upgrade
+						$title = "NEW REFERRAL!";
+						$type = "NEW_REFERRAL";
+						$update_text = "<a href=\"#\">" . $user->email . "</a> just joined as Premium! You’re getting more and more referrals, keep it up!";
+
+						$user_update = new UserUpdate;
+						$user_update->email = $referrer->email;
+						$user_update->title = $title;
+						$user_update->content = $update_text;
+						$user_update->type = $type;
+						$user_update->save();
+
 					}
 				}
 
@@ -218,6 +232,21 @@ class FunnelsController extends Controller
 				if ($referrer->tier % 10 == 3) {
 					$referrer->pending_commission = $referrer->pending_commission + 150;
 					$referrer->save();
+
+					//Do a new referral upgrade
+					$title = "PRO UPGRADE!";
+					$type = "PRO_OTO_UPSELL";
+					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! You've earned yourself another $150USD!";
+
+					$user_update = new UserUpdate;
+					$user_update->email = $referrer->email;
+					$user_update->title = $title;
+					$user_update->content = $update_text;
+					$user_update->type = $type;
+					$user_update->save();
+
+				} else {
+
 				}
 			}
 
@@ -263,6 +292,18 @@ class FunnelsController extends Controller
 				if ($referrer->tier / 10 > 0) {
 					$referrer->pending_commission = $referrer->pending_commission + 50;
 					$referrer->save();
+
+					//Do a new referral upgrade
+					$title = "NEW BUSINESS UPGRADE!";
+					$type = "BUSINESS_UPGRADE";
+					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Business! That's another $50 USD for as long as they are there, keep it up!";
+
+					$user_update = new UserUpdate;
+					$user_update->email = $referrer->email;
+					$user_update->title = $title;
+					$user_update->content = $update_text;
+					$user_update->type = $type;
+					$user_update->save();
 				}
 			}
 
