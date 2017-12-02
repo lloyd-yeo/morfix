@@ -208,7 +208,7 @@ class AffiliateController extends Controller {
                 ->where('ua.referrer', '=', Auth::user()->user_id)
                 ->get();
 
-//        dd($referrals);
+        dd($referrals);
 //        dd(DB::getQueryLog());
 //        $referrals = DB::table('user')
 //                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
