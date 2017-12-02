@@ -78,6 +78,8 @@ class CompetitionController extends Controller
 		                ->where('pending_commission_payable', '>', '0')
 		                ->orderBy('pending_commission_payable', 'DESC')->get();
 
+//		$response = User::where('tier', '>', '1')->where('is_competitor', 1)->get();
+
 		return $response;
 	}
 
@@ -126,8 +128,13 @@ class CompetitionController extends Controller
 		$start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
 		$end_date   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
 		#test
-		$start_date             = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
-		$end_date               = Carbon::create(2017, 9, 1, 23, 59, 59, 'Asia/Singapore');
+
+		$start_date = clone $this->startDate;
+		$end_date = clone $this->startDate;
+		$end_date->hour(59);
+		$end_date->minute(59);
+		$end_date->second(59);
+		
 		$affiliates_today_count = 0;
 		$affiliates_today       = DB::select("SELECT COUNT(referred_user.email) AS referrals
                   FROM user_affiliate ua, user referred_user
