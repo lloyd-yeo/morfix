@@ -48,14 +48,12 @@ class CompetitionController extends Controller
 			$ranking = count($competitors);
 		}
 
-		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
+		$startDate = $this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
+		$analysis = $this->getAnalysis($startDate, $this->endDate);
 
 		$total_referrals = $this->getTotalReferral();
 
 		$daily_referrals = $this->getDailyReferral();
-
-		$igProfiles = $this->getInstagramProfiles();
-
 
 		return view('competition.index', [
 			"month"                   => $this->startDate->format("F"),
@@ -69,7 +67,6 @@ class CompetitionController extends Controller
 			"allReferrals"            => $total_referrals,
 			"analysis"                => $analysis['analysis'],
 			"analysisLabel"           => $analysis['analysisLabel'],
-			"igProfiles"              => $igProfiles[0],
 			"competition_leaderboard" => $leaderboard_entries,
 		]);
 	}
