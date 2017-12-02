@@ -208,7 +208,7 @@ class AffiliateController extends Controller {
                 ->where('ua.referrer', '=', Auth::user()->user_id)
                 ->get();
 
-        dd($referrals);
+//        dd($referrals);
 //        dd(DB::getQueryLog());
 //        $referrals = DB::table('user')
 //                ->select('user.email', 'user.tier', 'user.created_at', 'user.paypal')
@@ -220,10 +220,12 @@ class AffiliateController extends Controller {
         \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
 
         foreach ($referrals as $referral) {
-            
+
             if ($referral->tier == 1) {
                 $free_trial_referrals[] = $referral;
                 continue;
+            } else {
+            	dump($referral);
             }
             
             if ($referral->email == "maychengmt@yahoo.com" || $referral->email == "michaeltang90@hotmail.com" || $referral->email == "kingkew18@gmail.com") {
