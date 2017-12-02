@@ -232,9 +232,6 @@ class AffiliateController extends Controller {
             }
 
             if ($referral->tier > 1) {
-
-	            dump($referral);
-
                 $active = false;
 
                 if ($referral->paypal == 0) {

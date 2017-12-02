@@ -251,6 +251,9 @@
 											@if ($referral->paypal == 1)
 												<td><img style="height: 20px;"
 												         src="{{ asset('assets/img/logo/paypal-logo.png') }}"/></td>
+											@elseif ($referral->braintree_id !== NULL)
+												<td><img style="height: 20px;"
+												         src="https://s3.amazonaws.com/braintree-badges/braintree-badge-wide-dark.png" border="0"/></td>
 											@else
 												<td><img style="height: 20px;"
 												         src="{{ asset('assets/img/logo/credit-card.png') }}"/></td>
