@@ -112,6 +112,18 @@
 					@endif
 				</div>
 			</div>
+
+
+			<div class="row">
+				<div class="col-lg-6">
+					<button class="btn btn-block btn-primary push-10" type="button">[READ FIRST!] Terms & Conditions</button>
+				</div>
+				<div class="col-lg-6">
+					<button class="btn btn-block btn-primary push-10" type="button">Prizes</button>
+				</div>
+			</div>
+
+			
 			<div class="row">
 				@include('competition.ranking')
 				<div class="col-lg-6 announcements">
@@ -135,14 +147,6 @@
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" type="button">[READ FIRST!] Terms & Conditions</button>
-				</div>
-				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" type="button">Prizes</button>
-				</div>
-			</div>
 
 			<div class="row">
 				<div class="referral">
