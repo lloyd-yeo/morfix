@@ -116,14 +116,14 @@
 
 			<div class="row">
 				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" type="button">[READ FIRST!] Terms & Conditions</button>
+					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-prizes" type="button">[READ FIRST!] Terms & Conditions</button>
 				</div>
 				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" type="button">Prizes</button>
+					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-terms-conditions" type="button">Prizes</button>
 				</div>
 			</div>
 
-			
+
 			<div class="row">
 				@include('competition.ranking')
 				<div class="col-lg-6 announcements">
@@ -222,9 +222,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="row footer">
-				<span class="pull-right">Terms and Conditions</span>
-			</div>
+
+
+			@include('competition.modal.termsandconditions')
+			@include('competition.modal.prizes')
+
 		</div>
 	</main>
 @endsection
