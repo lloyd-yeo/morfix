@@ -224,8 +224,6 @@ class AffiliateController extends Controller {
             if ($referral->tier == 1) {
                 $free_trial_referrals[] = $referral;
                 continue;
-            } else {
-            	dump($referral);
             }
             
             if ($referral->email == "maychengmt@yahoo.com" || $referral->email == "michaeltang90@hotmail.com" || $referral->email == "kingkew18@gmail.com") {
@@ -234,6 +232,9 @@ class AffiliateController extends Controller {
             }
 
             if ($referral->tier > 1) {
+
+	            dump($referral);
+	            
                 $active = false;
 
                 if ($referral->paypal == 0) {
