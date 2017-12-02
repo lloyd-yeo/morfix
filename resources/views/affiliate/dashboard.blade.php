@@ -179,6 +179,7 @@
                     </ul>
                     <h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i class="fa fa-group"></i> Referrals</h2>
                 </div>
+
                 <div class="block-content block-content-full">
                     <table class="table table-bordered table-striped js-dataTable-full-pagination">
                         <thead>

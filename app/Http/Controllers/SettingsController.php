@@ -37,7 +37,7 @@ class SettingsController extends Controller
 		\Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
 		$subscriptions = [];
 		$invoices      = [];
-		$invoices_     = null;
+		$invoices_     = [];
 
 		if (Auth::user()->paypal != 1) {
 			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();

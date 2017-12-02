@@ -1,53 +1,53 @@
 <style>
 
-    .countdown{
-    	height: 400px;
-    	color: #fff;
-    }
+	.countdown {
+		height: 400px;
+		color: #fff;
+	}
 
-    .date, .timer{
-    	width: 100%;
-    	float: left;
-    }
-    .date{
-    	margin-top: 100px;
-    }
-    .timer{
-    	font-size:100px;
-    }
+	.date, .timer {
+		width: 100%;
+		float: left;
+	}
 
-    /*  STATISTICS */
-    .statistics{
-    	min-height: 125px;
-    	overflow: hidden;
-    }
+	.date {
+		margin-top: 100px;
+	}
 
-    /* ANNOUNCEMENTS  */
-    .announcements{
-    	height: 500px;
-    }
+	.timer {
+		font-size: 100px;
+	}
 
-     .ranking{
-    	height: 500px;
-    }
+	/*  STATISTICS */
+	.statistics {
+		min-height: 125px;
+		overflow: hidden;
+	}
 
-    /* REFERRAL  */
+	/* ANNOUNCEMENTS  */
+	.announcements {
+		height: 500px;
+	}
 
-    .referral{
-    	
-    }
-   
+	.ranking {
+		height: 500px;
+	}
 
-   /*  RESOURCES */
+	/* REFERRAL  */
 
+	.referral {
 
-   /*   FOOTER  */
+	}
 
-    .footer span{
-        margin-top: 50px !important;
-        float: left;
-        padding: 0px !important;
-    }
+	/*  RESOURCES */
+
+	/*   FOOTER  */
+
+	.footer span {
+		margin-top: 50px !important;
+		float: left;
+		padding: 0px !important;
+	}
 
 
 </style>

@@ -132,6 +132,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if($invoices_ != NULL)
                         @foreach ($invoices_->autoPagingIterator() as $invoice)
                             <tr>
                                 @foreach ($invoice->lines->data as $invoice_lines)
@@ -175,6 +176,7 @@
 
                             </tr>
                         @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>

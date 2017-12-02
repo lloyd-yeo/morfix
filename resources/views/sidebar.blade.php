@@ -37,6 +37,16 @@
                     </li>
                     @endif
 
+                    @if (Auth::user()->admin == 1)
+                        <li>
+                            @if ($page == 'mailer')
+                                <a class="active" href="/mailer"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Administrative Mailer</span></a>
+                            @else
+                                <a href="/mailer"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Administrative Mailer</span></a>
+                            @endif
+                        </li>
+                    @endif
+
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AUTOMATION TOOLS</span></li>
 
                     <li>

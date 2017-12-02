@@ -8,7 +8,7 @@
 @endsection
 
 @section('sidebar')
-	@include('sidebar', ['page' => 'settings'])
+	@include('sidebar', ['page' => 'mailer'])
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
 			<div class="row items-push">
 				<div class="col-sm-7">
 					<h1 class="page-heading">
-						<i class="si si-mailer"></i> Mailer
+						<i class="si si-envelope"></i> Mailer
 						<small> Administrative Mailer</small>
 					</h1>
 				</div>
@@ -26,32 +26,40 @@
 
 		<div class="content content-boxed">
 			<!-- Dynamic Table Full -->
-			<form class="form-horizontal" action="/mail/send/active" method="post">
+			<form class="form-horizontal" action="/mailer/send/active" method="post">
 				<div class="form-group">
 					<div class="col-xs-12">
-						<!-- SimpleMDE Editor (js-simplemde class is initialized in App() -> uiHelperSimpleMDE()) -->
-						<!-- For more info and examples you can check out https://github.com/NextStepWebs/simplemde-markdown-editor -->
-						{{--<h2 class="content-heading">Send Mails</h2>--}}
 						<div class="block">
 							<div class="block-header">
 								<ul class="block-options">
 									<li>
-										<button type="button"><i class="si si-mail"></i></button>
+										<button type="button"><i class="si si-envelope"></i></button>
 									</li>
 								</ul>
 								<h3 class="block-title">Send Mail to Active/Paying Affiliates</h3>
 							</div>
 							<div class="block-content">
-								<form class="form-horizontal" action="/mailer/send/active" method="post"
-								      onsubmit="return false;">
-									<div class="form-group">
-										<div class="col-xs-12">
-											<!-- SimpleMDE Container -->
-											<textarea class="js-simplemde" id="simplemde" name="simplemde">Type your content here!</textarea>
-										</div>
+								{{--<form id="mailer-form" class="form-horizontal" action="/mailer/send/active" method="post">           --}}
+								<div class="form-group">
+									<div class="col-xs-12">
+										<label>
+											Subject:
+										</label>
+										<input class="form-control" type="text" id="subject-text" name="subject">
 									</div>
-									<button type="button" class="btn btn-primary pull-right" style="margin-bottom: 20px;">Send Email</button>
-								</form>
+								</div>
+								<div class="form-group">
+
+									<div class="col-xs-12">
+										<!-- SimpleMDE Container -->
+										<textarea class="js-simplemde" id="simplemde" name="text">Type your content here!</textarea>
+									</div>
+								</div>
+
+								<button id="send-email-btn" type="submit" class="btn btn-primary pull-right"
+								        style="margin-bottom: 20px;">Send Email
+								</button>
+								{{--</form> --}}
 							</div>
 						</div>
 						<!-- END SimpleMDE Editor -->
