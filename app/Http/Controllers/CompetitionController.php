@@ -58,10 +58,10 @@ class CompetitionController extends Controller
 
 
 		return view('competition.index', [
-			"month"                   => "December",
-			"startDate"               => 4,
-			"endDate"                 => 10,
-			"year"                    => 2017,
+			"month"                   => $this->startDate->format("F"),
+			"startDate"               => $this->startDate->day,
+			"endDate"                 => $this->endDate->day,
+			"year"                    => $this->startDate->year,
 			"competitors"             => $competitors,
 			"ranking"                 => $ranking,
 			"dailyReferral"           => $daily_referrals,
