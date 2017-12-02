@@ -130,7 +130,7 @@ class CompetitionController extends Controller
     $end_date   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
     #test
     $start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
-    $end_date   = Carbon::create(2017, 9, 2, 23, 59, 59, 'Asia/Singapore');
+    $end_date   = Carbon::create(2017, 9, 1, 23, 59, 59, 'Asia/Singapore');
 
     $affiliates_today = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
                   FROM user_affiliate ua, user referred_user
