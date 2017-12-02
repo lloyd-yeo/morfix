@@ -15,124 +15,146 @@ use Illuminate\Support\Facades\Auth;
 
 class CompetitionController extends Controller
 {
-  protected $startDate = NULL;
-  protected $endDate = NULL;
+	protected $startDate = NULL;
+	protected $endDate = NULL;
 
-  public function __construct()
-  {
-    $this->middleware('auth');
-  }
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
-  public function show()
-  {
+	public function show()
+	{
 
-    $this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
-    $this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59);
+		$this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
+		$this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59);
 
-    $competitors = $this->getCompetitors();
+		$competitors = $this->getCompetitors();
 
-    $leaderboard_entries = $this->getNewProfilesByRankingLimit();
+		$leaderboard_entries = $this->getNewProfilesByRankingLimit();
 
-    $ranking        = 1;
-    $in_leaderboard = FALSE;
+		$ranking        = 1;
+		$in_leaderboard = FALSE;
 
-    foreach ($leaderboard_entries as $leaderboard_entry) {
-      if ($leaderboard_entry['email'] == Auth::user()->email) {
-        $in_leaderboard = TRUE;
-        break;
-      }
-      $ranking++;
-    }
+		foreach ($leaderboard_entries as $leaderboard_entry) {
+			if ($leaderboard_entry['email'] == Auth::user()->email) {
+				$in_leaderboard = TRUE;
+				break;
+			}
+			$ranking++;
+		}
 
-    if (!$in_leaderboard) {
-      $ranking = count($competitors);
-    }
+		if (!$in_leaderboard) {
+			$ranking = count($competitors);
+		}
 
-    $analysis = $this->getAnalysis($this->startDate, $this->endDate);
+		$analysis = $this->getAnalysis($this->startDate, $this->endDate);
 
-    $total_referrals = $this->getTotalReferral();
+		$total_referrals = $this->getTotalReferral();
 
-    $daily_referrals = $this->getDailyReferral();
+		$daily_referrals = $this->getDailyReferral();
 
-    $igProfiles = $this->getInstagramProfiles();
+		$igProfiles = $this->getInstagramProfiles();
 
 
-    return view('competition.index', [
-      "month"                   => "December",
-      "startDate"               => 4,
-      "endDate"                 => 10,
-      "year"                    => 2017,
-      "competitors"             => $competitors,
-      "ranking"                 => $ranking,
-      "dailyReferral"           => count($daily_referrals),
-      "totalReferral"           => count($total_referrals),
-      "allReferrals"            => $total_referrals,
-      "analysis"                => $analysis['analysis'],
-      "analysisLabel"           => $analysis['analysisLabel'],
-      "igProfiles"              => $igProfiles[0],
-      "competition_leaderboard" => $leaderboard_entries,
-    ]);
-  }
+		return view('competition.index', [
+			"month"                   => "December",
+			"startDate"               => 4,
+			"endDate"                 => 10,
+			"year"                    => 2017,
+			"competitors"             => $competitors,
+			"ranking"                 => $ranking,
+			"dailyReferral"           => $daily_referrals,
+			"totalReferral"           => count($total_referrals),
+			"allReferrals"            => $total_referrals,
+			"analysis"                => $analysis['analysis'],
+			"analysisLabel"           => $analysis['analysisLabel'],
+			"igProfiles"              => $igProfiles[0],
+			"competition_leaderboard" => $leaderboard_entries,
+		]);
+	}
 
-  public function getCompetitors()
-  {
-    $response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')
-                    ->where('tier', '>', '1')
-                    ->where('pending_commission_payable', '>', '0')
-                    ->orderBy('pending_commission_payable', 'DESC')->get();
+	public function getCompetitors()
+	{
+		$response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')
+		                ->where('tier', '>', '1')
+		                ->where('pending_commission_payable', '>', '0')
+		                ->orderBy('pending_commission_payable', 'DESC')->get();
 
-    return $response;
-  }
+		return $response;
+	}
 
-  public function getRanking()
-  {
-    $currentUser = Auth::user();
+	public function getRanking()
+	{
+		$currentUser = Auth::user();
 
-    $ranking = NULL;
-    /*
-      1. Get All new Users
-      2. Loop for new users and get referrals
-    */
-    $myTotalReferral = $this->getTotalReferral();
+		$ranking = NULL;
+		/*
+		  1. Get All new Users
+		  2. Loop for new users and get referrals
+		*/
+		$myTotalReferral = $this->getTotalReferral();
 
-    if ($myTotalReferral > 0) {
-      $rankingCompetitionResult = $this->getNewProfilesByRanking('>=', $this->startDate);
+		if ($myTotalReferral > 0) {
+			$rankingCompetitionResult = $this->getNewProfilesByRanking('>=', $this->startDate);
 
-      $rank = 0;
+			$rank = 0;
 
-      foreach ($rankingCompetitionResult as $result) {
-        //                echo json_encode($result);
-        $rank++;
-        if ($result->referrer == $currentUser->user_id) {
-          break;
-        }
-      }
+			foreach ($rankingCompetitionResult as $result) {
+				//                echo json_encode($result);
+				$rank++;
+				if ($result->referrer == $currentUser->user_id) {
+					break;
+				}
+			}
 
-      $ranking = $rank;
-      //            if($rank > 10){
-      //                $ranking = "UNRANKED";
-      //            }
-      //            else{
-      //                $ranking = $rank;
-      //            }
-    } else {
-      $ranking = "UNRANKED";
-    }
+			$ranking = $rank;
+			//            if($rank > 10){
+			//                $ranking = "UNRANKED";
+			//            }
+			//            else{
+			//                $ranking = $rank;
+			//            }
+		} else {
+			$ranking = "UNRANKED";
+		}
 
-    return $ranking;
-  }
+		return $ranking;
+	}
 
-  public function getDailyReferral()
-  {
-    $referrer_id = Auth::user()->user_id;
+	public function getDailyReferral()
+	{
+		$referrer_id = Auth::user()->user_id;
 
-    $start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
-    $end_date   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
-    #test
-    $start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
-    $end_date   = Carbon::create(2017, 9, 1, 23, 59, 59, 'Asia/Singapore');
+		$start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
+		$end_date   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
+		#test
+		$start_date             = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
+		$end_date               = Carbon::create(2017, 9, 1, 23, 59, 59, 'Asia/Singapore');
+		$affiliates_today_count = 0;
+		$affiliates_today       = DB::select("SELECT COUNT(referred_user.email) AS referrals
+                  FROM user_affiliate ua, user referred_user
+                  WHERE ua.referrer = $referrer_id
+                  AND referred_user.user_id = ua.referred
+                  AND DATE(referred_user.created_at) >= '$start_date'
+                  AND DATE(referred_user.created_at) <= '$end_date'
+                  AND referred_user.tier > 1;");
+		foreach ($affiliates_today as $affiliates_row) {
+			$affiliates_today_count = $affiliates_row->referrals;
+		}
+		return $affiliates_today_count;
+	}
 
-    $affiliates_today = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+	public function getTotalReferral()
+	{
+		$referrer_id = Auth::user()->user_id;
+		$start_date  = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
+		//    $this->endDate = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
+		#test
+		$start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
+		$end_date   = Carbon::create(2017, 9, 30, 23, 59, 59, 'Asia/Singapore');
+
+		$affiliates_total = DB::select("SELECT referred_user.*
                   FROM user_affiliate ua, user referred_user
                   WHERE ua.referrer = $referrer_id
                   AND referred_user.user_id = ua.referred
@@ -140,49 +162,29 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
 
-    return $affiliates_today;
-  }
+		return $affiliates_total;
+	}
 
-  public function getTotalReferral()
-  {
-    $referrer_id = Auth::user()->user_id;
-    $start_date  = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
-    //    $this->endDate = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
-    #test
-    $start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
-    $end_date   = Carbon::create(2017, 9, 30, 23, 59, 59, 'Asia/Singapore');
+	public function getReferral($newProfiles)
+	{
+		$referrals   = 0;
+		$currentUser = Auth::user();
+		foreach ($newProfiles as $newProfile) {
+			$userAffiliate = UserAffiliates::where('referrer', '=', $currentUser->user_id)
+			                               ->where('referred', '=', $newProfile->user_id)
+			                               ->limit(1)
+			                               ->get();
+			if (sizeof($userAffiliate) >= 1) {
+				$referrals++;
+			}
+		}
 
-    $affiliates_total = DB::select("SELECT referred_user.*
-                  FROM user_affiliate ua, user referred_user
-                  WHERE ua.referrer = $referrer_id
-                  AND referred_user.user_id = ua.referred
-                  AND DATE(referred_user.created_at) >= '$start_date'
-                  AND DATE(referred_user.created_at) <= '$end_date'
-                  AND referred_user.tier > 1;");
+		return $referrals;
+	}
 
-    return $affiliates_total;
-  }
-
-  public function getReferral($newProfiles)
-  {
-    $referrals   = 0;
-    $currentUser = Auth::user();
-    foreach ($newProfiles as $newProfile) {
-      $userAffiliate = UserAffiliates::where('referrer', '=', $currentUser->user_id)
-                                     ->where('referred', '=', $newProfile->user_id)
-                                     ->limit(1)
-                                     ->get();
-      if (sizeof($userAffiliate) >= 1) {
-        $referrals++;
-      }
-    }
-
-    return $referrals;
-  }
-
-  public function getNewProfilesByRanking($clause, $date)
-  {
-    $response = DB::select("SELECT u.name, ua.referrer, count(ua.referrer) as total
+	public function getNewProfilesByRanking($clause, $date)
+	{
+		$response = DB::select("SELECT u.name, ua.referrer, count(ua.referrer) as total
                             FROM user AS u
                             LEFT JOIN user_affiliate AS ua 
                             ON ua.referred = u.user_id
@@ -191,21 +193,21 @@ class CompetitionController extends Controller
                             ORDER BY total DESC
                             ;");
 
-    return $response;
-  }
+		return $response;
+	}
 
-  public function getNewProfilesByRankingLimit()
-  {
+	public function getNewProfilesByRankingLimit()
+	{
 
-    $competitor_stats_array = [];
-    $start_date             = $this->startDate;
-    $end_date               = $this->endDate;
+		$competitor_stats_array = [];
+		$start_date             = $this->startDate;
+		$end_date               = $this->endDate;
 
-    foreach ($this->getCompetitors() as $competitor) {
+		foreach ($this->getCompetitors() as $competitor) {
 
-      $referrer_id = $competitor->user_id;
+			$referrer_id = $competitor->user_id;
 
-      $response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
                   FROM user_affiliate ua, user referred_user
                   WHERE ua.referrer = $referrer_id
                   AND referred_user.user_id = ua.referred
@@ -213,40 +215,40 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
 
-      foreach ($response as $affiliate_referrals) {
-        if ($affiliate_referrals->referrals > 0) {
-          $competitor_stats_array[] = [
-            'email'     => $competitor->email,
-            'name'      => $competitor->name,
-            'referrals' => $affiliate_referrals->referrals,
-          ];
-        }
-      }
-    }
+			foreach ($response as $affiliate_referrals) {
+				if ($affiliate_referrals->referrals > 0) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => $affiliate_referrals->referrals,
+					];
+				}
+			}
+		}
 
-    $competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals')->values()->all();
+		$competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals')->values()->all();
 
-    return $competitor_stats_collection;
-  }
+		return $competitor_stats_collection;
+	}
 
-  public function getNewProfilesByDate($clause, $date)
-  {
-    return User::whereDate('created_at', $clause, $date)->where('tier', '>', '1')->get();
-  }
+	public function getNewProfilesByDate($clause, $date)
+	{
+		return User::whereDate('created_at', $clause, $date)->where('tier', '>', '1')->get();
+	}
 
-  public function getAnalysis(Carbon $startDate, Carbon $endDate)
-  {
-    $referrer_id       = Auth::user()->user_id;
-    $analysis_csv      = "";
-    $analysis_date_csv = "";
+	public function getAnalysis(Carbon $startDate, Carbon $endDate)
+	{
+		$referrer_id       = Auth::user()->user_id;
+		$analysis_csv      = "";
+		$analysis_date_csv = "";
 
-    while ($startDate->lt($endDate)) {
-      $start_date = $startDate;
-      $end_date   = $startDate;
-      $start_date = $start_date->setTime(0, 0, 0)->toDateTimeString();
-      $end_date   = $end_date->setTime(23, 59, 59)->toDateTimeString();
+		while ($startDate->lt($endDate)) {
+			$start_date = $startDate;
+			$end_date   = $startDate;
+			$start_date = $start_date->setTime(0, 0, 0)->toDateTimeString();
+			$end_date   = $end_date->setTime(23, 59, 59)->toDateTimeString();
 
-      $response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
                   FROM user_affiliate ua, user referred_user
                   WHERE ua.referrer = $referrer_id
                   AND referred_user.user_id = ua.referred
@@ -254,133 +256,133 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
 
-      foreach ($response as $resp) {
-        $analysis_csv            = $resp->referrals . "," . $analysis_csv;
-        $analysis_date           = date_create($start_date);
-        $analysis_date_formatted = date_format($analysis_date, "d M");
+			foreach ($response as $resp) {
+				$analysis_csv            = $resp->referrals . "," . $analysis_csv;
+				$analysis_date           = date_create($start_date);
+				$analysis_date_formatted = date_format($analysis_date, "d M");
 
-        if ($analysis_date_csv == "") {
-          $analysis_date_csv = $analysis_date_formatted;
-        } else {
-          $analysis_date_csv = $analysis_date_csv . "," . $analysis_date_formatted;
-        }
+				if ($analysis_date_csv == "") {
+					$analysis_date_csv = $analysis_date_formatted;
+				} else {
+					$analysis_date_csv = $analysis_date_csv . "," . $analysis_date_formatted;
+				}
 
-      }
+			}
 
-      $startDate = $startDate->addDays(1);
-    }
+			$startDate = $startDate->addDays(1);
+		}
 
-    $new_referral_analysis       = [];
-    $new_referral_analysis_label = [];
-    //    $new_referral_count          = [];
-    $currentUser = Auth::user();
+		$new_referral_analysis       = [];
+		$new_referral_analysis_label = [];
+		//    $new_referral_count          = [];
+		$currentUser = Auth::user();
 
-    //    $referrals = DB::select("SELECT date(u.created_at) as date, count(u.created_at) as total
-    //                                FROM user_affiliate AS ua
-    //                                LEFT JOIN user AS u
-    //                                ON u.user_id = ua.referred
-    //                                where date(u.created_at) between '$startDate' AND '$endDate' AND ua.referrer = '$currentUser->user_id'
-    //                                GROUP BY date(u.created_at)
-    //                                ORDER BY date(u.created_at) DESC
-    //                                ");
+		//    $referrals = DB::select("SELECT date(u.created_at) as date, count(u.created_at) as total
+		//                                FROM user_affiliate AS ua
+		//                                LEFT JOIN user AS u
+		//                                ON u.user_id = ua.referred
+		//                                where date(u.created_at) between '$startDate' AND '$endDate' AND ua.referrer = '$currentUser->user_id'
+		//                                GROUP BY date(u.created_at)
+		//                                ORDER BY date(u.created_at) DESC
+		//                                ");
 
-    //    $analysis_csv      = "";
-    //    $analysis_date_csv = "";
-    //    $sum               = intval(0);
-    //    foreach ($referrals as $analysis) {
-    //      $sum                     += $analysis->total;
-    //      $analysis_csv            = $sum . "," . $analysis_csv;
-    //      $analysis_date           = date_create($analysis->date);
-    //      $analysis_date_formatted = date_format($analysis_date, "d M");
-    //      $analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
-    //    }
+		//    $analysis_csv      = "";
+		//    $analysis_date_csv = "";
+		//    $sum               = intval(0);
+		//    foreach ($referrals as $analysis) {
+		//      $sum                     += $analysis->total;
+		//      $analysis_csv            = $sum . "," . $analysis_csv;
+		//      $analysis_date           = date_create($analysis->date);
+		//      $analysis_date_formatted = date_format($analysis_date, "d M");
+		//      $analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
+		//    }
 
-    if ($analysis_csv != "") {
-      $analysis_csv = substr($analysis_csv, 0, -1);
-    }
+		if ($analysis_csv != "") {
+			$analysis_csv = substr($analysis_csv, 0, -1);
+		}
 
-    if ($analysis_date_csv != "") {
-      $analysis_date_csv = substr($analysis_date_csv, 0, -1);
-    }
+		if ($analysis_date_csv != "") {
+			$analysis_date_csv = substr($analysis_date_csv, 0, -1);
+		}
 
-    $new_referral_analysis       = $analysis_csv;
-    $new_referral_analysis_label = $analysis_date_csv;
+		$new_referral_analysis       = $analysis_csv;
+		$new_referral_analysis_label = $analysis_date_csv;
 
-    //$new_referral_count= $new_referral_diff;
-    return [
-      "analysis"      => $new_referral_analysis,
-      "analysisLabel" => $new_referral_analysis_label,
-      //      "referralCount" => $new_referral_count,
-    ];
-  }
+		//$new_referral_count= $new_referral_diff;
+		return [
+			"analysis"      => $new_referral_analysis,
+			"analysisLabel" => $new_referral_analysis_label,
+			//      "referralCount" => $new_referral_count,
+		];
+	}
 
-  public function getInstagramProfiles()
-  {
-    $current_user = Auth::user();
+	public function getInstagramProfiles()
+	{
+		$current_user = Auth::user();
 
-    if (UserAffiliates::where('referred', $current_user->user_id)->count() == 0 && $current_user->last_login === NULL) {
-      $referrer = Cookie::get('referrer');
-      if ($referrer !== NULL && !($referrer == $current_user->user_id)) {
-        $user_affiliate           = new UserAffiliates;
-        $user_affiliate->referrer = $referrer;
-        $user_affiliate->referred = $current_user->user_id;
-        $user_affiliate->save();
-      }
-    }
+		if (UserAffiliates::where('referred', $current_user->user_id)->count() == 0 && $current_user->last_login === NULL) {
+			$referrer = Cookie::get('referrer');
+			if ($referrer !== NULL && !($referrer == $current_user->user_id)) {
+				$user_affiliate           = new UserAffiliates;
+				$user_affiliate->referrer = $referrer;
+				$user_affiliate->referred = $current_user->user_id;
+				$user_affiliate->save();
+			}
+		}
 
-    $current_user->last_login = \Carbon\Carbon::now();
-    $current_user->save();
-    $instagram_profiles = [];
-    if (Auth::user()->partition === 0) {
-      $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
-                                            ->take($current_user->num_acct)
-                                            ->get();
-    } else {
-      $connection_name = Helper::getConnection(Auth::user()->partition);
+		$current_user->last_login = \Carbon\Carbon::now();
+		$current_user->save();
+		$instagram_profiles = [];
+		if (Auth::user()->partition === 0) {
+			$instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
+			                                      ->take($current_user->num_acct)
+			                                      ->get();
+		} else {
+			$connection_name = Helper::getConnection(Auth::user()->partition);
 
-      $instagram_profiles = DB::connection($connection_name)->table('user_insta_profile')
-                              ->where('email', Auth::user()->email)
-                              ->take($current_user->num_acct)
-                              ->get();
-    }
+			$instagram_profiles = DB::connection($connection_name)->table('user_insta_profile')
+			                        ->where('email', Auth::user()->email)
+			                        ->take($current_user->num_acct)
+			                        ->get();
+		}
 
-    return $instagram_profiles;
-  }
+		return $instagram_profiles;
+	}
 
-  public function getTime()
-  {
-    $current = Carbon::now();
-    $end     = Carbon::create(2017, 11, 20, 8, 2, 4, 'Asia/Singapore');
-    $time    = $end->diffInSeconds($current);
-    $seconds = $time % 60;
-    $time    = ($time - $seconds) / 60;
-    $minutes = $time % 60;
-    $hours   = (($time - $minutes) / 60) % 24;
-    $days    = intval((($time / 60) / 24));
-    // $secondsString = ($seconds >= 10) ? $seconds : '0'.$seconds;
-    // $minutesString = ($minutes >= 10) ? $minutes : '0'.$minutes;
-    // $hoursString = ($hours >= 10) ? $hours : '0'.$hours;
-    //    $timer = $days."D ".$hoursString.':'.$minutesString.':'.$secondsString;
-    return $this->manageTime($days, $hours, $minutes, $seconds);
-  }
+	public function getTime()
+	{
+		$current = Carbon::now();
+		$end     = Carbon::create(2017, 11, 20, 8, 2, 4, 'Asia/Singapore');
+		$time    = $end->diffInSeconds($current);
+		$seconds = $time % 60;
+		$time    = ($time - $seconds) / 60;
+		$minutes = $time % 60;
+		$hours   = (($time - $minutes) / 60) % 24;
+		$days    = intval((($time / 60) / 24));
+		// $secondsString = ($seconds >= 10) ? $seconds : '0'.$seconds;
+		// $minutesString = ($minutes >= 10) ? $minutes : '0'.$minutes;
+		// $hoursString = ($hours >= 10) ? $hours : '0'.$hours;
+		//    $timer = $days."D ".$hoursString.':'.$minutesString.':'.$secondsString;
+		return $this->manageTime($days, $hours, $minutes, $seconds);
+	}
 
-  public function manageTime($days, $hours, $minutes, $seconds)
-  {
-    $time = NULL;
-    if ($days > 2) {
-      $time = $days . ' days left';
-    } else if ($days <= 2 && $hours >= 1) {
-      $time = $hours . " hours left";
-    } else if ($hours < 1 && $minutes >= 1) {
-      $time = $minutes . ' minutes left';
-    } else if ($minutes < 1 && $seconds >= 1) {
-      $time = $seconds . ' seconds left';
-    } else {
-      $time = 'Competition has ended';
-    }
+	public function manageTime($days, $hours, $minutes, $seconds)
+	{
+		$time = NULL;
+		if ($days > 2) {
+			$time = $days . ' days left';
+		} else if ($days <= 2 && $hours >= 1) {
+			$time = $hours . " hours left";
+		} else if ($hours < 1 && $minutes >= 1) {
+			$time = $minutes . ' minutes left';
+		} else if ($minutes < 1 && $seconds >= 1) {
+			$time = $seconds . ' seconds left';
+		} else {
+			$time = 'Competition has ended';
+		}
 
-    return $time;
-  }
+		return $time;
+	}
 
 
 }
