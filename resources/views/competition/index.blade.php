@@ -17,14 +17,63 @@
 			<div>
 				<div class="row countdown text-center">
 	    		<span class="date">
-	    			Duration: {{$month}} {{$startDate}} - {{$endDate}}, {{$year}}
+	    			Duration: {{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}
 	    		</span>
 					<span class="timer"></span>
 				</div>
 			</div>
 		</div>
+
+		<!-- Stats -->
+		<div class="content bg-white border-b">
+			<div class="row items-push text-uppercase">
+
+				<div class="col-xs-6 col-sm-2 col-lg-2">
+					<div class="font-w700 text-gray-darker animated fadeIn">DAILY REFERRAL</div>
+					<div class="text-muted animated fadeIn">
+						<small><i class="si si-calendar"></i> Date
+							<i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip"
+							   data-placement="top" title="Commissions that will be paid out the 25th of this month"
+							   type="button"></i>
+						</small>
+					</div>
+					<span class="h2 text-moneygreen animated flipInX">{{ $dailyReferral }}</span>
+				</div>
+				<div class="col-xs-6 col-sm-2 col-lg-2">
+					<div class="font-w700 text-gray-darker animated fadeIn">TOTAL REFERRAL</div>
+					<div class="text-muted animated fadeIn">
+						<small><i class="si si-calendar"></i> Start Date - End Date
+							<i class="fa fa-question-circle" style="margin-left: 5px;" data-toggle="tooltip"
+							   data-placement="top" title="Commissions that will be paid out the 25th of this month"
+							   type="button"></i>
+						</small>
+					</div>
+					<span class="h2 text-moneygreen animated flipInX">{{ $totalReferral }}</span>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-lg-4">
+					<div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
+					<div class="text-muted animated fadeIn">
+						<small><i class="si si-trophy"></i> All Time</small>
+					</div>
+					@if ($ranking == 1)
+						<span class="h2 font-w300 text-modern animated flipInX">FIRST PLACE!</span>
+					@elseif ($ranking == 2)
+						<span class="h2 font-w300 text-modern animated flipInX">SECOND PLACE!</span>
+					@elseif ($ranking == 3)
+						<span class="h2 font-w300 text-modern animated flipInX">THIRD PLACE!</span>
+					@else
+						<span class="h2 font-w300 text-modern animated flipInX">#{{ $ranking }}</span>
+					@endif
+				</div>
+
+			</div>
+		</div>
+		<!-- END Stats -->
+
+
+
 		<div class="content content-boxed">
-			<div class="row statistics">
+			<div class="row statistics" style="display:none;">
 				<div class="col-xs-6 col-sm-2 col-lg-2">
 					<div class="font-w700 text-gray-darker animated fadeIn">DAILY REFERRAL</div>
 					<div class="text-muted animated fadeIn">
