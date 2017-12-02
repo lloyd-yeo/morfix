@@ -48,7 +48,7 @@ class CompetitionController extends Controller
 			$ranking = count($competitors);
 		}
 
-		$startDate = $this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
+		$startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
 		$analysis = $this->getAnalysis($startDate, $this->endDate);
 
 		$total_referrals = $this->getTotalReferral();
