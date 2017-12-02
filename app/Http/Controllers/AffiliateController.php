@@ -234,10 +234,15 @@ class AffiliateController extends Controller {
             if ($referral->tier > 1) {
 
 	            dump($referral);
-	            
+
                 $active = false;
 
                 if ($referral->paypal == 0) {
+
+                	if ($referral->braintree_id !== NULL) {
+		                $active = true;
+	                }
+
                     $stripe_details = StripeDetail::where('email', $referral->email)->get();
 
                     foreach ($stripe_details as $stripe_detail) {
@@ -249,7 +254,7 @@ class AffiliateController extends Controller {
                             }
                         }
                     }
-                } else if ($referral->braintree_id !== NULL || $referral->paypal == 1) {
+                } else {
                     $active = true;
                 }
 
