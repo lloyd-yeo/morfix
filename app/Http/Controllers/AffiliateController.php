@@ -207,6 +207,7 @@ class AffiliateController extends Controller {
                 })
                 ->where('ua.referrer', '=', Auth::user()->user_id)
                 ->get();
+
 //        dd($referrals);
 //        dd(DB::getQueryLog());
 //        $referrals = DB::table('user')
