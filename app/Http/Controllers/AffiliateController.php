@@ -246,7 +246,7 @@ class AffiliateController extends Controller {
                             }
                         }
                     }
-                } else {
+                } else if ($referral->braintree_id !== NULL || $referral->paypal == 1) {
                     $active = true;
                 }
 
