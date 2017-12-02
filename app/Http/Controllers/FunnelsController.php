@@ -247,6 +247,17 @@ class FunnelsController extends Controller
 
 				} else {
 
+					//Do a new referral upgrade
+					$title = "PRO UPGRADE!";
+					$type = "PRO_OTO_UPSELL";
+					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! But you missed out on the commission because you are not on Pro!";
+
+					$user_update = new UserUpdate;
+					$user_update->email = $referrer->email;
+					$user_update->title = $title;
+					$user_update->content = $update_text;
+					$user_update->type = $type;
+					$user_update->save();
 				}
 			}
 
@@ -297,6 +308,18 @@ class FunnelsController extends Controller
 					$title = "NEW BUSINESS UPGRADE!";
 					$type = "BUSINESS_UPGRADE";
 					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Business! That's another $50 USD for as long as they are there, keep it up!";
+
+					$user_update = new UserUpdate;
+					$user_update->email = $referrer->email;
+					$user_update->title = $title;
+					$user_update->content = $update_text;
+					$user_update->type = $type;
+					$user_update->save();
+				} else {
+					//Do a new referral upgrade
+					$title = "NEW BUSINESS UPGRADE!";
+					$type = "BUSINESS_UPGRADE";
+					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Business! But you missed out on the commission because you are not on Business!";
 
 					$user_update = new UserUpdate;
 					$user_update->email = $referrer->email;
