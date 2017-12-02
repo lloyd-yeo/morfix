@@ -28,7 +28,7 @@
 		<div class="content bg-white border-b">
 			<div class="row items-push text-uppercase">
 
-				<div class="col-xs-6 col-sm-2 col-lg-2">
+				<div class="col-xs-6 col-sm-2 col-lg-4">
 					<div class="font-w700 text-gray-darker animated fadeIn">DAILY REFERRAL</div>
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-calendar"></i> Date
@@ -39,7 +39,7 @@
 					</div>
 					<span class="h2 text-moneygreen animated flipInX">{{ $dailyReferral }}</span>
 				</div>
-				<div class="col-xs-6 col-sm-2 col-lg-2">
+				<div class="col-xs-6 col-sm-2 col-lg-4">
 					<div class="font-w700 text-gray-darker animated fadeIn">TOTAL REFERRAL</div>
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-calendar"></i> Start Date - End Date
