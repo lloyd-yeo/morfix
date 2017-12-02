@@ -133,8 +133,17 @@
 					</div>
 					<!-- END News -->
 				</div>
-
 			</div>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<button class="btn btn-block btn-primary push-10" type="button">[READ FIRST!] Terms & Conditions</button>
+				</div>
+				<div class="col-lg-6">
+					<button class="btn btn-block btn-primary push-10" type="button">Prizes</button>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="referral">
 					<div class="block">

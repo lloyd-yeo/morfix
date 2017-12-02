@@ -134,7 +134,7 @@ class CompetitionController extends Controller
 		$end_date->hour(59);
 		$end_date->minute(59);
 		$end_date->second(59);
-		
+
 		$affiliates_today_count = 0;
 		$affiliates_today       = DB::select("SELECT COUNT(referred_user.email) AS referrals
                   FROM user_affiliate ua, user referred_user
