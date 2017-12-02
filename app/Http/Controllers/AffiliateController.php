@@ -201,7 +201,7 @@ class AffiliateController extends Controller {
         $free_trial_referrals = array();
 //        DB::enableQueryLog();
         $referrals = DB::table('user as u')
-                ->select('u.email', 'u.tier', 'u.created_at', 'u.paypal')
+                ->select('u.email', 'u.tier', 'u.created_at', 'u.paypal', 'u.braintree_id')
                 ->join('user_affiliate as ua', function($join) {
                     $join->on('ua.referred', '=', 'u.user_id');
                 })
