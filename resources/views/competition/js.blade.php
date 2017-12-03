@@ -198,6 +198,12 @@ jQuery(function () {
             });
         }, 1000);
 
+        var x = setInterval(function (){
+            $.get("/competition/timerHour", function(timer){
+                $("#hourTimer").html(timer);
+            });
+        }, 1000);
+
         App.initHelpers(['appear', 'appear-countTo']);
         BaseTableDatatables.init();
     });

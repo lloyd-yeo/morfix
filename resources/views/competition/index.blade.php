@@ -20,6 +20,8 @@
 	    			Duration: {{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}
 	    		</span>
 					<span class="timer"></span>
+					<br/>
+					<span id="hourTimer"></span> hours remaining
 				</div>
 			</div>
 		</div>
@@ -69,7 +71,6 @@
 			</div>
 		</div>
 		<!-- END Stats -->
-
 
 
 		<div class="content content-boxed">
@@ -124,10 +125,14 @@
 
 			<div class="row">
 				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-terms-conditions" type="button">[READ FIRST!] Terms & Conditions</button>
+					<button class="btn btn-block btn-primary push-10" data-toggle="modal"
+					        data-target="#modal-terms-conditions" type="button">[READ FIRST!] Terms & Conditions
+					</button>
 				</div>
 				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-prizes" type="button">Prizes</button>
+					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-prizes"
+					        type="button">Prizes
+					</button>
 				</div>
 			</div>
 
@@ -231,7 +236,8 @@
 					<div class="block-content block-content-full">
 						<div class="row">
 							<div class="col-xs-6 col-sm-4 col-lg-4">
-								<a class="block block-link-hover2 text-center" href="{{ asset('/assets/Morfix_Email_Swipes.docx') }}" download>
+								<a class="block block-link-hover2 text-center"
+								   href="{{ asset('/assets/Morfix_Email_Swipes.docx') }}" download>
 									<div class="block-content block-content-full bg-primary">
 										<i class="si si-docs fa-4x text-white"></i>
 										<div class="font-w600 text-white-op push-15-t">Email Swipes</div>

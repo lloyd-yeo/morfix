@@ -342,6 +342,18 @@ class CompetitionController extends Controller
 		return $this->manageTime($days, $hours, $minutes, $seconds);
 	}
 
+	public function getTimeHour()
+	{
+		$current = Carbon::now();
+		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+		$time    = $end->diffInSeconds($current);
+		$seconds = $time % 60;
+		$time    = ($time - $seconds) / 60;
+		$minutes = $time % 60;
+		$hours   = (($time - $minutes) / 60) % 24;
+		return $hours;
+	}
+
 	public function manageTime($days, $hours, $minutes, $seconds)
 	{
 		$time = NULL;

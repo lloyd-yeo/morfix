@@ -156,6 +156,7 @@ Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgree
 
 Route::get('/competition', 'CompetitionController@show');
 Route::get('/competition/timer','CompetitionController@getTime');
+Route::get('/competition/timerHour','CompetitionController@getTimeHour');
 Route::get('/competition/competitors', 'CompetitionController@getCompetitors');
 
 /**
