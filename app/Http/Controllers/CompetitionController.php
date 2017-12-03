@@ -56,7 +56,7 @@ class CompetitionController extends Controller
 
 			$daily_referrals = $this->getDailyReferral();
 
-			$competition_time = Carbon::now('American/Belize');
+			$competition_time = Carbon::now('America/Belize');
 
 			return view('competition.index', [
 				"month"                   => $this->startDate->format("F"),
