@@ -481,6 +481,9 @@
                 cardholderName: {
                     required: true
                 }
+            },
+            paypalCredit: {
+                flow: 'vault'
             }
         }, function (createErr, instance) {
             button.addEventListener('click', function () {

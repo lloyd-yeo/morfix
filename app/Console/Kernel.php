@@ -90,6 +90,7 @@ class Kernel extends ConsoleKernel {
         Commands\TestInteractionGenderFilter::class,
 	    Commands\TestFailedEngagementGroupNotification::class,
 	    Commands\UpdateMasterInstagramProfileErrorFlags::class,
+        Commands\ImportCompetitorsCsv::class,
     ];
 
     /**

@@ -291,8 +291,10 @@
                     label: 'buynow',
                     branding: true,
                 },
+            },
+            paypalCredit: {
+                flow: 'vault'
             }
-
         }, function (createErr, instance) {
             button.addEventListener('click', function () {
                 instance.requestPaymentMethod(function (err, payload) {
