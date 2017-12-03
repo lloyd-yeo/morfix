@@ -24,9 +24,10 @@
 					<span class="timer font-w700" style="margin-top: 15px; font-size: 18px;"></span>
 					<br/>
 					<span class="font-w700" style="width: 100%; float: left; margin-top: 15px; font-size: 18px;">
-						<span id="hourTimer"></span> hours remaining</span>
-						<span id="minuteTimer"></span> minutes remaining</span>
-						<span id="secondTimer"></span> seconds remaining</span>
+						<span id="hourTimer"></span> hours remaining
+						<span id="minuteTimer"></span> minutes remaining
+						<span id="secondTimer"></span> seconds remaining
+					</span>
 				</div>
 			</div>
 		</div>
