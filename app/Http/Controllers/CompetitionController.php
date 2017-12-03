@@ -194,6 +194,8 @@ class CompetitionController extends Controller
 		$start_date             = $this->startDate;
 		$end_date               = $this->endDate;
 
+		$test_counter = 0;
+
 		foreach ($this->getCompetitors() as $competitor) {
 
 			$referrer_id = $competitor->user_id;
@@ -208,11 +210,57 @@ class CompetitionController extends Controller
 
 			foreach ($response as $affiliate_referrals) {
 				//				if ($affiliate_referrals->referrals > 0) {
-				$competitor_stats_array[] = [
-					'email'     => $competitor->email,
-					'name'      => $competitor->name,
-					'referrals' => $affiliate_referrals->referrals,
-				];
+				if ($test_counter == 0) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => $affiliate_referrals->referrals,
+					];
+				} else if ($test_counter == 1) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => 1,
+					];
+				} else if ($test_counter == 2) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => 3,
+					];
+				} else if ($test_counter == 3) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => 5,
+					];
+				} else if ($test_counter == 4) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => 10,
+					];
+				} else if ($test_counter == 5) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => 15,
+					];
+				} else if ($test_counter == 6) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => 20,
+					];
+				} else if ($test_counter > 6) {
+					$competitor_stats_array[] = [
+						'email'     => $competitor->email,
+						'name'      => $competitor->name,
+						'referrals' => $affiliate_referrals->referrals,
+					];
+				}
+				$test_counter++;
+
 				//				}
 			}
 		}
