@@ -112,7 +112,7 @@
 					@endif
 				</div>
 
-				<div class="col-xs-6 col-sm-6 col-lg-34">
+				<div class="col-xs-6 col-sm-6 col-lg-3">
 					<div class="font-w700 text-gray-darker animated fadeIn">COMPETITION TIME NOW (CST)</div>
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-clock"></i> Time Now</small>
