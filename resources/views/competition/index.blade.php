@@ -220,6 +220,18 @@
 					<div class="block-header">
 						<h3 class="block-title"><i class="fa fa-bars"></i> RESOURCES</h3>
 					</div>
+					<div class="block-content block-content-full">
+						<div class="row">
+							<div class="col-xs-6 col-sm-4 col-lg-2">
+								<a class="block block-link-hover2 text-center" href="javascript:void(0)">
+									<div class="block-content block-content-full bg-primary">
+										<i class="si si-email fa-4x text-white"></i>
+										<div class="font-w600 text-white-op push-15-t">Email Swipes</div>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
