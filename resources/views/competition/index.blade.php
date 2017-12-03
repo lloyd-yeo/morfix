@@ -96,7 +96,7 @@
 					</div>
 					<span class="h2 text-moneygreen animated flipInX">{{ $totalReferral }}</span>
 				</div>
-				<div class="col-xs-6 col-sm-6 col-lg-34">
+				<div class="col-xs-6 col-sm-6 col-lg-3">
 					<div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-trophy"></i> All Time</small>
