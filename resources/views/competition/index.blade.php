@@ -70,7 +70,7 @@
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-clock"></i> Time Now</small>
 					</div>
-					<span class="h2 font-w300 text-modern animated flipInX">{{ $competition_time }}</span>
+					<span class="h2 font-w300 text-modern animated flipInX">{{ $competition_time->toDayDateTimeString() }}</span>
 				</div>
 			</div>
 		</div>
