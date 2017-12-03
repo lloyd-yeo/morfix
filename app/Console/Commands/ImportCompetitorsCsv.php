@@ -38,7 +38,6 @@ class ImportCompetitorsCsv extends Command
      */
     public function handle()
     {
-
 	    $path = storage_path('app/competitors.csv');
 	    $file = fopen($path, "r");
 

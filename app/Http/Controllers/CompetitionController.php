@@ -26,59 +26,63 @@ class CompetitionController extends Controller
 	public function show()
 	{
 
-		$this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
-		$this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59);
+		if (Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) {
+			$this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
+			$this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59);
 
-		$competitors = $this->getCompetitors();
+			$competitors = $this->getCompetitors();
 
-		$leaderboard_entries = $this->getNewProfilesByRankingLimit();
+			$leaderboard_entries = $this->getNewProfilesByRankingLimit();
 
-		$ranking        = 1;
-		$in_leaderboard = FALSE;
+			$ranking        = 1;
+			$in_leaderboard = FALSE;
 
-		foreach ($leaderboard_entries as $leaderboard_entry) {
-			if ($leaderboard_entry['email'] == Auth::user()->email) {
-				$in_leaderboard = TRUE;
-				break;
+			foreach ($leaderboard_entries as $leaderboard_entry) {
+				if ($leaderboard_entry['email'] == Auth::user()->email) {
+					$in_leaderboard = TRUE;
+					break;
+				}
+				$ranking++;
 			}
-			$ranking++;
+
+			if (!$in_leaderboard) {
+				$ranking = count($competitors);
+			}
+
+			$startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
+			$analysis = $this->getAnalysis($startDate, $this->endDate);
+
+			$total_referrals = $this->getTotalReferral();
+
+			$daily_referrals = $this->getDailyReferral();
+
+			return view('competition.index', [
+				"month"                   => $this->startDate->format("F"),
+				"startDate"               => $this->startDate->day,
+				"endDate"                 => $this->endDate->day,
+				"year"                    => $this->startDate->year,
+				"competitors"             => $competitors,
+				"ranking"                 => $ranking,
+				"dailyReferral"           => $daily_referrals,
+				"totalReferral"           => count($total_referrals),
+				"allReferrals"            => $total_referrals,
+				"analysis"                => $analysis['analysis'],
+				"analysisLabel"           => $analysis['analysisLabel'],
+				"competition_leaderboard" => $leaderboard_entries,
+			]);
+		} else {
+			return redirect('home')->with('error', 'You are not eligible for the competition!');
 		}
-
-		if (!$in_leaderboard) {
-			$ranking = count($competitors);
-		}
-
-		$startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
-		$analysis = $this->getAnalysis($startDate, $this->endDate);
-
-		$total_referrals = $this->getTotalReferral();
-
-		$daily_referrals = $this->getDailyReferral();
-
-		return view('competition.index', [
-			"month"                   => $this->startDate->format("F"),
-			"startDate"               => $this->startDate->day,
-			"endDate"                 => $this->endDate->day,
-			"year"                    => $this->startDate->year,
-			"competitors"             => $competitors,
-			"ranking"                 => $ranking,
-			"dailyReferral"           => $daily_referrals,
-			"totalReferral"           => count($total_referrals),
-			"allReferrals"            => $total_referrals,
-			"analysis"                => $analysis['analysis'],
-			"analysisLabel"           => $analysis['analysisLabel'],
-			"competition_leaderboard" => $leaderboard_entries,
-		]);
 	}
 
 	public function getCompetitors()
 	{
-		$response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')
-		                ->where('tier', '>', '1')
-		                ->where('pending_commission_payable', '>', '0')
-		                ->orderBy('pending_commission_payable', 'DESC')->get();
+//		$response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')
+//		                ->where('tier', '>', '1')
+//		                ->where('pending_commission_payable', '>', '0')
+//		                ->orderBy('pending_commission_payable', 'DESC')->get();
 
-//		$response = User::where('tier', '>', '1')->where('is_competitor', 1)->get();
+		$response = User::where('tier', '>', '1')->where('is_competitor', 1)->get();
 
 		return $response;
 	}
@@ -127,14 +131,8 @@ class CompetitionController extends Controller
 
 		$start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
 		$end_date   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
+
 		#test
-
-		$start_date = clone $this->startDate;
-		$end_date = clone $this->startDate;
-		$end_date->hour(59);
-		$end_date->minute(59);
-		$end_date->second(59);
-
 		$affiliates_today_count = 0;
 		$affiliates_today       = DB::select("SELECT COUNT(referred_user.email) AS referrals
                   FROM user_affiliate ua, user referred_user
