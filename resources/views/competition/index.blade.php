@@ -12,7 +12,7 @@
 		     data-vide-options="posterType: jpg, position: 50% 75%" style="position: relative;">
 			<div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden; background-size: cover;
          background-color: transparent; background-repeat: no-repeat; background-position: 50% 75%; background-image: none;">
-				<img src="assets/img/competition/hero.jpg" style=""/></div>
+				<img src="assets/img/competition/hero.jpg" style="width: 100%;"/></div>
 			<div>
 				<div class="row countdown text-center">
 	    		<span class="date">
