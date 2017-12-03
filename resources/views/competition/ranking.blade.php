@@ -38,7 +38,7 @@
                                                     @elseif ($user["referrals"] == 25)
                                                         <img src="{{  asset('assets/img/competition/cupking.png') }}">
                                                     @endif
-                                                    <i class='text-primary fa fa-trophy'></i>
+                                                    {{--<i class='text-primary fa fa-trophy'></i>--}}
                                                 @else
                                                 @endif
 
@@ -51,7 +51,22 @@
                                             </td>
                                             <td>
                                                 @if ($user["referrals"] > 0)
-                                                    <i class='text-primary fa fa-diamond'></i>
+                                                    @if ($user["referrals"] == 1)
+                                                        <img src="{{  asset('assets/img/competition/achievement1.png') }}">
+                                                    @elseif ($user["referrals"] == 3)
+                                                        <img src="{{  asset('assets/img/competition/achievement2.png') }}">
+                                                    @elseif ($user["referrals"] == 5)
+                                                        <img src="{{  asset('assets/img/competition/bigachievementmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 10)
+                                                        <img src="{{  asset('assets/img/competition/smallmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 15)
+                                                        <img src="{{  asset('assets/img/competition/diamondmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 20)
+                                                        <img src="{{  asset('assets/img/competition/cup1.png') }}">
+                                                    @elseif ($user["referrals"] == 25)
+                                                        <img src="{{  asset('assets/img/competition/cupking.png') }}">
+                                                    @endif
+                                                    {{--<i class='text-primary fa fa-diamond'></i>--}}
                                                 @else
                                                 @endif
                                                 </td>
@@ -63,7 +78,22 @@
                                             </td>
                                             <td>
                                                 @if ($user["referrals"] > 0)
-                                                    <i class='text-primary si si-badge'></i>
+                                                    @if ($user["referrals"] == 1)
+                                                        <img src="{{  asset('assets/img/competition/achievement1.png') }}">
+                                                    @elseif ($user["referrals"] == 3)
+                                                        <img src="{{  asset('assets/img/competition/achievement2.png') }}">
+                                                    @elseif ($user["referrals"] == 5)
+                                                        <img src="{{  asset('assets/img/competition/bigachievementmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 10)
+                                                        <img src="{{  asset('assets/img/competition/smallmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 15)
+                                                        <img src="{{  asset('assets/img/competition/diamondmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 20)
+                                                        <img src="{{  asset('assets/img/competition/cup1.png') }}">
+                                                    @elseif ($user["referrals"] == 25)
+                                                        <img src="{{  asset('assets/img/competition/cupking.png') }}">
+                                                    @endif
+                                                    {{--<i class='text-primary si si-badge'></i>--}}
                                                 @else
                                                 @endif
 
@@ -77,6 +107,21 @@
                                             </td>
                                             <td>
                                                 @if ($user["referrals"] > 0)
+                                                    @if ($user["referrals"] == 1)
+                                                        <img src="{{  asset('assets/img/competition/achievement1.png') }}">
+                                                    @elseif ($user["referrals"] == 3)
+                                                        <img src="{{  asset('assets/img/competition/achievement2.png') }}">
+                                                    @elseif ($user["referrals"] == 5)
+                                                        <img src="{{  asset('assets/img/competition/bigachievementmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 10)
+                                                        <img src="{{  asset('assets/img/competition/smallmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 15)
+                                                        <img src="{{  asset('assets/img/competition/diamondmedal.png') }}">
+                                                    @elseif ($user["referrals"] == 20)
+                                                        <img src="{{  asset('assets/img/competition/cup1.png') }}">
+                                                    @elseif ($user["referrals"] == 25)
+                                                        <img src="{{  asset('assets/img/competition/cupking.png') }}">
+                                                    @endif
                                                 @else
                                                 @endif
                                             </td>
