@@ -12,8 +12,8 @@
 		     data-vide-options="posterType: jpg, position: 50% 75%" style="position: relative;">
 			<div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden; background-size: cover;
          background-color: transparent; background-repeat: no-repeat; background-position: 50% 75%; background-image: none;">
-				<img class="" src="assets/img/competition/hero.jpg" style="margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%);
-               visibility: visible; opacity: 0.1; width: 100%; height: auto;"/></div>
+				<img class="" src="assets/img/competition/hero.jpg" style="filter: brightness(50%); margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%);
+               visibility: visible; opacity: 1; width: 100%; height: auto;"/></div>
 			<div>
 				<div class="row countdown text-center">
 	    		<span class="date">
