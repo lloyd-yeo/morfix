@@ -21,7 +21,11 @@
                                             <td class="font-w700">
                                                 <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
                                             </td>
-                                            <td><i class='text-primary fa fa-trophy'></i></td>
+                                            <td>
+                                                @if ($user["referrals"] > 0)
+                                                @endif
+                                                <i class='text-primary fa fa-trophy'></i>
+                                            </td>
                                         </tr>
                                         @elseif ($loop->iteration == 2)
                                         <tr>
