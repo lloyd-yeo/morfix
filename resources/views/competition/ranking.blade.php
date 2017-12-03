@@ -23,8 +23,10 @@
                                             </td>
                                             <td>
                                                 @if ($user["referrals"] > 0)
+                                                    <i class='text-primary fa fa-trophy'></i>
+                                                @else
                                                 @endif
-                                                <i class='text-primary fa fa-trophy'></i>
+
                                             </td>
                                         </tr>
                                         @elseif ($loop->iteration == 2)
@@ -32,20 +34,36 @@
                                             <td class="font-w700">
                                                 <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
                                             </td>
-                                            <td><i class='text-primary fa fa-diamond'></i></td>
+                                            <td>
+                                                @if ($user["referrals"] > 0)
+                                                    <i class='text-primary fa fa-diamond'></i>
+                                                @else
+                                                @endif
+                                                </td>
                                         </tr>
                                         @elseif ($loop->iteration == 3)
                                         <tr>
                                             <td class="font-w700">
                                                 <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
                                             </td>
-                                            <td><i class='text-primary si si-badge'></i></td>
+                                            <td>
+                                                @if ($user["referrals"] > 0)
+                                                    <i class='text-primary si si-badge'></i>
+                                                @else
+                                                @endif
+
+                                            </td>
                                         </tr>
                                         @elseif ($loop->iteration > 10)
                                         @else
                                         <tr>
                                             <td class="font-w600">
                                                 <span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
+                                            </td>
+                                            <td>
+                                                @if ($user["referrals"] > 0)
+                                                @else
+                                                @endif
                                             </td>
                                         </tr>
                                         @endif
