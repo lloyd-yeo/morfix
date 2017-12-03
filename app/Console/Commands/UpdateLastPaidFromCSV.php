@@ -43,7 +43,7 @@ class UpdateLastPaidFromCSV extends Command {
     public function handle() {
         $path = app_path('november-payout.csv');
         $file = fopen($path, "r");
-
+        dump($path);
         $current_email = "";
         $last_pay_out_coms_date = "2017-11-25 00:00:00"; //edit here every month
         $paid_amount =0;
