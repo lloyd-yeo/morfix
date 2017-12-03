@@ -22,6 +22,7 @@ use PayPal\Api\Plan;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 use Response;
+use App\CompetitionUpdate;
 
 class PaymentController extends Controller
 {
@@ -177,7 +178,29 @@ class PaymentController extends Controller
 					if ($referrer->tier > 1) {
 						$referrer->pending_commission = $referrer->pending_commission + 20;
 						$referrer->save();
-					}
+
+                        //Do a new referral upgrade
+                        $title = "NEW REFERRAL!";
+                        $type = "NEW_REFERRAL";
+                        $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Premium! You’re getting more and more referrals, keep it up!";
+
+                        $user_update = new UserUpdate;
+                        $user_update->email = $referrer->email;
+                        $user_update->title = $title;
+                        $user_update->content = $update_text;
+                        $user_update->type = $type;
+                        $user_update->save();
+
+                        if ($referrer->is_competitor == 1) {
+                            $user_competitor_update = new CompetitionUpdate;
+                            $user_competitor_update->email = $referrer->email;
+                            $user_competitor_update->title = $title;
+                            $user_competitor_update->content = $update_text;
+                            $user_competitor_update->type = $type;
+                            $user_competitor_update->save();
+                        }
+
+                    }
 				}
 
 				$user->tier = 2;
@@ -260,6 +283,27 @@ class PaymentController extends Controller
 					if ($referrer->tier % 10 == 3) {
 						$referrer->pending_commission = $referrer->pending_commission + 200;
 						$referrer->save();
+
+                        //Do a new referral upgrade
+                        $title = "PRO UPGRADE!";
+                        $type = "PRO_OTO_UPSELL";
+                        $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! You've earned yourself another $200USD!";
+
+                        $user_update = new UserUpdate;
+                        $user_update->email = $referrer->email;
+                        $user_update->title = $title;
+                        $user_update->content = $update_text;
+                        $user_update->type = $type;
+                        $user_update->save();
+
+                        if ($referrer->is_competitor == 1) {
+                            $user_competitor_update = new CompetitionUpdate;
+                            $user_competitor_update->email = $referrer->email;
+                            $user_competitor_update->title = $title;
+                            $user_competitor_update->content = $update_text;
+                            $user_competitor_update->type = $type;
+                            $user_competitor_update->save();
+                        }
 					}
 				}
 
@@ -309,6 +353,27 @@ class PaymentController extends Controller
 					if ($referrer->tier % 10 == 3) {
 						$referrer->pending_commission = $referrer->pending_commission + 150;
 						$referrer->save();
+
+                        //Do a new referral upgrade
+                        $title = "PRO UPGRADE!";
+                        $type = "PRO_OTO_UPSELL";
+                        $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! You've earned yourself another $150USD!";
+
+                        $user_update = new UserUpdate;
+                        $user_update->email = $referrer->email;
+                        $user_update->title = $title;
+                        $user_update->content = $update_text;
+                        $user_update->type = $type;
+                        $user_update->save();
+
+                        if ($referrer->is_competitor == 1) {
+                            $user_competitor_update = new CompetitionUpdate;
+                            $user_competitor_update->email = $referrer->email;
+                            $user_competitor_update->title = $title;
+                            $user_competitor_update->content = $update_text;
+                            $user_competitor_update->type = $type;
+                            $user_competitor_update->save();
+                        }
 					}
 				}
 
@@ -353,7 +418,29 @@ class PaymentController extends Controller
 				if ($referrer->tier / 10 > 0) {
 					$referrer->pending_commission = $referrer->pending_commission + 50;
 					$referrer->save();
-				}
+
+                    //Do a new referral upgrade
+                    $title = "NEW BUSINESS UPGRADE!";
+                    $type = "BUSINESS_UPGRADE";
+                    $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Business! That's another $50 USD for as long as they are there, keep it up!";
+
+                    $user_update = new UserUpdate;
+                    $user_update->email = $referrer->email;
+                    $user_update->title = $title;
+                    $user_update->content = $update_text;
+                    $user_update->type = $type;
+                    $user_update->save();
+
+                    if ($referrer->is_competitor == 1) {
+                        $user_competitor_update = new CompetitionUpdate;
+                        $user_competitor_update->email = $referrer->email;
+                        $user_competitor_update->title = $title;
+                        $user_competitor_update->content = $update_text;
+                        $user_competitor_update->type = $type;
+                        $user_competitor_update->save();
+                    }
+
+                }
 			}
 
 			return view('payment.upgrade.confirmation');
