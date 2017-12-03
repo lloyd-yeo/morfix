@@ -56,7 +56,7 @@ class UpdateLastPaidFromCSV extends Command {
 
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
-                if ($data[2] > 50 && !empty($data[1]) && $data[4] == 'paid') {      //edit here every month
+                if ($data[2] > 50 && !empty($data[1]) && $data[4] == 'PAID') {      //edit here every month
                     $tier = $user->tier;
                     $user->last_pay_out_date = $last_pay_out_coms_date;
                     $this->UpdateUserChargesPaid($user);
