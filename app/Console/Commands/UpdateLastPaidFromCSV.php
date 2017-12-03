@@ -43,17 +43,15 @@ class UpdateLastPaidFromCSV extends Command {
     public function handle() {
         $path = app_path('november-payout.csv');
         $file = fopen($path, "r");
-        dump($path);
         $current_email = "";
         $last_pay_out_coms_date = "2017-11-25 00:00:00"; //edit here every month
         $paid_amount =0;
         $tier = 0;
             
         while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
-            #$data is one row.
-            #$data[0] is first cell so on & so forth.
+//            #$data is one row.
+//            #$data[0] is first cell so on & so forth.
             $current_email = $data[0];
-
             $user = User::where('email', $current_email)->first();
             if ($user !== NULL) {
                 if ($data[2] > 50 && !empty($data[1]) && $data[4] == 'PAID') {      //edit here every month
