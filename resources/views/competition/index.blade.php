@@ -21,9 +21,9 @@
 				    <span style="font-size: 25px;">COMPETITION PERIOD: </span><br/>
 				    <span style="font-size: 25px;">{{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}</span>
 	    		</span>
-					<span class="timer" style="margin-top: 15px;"></span>
+					<span class="timer font-w700" style="margin-top: 15px; font-size: 18px;"></span>
 					<br/>
-					<span style="width: 100%; float: left; margin-top: 15px;"><span id="hourTimer"></span> seconds remaining</span>
+					<span class="font-w700" style="width: 100%; float: left; margin-top: 15px; font-size: 18px;"><span id="hourTimer"></span> seconds remaining</span>
 				</div>
 			</div>
 		</div>
