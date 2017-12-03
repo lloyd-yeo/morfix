@@ -33,7 +33,6 @@ class CompetitionController extends Controller
 			$competitors = $this->getCompetitors();
 
 			$leaderboard_entries = $this->getNewProfilesByRankingLimit();
-			dump($leaderboard_entries);
 			$ranking        = 1;
 			$in_leaderboard = FALSE;
 
@@ -205,13 +204,13 @@ class CompetitionController extends Controller
                   AND referred_user.tier > 1;");
 
 			foreach ($response as $affiliate_referrals) {
-				if ($affiliate_referrals->referrals > 0) {
+//				if ($affiliate_referrals->referrals > 0) {
 					$competitor_stats_array[] = [
 						'email'     => $competitor->email,
 						'name'      => $competitor->name,
 						'referrals' => $affiliate_referrals->referrals,
 					];
-				}
+//				}
 			}
 		}
 
