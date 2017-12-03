@@ -27,8 +27,8 @@ class CompetitionController extends Controller
 	{
 
 		if (Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) {
-			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'Asia/Singapore');
-			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'Asia/Singapore');
+			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
+			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 
 			$competitors = $this->getCompetitors();
 
@@ -49,7 +49,7 @@ class CompetitionController extends Controller
 				$ranking = count($competitors);
 			}
 
-			$startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'Asia/Singapore');
+			$startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
 			$analysis  = $this->getAnalysis($startDate, $this->endDate);
 
 			$total_referrals = $this->getTotalReferral();
@@ -141,7 +141,7 @@ class CompetitionController extends Controller
 		$referrer_id = Auth::user()->user_id;
 		$start_date  = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
 		//    $this->endDate = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
-		$end_date = Carbon::create(2017, 12, 17, 23, 59, 59, 'Asia/Singapore');
+		$end_date = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 
 		$affiliates_total = DB::select("SELECT referred_user.*
                   FROM user_affiliate ua, user referred_user
@@ -341,7 +341,7 @@ class CompetitionController extends Controller
 	public function getTime()
 	{
 		$current = Carbon::now();
-		$end  = Carbon::create(2017, 12, 17, 23, 59, 59, 'Asia/Singapore');
+		$end  = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 		$time = $end->diffInSeconds($current);
 		$seconds = $time % 60;
 		$time    = ($time - $seconds) / 60;
