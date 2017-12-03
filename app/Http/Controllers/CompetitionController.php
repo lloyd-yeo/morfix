@@ -363,7 +363,7 @@ class CompetitionController extends Controller
 
 		$time    = $end->diffInSeconds($current);
 
-		$hours   = round($time / 60 / 60);
+		$hours   = floor($time / 60 / 60);
 		$time = $time - ($hours * 60 * 60); //remainder time after deducting hours
 
 		$minutes = round($time / 60);
@@ -377,7 +377,7 @@ class CompetitionController extends Controller
 		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 		$time    = $end->diffInSeconds($current);
 
-		$hours   = round($time / 60 / 60);
+		$hours   = floor($time / 60 / 60);
 		$time = $time - ($hours * 60 * 60); //remainder time after deducting hours
 
 		$minutes = round($time / 60);
