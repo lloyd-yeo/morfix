@@ -33,7 +33,7 @@ class CompetitionController extends Controller
 			$competitors = $this->getCompetitors();
 
 			$leaderboard_entries = $this->getNewProfilesByRankingLimit();
-			dump($leaderboard_entries);
+//			dump($leaderboard_entries);
 			$ranking        = 1;
 			$in_leaderboard = FALSE;
 
