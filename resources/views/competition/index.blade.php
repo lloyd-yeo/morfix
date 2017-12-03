@@ -16,7 +16,7 @@
                visibility: visible; opacity: 1; width: 100%; height: auto;"/></div>
 			<div>
 				<div class="row countdown text-center">
-	    		<span class="date" style="font-size: 80px;">
+	    		<span class="date" style="font-size: 40px;">
 	    			COMPETITION PERIOD: <br/>
 				    {{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}
 	    		</span>
