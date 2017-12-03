@@ -21,7 +21,7 @@
 	    		</span>
 					<span class="timer"></span>
 					<br/>
-					<span id="hourTimer"></span> hours remaining
+					<span id="hourTimer"></span> seconds remaining
 				</div>
 			</div>
 		</div>
