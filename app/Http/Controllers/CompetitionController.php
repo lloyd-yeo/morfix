@@ -33,7 +33,7 @@ class CompetitionController extends Controller
 			$competitors = $this->getCompetitors();
 
 			$leaderboard_entries = $this->getNewProfilesByRankingLimit();
-
+			dump($leaderboard_entries);
 			$ranking        = 1;
 			$in_leaderboard = FALSE;
 
@@ -99,7 +99,7 @@ class CompetitionController extends Controller
 			$rank = 0;
 
 			foreach ($rankingCompetitionResult as $result) {
-				//                echo json_encode($result);
+
 				$rank++;
 				if ($result->referrer == $currentUser->user_id) {
 					break;
