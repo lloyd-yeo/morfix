@@ -12,7 +12,7 @@
 		     data-vide-options="posterType: jpg, position: 50% 75%" style="position: relative;">
 			<div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden; background-size: cover;
          background-color: transparent; background-repeat: no-repeat; background-position: 50% 75%; background-image: none;">
-				<img src="assets/img/photos/photo6@2x.jpg" style="margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%);
+				<img src="assets/img/competition/hero.jpg" style="margin: auto; position: absolute; z-index: -1; top: 75%; left: 50%; transform: translate(-50%, -75%);
                visibility: visible; opacity: 1; width: 100%; height: auto;"/></div>
 			<div>
 				<div class="row countdown text-center">
@@ -28,7 +28,7 @@
 		<div class="content bg-white border-b">
 			<div class="row items-push text-uppercase">
 
-				<div class="col-xs-6 col-sm-2 col-lg-3">
+				<div class="col-xs-6 col-sm-2 col-lg-4">
 					<div class="font-w700 text-gray-darker animated fadeIn">DAILY REFERRAL</div>
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-calendar"></i> Date
@@ -39,7 +39,7 @@
 					</div>
 					<span class="h2 text-moneygreen animated flipInX">{{ $dailyReferral }}</span>
 				</div>
-				<div class="col-xs-6 col-sm-2 col-lg-3">
+				<div class="col-xs-6 col-sm-2 col-lg-4">
 					<div class="font-w700 text-gray-darker animated fadeIn">TOTAL REFERRAL</div>
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-calendar"></i> Start Date - End Date
@@ -50,7 +50,7 @@
 					</div>
 					<span class="h2 text-moneygreen animated flipInX">{{ $totalReferral }}</span>
 				</div>
-				<div class="col-xs-6 col-sm-6 col-lg-3">
+				<div class="col-xs-6 col-sm-6 col-lg-4">
 					<div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
 					<div class="text-muted animated fadeIn">
 						<small><i class="si si-trophy"></i> All Time</small>
@@ -65,13 +65,7 @@
 						<span class="h2 font-w300 text-modern animated flipInX">#{{ $ranking }}</span>
 					@endif
 				</div>
-				<div class="col-xs-6 col-sm-6 col-lg-3">
-					<div class="font-w700 text-gray-darker animated fadeIn">COMPETITION TIME NOW (CST)</div>
-					<div class="text-muted animated fadeIn">
-						<small><i class="si si-clock"></i> Time Now</small>
-					</div>
-					<span class="h2 font-w300 text-modern animated flipInX">{{ $competition_time->toDayDateTimeString() }}</span>
-				</div>
+
 			</div>
 		</div>
 		<!-- END Stats -->
