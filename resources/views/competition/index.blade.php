@@ -225,7 +225,7 @@
 							<div class="col-xs-6 col-sm-4 col-lg-2">
 								<a class="block block-link-hover2 text-center" href="javascript:void(0)">
 									<div class="block-content block-content-full bg-primary">
-										<i class="si si-email fa-4x text-white"></i>
+										<i class="si si-message fa-4x text-white"></i>
 										<div class="font-w600 text-white-op push-15-t">Email Swipes</div>
 									</div>
 								</a>
