@@ -50,7 +50,7 @@ class CompetitionController extends Controller
 			}
 
 			$startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
-			$analysis = $this->getAnalysis($startDate, $this->endDate);
+			$analysis  = $this->getAnalysis($startDate, $this->endDate);
 
 			$total_referrals = $this->getTotalReferral();
 
@@ -77,11 +77,6 @@ class CompetitionController extends Controller
 
 	public function getCompetitors()
 	{
-//		$response = User::where('last_pay_out_date', '=', '2017-10-25 00:00:00')
-//		                ->where('tier', '>', '1')
-//		                ->where('pending_commission_payable', '>', '0')
-//		                ->orderBy('pending_commission_payable', 'DESC')->get();
-
 		$response = User::where('tier', '>', '1')->where('is_competitor', 1)->get();
 
 		return $response;
@@ -144,6 +139,7 @@ class CompetitionController extends Controller
 		foreach ($affiliates_today as $affiliates_row) {
 			$affiliates_today_count = $affiliates_row->referrals;
 		}
+
 		return $affiliates_today_count;
 	}
 
@@ -354,17 +350,15 @@ class CompetitionController extends Controller
 	public function getTime()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 11, 20, 8, 2, 4, 'Asia/Singapore');
-		$time    = $end->diffInSeconds($current);
+		//		$end     = Carbon::create(2017, 11, 20, 8, 2, 4, 'Asia/Singapore');
+		$end  = $this->endDate;
+		$time = $end->diffInSeconds($current);
 		$seconds = $time % 60;
 		$time    = ($time - $seconds) / 60;
 		$minutes = $time % 60;
 		$hours   = (($time - $minutes) / 60) % 24;
 		$days    = intval((($time / 60) / 24));
-		// $secondsString = ($seconds >= 10) ? $seconds : '0'.$seconds;
-		// $minutesString = ($minutes >= 10) ? $minutes : '0'.$minutes;
-		// $hoursString = ($hours >= 10) ? $hours : '0'.$hours;
-		//    $timer = $days."D ".$hoursString.':'.$minutesString.':'.$secondsString;
+
 		return $this->manageTime($days, $hours, $minutes, $seconds);
 	}
 
