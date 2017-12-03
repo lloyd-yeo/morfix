@@ -23,7 +23,7 @@
 
 											</td>
 											<td>
-												<img src="{{  asset('assets/img/competition/firstplace.png') }}">
+												<img style="width: 32px;" src="{{  asset('assets/img/competition/firstplace.png') }}">
 											</td>
 										</tr>
 									@elseif ($loop->iteration == 2)
@@ -32,7 +32,7 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td>
-												<img src="{{  asset('assets/img/competition/secondplace.png') }}">
+												<img style="width: 32px;" src="{{  asset('assets/img/competition/secondplace.png') }}">
 											</td>
 										</tr>
 									@elseif ($loop->iteration == 3)
@@ -41,7 +41,7 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td>
-												<img src="{{  asset('assets/img/competition/thirdplace.png') }}">
+												<img style="width: 32px;" src="{{  asset('assets/img/competition/thirdplace.png') }}">
 											</td>
 										</tr>
 									@elseif ($loop->iteration > 10)
