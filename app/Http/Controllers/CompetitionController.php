@@ -347,9 +347,42 @@ class CompetitionController extends Controller
 		$current = Carbon::now();
 		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 		$time    = $end->diffInSeconds($current);
-//		$time    = ($time - $seconds) / 60;
-//		$minutes = $time % 60;
-//		$hours   = (($time - $minutes) / 60) % 24;
+
+		$hours   = round($time / 60 / 60); //get hours first
+
+		//		$time    = ($time - $seconds) / 60;
+		//		$minutes = $time % 60;
+		//		$hours   = (($time - $minutes) / 60) % 24;
+		return $hours;
+	}
+
+	public function getTimeMinute()
+	{
+		$current = Carbon::now();
+		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+
+		$time    = $end->diffInSeconds($current);
+
+		$hours   = round($time / 60 / 60);
+		$time = $time - ($hours * 60 * 60); //remainder time after deducting hours
+
+		$minutes = round($time / 60);
+
+		return $minutes;
+	}
+
+	public function getTimeSecond()
+	{
+		$current = Carbon::now();
+		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+		$time    = $end->diffInSeconds($current);
+
+		$hours   = round($time / 60 / 60);
+		$time = $time - ($hours * 60 * 60); //remainder time after deducting hours
+
+		$minutes = round($time / 60);
+		$time = $time - ($minutes * 60); //remainder time after deducting hours
+
 		return $time;
 	}
 

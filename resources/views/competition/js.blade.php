@@ -198,9 +198,21 @@ jQuery(function () {
             });
         }, 1000);
 
-        var x = setInterval(function (){
+        var y = setInterval(function (){
             $.get("/competition/timerHour", function(timer){
                 $("#hourTimer").html(timer);
+            });
+        }, 1000);
+
+        var z = setInterval(function (){
+            $.get("/competition/timerMinute", function(timer){
+                $("#minuteMinute").html(timer);
+            });
+        }, 1000);
+
+        var a = setInterval(function (){
+            $.get("/competition/timerSecond", function(timer){
+                $("#secondTimer").html(timer);
             });
         }, 1000);
 
