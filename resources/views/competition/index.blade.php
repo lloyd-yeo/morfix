@@ -23,7 +23,7 @@
 	    		</span>
 					<span class="timer" style="margin-top: 15px;"></span>
 					<br/>
-					<span id="hourTimer" style="width: 100%; float: left; margin-top: 15px;"></span> seconds remaining
+					<span style="width: 100%; float: left; margin-top: 15px;"><span id="hourTimer"></span> seconds remaining</span>
 				</div>
 			</div>
 		</div>
