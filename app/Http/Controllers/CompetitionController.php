@@ -350,7 +350,7 @@ class CompetitionController extends Controller
 	public function getTime()
 	{
 		$current = Carbon::now();
-		$end  = Carbon::create(2017, 9, 30, 23, 59, 59);
+		$end  = Carbon::create(2017, 12, 17, 23, 59, 59, 'Asia/Singapore');
 		$time = $end->diffInSeconds($current);
 		$seconds = $time % 60;
 		$time    = ($time - $seconds) / 60;
