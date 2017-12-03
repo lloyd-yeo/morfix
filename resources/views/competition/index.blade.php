@@ -223,7 +223,7 @@
 					<div class="block-content block-content-full">
 						<div class="row">
 							<div class="col-xs-6 col-sm-4 col-lg-4">
-								<a class="block block-link-hover2 text-center" href="javascript:void(0)">
+								<a class="block block-link-hover2 text-center" href="{{ asset('/assets/Morfix_Email_Swipes.docx') }}" download>
 									<div class="block-content block-content-full bg-primary">
 										<i class="si si-docs fa-4x text-white"></i>
 										<div class="font-w600 text-white-op push-15-t">Email Swipes</div>
