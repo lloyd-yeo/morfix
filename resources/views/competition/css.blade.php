@@ -15,7 +15,7 @@
 	}
 
 	.timer {
-		font-size: 100px;
+		font-size: 30px;
 	}
 
 	/*  STATISTICS */
