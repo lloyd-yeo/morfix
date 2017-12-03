@@ -17,6 +17,7 @@
 			<div>
 				<div class="row countdown text-center">
 	    		<span class="date font-w700" style="font-size: 30px;">
+				    MORFIX FIRST EVER AFFILIATE COMPETITION!<br/>
 	    			COMPETITION PERIOD: <br/>
 				    {{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}
 	    		</span>
