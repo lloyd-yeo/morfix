@@ -206,7 +206,7 @@ jQuery(function () {
 
         var z = setInterval(function (){
             $.get("/competition/timerMinute", function(timer){
-                $("#minuteMinute").html(timer);
+                $("#minuteTimer").html(timer);
             });
         }, 1000);
 
