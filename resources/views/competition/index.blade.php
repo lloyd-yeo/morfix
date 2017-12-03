@@ -21,6 +21,7 @@
 	    			COMPETITION PERIOD: <br/>
 				    {{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}
 	    		</span>
+					<br/>
 					<span class="timer"></span>
 					<br/>
 					<span id="hourTimer"></span> seconds remaining
