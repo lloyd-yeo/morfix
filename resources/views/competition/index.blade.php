@@ -17,11 +17,11 @@
 			<div>
 				<div class="row countdown text-center">
 	    		<span class="date font-w700" style="font-size: 30px;">
-				    MORFIX FIRST EVER AFFILIATE COMPETITION!<br/>
-	    			COMPETITION PERIOD: <br/>
-				    {{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}
+				    <span>MORFIX FIRST EVER AFFILIATE COMPETITION!</span><br/>
+				    <span style="font-size: 25px;">COMPETITION PERIOD: </span><br/>
+				    <span style="font-size: 25px;">{{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}</span>
 	    		</span>
-					<br/>
+					<br/><br/>
 					<span class="timer"></span>
 					<br/>
 					<span id="hourTimer"></span> seconds remaining
