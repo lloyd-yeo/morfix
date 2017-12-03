@@ -343,6 +343,13 @@ class InstagramProfileController extends Controller
 		$ig_profile->insta_pw = $password;
 		$ig_profile->save();
 
+		if (Auth::user()->partition > 0) {
+			$connection_name = Helper::getConnection(Auth::user()->partition);
+			DB::connection($connection_name)->table('user_insta_profile')
+			  ->where('id', $ig_profile->id)
+			  ->update(['insta_pw' => $password]);
+		}
+
 		$config                = [];
 		$config["storage"]     = "mysql";
 		$config["pdo"]         = DB::connection('mysql_igsession')->getPdo();
