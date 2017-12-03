@@ -27,8 +27,8 @@ class CompetitionController extends Controller
 	{
 
 		if (Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) {
-			$this->startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
-			$this->endDate   = Carbon::create(2017, 9, 30, 23, 59, 59);
+			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'Asia/Singapore');
+			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'Asia/Singapore');
 
 			$competitors = $this->getCompetitors();
 
@@ -49,7 +49,7 @@ class CompetitionController extends Controller
 				$ranking = count($competitors);
 			}
 
-			$startDate = Carbon::create(2017, 9, 1, 0, 0, 0);
+			$startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'Asia/Singapore');
 			$analysis  = $this->getAnalysis($startDate, $this->endDate);
 
 			$total_referrals = $this->getTotalReferral();
@@ -107,12 +107,6 @@ class CompetitionController extends Controller
 			}
 
 			$ranking = $rank;
-			//            if($rank > 10){
-			//                $ranking = "UNRANKED";
-			//            }
-			//            else{
-			//                $ranking = $rank;
-			//            }
 		} else {
 			$ranking = "UNRANKED";
 		}
@@ -127,7 +121,6 @@ class CompetitionController extends Controller
 		$start_date = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
 		$end_date   = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
 
-		#test
 		$affiliates_today_count = 0;
 		$affiliates_today       = DB::select("SELECT COUNT(referred_user.email) AS referrals
                   FROM user_affiliate ua, user referred_user
@@ -148,9 +141,7 @@ class CompetitionController extends Controller
 		$referrer_id = Auth::user()->user_id;
 		$start_date  = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
 		//    $this->endDate = Carbon::today()->setTime(23, 59, 59)->toDateTimeString();
-		#test
-		$start_date = Carbon::create(2017, 9, 1, 0, 0, 0, 'Asia/Singapore');
-		$end_date   = Carbon::create(2017, 9, 30, 23, 59, 59, 'Asia/Singapore');
+		$end_date = Carbon::create(2017, 12, 17, 23, 59, 59, 'Asia/Singapore');
 
 		$affiliates_total = DB::select("SELECT referred_user.*
                   FROM user_affiliate ua, user referred_user
