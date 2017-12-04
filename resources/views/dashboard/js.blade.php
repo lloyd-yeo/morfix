@@ -157,7 +157,7 @@ jQuery(function () {
     });
 
     $("#closetutorial-btn").on("click", function(){
-        alert($("#tut-cbx").attr("checked"));
+        alert($("#tut-cbx").val());
     });
 
     if (localStorage.status) {
