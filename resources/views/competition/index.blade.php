@@ -171,7 +171,7 @@
 						<div class="block-content">
 							<table class="table table-borderless remove-margin-b remove-margin-t font-s13">
 								<tbody>
-									<tr class='bg-modern-lighter'>
+									<tr>
 										<td class="font-w700">
 											<span class='text-primary'>20 REFERRALS</span>
 										</td>
@@ -181,7 +181,7 @@
 										</td>
 									</tr>
 
-									<tr class='bg-modern-lighter'>
+									<tr>
 										<td class="font-w700">
 											<span class='text-primary'>10 REFERRALS</span>
 										</td>
@@ -191,7 +191,7 @@
 										</td>
 									</tr>
 
-									<tr class='bg-modern-lighter'>
+									<tr>
 										<td class="font-w700">
 											<span class='text-primary'>5 REFERRALS</span>
 										</td>
