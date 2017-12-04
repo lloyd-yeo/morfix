@@ -166,15 +166,41 @@
 					<!-- News -->
 					<div class="block">
 						<div class="block-header">
-							<h3 class="block-title"> Medal Legend</h3>
+							<h3 class="block-title"> Medal Legends</h3>
 						</div>
 						<div class="block-content">
-							<table>
-								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
+							<table class="table table-borderless remove-margin-b remove-margin-t font-s13">
+								<tbody>
+									<tr class='bg-modern-lighter'>
+										<td class="font-w700">
+											<span class='text-primary'>20 REFERRALS</span>
+										</td>
+										<td>
+											<img style="width: 32px;"
+											     src="{{  asset('assets/img/competition/medal20diamond.png') }}">
+										</td>
+									</tr>
+
+									<tr class='bg-modern-lighter'>
+										<td class="font-w700">
+											<span class='text-primary'>10 REFERRALS</span>
+										</td>
+										<td>
+											<img style="width: 32px;"
+											     src="{{  asset('assets/img/competition/medal5.png') }}">
+										</td>
+									</tr>
+
+									<tr class='bg-modern-lighter'>
+										<td class="font-w700">
+											<span class='text-primary'>5 REFERRALS</span>
+										</td>
+										<td>
+											<img style="width: 32px;"
+											     src="{{  asset('assets/img/competition/moneymedal.png') }}">
+										</td>
+									</tr>
+								</tbody>
 							</table>
 						</div>
 					</div>
