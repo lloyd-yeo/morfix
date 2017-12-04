@@ -20,7 +20,7 @@
                         </div>
                         <div class='col-xs-12'>
                             <label class="css-input css-checkbox css-checkbox-sm css-checkbox-primary">
-                                <input id="dontshowme-cbx" type="checkbox"><span></span> Don't show me this again
+                                <input id="tut-cbx" type="checkbox"><span></span> Don't show me this again
                             </label>
                         </div>
                         <div class="modal-footer">
