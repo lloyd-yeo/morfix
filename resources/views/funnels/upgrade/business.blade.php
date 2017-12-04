@@ -5,7 +5,7 @@
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
 		<meta name="viewport" content="initial-scale=1">
-		<title>SPECIAL OFFER - Morfix PRO</title>
+		<title>SPECIAL OFFER - Morfix BUSINESS</title>
 		<meta class="metaTagTop" name="description" content="Special offer for Morfix PRO">
 		<meta class="metaTagTop" name="keywords" content="Morfix, Instaffiliates, Instagram, PRO">
 		<meta class="metaTagTop" name="author" content="Morfix">
