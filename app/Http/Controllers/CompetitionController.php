@@ -230,18 +230,29 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
 
-
-
+			$referral_count = count($response);
+			$total_val = 0;
 			foreach ($response as $affiliate_referrals) {
-				$competitor_stats_array[] = [
-					'email'     => $competitor->email,
-					'name'      => $competitor->name,
-					'referrals' => $affiliate_referrals->referrals,
-				];
+				if ($affiliate_referrals->referrals == 12) {
+					$total_val += 70;
+				} else if ($affiliate_referrals->referrals == 2) {
+					$total_val += 20;
+				} else if ($affiliate_referrals->referrals == 3) {
+					$total_val += 150;
+				} else if ($affiliate_referrals->referrals == 13) {
+					$total_val += 200;
+				}
 			}
+
+			$competitor_stats_array[] = [
+				'email'     => $competitor->email,
+				'name'      => $competitor->name,
+				'referrals' => $referral_count,
+				'referral_value' => $total_val,
+			];
 		}
 
-		$competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referrals')->values()->all();
+		$competitor_stats_collection = collect($competitor_stats_array)->sortByDesc('referral_value')->values()->all();
 
 		return $competitor_stats_collection;
 	}
