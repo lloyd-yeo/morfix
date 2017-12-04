@@ -30,7 +30,7 @@
 
 									(Login Info) your Morfix account<br/><br/>
 
-									Morfix is LIVE
+									Morfix is LIVE<br/>
 									Morfix - get a FREE account<br/><br/>
 
 									Sample Body Copy:<br/><br/>
