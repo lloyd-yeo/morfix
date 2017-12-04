@@ -23,7 +23,8 @@
 
 											</td>
 											<td>
-												<img style="width: 32px;" src="{{  asset('assets/img/competition/firstplace.png') }}">
+												<img style="width: 32px;"
+												     src="{{  asset('assets/img/competition/firstplace.png') }}">
 											</td>
 										</tr>
 									@elseif ($loop->iteration == 2)
@@ -32,7 +33,8 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td>
-												<img style="width: 32px;" src="{{  asset('assets/img/competition/secondplace.png') }}">
+												<img style="width: 32px;"
+												     src="{{  asset('assets/img/competition/secondplace.png') }}">
 											</td>
 										</tr>
 									@elseif ($loop->iteration == 3)
@@ -41,7 +43,8 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td>
-												<img style="width: 32px;" src="{{  asset('assets/img/competition/thirdplace.png') }}">
+												<img style="width: 32px;"
+												     src="{{  asset('assets/img/competition/thirdplace.png') }}">
 											</td>
 										</tr>
 									@elseif ($loop->iteration > 10)
@@ -54,28 +57,35 @@
 												@if ($user["referrals"] > 0)
 
 													@while ($user["referrals"] - 20 > 0)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal20diamond.png') }}">
+														@php
+															$user["referrals"] = $user["referrals"] - 20;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/medal20diamond.png') }}">
+
 													@endwhile
 
+													@while ($user["referrals"] - 10 > 0)
+														@php
+															$user["referrals"] = $user["referrals"] - 10;
+														@endphp
 
-													@if ($user["referrals"] == 1)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal1.png') }}">
-													@elseif ($user["referrals"] == 3)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal3.png') }}">
-													@elseif ($user["referrals"] == 5)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal5.png') }}">
-													@elseif ($user["referrals"] == 10)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal10.png') }}">
-													@elseif ($user["referrals"] == 15)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal15.png') }}">
-													@elseif ($user["referrals"] == 20)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal20.png') }}">
-													@elseif ($user["referrals"] == 25)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal25.png') }}">
-													@elseif ($user["referrals"] == 30)
-														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal30.png') }}">
-													@endif
-													{{--<i class='text-primary fa fa-trophy'></i>--}}
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/medal5.png') }}">
+
+													@endwhile
+
+													@while ($user["referrals"] - 5 > 0)
+														@php
+															$user["referrals"] = $user["referrals"] - 5;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/moneymedal.png') }}">
+
+													@endwhile
+													
 												@else
 												@endif
 											</td>
