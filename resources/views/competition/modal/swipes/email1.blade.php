@@ -57,7 +57,7 @@
 
 									<< Affiliate Link >><br/><br/>
 
-									Thanks,
+									Thanks,<br/>
 									<< Your Name>><br/><br/>
 
 									P.S. - After you see the demo video, you can get a 7 day free account, and go setup with your IG Account. You'll be blown away with what's possible:<br/><br/>
