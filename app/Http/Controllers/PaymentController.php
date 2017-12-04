@@ -7,6 +7,7 @@ use App\PaymentLog;
 use App\PaypalAgreement;
 use App\StripeDetail;
 use App\User;
+use App\Mail\NewPremiumAffiliate;
 use App\UserAffiliates;
 use Auth;
 use AWeberAPI;
@@ -88,46 +89,6 @@ class PaymentController extends Controller
 			return view('payment.upgrade.funnel.business');
 		} else {
 			return view('payment.upgrade.funnel.business');
-//			$user = User::find(Auth::user()->user_id);
-//
-//			if ($user->braintree_id != NULL) {
-//				$plan = '0297';
-//
-//				$braintree_id       = $user->braintree_id;
-//				$braintree_customer = Braintree_Customer::find($braintree_id);
-//
-//				$sub_result = Braintree_Subscription::create([
-//					'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
-//					'merchantAccountId'  => 'morfixUSD',
-//					'planId'             => $plan,
-//				]);
-//
-//				if ($sub_result->success) {
-//					$user->num_acct = 6;
-//					$user->tier     = $user->tier + 10;
-//					$user->save();
-//
-//					//Get referrer & add commissions
-//					$referrer       = NULL;
-//					$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
-//					if ($user_affiliate !== NULL) {
-//						$referrer = User::find($user_affiliate->referrer);
-//					}
-//
-//					if ($referrer !== NULL) {
-//						//Send referrer Business congrats email
-//						if ($referrer->tier / 10 > 0) {
-//							$referrer->pending_commission = $referrer->pending_commission + 50;
-//							$referrer->save();
-//						}
-//					}
-//
-//					return view('payment.upgrade.confirmation');
-//				}
-//			} else {
-//				return view('payment.upgrade.business', [ 'client_token' => $client_token ]);
-//			}
-
 		}
 	}
 
@@ -179,28 +140,34 @@ class PaymentController extends Controller
 						$referrer->pending_commission = $referrer->pending_commission + 20;
 						$referrer->save();
 
-                        //Do a new referral upgrade
-                        $title = "NEW REFERRAL!";
-                        $type = "NEW_REFERRAL";
-                        $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Premium! You’re getting more and more referrals, keep it up!";
+						//Do a new referral upgrade
+						$title       = "NEW REFERRAL!";
+						$type        = "NEW_REFERRAL";
+						$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Premium! You’re getting more and more referrals, keep it up!";
 
-                        $user_update = new UserUpdate;
-                        $user_update->email = $referrer->email;
-                        $user_update->title = $title;
-                        $user_update->content = $update_text;
-                        $user_update->type = $type;
-                        $user_update->save();
+						$user_update          = new UserUpdate;
+						$user_update->email   = $referrer->email;
+						$user_update->title   = $title;
+						$user_update->content = $update_text;
+						$user_update->type    = $type;
+						$user_update->save();
 
-                        if ($referrer->is_competitor == 1) {
-                            $user_competitor_update = new CompetitionUpdate;
-                            $user_competitor_update->email = $referrer->email;
-                            $user_competitor_update->title = $title;
-                            $user_competitor_update->content = $update_text;
-                            $user_competitor_update->type = $type;
-                            $user_competitor_update->save();
-                        }
+						if ($referrer->is_competitor == 1) {
+							$user_competitor_update          = new CompetitionUpdate;
+							$user_competitor_update->email   = $referrer->email;
+							$user_competitor_update->title   = $title;
+							$user_competitor_update->content = $update_text;
+							$user_competitor_update->type    = $type;
+							$user_competitor_update->save();
+						}
+						try {
+							Mail::to($referrer->email)->send(new NewPremiumAffiliate($referrer, $user));
+						} catch (\Exception $ex) {
 
-                    }
+						}
+
+
+					}
 				}
 
 				$user->tier = 2;
@@ -222,7 +189,8 @@ class PaymentController extends Controller
 		}
 	}
 
-	public function upgradeProPayment(Request $request)
+	public
+	function upgradeProPayment(Request $request)
 	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
@@ -284,26 +252,26 @@ class PaymentController extends Controller
 						$referrer->pending_commission = $referrer->pending_commission + 200;
 						$referrer->save();
 
-                        //Do a new referral upgrade
-                        $title = "PRO UPGRADE!";
-                        $type = "PRO_OTO_UPSELL";
-                        $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! You've earned yourself another $200USD!";
+						//Do a new referral upgrade
+						$title       = "PRO UPGRADE!";
+						$type        = "PRO_OTO_UPSELL";
+						$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! You've earned yourself another $200USD!";
 
-                        $user_update = new UserUpdate;
-                        $user_update->email = $referrer->email;
-                        $user_update->title = $title;
-                        $user_update->content = $update_text;
-                        $user_update->type = $type;
-                        $user_update->save();
+						$user_update          = new UserUpdate;
+						$user_update->email   = $referrer->email;
+						$user_update->title   = $title;
+						$user_update->content = $update_text;
+						$user_update->type    = $type;
+						$user_update->save();
 
-                        if ($referrer->is_competitor == 1) {
-                            $user_competitor_update = new CompetitionUpdate;
-                            $user_competitor_update->email = $referrer->email;
-                            $user_competitor_update->title = $title;
-                            $user_competitor_update->content = $update_text;
-                            $user_competitor_update->type = $type;
-                            $user_competitor_update->save();
-                        }
+						if ($referrer->is_competitor == 1) {
+							$user_competitor_update          = new CompetitionUpdate;
+							$user_competitor_update->email   = $referrer->email;
+							$user_competitor_update->title   = $title;
+							$user_competitor_update->content = $update_text;
+							$user_competitor_update->type    = $type;
+							$user_competitor_update->save();
+						}
 					}
 				}
 
@@ -354,26 +322,26 @@ class PaymentController extends Controller
 						$referrer->pending_commission = $referrer->pending_commission + 150;
 						$referrer->save();
 
-                        //Do a new referral upgrade
-                        $title = "PRO UPGRADE!";
-                        $type = "PRO_OTO_UPSELL";
-                        $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! You've earned yourself another $150USD!";
+						//Do a new referral upgrade
+						$title       = "PRO UPGRADE!";
+						$type        = "PRO_OTO_UPSELL";
+						$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Pro! You've earned yourself another $150USD!";
 
-                        $user_update = new UserUpdate;
-                        $user_update->email = $referrer->email;
-                        $user_update->title = $title;
-                        $user_update->content = $update_text;
-                        $user_update->type = $type;
-                        $user_update->save();
+						$user_update          = new UserUpdate;
+						$user_update->email   = $referrer->email;
+						$user_update->title   = $title;
+						$user_update->content = $update_text;
+						$user_update->type    = $type;
+						$user_update->save();
 
-                        if ($referrer->is_competitor == 1) {
-                            $user_competitor_update = new CompetitionUpdate;
-                            $user_competitor_update->email = $referrer->email;
-                            $user_competitor_update->title = $title;
-                            $user_competitor_update->content = $update_text;
-                            $user_competitor_update->type = $type;
-                            $user_competitor_update->save();
-                        }
+						if ($referrer->is_competitor == 1) {
+							$user_competitor_update          = new CompetitionUpdate;
+							$user_competitor_update->email   = $referrer->email;
+							$user_competitor_update->title   = $title;
+							$user_competitor_update->content = $update_text;
+							$user_competitor_update->type    = $type;
+							$user_competitor_update->save();
+						}
 					}
 				}
 
@@ -382,7 +350,8 @@ class PaymentController extends Controller
 		}
 	}
 
-	public function upgradeBusinessPayment(Request $request)
+	public
+	function upgradeBusinessPayment(Request $request)
 	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
@@ -419,35 +388,36 @@ class PaymentController extends Controller
 					$referrer->pending_commission = $referrer->pending_commission + 50;
 					$referrer->save();
 
-                    //Do a new referral upgrade
-                    $title = "NEW BUSINESS UPGRADE!";
-                    $type = "BUSINESS_UPGRADE";
-                    $update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Business! That's another $50 USD for as long as they are there, keep it up!";
+					//Do a new referral upgrade
+					$title       = "NEW BUSINESS UPGRADE!";
+					$type        = "BUSINESS_UPGRADE";
+					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Business! That's another $50 USD for as long as they are there, keep it up!";
 
-                    $user_update = new UserUpdate;
-                    $user_update->email = $referrer->email;
-                    $user_update->title = $title;
-                    $user_update->content = $update_text;
-                    $user_update->type = $type;
-                    $user_update->save();
+					$user_update          = new UserUpdate;
+					$user_update->email   = $referrer->email;
+					$user_update->title   = $title;
+					$user_update->content = $update_text;
+					$user_update->type    = $type;
+					$user_update->save();
 
-                    if ($referrer->is_competitor == 1) {
-                        $user_competitor_update = new CompetitionUpdate;
-                        $user_competitor_update->email = $referrer->email;
-                        $user_competitor_update->title = $title;
-                        $user_competitor_update->content = $update_text;
-                        $user_competitor_update->type = $type;
-                        $user_competitor_update->save();
-                    }
+					if ($referrer->is_competitor == 1) {
+						$user_competitor_update          = new CompetitionUpdate;
+						$user_competitor_update->email   = $referrer->email;
+						$user_competitor_update->title   = $title;
+						$user_competitor_update->content = $update_text;
+						$user_competitor_update->type    = $type;
+						$user_competitor_update->save();
+					}
 
-                }
+				}
 			}
 
 			return view('payment.upgrade.confirmation');
 		}
 	}
 
-	public function index(Request $request)
+	public
+	function index(Request $request)
 	{
 		return view('payment.index', [
 		]);
