@@ -37,7 +37,7 @@ class CompetitionController extends Controller
 			if (CompetitionUpdate::where('email', Auth::user()->email)->first() == NULL) {
 				$first_update = new CompetitionUpdate;
 				$first_update->email = Auth::user()->email;
-				$first_update->title = "WELCOME TO MORFIX'S FIRST EVER COMPETITION";
+				$first_update->title = "WELCOME TO MORFIX'S FIRST EVER COMPETITION!!";
 				$first_update->content = "Over the course of the next 2 weeks, stand a chance to win yourself a brand new iPhone X. 
 				<br/>
 				To increase your success rate, we have provided email swipes & will be giving away valuable strategies on our Facebook page!

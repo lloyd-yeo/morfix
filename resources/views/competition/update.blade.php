@@ -2,8 +2,8 @@
 <li>
 	<div class="list-timeline-time">{{ Carbon\Carbon::parse($update->created_at)->diffForHumans() }}</div>
 
-	@if ($update->type == "NEW_REFERRAL")
-		<i class="fa fa-thumbs-o-up list-timeline-icon bg-info"></i>
+	@if ($update->type == "WELCOME_MSG")
+		<i class="fa fa-thumbs-o-up list-timeline-icon bg-danger"></i>
 	@elseif ($update->type == "PRO_OTO_UPSELL")
 		<i class="fa fa-level-up list-timeline-icon bg-info"></i>
 	@elseif ($update->type == "SYSTEM_UPGRADE")
