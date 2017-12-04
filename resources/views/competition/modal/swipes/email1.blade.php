@@ -1,5 +1,5 @@
 <!-- Apps Modal -->
-<div class="modal fade" id="modal-prizes" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modal-swipe1" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-lg modal-dialog modal-dialog-top">
 		<div class="modal-content">
 			<!-- Apps Block -->

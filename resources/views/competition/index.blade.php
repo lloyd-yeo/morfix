@@ -262,10 +262,23 @@
 						<div class="row">
 							<div class="col-xs-6 col-sm-4 col-lg-4">
 								<a class="block block-link-hover2 text-center"
-								   href="{{ asset('/assets/Morfix_Email_Swipes.docx') }}" download>
+								   href="#!"
+								   data-toggle="modal"
+								   data-target="#modal-swipe1">
 									<div class="block-content block-content-full bg-primary">
 										<i class="si si-docs fa-4x text-white"></i>
-										<div class="font-w600 text-white-op push-15-t">Email Swipes</div>
+										<div class="font-w600 text-white-op push-15-t">Email Swipes #1</div>
+									</div>
+								</a>
+							</div>
+							<div class="col-xs-6 col-sm-4 col-lg-4">
+								<a class="block block-link-hover2 text-center"
+								   href="#!"
+								   data-toggle="modal"
+								   data-target="#modal-swipe2">
+									<div class="block-content block-content-full bg-primary">
+										<i class="si si-docs fa-4x text-white"></i>
+										<div class="font-w600 text-white-op push-15-t">Email Swipes #2</div>
 									</div>
 								</a>
 							</div>
