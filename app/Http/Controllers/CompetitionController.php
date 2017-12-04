@@ -218,19 +218,19 @@ class CompetitionController extends Controller
 		$start_date             = $this->startDate;
 		$end_date               = $this->endDate;
 
-		$test_counter = 0;
-
 		foreach ($this->getCompetitors() as $competitor) {
 
 			$referrer_id = $competitor->user_id;
 
-			$response = DB::select("SELECT ua.referrer, COUNT(referred_user.email) AS referrals
+			$response = DB::select("SELECT ua.referrer, referred_user.email, referred_user.tier AS referrals
                   FROM user_affiliate ua, user referred_user
                   WHERE ua.referrer = $referrer_id
                   AND referred_user.user_id = ua.referred
                   AND DATE(referred_user.created_at) >= '$start_date'
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
+
+			
 
 			foreach ($response as $affiliate_referrals) {
 				$competitor_stats_array[] = [
