@@ -233,62 +233,11 @@ class CompetitionController extends Controller
                   AND referred_user.tier > 1;");
 
 			foreach ($response as $affiliate_referrals) {
-
 				$competitor_stats_array[] = [
 					'email'     => $competitor->email,
 					'name'      => $competitor->name,
 					'referrals' => $affiliate_referrals->referrals,
 				];
-
-				//				if ($affiliate_referrals->referrals > 0) {
-//				if ($test_counter == 0) {
-//					$competitor_stats_array[] = [
-//						'email'     => $competitor->email,
-//						'name'      => $competitor->name,
-//						'referrals' => $affiliate_referrals->referrals,
-//					];
-//				} else if ($test_counter == 1) {
-//					$competitor_stats_array[] = [
-//						'email'     => $competitor->email,
-//						'name'      => $competitor->name,
-//						'referrals' => 1,
-//					];
-//				} else if ($test_counter == 2) {
-//					$competitor_stats_array[] = [
-//						'email'     => $competitor->email,
-//						'name'      => $competitor->name,
-//						'referrals' => 3,
-//					];
-//				} else if ($test_counter == 3) {
-//					$competitor_stats_array[] = [
-//						'email'     => $competitor->email,
-//						'name'      => $competitor->name,
-//						'referrals' => 5,
-//					];
-//				} else if ($test_counter == 4) {
-//					$competitor_stats_array[] = [
-//						'email'     => $competitor->email,
-//						'name'      => $competitor->name,
-//						'referrals' => 10,
-//					];
-//				} else if ($test_counter == 5) {
-//					$competitor_stats_array[] = [
-//						'email'     => $competitor->email,
-//						'name'      => $competitor->name,
-//						'referrals' => 15,
-//					];
-//				} else if ($test_counter == 6) {
-//					$competitor_stats_array[] = [
-//						'email'     => $competitor->email,
-//						'name'      => $competitor->name,
-//						'referrals' => 20,
-//					];
-//				} else if ($test_counter > 6) {
-//
-//				}
-//				$test_counter++;
-
-				//				}
 			}
 		}
 
