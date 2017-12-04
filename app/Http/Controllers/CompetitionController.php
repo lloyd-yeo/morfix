@@ -31,7 +31,7 @@ class CompetitionController extends Controller
 			redirect("home")->with('error', 'The competition hasn\'t started yet.');
 		}
 
-		if (Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) {
+		if ((Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) || Auth::user()->admin == 1) {
 			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
 			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 
