@@ -45,9 +45,14 @@ class GetBraintreeTransactions extends Command
 	    \Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
 	    $collection = \Braintree_Transaction::search([
-		    \Braintree_TransactionSearch::amount()->greaterThanOrEqualTo('3700')
+		    \Braintree_TransactionSearch::amount()->greaterThanOrEqualTo('37')
 	    ]);
+		$transaction_ids = $collection->getIds();
 
-	    dump($collection);
+		foreach ($transaction_ids as $transaction_id) {
+			$transaction = Braintree_Transaction::find($transaction_id);
+			dump($transaction);
+			break;
+		}
     }
 }

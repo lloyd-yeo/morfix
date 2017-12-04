@@ -178,7 +178,7 @@ class InstagramProfileController extends Controller
 			$config["dbhost"]      = "52.221.60.235:3306";
 			$config["dbname"]      = "morfix";
 			$config["dbtablename"] = "instagram_sessions";
-
+			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 			$debug          = FALSE;
 			$truncatedDebug = FALSE;
 			$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
@@ -254,7 +254,7 @@ class InstagramProfileController extends Controller
 			$config["dbhost"]      = "52.221.60.235:3306";
 			$config["dbname"]      = "morfix";
 			$config["dbtablename"] = "instagram_sessions";
-
+			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 			$debug          = FALSE;
 			$truncatedDebug = FALSE;
 			$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
@@ -311,7 +311,7 @@ class InstagramProfileController extends Controller
 		$config["storage"]     = "mysql";
 		$config["pdo"]         = DB::connection('mysql_igsession')->getPdo();
 		$config["dbtablename"] = "instagram_sessions";
-
+		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 		$debug          = FALSE;
 		$truncatedDebug = FALSE;
 		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
@@ -354,7 +354,7 @@ class InstagramProfileController extends Controller
 		$config["storage"]     = "mysql";
 		$config["pdo"]         = DB::connection('mysql_igsession')->getPdo();
 		$config["dbtablename"] = "instagram_sessions";
-
+		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 		$debug          = FALSE;
 		$truncatedDebug = FALSE;
 		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
