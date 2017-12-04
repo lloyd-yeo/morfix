@@ -10,6 +10,7 @@ use App\InstagramProfile;
 use App\UserUpdate;
 use App\UserAffiliates;
 use App\Helper;
+use App\CompetitionUpdate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,20 @@ class CompetitionController extends Controller
 		}
 
 		if ((Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) || Auth::user()->admin == 1) {
+
+			if (CompetitionUpdate::where('email', Auth::user()->email)->first() == NULL) {
+				$first_update = new CompetitionUpdate;
+				$first_update->email = Auth::user()->email;
+				$first_update->title = "WELCOME TO MORFIX'S FIRST EVER COMPETITION";
+				$first_update->content = "Over the course of the next 2 weeks, stand a chance to win yourself a brand new iPhone X. 
+				<br/>
+				To increase your success rate, we have provided email swipes & will be giving away valuable strategies on our Facebook page!
+				<br/>
+				If you are not in our Facebook group yet, click <a href=\"https://www.facebook.com/groups/228876584224981/\">here</a> to join!";
+				$first_update->type = "WELCOME_MSG";
+				$first_update->save();
+			}
+
 			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
 			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 
