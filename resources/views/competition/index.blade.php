@@ -291,6 +291,8 @@
 			@include('competition.modal.termsandconditions')
 			@include('competition.modal.prizes')
 
+			@include('competition.modal.swipes.email1')
+			@include('competition.modal.swipes.email2')
 		</div>
 	</main>
 @endsection
