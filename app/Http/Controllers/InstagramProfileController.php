@@ -355,6 +355,7 @@ class InstagramProfileController extends Controller
 		$config["pdo"]         = DB::connection('mysql_igsession')->getPdo();
 		$config["dbtablename"] = "instagram_sessions";
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+
 		$debug          = FALSE;
 		$truncatedDebug = FALSE;
 		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);

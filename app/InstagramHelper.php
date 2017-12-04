@@ -18,7 +18,7 @@ class InstagramHelper {
 //	    $config["dbpassword"] = env('DB_PASSWORD_3', 'inst@ffiliates123');
 //	    $config["dbhost"] = env('DB_HOST_3', '52.221.60.235');
 //	    $config["dbname"] = env('DB_DATABASE_3', 'morfix');
-
+	    \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
         $debug = false;
         $truncatedDebug = false;
         $instagram = new Instagram($debug, $truncatedDebug, $config);
