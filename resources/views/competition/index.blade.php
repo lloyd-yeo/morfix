@@ -135,11 +135,12 @@
 					        {{--data-target="#modal-terms-conditions" type="button">[READ FIRST!] Terms & Conditions--}}
 					{{--</button>--}}
 
-					<div class="col-xs-6 col-sm-4 col-lg-4">
+					<div class="col-xs-6 col-sm-4 col-lg-12">
 						<a class="block block-link-hover2 text-center"
+						   href="#!"
 						   data-toggle="modal"
 						   data-target="#modal-terms-conditions">
-							<div class="block-content block-content-full bg-primary">
+							<div class="block-content block-content-full bg-danger">
 								<i class="si si-docs fa-4x text-white"></i>
 								<div class="font-w600 text-white-op push-15-t">[READ FIRST!] Terms & Conditions</div>
 							</div>
@@ -151,6 +152,17 @@
 					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-prizes"
 					        type="button">Prizes
 					</button>
+
+					<div class="col-xs-6 col-sm-4 col-lg-12">
+						<a class="block block-link-hover2 text-center"
+						   href="#!"
+						   data-toggle="modal" data-target="#modal-prizes">
+							<div class="block-content block-content-full bg-modern">
+								<i class="si si-docs fa-4x text-white"></i>
+								<div class="font-w600 text-white-op push-15-t">Attractive Prizes</div>
+							</div>
+						</a>
+					</div>
 				</div>
 			</div>
 
