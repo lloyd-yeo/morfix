@@ -28,6 +28,8 @@ Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
 Route::get('/interactions', 'InteractionsController@index');
 
+Route::post('/dashboard/tutorial/hide', 'HomeController@hideTutorial');
+
 Route::get('/braintree', 'BraintreeController@payment');
 
 Route::get('/interactions/{id}', 'InteractionsController@edit');

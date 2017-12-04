@@ -144,4 +144,10 @@ class HomeController extends Controller
 		]);
 	}
 
+	public function hideTutorial(Request $request) {
+		$user = User::find(Auth::user()->id);
+		$user->close_dashboard_tut = 1;
+		$user->save();
+	}
+
 }
