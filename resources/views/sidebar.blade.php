@@ -87,7 +87,7 @@
                     </li>
 
                     <li class="nav-main-heading"><span class="sidebar-mini-hide">AFFILIATE AREA</span></li>
-                    @if (Auth::user()->is_competitor == 2 && Auth::user()->tier > 1)
+                    @if (Auth::user()->is_competitor == 1 && Auth::user()->tier > 1)
                     <li>
                         @if ($page == 'competition')
                             <a class="active" href="/competition"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Competition</span></a>
