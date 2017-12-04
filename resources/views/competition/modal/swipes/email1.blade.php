@@ -21,46 +21,46 @@
 								<span class="font-w700">Email #1</span>
 								<p>
 									Sample Subject Lines:
-
+									<br/><br/>
 									(URGENT) want a free Morfix account?
-
+									<br/><br/>
 									watch me gain IG Followers in 10 minutes!
+									<br/><br/>
+									Morfix Demo (video inside)<br/><br/>
 
-									Morfix Demo (video inside)
-
-									(Login Info) your Morfix account
+									(Login Info) your Morfix account<br/><br/>
 
 									Morfix is LIVE
-									Morfix - get a FREE account
+									Morfix - get a FREE account<br/><br/>
 
-									Sample Body Copy:
+									Sample Body Copy:<br/><br/>
 
-									There's a new software product that's taking over the internet.  It's called Morfix, and I just hooked you up with a FREE account!
+									There's a new software product that's taking over the internet.  It's called Morfix, and I just hooked you up with a FREE account!<br/><br/>
 
-									<< Affiliate Link >>
+									<< Affiliate Link >><br/><br/>
 
-									This new software will help your Instagram account:
+									This new software will help your Instagram account:<br/><br/>
 
-									  - Grow Thousands Of Followers A Month on Automation..
+									  - Grow Thousands Of Followers A Month on Automation..<br/>
 
-									  - Automated Direct Messages...
+									  - Automated Direct Messages...<br/>
 
-									  - Schedule Posts...
+									  - Schedule Posts...<br/>
 
-									  - Trainings on Instagram Income…
+									  - Trainings on Instagram Income…<br/>
 
-									  - Going Viral...
+									  - Going Viral...<br/>
 
-									  - And a WHOLE LOT MORE!
+									  - And a WHOLE LOT MORE!<br/><br/>
 
-									Want to see a demo of the software in action? Check it out here:
+									Want to see a demo of the software in action? Check it out here:<br/><br/>
 
-									<< Affiliate Link >>
+									<< Affiliate Link >><br/><br/>
 
 									Thanks,
-									<< Your Name>>
+									<< Your Name>><br/><br/>
 
-									P.S. - After you see the demo video, you can get a 7 day free account, and go setup with your IG Account. You'll be blown away with what's possible:
+									P.S. - After you see the demo video, you can get a 7 day free account, and go setup with your IG Account. You'll be blown away with what's possible:<br/><br/>
 
 									<< Affiliate Link >>
 
