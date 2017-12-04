@@ -156,10 +156,6 @@ jQuery(function () {
         });
     });
 
-    $("#closetutorial-btn").on("click", function(){
-        alert($("#tut-cbx").val());
-    });
-
     if (localStorage.status) {
         swal({
             title: 'Success', 
@@ -170,6 +166,16 @@ jQuery(function () {
     }
     
     @if (Auth::user()->close_dashboard_tut == 0)
+		var $hide_tutorial = 0;
+		$("#tut-cbx").on("click", function(){
+            $hide_tutorial = 1;
+		});
+	    $("#closetutorial-btn").on("click", function(){
+			if ($hide_tutorial == 1) {
+                $.post( "/dashboard/tutorial/hide" );
+			}
+	    });
+
         jQuery('#dashboard-tutorial-modal').modal('show');    
     @endif
 });
