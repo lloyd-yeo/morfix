@@ -330,8 +330,6 @@
 					</div>
 				</div>
 			</div>
-
-
 			@include('competition.modal.termsandconditions')
 			@include('competition.modal.prizes')
 

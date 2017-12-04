@@ -91,6 +91,7 @@ class Kernel extends ConsoleKernel {
 	    Commands\TestFailedEngagementGroupNotification::class,
 	    Commands\UpdateMasterInstagramProfileErrorFlags::class,
         Commands\ImportCompetitorsCsv::class,
+        Commands\GetBraintreeTransactions::class,
     ];
 
     /**
