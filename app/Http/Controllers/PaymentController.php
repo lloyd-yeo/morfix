@@ -70,6 +70,7 @@ class PaymentController extends Controller
 		$client_token = Braintree_ClientToken::generate();
 
 		if ($request->session()->has('upsell')) {
+			$request->session()->forget('upsell');
 			return view('payment.upgrade.funnel.pro');
 		} else {
 			return view('payment.upgrade.pro', [ 'client_token' => $client_token ]);
