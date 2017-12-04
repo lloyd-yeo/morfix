@@ -275,8 +275,6 @@ class PaymentController extends Controller
 					}
 				}
 
-				#$user->tier = 3;
-
 				$add_on_tier = (int)($user->tier / 10);
 				$user->tier  = $add_on_tier + 3;
 				$user->save();
