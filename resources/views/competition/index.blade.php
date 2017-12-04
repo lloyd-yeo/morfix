@@ -175,6 +175,9 @@
 						</div>
 						<div class="block-content">
 							<ul class="list list-timeline pull-t">
+								@foreach ($competition_updates as $update)
+									@include('competition.update', ['update' => $update])
+								@endforeach
 							</ul>
 						</div>
 					</div>

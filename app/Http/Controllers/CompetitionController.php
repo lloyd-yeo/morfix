@@ -26,11 +26,11 @@ class CompetitionController extends Controller
 
 	public function show()
 	{
-		if (Auth::user()->admin == 1) {
-
-		} else if (Carbon::now()->lt(Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize'))) {
-			redirect("home")->with('error', 'The competition hasn\'t started yet.');
-		}
+//		if (Auth::user()->admin == 1) {
+//
+//		} else if (Carbon::now()->lt(Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize'))) {
+//			redirect("home")->with('error', 'The competition hasn\'t started yet.');
+//		}
 
 		if ((Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) || Auth::user()->admin == 1) {
 
@@ -46,6 +46,7 @@ class CompetitionController extends Controller
 				$first_update->type = "WELCOME_MSG";
 				$first_update->save();
 			}
+
 
 			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
 			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
@@ -78,6 +79,8 @@ class CompetitionController extends Controller
 
 			$competition_time = Carbon::now('America/Belize');
 
+			$competition_updates = CompetitionUpdate::where('email', Auth::user()->email)->get();
+
 			return view('competition.index', [
 				"month"                   => $this->startDate->format("F"),
 				"startDate"               => $this->startDate->day,
@@ -92,6 +95,7 @@ class CompetitionController extends Controller
 				"analysisLabel"           => $analysis['analysisLabel'],
 				"competition_leaderboard" => $leaderboard_entries,
 				"competition_time"        => $competition_time,
+				"competition_updates" => $competition_updates,
 			]);
 		} else {
 			return redirect('home')->with('error', 'You are not eligible for the competition!');
