@@ -26,11 +26,11 @@ class CompetitionController extends Controller
 
 	public function show()
 	{
-//		if (Auth::user()->admin == 1) {
-//
-//		} else if (Carbon::now()->lt(Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize'))) {
-//			redirect("home")->with('error', 'The competition hasn\'t started yet.');
-//		}
+		if (Auth::user()->admin == 1) {
+
+		} else if (Carbon::now()->lt(Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize'))) {
+			redirect("home")->with('error', 'The competition hasn\'t started yet.');
+		}
 
 		if ((Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) || Auth::user()->admin == 1) {
 
@@ -230,7 +230,7 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
 
-			
+
 
 			foreach ($response as $affiliate_referrals) {
 				$competitor_stats_array[] = [
