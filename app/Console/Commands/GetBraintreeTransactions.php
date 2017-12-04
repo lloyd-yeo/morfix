@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Braintree_Transaction;
-use Braintree_Configuration;
+use \Braintree_Transaction;
+use \Braintree_Configuration;
 
 class GetBraintreeTransactions extends Command
 {
