@@ -138,7 +138,7 @@
 						   data-target="#modal-terms-conditions">
 							<div class="block-content block-content-full bg-danger">
 								<i class="si si-docs fa-4x text-white"></i>
-								<div class="font-w600 text-white-op push-15-t">[READ FIRST!] Terms & Conditions</div>
+								<div class="font-w600 text-white-op push-15-t">[READ FIRST!] Terms & Conditions (Click here!)</div>
 							</div>
 						</a>
 					</div>
@@ -151,7 +151,7 @@
 						   data-toggle="modal" data-target="#modal-prizes">
 							<div class="block-content block-content-full bg-modern">
 								<i class="si si-diamond fa-4x text-white"></i>
-								<div class="font-w700 text-white-op push-15-t">ATTRACTIVE PRIZES</div>
+								<div class="font-w700 text-white-op push-15-t">ATTRACTIVE PRIZES (Click here!)</div>
 							</div>
 						</a>
 					</div>
