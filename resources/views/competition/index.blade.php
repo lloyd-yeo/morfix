@@ -131,9 +131,21 @@
 
 			<div class="row">
 				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" data-toggle="modal"
-					        data-target="#modal-terms-conditions" type="button">[READ FIRST!] Terms & Conditions
-					</button>
+					{{--<button class="btn btn-block btn-primary push-10" data-toggle="modal"--}}
+					        {{--data-target="#modal-terms-conditions" type="button">[READ FIRST!] Terms & Conditions--}}
+					{{--</button>--}}
+
+					<div class="col-xs-6 col-sm-4 col-lg-4">
+						<a class="block block-link-hover2 text-center"
+						   data-toggle="modal"
+						   data-target="#modal-terms-conditions">
+							<div class="block-content block-content-full bg-primary">
+								<i class="si si-docs fa-4x text-white"></i>
+								<div class="font-w600 text-white-op push-15-t">[READ FIRST!] Terms & Conditions</div>
+							</div>
+						</a>
+					</div>
+
 				</div>
 				<div class="col-lg-6">
 					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-prizes"
