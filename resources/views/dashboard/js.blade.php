@@ -155,7 +155,11 @@ jQuery(function () {
                 }
         });
     });
-    
+
+    $("#closetutorial-btn").on("click", function(){
+        alert($("#dontshowme-cbx").checked);
+    });
+
     if (localStorage.status) {
         swal({
             title: 'Success', 
