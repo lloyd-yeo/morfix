@@ -8,29 +8,12 @@
 		<meta content="utf-8" http-equiv="encoding">
 		<meta name="viewport" content="initial-scale=1">
 		<title>Morfix Pro Upgrade</title>
-		{{--<meta class="metaTagTop" name="description" content="">--}}
-		{{--<meta class="metaTagTop" name="keywords" content="morfix, instaffiliates">--}}
-		{{--<meta class="metaTagTop" name="author" content="Morfix">--}}
-		{{--<meta class="metaTagTop" property="og:image" content="https://images.clickfunnels.com/39/6f318081bd11e7bfc0b157cb2b69f4/mx-black-crop.png" id="social-image">--}}
-		{{--<meta property="og:title" content="Morfix Pro Upgrade">--}}
-		{{--<meta property="og:description" content="">--}}
-		{{--<meta property="og:url" content="https://admina94739.clickfunnels.com/premium-upgrade">--}}
-		{{--<meta property="og:type" content="website">--}}
 		<link rel="stylesheet" media="screen" href="https://www.clickfunnel.com/assets/lander.css">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700%7COswald:400,700%7CDroid+Sans:400,700%7CRoboto:400,700%7CLato:400,700%7CPT+Sans:400,700%7CSource+Sans+Pro:400,700%7CNoto+Sans:400,700%7CPT+Sans:400,700%7CUbuntu:400,700%7CBitter:400,700%7CPT+Serif:400,700%7CRokkitt:400,700%7CDroid+Serif:400,700%7CRaleway:400,700%7CInconsolata:400,700"
 		      rel="stylesheet" type="text/css">
-		{{--<meta property="cf:funnel_id" content="TlZubVp5TzhxMjJjYnRpOUdsOTZyZz09LS1sTG1lUDZRdFZMWmFPaW52SGQwSHpnPT0=--06a81434c937328cabee871517757097c01c6b73">--}}
-		{{--<meta property="cf:page_id" content="NUdZcmxrNUxRTXMxL1BoZUd4UEp1QT09LS1rTkZkRkdETng1OVp6WXRScTlEZWh3PT0=--0c37f10edc8ddb1b462964830f0d5265d17d1289">--}}
-		{{--<meta property="cf:funnel_step_id" content="SlVRWGxZbVR6ZSs0cVBFenJEZlROdz09LS1vQTd6aWg3Q1NRVnZvNWs5Sk0wM3F3PT0=--ecf2ebef3dfb51d8766a5a989f4d8a28e7b6045f">--}}
-		{{--<meta property="cf:user_id" content="dStnL3M4c1NXQ2IzNVZ1UENhYlErZz09LS1VY1FrS0lSQVpPSkVNTEN0VXVxa09nPT0=--6c0072233d8fb4fd96fd4404d9fb52eeee26ef95">--}}
-		{{--<meta property="cf:page_code" content="MTc0ODA3NTc=">--}}
-		{{--<meta property="cf:mode_id" content="1">--}}
-		{{--<meta property="cf:time_zone" content="UTC">--}}
-		{{--<meta property="cf:app_domain" content="app.clickfunnels.com">--}}
 		<script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
 		<script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
-		{{--<script src="https://www.clickfunnel.com/assets/userevents/application.js"></script>--}}
 		<style>
 			[data-timed-style='fade'] {
 				display: none
@@ -422,7 +405,7 @@
 				color: #FFF !important;
 			}</style>
 	</div>
-	=
+	
 	<!--[if lt IE 9]>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js'></script>
 	<![endif]-->
