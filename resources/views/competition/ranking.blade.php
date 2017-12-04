@@ -52,6 +52,12 @@
 											</td>
 											<td>
 												@if ($user["referrals"] > 0)
+
+													@while ($user["referrals"] - 20 > 0)
+														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal20diamond.png') }}">
+													@endwhile
+
+
 													@if ($user["referrals"] == 1)
 														<img style="width: 32px;" src="{{  asset('assets/img/competition/medal1.png') }}">
 													@elseif ($user["referrals"] == 3)

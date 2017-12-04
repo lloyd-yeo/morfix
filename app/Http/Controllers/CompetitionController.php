@@ -25,6 +25,11 @@ class CompetitionController extends Controller
 
 	public function show()
 	{
+		if (Auth::user()->admin == 1) {
+
+		} else if (Carbon::now()->lt(Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize'))) {
+			redirect("home")->with('error', 'The competition hasn\'t started yet.');
+		}
 
 		if (Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) {
 			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
