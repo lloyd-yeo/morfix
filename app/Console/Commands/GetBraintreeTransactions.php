@@ -39,13 +39,13 @@ class GetBraintreeTransactions extends Command
      */
     public function handle()
     {
-	    Braintree_Configuration::environment('production');
-	    Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
-	    Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
-	    Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+	    \Braintree_Configuration::environment('production');
+	    \Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+	    \Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+	    \Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-	    $collection = Braintree_Transaction::search([
-		    Braintree_TransactionSearch::amount()->greaterThanOrEqualTo('3700')
+	    $collection = \Braintree_Transaction::search([
+		    \Braintree_TransactionSearch::amount()->greaterThanOrEqualTo('3700')
 	    ]);
 
 	    dump($collection);
