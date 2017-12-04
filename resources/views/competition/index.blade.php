@@ -149,16 +149,12 @@
 
 				</div>
 				<div class="col-lg-6">
-					<button class="btn btn-block btn-primary push-10" data-toggle="modal" data-target="#modal-prizes"
-					        type="button">Prizes
-					</button>
-
 					<div class="col-xs-6 col-sm-4 col-lg-12">
 						<a class="block block-link-hover2 text-center"
 						   href="#!"
 						   data-toggle="modal" data-target="#modal-prizes">
 							<div class="block-content block-content-full bg-modern">
-								<i class="si si-docs fa-4x text-white"></i>
+								<i class="si si-diamond fa-4x text-white"></i>
 								<div class="font-w600 text-white-op push-15-t">Attractive Prizes</div>
 							</div>
 						</a>
