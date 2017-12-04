@@ -42,7 +42,7 @@ class CompetitionController extends Controller
 				<br/>
 				To increase your success rate, we have provided email swipes & will be giving away valuable strategies on our Facebook page!
 				<br/>
-				If you are not in our Facebook group yet, click <a href=\"https://www.facebook.com/groups/228876584224981/\">here</a> to join!";
+				If you are not in our Facebook group yet, click <a href=\"https://www.facebook.com/groups/228876584224981/\" target=\"_blank\">here</a> to join!";
 				$first_update->type = "WELCOME_MSG";
 				$first_update->save();
 			}
