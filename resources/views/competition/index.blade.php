@@ -162,6 +162,24 @@
 			<div class="row">
 				@include('competition.ranking')
 				<div class="col-lg-6 announcements">
+
+					<!-- News -->
+					<div class="block">
+						<div class="block-header">
+							<h3 class="block-title"> Medal Legend</h3>
+						</div>
+						<div class="block-content">
+							<table>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<!-- END News -->
+
 					<!-- News -->
 					<div class="block">
 						<div class="block-header">
