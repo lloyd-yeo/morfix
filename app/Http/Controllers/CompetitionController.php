@@ -233,13 +233,13 @@ class CompetitionController extends Controller
 			$total_val = 0;
 			foreach ($response as $affiliate_referrals) {
 				if ($affiliate_referrals->referrals == 12) {
-					$total_val += 70;
+					$total_val += 134;
 				} else if ($affiliate_referrals->referrals == 2) {
-					$total_val += 20;
+					$total_val += 37;
 				} else if ($affiliate_referrals->referrals == 3) {
-					$total_val += 150;
+					$total_val += 297;
 				} else if ($affiliate_referrals->referrals == 13) {
-					$total_val += 200;
+					$total_val += 394;
 				}
 			}
 
