@@ -347,24 +347,22 @@
 					</div>
 					<div class="block-content block-content-full">
 						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-lg-3">
 								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
 									<img src="{{ asset('assets/img/banner/banner1.jpeg') }}" width="300" height="250" class="affIMGURL">
 								</a>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-lg-3">
 								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
 									<img src="{{ asset('assets/img/banner/banner2.jpeg') }}" width="300" height="250" class="affIMGURL">
 								</a>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-6">
+							<div class="col-lg-3">
 								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
 									<img src="{{ asset('assets/img/banner/banner3.jpeg') }}" width="300" height="250" class="affIMGURL">
 								</a>
 							</div>
-							<div class="col-lg-6">
+							<div class="col-lg-3">
 								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
 									<img src="{{ asset('assets/img/banner/banner4.jpeg') }}" width="300" height="250" class="affIMGURL">
 								</a>
