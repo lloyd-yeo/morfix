@@ -346,6 +346,7 @@
 						<h3 class="block-title"><i class="fa fa-bars"></i> RESOURCES</h3>
 					</div>
 					<div class="block-content block-content-full">
+
 						<div class="row">
 							<div class="col-lg-3">
 								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
@@ -368,6 +369,7 @@
 								</a>
 							</div>
 						</div>
+
 						<div class="row">
 							<div class="col-xs-6 col-sm-4 col-lg-4">
 								<a class="block block-link-hover2 text-center"
