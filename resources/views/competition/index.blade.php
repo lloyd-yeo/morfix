@@ -175,7 +175,7 @@
 											<span class='text-primary'>20 REFERRALS</span>
 										</td>
 										<td>
-											<img style="width: 32px;"
+											<img class="pull-right" style="width: 32px;"
 											     src="{{  asset('assets/img/competition/medal20diamond.png') }}">
 										</td>
 									</tr>
@@ -185,7 +185,7 @@
 											<span class='text-primary'>10 REFERRALS</span>
 										</td>
 										<td>
-											<img style="width: 32px;"
+											<img class="pull-right" style="width: 32px;"
 											     src="{{  asset('assets/img/competition/medal5.png') }}">
 										</td>
 									</tr>
@@ -195,7 +195,7 @@
 											<span class='text-primary'>5 REFERRALS</span>
 										</td>
 										<td>
-											<img style="width: 32px;"
+											<img class="pull-right" style="width: 32px;"
 											     src="{{  asset('assets/img/competition/moneymedal.png') }}">
 										</td>
 									</tr>
