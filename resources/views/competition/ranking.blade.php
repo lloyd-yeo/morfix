@@ -1,4 +1,4 @@
-<div class="col-lg-6" style='height: 600px;'>
+<div class="col-lg-8" style='height: 600px;'>
 	<!-- Latest Sales Widget -->
 	<div id="leaderboard-container" class="block">
 		<div class="block-header">

@@ -161,7 +161,7 @@
 
 			<div class="row">
 				@include('competition.ranking')
-				<div class="col-lg-6 announcements">
+				<div class="col-lg-4 announcements">
 					<!-- News -->
 					<div class="block">
 						<div class="block-header">
@@ -218,7 +218,7 @@
 										<span class='text-primary'>$500 USD</span>
 									</td>
 									<td>
-										<img style="width: 32px;"
+										<img class="pull-right" style="width: 32px;"
 										     src="{{  asset('assets/img/competition/500sales.png') }}">
 									</td>
 								</tr>
@@ -228,7 +228,7 @@
 										<span class='text-primary'>$200 USD</span>
 									</td>
 									<td>
-										<img style="width: 32px;"
+										<img class="pull-right" style="width: 32px;"
 										     src="{{  asset('assets/img/competition/200sales.png') }}">
 									</td>
 								</tr>
@@ -238,7 +238,7 @@
 										<span class='text-primary'>$100 USD</span>
 									</td>
 									<td>
-										<img style="width: 32px;"
+										<img class="pull-right" style="width: 32px;"
 										     src="{{  asset('assets/img/competition/100sales.png') }}">
 									</td>
 								</tr>
