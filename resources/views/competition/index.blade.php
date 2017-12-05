@@ -249,6 +249,7 @@
 					<!-- END News -->
 				</div>
 			</div>
+
 			<div class="row">
 				<!-- News -->
 				<div class="block">
@@ -345,6 +346,30 @@
 						<h3 class="block-title"><i class="fa fa-bars"></i> RESOURCES</h3>
 					</div>
 					<div class="block-content block-content-full">
+						<div class="row">
+							<div class="col-lg-6">
+								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
+									<img src="{{ asset('assets/img/banner/banner1.jpg') }}" width="300" height="250" class="affIMGURL">
+								</a>
+							</div>
+							<div class="col-lg-6">
+								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
+									<img src="{{ asset('assets/img/banner/banner2.jpg') }}" width="300" height="250" class="affIMGURL">
+								</a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
+									<img src="{{ asset('assets/img/banner/banner3.jpg') }}" width="300" height="250" class="affIMGURL">
+								</a>
+							</div>
+							<div class="col-lg-6">
+								<a href="https://clickfunnels.com/?cf_affiliate_id=768373&amp;affiliate_id=768373">
+									<img src="{{ asset('assets/img/banner/banner4.jpg') }}" width="300" height="250" class="affIMGURL">
+								</a>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-xs-6 col-sm-4 col-lg-4">
 								<a class="block block-link-hover2 text-center"
