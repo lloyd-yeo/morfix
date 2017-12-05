@@ -162,7 +162,6 @@
 			<div class="row">
 				@include('competition.ranking')
 				<div class="col-lg-6 announcements">
-
 					<!-- News -->
 					<div class="block">
 						<div class="block-header">
@@ -209,29 +208,72 @@
 					<!-- News -->
 					<div class="block">
 						<div class="block-header">
-							<ul class="block-options">
-								<li>
-									<button type="button" data-toggle="block-option" data-action="refresh_toggle"
-									        data-action-mode="demo"><i class="si si-refresh"></i></button>
-								</li>
-							</ul>
-							<h3 class="block-title"> Announcements</h3>
+							<h3 class="block-title"> Sales Legends</h3>
 						</div>
 						<div class="block-content">
-							<ul class="list list-timeline pull-t">
-								@foreach ($competition_updates as $update)
-									@include('competition.update', ['update' => $update])
-								@endforeach
-							</ul>
+							<table class="table table-borderless remove-margin-b remove-margin-t font-s13">
+								<tbody>
+								<tr>
+									<td class="font-w700">
+										<span class='text-primary'>$500 USD</span>
+									</td>
+									<td>
+										<img style="width: 32px;"
+										     src="{{  asset('assets/img/competition/500sales.png') }}">
+									</td>
+								</tr>
+
+								<tr>
+									<td class="font-w700">
+										<span class='text-primary'>$200 USD</span>
+									</td>
+									<td>
+										<img style="width: 32px;"
+										     src="{{  asset('assets/img/competition/200sales.png') }}">
+									</td>
+								</tr>
+
+								<tr>
+									<td class="font-w700">
+										<span class='text-primary'>$100 USD</span>
+									</td>
+									<td>
+										<img style="width: 32px;"
+										     src="{{  asset('assets/img/competition/100sales.png') }}">
+									</td>
+								</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 					<!-- END News -->
 				</div>
 			</div>
-
+			<div class="row">
+				<!-- News -->
+				<div class="block">
+					<div class="block-header">
+						<ul class="block-options">
+							<li>
+								<button type="button" data-toggle="block-option" data-action="refresh_toggle"
+								        data-action-mode="demo"><i class="si si-refresh"></i></button>
+							</li>
+						</ul>
+						<h3 class="block-title"> Announcements</h3>
+					</div>
+					<div class="block-content">
+						<ul class="list list-timeline pull-t">
+							@foreach ($competition_updates as $update)
+								@include('competition.update', ['update' => $update])
+							@endforeach
+						</ul>
+					</div>
+				</div>
+				<!-- END News -->
+			</div>
 
 			<div class="row">
-				<div class="referral">
+				<div class="referral col-lg-12">
 					<div class="block">
 						<div id="follower-chart-header" class="block-header">
 							<h3 class="block-title"><i class="fa fa-instagram"></i> YOUR REFERRAL CHART</h3>

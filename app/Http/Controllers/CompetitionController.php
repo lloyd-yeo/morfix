@@ -47,7 +47,6 @@ class CompetitionController extends Controller
 				$first_update->save();
 			}
 
-
 			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
 			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 
