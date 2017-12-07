@@ -166,7 +166,7 @@ class CompetitionController extends Controller
 	{
 		$referrer_id = Auth::user()->user_id;
 		$start_date  = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize')->toDateTimeString();
-		$end_date    = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+		$end_date    = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize')->toDateTimeString();
 
 		$affiliates_total = DB::select("SELECT referred_user.*
                   FROM user_affiliate ua, user referred_user
