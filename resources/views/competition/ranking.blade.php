@@ -62,7 +62,7 @@
 
 													@while ($user["referral_value"] - 500 > 0)
 														@php
-															$user["referral_value"] = $user["referral_value"] - 20;
+															$user["referral_value"] = $user["referral_value"] - 500;
 														@endphp
 
 														<img style="width: 32px;"
@@ -72,7 +72,7 @@
 
 													@while ($user["referral_value"] - 200 > 0)
 														@php
-															$user["referral_value"] = $user["referral_value"] - 10;
+															$user["referral_value"] = $user["referral_value"] - 200;
 														@endphp
 
 														<img style="width: 32px;"
@@ -82,7 +82,7 @@
 
 													@while ($user["referral_value"] - 100 > 0)
 														@php
-															$user["referral_value"] = $user["referral_value"] - 5;
+															$user["referral_value"] = $user["referral_value"] - 100;
 														@endphp
 
 														<img style="width: 32px;"
