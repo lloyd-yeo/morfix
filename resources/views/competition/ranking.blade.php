@@ -57,6 +57,42 @@
 
 												@else
 												@endif
+
+												@if ($user["referral_value"] > 0)
+
+													@while ($user["referral_value"] - 500 > 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 20;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/500sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 200 > 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 10;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/200sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 100 > 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 5;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/100sales.png') }}">
+
+													@endwhile
+
+												@else
+												@endif
+
 											</td>
 										</tr>
 									@elseif ($loop->iteration == 2)
