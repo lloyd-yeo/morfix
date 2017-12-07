@@ -165,7 +165,7 @@ class CompetitionController extends Controller
 	public function getTotalReferral()
 	{
 		$referrer_id = Auth::user()->user_id;
-		$start_date  = Carbon::today()->setTime(0, 0, 0)->toDateTimeString();
+		$start_date  = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize')->toDateTimeString();
 		$end_date    = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
 
 		$affiliates_total = DB::select("SELECT referred_user.*
