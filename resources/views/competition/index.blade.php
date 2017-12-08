@@ -371,8 +371,8 @@
 						</div>
 
 						<div class="row">
-							<div class="block block-themed block-transparent">
-								<div class="block-header bg-modern">
+							<div class="block block-theme">
+								<div class="block-header">
 									<ul class="block-options">
 										<li>
 											<button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
