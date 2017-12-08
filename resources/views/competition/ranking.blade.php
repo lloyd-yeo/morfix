@@ -105,9 +105,7 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td class="referral-badge">
-											@if ($user["email"] == "billywillsonmedia@gmail.com")
-												{{ $user["referrals"] }}
-											@endif
+											
 											@if ($user["referrals"] > 0)
 												<!-- {{ $user["referrals"] }} -->
 
@@ -187,9 +185,7 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td class="referral-badge">
-											@if ($user["email"] == "billywillsonmedia@gmail.com")
-												{{ $user["referrals"] }}
-											@endif
+											
 											@if ($user["referrals"] > 0)
 												<!-- {{ $user["referrals"] }} -->
 
@@ -270,11 +266,8 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td class="referral-badge">
-											@if ($user["email"] == "billywillsonmedia@gmail.com")
-												{{ $user["referrals"] }}
-											@endif
+											
 											@if ($user["referrals"] > 0)
-												<!-- {{ $user["referrals"] }} -->
 
 													@while ($user["referrals"] - 20 >= 0)
 														@php
