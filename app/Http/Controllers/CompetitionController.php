@@ -71,13 +71,13 @@ class CompetitionController extends Controller
 			}
 
 			$startDate = Carbon::create(2017, 12, 4, 14, 0, 0);
-			$analysis  = $this->getAnalysis($startDate, $this->endDate);
+			$analysis  = $this->getAnalysis();
 
 			$total_referrals = $this->getTotalReferral();
 
 			$daily_referrals = $this->getDailyReferral();
 
-			$competition_time = Carbon::now('America/Belize');
+			$competition_time = Carbon::now();
 
 			$competition_updates = CompetitionUpdate::where('email', Auth::user()->email)->get();
 
@@ -263,12 +263,13 @@ class CompetitionController extends Controller
 		return User::whereDate('created_at', $clause, $date)->where('tier', '>', '1')->get();
 	}
 
-	public function getAnalysis(Carbon $startDate, Carbon $endDate)
+	public function getAnalysis()
 	{
 		$referrer_id       = Auth::user()->user_id;
 		$analysis_csv      = "";
 		$analysis_date_csv = "";
-
+		$startDate = Carbon::create(2017, 12, 4, 14, 0, 0);
+		$endDate = Carbon::create(2017, 12, 18, 13, 59, 59);
 		while ($startDate->lt($endDate)) {
 			$start_date = $startDate;
 			$end_date   = $startDate;
