@@ -25,6 +25,7 @@
 											<td class="referral-badge">
 												@if ($user["referrals"] > 0)
 													<!-- {{ $user["referrals"] }} -->
+
 													@while ($user["referrals"] - 20 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 20;
