@@ -270,6 +270,7 @@ class CompetitionController extends Controller
 		$analysis_date_csv = "";
 		$startDate = Carbon::create(2017, 12, 4, 14, 0, 0);
 		$endDate = Carbon::create(2017, 12, 18, 13, 59, 59);
+
 		while ($startDate->lt($endDate)) {
 			$start_date = $startDate;
 			$end_date   = $startDate;
@@ -292,7 +293,7 @@ class CompetitionController extends Controller
 				if ($analysis_date_csv == "") {
 					$analysis_date_csv = $analysis_date_formatted;
 				} else {
-					$analysis_date_csv = $analysis_date_csv . "," . $analysis_date_formatted;
+					$analysis_date_csv = $analysis_date_formatted . "," . $analysis_date_csv;
 				}
 
 			}
