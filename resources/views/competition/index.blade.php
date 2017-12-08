@@ -355,6 +355,7 @@
 									<div class="content content-narrow" style="padding-top: 0;">
 										<div class='row' style="margin-bottom: 20px;">
 											<h1 class="font-w700 push">Banner Ads</h1>
+											<h6>Click on the banners below to download them!</h6>
 											<div class="col-lg-6">
 												<center>
 													<a href="{{ asset('assets/img/banner/banner1.jpeg') }}" download>
