@@ -360,7 +360,7 @@
 											<div class="col-lg-6">
 												<center>
 													<a href="{{ asset('assets/img/banner/banner1.jpeg') }}" download>
-														<img src="{{ asset('assets/img/banner/banner1.jpeg') }}" width="300"
+														<img src="{{ asset('assets/img/banner/banner1.jpeg') }}"
 														     height="250" class="affIMGURL">
 													</a>
 												</center>
@@ -369,7 +369,7 @@
 											<div class="col-lg-6">
 												<center>
 													<a href="{{ asset('assets/img/banner/banner2.jpeg') }}" download>
-														<img src="{{ asset('assets/img/banner/banner2.jpeg') }}" width="300"
+														<img src="{{ asset('assets/img/banner/banner2.jpeg') }}"
 														     height="250" class="affIMGURL">
 													</a>
 												</center>
@@ -380,7 +380,7 @@
 											<div class="col-lg-6">
 												<center>
 													<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>
-														<img src="{{ asset('assets/img/banner/banner3.jpeg') }}" width="300"
+														<img src="{{ asset('assets/img/banner/banner3.jpeg') }}"
 														     height="250" class="affIMGURL">
 													</a>
 												</center>
@@ -388,7 +388,7 @@
 											<div class="col-lg-6">
 												<center>
 													<a href="{{ asset('assets/img/banner/banner4.jpeg') }}" download>
-														<img src="{{ asset('assets/img/banner/banner4.jpeg') }}" width="300"
+														<img src="{{ asset('assets/img/banner/banner4.jpeg') }}"
 														     height="250" class="affIMGURL">
 													</a>
 												</center>
