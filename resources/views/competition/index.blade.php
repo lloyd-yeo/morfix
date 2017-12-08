@@ -352,7 +352,7 @@
 						<div class="row" style="margin-top: 20px;">
 
 							<div class="col-lg-6">
-								<div class="block block-theme">
+								{{--<div class="block block-theme">--}}
 									<div class="block-content">
 										<div class="content content-narrow">
 											<center>
@@ -363,8 +363,9 @@
 											</center>
 										</div>
 									</div>
-								</div>
+								{{--</div>--}}
 							</div>
+
 							<div class="col-lg-6">
 								<center>
 									<a href="{{ asset('assets/img/banner/banner2.jpeg') }}" download>
