@@ -138,7 +138,9 @@
 						   data-target="#modal-terms-conditions">
 							<div class="block-content block-content-full bg-danger">
 								<i class="si si-docs fa-4x text-white"></i>
-								<div class="font-w600 text-white-op push-15-t">[READ FIRST!] Terms & Conditions (Click here!)</div>
+								<div class="font-w600 text-white-op push-15-t">[READ FIRST!] Terms & Conditions (Click
+								                                               here!)
+								</div>
 							</div>
 						</a>
 					</div>
@@ -170,35 +172,35 @@
 						<div class="block-content">
 							<table class="table table-borderless remove-margin-b remove-margin-t font-s13">
 								<tbody>
-									<tr>
-										<td class="font-w700">
-											<span class='text-primary'>20 REFERRALS</span>
-										</td>
-										<td>
-											<img class="pull-right" style="width: 32px;"
-											     src="{{  asset('assets/img/competition/medal20diamond.png') }}">
-										</td>
-									</tr>
+								<tr>
+									<td class="font-w700">
+										<span class='text-primary'>20 REFERRALS</span>
+									</td>
+									<td>
+										<img class="pull-right" style="width: 32px;"
+										     src="{{  asset('assets/img/competition/medal20diamond.png') }}">
+									</td>
+								</tr>
 
-									<tr>
-										<td class="font-w700">
-											<span class='text-primary'>10 REFERRALS</span>
-										</td>
-										<td>
-											<img class="pull-right" style="width: 32px;"
-											     src="{{  asset('assets/img/competition/medal5.png') }}">
-										</td>
-									</tr>
+								<tr>
+									<td class="font-w700">
+										<span class='text-primary'>10 REFERRALS</span>
+									</td>
+									<td>
+										<img class="pull-right" style="width: 32px;"
+										     src="{{  asset('assets/img/competition/medal5.png') }}">
+									</td>
+								</tr>
 
-									<tr>
-										<td class="font-w700">
-											<span class='text-primary'>5 REFERRALS</span>
-										</td>
-										<td>
-											<img class="pull-right" style="width: 32px;"
-											     src="{{  asset('assets/img/competition/moneymedal.png') }}">
-										</td>
-									</tr>
+								<tr>
+									<td class="font-w700">
+										<span class='text-primary'>5 REFERRALS</span>
+									</td>
+									<td>
+										<img class="pull-right" style="width: 32px;"
+										     src="{{  asset('assets/img/competition/moneymedal.png') }}">
+									</td>
+								</tr>
 								</tbody>
 							</table>
 						</div>
@@ -347,26 +349,41 @@
 					</div>
 					<div class="block-content block-content-full">
 
-						<div class="row">
+						<div class="row" style="margin-top: 20px;">
 							<div class="col-lg-6">
-								<a href="{{ asset('assets/img/banner/banner1.jpeg') }}" download>
-									<img src="{{ asset('assets/img/banner/banner1.jpeg') }}" width="300" height="250" class="affIMGURL">
-								</a>
+								<center>
+									<a href="{{ asset('assets/img/banner/banner1.jpeg') }}" download>
+										<img src="{{ asset('assets/img/banner/banner1.jpeg') }}" width="300"
+										     height="250" class="affIMGURL">
+									</a>
+								</center>
 							</div>
 							<div class="col-lg-6">
-								<a href="{{ asset('assets/img/banner/banner2.jpeg') }}" download>
-									<img src="{{ asset('assets/img/banner/banner2.jpeg') }}" width="300" height="250" class="affIMGURL">
-								</a>
+								<center>
+									<a href="{{ asset('assets/img/banner/banner2.jpeg') }}" download>
+										<img src="{{ asset('assets/img/banner/banner2.jpeg') }}" width="300"
+										     height="250" class="affIMGURL">
+									</a>
+								</center>
+							</div>
+						</div>
+
+						<div class="row" style="margin-top: 20px;">
+							<div class="col-lg-6">
+								<center>
+									<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>
+										<img src="{{ asset('assets/img/banner/banner3.jpeg') }}" width="300"
+										     height="250" class="affIMGURL">
+									</a>
+								</center>
 							</div>
 							<div class="col-lg-6">
-								<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>
-									<img src="{{ asset('assets/img/banner/banner3.jpeg') }}" width="300" height="250" class="affIMGURL">
-								</a>
-							</div>
-							<div class="col-lg-6">
-								<a href="{{ asset('assets/img/banner/banner4.jpeg') }}" download>
-									<img src="{{ asset('assets/img/banner/banner4.jpeg') }}" width="300" height="250" class="affIMGURL">
-								</a>
+								<center>
+									<a href="{{ asset('assets/img/banner/banner4.jpeg') }}" download>
+										<img src="{{ asset('assets/img/banner/banner4.jpeg') }}" width="300"
+										     height="250" class="affIMGURL">
+									</a>
+								</center>
 							</div>
 						</div>
 
@@ -395,7 +412,9 @@
 
 													Sample Body Copy:<br/><br/>
 
-													There's a new software product that's taking over the internet.  It's called Morfix, and I just hooked you up with a FREE account!<br/><br/>
+													There's a new software product that's taking over the internet.
+													 It's called Morfix, and I just hooked you up with a FREE
+													account!<br/><br/>
 
 													<< Affiliate Link >><br/><br/>
 
@@ -413,14 +432,17 @@
 
 													  - And a WHOLE LOT MORE!<br/><br/>
 
-													Want to see a demo of the software in action? Check it out here:<br/><br/>
+													Want to see a demo of the software in action? Check it out
+													here:<br/><br/>
 
 													<< Affiliate Link >><br/><br/>
 
 													Thanks,<br/>
 													<< Your Name>><br/><br/>
 
-													P.S. - After you see the demo video, you can get a 7 day free account, and go setup with your IG Account. You'll be blown away with what's possible:<br/><br/>
+													P.S. - After you see the demo video, you can get a 7 day free
+													account, and go setup with your IG Account. You'll be blown away
+													with what's possible:<br/><br/>
 
 													<< Affiliate Link >>
 
@@ -455,24 +477,33 @@
 
 													Sample Body Copy:<br/><br/>
 
-													Over the past 12 months, a new tool called Morfix has taken over the internet.  <br/><br/>
+													Over the past 12 months, a new tool called Morfix has taken over the
+													internet.  <br/><br/>
 
-													Over 3,000 Instagramers and Influencers have setup their Instagram account with it, and I was able to get you a free 7 day trial!<br/><br/>
-
-													<< Affiliate Link >><br/><br/>
-
-													Listen to what Mike Benson said after getting his free trial account:<br/><br/>
-
-													“...I never knew growing my followers can be so easy. Morfix has done all the heavy lifting for me. All I need to do is focus now is on giving my audience values through my Instagram and Morfix even has a training on that…” <br/><br/>
+													Over 3,000 Instagramers and Influencers have setup their Instagram
+													account with it, and I was able to get you a free 7 day
+													trial!<br/><br/>
 
 													<< Affiliate Link >><br/><br/>
 
-													This account will give you access for ONE full week so you can look under the hood and have some fun with Morfix!<br/><br/>
+													Listen to what Mike Benson said after getting his free trial
+													account:<br/><br/>
+
+													“...I never knew growing my followers can be so easy. Morfix has
+													done all the heavy lifting for me. All I need to do is focus now is
+													on giving my audience values through my Instagram and Morfix even
+													has a training on that…” <br/><br/>
+
+													<< Affiliate Link >><br/><br/>
+
+													This account will give you access for ONE full week so you can look
+													under the hood and have some fun with Morfix!<br/><br/>
 
 													Thanks,<br/>
 													<< Your Name>><br/><br/>
 
-													P.S. - After you see the demo video, you can get a free account, and go setup your IG account. You'll be blown away with what's possible:<br/><br/>
+													P.S. - After you see the demo video, you can get a free account, and
+													go setup your IG account. You'll be blown away with what's possible:<br/><br/>
 
 													<< Affiliate Link >>
 
