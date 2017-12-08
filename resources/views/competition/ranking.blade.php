@@ -25,7 +25,7 @@
 											<td class="referral-badge">
 												@if ($user["referrals"] > 0)
 
-													@while ($user["referrals"] - 20 > 0)
+													@while ($user["referrals"] - 20 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 20;
 														@endphp
@@ -35,7 +35,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 10 > 0)
+													@while ($user["referrals"] - 10 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 10;
 														@endphp
@@ -45,7 +45,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 5 > 0)
+													@while ($user["referrals"] - 5 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 5;
 														@endphp
@@ -60,7 +60,7 @@
 
 												@if ($user["referral_value"] > 0)
 
-													@while ($user["referral_value"] - 500 > 0)
+													@while ($user["referral_value"] - 500 >= 0)
 														@php
 															$user["referral_value"] = $user["referral_value"] - 500;
 														@endphp
@@ -70,7 +70,7 @@
 
 													@endwhile
 
-													@while ($user["referral_value"] - 200 > 0)
+													@while ($user["referral_value"] - 200 >= 0)
 														@php
 															$user["referral_value"] = $user["referral_value"] - 200;
 														@endphp
@@ -80,7 +80,7 @@
 
 													@endwhile
 
-													@while ($user["referral_value"] - 100 > 0)
+													@while ($user["referral_value"] - 100 >= 0)
 														@php
 															$user["referral_value"] = $user["referral_value"] - 100;
 														@endphp
