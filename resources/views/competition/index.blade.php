@@ -349,10 +349,10 @@
 					</div>
 					<div class="block-content block-content-full">
 
-						<div class="row" style="margin-top: 20px;">
+						<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 							<div class="block block-theme">
 								<div class="block-content">
-									<div class="content content-narrow">
+									<div class="content content-narrow" style="padding-top: 0;">
 										<div class='row'>
 											<h1 class="font-w700 push">Banner Ads</h1>
 											<div class="col-lg-6">
