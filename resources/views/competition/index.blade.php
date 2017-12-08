@@ -347,8 +347,7 @@
 					<div class="block-header">
 						<h3 class="block-title"><i class="fa fa-bars"></i> RESOURCES</h3>
 					</div>
-					<div class="block-content block-content-full">
-
+					<div class="block-content block-content-full" style="padding-top: 0;">
 						<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
 							<div class="block block-theme">
 								<div class="block-content">
