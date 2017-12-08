@@ -372,14 +372,6 @@
 
 						<div class="row">
 							<div class="block block-theme">
-								<div class="block-header">
-									<ul class="block-options">
-										<li>
-											<button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-										</li>
-									</ul>
-									<h3 class="block-title">Prizes</h3>
-								</div>
 								<div class="block-content">
 									<div class="content content-narrow">
 										<div class='row'>
