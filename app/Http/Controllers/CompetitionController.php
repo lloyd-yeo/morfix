@@ -176,21 +176,21 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
 
-		dump("SELECT ua.referrer, referred_user.email, referred_user.tier AS referrals
-                  FROM user_affiliate ua, user referred_user
-                  WHERE ua.referrer = $referrer_id
-                  AND referred_user.user_id = ua.referred
-                  AND DATE(referred_user.created_at) >= '$start_date'
-                  AND DATE(referred_user.created_at) <= '$end_date'
-                  AND referred_user.tier > 1;");
+//		dump("SELECT ua.referrer, referred_user.email, referred_user.tier AS referrals
+//                  FROM user_affiliate ua, user referred_user
+//                  WHERE ua.referrer = $referrer_id
+//                  AND referred_user.user_id = ua.referred
+//                  AND DATE(referred_user.created_at) >= '$start_date'
+//                  AND DATE(referred_user.created_at) <= '$end_date'
+//                  AND referred_user.tier > 1;");
 
-		$affiliates_total = DB::select("SELECT ua.referrer, referred_user.email, referred_user.tier AS referrals
-                  FROM user_affiliate ua, user referred_user
-                  WHERE ua.referrer = $referrer_id
-                  AND referred_user.user_id = ua.referred
-                  AND DATE(referred_user.created_at) >= '$start_date'
-                  AND DATE(referred_user.created_at) <= '$end_date'
-                  AND referred_user.tier > 1;");
+//		$affiliates_total = DB::select("SELECT ua.referrer, referred_user.email, referred_user.tier AS referrals
+//                  FROM user_affiliate ua, user referred_user
+//                  WHERE ua.referrer = $referrer_id
+//                  AND referred_user.user_id = ua.referred
+//                  AND DATE(referred_user.created_at) >= '$start_date'
+//                  AND DATE(referred_user.created_at) <= '$end_date'
+//                  AND referred_user.tier > 1;");
 
 		return $affiliates_total;
 	}
