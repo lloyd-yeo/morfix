@@ -350,44 +350,76 @@
 					<div class="block-content block-content-full">
 
 						<div class="row" style="margin-top: 20px;">
+							<div class="block block-theme">
+								<div class="block-content">
+									<div class="content content-narrow">
+										<div class='row'>
+											<h1 class="font-w700 push">Banner Ads</h1>
+											<div class="col-lg-6">
+												<center>
+													<a href="{{ asset('assets/img/banner/banner1.jpeg') }}" download>
+														<img src="{{ asset('assets/img/banner/banner1.jpeg') }}" width="300"
+														     height="250" class="affIMGURL">
+													</a>
+												</center>
+											</div>
 
-							<div class="col-lg-6">
-								<center>
-									<a href="{{ asset('assets/img/banner/banner1.jpeg') }}" download>
-										<img src="{{ asset('assets/img/banner/banner1.jpeg') }}" width="300"
-										     height="250" class="affIMGURL">
-									</a>
-								</center>
-							</div>
+											<div class="col-lg-6">
+												<center>
+													<a href="{{ asset('assets/img/banner/banner2.jpeg') }}" download>
+														<img src="{{ asset('assets/img/banner/banner2.jpeg') }}" width="300"
+														     height="250" class="affIMGURL">
+													</a>
+												</center>
+											</div>
+										</div>
 
-							<div class="col-lg-6">
-								<center>
-									<a href="{{ asset('assets/img/banner/banner2.jpeg') }}" download>
-										<img src="{{ asset('assets/img/banner/banner2.jpeg') }}" width="300"
-										     height="250" class="affIMGURL">
-									</a>
-								</center>
+										<div class='row'>
+											<div class="col-lg-6">
+												<center>
+													<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>
+														<img src="{{ asset('assets/img/banner/banner3.jpeg') }}" width="300"
+														     height="250" class="affIMGURL">
+													</a>
+												</center>
+											</div>
+											<div class="col-lg-6">
+												<center>
+													<a href="{{ asset('assets/img/banner/banner4.jpeg') }}" download>
+														<img src="{{ asset('assets/img/banner/banner4.jpeg') }}" width="300"
+														     height="250" class="affIMGURL">
+													</a>
+												</center>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
-						<div class="row" style="margin-top: 20px;">
-							<div class="col-lg-6">
-								<center>
-									<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>
-										<img src="{{ asset('assets/img/banner/banner3.jpeg') }}" width="300"
-										     height="250" class="affIMGURL">
-									</a>
-								</center>
-							</div>
-							<div class="col-lg-6">
-								<center>
-									<a href="{{ asset('assets/img/banner/banner4.jpeg') }}" download>
-										<img src="{{ asset('assets/img/banner/banner4.jpeg') }}" width="300"
-										     height="250" class="affIMGURL">
-									</a>
-								</center>
-							</div>
-						</div>
+						{{--<div class="row" style="margin-top: 20px;">--}}
+
+
+						{{--</div>--}}
+
+						{{--<div class="row" style="margin-top: 20px;">--}}
+							{{--<div class="col-lg-6">--}}
+								{{--<center>--}}
+									{{--<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>--}}
+										{{--<img src="{{ asset('assets/img/banner/banner3.jpeg') }}" width="300"--}}
+										     {{--height="250" class="affIMGURL">--}}
+									{{--</a>--}}
+								{{--</center>--}}
+							{{--</div>--}}
+							{{--<div class="col-lg-6">--}}
+								{{--<center>--}}
+									{{--<a href="{{ asset('assets/img/banner/banner4.jpeg') }}" download>--}}
+										{{--<img src="{{ asset('assets/img/banner/banner4.jpeg') }}" width="300"--}}
+										     {{--height="250" class="affIMGURL">--}}
+									{{--</a>--}}
+								{{--</center>--}}
+							{{--</div>--}}
+						{{--</div>--}}
 
 						<div class="row" style="margin-top: 20px;">
 							<div class="block block-theme">
