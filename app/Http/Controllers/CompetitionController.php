@@ -26,29 +26,30 @@ class CompetitionController extends Controller
 
 	public function show()
 	{
-//		if (Auth::user()->admin == 1) {
-//
-//		} else if (Carbon::now()->lt(Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize'))) {
-//			redirect("home")->with('error', 'The competition hasn\'t started yet.');
-//		}
+		//		if (Auth::user()->admin == 1) {
+		//
+		//		} else if (Carbon::now()->lt(Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize'))) {
+		//			redirect("home")->with('error', 'The competition hasn\'t started yet.');
+		//		}
 
 		if ((Auth::user()->is_competitor == 1 && Auth::user()->tier > 1) || Auth::user()->admin == 1) {
 
 			if (CompetitionUpdate::where('email', Auth::user()->email)->first() == NULL) {
-				$first_update = new CompetitionUpdate;
-				$first_update->email = Auth::user()->email;
-				$first_update->title = "WELCOME TO MORFIX'S FIRST EVER COMPETITION!!";
+				$first_update          = new CompetitionUpdate;
+				$first_update->email   = Auth::user()->email;
+				$first_update->title   = "WELCOME TO MORFIX'S FIRST EVER COMPETITION!!";
 				$first_update->content = "Over the course of the next 2 weeks, stand a chance to win yourself a brand new iPhone X. 
 				<br/>
 				To increase your success rate, we have provided email swipes & will be giving away valuable strategies on our Facebook page!
 				<br/>
 				If you are not in our Facebook group yet, click <a href=\"https://www.facebook.com/groups/228876584224981/\" target=\"_blank\">here</a> to join!";
-				$first_update->type = "WELCOME_MSG";
+				$first_update->type    = "WELCOME_MSG";
 				$first_update->save();
 			}
 
-			$this->startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
-			$this->endDate   = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+			$this->startDate  = Carbon::create(2017, 12, 4, 14, 0, 0)->toDateTimeString();
+			$this->endDate    = Carbon::create(2017, 12, 18, 13, 59, 59)->toDateTimeString();
+
 
 			$competitors = $this->getCompetitors();
 
@@ -69,7 +70,7 @@ class CompetitionController extends Controller
 				$ranking = count($competitors);
 			}
 
-			$startDate = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize');
+			$startDate = Carbon::create(2017, 12, 4, 14, 0, 0)->toDateTimeString();
 			$analysis  = $this->getAnalysis($startDate, $this->endDate);
 
 			$total_referrals = $this->getTotalReferral();
@@ -94,7 +95,7 @@ class CompetitionController extends Controller
 				"analysisLabel"           => $analysis['analysisLabel'],
 				"competition_leaderboard" => $leaderboard_entries,
 				"competition_time"        => $competition_time,
-				"competition_updates" => $competition_updates,
+				"competition_updates"     => $competition_updates,
 			]);
 		} else {
 			return redirect('home')->with('error', 'You are not eligible for the competition!');
@@ -165,8 +166,8 @@ class CompetitionController extends Controller
 	public function getTotalReferral()
 	{
 		$referrer_id = Auth::user()->user_id;
-		$start_date  = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize')->toDateTimeString();
-		$end_date    = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize')->toDateTimeString();
+		$start_date  = Carbon::create(2017, 12, 4, 14, 0, 0)->toDateTimeString();
+		$end_date    = Carbon::create(2017, 12, 18, 13, 59, 59)->toDateTimeString();
 
 		$affiliates_total = DB::select("SELECT referred_user.*
                   FROM user_affiliate ua, user referred_user
@@ -175,22 +176,6 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) >= '$start_date'
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
-
-//		dump("SELECT ua.referrer, referred_user.email, referred_user.tier AS referrals
-//                  FROM user_affiliate ua, user referred_user
-//                  WHERE ua.referrer = $referrer_id
-//                  AND referred_user.user_id = ua.referred
-//                  AND DATE(referred_user.created_at) >= '$start_date'
-//                  AND DATE(referred_user.created_at) <= '$end_date'
-//                  AND referred_user.tier > 1;");
-
-//		$affiliates_total = DB::select("SELECT ua.referrer, referred_user.email, referred_user.tier AS referrals
-//                  FROM user_affiliate ua, user referred_user
-//                  WHERE ua.referrer = $referrer_id
-//                  AND referred_user.user_id = ua.referred
-//                  AND DATE(referred_user.created_at) >= '$start_date'
-//                  AND DATE(referred_user.created_at) <= '$end_date'
-//                  AND referred_user.tier > 1;");
 
 		return $affiliates_total;
 	}
@@ -230,8 +215,8 @@ class CompetitionController extends Controller
 	{
 
 		$competitor_stats_array = [];
-		$start_date             = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize')->toDateTimeString();
-		$end_date               = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize')->toDateTimeString();
+		$start_date             = Carbon::create(2017, 12, 4, 14, 0, 0)->toDateTimeString();
+		$end_date               = Carbon::create(2017, 12, 18, 13, 59, 59)->toDateTimeString();
 
 		foreach ($this->getCompetitors() as $competitor) {
 
@@ -246,7 +231,7 @@ class CompetitionController extends Controller
                   AND referred_user.tier > 1;");
 
 			$referral_count = count($response);
-			$total_val = 0;
+			$total_val      = 0;
 			foreach ($response as $affiliate_referrals) {
 				if ($affiliate_referrals->referrals == 12) {
 					$total_val += 134;
@@ -260,9 +245,9 @@ class CompetitionController extends Controller
 			}
 
 			$competitor_stats_array[] = [
-				'email'     => $competitor->email,
-				'name'      => $competitor->name,
-				'referrals' => $referral_count,
+				'email'          => $competitor->email,
+				'name'           => $competitor->name,
+				'referrals'      => $referral_count,
 				'referral_value' => $total_val,
 			];
 		}
@@ -333,7 +318,7 @@ class CompetitionController extends Controller
 	public function getTime()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
 		$time    = $end->diffInSeconds($current);
 		$seconds = $time % 60;
 		$time    = ($time - $seconds) / 60;
@@ -347,10 +332,10 @@ class CompetitionController extends Controller
 	public function getTimeHour()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
 		$time    = $end->diffInSeconds($current);
 
-		$hours   = round($time / 60 / 60); //get hours first
+		$hours = round($time / 60 / 60); //get hours first
 
 		//		$time    = ($time - $seconds) / 60;
 		//		$minutes = $time % 60;
@@ -361,12 +346,12 @@ class CompetitionController extends Controller
 	public function getTimeMinute()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
 
-		$time    = $end->diffInSeconds($current);
+		$time = $end->diffInSeconds($current);
 
-		$hours   = floor($time / 60 / 60);
-		$time = $time - ($hours * 60 * 60); //remainder time after deducting hours
+		$hours = floor($time / 60 / 60);
+		$time  = $time - ($hours * 60 * 60); //remainder time after deducting hours
 
 		$minutes = round($time / 60);
 
@@ -376,14 +361,14 @@ class CompetitionController extends Controller
 	public function getTimeSecond()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize');
+		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
 		$time    = $end->diffInSeconds($current);
 
-		$hours   = floor($time / 60 / 60);
-		$time = $time - ($hours * 60 * 60); //remainder time after deducting hours
+		$hours = floor($time / 60 / 60);
+		$time  = $time - ($hours * 60 * 60); //remainder time after deducting hours
 
 		$minutes = floor($time / 60);
-		$time = $time - ($minutes * 60); //remainder time after deducting hours
+		$time    = $time - ($minutes * 60); //remainder time after deducting hours
 
 		return $time;
 	}
