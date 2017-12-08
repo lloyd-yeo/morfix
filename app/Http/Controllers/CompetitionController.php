@@ -214,8 +214,8 @@ class CompetitionController extends Controller
 	{
 
 		$competitor_stats_array = [];
-		$start_date             = $this->startDate;
-		$end_date               = $this->endDate;
+		$start_date             = Carbon::create(2017, 12, 4, 0, 0, 0, 'America/Belize')->toDateTimeString();
+		$end_date               = Carbon::create(2017, 12, 17, 23, 59, 59, 'America/Belize')->toDateTimeString();
 
 		foreach ($this->getCompetitors() as $competitor) {
 
