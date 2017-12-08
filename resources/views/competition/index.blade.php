@@ -433,7 +433,7 @@
 						</div>
 
 						<div class="row" style="margin-top: 20px;">
-							<div class="block block-themed">]
+							<div class="block block-themed">
 								<div class="block-content">
 									<div class="content content-narrow">
 										<div class='row'>
