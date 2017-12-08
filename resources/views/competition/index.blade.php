@@ -376,7 +376,7 @@
 											</div>
 										</div>
 
-										<div class='row' style="margin-bottom: 20px;">
+										<div class='row' style="margin-bottom: 40px;">
 											<div class="col-lg-6">
 												<center>
 													<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>
