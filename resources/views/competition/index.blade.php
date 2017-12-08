@@ -438,7 +438,6 @@
 									<div class="content content-narrow">
 										<div class='row'>
 											<h1 class="font-w700 push">Email #2 Swipe</h1>
-
 											<div class="nice-copy">
 												<span class="font-w700">Email #2</span>
 												<p>
