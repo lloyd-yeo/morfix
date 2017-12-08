@@ -286,7 +286,7 @@ class CompetitionController extends Controller
                   AND referred_user.tier > 1;");
 
 			foreach ($response as $resp) {
-				$analysis_csv            = $resp->referrals . "," . $analysis_csv;
+				$analysis_csv            = $analysis_csv . "," . $resp->referrals;
 				$analysis_date           = date_create($start_date);
 				$analysis_date_formatted = date_format($analysis_date, "d M");
 
