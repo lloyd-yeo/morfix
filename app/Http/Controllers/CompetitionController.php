@@ -230,11 +230,8 @@ class CompetitionController extends Controller
                   AND DATE(referred_user.created_at) <= '$end_date'
                   AND referred_user.tier > 1;");
 
-			if ($referrer_id == 4210) {
-				dump(count($response));
-			}
-
 			$referral_count = count($response);
+
 			$total_val      = 0;
 			foreach ($response as $affiliate_referrals) {
 				if ($affiliate_referrals->referrals == 12) {

@@ -23,6 +23,9 @@
 
 											</td>
 											<td class="referral-badge">
+												@if ($user["email"] == "billywillsonmedia@gmail.com")
+													{{ $user["referrals"] }}
+												@endif
 												@if ($user["referrals"] > 0)
 													<!-- {{ $user["referrals"] }} -->
 
