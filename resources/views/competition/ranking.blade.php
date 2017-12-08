@@ -105,9 +105,13 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td class="referral-badge">
-												@if ($user["referrals"] > 0)
+											@if ($user["email"] == "billywillsonmedia@gmail.com")
+												{{ $user["referrals"] }}
+											@endif
+											@if ($user["referrals"] > 0)
+												<!-- {{ $user["referrals"] }} -->
 
-													@while ($user["referrals"] - 20 > 0)
+													@while ($user["referrals"] - 20 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 20;
 														@endphp
@@ -117,7 +121,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 10 > 0)
+													@while ($user["referrals"] - 10 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 10;
 														@endphp
@@ -127,7 +131,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 5 > 0)
+													@while ($user["referrals"] - 5 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 5;
 														@endphp
@@ -139,6 +143,42 @@
 
 												@else
 												@endif
+
+												@if ($user["referral_value"] > 0)
+
+													@while ($user["referral_value"] - 500 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 500;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/500sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 200 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 200;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/200sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 100 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 100;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/100sales.png') }}">
+
+													@endwhile
+
+												@else
+												@endif
+
 											</td>
 										</tr>
 									@elseif ($loop->iteration == 3)
@@ -147,9 +187,13 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td class="referral-badge">
-												@if ($user["referrals"] > 0)
+											@if ($user["email"] == "billywillsonmedia@gmail.com")
+												{{ $user["referrals"] }}
+											@endif
+											@if ($user["referrals"] > 0)
+												<!-- {{ $user["referrals"] }} -->
 
-													@while ($user["referrals"] - 20 > 0)
+													@while ($user["referrals"] - 20 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 20;
 														@endphp
@@ -159,7 +203,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 10 > 0)
+													@while ($user["referrals"] - 10 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 10;
 														@endphp
@@ -169,7 +213,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 5 > 0)
+													@while ($user["referrals"] - 5 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 5;
 														@endphp
@@ -181,6 +225,42 @@
 
 												@else
 												@endif
+
+												@if ($user["referral_value"] > 0)
+
+													@while ($user["referral_value"] - 500 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 500;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/500sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 200 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 200;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/200sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 100 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 100;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/100sales.png') }}">
+
+													@endwhile
+
+												@else
+												@endif
+
 											</td>
 										</tr>
 									@elseif ($loop->iteration > 10)
@@ -190,9 +270,13 @@
 												<span class='text-primary'>#{{ $loop->iteration }} {{ $user["name"] }}</span>
 											</td>
 											<td class="referral-badge">
-												@if ($user["referrals"] > 0)
+											@if ($user["email"] == "billywillsonmedia@gmail.com")
+												{{ $user["referrals"] }}
+											@endif
+											@if ($user["referrals"] > 0)
+												<!-- {{ $user["referrals"] }} -->
 
-													@while ($user["referrals"] - 20 > 0)
+													@while ($user["referrals"] - 20 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 20;
 														@endphp
@@ -202,7 +286,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 10 > 0)
+													@while ($user["referrals"] - 10 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 10;
 														@endphp
@@ -212,7 +296,7 @@
 
 													@endwhile
 
-													@while ($user["referrals"] - 5 > 0)
+													@while ($user["referrals"] - 5 >= 0)
 														@php
 															$user["referrals"] = $user["referrals"] - 5;
 														@endphp
@@ -224,6 +308,42 @@
 
 												@else
 												@endif
+
+												@if ($user["referral_value"] > 0)
+
+													@while ($user["referral_value"] - 500 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 500;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/500sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 200 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 200;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/200sales.png') }}">
+
+													@endwhile
+
+													@while ($user["referral_value"] - 100 >= 0)
+														@php
+															$user["referral_value"] = $user["referral_value"] - 100;
+														@endphp
+
+														<img style="width: 32px;"
+														     src="{{  asset('assets/img/competition/100sales.png') }}">
+
+													@endwhile
+
+												@else
+												@endif
+
 											</td>
 										</tr>
 									@endif
