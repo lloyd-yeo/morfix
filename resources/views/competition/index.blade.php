@@ -353,7 +353,7 @@
 							<div class="block block-theme">
 								<div class="block-content">
 									<div class="content content-narrow" style="padding-top: 0;">
-										<div class='row'>
+										<div class='row' style="margin-bottom: 20px;">
 											<h1 class="font-w700 push">Banner Ads</h1>
 											<div class="col-lg-6">
 												<center>
@@ -374,7 +374,7 @@
 											</div>
 										</div>
 
-										<div class='row'>
+										<div class='row' style="margin-bottom: 20px;">
 											<div class="col-lg-6">
 												<center>
 													<a href="{{ asset('assets/img/banner/banner3.jpeg') }}" download>
