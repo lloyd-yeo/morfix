@@ -7,6 +7,7 @@ use App\Helper;
 use App\InstagramHelper;
 use App\InstagramProfile;
 use App\Proxy;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
