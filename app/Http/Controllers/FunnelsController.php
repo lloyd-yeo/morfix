@@ -221,6 +221,10 @@ class FunnelsController extends Controller
 
         $user = User::find(Auth::user()->user_id);
 
+	    if ($user->email == "ywz.lloyd@gmail.com") {
+		    $plan = "MX297";
+	    }
+
         $braintree_id = $user->braintree_id;
         $braintree_customer = Braintree_Customer::find($braintree_id);
 
