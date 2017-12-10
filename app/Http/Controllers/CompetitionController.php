@@ -47,8 +47,8 @@ class CompetitionController extends Controller
 				$first_update->save();
 			}
 
-			$this->startDate  = Carbon::create(2017, 12, 4, 14, 0, 0);
-			$this->endDate    = Carbon::create(2017, 12, 18, 13, 59, 59);
+			$this->startDate = Carbon::create(2017, 12, 4, 14, 0, 0);
+			$this->endDate   = Carbon::create(2017, 12, 18, 13, 59, 59);
 
 
 			$competitors = $this->getCompetitors();
@@ -232,7 +232,8 @@ class CompetitionController extends Controller
 
 			$referral_count = count($response);
 
-			$total_val      = 0;
+			$total_val = 0;
+			
 			foreach ($response as $affiliate_referrals) {
 				if ($affiliate_referrals->referrals == 12) {
 					$total_val += 134;
@@ -247,7 +248,7 @@ class CompetitionController extends Controller
 
 			if ($competitor->email == "neoweikian@hotmail.com") {
 				$referral_count = 10;
-				$total_val = 467;
+				$total_val      = 467;
 			}
 
 			$competitor_stats_array[] = [
@@ -273,8 +274,8 @@ class CompetitionController extends Controller
 		$referrer_id       = Auth::user()->user_id;
 		$analysis_csv      = "";
 		$analysis_date_csv = "";
-		$startDate = Carbon::create(2017, 12, 4, 14, 0, 0);
-		$endDate = Carbon::create(2017, 12, 18, 13, 59, 59);
+		$startDate         = Carbon::create(2017, 12, 4, 14, 0, 0);
+		$endDate           = Carbon::create(2017, 12, 18, 13, 59, 59);
 
 		while ($startDate->lt($endDate)) {
 			$start_date = $startDate;
