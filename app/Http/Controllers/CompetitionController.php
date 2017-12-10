@@ -293,7 +293,7 @@ class CompetitionController extends Controller
 				if ($analysis_date_csv == "") {
 					$analysis_date_csv = $analysis_date_formatted;
 				} else {
-					$analysis_date_csv = $analysis_date_csv . ',' . $analysis_date_formatted;
+					$analysis_date_csv = $analysis_date_csv . ', ' . $analysis_date_formatted;
 				}
 
 			}
