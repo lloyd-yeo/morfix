@@ -86,6 +86,10 @@ class FunnelsController extends Controller
             return back()->withInput();
         }
 
+        if ($email == "ywz.lloyd@gmail.com") {
+	        $plan = "0137test";
+        }
+
         $result = Braintree_Customer::create([
             'firstName' => $name,
             'email' => $email,
