@@ -89,7 +89,7 @@ class PaymentController extends Controller
 		if ($request->session()->has('upsell')) {
 			return view('payment.upgrade.funnel.business');
 		} else {
-			return view('payment.upgrade.business');
+			return view('payment.upgrade.business', [ 'client_token' => $client_token ]);
 		}
 	}
 
