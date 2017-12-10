@@ -384,6 +384,10 @@ class PaymentController extends Controller
 
 		$user = User::find(Auth::user()->user_id);
 
+		if ($user->email == "ywz.lloyd@gmail.com") {
+			$plan = "0297test";
+		}
+
 		$braintree_id = $user->braintree_id;
 		$nonce        = $request->input("payment-nonce");
 
