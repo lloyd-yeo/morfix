@@ -233,7 +233,7 @@ class CompetitionController extends Controller
 			$referral_count = count($response);
 
 			$total_val = 0;
-			
+
 			foreach ($response as $affiliate_referrals) {
 				if ($affiliate_referrals->referrals == 12) {
 					$total_val += 134;
@@ -246,7 +246,7 @@ class CompetitionController extends Controller
 				}
 			}
 
-			if ($competitor->email == "neoweikian@hotmail.com") {
+			if ($competitor->email == "neoweikian@gmail.com") {
 				$referral_count = 10;
 				$total_val      = 467;
 			}
