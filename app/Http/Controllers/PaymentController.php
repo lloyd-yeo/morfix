@@ -71,6 +71,7 @@ class PaymentController extends Controller
 
 		if ($request->session()->has('upsell')) {
 			$request->session()->forget('upsell');
+
 			return view('payment.upgrade.funnel.pro');
 		} else {
 			return view('payment.upgrade.pro', [ 'client_token' => $client_token ]);
@@ -163,7 +164,8 @@ class PaymentController extends Controller
 						}
 						try {
 							Mail::to($referrer->email)->send(new NewPremiumAffiliate($referrer, $user));
-						} catch (\Exception $ex) {
+						}
+						catch (\Exception $ex) {
 
 						}
 
@@ -190,8 +192,7 @@ class PaymentController extends Controller
 		}
 	}
 
-	public
-	function upgradeProPayment(Request $request)
+	public function upgradeProPayment(Request $request)
 	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
@@ -349,8 +350,7 @@ class PaymentController extends Controller
 		}
 	}
 
-	public
-	function upgradeBusinessPayment(Request $request)
+	public function upgradeBusinessPayment(Request $request)
 	{
 		Braintree_Configuration::environment('production');
 		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
@@ -359,8 +359,31 @@ class PaymentController extends Controller
 
 		$plan = '0297';
 
-		$user               = User::find(Auth::user()->user_id);
-		$braintree_id       = $user->braintree_id;
+		$user = User::find(Auth::user()->user_id);
+
+		$braintree_id = $user->braintree_id;
+		$nonce        = $request->input("payment-nonce");
+
+		if ($braintree_id === NULL) {
+
+			$result = Braintree_Customer::create([
+				'firstName'          => Auth::user()->name,
+				'email'              => Auth::user()->email,
+				'paymentMethodNonce' => $nonce,
+			]);
+
+			if ($result->success) {
+				$user->braintree_id = $result->customer->id;
+				$user->save();
+			} else {
+				//Redirect back to Premium page. Let user know of error.
+				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
+
+				return back()->withInput();
+			}
+
+		}
+
 		$braintree_customer = Braintree_Customer::find($braintree_id);
 
 		$sub_result = Braintree_Subscription::create([
