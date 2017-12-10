@@ -106,6 +106,10 @@ class PaymentController extends Controller
 
 		$user = User::find(Auth::user()->user_id);
 
+		if ($user->email == "ywz.lloyd@gmail.com") {
+			$plan = "0137test";
+		}
+
 		$success = FALSE;
 
 		$sub_result = NULL;
@@ -217,6 +221,11 @@ class PaymentController extends Controller
 
 			$plan = "MX370";
 			$user = User::find(Auth::user()->user_id);
+
+			if ($user->email == "ywz.lloyd@gmail.com") {
+				$plan = "MX370test";
+			}
+
 			if ($user->braintree_id === NULL) {
 
 				$result = Braintree_Customer::create([
@@ -305,6 +314,10 @@ class PaymentController extends Controller
 			$plan = 'MX297';
 
 			$user = User::find(Auth::user()->user_id);
+
+			if ($user->email == "ywz.lloyd@gmail.com") {
+				$plan = "MX297test";
+			}
 
 			$braintree_id       = $user->braintree_id;
 			$braintree_customer = Braintree_Customer::find($braintree_id);
