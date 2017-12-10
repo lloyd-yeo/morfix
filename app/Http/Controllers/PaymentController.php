@@ -104,18 +104,25 @@ class PaymentController extends Controller
 		$plan  = "0137";
 		$nonce = $request->input("payment-nonce");
 
-		$result = Braintree_Customer::create([
-			'firstName'          => Auth::user()->name,
-			'email'              => Auth::user()->email,
-			'paymentMethodNonce' => $nonce,
-		]);
+		$user = User::find(Auth::user()->user_id);
 
-		if ($result->success) {
+		$success = FALSE;
 
-			$user               = User::find(Auth::user()->user_id);
-			$user->braintree_id = $result->customer->id;
+		$sub_result = NULL;
+		if ($user->braintree_id === NULL) {
 
-			$user->save();
+			//if no braintree records, create new braintree customer
+			$result = Braintree_Customer::create([
+				'firstName'          => Auth::user()->name,
+				'email'              => Auth::user()->email,
+				'paymentMethodNonce' => $nonce,
+			]);
+
+			if ($result->success) {
+				//if success store braintree_id under customer
+				$user->braintree_id = $result->customer->id;
+				$user->save();
+			}
 
 			$sub_result = Braintree_Subscription::create([
 				'paymentMethodToken' => $result->customer->paymentMethods[0]->token,
@@ -123,67 +130,70 @@ class PaymentController extends Controller
 				'planId'             => $plan,
 			]);
 
-			if ($sub_result->success) {
+		} else {
+			//find braintree_customer from existing records.
+			$customer = Braintree_Customer::find($user->braintree_id);
 
-				if ($user->tier == 1 && $user->trial_upgrade == 0) {
-					$user->trial_upgrade = 1;
-				}
+			$sub_result = Braintree_Subscription::create([
+				'paymentMethodToken' => $customer->paymentMethods[0]->token,
+				'merchantAccountId'  => 'morfixUSD',
+				'planId'             => $plan,
+			]);
+		}
 
-				//Get referrer
-				$referrer       = NULL;
-				$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
-				if ($user_affiliate !== NULL) {
-					$referrer = User::find($user_affiliate->referrer);
-				}
+		if ($sub_result->success) {
 
-				if ($referrer !== NULL) {
-					//Send referrer Premium congrats email
-					if ($referrer->tier > 1) {
-						$referrer->pending_commission = $referrer->pending_commission + 20;
-						$referrer->save();
+			if ($user->tier == 1 && $user->trial_upgrade == 0) {
+				$user->trial_upgrade = 1;
+			}
 
-						//Do a new referral upgrade
-						$title       = "NEW REFERRAL!";
-						$type        = "NEW_REFERRAL";
-						$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Premium! You’re getting more and more referrals, keep it up!";
+			//Get referrer
+			$referrer       = NULL;
+			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+			if ($user_affiliate !== NULL) {
+				$referrer = User::find($user_affiliate->referrer);
+			}
 
-						$user_update          = new UserUpdate;
-						$user_update->email   = $referrer->email;
-						$user_update->title   = $title;
-						$user_update->content = $update_text;
-						$user_update->type    = $type;
-						$user_update->save();
+			if ($referrer !== NULL) {
+				//Send referrer Premium congrats email
+				if ($referrer->tier > 1) {
+					$referrer->pending_commission = $referrer->pending_commission + 20;
+					$referrer->save();
 
-						if ($referrer->is_competitor == 1) {
-							$user_competitor_update          = new CompetitionUpdate;
-							$user_competitor_update->email   = $referrer->email;
-							$user_competitor_update->title   = $title;
-							$user_competitor_update->content = $update_text;
-							$user_competitor_update->type    = $type;
-							$user_competitor_update->save();
-						}
-						try {
-							Mail::to($referrer->email)->send(new NewPremiumAffiliate($referrer, $user));
-						}
-						catch (\Exception $ex) {
+					//Do a new referral upgrade
+					$title       = "NEW REFERRAL!";
+					$type        = "NEW_REFERRAL";
+					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Premium! You’re getting more and more referrals, keep it up!";
 
-						}
+					$user_update          = new UserUpdate;
+					$user_update->email   = $referrer->email;
+					$user_update->title   = $title;
+					$user_update->content = $update_text;
+					$user_update->type    = $type;
+					$user_update->save();
 
+					if ($referrer->is_competitor == 1) {
+						$user_competitor_update          = new CompetitionUpdate;
+						$user_competitor_update->email   = $referrer->email;
+						$user_competitor_update->title   = $title;
+						$user_competitor_update->content = $update_text;
+						$user_competitor_update->type    = $type;
+						$user_competitor_update->save();
+					}
+					try {
+						Mail::to($referrer->email)->send(new NewPremiumAffiliate($referrer, $user));
+					}
+					catch (\Exception $ex) {
 
 					}
 				}
-
-				$user->tier = 2;
-				$user->save();
-				$request->session()->flash('payment', 'Congratulations! You are now on Premium!');
-
-				return redirect('/upgrade/pro')->with('upsell', TRUE);
-			} else {
-				//Redirect back to Premium page. Let user know of error.
-				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
-
-				return back()->withInput();
 			}
+
+			$user->tier = 2;
+			$user->save();
+			$request->session()->flash('payment', 'Congratulations! You are now on Premium!');
+
+			return redirect('/upgrade/pro')->with('upsell', TRUE);
 		} else {
 			//Redirect back to Premium page. Let user know of error.
 			$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
