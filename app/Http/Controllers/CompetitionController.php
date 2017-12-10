@@ -247,18 +247,18 @@ class CompetitionController extends Controller
 			}
 
 			if ($competitor->email == "neoweikian@gmail.com") {
-				$referral_count = 5;
-				$total_val      = 282;
-			}
-
-			if ($competitor->email == "rongronggg@gmail.com") {
 				$referral_count = 3;
 				$total_val      = 208;
 			}
 
+			if ($competitor->email == "rongronggg@gmail.com") {
+				$referral_count = 2;
+				$total_val      = 171;
+			}
+
 			if ($competitor->email == "l-ywz@hotmail.com") {
-				$referral_count = 3;
-				$total_val      = 111;
+				$referral_count = 2;
+				$total_val      = 74;
 			}
 
 			if ($competitor->email == "senghong.lim@gmail.com") {
