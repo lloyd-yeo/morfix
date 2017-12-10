@@ -62,7 +62,17 @@ class InstagramProfileController extends Controller
 				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'response' => "This instagram username has already been added!" ]);
 			}
 
-			$instagram->setProxy($proxy->proxy);
+			$user = User::find(Auth::user()->user_id);
+
+			$last_used_proxy = $user->last_used_proxy;
+			if ($last_used_proxy === NULL) {
+				$instagram->setProxy($proxy->proxy);
+				$user->last_used_proxy = $proxy->proxy;
+				$user->save();
+			} else {
+				$instagram->setProxy($user->last_used_proxy);
+			}
+
 			$explorer_response = $instagram->login($ig_username, $ig_password);
 
 			if ($explorer_response !== NULL) {
@@ -95,6 +105,9 @@ class InstagramProfileController extends Controller
 
 			$profile_log->error_msg = "Profile successfully created.";
 			$profile_log->save();
+
+			$user->last_used_proxy = NULL;
+			$user->save();
 
 			$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
 			$morfix_ig_profile->save();
@@ -235,7 +248,6 @@ class InstagramProfileController extends Controller
 				}
 			}
 		}
-
 
 		$log                 = new CreateInstagramProfileLog;
 		$log->insta_username = $ig_username;
