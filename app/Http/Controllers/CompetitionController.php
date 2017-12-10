@@ -261,6 +261,11 @@ class CompetitionController extends Controller
 				$total_val      = 111;
 			}
 
+			if ($competitor->email == "senghong.lim@gmail.com") {
+				$referral_count = 2;
+				$total_val      = 74;
+			}
+
 			$competitor_stats_array[] = [
 				'email'          => $competitor->email,
 				'name'           => $competitor->name,
