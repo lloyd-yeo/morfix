@@ -125,6 +125,10 @@ jQuery(function () {
                             swal('Oops...', data.response, 'error');
                         } else if (data.type === 'checkpoint') {
                             swal('Oops...', data.response, 'error');
+                        } else if (data.type === 'challenge') {
+                            swal('Oops...', data.response, 'error');
+                            $("#challenge_url").attr("href", data.link);
+                            $("#challenge_url").html(data.link);
                         } else {
                            swal('Oops...', data.response, 'error');
                         }
