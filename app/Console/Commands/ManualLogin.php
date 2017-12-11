@@ -68,7 +68,7 @@ class ManualLogin extends Command {
 //            dump($instagram->timeline->getSelfUserFeed());
         } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 	        $challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
-
+			dump($challenge_url);
         } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
             dump($emptyresponse_ex);
         } catch (\InstagramAPI\Exception\InstagramException $instagramException) {
