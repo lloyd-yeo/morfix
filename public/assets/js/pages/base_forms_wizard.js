@@ -287,6 +287,10 @@ var BaseFormWizard = function() {
                                     $success = false;
                                 } else if (data.type === 'checkpoint') {
                                     $success = true;
+                                } else if (data.type === 'challenge') {
+                                    swal('Oops...', data.response, 'error');
+                                    $current = $current - 1;
+                                    $success = false;
                                 } else {
                                    swal('Oops...', data.response, 'error');
                                    $current = $current - 1;

@@ -154,8 +154,8 @@ class InstagramProfileController extends Controller
 		catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 			$profile_log->error_msg = $challenge_required_ex->getMessage();
 			$profile_log->save();
-			dump($challenge_required_ex->getResponse()->asArray()["challenge"]);
-			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required", 'link' => 'NULL' ]);
+			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
+			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url ]);
 		}
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
