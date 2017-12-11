@@ -20,7 +20,7 @@ class ManualLogin extends Command {
      *
      * @var string
      */
-    protected $signature = 'ig:login {ig_username} {ig_password} {two_fa?}';
+    protected $signature = 'ig:login {ig_username} {ig_password} {proxy?}';
 
     /**
      * The console command description.
@@ -47,21 +47,22 @@ class ManualLogin extends Command {
         $ig_username = $this->argument("ig_username");
         $ig_password = $this->argument("ig_password");
 
+	    $instagram = InstagramHelper::initInstagram();
+
+
+
+	    $proxy = NULL;
+        if ($this->argument("proxy") !== NULL) {
+	        $proxy = $this->argument("proxy");
+	        $instagram->setProxy($proxy);
+        } else {
+	        $proxy = Proxy::inRandomOrder()->first();
+	        $instagram->setProxy($proxy->proxy);
+	        $this->line("Using proxy [" . $proxy->proxy . "]");
+        }
+
         $this->line($ig_username . " " . $ig_password);
 
-//        $config = array();
-//        $config["storage"] = "mysql";
-//        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
-//        $config["dbtablename"] = "instagram_sessions";
-//        $debug = true;
-//        $truncatedDebug = false;
-//        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-        $instagram = InstagramHelper::initInstagram();
-
-        $proxy = Proxy::inRandomOrder()->first();
-        $this->line("Using proxy [" . $proxy->proxy . "]");
-        $instagram->setProxy($proxy->proxy);
         try {
             #$explorer_response = $instagram->login($ig_username, $ig_password);
 //            dd($explorer_response);
