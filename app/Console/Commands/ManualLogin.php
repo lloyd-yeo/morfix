@@ -64,8 +64,8 @@ class ManualLogin extends Command {
         try {
             #$explorer_response = $instagram->login($ig_username, $ig_password);
 //            dd($explorer_response);
-            $instagram->login($ig_username, $ig_password, true);
-            dump($instagram->timeline->getSelfUserFeed());
+            dump($instagram->login($ig_username, $ig_password, true));
+//            dump($instagram->timeline->getSelfUserFeed());
         } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 	        $challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
 
