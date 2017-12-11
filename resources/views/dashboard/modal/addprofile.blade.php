@@ -69,7 +69,7 @@
                                                     </p>
                                                     <center><h4 class='push'>1. Login to Instagram with your account</h4></center>
                                                     <p>
-                                                        Go to <a target='_blank' href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
+                                                        Go to <a id="challenge_url" target='_blank' href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
                                                         Leave the page on for now & go back to Morfix.
                                                     </p>
                                                     <center><h4 class='push'>2. Retry adding</h4></center>
