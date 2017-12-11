@@ -291,8 +291,7 @@ var BaseFormWizard = function() {
                                     swal('Oops...', data.response, 'error');
                                     $("#challenge_url").attr("href", data.link);
                                     $("#challenge_url").html(data.link);
-                                    $current = $current - 1;
-                                    $success = false;
+                                    $success = true;
                                 } else {
                                    swal('Oops...', data.response, 'error');
                                    $current = $current - 1;
