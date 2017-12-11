@@ -286,7 +286,7 @@ var BaseFormWizard = function() {
                                     $current = $current - 1;
                                     $success = false;
                                 } else if (data.type === 'checkpoint') {
-                                    $success = true;
+                                    $success = false;
                                 } else if (data.type === 'challenge') {
                                     swal('Oops...', data.response, 'error');
                                     $("#challenge_url").attr("href", data.link);
