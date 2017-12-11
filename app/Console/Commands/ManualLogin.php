@@ -56,7 +56,7 @@ class ManualLogin extends Command {
         } else {
 	        $proxy = Proxy::inRandomOrder()->first();
 	        $instagram->setProxy($proxy->proxy);
-	        $this->line("Using proxy [" . $proxy->proxy . "]");
+	        $this->line("Not using Proxy.");
         }
 
         $this->line($ig_username . " " . $ig_password);
