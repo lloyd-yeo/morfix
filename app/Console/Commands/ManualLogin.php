@@ -68,6 +68,8 @@ class ManualLogin extends Command {
             dump($instagram->timeline->getSelfUserFeed());
         } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
             dump($emptyresponse_ex);
+        } catch (\InstagramAPI\Exception\InstagramException $instagramException) {
+	        dump($instagramException);
         }
 
 //        $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
