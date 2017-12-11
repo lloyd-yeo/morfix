@@ -91,9 +91,10 @@ jQuery(function () {
                 } else {
                     swal('Oops...', data.response, 'error');
                 }
-                App.loader('hide');
+
             }
         });
+        App.loader('hide');
     });
     
     $(".btn-retry").on("click", function(){
@@ -115,8 +116,8 @@ jQuery(function () {
                     'ig-password': $igPassword
                 },
                 success: function (data) {
-                    jQuery('#modal-addprofile').modal('hide');
                     if (data.success === true) {
+                        jQuery('#modal-addprofile').modal('hide');
                         localStorage.setItem("status", data.response);
                         location.reload(true);
                     } else {
