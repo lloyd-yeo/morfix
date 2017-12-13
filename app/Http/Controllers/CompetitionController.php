@@ -48,7 +48,7 @@ class CompetitionController extends Controller
 			}
 
 			$this->startDate = Carbon::create(2017, 12, 4, 14, 0, 0);
-			$this->endDate   = Carbon::create(2017, 12, 18, 13, 59, 59);
+			$this->endDate   = Carbon::create(2017, 12, 23, 13, 59, 59);
 
 
 			$competitors = $this->getCompetitors();
@@ -167,7 +167,7 @@ class CompetitionController extends Controller
 	{
 		$referrer_id = Auth::user()->user_id;
 		$start_date  = Carbon::create(2017, 12, 4, 14, 0, 0)->toDateTimeString();
-		$end_date    = Carbon::create(2017, 12, 18, 13, 59, 59)->toDateTimeString();
+		$end_date    = Carbon::create(2017, 12, 23, 13, 59, 59)->toDateTimeString();
 
 		$affiliates_total = DB::select("SELECT referred_user.*
                   FROM user_affiliate ua, user referred_user
@@ -216,7 +216,7 @@ class CompetitionController extends Controller
 
 		$competitor_stats_array = [];
 		$start_date             = Carbon::create(2017, 12, 4, 14, 0, 0)->toDateTimeString();
-		$end_date               = Carbon::create(2017, 12, 18, 13, 59, 59)->toDateTimeString();
+		$end_date               = Carbon::create(2017, 12, 23, 13, 59, 59)->toDateTimeString();
 
 		foreach ($this->getCompetitors() as $competitor) {
 
@@ -290,7 +290,7 @@ class CompetitionController extends Controller
 		$analysis_csv      = "";
 		$analysis_date_csv = "";
 		$startDate         = Carbon::create(2017, 12, 4, 14, 0, 0);
-		$endDate           = Carbon::create(2017, 12, 18, 13, 59, 59);
+		$endDate           = Carbon::create(2017, 12, 23, 13, 59, 59);
 
 		while ($startDate->lt($endDate)) {
 			$start_date = $startDate;
@@ -342,7 +342,7 @@ class CompetitionController extends Controller
 	public function getTime()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
+		$end     = Carbon::create(2017, 12, 23, 13, 59, 59);
 		$time    = $end->diffInSeconds($current);
 		$seconds = $time % 60;
 		$time    = ($time - $seconds) / 60;
@@ -356,7 +356,7 @@ class CompetitionController extends Controller
 	public function getTimeHour()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
+		$end     = Carbon::create(2017, 12, 23, 13, 59, 59);
 		$time    = $end->diffInSeconds($current);
 
 		$hours = round($time / 60 / 60); //get hours first
@@ -370,7 +370,7 @@ class CompetitionController extends Controller
 	public function getTimeMinute()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
+		$end     = Carbon::create(2017, 12, 23, 13, 59, 59);
 
 		$time = $end->diffInSeconds($current);
 
@@ -385,7 +385,7 @@ class CompetitionController extends Controller
 	public function getTimeSecond()
 	{
 		$current = Carbon::now();
-		$end     = Carbon::create(2017, 12, 18, 13, 59, 59);
+		$end     = Carbon::create(2017, 12, 23, 13, 59, 59);
 		$time    = $end->diffInSeconds($current);
 
 		$hours = floor($time / 60 / 60);
