@@ -94,6 +94,19 @@ class PaymentController extends Controller
 		}
 	}
 
+	public function upgradeMastermind(Request $request)
+	{
+		Braintree_Configuration::environment('production');
+		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
+		$client_token = Braintree_ClientToken::generate();
+
+		return view('payment.upgrade.mastermind', [ 'client_token' => $client_token ]);
+
+	}
+
 	public function upgradePremiumPayment(Request $request)
 	{
 		Braintree_Configuration::environment('production');
