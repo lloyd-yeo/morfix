@@ -104,7 +104,7 @@
 								</div>
 							</div>
 							{{--<form id="payment-form" action="/upgrade/premium" method="POST">--}}
-							<form id="payment-form" action="/upgrade/business" method="POST">
+							<form id="payment-form" action="/upgrade/mastermind" method="POST">
 								<input id="payment-nonce" name="payment-nonce" type="hidden"/>
 							</form>
 							<div class="de elHeadlineWrapper ui-droppable de-editable" id="headline-24973" data-de-type="headline" data-de-editing="false" data-title="headline" data-ce="true" data-trigger="none" data-animate="fade" data-delay="500" style="margin-top: 20px; cursor: pointer; outline: none; display: block;" aria-disabled="false">

@@ -199,6 +199,7 @@ Route::get('/upgrade/pro', 'PaymentController@upgradePro');
 Route::post('/upgrade/pro', 'PaymentController@upgradeProPayment');
 Route::get('/upgrade/business', 'PaymentController@upgradeBusiness');
 Route::get('/upgrade/mastermind', 'PaymentController@upgradeMastermind');
+Route::post('/upgrade/mastermind', 'PaymentController@upgradeMastermindPayment');
 
 Route::get('/cancellation', function(){ return view('cancellation'); });
 

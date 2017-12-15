@@ -488,6 +488,96 @@ class PaymentController extends Controller
 		}
 	}
 
+
+	public function upgradeMastermindPayment(Request $request)
+	{
+		Braintree_Configuration::environment('production');
+		Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
+		$plan = 'MX970';
+
+		$user = User::find(Auth::user()->user_id);
+
+		if ($user->email == "ywz.lloyd@gmail.com") {
+			$plan = "mx970test";
+		}
+
+		$braintree_id = $user->braintree_id;
+		$nonce        = $request->input("payment-nonce");
+
+		if ($braintree_id === NULL) {
+			$result = Braintree_Customer::create([
+				'firstName'          => Auth::user()->name,
+				'email'              => Auth::user()->email,
+				'paymentMethodNonce' => $nonce,
+			]);
+
+			if ($result->success) {
+				$user->braintree_id = $result->customer->id;
+				$user->save();
+			} else {
+				//Redirect back to Premium page. Let user know of error.
+				$request->session()->flash('error', 'Unable to register your account, you have not been charged. Do try again.');
+
+				return back()->withInput();
+			}
+		}
+
+		$braintree_customer = Braintree_Customer::find($braintree_id);
+
+		$sub_result = Braintree_Subscription::create([
+			'paymentMethodToken' => $braintree_customer->paymentMethods[0]->token,
+			'merchantAccountId'  => 'morfixUSD',
+			'planId'             => $plan,
+		]);
+
+		if ($sub_result->success) {
+			$user->num_acct = 6;
+			$user->tier     = $user->tier + 20;
+			$user->save();
+
+			//Get referrer & add commissions
+			$referrer       = NULL;
+			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
+			if ($user_affiliate !== NULL) {
+				$referrer = User::find($user_affiliate->referrer);
+			}
+
+			if ($referrer !== NULL) {
+				//Send referrer Pro congrats email
+				if ($referrer->tier - 20 > 0) {
+					$referrer->pending_commission = $referrer->pending_commission + 500;
+					$referrer->save();
+
+					//Do a new referral upgrade
+					$title       = "NEW BUSINESS UPGRADE!";
+					$type        = "BUSINESS_UPGRADE";
+					$update_text = "<a href=\"#\">" . $user->email . "</a> just upgraded to Mastermind! That's another $500 USD for as long as they are there, keep it up!";
+
+					$user_update          = new UserUpdate;
+					$user_update->email   = $referrer->email;
+					$user_update->title   = $title;
+					$user_update->content = $update_text;
+					$user_update->type    = $type;
+					$user_update->save();
+
+					if ($referrer->is_competitor == 1) {
+						$user_competitor_update          = new CompetitionUpdate;
+						$user_competitor_update->email   = $referrer->email;
+						$user_competitor_update->title   = $title;
+						$user_competitor_update->content = $update_text;
+						$user_competitor_update->type    = $type;
+						$user_competitor_update->save();
+					}
+
+				}
+			}
+			return view('payment.upgrade.confirmation');
+		}
+	}
+
 	public
 	function index(Request $request)
 	{
