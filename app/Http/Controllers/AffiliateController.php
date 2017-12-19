@@ -217,7 +217,7 @@ class AffiliateController extends Controller {
 //                ->where('user.tier', '>', 1)
 //                ->get();
 
-        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
 
         foreach ($referrals as $referral) {
 
