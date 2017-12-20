@@ -247,23 +247,33 @@ class CompetitionController extends Controller
 			}
 
 			if ($competitor->email == "neoweikian@gmail.com") {
-				$referral_count = 10;
-				$total_val      = 564;
+				$referral_count = 14;
+				$total_val      = 712;
 			}
 
 			if ($competitor->email == "rongronggg@gmail.com") {
-				$referral_count = 2;
-				$total_val      = 171;
+				$referral_count = 5;
+				$total_val      = 282;
 			}
 
 			if ($competitor->email == "l-ywz@hotmail.com") {
+				$referral_count = 4;
+				$total_val      = 245;
+			}
+
+			if ($competitor->email == "senghong.lim@gmail.com") {
+				$referral_count = 4;
+				$total_val      = 148;
+			}
+
+			if ($competitor->email = "morfixtest1@gmail.com") {
 				$referral_count = 2;
 				$total_val      = 74;
 			}
 
-			if ($competitor->email == "senghong.lim@gmail.com") {
-				$referral_count = 1;
-				$total_val      = 37;
+			if ($competitor->email = "morfixtest2@gmail.com") {
+				$referral_count = 2;
+				$total_val      = 171;
 			}
 
 			$competitor_stats_array[] = [
