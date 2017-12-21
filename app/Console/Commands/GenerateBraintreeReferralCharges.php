@@ -49,11 +49,11 @@ class GenerateBraintreeReferralCharges extends Command
 		\Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		\Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		\Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+		$date_to_retrieve_from = "2017-12-01 00:00:00";
+		$users                 = [];
 
-		$users = [];
-
-		$user_payout_comms = array();
-		$user_payouts = array();
+		$user_payout_comms = [];
+		$user_payouts      = [];
 
 		$referred_user_under_braintree = User::whereNotNull('braintree_id')->get();
 
@@ -155,11 +155,12 @@ class GenerateBraintreeReferralCharges extends Command
 
 				//get Braintree transactions for this user
 				$braintree_transactions = BraintreeTransaction::where('user_email', $referred_user->email)
-				                    ->where('status', '!=', 'voided')
-				                    ->where('status', '!=', 'processor_declined')
-				                    ->where('amount', '>', '0.02')
-				                    ->orderBy('sub_id', 'desc')
-				                    ->get();
+				                                              ->where('status', '!=', 'voided')
+				                                              ->where('status', '!=', 'processor_declined')
+				                                              ->where('amount', '>', '0.02')
+				                                              ->where('created_at', '<', $date_to_retrieve_from)
+				                                              ->orderBy('sub_id', 'desc')
+				                                              ->get();
 
 				$refunded_referred_braintree_subscriptions = [];
 
@@ -213,7 +214,7 @@ class GenerateBraintreeReferralCharges extends Command
 							$braintree_transaction->id . "," .
 							$eligible);
 
-						$comms_row = array();
+						$comms_row    = [];
 						$comms_row[0] = $referred_user->email;
 						$comms_row[1] = $braintree_transaction->plan_id;
 						$comms_row[2] = $amt_to_payout;
@@ -237,7 +238,7 @@ class GenerateBraintreeReferralCharges extends Command
 				$referrer_user = User::where("email", $referrer_email)->first();
 				if ($referrer_user !== NULL) {
 					$user_payouts[$referrer_email]['paypal_email'] = $referrer_user->paypal_email;
-					$user_payouts[$referrer_email]['payout_amt'] = 0;
+					$user_payouts[$referrer_email]['payout_amt']   = 0;
 				}
 			}
 
