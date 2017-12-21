@@ -163,7 +163,7 @@
 			</div>
 
 
-			<div class="row" style="margin-top: 400px;">
+			<div class="row">
 				@include('competition.ranking')
 				<div class="col-lg-4 announcements">
 					<!-- News -->
@@ -254,7 +254,7 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row" style="margin-top: 100px;">
 				<!-- News -->
 				<div class="block">
 					<div class="block-header">
