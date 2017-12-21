@@ -157,7 +157,7 @@ class GenerateBraintreeReferralCharges extends Command
 				$braintree_transactions = BraintreeTransaction::where('user_email', $referred_user->email)
 				                    ->where('status', '!=', 'voided')
 				                    ->where('status', '!=', 'processor_declined')
-				                    ->where('amount' > '0.02')
+				                    ->where('amount', '>', '0.02')
 				                    ->orderBy('sub_id', 'desc')
 				                    ->get();
 
