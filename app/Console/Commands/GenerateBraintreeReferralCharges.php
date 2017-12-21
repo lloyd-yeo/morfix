@@ -44,7 +44,7 @@ class GenerateBraintreeReferralCharges extends Command
 		foreach ($referred_user_under_braintree as $referred_user) {
 			$referrer_id = NULL;
 
-			$user_affiliate = UserAffiliates::where('referred', $referred_user->id)->first();
+			$user_affiliate = UserAffiliates::where('referred', $referred_user->id)->whereNotNull('referrer')->first();
 
 			if ($user_affiliate != NULL) {
 				dump($user_affiliate);
