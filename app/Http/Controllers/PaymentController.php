@@ -150,6 +150,18 @@ class PaymentController extends Controller
 				//if success store braintree_id under customer
 				$user->braintree_id = $result->customer->id;
 				$user->save();
+			} else {
+				foreach($result->errors->deepAll() AS $error) {
+					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+				}
+
+				foreach($result->errors->forKey('customer')->shallowAll() AS $error) {
+					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+				}
+
+				foreach($result->errors->forKey('customer')->forKey('creditCard')->shallowAll() AS $error) {
+					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+				}
 			}
 
 			$sub_result = Braintree_Subscription::create([
