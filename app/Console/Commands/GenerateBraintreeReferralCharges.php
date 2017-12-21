@@ -2,13 +2,14 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\BraintreeTransaction;
-use App\User;
-use App\UserAffiliates;
-use App\StripeDetail;
 use App\PaypalCharges;
 use App\StripeActiveSubscription;
+use App\StripeDetail;
+use App\User;
+use App\UserAffiliates;
+use Braintree_Customer;
+use Illuminate\Console\Command;
 
 class GenerateBraintreeReferralCharges extends Command
 {
@@ -43,6 +44,12 @@ class GenerateBraintreeReferralCharges extends Command
 	 */
 	public function handle()
 	{
+
+		\Braintree_Configuration::environment('production');
+		\Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+		\Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+		\Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
 		$users = [];
 
 		$referred_user_under_braintree = User::whereNotNull('braintree_id')->get();
@@ -52,10 +59,11 @@ class GenerateBraintreeReferralCharges extends Command
 			$referrer_id = NULL;
 
 			$user_affiliate = UserAffiliates::where('referred', $referred_user->user_id)->whereNotNull('referrer')->first();
-			if ($user_affiliate != NULL) {
+			if ($user_affiliate != NULL) { //this referred user has a referrer
 				$referrer_user  = User::find($user_affiliate->referrer);
 				$referrer_email = $referrer_user->email;
 
+				//If referrer is not in the $users array yet, create a new entry with their email & decide the eligibility of this referrer.
 				if (!array_has($users, $referrer_email)) {
 					$users[$referrer_email]               = [];
 					$users[$referrer_email]["premium"]    = 0;
@@ -111,40 +119,80 @@ class GenerateBraintreeReferralCharges extends Command
 						}
 					}
 
-					$braintree_transactions = BraintreeTransaction::where('user_email', $referrer_email)
-					                                              ->where('status', '!=', 'voided')
-					                                              ->where('status', '!=', 'processor_declined')
-					                                              ->orderBy('sub_id', 'desc')
-					                                              ->get();
-
-					$refunded_braintree_subscriptions = array();
-
-					foreach ($braintree_transactions as $braintree_transaction) {
-						if ($braintree_transaction->type == "credit") {
-							$refunded_braintree_subscriptions[$braintree_transaction->sub_id] = 1;
-						}
+					if ($referrer_charge->braintree_id != NULL) {
+						$bt_customer = \Braintree_Customer::find($referrer_charge->braintree_id);
+						dump($bt_customer);
 					}
 
-					foreach ($braintree_transactions as $braintree_transaction) {
-						if (!array_has($refunded_braintree_subscriptions, $braintree_transaction->sub_id) && $braintree_transaction->plan_id != NULL) {
-							if ($braintree_transaction->plan_id == "0137") {
-								$users[$referrer_email]["premium"]    = 1;
-							} else if ($braintree_transaction->plan_id == "0297") {
-								$users[$referrer_email]["business"]   = 1;
-							} else if ($braintree_transaction->plan_id == "MX370") {
-								$users[$referrer_email]["premium"]    = 1;
-								$users[$referrer_email]["pro"]        = 1;
-							} else if ($braintree_transaction->plan_id == "MX970") {
-								$users[$referrer_email]["business"]   = 1;
-								$users[$referrer_email]["mastermind"] = 1;
-							}
-						}
-					}
+
+
+//					$braintree_transactions = BraintreeTransaction::where('user_email', $referrer_email)
+//					                                              ->where('status', '!=', 'voided')
+//					                                              ->where('status', '!=', 'processor_declined')
+//					                                              ->where('amount' > '0.02')
+//					                                              ->orderBy('sub_id', 'desc')
+//					                                              ->get();
+//
+//					$refunded_braintree_subscriptions = [];
+//
+//					foreach ($braintree_transactions as $braintree_transaction) {
+//						if ($braintree_transaction->type == "credit") {
+//							$refunded_braintree_subscriptions[$braintree_transaction->sub_id] = 1;
+//						}
+//					}
+//
+//					foreach ($braintree_transactions as $braintree_transaction) {
+//						if (!array_has($refunded_braintree_subscriptions, $braintree_transaction->sub_id) && $braintree_transaction->plan_id != NULL) {
+//							if ($braintree_transaction->plan_id == "0137") {
+//								$users[$referrer_email]["premium"] = 1;
+//							} else if ($braintree_transaction->plan_id == "0297") {
+//								$users[$referrer_email]["business"] = 1;
+//							} else if ($braintree_transaction->plan_id == "MX370") {
+//								$users[$referrer_email]["premium"] = 1;
+//								$users[$referrer_email]["pro"]     = 1;
+//							} else if ($braintree_transaction->plan_id == "MX970") {
+//								$users[$referrer_email]["business"]   = 1;
+//								$users[$referrer_email]["mastermind"] = 1;
+//							}
+//						}
+//					}
 
 					if ($this->argument("debug") !== NULL) {
 						dump($users[$referrer_email]);
 					}
 				}
+
+				//get Braintree transactions for this user
+//				$braintree_transactions = BraintreeTransaction::where('user_email', $referred_user->user_id)
+//				                    ->where('status', '!=', 'voided')
+//				                    ->where('status', '!=', 'processor_declined')
+//				                    ->where('amount' > '0.02')
+//				                    ->orderBy('sub_id', 'desc')
+//				                    ->get();
+//
+//				$refunded_referred_braintree_subscriptions = [];
+//
+//				foreach ($braintree_transactions as $braintree_transaction) {
+//					if ($braintree_transaction->type == "credit") {
+//						$refunded_referred_braintree_subscriptions[$braintree_transaction->sub_id] = 1;
+//					}
+//				}
+//
+//				foreach ($braintree_transactions as $braintree_transaction) {
+//					if (!array_has($refunded_braintree_subscriptions, $braintree_transaction->sub_id) && $braintree_transaction->plan_id != NULL) {
+//						if ($braintree_transaction->plan_id == "0137") {
+//							$users[$referrer_email]["premium"] = 1;
+//						} else if ($braintree_transaction->plan_id == "0297") {
+//							$users[$referrer_email]["business"] = 1;
+//						} else if ($braintree_transaction->plan_id == "MX370") {
+//							$users[$referrer_email]["premium"] = 1;
+//							$users[$referrer_email]["pro"]     = 1;
+//						} else if ($braintree_transaction->plan_id == "MX970") {
+//							$users[$referrer_email]["business"]   = 1;
+//							$users[$referrer_email]["mastermind"] = 1;
+//						}
+//					}
+//				}
 
 
 			}
