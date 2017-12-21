@@ -122,9 +122,24 @@ class GenerateBraintreeReferralCharges extends Command
 					if ($referrer_charge->braintree_id != NULL) {
 						$bt_customer = \Braintree_Customer::find($referrer_charge->braintree_id);
 						foreach ($bt_customer->creditCards as $creditCard) {
-							dump($creditCard->subscriptions);
+							foreach ($creditCard->subscriptions as $bt_subscription) {
+								$planId = $bt_subscription->planId;
+								$status = $bt_subscription->status;
+								if ($status == "Active") {
+									if ($planId == "0137") {
+										$users[$referrer_email]["premium"] = 1;
+									} else if ($planId == "0297") {
+										$users[$referrer_email]["business"] = 1;
+									} else if ($planId == "MX370") {
+										$users[$referrer_email]["premium"] = 1;
+										$users[$referrer_email]["pro"]     = 1;
+									} else if ($planId == "MX970") {
+										$users[$referrer_email]["business"]   = 1;
+										$users[$referrer_email]["mastermind"] = 1;
+									}
+								}
+							}
 						}
-//						dump($bt_customer);
 					}
 
 
@@ -161,6 +176,9 @@ class GenerateBraintreeReferralCharges extends Command
 //					}
 
 					if ($this->argument("debug") !== NULL) {
+						if ($referrer_charge->braintree_id != NULL) {
+							$this->line($referrer_email . ' [BRAINTREE]');
+						}
 						dump($users[$referrer_email]);
 					}
 				}
