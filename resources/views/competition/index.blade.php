@@ -81,6 +81,7 @@
 
 		<div class="content content-boxed">
 			<div class="row statistics" style="display:none;">
+
 				<div class="col-xs-6 col-sm-2 col-lg-3">
 					<div class="font-w700 text-gray-darker animated fadeIn">DAILY REFERRAL</div>
 					<div class="text-muted animated fadeIn">
@@ -92,6 +93,7 @@
 					</div>
 					<span class="h2 text-moneygreen animated flipInX">{{ $dailyReferral }}</span>
 				</div>
+
 				<div class="col-xs-6 col-sm-2 col-lg-3">
 					<div class="font-w700 text-gray-darker animated fadeIn">TOTAL REFERRAL</div>
 					<div class="text-muted animated fadeIn">
@@ -103,6 +105,7 @@
 					</div>
 					<span class="h2 text-moneygreen animated flipInX">{{ $totalReferral }}</span>
 				</div>
+
 				<div class="col-xs-6 col-sm-6 col-lg-3">
 					<div class="font-w700 text-gray-darker animated fadeIn">MY COMPETITION RANKING</div>
 					<div class="text-muted animated fadeIn">
@@ -127,7 +130,6 @@
 					<span class="h2 font-w300 text-modern animated flipInX">{{ $competition_time }}</span>
 				</div>
 			</div>
-
 
 			<div class="row">
 				<div class="col-lg-6">
@@ -161,7 +163,7 @@
 			</div>
 
 
-			<div class="row">
+			<div class="row" style="margin-top: 100px;">
 				@include('competition.ranking')
 				<div class="col-lg-4 announcements">
 					<!-- News -->
