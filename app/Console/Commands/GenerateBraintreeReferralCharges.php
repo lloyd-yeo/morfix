@@ -121,7 +121,9 @@ class GenerateBraintreeReferralCharges extends Command
 
 					if ($referrer_charge->braintree_id != NULL) {
 						$bt_customer = \Braintree_Customer::find($referrer_charge->braintree_id);
-						dump($bt_customer->creditCards);
+						foreach ($bt_customer->creditCards as $creditCard) {
+							dump($creditCard->subscriptions);
+						}
 //						dump($bt_customer);
 					}
 
