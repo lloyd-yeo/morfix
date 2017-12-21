@@ -8,6 +8,7 @@ use App\User;
 use App\UserAffiliates;
 use App\StripeDetail;
 use App\PaypalCharges;
+use App\StripeActiveSubscription;
 
 class GenerateBraintreeReferralCharges extends Command
 {

@@ -36,7 +36,7 @@ class RefreshStripeSubscription extends Command {
      * @return mixed
      */
     public function handle() {
-        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
         $subscriptions = \Stripe\Subscription::all(array('limit' => 100, 'status' => 'all'));
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
 //            dump($subscription);
