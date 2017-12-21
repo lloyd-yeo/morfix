@@ -157,17 +157,18 @@ class PaymentController extends Controller
 					'planId'             => $plan,
 				]);
 			} else {
-				foreach($result->errors->deepAll() AS $error) {
-					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
-				}
-
-				foreach($result->errors->forKey('customer')->shallowAll() AS $error) {
-					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
-				}
-
-				foreach($result->errors->forKey('customer')->forKey('creditCard')->shallowAll() AS $error) {
-					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
-				}
+				dump($result);
+//				foreach($result->errors->deepAll() AS $error) {
+//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+//				}
+//
+//				foreach($result->errors->forKey('customer')->shallowAll() AS $error) {
+//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+//				}
+//
+//				foreach($result->errors->forKey('customer')->forKey('creditCard')->shallowAll() AS $error) {
+//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+//				}
 			}
 
 
