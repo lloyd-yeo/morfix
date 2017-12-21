@@ -228,8 +228,33 @@ class GenerateBraintreeReferralCharges extends Command
 						$user_payout_comms[] = $comms_row;
 					}
 				}
+			}
+		}
 
+		foreach ($user_payout_comms as $comms_row) {
+			$referrer_email = $comms_row[7];
+			if (!array_has($user_payouts, $referrer_email)) {
+				$referrer_user = User::where("email", $referrer_email)->first();
+				if ($referrer_user !== NULL) {
+					$user_payouts[$referrer_email]['paypal_email'] = $referrer_user->paypal_email;
+					$user_payouts[$referrer_email]['payout_amt'] = 0;
+				}
+			}
 
+			if ($comms_row[5] == 1) {
+				continue;
+			}
+
+			if ($comms_row[6] == "Yes") {
+				$user_payouts[$referrer_email]['payout_amt'] = $user_payouts[$referrer_email]['payout_amt'] + $comms_row[2];
+			}
+		}
+
+		foreach ($user_payouts as $referrer_email => $user_payout) {
+			if ($user_payout["payout_amt"] < 50) {
+				$this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Not Eligible");
+			} else {
+				$this->line($referrer_email . "," . $user_payout['paypal_email'] . "," . $user_payout["payout_amt"] . ",Eligible");
 			}
 		}
 	}
