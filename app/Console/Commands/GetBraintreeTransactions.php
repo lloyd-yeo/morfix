@@ -56,34 +56,22 @@ class GetBraintreeTransactions extends Command
 
 			$braintree_transaction = BraintreeTransaction::where('id', $transaction_id)->first();
 
-			if ($braintree_transaction !== NULL) { //if not null, update our records.
-				$braintree_transaction->id = $transaction->id;
-				$braintree_transaction->status = $transaction->status;
-				$braintree_transaction->type = $transaction->type;
-				$braintree_transaction->amount = $transaction->amount;
-				$braintree_transaction->created_at = $transaction->createdAt;
-				$braintree_transaction->updated_at = Carbon::now();
-				$braintree_transaction->braintree_id = $transaction->customerDetails->id;
-				$braintree_transaction->user_email = $transaction->customerDetails->email;
-				$braintree_transaction->plan_id = $transaction->planId;
-				$braintree_transaction->sub_id = $transaction->subscriptionId;
-				$braintree_transaction->bt_cc_token = $transaction->creditCardDetails->token;
-				$braintree_transaction->save();
-			} else { //if null, new record & save.
+			if ($braintree_transaction == NULL) {
 				$braintree_transaction = new BraintreeTransaction;
-				$braintree_transaction->id = $transaction->id;
-				$braintree_transaction->status = $transaction->status;
-				$braintree_transaction->type = $transaction->type;
-				$braintree_transaction->amount = $transaction->amount;
-				$braintree_transaction->created_at = $transaction->createdAt;
-				$braintree_transaction->updated_at = Carbon::now();
-				$braintree_transaction->braintree_id = $transaction->customerDetails->id;
-				$braintree_transaction->user_email = $transaction->customerDetails->email;
-				$braintree_transaction->plan_id = $transaction->planId;
-				$braintree_transaction->sub_id = $transaction->subscriptionId;
-				$braintree_transaction->bt_cc_token = $transaction->creditCardDetails->token;
-				$braintree_transaction->save();
 			}
+
+			$braintree_transaction->id = $transaction->id;
+			$braintree_transaction->status = $transaction->status;
+			$braintree_transaction->type = $transaction->type;
+			$braintree_transaction->amount = $transaction->amount;
+			$braintree_transaction->created_at = $transaction->createdAt;
+			$braintree_transaction->updated_at = Carbon::now();
+			$braintree_transaction->braintree_id = $transaction->customerDetails->id;
+			$braintree_transaction->user_email = $transaction->customerDetails->email;
+			$braintree_transaction->plan_id = $transaction->planId;
+			$braintree_transaction->sub_id = $transaction->subscriptionId;
+			$braintree_transaction->bt_cc_token = $transaction->creditCardDetails->token;
+			$braintree_transaction->save();
 
 //			dump($transaction);
 //			break;

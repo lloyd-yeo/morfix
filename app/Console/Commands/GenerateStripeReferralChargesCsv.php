@@ -40,7 +40,7 @@ class GenerateStripeReferralChargesCsv extends Command {
      * @return mixed
      */
     public function handle() {
-    	$date_to_retrieve_from = "2017-11-01 00:00:00";
+    	$date_to_retrieve_from = "2017-12-01 00:00:00";
         $users = array();
         $user_payout_comms = array();
         $user_payouts = array();
