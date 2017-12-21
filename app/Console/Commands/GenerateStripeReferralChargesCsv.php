@@ -128,7 +128,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                 }
 
                 $paypal_charges_for_referrer = PaypalCharges::where('email', $referrer_email)
-                                ->where('status', 'Completed')->where('time_stamp', '<', '2017-09-01 00:00:00')->get();
+                                ->where('status', 'Completed')->where('time_stamp', '<', '2017-12-01 00:00:00')->get();
                 foreach ($paypal_charges_for_referrer as $paypal_charge_for_referrer) {
                     if ($paypal_charge_for_referrer->subscription_id == "0137") {
                         $users[$referrer_email]["premium"] = 1;

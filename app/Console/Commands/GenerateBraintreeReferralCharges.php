@@ -108,7 +108,7 @@ class GenerateBraintreeReferralCharges extends Command
 					}
 
 					$paypal_charges_for_referrer = PaypalCharges::where('email', $referrer_email)
-					                                            ->where('status', 'Completed')->where('time_stamp', '<', '2017-09-01 00:00:00')->get();
+					                                            ->where('status', 'Completed')->where('time_stamp', '<', '2017-12-01 00:00:00')->get();
 					foreach ($paypal_charges_for_referrer as $paypal_charge_for_referrer) {
 						if ($paypal_charge_for_referrer->subscription_id == "0137") {
 							$users[$referrer_email]["premium"] = 1;
@@ -154,7 +154,7 @@ class GenerateBraintreeReferralCharges extends Command
 				}
 
 				//get Braintree transactions for this user
-				$braintree_transactions = BraintreeTransaction::where('user_email', $referred_user->user_id)
+				$braintree_transactions = BraintreeTransaction::where('user_email', $referred_user->email)
 				                    ->where('status', '!=', 'voided')
 				                    ->where('status', '!=', 'processor_declined')
 				                    ->where('amount' > '0.02')
