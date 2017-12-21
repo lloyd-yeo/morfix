@@ -43,12 +43,17 @@ class GenerateBraintreeReferralCharges extends Command
 		$referred_user_under_braintree = User::whereNotNull('braintree_id')->get();
 		foreach ($referred_user_under_braintree as $referred_user) {
 			$referrer_id = NULL;
+
 			$user_affiliate = UserAffiliates::where('referred', $referred_user->id)->first();
 			if ($user_affiliate != NULL) {
 				$referrer_id = $user_affiliate->referrer;
+
+				$referrer_user = User::find($referrer_id);
+				if ($referrer_user != NULL) {
+					$this->line($referred_user->email . " is referred by: " . $referrer_user->email);
+				}
+
 			}
-			$referrer_user = User::find($referrer_id);
-			$this->line($referred_user->email . " is referred by: " . $referrer_user->email);
 		}
 	}
 }
