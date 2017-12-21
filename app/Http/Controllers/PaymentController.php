@@ -150,6 +150,12 @@ class PaymentController extends Controller
 				//if success store braintree_id under customer
 				$user->braintree_id = $result->customer->id;
 				$user->save();
+
+				$sub_result = Braintree_Subscription::create([
+					'paymentMethodToken' => $result->customer->paymentMethods[0]->token,
+					'merchantAccountId'  => 'morfixUSD',
+					'planId'             => $plan,
+				]);
 			} else {
 				foreach($result->errors->deepAll() AS $error) {
 					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
@@ -164,11 +170,7 @@ class PaymentController extends Controller
 				}
 			}
 
-			$sub_result = Braintree_Subscription::create([
-				'paymentMethodToken' => $result->customer->paymentMethods[0]->token,
-				'merchantAccountId'  => 'morfixUSD',
-				'planId'             => $plan,
-			]);
+
 
 		} else {
 			//find braintree_customer from existing records.
