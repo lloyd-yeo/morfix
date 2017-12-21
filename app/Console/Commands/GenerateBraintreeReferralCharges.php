@@ -52,6 +52,9 @@ class GenerateBraintreeReferralCharges extends Command
 
 		$users = [];
 
+		$user_payout_comms = array();
+		$user_payouts = array();
+
 		$referred_user_under_braintree = User::whereNotNull('braintree_id')->get();
 
 		foreach ($referred_user_under_braintree as $referred_user) {
@@ -142,39 +145,6 @@ class GenerateBraintreeReferralCharges extends Command
 						}
 					}
 
-
-
-//					$braintree_transactions = BraintreeTransaction::where('user_email', $referrer_email)
-//					                                              ->where('status', '!=', 'voided')
-//					                                              ->where('status', '!=', 'processor_declined')
-//					                                              ->where('amount' > '0.02')
-//					                                              ->orderBy('sub_id', 'desc')
-//					                                              ->get();
-//
-//					$refunded_braintree_subscriptions = [];
-//
-//					foreach ($braintree_transactions as $braintree_transaction) {
-//						if ($braintree_transaction->type == "credit") {
-//							$refunded_braintree_subscriptions[$braintree_transaction->sub_id] = 1;
-//						}
-//					}
-//
-//					foreach ($braintree_transactions as $braintree_transaction) {
-//						if (!array_has($refunded_braintree_subscriptions, $braintree_transaction->sub_id) && $braintree_transaction->plan_id != NULL) {
-//							if ($braintree_transaction->plan_id == "0137") {
-//								$users[$referrer_email]["premium"] = 1;
-//							} else if ($braintree_transaction->plan_id == "0297") {
-//								$users[$referrer_email]["business"] = 1;
-//							} else if ($braintree_transaction->plan_id == "MX370") {
-//								$users[$referrer_email]["premium"] = 1;
-//								$users[$referrer_email]["pro"]     = 1;
-//							} else if ($braintree_transaction->plan_id == "MX970") {
-//								$users[$referrer_email]["business"]   = 1;
-//								$users[$referrer_email]["mastermind"] = 1;
-//							}
-//						}
-//					}
-
 					if ($this->argument("debug") !== NULL) {
 						if ($referrer_charge->braintree_id != NULL) {
 							$this->line($referrer_email . ' [BRAINTREE]');
@@ -184,36 +154,80 @@ class GenerateBraintreeReferralCharges extends Command
 				}
 
 				//get Braintree transactions for this user
-//				$braintree_transactions = BraintreeTransaction::where('user_email', $referred_user->user_id)
-//				                    ->where('status', '!=', 'voided')
-//				                    ->where('status', '!=', 'processor_declined')
-//				                    ->where('amount' > '0.02')
-//				                    ->orderBy('sub_id', 'desc')
-//				                    ->get();
-//
-//				$refunded_referred_braintree_subscriptions = [];
-//
-//				foreach ($braintree_transactions as $braintree_transaction) {
-//					if ($braintree_transaction->type == "credit") {
-//						$refunded_referred_braintree_subscriptions[$braintree_transaction->sub_id] = 1;
-//					}
-//				}
-//
-//				foreach ($braintree_transactions as $braintree_transaction) {
-//					if (!array_has($refunded_braintree_subscriptions, $braintree_transaction->sub_id) && $braintree_transaction->plan_id != NULL) {
-//						if ($braintree_transaction->plan_id == "0137") {
-//							$users[$referrer_email]["premium"] = 1;
-//						} else if ($braintree_transaction->plan_id == "0297") {
-//							$users[$referrer_email]["business"] = 1;
-//						} else if ($braintree_transaction->plan_id == "MX370") {
-//							$users[$referrer_email]["premium"] = 1;
-//							$users[$referrer_email]["pro"]     = 1;
-//						} else if ($braintree_transaction->plan_id == "MX970") {
-//							$users[$referrer_email]["business"]   = 1;
-//							$users[$referrer_email]["mastermind"] = 1;
-//						}
-//					}
-//				}
+				$braintree_transactions = BraintreeTransaction::where('user_email', $referred_user->user_id)
+				                    ->where('status', '!=', 'voided')
+				                    ->where('status', '!=', 'processor_declined')
+				                    ->where('amount' > '0.02')
+				                    ->orderBy('sub_id', 'desc')
+				                    ->get();
+
+				$refunded_referred_braintree_subscriptions = [];
+
+				foreach ($braintree_transactions as $braintree_transaction) {
+					if ($braintree_transaction->type == "credit") {
+						$refunded_referred_braintree_subscriptions[$braintree_transaction->sub_id] = 1;
+					}
+				}
+
+				foreach ($braintree_transactions as $braintree_transaction) {
+					if (!array_has($refunded_referred_braintree_subscriptions, $braintree_transaction->sub_id) && $braintree_transaction->plan_id != NULL) {
+
+						$eligible = "No";
+						if ($users[$referrer_email]["vip"] === 1) {
+							$eligible = "Yes";
+						} else {
+							if ($braintree_transaction->plan_id == "0137" && ($users[$referrer_email]["premium"] == 1 || $users[$referrer_email]["pro"] == 1)) {
+								$eligible = "Yes";
+							} else if ($braintree_transaction->plan_id == "0297" && ($users[$referrer_email]["business"] == 1)) {
+								$eligible = "Yes";
+							} else if ($braintree_transaction->plan_id == "MX370" && ($users[$referrer_email]["pro"] == 1)) {
+								$eligible = "Yes";
+							} else if ($braintree_transaction->plan_id == "MX297" && ($users[$referrer_email]["pro"] == 1)) {
+								$eligible = "Yes";
+							} else if ($braintree_transaction->plan_id == "MX970" && ($users[$referrer_email]["mastermind"] == 1)) {
+								$eligible = "Yes";
+							}
+						}
+
+						$amt_to_payout = 0;
+						if ($braintree_transaction->plan_id == "0137") {
+							$amt_to_payout = 20;
+						} else if ($braintree_transaction->plan_id == "0297") {
+							$amt_to_payout = 50;
+						} else if ($braintree_transaction->plan_id == "MX370") {
+							$amt_to_payout = 200;
+						} else if ($braintree_transaction->plan_id == "MX297") {
+							$amt_to_payout = 120;
+						} else if ($braintree_transaction->plan_id == "MX970") {
+							$amt_to_payout = 500;
+						}
+
+						$this->line($referrer_email . "," .
+							$referred_user->email . "," .
+							$braintree_transaction->plan_id . "," .
+							$amt_to_payout . "," .
+							$braintree_transaction->created_at . "," .
+							1 . "," .
+							0 . "," .
+							"Braintree," .
+							$braintree_transaction->id . "," .
+							$eligible);
+
+						$comms_row = array();
+						$comms_row[0] = $referred_user->email;
+						$comms_row[1] = $braintree_transaction->plan_id;
+						$comms_row[2] = $amt_to_payout;
+						$comms_row[3] = $braintree_transaction->created_at;
+						$comms_row[4] = 1;
+						$comms_row[5] = 0;
+						$comms_row[6] = $eligible;
+						$comms_row[7] = $referrer_email;
+						$comms_row[8] = "Braintree";
+						$comms_row[9] = $braintree_transaction->id;
+
+						$user_payout_comms[] = $comms_row;
+					}
+				}
 
 
 			}
