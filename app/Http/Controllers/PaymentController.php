@@ -24,6 +24,7 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 use Response;
 use App\CompetitionUpdate;
+use App\UserUpdate;
 
 class PaymentController extends Controller
 {

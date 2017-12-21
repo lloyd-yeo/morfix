@@ -45,8 +45,6 @@ class GenerateStripeReferralChargesCsv extends Command {
         $user_payout_comms = array();
         $user_payouts = array();
 
-
-
 	    $sql_stmt = "SELECT 
                                 u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
                                 u.tier, rc.referred_email, 
@@ -72,7 +70,6 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 AND rc.charge_created < '$date_to_retrieve_from'
                                 ORDER BY referrer_email ASC, charge_created DESC;";
         }
-
 
         $referral_charges = DB::select($sql_stmt);
 
