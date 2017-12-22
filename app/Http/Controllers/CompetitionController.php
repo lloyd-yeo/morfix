@@ -247,18 +247,18 @@ class CompetitionController extends Controller
 			}
 
 			if ($competitor->email == "neoweikian@gmail.com") {
-				$referral_count = 17;
-				$total_val      = 920;
+				$referral_count = 20;
+				$total_val      = 1128;
 			}
 
 			if ($competitor->email == "rongronggg@gmail.com") {
-				$referral_count = 7;
-				$total_val      = 356;
+				$referral_count = 10;
+				$total_val      = 467;
 			}
 
 			if ($competitor->email == "l-ywz@hotmail.com") {
-				$referral_count = 6;
-				$total_val      = 313;
+				$referral_count = 8;
+				$total_val      = 387;
 			}
 
 			if ($competitor->email == "senghong.lim@gmail.com") {
@@ -267,13 +267,13 @@ class CompetitionController extends Controller
 			}
 
 			if ($competitor->email == "morfixtest1@gmail.com") {
-				$referral_count = 4;
-				$total_val      = 245;
+				$referral_count = 5;
+				$total_val      = 282;
 			}
 
 			if ($competitor->email == "morfixtest2@gmail.com") {
-				$referral_count = 4;
-				$total_val      = 148;
+				$referral_count = 5;
+				$total_val      = 185;
 			}
 
 			$competitor_stats_array[] = [
