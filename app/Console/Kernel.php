@@ -93,6 +93,7 @@ class Kernel extends ConsoleKernel {
         Commands\ImportCompetitorsCsv::class,
         Commands\GetBraintreeTransactions::class,
         Commands\GenerateBraintreeReferralCharges::class,
+        Commands\CombinePayoutCSV::class,
     ];
 
     /**
