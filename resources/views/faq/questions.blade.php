@@ -25,7 +25,8 @@
                     <div class="block-content" style='padding-bottom: 40px;'>
                         <div class="push">
                             <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
-                            <span class="text-primary font-w600">{{ $qna->author }}</span> last updated this on {{ \Carbon\Carbon::parse($qna->written_at)->toFormattedDateString() }}
+                            <span class="text-primary font-w600">{{ $qna->author }}</span>
+                            last updated this on {{ \Carbon\Carbon::parse($qna->written_at)->toFormattedDateString() }}
                         </div>
                         
                         <h4 class="push-10">{{ $qna->question }}</h4>

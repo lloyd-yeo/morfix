@@ -280,6 +280,7 @@ class InstagramProfileController extends Controller
 			}
 
 			$instagram->setProxy($proxy);
+
 			try {
 				$explorer_response = $instagram->login($ig_username, $ig_password);
 				$user_response     = $instagram->getUserInfoByName($ig_username);
@@ -302,7 +303,10 @@ class InstagramProfileController extends Controller
 				$new_profile->proxy             = $proxy;
 				$new_profile->save();
 
-				return Response::json([ "success" => TRUE, 'response' => serialize($explorer_response), 'user' => serialize($user_response), 'proxy' => $proxy ]);
+				return Response::json([ "success" => TRUE,
+				                        'response' => serialize($explorer_response),
+				                        'user' => serialize($user_response),
+				                        'proxy' => $proxy ]);
 
 			}
 			catch (InstagramException $ig_ex) {

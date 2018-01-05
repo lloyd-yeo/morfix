@@ -34,7 +34,7 @@ class SettingsController extends Controller
 	public function index()
 	{
 		//get recent subscription
-		\Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+		\Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
 		$subscriptions = [];
 		$invoices      = [];
 		$invoices_     = [];
@@ -131,7 +131,7 @@ class SettingsController extends Controller
 
 	public function cancelSubscription($sub_id)
 	{
-		\Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+		\Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
 		$subscription = Subscription::retrieve($sub_id);
 		$subscription->cancel([ 'at_period_end' => TRUE ]);
 
@@ -145,7 +145,7 @@ class SettingsController extends Controller
 	public function updateCreditCard(Request $request)
 	{
 		//get recent subscription
-		\Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+		\Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
 		$subscriptions = [];
 		$invoices      = [];
 
@@ -218,7 +218,7 @@ class SettingsController extends Controller
 		$payment_log->save();
 
 		try {
-			\Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+			\Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
 			$invoice = Invoice::retrieve($invoice_id);
 			if ($invoice->pay()->paid == TRUE) {
 				$payment_log->log = "invoice_paid";

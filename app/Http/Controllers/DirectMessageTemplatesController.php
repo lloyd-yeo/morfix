@@ -105,7 +105,6 @@ class DirectMessageTemplatesController extends Controller
 					$dm_job->message = $new_message;
 					$dm_job->save();
 				}
-
 			}
 
 			$response = "Your new follower greetings template has been saved!";

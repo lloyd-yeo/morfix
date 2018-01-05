@@ -29,7 +29,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#topic{{ $loop->parent->iteration }}" href="#topic{{ $loop->parent->iteration }}_q{{ $loop->iteration }}">{{ $qna->question }}</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#topic{{ $loop->parent->iteration }}"
+                                   href="#topic{{ $loop->parent->iteration }}_q{{ $loop->iteration }}">{{ $qna->question }}</a>
                             </h3>
                         </div>
                         <div id="topic{{ $loop->parent->iteration }}_q{{ $loop->iteration }}" class="panel-collapse collapse">
@@ -41,7 +42,6 @@
                     @endforeach
                 </div>
                 @endforeach
-
             </div>
         </div>
         <!-- END Frequently Asked Questions -->
