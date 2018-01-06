@@ -501,7 +501,7 @@ class PaymentController extends Controller
 				}
 			}
 
-			return view('payment.upgrade.confirmation');
+			return view('payment.upgrade.funnel.confirmation');
 		}
 	}
 
@@ -591,7 +591,7 @@ class PaymentController extends Controller
 
 				}
 			}
-			return view('payment.upgrade.confirmation');
+			return view('payment.upgrade.funnel.confirmation');
 		}
 	}
 
