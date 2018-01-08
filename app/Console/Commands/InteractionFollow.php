@@ -87,15 +87,6 @@ class InteractionFollow extends Command {
      */
     public function handle() {
 
-        /*
-          - Get users if email argument is not Null
-          - Get users if email argument is Null in whereRaw
-          - Loop Users
-          - get instagram_profiles
-          - if email argument is null & tier is 1 and activation is 1
-          - dispatch InteractionFollow Job
-          - else, call handle again(Recursion)
-         */
         $users = NULL;
 
         if ($this->argument("email") == "slave") {
