@@ -98,6 +98,14 @@ class GenerateStripeReferralChargesCsv extends Command {
                 $users[$referrer_email]["mastermind"] = 0;
                 $users[$referrer_email]["vip"] = 0;
 
+                if ($referral_charge->vip == 1) {
+	                $users[$referrer_email]["premium"] = 1;
+	                $users[$referrer_email]["business"] = 1;
+	                $users[$referrer_email]["pro"] = 1;
+	                $users[$referrer_email]["mastermind"] = 1;
+	                $users[$referrer_email]["vip"] = 1;
+                }
+
                 $stripe_details = StripeDetail::where('email', $referrer_email)->get();
                 foreach ($stripe_details as $stripe_detail) {
                     if ($referral_charge->vip == 1) {
@@ -137,7 +145,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                         $users[$referrer_email]["business"] = 1;
                     } else if ($paypal_charge_for_referrer->subscription_id == "0297") {
                         $users[$referrer_email]["business"] = 1;
-                    } else if ($paypal_charge_for_referrer->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
+                    } else if ($paypal_charge_for_referrer->subscription_id == "MX370" || $paypal_charge_for_referrer->subscription_id == "MX297") {
                         $users[$referrer_email]["pro"] = 1;
                     }
                 }
