@@ -25,7 +25,7 @@ use PayPal\Rest\ApiContext;
 use Response;
 use App\CompetitionUpdate;
 use App\UserUpdate;
-use App\Mail;
+use Mail;
 
 class PaymentController extends Controller
 {
