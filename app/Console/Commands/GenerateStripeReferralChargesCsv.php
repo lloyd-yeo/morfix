@@ -266,7 +266,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                             $users[$referrer_email]["business"] = 1;
                         } else if ($paypal_charge_for_referrer->subscription_id == "0297") {
                             $users[$referrer_email]["business"] = 1;
-                        } else if ($paypal_charge_for_referrer->subscription_id == "MX370" || $sub->subscription_id == "MX297") {
+                        } else if ($paypal_charge_for_referrer->subscription_id == "MX370" || $paypal_charge_for_referrer->subscription_id == "MX297") {
                             $users[$referrer_email]["pro"] = 1;
                         }
                     }
