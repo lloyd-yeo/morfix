@@ -32,18 +32,17 @@ class HomeController extends Controller
 	 */
 	public function index(Request $request)
 	{
-
 		$current_user = Auth::user();
 
-		if (UserAffiliates::where('referred', $current_user->user_id)->count() == 0 && $current_user->last_login === NULL) {
-			$referrer = Cookie::get('referrer');
-			if ($referrer !== NULL && !($referrer == $current_user->user_id)) {
-				$user_affiliate = new UserAffiliates;
-				$user_affiliate->referrer = $referrer;
-				$user_affiliate->referred = $current_user->user_id;
-				$user_affiliate->save();
-			}
-		}
+//		if (UserAffiliates::where('referred', $current_user->user_id)->count() == 0 && $current_user->last_login === NULL) {
+//			$referrer = Cookie::get('referrer');
+//			if ($referrer !== NULL && !($referrer == $current_user->user_id)) {
+//				$user_affiliate = new UserAffiliates;
+//				$user_affiliate->referrer = $referrer;
+//				$user_affiliate->referred = $current_user->user_id;
+//				$user_affiliate->save();
+//			}
+//		}
 
 		$current_user->last_login = \Carbon\Carbon::now();
 		$current_user->save();
@@ -65,6 +64,7 @@ class HomeController extends Controller
 			}
 			$ranking++;
 		}
+
 		$instagram_profiles = array();
 		if (Auth::user()->partition === 0) {
 			$instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
@@ -78,6 +78,7 @@ class HomeController extends Controller
 				->take($current_user->num_acct)
 				->get();
 		}
+
 		$new_profile_follower_analysis = array();
 		$new_profile_follower_analysis_label = array();
 		$new_follower_count = array();

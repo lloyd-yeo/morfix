@@ -102,7 +102,7 @@ class EngagementGroup implements ShouldQueue
 
 			try {
 				$response = $instagram->media->like($mediaId);
-
+				dump($response);
 				if ($ig_profile->owner()->trial_activation === 1) {
 					echo "[" . $ig_profile->insta_username . "] owner is on Free-Trial\n";
 				} else {
@@ -115,25 +115,17 @@ class EngagementGroup implements ShouldQueue
 						if ($ig_profile->auto_comment == 1) {
 							$comments = InstagramProfileComment::where('insta_username', $ig_profile->insta_username)
 								->get();
-
-							dump($comments);
 							if (count($comments) > 0 && $this->comments_to_give > 0) {
 								$comment = $comments->random();
-
 								if (!empty($comment->comment)) {
 									$comment_resp = $instagram->media->comment($mediaId, $comment->comment);
-
 									dump($comment_resp);
-
 									$this->comments_to_give--;
 								}
 							}
 						}
 					}
 				}
-
-//				dump($response);
-
 			} catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
 				dump($feedback_required_ex);
 				continue;
