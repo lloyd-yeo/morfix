@@ -118,7 +118,7 @@ class UpdateLastPaidFromCSV extends Command {
 
 
 			//braintree transaction
-			$braintree_transaction = BraintreeTransaction::->where('user_email', $user->email)
+			$braintree_transaction = BraintreeTransaction::where('user_email', $user->email)
 			                                                   ->where('updated_at', '<', $end_date)
 			                                                   ->get();
 
