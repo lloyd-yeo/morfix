@@ -109,12 +109,16 @@ class UpdateLastPaidFromCSV extends Command
 
 			foreach ($referral_stripe_charges as $referral_stripe_charge) {
 
-				$referral_stripe_charge->comms_given = 1;
-				$referral_stripe_charge->save();
+//				$referral_stripe_charge->comms_given = 1;
+//				$referral_stripe_charge->save();
+				$charge_id = $referral_stripe_charge->charge_id;
+				$stripe_charge = StripeCharge::where('charge_id', $charge_id)->first();
+				$stripe_charge->commission_given = 1;
+				$stripe_charge->save();
 
 				//update commission_given to commission_given after verifying code
 
-				//   echo "updated commission: " . $referral_stripe_charge->referrer_email . "\n";
+				   echo "updated commission: " . $referral_stripe_charge->referrer_email . "[]\n";
 			}
 
 			$referral_paypal_charges = PaypalCharges::where('referrer_email', $user->email)
