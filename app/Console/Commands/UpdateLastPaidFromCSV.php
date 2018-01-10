@@ -101,9 +101,10 @@ class UpdateLastPaidFromCSV extends Command {
 			//update last month charges to given if paid this month
 
 			foreach ($referral_stripe_charges as $referral_stripe_charge) {
-
-				$charges = StripeCharge::where('charge_id', $referral_stripe_charge->charge_id)
-				                       ->update(['comms_given' => 1]);
+				
+				$referral_stripe_charge->comms_given = 1;
+				$referral_stripe_charge->save();
+				
 				//update commission_given to commission_given after verifying code
 
 				//   echo "updated commission: " . $referral_stripe_charge->referrer_email . "\n";
