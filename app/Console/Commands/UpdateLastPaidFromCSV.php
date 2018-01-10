@@ -69,13 +69,13 @@ class UpdateLastPaidFromCSV extends Command
 					$user->all_time_commission        = $user->all_time_commission + $data[2];
 					$user->save();
 
-					echo "Updated [$current_email] last pay out date to [$last_pay_out_coms_date]\n";
-					echo "Updated [$current_email] last pay out amount to [$data[2]]\n";
-					echo "Updated [$current_email] pending commission to to [$user->pending_commission]\n";
+					echo "[$current_email] Updated last pay out date to [$last_pay_out_coms_date]\n";
+					echo "[$current_email] Updated last pay out amount to [$data[2]]\n";
+					echo "[$current_email] Updatedpending commission to to [$user->pending_commission]\n";
 					$paid_amount = 0;
 					$tier        = 0;
 				} else {
-					echo $user->email . "is not eligible for current payout\n";
+					echo $user->email . " doesn't exists!\n";
 				}
 			}
 		}
@@ -86,14 +86,12 @@ class UpdateLastPaidFromCSV extends Command
 	public function UpdateUserChargesPaid($user, $recent_pay_out_date)
 	{
 
-		//        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
-
 		if ($user->last_pay_out_date == $recent_pay_out_date) {
 
 			$end_date = Carbon::parse($recent_pay_out_date)->subMonth()->endOfMonth();
-			echo "Recent payout date:" . $recent_pay_out_date . "\n";
+			echo "[$user->email] Recent payout date: " . $recent_pay_out_date . "\n";
 			//    echo "Start date for charges:" . $start_date . "\n";
-			echo "End date for charges:" . $end_date . "\n";
+			echo "[$user->email] End date for charges: " . $end_date . "\n";
 
 			// if we paid user recently, grab the charges from the start till the end of month before
 			// the month we paid him
@@ -118,7 +116,7 @@ class UpdateLastPaidFromCSV extends Command
 
 				//update commission_given to commission_given after verifying code
 
-				   echo "updated commission: " . $referral_stripe_charge->referrer_email . "[]\n";
+				   echo "updated commission: " . $referral_stripe_charge->referrer_email . "[$charge_id]\n";
 			}
 
 			$referral_paypal_charges = PaypalCharges::where('referrer_email', $user->email)
@@ -139,15 +137,12 @@ class UpdateLastPaidFromCSV extends Command
 				$braintree_transaction_value->comms_given = 1;
 				$braintree_transaction_value->save();
 			}
-
 		} else {
-
-			echo "User not paid in recent payout date \n";
+			echo "[$user->email] this user has not paid in recent payout date \n";
 		}
 	}
 
-	public
-	function CalculateUserPendingCommissions($user, $paid_amount, $tier)
+	public function CalculateUserPendingCommissions($user, $paid_amount, $tier)
 	{
 		$now                  = Carbon::now();
 		$now                  = $now->toDateTimeString();
@@ -155,7 +150,7 @@ class UpdateLastPaidFromCSV extends Command
 		$current_comms_paypal = 0;
 		$final_comms          = 0;
 
-		echo "Time now is: " . $now . "\n";
+		echo "[DEBUG] Time now is: " . $now . "\n";
 
 		$referral_stripe1_charges = GetReferralChargesOfUser::fromView()
 		                                                    ->where('referrer_email', $user->email)
@@ -165,8 +160,8 @@ class UpdateLastPaidFromCSV extends Command
 		                                                    ->orderBy('charge_created', 'desc')
 		                                                    ->get();
 
-		echo "start of date of charges is since the start \n";
-		echo "end of date of charges is before " . $now . "\n";
+		echo "Start of date of charges is since the start \n";
+		echo "End of date of charges is before " . $now . "\n";
 
 		foreach ($referral_stripe1_charges as $referral_stripe1_charge) {
 
@@ -188,7 +183,7 @@ class UpdateLastPaidFromCSV extends Command
 				$current_comms_stripe = $current_comms_stripe + 120;
 			}
 		}
-		echo "current_comms_stripe = " . $current_comms_stripe . "\n";
+		echo "[DEBUG] Current_comms_stripe = " . $current_comms_stripe . "\n";
 
 		$referral_paypal1_charges = PaypalCharges::where('referrer_email', $user->email)
 		                                         ->where('commission_given', 0)
@@ -224,9 +219,9 @@ class UpdateLastPaidFromCSV extends Command
 
 		$final_comms              = $current_comms_stripe + $current_comms_paypal;
 		$user->pending_commission = $final_comms;
-		echo "Updated pending_commission to: " . $final_comms . "\n";
+		echo "[$user->email] Updated pending_commission to: " . $final_comms . "\n";
 		$user->save();
-		echo "current_comms_paypal = " . $current_comms_paypal . "\n";
+		echo "[DEBUG] current_comms_paypal = " . $current_comms_paypal . "\n";
 	}
 
 }
