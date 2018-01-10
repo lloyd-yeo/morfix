@@ -73,12 +73,13 @@ class UpdateLastPaidFromCSV extends Command {
 					echo $user->email . "is not eligible for current payout\n";
 				}
 			}
-
 		}
+		
+		$recent_pay_out_date = Carbon::create(2017, 11, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
 	}
 
 	public function UpdateUserChargesPaid($user,$recent_pay_out_date) {
-		$recent_pay_out_date = Carbon::create(2017, 11, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
+		
 		//        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
 		if ($user->last_pay_out_date == $recent_pay_out_date) {
@@ -104,7 +105,7 @@ class UpdateLastPaidFromCSV extends Command {
 				
 				$referral_stripe_charge->comms_given = 1;
 				$referral_stripe_charge->save();
-				
+
 				//update commission_given to commission_given after verifying code
 
 				//   echo "updated commission: " . $referral_stripe_charge->referrer_email . "\n";
