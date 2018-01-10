@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\GetReferralChargesOfUser;
 use App\StripeCharge;
 use App\PaypalCharges;
+use App\BraintreeTransaction;
 
 class UpdateLastPaidFromCSV extends Command {
 
@@ -72,6 +73,7 @@ class UpdateLastPaidFromCSV extends Command {
 					echo $user->email . "is not eligible for current payout\n";
 				}
 			}
+
 		}
 	}
 
@@ -113,6 +115,19 @@ class UpdateLastPaidFromCSV extends Command {
 			                                        ->where('status', '!=', 'Refunded')
 			                                        ->orderBy('time_stamp', 'desc')
 			                                        ->update(['commission_given' => 1]);
+
+
+			//braintree transaction
+			$BraintreeTransaction = BraintreeTransaction::fromView()
+			                                                   ->where('user_email', $user->email)
+			                                                   ->where('updated_at', '<', $end_date)
+			                                                   ->get();
+
+
+			foreach ($BraintreeTransaction as $BraintreeTransactionValue) {
+			    $Breaintree= BraintreeTransaction::where('user_email', $BraintreeTransactionValue->user_email)->update(['comms_given' => 1]);
+			}    
+			                                          
 		} else {
 
 			echo "User not paid in recent payout date \n";
