@@ -54,6 +54,11 @@ class CreateUserTable extends Migration {
 			$table->decimal('paid_amount', 13, 4)->nullable();
 			$table->decimal('testing_all_time_commission', 13, 4)->nullable()->default(0.0000);
 			$table->boolean('reminder_igprofile')->nullable()->default(0);
+			$table->string('braintree_id', 50)->nullable()->index('braintree_id_idx');
+			$table->boolean('trial_upgrade')->nullable()->default(0);
+			$table->boolean('eligibile_tshirt')->nullable()->default(0);
+			$table->boolean('is_competitor')->nullable()->default(0);
+			$table->string('last_used_proxy', 100)->nullable();
 		});
 	}
 
