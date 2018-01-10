@@ -49,7 +49,7 @@ class UpdateLastPaidFromCSV extends Command {
 		$paid_amount =0;
 		$tier = 0;
 
-		while (($data = fgetcsv($file, 200, ",")) !== FALSE) {
+		while (($data = fgetcsv($file, 0, ",")) !== FALSE) {
 			//            #$data is one row.
 			//            #$data[0] is first cell so on & so forth.
 			$current_email = $data[0];
@@ -77,7 +77,7 @@ class UpdateLastPaidFromCSV extends Command {
 		}
 	}
 
-	public function UpdateUserChargesPaid($user) {
+	public function UpdateUserChargesPaid($user,$recent_pay_out_date) {
 		$recent_pay_out_date = Carbon::create(2017, 11, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
 		//        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
@@ -118,14 +118,13 @@ class UpdateLastPaidFromCSV extends Command {
 
 
 			//braintree transaction
-			$BraintreeTransaction = BraintreeTransaction::fromView()
-			                                                   ->where('user_email', $user->email)
+			$braintree_transaction = BraintreeTransaction::->where('user_email', $user->email)
 			                                                   ->where('updated_at', '<', $end_date)
 			                                                   ->get();
 
 
-			foreach ($BraintreeTransaction as $BraintreeTransactionValue) {
-			    $Breaintree= BraintreeTransaction::where('user_email', $BraintreeTransactionValue->user_email)->update(['comms_given' => 1]);
+			foreach ($braintree_transaction as $braintree_transaction_value) {
+			    	BraintreeTransaction::where('user_email', $braintree_transaction_value->user_email)->update(['comms_given' => 1]);
 			}    
 			                                          
 		} else {
