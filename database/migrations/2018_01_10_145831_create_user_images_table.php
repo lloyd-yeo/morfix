@@ -16,7 +16,7 @@ class CreateUserImagesTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('email')->nullable()->index('email_idx');
-			$table->text('image_path', 16777215)->nullable();
+			$table->text('image_path')->nullable();
 		});
 	}
 

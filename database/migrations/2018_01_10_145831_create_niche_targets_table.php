@@ -17,7 +17,6 @@ class CreateNicheTargetsTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('niche_id')->index('niche_id_idx');
 			$table->string('target_username', 200)->index('target_username');
-			$table->primary(['id','niche_id','target_username']);
 		});
 	}
 

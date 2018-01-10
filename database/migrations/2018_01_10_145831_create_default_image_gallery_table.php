@@ -15,7 +15,7 @@ class CreateDefaultImageGalleryTable extends Migration {
 		Schema::create('default_image_gallery', function(Blueprint $table)
 		{
 			$table->integer('image_id', true);
-			$table->text('image_path', 16777215)->index('path_idx');
+			$table->text('image_path')->nullable();
 			$table->integer('category_id')->nullable()->default(1);
 		});
 	}
