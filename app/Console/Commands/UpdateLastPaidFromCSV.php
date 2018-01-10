@@ -125,7 +125,7 @@ class UpdateLastPaidFromCSV extends Command {
 
 			foreach ($braintree_transaction as $braintree_transaction_value) {
 			    	$braintree_transaction_value->comms_given = 1;
-					$user->save();
+					$braintree_transaction_value->save();
 			}    
 			                                          
 		} else {
