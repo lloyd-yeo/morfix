@@ -103,7 +103,7 @@ class UpdateLastPaidFromCSV extends Command {
 			foreach ($referral_stripe_charges as $referral_stripe_charge) {
 
 				$charges = StripeCharge::where('charge_id', $referral_stripe_charge->charge_id)
-				                       ->update(['commission_given' => 1]);
+				                       ->update(['comms_given' => 1]);
 				//update commission_given to commission_given after verifying code
 
 				//   echo "updated commission: " . $referral_stripe_charge->referrer_email . "\n";
@@ -124,7 +124,8 @@ class UpdateLastPaidFromCSV extends Command {
 
 
 			foreach ($braintree_transaction as $braintree_transaction_value) {
-			    	BraintreeTransaction::where('user_email', $braintree_transaction_value->user_email)->update(['comms_given' => 1]);
+			    	$braintree_transaction_value->comms_given = 1;
+					$user->save();
 			}    
 			                                          
 		} else {
