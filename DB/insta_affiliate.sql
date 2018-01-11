@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2018 at 01:01 PM
--- Server version: 10.1.29-MariaDB
--- PHP Version: 7.1.12
+-- Generation Time: Jan 11, 2018 at 04:53 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 5.6.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -61,6 +61,27 @@ CREATE TABLE `blacklisted_username` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `braintree_transactions`
+--
+
+CREATE TABLE `braintree_transactions` (
+  `id` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `status` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `amount` decimal(13,4) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL,
+  `bt_cc_token` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `plan_id` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sub_id` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `braintree_id` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `comms_given` tinyint(4) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `clickfunnel_webhook_log`
 --
 
@@ -68,6 +89,22 @@ CREATE TABLE `clickfunnel_webhook_log` (
   `id` int(11) NOT NULL,
   `log` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `competition_updates`
+--
+
+CREATE TABLE `competition_updates` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `content` text,
+  `type` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -311,6 +348,20 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `instagram_sessions`
+--
+
+CREATE TABLE `instagram_sessions` (
+  `id` int(11) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `settings` mediumblob,
+  `cookies` mediumblob,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -323,6 +374,18 @@ CREATE TABLE `jobs` (
   `available_at` int(10) UNSIGNED NOT NULL,
   `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mailing_list`
+--
+
+CREATE TABLE `mailing_list` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -758,6 +821,88 @@ CREATE TABLE `user_insta_photo_post_schedule` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_insta_profile`
+--
+
+CREATE TABLE `user_insta_profile` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `insta_user_id` varchar(255) DEFAULT NULL,
+  `insta_username` varchar(200) NOT NULL,
+  `insta_pw` varchar(200) DEFAULT NULL,
+  `profile_pic_url` varchar(200) DEFAULT NULL,
+  `follower_count` int(11) DEFAULT NULL,
+  `profile_full_name` varchar(200) DEFAULT NULL,
+  `insta_new_follower_template` mediumtext,
+  `follow_up_message` mediumtext,
+  `num_posts` int(11) DEFAULT NULL,
+  `recent_activity_timestamp` decimal(15,4) DEFAULT '0.0000',
+  `auto_dm_new_follower` int(11) DEFAULT '0',
+  `auto_dm_delay` bit(1) DEFAULT b'0',
+  `last_sent_dm` datetime DEFAULT NULL,
+  `temporary_ban` datetime DEFAULT NULL,
+  `dm_probation` int(11) DEFAULT '0',
+  `niche` int(11) DEFAULT '0',
+  `speed` varchar(200) DEFAULT 'Slow',
+  `next_follow_time` datetime DEFAULT NULL,
+  `unfollow` int(11) DEFAULT '0',
+  `login_log` text,
+  `last_instagram_login` datetime DEFAULT NULL,
+  `follow_cycle` int(11) DEFAULT '255',
+  `follow_quota` int(11) DEFAULT '18',
+  `unfollow_quota` int(11) DEFAULT '18',
+  `like_quota` int(11) DEFAULT '20',
+  `comment_quota` int(11) DEFAULT '6',
+  `auto_interaction` int(11) DEFAULT '0',
+  `gender_filter` int(11) DEFAULT '0',
+  `auto_comment` int(11) DEFAULT '0',
+  `auto_like` int(11) DEFAULT '0',
+  `auto_follow` int(11) DEFAULT '0',
+  `auto_follow_ban` int(11) DEFAULT '0',
+  `auto_follow_ban_time` datetime DEFAULT NULL,
+  `auto_unfollow` int(11) DEFAULT '0',
+  `auto_unfollow_ban` int(11) DEFAULT '0',
+  `auto_unfollow_ban_time` datetime DEFAULT NULL,
+  `follow_max_followers` int(11) DEFAULT '0',
+  `next_like_time` datetime DEFAULT NULL,
+  `auto_like_ban` int(11) DEFAULT '0',
+  `auto_like_ban_time` datetime DEFAULT NULL,
+  `auto_comment_ban` int(11) DEFAULT '0',
+  `auto_comment_ban_time` datetime DEFAULT NULL,
+  `next_comment_time` datetime DEFAULT NULL,
+  `unfollow_unfollowed` int(11) DEFAULT '0',
+  `follow_min_followers` int(11) DEFAULT '0',
+  `follow_unfollow_delay` int(11) DEFAULT '255',
+  `follow_recent_engaged` int(11) DEFAULT '0',
+  `checkpoint_required` int(11) DEFAULT '0',
+  `account_disabled` int(11) DEFAULT '0',
+  `invalid_user` int(11) DEFAULT '0',
+  `incorrect_pw` int(11) DEFAULT '0',
+  `invalid_proxy` int(11) DEFAULT '0',
+  `feedback_required` int(11) DEFAULT '0',
+  `comment_feedback_required` int(11) DEFAULT '0',
+  `error_msg` text,
+  `proxy` varchar(100) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `daily_likes` int(11) DEFAULT '0',
+  `daily_comments` int(11) DEFAULT '0',
+  `daily_follows` int(11) DEFAULT '0',
+  `daily_unfollows` int(11) DEFAULT '0',
+  `total_likes` int(11) DEFAULT '0',
+  `total_comments` int(11) DEFAULT '0',
+  `total_follows` int(11) DEFAULT '0',
+  `total_unfollows` int(11) DEFAULT '0',
+  `auto_interactions_working` int(11) DEFAULT '0',
+  `auto_like_working` int(11) DEFAULT '0',
+  `auto_follow_working` int(11) DEFAULT '0',
+  `auto_comment_working` int(11) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_insta_profile_comment`
 --
 
@@ -864,6 +1009,22 @@ CREATE TABLE `user_insta_target_hashtag` (
   `insta_username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hashtag` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_insta_target_username`
+--
+
+CREATE TABLE `user_insta_target_username` (
+  `target_id` int(11) NOT NULL,
+  `insta_id` int(11) DEFAULT NULL,
+  `insta_username` varchar(255) DEFAULT NULL,
+  `target_username` varchar(255) DEFAULT NULL,
+  `invalid` bit(1) DEFAULT b'0',
+  `insufficient_followers` bit(1) DEFAULT b'0',
+  `last_checked` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -1039,10 +1200,24 @@ ALTER TABLE `admin_log`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `braintree_transactions`
+--
+ALTER TABLE `braintree_transactions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `clickfunnel_webhook_log`
 --
 ALTER TABLE `clickfunnel_webhook_log`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `competition_updates`
+--
+ALTER TABLE `competition_updates`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email_idx` (`email`(10)),
+  ADD KEY `date_idx` (`created_at`);
 
 --
 -- Indexes for table `create_insta_profile_log`
@@ -1123,9 +1298,22 @@ ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `instagram_sessions`
+--
+ALTER TABLE `instagram_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mailing_list`
+--
+ALTER TABLE `mailing_list`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1278,6 +1466,17 @@ ALTER TABLE `user_insta_photo_post_schedule`
   ADD KEY `insta_id_idx` (`insta_id`);
 
 --
+-- Indexes for table `user_insta_profile`
+--
+ALTER TABLE `user_insta_profile`
+  ADD PRIMARY KEY (`id`,`insta_username`),
+  ADD KEY `insta_profile_user_idx` (`user_id`),
+  ADD KEY `insta_profile_user_niche_idx` (`niche`),
+  ADD KEY `insta_username_idx` (`insta_username`(30)),
+  ADD KEY `insta_profile_email` (`email`),
+  ADD KEY `insta_profile_id_idx` (`user_id`);
+
+--
 -- Indexes for table `user_insta_profile_comment`
 --
 ALTER TABLE `user_insta_profile_comment`
@@ -1313,6 +1512,15 @@ ALTER TABLE `user_insta_profile_like_log_archive`
 ALTER TABLE `user_insta_target_hashtag`
   ADD PRIMARY KEY (`id`),
   ADD KEY `insta_user_target_hashtag_idx` (`insta_id`);
+
+--
+-- Indexes for table `user_insta_target_username`
+--
+ALTER TABLE `user_insta_target_username`
+  ADD PRIMARY KEY (`target_id`),
+  ADD KEY `user_insta_target_username_idx` (`insta_id`),
+  ADD KEY `insta_username_idx` (`insta_username`(30)),
+  ADD KEY `target_username_idx` (`target_username`(30));
 
 --
 -- Indexes for table `user_interaction_failed`
@@ -1388,6 +1596,12 @@ ALTER TABLE `admin_log`
 --
 ALTER TABLE `clickfunnel_webhook_log`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `competition_updates`
+--
+ALTER TABLE `competition_updates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `create_insta_profile_log`
@@ -1468,10 +1682,22 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `instagram_sessions`
+--
+ALTER TABLE `instagram_sessions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `mailing_list`
+--
+ALTER TABLE `mailing_list`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1588,6 +1814,12 @@ ALTER TABLE `user_insta_photo_post_schedule`
   MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `user_insta_profile`
+--
+ALTER TABLE `user_insta_profile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=255;
+
+--
 -- AUTO_INCREMENT for table `user_insta_profile_comment`
 --
 ALTER TABLE `user_insta_profile_comment`
@@ -1622,6 +1854,12 @@ ALTER TABLE `user_insta_profile_like_log_archive`
 --
 ALTER TABLE `user_insta_target_hashtag`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_insta_target_username`
+--
+ALTER TABLE `user_insta_target_username`
+  MODIFY `target_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35708;
 
 --
 -- AUTO_INCREMENT for table `user_interaction_failed`
@@ -1668,6 +1906,13 @@ ALTER TABLE `yourls_options`
 --
 ALTER TABLE `niche_targets`
   ADD CONSTRAINT `niche_id` FOREIGN KEY (`niche_id`) REFERENCES `niches` (`niche_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `user_insta_profile`
+--
+ALTER TABLE `user_insta_profile`
+  ADD CONSTRAINT `insta_profile_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `insta_profile_user_niche` FOREIGN KEY (`niche`) REFERENCES `niches` (`niche_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `user_stripe_active_subscription`
