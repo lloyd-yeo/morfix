@@ -194,7 +194,6 @@
             @endif
             <!-- END Dynamic Table Full -->
 
-
             <div class="block">
                 <div class="block-header">
                     <h3 class="block-title">Update My Card Details</h3>

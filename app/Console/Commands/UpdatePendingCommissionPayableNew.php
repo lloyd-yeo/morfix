@@ -49,8 +49,6 @@ class UpdatePendingCommissionPayableNew extends Command {
                     ->orderBy('user_id', 'desc')
                     ->get();
             //get this user
-
-
             foreach ($users as $user) {
                 $tier = $user->tier;
 
@@ -62,16 +60,14 @@ class UpdatePendingCommissionPayableNew extends Command {
 
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
-            echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
+            echo '[DEBUG] Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
         } else {
             $time_start = microtime(true);
 
             $users = User::whereRaw('email IN (SELECT DISTINCT(email) FROM user)')
                     ->where('tier', '>=', 2)
                     ->orderBy('last_pay_out_date', 'desc')
-//                    ->take(3)
                     ->get();
-            //Remove ->take(3) after verifying code
 
             foreach ($users as $user) {
                 $tier = $user->tier;
@@ -84,23 +80,19 @@ class UpdatePendingCommissionPayableNew extends Command {
 
             $time_end = microtime(true);
             $execution_time = ($time_end - $time_start);
-            echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
+            echo '[DEBUG] Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
         }
     }
 
     public function UpdateUserChargesPaid($user) {
-        //$recent_pay_out_date = Carbon::create(2017, 9, 25, 0, 0, 0, 'Asia/Singapore');
-//        $start_date = Carbon::parse($recent_pay_out_date)->subMonth()->startOfMonth();
 
         if ($user->last_pay_out_date !== NULL) {
 
             $end_date = Carbon::parse($user->last_pay_out_date)->subMonth()->endOfMonth();
-            //    echo "Start date for charges:" . $start_date . "\n";
             echo "End date for charges:" . $end_date . "\n";
 
             // if we paid user recently, grab the charges from the start till the end of month before 
             // the month we paid him
-
             $referral_charges = GetReferralChargesOfUser::fromView()
                     ->where('referrer_email', $user->email)
                     ->where('charge_created', '<', $end_date)
@@ -109,9 +101,7 @@ class UpdatePendingCommissionPayableNew extends Command {
                     ->orderBy('charge_created', 'desc')
                     ->get();
 
-
             //update last month charges to given if paid this month
-
             foreach ($referral_charges as $referral_charge) {
 
                 $charges = StripeCharge::where('charge_id', $referral_charge->charge_id)
@@ -126,7 +116,6 @@ class UpdatePendingCommissionPayableNew extends Command {
                     ->orderBy('time_stamp', 'desc')
                     ->update(['commission_given' => 1]);
         } else {
-
             echo "$user->email not paid in recent payout date \n";
         }
     }
