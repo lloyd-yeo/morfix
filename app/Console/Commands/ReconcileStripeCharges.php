@@ -45,8 +45,7 @@ class ReconcileStripeCharges extends Command
             $customer_id = $charge->customer;
             $wrong_charge->stripe_id = $customer_id;
             echo $charge;
-//            echo $charge->id . "\t" . $charge->customer . "\n";
-            exit;
+//            exit;
         }
     }
 }
