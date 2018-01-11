@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class StripeInvoice extends Model
 {
-    protected $table = "stripe_invoices";
+    protected $table = "user_stripe_invoice";
+	protected $primaryKey = 'invoice_id';
+    public $timestamps = false;
+	public $incrementing = false;
 }

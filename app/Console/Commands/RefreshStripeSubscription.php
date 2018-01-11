@@ -39,7 +39,6 @@ class RefreshStripeSubscription extends Command {
         \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
         $subscriptions = \Stripe\Subscription::all(array('limit' => 100, 'status' => 'all'));
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
-//            dump($subscription);
             $active_sub = new StripeActiveSubscription;
             $active_sub->stripe_id = $subscription->customer;
             if ($subscription->plan !== NULL) {
