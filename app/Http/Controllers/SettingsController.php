@@ -142,6 +142,27 @@ class SettingsController extends Controller
 		return Response::json([ "success" => TRUE, 'message' => "Your subscription has been cancelled." ]);
 	}
 
+	public function CancelSubscriptionToDefault(){
+
+		$cancel = User::where('email', Auth::user()->email)->first();
+		$cancel->tier = 1;
+
+		// if(is_null($cancel->braintree_id)):
+		// 	//if braintree user
+			
+		// 	elseif($cancel->paypal == 1) :
+		// 		//if paypal user
+				
+		// 		else:
+		// 			//stripe user
+
+		// endif;
+		$cancel->save();
+
+		return Response::json([ "success" => TRUE, 'message' => "Your subscription has been cancelled." ]);
+
+	}	
+
 	public function updateCreditCard(Request $request)
 	{
 		//get recent subscription

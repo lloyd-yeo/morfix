@@ -18,11 +18,13 @@
                         <small> Manage your account settings here.</small>
                     </h1>
                 </div>
+                @if(Auth::user()->tier > 1)
                 <div class="col-sm-4">
                     <h1 class="page-heading">
                         <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#CancelConfirmation"> I want to cancel my subscription</button>
                     </h1>
                 </div>
+                @endif
             </div>
         </div>
 
@@ -284,7 +286,7 @@
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
-        <button type="button" id="cancel_subscription" class="btn btn-default pull-right" style="color:red">Yes, cancel my subscription</button>
+        <button type="button" onClick="cancelSubscription();" class="btn btn-default pull-right" style="color:red" >Yes, cancel my subscription</button>
       </div>
     </div>
 
@@ -294,4 +296,16 @@
 
 @section('js')
     @include('settings.js')
+    <script type="text/javascript">
+        function cancelSubscription() {
+            $.ajax({
+                url: "cancel-subscription",
+                type: "HEAD",
+                dataType: 'json',
+                success: function (success) {
+                    $(location).attr('href', 'settings');
+                }
+            });
+    }
+    </script>
 @endsection
