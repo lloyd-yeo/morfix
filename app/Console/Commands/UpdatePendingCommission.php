@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\UserAffiliates;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\User;
@@ -39,10 +40,21 @@ class UpdatePendingCommission extends Command
      */
     public function handle()
     {
-    	$users = User::where('tier', '>', 2)->get();
+    	$users = User::where('tier', '>', 2)->where('last_pay_out_date', '2017-12-25 00:00:00')->get();
     	$this->alert($users->count() . " users");
     	foreach ($users as $user) {
 			$this->line($user->email);
+
+			$user_affiliates = UserAffiliates::where('referrer', $user->user_id);
+
+//			foreach ($user_affiliates as $user_affiliate) {
+//				$affiliate = User::find($user_affiliate->referred);
+//				if ($affiliate == NULL) {
+//					continue;
+//				} else {
+//
+//				}
+//			}
 	    }
 
 //        $path = storage_path('app/may-payout-final.csv');
