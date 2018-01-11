@@ -40,6 +40,7 @@ class UpdatePendingCommission extends Command
     public function handle()
     {
     	$users = User::where('tier', '>', 2)->get();
+    	$this->alert($users->count() . " users");
     	foreach ($users as $user) {
 			$this->line($user->email);
 	    }
