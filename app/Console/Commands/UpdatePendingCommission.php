@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\StripeDetail;
 use App\UserAffiliates;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -43,18 +44,24 @@ class UpdatePendingCommission extends Command
     	$users = User::where('tier', '>', 2)->where('last_pay_out_date', '2017-12-25 00:00:00')->get();
     	$this->alert($users->count() . " users");
     	foreach ($users as $user) {
+    		$pending_comms = 0;
 			$this->line($user->email);
 
 			$user_affiliates = UserAffiliates::where('referrer', $user->user_id);
 
-//			foreach ($user_affiliates as $user_affiliate) {
-//				$affiliate = User::find($user_affiliate->referred);
-//				if ($affiliate == NULL) {
-//					continue;
-//				} else {
-//
-//				}
-//			}
+			foreach ($user_affiliates as $user_affiliate) {
+				$affiliate = User::find($user_affiliate->referred);
+				if ($affiliate == NULL) {
+					continue;
+				} else {
+					$stripe_details = StripeDetail::where('email', $affiliate->email)->first();
+					if ($stripe_details != NULL) {
+
+					} else {
+
+					}
+				}
+			}
 	    }
 
 //        $path = storage_path('app/may-payout-final.csv');
