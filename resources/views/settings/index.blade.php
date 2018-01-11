@@ -18,6 +18,11 @@
                         <small> Manage your account settings here.</small>
                     </h1>
                 </div>
+                <div class="col-sm-4">
+                    <h1 class="page-heading">
+                        <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#CancelConfirmation"> I want to cancel my subscription</button>
+                    </h1>
+                </div>
             </div>
         </div>
 
@@ -222,6 +227,69 @@
         </div>
 
     </main>
+
+<div id="CancelConfirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title text-center">Do you really want to cancel? </h2>
+      </div>
+      <div class="modal-body">
+        <p>Thanks for using Morfix! Hope you appreciated our paid benefits. After you cancel, you'll be downgraded to our free plan. 
+        This means:</p><br>
+
+        <p> - Suspension of Auto Interactions </p>
+        <p> - Suspension of Auto DMs </p>
+        <p> - Suspension of Engagement Group benefits (for Business users that are downgrading) </p>
+        <p> - Morfix Branding on Image Captions </p>
+        <p> - Limited to 1 instagram account (for Business users that are downgrading) </p>
+        <br>
+        <p> You will be able to use Morfix services that you've paid for until your subscription expires at the end of the current subscription period. </p>
+
+        <p>After that you will still have access to free features with corresponding limitations & branding.</p>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+        <button type="button" class="btn btn-default pull-right" style="color:red" data-toggle="modal"  data-dismiss="modal" data-target="#QA">Yes, cancel my subscription</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="QA" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title text-center">We're sad to say you go. </h2>
+      </div>
+      <div class="modal-body">
+        <p>One question: What made you cancel?</p><br>
+
+        <p> - Suspension of Auto Interactions </p>
+        <p> - Suspension of Auto DMs </p>
+        <p> - Suspension of Engagement Group benefits (for Business users that are downgrading) </p>
+        <p> - Morfix Branding on Image Captions </p>
+        <p> - Limited to 1 instagram account (for Business users that are downgrading) </p>
+        <br>
+        <p> You will be able to use Morfix services that you've paid for until your subscription expires at the end of the current subscription period. </p>
+
+        <p>After that you will still have access to free features with corresponding limitations & branding.</p>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+        <button type="button" id="cancel_subscription" class="btn btn-default pull-right" style="color:red">Yes, cancel my subscription</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 @endsection
 
 @section('js')
