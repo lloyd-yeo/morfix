@@ -18,7 +18,7 @@
 						<small> Manage your account settings here.</small>
 					</h1>
 				</div>
-				<div class="col-sm-4">
+				<div class="col-sm-4" style="">
 					<h1 class="page-heading">
 						<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#CancelConfirmation">
 							I want to cancel my subscription
