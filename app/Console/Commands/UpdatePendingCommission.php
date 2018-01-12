@@ -58,7 +58,7 @@ class UpdatePendingCommission extends Command
 			$pending_comms = 0;
 			$this->line($user->email);
 
-			$user_affiliates = UserAffiliates::where('referrer', $user->user_id);
+			$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
 
 			foreach ($user_affiliates as $user_affiliate) {
 				$affiliate = User::find($user_affiliate->referred);
