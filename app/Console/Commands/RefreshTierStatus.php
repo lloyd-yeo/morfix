@@ -100,7 +100,7 @@ class RefreshTierStatus extends Command
 					$braintree_subscription->braintree_id = $user->braintree_id;
 					$braintree_subscription->plan_id = $subscription->planId;
 					$braintree_subscription->status = $subscription->status;
-					
+
 					if ($braintree_subscription->save()) {
 
 						$plan = $braintree_subscription->plan_id;
@@ -125,14 +125,14 @@ class RefreshTierStatus extends Command
 
 				$user->tier = $user_tier;
 
-				if ($user->save()) {
+//				if ($user->save()) {
 					if ($user->tier > 1) {
 						$num_bt_active_paying_user++;
 					}
 					echo $user->email . " [$user_tier] saved!\n";
-				} else {
-					echo $user->email . " [$user_tier] failed to save!\n";
-				}
+//				} else {
+//					echo $user->email . " [$user_tier] failed to save!\n";
+//				}
 
 			} else {
 				if ($user->stripeDetails()->count() > 0) {
