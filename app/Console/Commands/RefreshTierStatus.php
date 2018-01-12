@@ -88,10 +88,13 @@ class RefreshTierStatus extends Command
 
 				$transactions = BraintreeTransaction::select('sub_id')->distinct()->where('braintree_id', $user->braintree_id)->get();
 				foreach ($transactions as $transaction) {
-					dump($transaction);
+					$sub_id = $transaction->sub_id;
+					$subscription = \Braintree_Subscription::find($sub_id);
+					dump($subscription);
+//					dump($transaction);
 				}
 				break;
-				#$subscription = \Braintree_Subscription::find('a_subscription_id');
+
 
 			} else {
 				if ($user->stripeDetails()->count() > 0) {
