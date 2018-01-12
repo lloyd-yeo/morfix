@@ -120,7 +120,10 @@ class UpdatePendingCommission extends Command
 							//check if there is refund for transaction
 							$this->alert($braintree_transaction->sub_id);
 
-							$braintree_transactions_all = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)->get();
+							$braintree_transactions_all = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)
+							                                                  ->where('created_at', '>=', $start_date)
+							                                                  ->where('created_at', '<=', $end_date)
+							                                                  ->get();
 							foreach ($braintree_transactions_all as $braintree_transaction_) {
 								$this->line('[' . $braintree_transaction_->type . '] [' . $braintree_transaction_->status . ']');
 							}
