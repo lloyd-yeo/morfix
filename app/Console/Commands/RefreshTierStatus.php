@@ -70,7 +70,7 @@ class RefreshTierStatus extends Command
 		             ->where('vip', FALSE)
 		             ->where('admin', FALSE)->get();
 
-		$num_active_paying_user = 0;
+		$num_stripe_active_paying_user = 0;
 
 		foreach ($users as $user) {
 
@@ -111,7 +111,9 @@ class RefreshTierStatus extends Command
 //					if ($user_tier > 1) {
 						//			            echo $user->email . " [$user_tier] saved!\n";
 						if ($user->save()) {
-							$num_active_paying_user++;
+							if ($user->tier > 1) {
+								$num_stripe_active_paying_user++;
+							}
 							echo $user->email . " [$user_tier] saved!\n";
 						} else {
 							echo $user->email . " [$user_tier] failed to save!\n";
@@ -128,6 +130,6 @@ class RefreshTierStatus extends Command
 
 		}
 
-		echo "Total number of paying users: $num_active_paying_user";
+		echo "Total number of paying users via Stripe: $num_stripe_active_paying_user\n";
 	}
 }
