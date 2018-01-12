@@ -45,8 +45,8 @@ class UpdatePendingCommission extends Command
 	public function handle()
 	{
 		$start_date = '2017-12-01 00:00:00';
-		$end_date = '2017-12-31 00:00:00';
-		$users = User::where('tier', '>=', 2)->where('last_pay_out_date', '2017-12-25 00:00:00');
+		$end_date   = '2017-12-31 00:00:00';
+		$users      = User::where('tier', '>=', 2)->where('last_pay_out_date', '2017-12-25 00:00:00');
 		if ($this->argument('email') != NULL) {
 			$users = $users->where('email', $this->argument('email'));
 		}
@@ -78,10 +78,10 @@ class UpdatePendingCommission extends Command
 
 							foreach ($stripe_invoices as $stripe_invoice) {
 								$stripe_charge = StripeCharge::where('charge_id', $stripe_invoice->charge_id)
-								            ->where('invoice_id', $stripe_invoice->invoice_id)
-											->where('paid', 1)
-								            ->where('refunded', 0)
-								            ->first();
+								                             ->where('invoice_id', $stripe_invoice->invoice_id)
+								                             ->where('paid', 1)
+								                             ->where('refunded', 0)
+								                             ->first();
 
 								if ($stripe_charge != NULL) {
 									dump($stripe_charge);
@@ -106,22 +106,23 @@ class UpdatePendingCommission extends Command
 								}
 							}
 						}
-					} else {
-						if ($affiliate->braintree_id != NULL) {
-							//retrieve braintree stuff here
-							$braintree_transactions = BraintreeTransaction::where('braintree_id', $affiliate->braintree_id)
-							                                              ->where('created_at', '>=', $start_date)
-							                                              ->where('created_at', '<=', $end_date)
-							                                              ->get();
-
-							foreach ($braintree_transactions as $braintree_transaction) {
-//								dump($braintree_transaction);
-							}
-
-						} else {
-
-						}
 					}
+
+					if ($affiliate->braintree_id != NULL) {
+						//retrieve braintree stuff here
+						$braintree_transactions = BraintreeTransaction::where('braintree_id', $affiliate->braintree_id)
+						                                              ->where('created_at', '>=', $start_date)
+						                                              ->where('created_at', '<=', $end_date)
+						                                              ->get();
+
+						foreach ($braintree_transactions as $braintree_transaction) {
+							dump($braintree_transaction);
+						}
+
+					} else {
+
+					}
+
 				}
 			}
 
