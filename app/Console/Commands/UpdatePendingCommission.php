@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\BraintreeTransaction;
 use App\StripeCharge;
 use App\StripeDetail;
 use App\StripeInvoice;
@@ -106,12 +107,22 @@ class UpdatePendingCommission extends Command
 					} else {
 						if ($affiliate->braintree_id != NULL) {
 							//retrieve braintree stuff here
+							$braintree_transactions = BraintreeTransaction::where('braintree_id', $affiliate->braintree_id)
+							                                              ->where('created_at', '>=', $start_date)
+							                                              ->where('created_at', '<=', $end_date)
+							                                              ->get();
+
+							foreach ($braintree_transactions as $braintree_transaction) {
+								dump($braintree_transaction);
+							}
+
 						} else {
 
 						}
 					}
 				}
 			}
+
 			$this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
 		}
 
