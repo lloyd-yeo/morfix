@@ -72,7 +72,6 @@ class UpdatePendingCommission extends Command
 
 							$stripe_invoices = StripeInvoice::where('stripe_id', $stripe_id)
 							                                ->where('invoice_date', '>=', $start_date)
-							                                ->where('invoice_date', '<=', $end_date)
 							                                ->where('paid', 1)
 							                                ->get();
 
@@ -141,14 +140,12 @@ class UpdatePendingCommission extends Command
 
 							$braintree_transactions_cancelled = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)
 							                                                        ->where('created_at', '>=', $start_date)
-							                                                        ->where('created_at', '<=', $end_date)
 							                                                        ->where('type', 'credit')
 							                                                        ->first();
 							if ($braintree_transactions_cancelled == NULL) {
 
 								$braintree_transactions_completed = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)
 								                                                        ->where('created_at', '>=', $start_date)
-								                                                        ->where('created_at', '<=', $end_date)
 								                                                        ->where('type', 'sale')
 								                                                        ->first();
 
