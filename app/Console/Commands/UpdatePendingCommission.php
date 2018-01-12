@@ -117,7 +117,13 @@ class UpdatePendingCommission extends Command
 						                                              ->get();
 
 						foreach ($braintree_transactions as $braintree_transaction) {
-							dump($braintree_transaction);
+							//check if there is refund for transaction
+							$this->alert($braintree_transaction->id);
+
+							$braintree_transactions_all = BraintreeTransaction::where('id', $braintree_transaction->id)->get();
+							foreach ($braintree_transactions_all as $braintree_transaction_) {
+								$this->line('[' . $braintree_transaction_->type . '] [' . $braintree_transaction_->status . ']');
+							}
 						}
 
 					} else {
