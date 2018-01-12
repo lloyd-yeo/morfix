@@ -75,7 +75,7 @@ class RefreshTierStatus extends Command
 		             ->get();
 
 		$num_stripe_active_paying_user = 0;
-		$num_bt_active_paying_user = 0;
+		$num_bt_active_paying_user     = 0;
 
 		foreach ($users as $user) {
 
@@ -88,23 +88,24 @@ class RefreshTierStatus extends Command
 				\Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 				\Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
 
-				$transactions = BraintreeTransaction::select('sub_id')->distinct()->where('braintree_id', $user->braintree_id)->get();
+				$transactions = BraintreeTransaction::select('sub_id')->distinct()
+				                                    ->whereNotNull('sub_id')
+				                                    ->where('braintree_id', $user->braintree_id)->get();
 				foreach ($transactions as $transaction) {
-					$sub_id = $transaction->sub_id;
-					$subscription = \Braintree_Subscription::find($sub_id);
+					$sub_id                 = $transaction->sub_id;
+					$subscription           = \Braintree_Subscription::find($sub_id);
 					$braintree_subscription = BraintreeSubscription::find($sub_id);
 					if ($braintree_subscription == NULL) {
 						$braintree_subscription = new BraintreeSubscription;
 					}
 					$braintree_subscription->subscription_id = $sub_id;
-					$braintree_subscription->braintree_id = $user->braintree_id;
-					$braintree_subscription->plan_id = $subscription->planId;
-					$braintree_subscription->status = $subscription->status;
+					$braintree_subscription->braintree_id    = $user->braintree_id;
+					$braintree_subscription->plan_id         = $subscription->planId;
+					$braintree_subscription->status          = $subscription->status;
 
 					if ($braintree_subscription->save()) {
 						dump($braintree_subscription);
 						$plan = $braintree_subscription->plan_id;
-
 						if ($plan == "0137") {
 							$user_tier = $user_tier + 1;
 						} else if ($plan == "0297") {
@@ -125,14 +126,14 @@ class RefreshTierStatus extends Command
 
 				$user->tier = $user_tier;
 
-//				if ($user->save()) {
-					if ($user->tier > 1) {
-						$num_bt_active_paying_user++;
-					}
-					echo $user->email . " [$user_tier] saved!\n";
-//				} else {
-//					echo $user->email . " [$user_tier] failed to save!\n";
-//				}
+				//				if ($user->save()) {
+				if ($user->tier > 1) {
+					$num_bt_active_paying_user++;
+				}
+				echo $user->email . " [$user_tier] saved!\n";
+				//				} else {
+				//					echo $user->email . " [$user_tier] failed to save!\n";
+				//				}
 
 			} else {
 				if ($user->stripeDetails()->count() > 0) {
