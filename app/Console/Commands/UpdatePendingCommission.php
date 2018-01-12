@@ -79,6 +79,7 @@ class UpdatePendingCommission extends Command
 							foreach ($stripe_invoices as $stripe_invoice) {
 								$stripe_charge = StripeCharge::where('charge_id', $stripe_invoice->charge_id)
 								            ->where('invoice_id', $stripe_invoice->invoice_id)
+											->where('paid', 1)
 								            ->where('refunded', 0)
 								            ->first();
 
