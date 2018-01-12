@@ -84,7 +84,6 @@ class UpdatePendingCommission extends Command
 								                             ->first();
 
 								if ($stripe_charge != NULL) {
-									dump($stripe_charge);
 									switch ($stripe_invoice->subscription_id) {
 										case '0137':
 											if ($user->tier > 1) {
