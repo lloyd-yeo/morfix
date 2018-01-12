@@ -102,7 +102,7 @@ class RefreshTierStatus extends Command
 					$braintree_subscription->status = $subscription->status;
 
 					if ($braintree_subscription->save()) {
-
+						dump($braintree_subscription);
 						$plan = $braintree_subscription->plan_id;
 
 						if ($plan == "0137") {
