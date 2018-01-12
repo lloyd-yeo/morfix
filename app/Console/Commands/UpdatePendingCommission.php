@@ -113,6 +113,7 @@ class UpdatePendingCommission extends Command
 						$braintree_transactions = BraintreeTransaction::where('braintree_id', $affiliate->braintree_id)
 						                                              ->where('created_at', '>=', $start_date)
 						                                              ->where('created_at', '<=', $end_date)
+						                                              ->where('status', '!=', 'processor_declined')
 						                                              ->get();
 
 						foreach ($braintree_transactions as $braintree_transaction) {
