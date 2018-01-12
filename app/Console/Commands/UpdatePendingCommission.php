@@ -130,7 +130,6 @@ class UpdatePendingCommission extends Command
 						                                              ->distinct()
 						                                              ->where('braintree_id', $affiliate->braintree_id)
 						                                              ->where('created_at', '>=', $start_date)
-						                                              ->where('created_at', '<=', $end_date)
 						                                              ->where('status', '!=', 'processor_declined')
 						                                              ->get();
 
