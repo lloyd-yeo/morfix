@@ -129,9 +129,32 @@ class UpdatePendingCommission extends Command
 							                                                        ->first();
 							if ($braintree_transactions_cancelled == NULL) {
 
+								$braintree_transactions_completed = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)
+								                                                        ->where('created_at', '>=', $start_date)
+								                                                        ->where('created_at', '<=', $end_date)
+								                                                        ->where('type', 'sale')
+								                                                        ->first();
+
+								switch ($braintree_transactions_completed->plan_id) {
+									case '0137':
+										$pending_comms += 20;
+										break;
+									case '0297':
+										$pending_comms += 50;
+										break;
+									case 'MX370':
+										$pending_comms += 200;
+										break;
+									case 'MX297':
+										$pending_comms += 120;
+										break;
+									case '0167':
+										break;
+									default:
+										break;
+								}
 							}
 						}
-
 					} else {
 
 					}
