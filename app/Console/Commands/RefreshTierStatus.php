@@ -128,16 +128,14 @@ class RefreshTierStatus extends Command
 				}
 
 				$user->tier = $user_tier;
-
-				//				if ($user->save()) {
-				if ($user->tier > 1) {
-					$num_bt_active_paying_user++;
+				if ($user->save()) {
+					if ($user->tier > 1) {
+						$num_bt_active_paying_user++;
+					}
+					echo $user->email . " [$user_tier] saved!\n";
+				} else {
+					echo $user->email . " [$user_tier] failed to save!\n";
 				}
-				echo $user->email . " [$user_tier] saved!\n";
-				//				} else {
-				//					echo $user->email . " [$user_tier] failed to save!\n";
-				//				}
-
 			} else {
 				if ($user->stripeDetails()->count() > 0) {
 					//Stripe User
@@ -185,5 +183,6 @@ class RefreshTierStatus extends Command
 		}
 
 		echo "Total number of paying users via Stripe: $num_stripe_active_paying_user\n";
+		echo "Total number of paying users via Braintree: $num_bt_active_paying_user\n";
 	}
 }
