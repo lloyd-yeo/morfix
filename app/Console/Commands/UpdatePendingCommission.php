@@ -120,7 +120,7 @@ class UpdatePendingCommission extends Command
 
 						foreach ($braintree_transactions as $braintree_transaction) {
 							//check if there is refund for transaction
-							$this->alert($braintree_transaction->sub_id);
+//							$this->alert($braintree_transaction->sub_id);
 
 							$braintree_transactions_cancelled = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)
 							                                                        ->where('created_at', '>=', $start_date)
@@ -134,7 +134,7 @@ class UpdatePendingCommission extends Command
 								                                                        ->where('created_at', '<=', $end_date)
 								                                                        ->where('type', 'sale')
 								                                                        ->first();
-
+								$this->alert($braintree_transactions_completed->sub_id . " " . $braintree_transactions_completed->plan_id);
 								switch ($braintree_transactions_completed->plan_id) {
 									case '0137':
 										$pending_comms += 20;
