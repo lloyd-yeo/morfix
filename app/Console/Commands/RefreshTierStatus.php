@@ -92,7 +92,7 @@ class RefreshTierStatus extends Command
 				foreach ($transactions as $transaction) {
 					$sub_id = $transaction->sub_id;
 					$subscription = \Braintree_Subscription::find($sub_id);
-					$braintree_subscription = BraintreeSubscription::where('sub_id', $sub_id)->first();
+					$braintree_subscription = BraintreeSubscription::find($sub_id);
 					if ($braintree_subscription == NULL) {
 						$braintree_subscription = new BraintreeSubscription;
 					}
