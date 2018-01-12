@@ -56,7 +56,7 @@ class UpdatePendingCommission extends Command
 				} else {
 					$stripe_details = StripeDetail::where('email', $affiliate->email)->first();
 					if ($stripe_details != NULL) {
-
+						
 					} else {
 
 					}
