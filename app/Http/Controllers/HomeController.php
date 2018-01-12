@@ -34,16 +34,6 @@ class HomeController extends Controller
 	{
 		$current_user = Auth::user();
 
-//		if (UserAffiliates::where('referred', $current_user->user_id)->count() == 0 && $current_user->last_login === NULL) {
-//			$referrer = Cookie::get('referrer');
-//			if ($referrer !== NULL && !($referrer == $current_user->user_id)) {
-//				$user_affiliate = new UserAffiliates;
-//				$user_affiliate->referrer = $referrer;
-//				$user_affiliate->referred = $current_user->user_id;
-//				$user_affiliate->save();
-//			}
-//		}
-
 		$current_user->last_login = \Carbon\Carbon::now();
 		$current_user->save();
 
