@@ -114,7 +114,7 @@ class UpdatePendingCommission extends Command
 							                                              ->get();
 
 							foreach ($braintree_transactions as $braintree_transaction) {
-								dump($braintree_transaction);
+//								dump($braintree_transaction);
 							}
 
 						} else {
