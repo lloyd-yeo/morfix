@@ -61,7 +61,9 @@ class GetAllStripeInvoiceCharges extends Command
 		    if ($charge->refunded) {
 			    $stripe_charge->refunded = 1;
 		    }
-		    $stripe_charge->save();
+		    if ($stripe_charge->save()) {
+		    	dump($stripe_charge);
+		    }
 	    }
     }
 }
