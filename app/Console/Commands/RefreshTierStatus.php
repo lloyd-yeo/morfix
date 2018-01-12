@@ -106,20 +106,23 @@ class RefreshTierStatus extends Command
 					if ($braintree_subscription->save()) {
 						dump($braintree_subscription);
 						$plan = $braintree_subscription->plan_id;
-						if ($plan == "0137") {
-							$user_tier = $user_tier + 1;
-						} else if ($plan == "0297") {
-							$user_tier = $user_tier + 10;
-						} else if ($plan == "MX370") {
-							$user_tier = $user_tier + 2;
-						} else if ($plan == "MX297") {
-							$user_tier = $user_tier + 2;
-						} else if ($plan == "MX970") {
-							$user_tier = $user_tier + 20;
-						} else if ($plan == "0167") {
-							$user_tier = $user_tier + 11;
-						} else if ($plan == "0197") {
-							$user_tier = $user_tier + 11;
+
+						if ($braintree_subscription->status == "Active") {
+							if ($plan == "0137") {
+								$user_tier = $user_tier + 1;
+							} else if ($plan == "0297") {
+								$user_tier = $user_tier + 10;
+							} else if ($plan == "MX370") {
+								$user_tier = $user_tier + 2;
+							} else if ($plan == "MX297") {
+								$user_tier = $user_tier + 2;
+							} else if ($plan == "MX970") {
+								$user_tier = $user_tier + 20;
+							} else if ($plan == "0167") {
+								$user_tier = $user_tier + 11;
+							} else if ($plan == "0197") {
+								$user_tier = $user_tier + 11;
+							}
 						}
 					}
 				}
