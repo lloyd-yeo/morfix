@@ -42,13 +42,10 @@ class GetAllStripeInvoiceCharges extends Command
 	    $invoices = \Stripe\Invoice::all(array("limit" => 100));
 	    foreach ($invoices->autoPagingIterator() as $invoice) {
 		    foreach ($invoice->lines->data as $line) {
-
 			    $subscription_id = $line->plan->id;
-
-
 			    $stripe_invoice = StripeInvoice::where('invoice_id', $invoice->id)
 			                                   ->where('stripe_id', $invoice->customer)
-				                                ->where('subscription_id', $invoice->$subscription_id)
+				                                ->where('subscription_id', $subscription_id)
 			                                   ->first();
 			    if ($stripe_invoice == NULL) {
 				    $stripe_invoice = new StripeInvoice;
