@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\BraintreeTransaction;
 use Illuminate\Console\Command;
 use App\User;
 use App\InstagramProfilePhotoPostSchedule;
@@ -68,7 +69,9 @@ class RefreshTierStatus extends Command
 
 		$users = User::where('tier', '>=', '2')
 		             ->where('vip', FALSE)
-		             ->where('admin', FALSE)->get();
+		             ->where('admin', FALSE)
+		             ->whereNotNull('braintree_id')
+		             ->get();
 
 		$num_stripe_active_paying_user = 0;
 
@@ -77,6 +80,18 @@ class RefreshTierStatus extends Command
 			$user_tier = 1;
 
 			if ($user->braintree_id != NULL) {
+
+				\Braintree_Configuration::environment('production');
+				\Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+				\Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+				\Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
+				$transactions = BraintreeTransaction::select('sub_id')->distinct()->where('braintree_id', $user->braintree_id)->get();
+				foreach ($transactions as $transaction) {
+					dump($transaction);
+				}
+				break;
+				#$subscription = \Braintree_Subscription::find('a_subscription_id');
 
 			} else {
 				if ($user->stripeDetails()->count() > 0) {
@@ -108,24 +123,18 @@ class RefreshTierStatus extends Command
 						}
 					}
 					$user->tier = $user_tier;
-//					if ($user_tier > 1) {
-						//			            echo $user->email . " [$user_tier] saved!\n";
-						if ($user->save()) {
-							if ($user->tier > 1) {
-								$num_stripe_active_paying_user++;
-							}
-							echo $user->email . " [$user_tier] saved!\n";
-						} else {
-							echo $user->email . " [$user_tier] failed to save!\n";
+					if ($user->save()) {
+						if ($user->tier > 1) {
+							$num_stripe_active_paying_user++;
 						}
-//					}
-
+						echo $user->email . " [$user_tier] saved!\n";
+					} else {
+						echo $user->email . " [$user_tier] failed to save!\n";
+					}
 				} else {
 
 				}
 			}
-
-
 
 
 		}
