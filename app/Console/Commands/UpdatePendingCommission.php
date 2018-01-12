@@ -110,12 +110,12 @@ class UpdatePendingCommission extends Command
 
 					if ($affiliate->braintree_id != NULL) {
 						//retrieve braintree stuff here
-						$braintree_transactions = BraintreeTransaction::select('id', 'status', 'type', 'amount', 'created_at', 'sub_id', 'braintree_id', 'plan_id')
+						$braintree_transactions = BraintreeTransaction::select('sub_id')
+						                                              ->distinct()
 						                                              ->where('braintree_id', $affiliate->braintree_id)
 						                                              ->where('created_at', '>=', $start_date)
 						                                              ->where('created_at', '<=', $end_date)
 						                                              ->where('status', '!=', 'processor_declined')
-						                                              ->groupBy('sub_id')
 						                                              ->get();
 
 						foreach ($braintree_transactions as $braintree_transaction) {
