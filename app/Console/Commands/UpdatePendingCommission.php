@@ -89,26 +89,31 @@ class UpdatePendingCommission extends Command
 										case '0137':
 											if ($user->tier > 1) {
 												$pending_comms += 20;
+												$this->line("[STRIPE] [COMMS] Added!");
 											}
 											break;
 										case '0297':
 											if ($user->tier > 10) {
 												$pending_comms += 50;
+												$this->line("[STRIPE] [COMMS] Added!");
 											}
 											break;
 										case 'MX370':
 											if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 												$pending_comms += 200;
+												$this->line("[STRIPE] [COMMS] Added!");
 											}
 											break;
 										case 'MX297':
 											if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 												$pending_comms += 120;
+												$this->line("[STRIPE] [COMMS] Added!");
 											}
 											break;
 										case 'MX970':
 											if ($user->tier > 20) {
 												$pending_comms += 500;
+												$this->line("[STRIPE] [COMMS] Added!");
 											}
 											break;
 										case '0167':
@@ -154,26 +159,31 @@ class UpdatePendingCommission extends Command
 									case '0137':
 										if ($user->tier > 1) {
 											$pending_comms += 20;
+											$this->line("[BRAINTREE] [COMMS] Added!");
 										}
 										break;
 									case '0297':
 										if ($user->tier > 10) {
 											$pending_comms += 50;
+											$this->line("[BRAINTREE] [COMMS] Added!");
 										}
 										break;
 									case 'MX370':
 										if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 											$pending_comms += 200;
+											$this->line("[BRAINTREE] [COMMS] Added!");
 										}
 										break;
 									case 'MX297':
 										if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 											$pending_comms += 120;
+											$this->line("[BRAINTREE] [COMMS] Added!");
 										}
 										break;
 									case 'MX970':
 										if ($user->tier > 20) {
 											$pending_comms += 500;
+											$this->line("[BRAINTREE] [COMMS] Added!");
 										}
 										break;
 									case '0167':
