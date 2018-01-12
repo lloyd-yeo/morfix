@@ -45,13 +45,14 @@ class UpdatePendingCommission extends Command
 	{
 		$start_date = '2017-12-01 00:00:00';
 		$end_date = '2017-12-31 00:00:00';
-		$users = User::where('tier', '>', 2)->where('last_pay_out_date', '2017-12-25 00:00:00');
+		$users = User::where('tier', '>=', 2)->where('last_pay_out_date', '2017-12-25 00:00:00');
 		if ($this->argument('email') != NULL) {
 			$users = $users->where('email', $this->argument('email'));
 		}
 		$users = $users->get();
 
 		$this->alert($users->count() . " users");
+
 		foreach ($users as $user) {
 			$pending_comms = 0;
 			$this->line($user->email);
