@@ -2,10 +2,14 @@
 
 namespace App\Console\Commands;
 
+use App\BraintreeTransaction;
+use App\StripeCharge;
+use App\StripeDetail;
+use App\StripeInvoice;
+use App\UserAffiliates;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\User;
-use App\StripeCharge;
 
 class UpdatePendingCommissionPayable extends Command {
 
