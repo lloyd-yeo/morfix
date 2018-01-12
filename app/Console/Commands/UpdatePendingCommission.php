@@ -103,7 +103,6 @@ class UpdatePendingCommission extends Command
 							}
 						}
 					} else {
-
 						if ($affiliate->braintree_id != NULL) {
 							//retrieve braintree stuff here
 						} else {
@@ -112,6 +111,7 @@ class UpdatePendingCommission extends Command
 					}
 				}
 			}
+			$this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
 		}
 
 		//        $path = storage_path('app/may-payout-final.csv');
