@@ -9,6 +9,24 @@
 @endsection
 
 @section('content')
+    <main id="main-container">
+        <div class="content bg-gray-lighter">
+            <div class="row items-push">
+                <div class="col-sm-7">
+                    <h1 class="page-heading">
+                        <i class="si si-settings"></i> Settings
+                        <small> Manage your account settings here.</small>
+                    </h1>
+                </div>
+                @if(Auth::user()->tier > 1)
+                <div class="col-sm-4">
+                    <h1 class="page-heading">
+                        <button class="btn btn-danger pull-right" data-toggle="modal" data-target="#CancelConfirmation"> I want to cancel my subscription</button>
+                    </h1>
+                </div>
+                @endif
+            </div>
+        </div>
 	<main id="main-container">
 		<div class="content bg-gray-lighter">
 			<div class="row items-push">
@@ -298,23 +316,30 @@
 					<p> You will be able to use Morfix services that you've paid for until your subscription expires at
 					    the end of the current subscription period. </p>
 
-					<p>After that you will still have access to free features with corresponding limitations &
-					   branding.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my
-					                                                                             mind
-					</button>
-					<button type="button" id="cancel_subscription" class="btn btn-default pull-right" style="color:red">
-						Yes, cancel my subscription
-					</button>
-				</div>
-			</div>
+        <p>After that you will still have access to free features with corresponding limitations & branding.</p>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+        <button type="button" onClick="cancelSubscription();" class="btn btn-default pull-right" style="color:red" >Yes, cancel my subscription</button>
+      </div>
+    </div>
 
 		</div>
 	</div>
 @endsection
 
 @section('js')
-	@include('settings.js')
+    @include('settings.js')
+    <script type="text/javascript">
+        function cancelSubscription() {
+            $.ajax({
+                url: "cancel-subscription",
+                type: "HEAD",
+                dataType: 'json',
+                success: function (success) {
+                    $(location).attr('href', 'settings');
+                }
+            });
+    }
+    </script>
 @endsection
