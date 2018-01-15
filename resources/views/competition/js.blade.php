@@ -192,29 +192,29 @@ jQuery(function () {
 
     jQuery(function () {
         // Init page helpers (Appear, CountTo)
-        var x = setInterval(function (){
-            $.get("/competition/timer", function(timer){
-                $(".timer").html(timer);
-            });
-        }, 1000);
-
-        var y = setInterval(function (){
-            $.get("/competition/timerHour", function(timer){
-                $("#hourTimer").html(timer);
-            });
-        }, 1000);
-
-        var z = setInterval(function (){
-            $.get("/competition/timerMinute", function(timer){
-                $("#minuteTimer").html(timer);
-            });
-        }, 1000);
-
-        var a = setInterval(function (){
-            $.get("/competition/timerSecond", function(timer){
-                $("#secondTimer").html(timer);
-            });
-        }, 1000);
+//        var x = setInterval(function (){
+//            $.get("/competition/timer", function(timer){
+//                $(".timer").html(timer);
+//            });
+//        }, 1000);
+//
+//        var y = setInterval(function (){
+//            $.get("/competition/timerHour", function(timer){
+//                $("#hourTimer").html(timer);
+//            });
+//        }, 1000);
+//
+//        var z = setInterval(function (){
+//            $.get("/competition/timerMinute", function(timer){
+//                $("#minuteTimer").html(timer);
+//            });
+//        }, 1000);
+//
+//        var a = setInterval(function (){
+//            $.get("/competition/timerSecond", function(timer){
+//                $("#secondTimer").html(timer);
+//            });
+//        }, 1000);
 
         App.initHelpers(['appear', 'appear-countTo']);
         BaseTableDatatables.init();
