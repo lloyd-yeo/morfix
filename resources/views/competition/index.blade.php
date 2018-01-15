@@ -19,15 +19,16 @@
 	    		<span class="date font-w700" style="font-size: 30px;">
 				    <span>MORFIX FIRST EVER AFFILIATE COMPETITION!</span><br/>
 				    <span style="font-size: 25px;">COMPETITION PERIOD: </span><br/>
-				    <span style="font-size: 25px;">{{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}</span>
+				    <span style="font-size: 25px;">{{ $month }} {{ $startDate }} - {{ $endDate }}, {{ $year }}</span><br/><br/>
+				    <span style="font-size: 25px;">END OF COMPETITION</span>
 	    		</span>
-					<span class="timer font-w700" style="margin-top: 15px; font-size: 18px;"></span>
-					<br/>
-					<span class="font-w500" style="width: 100%; float: left; margin-top: 15px; font-size: 18px;">
-						<span id="hourTimer"></span> hours,
-						<span id="minuteTimer"></span> minutes,
-						<span id="secondTimer"></span> seconds remaining
-					</span>
+					{{--<span class="timer font-w700" style="margin-top: 15px; font-size: 18px;"></span>--}}
+					{{--<br/>--}}
+					{{--<span class="font-w500" style="width: 100%; float: left; margin-top: 15px; font-size: 18px;">--}}
+						{{--<span id="hourTimer"></span> hours,--}}
+						{{--<span id="minuteTimer"></span> minutes,--}}
+						{{--<span id="secondTimer"></span> seconds remaining--}}
+					{{--</span>--}}
 				</div>
 			</div>
 		</div>
