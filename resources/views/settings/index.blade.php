@@ -206,16 +206,30 @@
             </div>
             @endif
             <!-- END Dynamic Table Full -->
+            @if((Auth::user()->address))
+                <div class="block">
+                    <div class="block-header">
+                        <h3 class="block-title">Personal Address</h3>
+                    </div>
+                    <div class="block-content">
+                        <?= Auth::user()->address ?>
+
+                        <div style="height: 30px;">
+
+                        </div>
+                    </div>
+                </div>
+            @endif
             @if(empty(Auth::user()->address))
             <div class="block">
                 <div class="block-header">
                     <h3 class="block-title">Add Personal Address</h3>
                 </div>
                 <div class="block-content">
-                    <form action="/settings/address/update" method="POST">
-                        <input type="text" name="address" class="form-control">
+                    <form id="address_form" action="" method="POST">
+                        <textarea name="address" id="address" class="form-control"></textarea>
                         <br>
-                        <button type="submit" class="btn btn-primary">Save Address</button>
+                        <button type="button" onclick="save_address();" class="btn btn-primary">Save Address</button>
                     </form>
                     <div style="height: 30px;">
 
@@ -223,29 +237,6 @@
                 </div>
             </div>
             @endif
-            <div class="block">
-                <div class="block-header">
-                    <h3 class="block-title">Update My Card Details</h3>
-                </div>
-                <div class="block-content">
-                    <form action="/settings/cards/update" method="POST">
-                        <script
-                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="pk_live_WrvnbbOwMxU7FwZzaoTdaUpa"
-                                data-image="https://morfix.co/app/assets/img/logo/mx-black-crop.png"
-                                data-name="Morfix.co"
-                                data-panel-label="Update Card Details"
-                                data-label="Update Card Details"
-                                data-allow-remember-me="true"
-                                data-locale="auto"
-                                data-email="{{ Auth::user()->email }}">
-                        </script>
-                    </form>
-                    <div style="height: 30px;">
-
-                    </div>
-                </div>
-            </div>
 
         </div>
 
@@ -422,6 +413,19 @@
 @section('js')
     @include('settings.js')
     <script type="text/javascript">
+        function save_address() {
+            $.ajax({
+                type: "POST",
+                url: "/settings/address/update",
+                dataType: "json",
+                data: jQuery("#address_form").serialize(),
+                success:  function(success){
+                    //alert("---"+data);
+                    alert("Address successfully added");
+                    window.location.reload(true);
+                }
+            });
+        }
 
         $(document).ready(function () {
 
