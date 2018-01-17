@@ -101,7 +101,7 @@ Route::post('/settings/invoice/pay/{invoice_id}', 'SettingsController@attemptInv
 
 Route::post('/settings/cards/update', 'SettingsController@updateCreditCard');
 Route::post('/settings/address/update', 'SettingsController@updateAddressCard');
-Route::post('/cancel-subscription', 'SettingsController@CancelSubscriptionToDefault');
+Route::post('/cancel-subscription', 'SettingsController@cancelUserSubscription');
 
 #Route::get('/faq', 'FaqController@index');
 Route::get('/faq', 'FaqController@topic');
