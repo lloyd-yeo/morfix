@@ -18,7 +18,7 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Api\Agreement;
 use App\PaypalCharges;
 use App\PaypalAgreement;
-
+use App\UserCancellationFeedback;
 
 use Braintree_Configuration;
 use Braintree_Subscription;
@@ -146,27 +146,36 @@ class SettingsController extends Controller
 		return Response::json([ "success" => TRUE, 'message' => "Your subscription has been cancelled." ]);
 	}
 
-	public function CancelSubscriptionToDefault(){
+	public function CancelSubscriptionToDefault(Request $request){
 
 		$user_to_cancel = User::where('email', Auth::user()->email)->first();
         $user_to_cancel->tier = 1;
         $user_to_cancel->save();
 
-		if(! empty($user_to_cancel->braintree_id)):
+        $feedback = new UserCancellationFeedback;
+        $feedback->email = Auth::user()->email;
+        $feedback->first_answer = $request->input('first_question');
+        $feedback->second_answer = $request->input('second_question');
+        $feedback->third_answer = $request->input('third_question');
+        $feedback->fourth_answer = $request->input('fourth_question');
+        $feedback->save();
+
+
+        if(is_null(Auth::user()->braintree_id)):
         //cancell braintree transaction
 
             Braintree_Configuration::environment('production');
             Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
             Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
             Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
-            $braintree_id = $user_to_cancel->braintree_id;
+            $braintree_id = Auth::user()->braintree_id;
             Braintree_Subscription::cancel( $braintree_id );
             $braintree = Braintree_Subscription::where('braintree_id', $braintree_id) ->get();
             foreach ($braintree as $braintree_cancel) {
                 $braintree_cancel->status = 'Canceled';
                 $braintree_cancel->save();
             }
-			
+
 		elseif($user_to_cancel->paypal == 1) :
 		//if paypal user
             $paypal_charges = PaypalCharges::where('email', Auth::user()->email)->get();
@@ -201,7 +210,16 @@ class SettingsController extends Controller
 
         return Response::json([ "success" => TRUE, 'message' => "Your subscription has been cancelled." ]);
 
-	}
+    }
+    public function updateAddressCard(Request $request)
+    {
+
+        $email = User::where('email', Auth::user()->email)->get();
+        foreach ($email as $save_address) {
+            $save_address->address = $request->input('address');
+            $save_address->save();
+        }
+    }
 
 	public function updateCreditCard(Request $request)
 	{

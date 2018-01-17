@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 @section('css')
-	@include('settings.css')
+    @include('settings.css')
+    <style>
+        button .long{
+            font: inherit;
+            cursor:pointer;
+        }
+    </style>
 @endsection
 
 @section('sidebar')
@@ -195,133 +201,262 @@
 				</div>
 			</div>
 
-			@if (Auth::user()->paypal == 1)
-				<div class="block">
-					<div class="block-header">
-						<h3 class="block-title">Paypal</h3>
-					</div>
-					<div class="block-content" style="padding-bottom: 50px;">
-						<button id="cancel-paypal-btn" class="btn" data-agreement-id="{{ $agreement_id }}">Cancel Paypal
-						                                                                                   Subscription
-						</button>
-					</div>
-				</div>
-		@endif
-		<!-- END Dynamic Table Full -->
+            @if (Auth::user()->paypal == 1)
+            <div class="block">
+                <div class="block-header">
+                    <h3 class="block-title">Paypal</h3>
+                </div>
+                <div class="block-content" style="padding-bottom: 50px;">
+                    <button id="cancel-paypal-btn" class="btn" data-agreement-id="{{ $agreement_id }}">Cancel Paypal Subscription</button>
+                </div>
+            </div>
+            @endif
+            <!-- END Dynamic Table Full -->
+            @if(empty(Auth::user()->address))
+            <div class="block">
+                <div class="block-header">
+                    <h3 class="block-title">Add Personal Address</h3>
+                </div>
+                <div class="block-content">
+                    <form action="/settings/address/update" method="POST">
+                        <input type="text" name="address" class="form-control">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Save Address</button>
+                    </form>
+                    <div style="height: 30px;">
 
+                    </div>
+                </div>
+            </div>
+            @endif
+            <div class="block">
+                <div class="block-header">
+                    <h3 class="block-title">Update My Card Details</h3>
+                </div>
+                <div class="block-content">
+                    <form action="/settings/cards/update" method="POST">
+                        <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="pk_live_WrvnbbOwMxU7FwZzaoTdaUpa"
+                                data-image="https://morfix.co/app/assets/img/logo/mx-black-crop.png"
+                                data-name="Morfix.co"
+                                data-panel-label="Update Card Details"
+                                data-label="Update Card Details"
+                                data-allow-remember-me="true"
+                                data-locale="auto"
+                                data-email="{{ Auth::user()->email }}">
+                        </script>
+                    </form>
+                    <div style="height: 30px;">
 
-			<div class="block">
-				<div class="block-header">
-					<h3 class="block-title">Update My Card Details</h3>
-				</div>
-				<div class="block-content">
-					<form action="/settings/cards/update" method="POST">
-						<script
-								src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-								data-key="pk_live_WrvnbbOwMxU7FwZzaoTdaUpa"
-								data-image="https://morfix.co/app/assets/img/logo/mx-black-crop.png"
-								data-name="Morfix.co"
-								data-panel-label="Update Card Details"
-								data-label="Update Card Details"
-								data-allow-remember-me="true"
-								data-locale="auto"
-								data-email="{{ Auth::user()->email }}">
-						</script>
-					</form>
-					<div style="height: 30px;">
+                    </div>
+                </div>
+            </div>
 
-					</div>
-				</div>
-			</div>
+        </div>
 
-		</div>
+    </main>
 
-	</main>
+<div id="CancelConfirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
 
-	<div id="CancelConfirmation" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title text-center">Do you really want to cancel? </h2>
+      </div>
+      <div class="modal-body">
+        <p>Thanks for using Morfix! Hope you appreciated our paid benefits. After you cancel, you'll be downgraded to our free plan.
+        This means:</p><br>
 
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h2 class="modal-title text-center">Do you really want to cancel? </h2>
-				</div>
-				<div class="modal-body">
-					<p>Thanks for using Morfix! Hope you appreciated our paid benefits. After you cancel, you'll be
-					   downgraded to our free plan.
-					   This means:</p><br>
-
-					<p> - Suspension of Auto Interactions </p>
-					<p> - Suspension of Auto DMs </p>
-					<p> - Suspension of Engagement Group benefits (for Business users that are downgrading) </p>
-					<p> - Morfix Branding on Image Captions </p>
-					<p> - Limited to 1 instagram account (for Business users that are downgrading) </p>
-					<br>
-					<p> You will be able to use Morfix services that you've paid for until your subscription expires at
-					    the end of the current subscription period. </p>
-
-					<p>After that you will still have access to free features with corresponding limitations &
-					   branding.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my
-					                                                                             mind
-					</button>
-					<button type="button" class="btn btn-default pull-right" style="color:red" data-toggle="modal"
-					        data-dismiss="modal" data-target="#QA">Yes, cancel my subscription
-					</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="QA" class="modal fade" role="dialog">
-		<div class="modal-dialog modal-lg">
-
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h2 class="modal-title text-center">We're sad to say you go. </h2>
-				</div>
-				<div class="modal-body">
-					<p>One question: What made you cancel?</p><br>
-
-					<p> - Suspension of Auto Interactions </p>
-					<p> - Suspension of Auto DMs </p>
-					<p> - Suspension of Engagement Group benefits (for Business users that are downgrading) </p>
-					<p> - Morfix Branding on Image Captions </p>
-					<p> - Limited to 1 instagram account (for Business users that are downgrading) </p>
-					<br>
-					<p> You will be able to use Morfix services that you've paid for until your subscription expires at
-					    the end of the current subscription period. </p>
+        <p> - Suspension of Auto Interactions </p>
+        <p> - Suspension of Auto DMs </p>
+        <p> - Suspension of Engagement Group benefits (for Business users that are downgrading) </p>
+        <p> - Morfix Branding on Image Captions </p>
+        <p> - Limited to 1 instagram account (for Business users that are downgrading) </p>
+        <br>
+        <p> You will be able to use Morfix services that you've paid for until your subscription expires at the end of the current subscription period. </p>
 
         <p>After that you will still have access to free features with corresponding limitations & branding.</p>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
-        <button type="button" onClick="cancelSubscription();" class="btn btn-default pull-right" style="color:red" >Yes, cancel my subscription</button>
+        <button type="button" class="btn btn-default pull-right" style="color:red" data-toggle="modal"  data-dismiss="modal" data-target="#QA">Yes, cancel my subscription</button>
       </div>
     </div>
 
-		</div>
-	</div>
+  </div>
+</div>
+
+<div id="QA" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title text-center">We're sorry to see you leave. </h2>
+      </div>
+      <div class="modal-body">
+                <section>
+                    <div class="wizard">
+
+                        <ul class="nav nav-wizard"  style="display: none;">
+
+                            <li class="active">
+                                <a href="#step1" data-toggle="tab"></a>
+                            </li>
+
+                            <li class="disabled">
+                                <a href="#step2" data-toggle="tab"></a>
+                            </li>
+
+                            <li class="disabled">
+                                <a href="#step3" data-toggle="tab"></a>
+                            </li>
+
+                            <li class="disabled">
+                                <a href="#step4" data-toggle="tab"></a>
+                            </li>
+                            <li class="disabled">
+                                <a href="#step5" data-toggle="tab"></a>
+                            </li>
+                        </ul>
+
+                        <form action="/cancel-subscription" method="POST">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="step1">
+                                    <center>
+                                        <img src="https://images.typeform.com/images/WXhyJGNcF5iF/image/default#.png" data-original="https://images.typeform.com/images/WXhyJGNcF5iF/image/default#.png" style="width: 400px; height: 400px;">
+                                        <div style="width:70%;">
+                                            <p>
+                                                <strong>
+                                                    However, would it be okay to get some feedbacks from you so we know how we can hope to serve you better next time?
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </center>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+                                        <button type="button"  class="btn btn-primary pull-right">Yes, Go to first question</button>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="step2">
+                                    <center>
+                                        <div style="width:100%;">
+                                            <p>
+                                                <strong>
+                                                  1. How long have you been using Morfix?*
+                                                    <p></p>
+                                                   <button type="button" class="btn btn-default long" style="width: 200px;" onclick="checkValue(this);" value="Less than a week">Less than a week</button>
+                                                    &nbsp;&nbsp;
+                                                    <button type="button" class="btn btn-default long" style="width: 200px;" onclick="checkValue(this);" value="Less than a month">Less than a month</button>
+                                                    <p></p>
+                                                    <button type="button" class="btn btn-default long" style="width: 200px;" onclick="checkValue(this);" value="1 - 3 months">1 - 3 months</button>
+                                                    &nbsp;&nbsp;
+                                                    <button type="button" class="btn btn-default long" style="width: 200px;" onclick="checkValue(this);" value="More than 6 months">More than 6 months</button>
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </center>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+                                        <button type="button"  class="btn btn-primary pull-right" onclick="save_first();">Yes, Go to second question</button>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="step3">
+                                        <div style="width:100%;">
+                                            <p>
+                                                <strong>
+                                                    2. What made you cancel Morfix?*
+                                            <p></p>
+                                            <textarea class="form-control" name="second_question" style="height:30%"></textarea>
+                                            </strong>
+                                            </p>
+                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+                                        <button type="button"  class="btn btn-primary pull-right" onclick="save_second();">Yes, Go to third question</button>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="step4">
+                                         <div style="width:100%;">
+                                            <p>
+                                                <strong>
+                                                    3. What would make you reconsider Morfix again?
+                                            <p></p>
+                                            <textarea class="form-control" name="third_question" style="height:30%"></textarea>
+                                            </strong>
+                                            </p>
+                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+                                        <button type="button"  class="btn btn-primary pull-right"onclick="save_third();">Yes, Go to last question</button>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="step5">
+                                        <div style="width:100%;">
+                                            <p>
+                                                <strong>
+                                                    4. What features would you like to see if you were to come back to Morfix?
+                                            <p></p>
+                                            <textarea class="form-control" name="fourth_question" style="height:30%"></textarea>
+                                            </strong>
+                                            </p>
+                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No, I've change my mind</button>
+                                        <button type="submit" class="btn btn-primary pull-right">Yes, cancel my subscription</button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <input type="hidden" name="first_question" id="first_question">
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('js')
     @include('settings.js')
     <script type="text/javascript">
-        function cancelSubscription() {
-            $.ajax({
-                url: "cancel-subscription",
-                type: "HEAD",
-                dataType: 'json',
-                success: function (success) {
-                    $(location).attr('href', 'settings');
+
+        $(document).ready(function () {
+
+            //Wizard
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+                var $target = $(e.target);
+
+                if ($target.parent().hasClass('disabled')) {
+                    return false;
                 }
             });
-    }
+
+            $(".btn-primary").click(function (e) {
+
+                var $active = $('.wizard .nav-wizard li.active');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+
+            });
+        });
+
+        function nextTab(elem) {
+            $(elem).next().find('a[data-toggle="tab"]').click();
+        }
+
+        function checkValue(ele) {
+            //console.log(ele.value);
+            $('#first_question').val(ele.value);
+        }
     </script>
 @endsection
