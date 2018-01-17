@@ -27,24 +27,6 @@
                 @endif
             </div>
         </div>
-	<main id="main-container">
-		<div class="content bg-gray-lighter">
-			<div class="row items-push">
-				<div class="col-sm-7">
-					<h1 class="page-heading">
-						<i class="si si-settings"></i> Settings
-						<small> Manage your account settings here.</small>
-					</h1>
-				</div>
-				<div class="col-sm-4" style="">
-					<h1 class="page-heading">
-						<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#CancelConfirmation">
-							I want to cancel my subscription
-						</button>
-					</h1>
-				</div>
-			</div>
-		</div>
 
 		<div class="content content-boxed">
 			<!-- Dynamic Table Full -->
