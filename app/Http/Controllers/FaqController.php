@@ -54,4 +54,26 @@ class FaqController extends Controller {
             'qnas' => $faq_qnas,
         ]);
     }
+
+    public function qnaSlug(Request $request, $topic, $qna_slug) {
+
+        $topic = FaqTopic::where('topic_url', $topic)->first();
+        $slug = FaqQna::all();
+
+        foreach ($slug as $slugs) {
+            if($qna_slug == str_slug($slugs->question)){
+
+                $faq_qnas = array();
+                if ($topic !== NULL) {
+                    $faq_qnas = FaqQna::where('question', $slugs->question)->get();
+                }
+
+                return view('faq.slug', [
+                    'topic' => $topic,
+                    'qnas' => $faq_qnas,
+                ]);
+            }
+        }
+
+    }
 }
