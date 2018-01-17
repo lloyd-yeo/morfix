@@ -106,6 +106,8 @@ Route::post('/cancel-subscription', 'SettingsController@cancelUserSubscription')
 #Route::get('/faq', 'FaqController@index');
 Route::get('/faq', 'FaqController@topic');
 Route::get('/faq/{topic}', 'FaqController@listQuestions');
+Route::get('/faq/{topic}/{qna_slug}', 'FaqController@qnaSlug');
+
 
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
 
