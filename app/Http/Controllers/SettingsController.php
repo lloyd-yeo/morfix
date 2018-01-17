@@ -146,7 +146,7 @@ class SettingsController extends Controller
 		return Response::json([ "success" => TRUE, 'message' => "Your subscription has been cancelled." ]);
 	}
 
-	public function CancelSubscriptionToDefault(Request $request){
+	public function cancelUserSubscription(Request $request){
 
 		$user_to_cancel = User::where('email', Auth::user()->email)->first();
         $user_to_cancel->tier = 1;
@@ -219,6 +219,8 @@ class SettingsController extends Controller
             $save_address->address = $request->input('address');
             $save_address->save();
         }
+        return Response::json([ "success" => TRUE, 'message' => "Address successfully added." ]);
+
     }
 
 	public function updateCreditCard(Request $request)
