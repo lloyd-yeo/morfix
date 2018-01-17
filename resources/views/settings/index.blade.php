@@ -211,6 +211,7 @@
                 </div>
             </div>
             @endif
+			
             <!-- END Dynamic Table Full -->
             @if(empty(Auth::user()->address))
             <div class="block">
@@ -229,6 +230,7 @@
                 </div>
             </div>
             @endif
+
             <div class="block">
                 <div class="block-header">
                     <h3 class="block-title">Update My Card Details</h3>
