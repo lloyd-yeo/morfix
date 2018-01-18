@@ -22,6 +22,7 @@ use App\UserCancellationFeedback;
 
 use Braintree_Configuration;
 use Braintree_Subscription;
+use Braintree_ClientToken;
 
 class SettingsController extends Controller
 {
@@ -108,12 +109,20 @@ class SettingsController extends Controller
 			}
 		}
 
+        Braintree_Configuration::environment('production');
+        Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+        Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+        Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+        $client_token = Braintree_ClientToken::generate();
+
+
 		return view('settings.index', [
 			'subscriptions' => $subscriptions,
 			'invoices'      => $invoices,
 			'invoices_'     => $invoices_,
 			'agreement_id'  => $agreement_id,
-		]);
+            'client_token' => $client_token,
+        ]);
 	}
 
 	public function cancelPaypalAgreement(Request $request)
