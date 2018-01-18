@@ -311,17 +311,19 @@
                         });
                     </script>
                 </div>
-            <div class="block" id="braintree-value">
-                <div class="block-header">
-                    <h3 class="block-title">Update card details</h3>
-                </div>
-                <div class="block-content">
-                        <button class="btn btn-primary" id="show-braintree-null" name="submit" type="submit"> Update Card Details</button>
-                    <div style="height: 30px;">
+            @if(!is_null(Auth::user()->braintree_id))
+                <div class="block" id="braintree-value">
+                    <div class="block-header">
+                        <h3 class="block-title">Update card details</h3>
+                    </div>
+                    <div class="block-content">
+                            <button class="btn btn-primary" id="show-braintree-null" name="submit" type="submit"> Update Card Details</button>
+                        <div style="height: 30px;">
 
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
 
     </main>
