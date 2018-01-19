@@ -161,26 +161,25 @@ class SettingsController extends Controller
         $feedback->save();
 
 
-        if(is_null(Auth::user()->braintree_id)):
-        //cancell braintree transaction
+        if(is_null(Auth::user()->braintree_id)) {
+            //cancel braintree transaction
 
             Braintree_Configuration::environment('production');
             Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
             Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
             Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
             $braintree_id = Auth::user()->braintree_id;
-            Braintree_Subscription::cancel( $braintree_id );
-            $braintree = Braintree_Subscription::where('braintree_id', $braintree_id) ->get();
+            $braintree = Braintree_Subscription::where('braintree_id', $braintree_id)->get();
             foreach ($braintree as $braintree_cancel) {
                 $braintree_cancel->status = 'Canceled';
                 $braintree_cancel->save();
+                Braintree_Subscription::cancel($braintree_cancel->subscription_id);
             }
-
-		elseif($user_to_cancel->paypal == 1) :
-		//if paypal user
+        } elseif($user_to_cancel->paypal == 1) {
+            //if paypal user
             $paypal_charges = PaypalCharges::where('email', Auth::user()->email)->get();
             $this->client_id = config('paypal.live_client_id');
-            $this->secret    = config('paypal.live_secret');
+            $this->secret = config('paypal.live_secret');
 
             $this->apiContext = new ApiContext(new OAuthTokenCredential($this->client_id, $this->secret));
             $this->apiContext->setConfig(config('paypal.settings'));
@@ -188,16 +187,15 @@ class SettingsController extends Controller
             $agreementStateDescriptor = new AgreementStateDescriptor();
             $agreementStateDescriptor->setNote("Cancelled on " . \Carbon\Carbon::now()->toDateTimeString());
 
-            foreach($paypal_charges as $paypal_charge){
-                Agreement::get( $paypal_charge->agreement_id, $this->apiContext)->cancel($agreementStateDescriptor, $this->apiContext);
+            foreach ($paypal_charges as $paypal_charge) {
+                Agreement::get($paypal_charge->agreement_id, $this->apiContext)->cancel($agreementStateDescriptor, $this->apiContext);
                 $paypal_charge->status = 'Canceled';
-                $paypal_charge-save();
+                $paypal_charge - save();
             }
-
-        else:
-		//stripe user
+        } else {
+            //stripe user
             \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
-            $stripe_cancellation = StripeActiveSubscription::where('email',Auth::user()->stripe_id)->get();
+            $stripe_cancellation = StripeActiveSubscription::where('email', Auth::user()->stripe_id)->get();
             foreach ($stripe_cancellation as $stripe_cancel) {
 
                 $subscription = \Stripe\Subscription::retrieve($stripe_cancel->stripe_subscription_id);
@@ -206,7 +204,7 @@ class SettingsController extends Controller
                 $stripe_cancel->status = 'Canceled';
                 $stripe_cancel->save();
             }
-        endif;
+        }
 
         return Response::json([ "success" => TRUE, 'message' => "Your subscription has been cancelled." ]);
 
