@@ -197,6 +197,11 @@ class UpdatePendingCommissionPayable extends Command {
 
 			    }
 		    }
+            $user_commission_payable = User::where('email',Auth::user()->email)->get();
+            foreach ($user_commission_payable as $user_commission_payable_value){
+                $user_commission_payable_value->pending_commission_payable = $pending_comms;
+                $user_commission_payable_value->save();
+            }
 
 		    $this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
 	    }
