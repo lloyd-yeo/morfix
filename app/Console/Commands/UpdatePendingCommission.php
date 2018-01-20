@@ -195,13 +195,8 @@ class UpdatePendingCommission extends Command
 
 				}
 			}
-
-            $user_commission = User::where('email',Auth::user()->email)->get();
-            foreach ($user_commission as $user_commission_value){
-                $user_commission_value->pending_commission = $pending_comms;
-                $user_commission_value->save();
-            }
-
+            $user->pending_commission = $pending_comms;
+            $user->save();
 			$this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
 		}
 	}
