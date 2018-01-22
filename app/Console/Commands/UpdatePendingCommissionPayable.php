@@ -197,6 +197,8 @@ class UpdatePendingCommissionPayable extends Command {
 
 			    }
 		    }
+                $user->pending_commission_payable = $pending_comms;
+                $user->save();
 
 		    $this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
 	    }

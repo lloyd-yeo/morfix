@@ -195,7 +195,8 @@ class UpdatePendingCommission extends Command
 
 				}
 			}
-
+            $user->pending_commission = $pending_comms;
+            $user->save();
 			$this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
 		}
 	}
