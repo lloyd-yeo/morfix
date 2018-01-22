@@ -8,7 +8,8 @@ use Auth;
 use Braintree_ClientToken;
 use Braintree_Configuration;
 use Braintree_Customer;
-use Braintree_Subscription;
+use Braintree_Transaction;
+use App\BraintreeTransaction;
 use Cookie;
 use Illuminate\Http\Request;
 
@@ -197,4 +198,35 @@ class BraintreeController extends Controller
 		}
 
 	}
+
+	public function updateBraintreeInformation(Request $request){
+
+        Braintree_Configuration::environment('production');
+        Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
+        Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
+        Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
+        $braintree = BraintreeTransaction::where('braintree_id', Auth::user()->braintree_id )->first();
+
+
+        $result = \Braintree\CreditCard::update($braintree->bt_cc_token, [
+            'cardholderName' => $request->input('cardholderName'),
+            'cvv' => $request->input('cvv'),
+            'number' => $request->input('number'),
+            'expiration_month' => $request->input('expiration_month'),
+            'expiration_year' => $request->input('expiration_year'),
+            'billingAddress' => [
+              'postal_code' => $request->input('postal_code')
+              ]
+        ]);
+
+        if($result){
+            $message = "Your braintree account has been changed.";
+        } else {
+            $message = "Your braintree account can't be changed.";
+        }
+
+        return Response::json([ "success" => TRUE, 'message' => $message ]);
+
+    }
 }

@@ -241,6 +241,89 @@
             </div>
             @endif
 
+                <div class="block" id="braintree-null">
+                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+                    <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
+                    <div class="block-header">
+                        <h3 class="block-title">Update card details</h3>
+                    </div>
+                    <div class="block-content">
+                        <form method="POST" action="/update-details" id="update_card">
+                            <div id="dropin-container"></div>
+                            <button class="btn btn-primary" id="submit-button" type="button"> Save Updated Card Details</button>
+                            <button class="btn btn-success" id="use-old-card" type="button"> Use My Old Card</button>
+                        </form>
+                        <div style="height: 30px;">
+
+                        </div>
+                    </div>
+                    <script>
+                        // function update_card_details() {
+                        //     if(confirm("Are you sure to change your card details?")){
+                        //         var formdata = {
+                        //           'card_holder' : $('#braintree__card-view-input__cardholder-name').val(),
+                        //           'card_number' : $('#').val(),
+                        //           'expiration' : $('#expiration').val(),
+                        //           'cvv' : $('#cvv').val(),
+                        //           'postal_code' : $('#postal-code').val()
+                        //         }
+                        //         $.ajax({
+                        //             type: "POST",
+                        //             url: "/update-details",
+                        //             dataType: "json",
+                        //             success:  function(success){
+                        //                 //alert("---"+data);
+                        //                 alert("Address successfully added");
+                        //                 window.location.reload(true);
+                        //             }
+                        //         });
+                        //     }
+                        // }
+
+                        var button = document.querySelector('#submit-button');
+
+                        $(document).ready(function () {
+
+                            @if(session()->has('error'))
+                            alert("{{ session('error') }}")
+                            @endif
+
+                        });
+
+                        braintree.dropin.create({
+                            authorization: '{{ $client_token }}',
+                            container: '#dropin-container',
+
+                            card: {
+                                cardholderName: {
+                                    required: true
+                                }
+                            },
+
+                        }, function (createErr, instance) {
+                            button.addEventListener('click', function () {
+                                instance.requestPaymentMethod(function (err, payload) {
+                                    // Submit payload.nonce to your server
+                                    $("#payment-nonce").val(payload.nonce);
+                                    $("#payment-form").submit();
+                                });
+                            });
+                        });
+                    </script>
+                </div>
+            @if(!is_null(Auth::user()->braintree_id))
+                <div class="block" id="braintree-value">
+                    <div class="block-header">
+                        <h3 class="block-title">Update card details</h3>
+                    </div>
+                    <div class="block-content">
+                            <button class="btn btn-primary" id="show-braintree-null" name="submit" type="submit"> Update Card Details</button>
+                        <div style="height: 30px;">
+
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
 
     </main>
@@ -416,6 +499,29 @@
 @section('js')
     @include('settings.js')
     <script type="text/javascript">
+        $(document).ready(function () {
+
+            @if(!is_null(Auth::user()->braintree_id))
+                $('#braintree-null').show();
+                $('#braintree-null-button').hide();
+                @else
+                $('#braintree-null').hide();
+                $('#braintree-null-button').show();
+            @endif
+
+            $('#show-braintree-null').on('click',function(){
+                $('#braintree-null').show();
+                $('#braintree-value').hide();
+                $('#braintree-null-button').hide();
+            })
+
+            $('#use-old-card').on('click',function(){
+                $('#braintree-null').hide();
+                $('#braintree-value').show();
+                $('#braintree-null-button').show();
+            })
+        });
+
         function edit_address_button() {
             $('#display_address').hide();
             $('#edit_address').html('<div class="block">\n' +

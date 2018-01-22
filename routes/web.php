@@ -151,6 +151,7 @@ Route::get('/dm/thread/{id}', 'DirectThreadController@show');
 
 Route::post('/paypal/subscription/cancel', 'SettingsController@cancelPaypalAgreement');
 
+Route::post('/update-details', 'BraintreeController@updateBraintreeInformation');
 #Route::get('/funnels/upgrade/premium', 'BraintreeController@funnelPremium');
 #Route::get('/funnels/upgrade/pro', 'BraintreeController@funnelPro');
 #Route::get('/funnels/upgrade/business', 'BraintreeController@funnelBusiness');
