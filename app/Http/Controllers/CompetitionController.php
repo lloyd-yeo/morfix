@@ -82,7 +82,7 @@ class CompetitionController extends Controller
 
 			$competition_updates = CompetitionUpdate::where('email', Auth::user()->email)->get();
 
-			$competition_winners = CompetitionWinners::all();
+			$competition_winners = CompetitionWinners::all()->sortBy("sale_value");
 
 			return view('competition.index', [
 				"month"                   => $this->startDate->format("F"),
