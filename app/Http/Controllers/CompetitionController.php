@@ -11,6 +11,7 @@ use App\UserUpdate;
 use App\UserAffiliates;
 use App\Helper;
 use App\CompetitionUpdate;
+use App\CompetitionWinners;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,6 +82,8 @@ class CompetitionController extends Controller
 
 			$competition_updates = CompetitionUpdate::where('email', Auth::user()->email)->get();
 
+			$competition_winners = CompetitionWinners::all();
+
 			return view('competition.index', [
 				"month"                   => $this->startDate->format("F"),
 				"startDate"               => $this->startDate->day,
@@ -96,6 +99,7 @@ class CompetitionController extends Controller
 				"competition_leaderboard" => $leaderboard_entries,
 				"competition_time"        => $competition_time,
 				"competition_updates"     => $competition_updates,
+                "competition_winners"     => $competition_winners,
 			]);
 		} else {
 			return redirect('home')->with('error', 'You are not eligible for the competition!');
