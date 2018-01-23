@@ -82,7 +82,7 @@ class CompetitionController extends Controller
 
 			$competition_updates = CompetitionUpdate::where('email', Auth::user()->email)->get();
 
-			$competition_winners = CompetitionWinners::all()->sortByDesc("sale_value");
+            $competition_winners = DB::table('competition_winners')->leftJoin('user', 'competition_winners.email', '=', 'user.email')->get();
 
 			return view('competition.index', [
 				"month"                   => $this->startDate->format("F"),
