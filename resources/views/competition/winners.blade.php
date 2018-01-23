@@ -2,8 +2,8 @@
     <div class="block-header">
         <h3 class="block-title"><center><i class="si si-trophy fa-2x"></i>WINNERS RANKING</center></h3>
     </div>
-    <div class="block-content tab-content"  style="width:30%">
-        <table class="table table-borderless remove-margin-b remove-margin-t font-s13">
+    <div class="block-content tab-content col-md-2"  style="float: none;margin: 0 auto;">
+        <table class="table table-border less remove-margin-b remove-margin-t font-s13">
             @foreach ($competition_winners as $winner)
                 @if ($loop->iteration == 1)
                     <tr>
