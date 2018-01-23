@@ -362,11 +362,11 @@
 							</thead>
 
 							<tbody>
-										@foreach ($competition_winners as $winners)
+										@foreach ($competition_winners as $winner)
 											<tr>
-												<td class="font-w600">{{ $winners->email }}</td>
-												<td class="font-w600">{{ $winners->competition_date }}</td>
-												<td class="font-w600">{{ $winners->sale_value }}</td>
+												<td class="font-w600">{{ $winner->email }}</td>
+												<td class="font-w600">{{ $winner->competition_date }}</td>
+												<td class="font-w600">{{ $winner->sale_value }}</td>
 											</tr>
 										@endforeach
 							</tbody>
