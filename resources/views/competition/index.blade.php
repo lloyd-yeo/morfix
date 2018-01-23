@@ -163,6 +163,9 @@
 				</div>
 			</div>
 
+			<div class="row">
+                @include('competition.winners')
+			</div>
 
 			<div class="row">
 				@include('competition.ranking')
@@ -339,36 +342,6 @@
 										</tr>
 									@endif
 									@endforeach
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-
-
-			<div class="row">
-				<div class="block">
-					<div class="block-header">
-						<h3 class="block-title"> Winners</h3>
-					</div>
-					<div class="block-content block-content-full">
-						<table class="table table-bordered table-striped js-dataTable-full-pagination-competition">
-							<thead class="bg-primary">
-							<tr>
-								<th>Email</th>
-								<th class="hidden-xs">Competition Date</th>
-								<th>Sale Value</th>
-							</tr>
-							</thead>
-
-							<tbody>
-										@foreach ($competition_winners as $winner)
-											<tr>
-												<td class="font-w600">{{ $winner->email }}</td>
-												<td class="font-w600">{{ $winner->competition_date }}</td>
-												<td class="font-w600">{{ $winner->sale_value }}</td>
-											</tr>
-										@endforeach
 							</tbody>
 						</table>
 					</div>
