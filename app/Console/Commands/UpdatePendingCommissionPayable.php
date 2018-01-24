@@ -71,7 +71,7 @@ class UpdatePendingCommissionPayable extends Command
 				} else {
 					$date_to_retrieve_invoices_from = \Carbon\Carbon::parse($start_date);
 				}
-				
+
 				$pending_comms   = 0;
 				$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
 
@@ -106,7 +106,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",20," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
 												}
 												break;
 											case '0297':
@@ -115,7 +115,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",50," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
 												}
 												break;
 											case 'MX370':
@@ -124,7 +124,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",200," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
 												}
 												break;
 											case 'MX297':
@@ -133,7 +133,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",120," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
 												}
 												break;
 											case 'MX970':
@@ -142,7 +142,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",500," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
 												}
 												break;
 											case '0167':
