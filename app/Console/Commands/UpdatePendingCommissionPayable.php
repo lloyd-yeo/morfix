@@ -109,7 +109,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",20," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
 												}
 												break;
 											case '0297':
@@ -118,7 +118,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",50," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
 												}
 												break;
 											case 'MX370':
@@ -127,7 +127,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",200," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
 												}
 												break;
 											case 'MX297':
@@ -136,7 +136,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",120," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
 												}
 												break;
 											case 'MX970':
@@ -145,7 +145,7 @@ class UpdatePendingCommissionPayable extends Command
 													$this->line($user->email . "," .
 														$affiliate->email . ",500," .
 														$stripe_charge->charge_id . "," .
-														$stripe_invoice->invoice_id . ",stripe");
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->created_at . ",stripe");
 												}
 												break;
 											case '0167':
@@ -199,7 +199,7 @@ class UpdatePendingCommissionPayable extends Command
 												$pending_comms += 20;
 												$this->line($user->email . "," .
 													$affiliate->email . ",20," .
-													$braintree_transactions_completed->sub_id . ",braintree");
+													$braintree_transactions_completed->sub_id . "," . $braintree_transactions_completed->created_at . ",braintree");
 											}
 											break;
 										case '0297':
@@ -207,7 +207,7 @@ class UpdatePendingCommissionPayable extends Command
 												$pending_comms += 50;
 												$this->line($user->email . "," .
 													$affiliate->email . ",50," .
-													$braintree_transactions_completed->sub_id . ",braintree");
+													$braintree_transactions_completed->sub_id . "," . $braintree_transactions_completed->created_at . ",braintree");
 											}
 											break;
 										case 'MX370':
@@ -215,7 +215,7 @@ class UpdatePendingCommissionPayable extends Command
 												$pending_comms += 200;
 												$this->line($user->email . "," .
 													$affiliate->email . ",200," .
-													$braintree_transactions_completed->sub_id . ",braintree");
+													$braintree_transactions_completed->sub_id . "," . $braintree_transactions_completed->created_at . ",braintree");
 											}
 											break;
 										case 'MX297':
@@ -223,7 +223,7 @@ class UpdatePendingCommissionPayable extends Command
 												$pending_comms += 120;
 												$this->line($user->email . "," .
 													$affiliate->email . ",120," .
-													$braintree_transactions_completed->sub_id . ",braintree");
+													$braintree_transactions_completed->sub_id . "," . $braintree_transactions_completed->created_at . ",braintree");
 											}
 											break;
 										case 'MX970':
@@ -231,7 +231,7 @@ class UpdatePendingCommissionPayable extends Command
 												$pending_comms += 500;
 												$this->line($user->email . "," .
 													$affiliate->email . ",500," .
-													$braintree_transactions_completed->sub_id . ",braintree");
+													$braintree_transactions_completed->sub_id . "," . $braintree_transactions_completed->created_at . ",braintree");
 											}
 											break;
 										case '0167':
