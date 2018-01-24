@@ -248,7 +248,7 @@ class UpdatePendingCommissionPayable extends Command
 				$user->pending_commission_payable = $pending_comms;
 				//			$user->save();
 				if ($pending_comms > 0) {
-					$user_comms[] = $user->email . ',' . $pending_comms;
+					$user_comms[] = $user->email . ',' . $user->paypal_email . ',' . $pending_comms;
 				}
 
 			}
