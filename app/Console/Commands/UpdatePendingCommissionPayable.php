@@ -188,6 +188,8 @@ class UpdatePendingCommissionPayable extends Command
 									//								$this->alert($braintree_transactions_completed->sub_id . " " . $braintree_transactions_completed->plan_id);
 
 									if ($braintree_transactions_completed == NULL) {
+										dump($date_to_retrieve_invoices_from);
+										dump($end_date);
 										dump($braintree_transaction);
 									}
 
