@@ -57,7 +57,7 @@ class UpdatePendingCommissionPayable extends Command
 
 		foreach ($users as $user) {
 			$pending_comms = 0;
-			$this->line($user->email);
+//			$this->line($user->email);
 
 			$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
 
@@ -173,7 +173,7 @@ class UpdatePendingCommissionPayable extends Command
 								                                                        ->where('type', 'sale')
 								                                                        ->first();
 
-								$this->alert($braintree_transactions_completed->sub_id . " " . $braintree_transactions_completed->plan_id);
+//								$this->alert($braintree_transactions_completed->sub_id . " " . $braintree_transactions_completed->plan_id);
 
 								switch ($braintree_transactions_completed->plan_id) {
 									case '0137':
