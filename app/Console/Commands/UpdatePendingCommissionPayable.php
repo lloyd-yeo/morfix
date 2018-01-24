@@ -7,6 +7,7 @@ use App\StripeCharge;
 use App\StripeDetail;
 use App\StripeInvoice;
 use App\UserAffiliates;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\User;
@@ -46,20 +47,26 @@ class UpdatePendingCommissionPayable extends Command
 	public function handle()
 	{
 		$start_date = '2017-12-01 00:00:00';
-		$end_date   = '2017-12-31 00:00:00';
-		$users      = User::where('tier', '>=', 2)->where('last_pay_out_date', '2017-12-25 00:00:00');
+		$end_date   = '2017-12-31 23:59:59';
+		$users      = User::where('tier', '>=', 2);
+//		                  ->where('last_pay_out_date', '2017-12-25 00:00:00');
+
 		if ($this->argument('email') != NULL) {
 			$users = $users->where('email', $this->argument('email'));
 		}
 		$users            = $users->get();
-		$user_comms_array = [];
+		$user_comms = [];
 
 		$this->alert($users->count() . " users");
 
 		foreach ($users as $user) {
-			$pending_comms = 0;
-			//			$this->line($user->email);
 
+			$last_pay_out_date = \Carbon\Carbon::parse($user->last_pay_out_date);
+			$date_to_retrieve_invoices_from = $last_pay_out_date->day(1)->hour(0)->minute(0);
+			$this->line($user->email . "," . $date_to_retrieve_invoices_from);
+			continue;
+			
+			$pending_comms = 0;
 			$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
 
 			foreach ($user_affiliates as $user_affiliate) {
@@ -73,7 +80,7 @@ class UpdatePendingCommissionPayable extends Command
 							$stripe_id = $stripe_detail->stripe_id;
 
 							$stripe_invoices = StripeInvoice::where('stripe_id', $stripe_id)
-							                                ->where('invoice_date', '>=', $start_date)
+							                                ->where('invoice_date', '>=', $date_to_retrieve_invoices_from)
 							                                ->where('invoice_date', '<=', $end_date)
 							                                ->where('paid', 1)
 							                                ->get();
@@ -90,7 +97,6 @@ class UpdatePendingCommissionPayable extends Command
 										case '0137':
 											if ($user->tier > 1) {
 												$pending_comms += 20;
-												//												$this->line("[STRIPE] [COMMS] Added!");
 												$this->line($user->email . "," .
 													$affiliate->email . ",20," .
 													$stripe_charge->charge_id . "," .
@@ -100,7 +106,6 @@ class UpdatePendingCommissionPayable extends Command
 										case '0297':
 											if ($user->tier > 10) {
 												$pending_comms += 50;
-												//												$this->line("[STRIPE] [COMMS] Added!");
 												$this->line($user->email . "," .
 													$affiliate->email . ",50," .
 													$stripe_charge->charge_id . "," .
@@ -110,7 +115,6 @@ class UpdatePendingCommissionPayable extends Command
 										case 'MX370':
 											if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 												$pending_comms += 200;
-												//												$this->line("[STRIPE] [COMMS] Added!");
 												$this->line($user->email . "," .
 													$affiliate->email . ",200," .
 													$stripe_charge->charge_id . "," .
@@ -120,7 +124,6 @@ class UpdatePendingCommissionPayable extends Command
 										case 'MX297':
 											if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 												$pending_comms += 120;
-												//												$this->line("[STRIPE] [COMMS] Added!");
 												$this->line($user->email . "," .
 													$affiliate->email . ",120," .
 													$stripe_charge->charge_id . "," .
@@ -130,7 +133,6 @@ class UpdatePendingCommissionPayable extends Command
 										case 'MX970':
 											if ($user->tier > 20) {
 												$pending_comms += 500;
-												//												$this->line("[STRIPE] [COMMS] Added!");
 												$this->line($user->email . "," .
 													$affiliate->email . ",500," .
 													$stripe_charge->charge_id . "," .
@@ -162,14 +164,14 @@ class UpdatePendingCommissionPayable extends Command
 							//							$this->alert($braintree_transaction->sub_id);
 
 							$braintree_transactions_cancelled = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)
-							                                                        ->where('created_at', '>=', $start_date)
+							                                                        ->where('created_at', '>=', $date_to_retrieve_invoices_from)
 							                                                        ->where('created_at', '<=', $end_date)
 							                                                        ->where('type', 'credit')
 							                                                        ->first();
 							if ($braintree_transactions_cancelled == NULL) {
 
 								$braintree_transactions_completed = BraintreeTransaction::where('sub_id', $braintree_transaction->sub_id)
-								                                                        ->where('created_at', '>=', $start_date)
+								                                                        ->where('created_at', '>=', $date_to_retrieve_invoices_from)
 								                                                        ->where('created_at', '<=', $end_date)
 								                                                        ->where('type', 'sale')
 								                                                        ->first();
@@ -180,7 +182,6 @@ class UpdatePendingCommissionPayable extends Command
 									case '0137':
 										if ($user->tier > 1) {
 											$pending_comms += 20;
-											//											$this->line("[BRAINTREE] [COMMS] Added!");
 											$this->line($user->email . "," .
 												$affiliate->email . ",20," .
 												$braintree_transactions_completed->sub_id . ",braintree");
@@ -189,7 +190,6 @@ class UpdatePendingCommissionPayable extends Command
 									case '0297':
 										if ($user->tier > 10) {
 											$pending_comms += 50;
-											//											$this->line("[BRAINTREE] [COMMS] Added!");
 											$this->line($user->email . "," .
 												$affiliate->email . ",50," .
 												$braintree_transactions_completed->sub_id . ",braintree");
@@ -198,7 +198,6 @@ class UpdatePendingCommissionPayable extends Command
 									case 'MX370':
 										if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 											$pending_comms += 200;
-											//											$this->line("[BRAINTREE] [COMMS] Added!");
 											$this->line($user->email . "," .
 												$affiliate->email . ",200," .
 												$braintree_transactions_completed->sub_id . ",braintree");
@@ -207,7 +206,6 @@ class UpdatePendingCommissionPayable extends Command
 									case 'MX297':
 										if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 											$pending_comms += 120;
-											//											$this->line("[BRAINTREE] [COMMS] Added!");
 											$this->line($user->email . "," .
 												$affiliate->email . ",120," .
 												$braintree_transactions_completed->sub_id . ",braintree");
@@ -216,7 +214,6 @@ class UpdatePendingCommissionPayable extends Command
 									case 'MX970':
 										if ($user->tier > 20) {
 											$pending_comms += 500;
-											//											$this->line("[BRAINTREE] [COMMS] Added!");
 											$this->line($user->email . "," .
 												$affiliate->email . ",500," .
 												$braintree_transactions_completed->sub_id . ",braintree");
@@ -240,9 +237,8 @@ class UpdatePendingCommissionPayable extends Command
 			$user->save();
 
 			$user_comms[] = $user->email . ',' . $pending_comms;
-			//			$this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
 		}
-		
+
 		foreach ($user_comms as $user_comm) {
 			$this->line($user_comm);
 		}
