@@ -187,6 +187,10 @@ class UpdatePendingCommissionPayable extends Command
 
 									//								$this->alert($braintree_transactions_completed->sub_id . " " . $braintree_transactions_completed->plan_id);
 
+									if ($braintree_transactions_completed == NULL) {
+										dump($braintree_transaction);
+									}
+
 									switch ($braintree_transactions_completed->plan_id) {
 										case '0137':
 											if ($user->tier > 1) {
