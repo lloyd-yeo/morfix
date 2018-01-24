@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\StripeInvoice;
+
 
 class GetAllStripeInvoice extends Command
 {
