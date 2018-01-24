@@ -61,8 +61,15 @@ class UpdatePendingCommissionPayable extends Command
 
 		foreach ($users as $user) {
 
-			$last_pay_out_date = \Carbon\Carbon::parse($user->last_pay_out_date);
-			$date_to_retrieve_invoices_from = $last_pay_out_date->day(1)->hour(0)->minute(0);
+			$last_pay_out_date = $user->last_pay_out_date;
+
+			if ($user->last_pay_out_date !== NULL) {
+				$last_pay_out_date = \Carbon\Carbon::parse($user->last_pay_out_date);
+				$date_to_retrieve_invoices_from = $last_pay_out_date->day(1)->hour(0)->minute(0);
+			} else {
+				$last_pay_out_date = \Carbon\Carbon::parse($start_date);
+			}
+
 			$this->line($user->email . "," . $date_to_retrieve_invoices_from);
 			continue;
 
