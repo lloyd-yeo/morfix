@@ -51,13 +51,14 @@ class UpdatePendingCommissionPayable extends Command
 		if ($this->argument('email') != NULL) {
 			$users = $users->where('email', $this->argument('email'));
 		}
-		$users = $users->get();
+		$users            = $users->get();
+		$user_comms_array = [];
 
 		$this->alert($users->count() . " users");
 
 		foreach ($users as $user) {
 			$pending_comms = 0;
-//			$this->line($user->email);
+			//			$this->line($user->email);
 
 			$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
 
@@ -89,51 +90,51 @@ class UpdatePendingCommissionPayable extends Command
 										case '0137':
 											if ($user->tier > 1) {
 												$pending_comms += 20;
-//												$this->line("[STRIPE] [COMMS] Added!");
-												$this->line($user->email .",".
-													$affiliate->email.",20,".
-													$stripe_charge->charge_id.",".
-													$stripe_invoice->invoice_id.",stripe");
+												//												$this->line("[STRIPE] [COMMS] Added!");
+												$this->line($user->email . "," .
+													$affiliate->email . ",20," .
+													$stripe_charge->charge_id . "," .
+													$stripe_invoice->invoice_id . ",stripe");
 											}
 											break;
 										case '0297':
 											if ($user->tier > 10) {
 												$pending_comms += 50;
-//												$this->line("[STRIPE] [COMMS] Added!");
-												$this->line($user->email .",".
-													$affiliate->email.",50,".
-													$stripe_charge->charge_id.",".
-													$stripe_invoice->invoice_id.",stripe");
+												//												$this->line("[STRIPE] [COMMS] Added!");
+												$this->line($user->email . "," .
+													$affiliate->email . ",50," .
+													$stripe_charge->charge_id . "," .
+													$stripe_invoice->invoice_id . ",stripe");
 											}
 											break;
 										case 'MX370':
 											if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 												$pending_comms += 200;
-//												$this->line("[STRIPE] [COMMS] Added!");
-												$this->line($user->email .",".
-													$affiliate->email.",200,".
-													$stripe_charge->charge_id.",".
-													$stripe_invoice->invoice_id.",stripe");
+												//												$this->line("[STRIPE] [COMMS] Added!");
+												$this->line($user->email . "," .
+													$affiliate->email . ",200," .
+													$stripe_charge->charge_id . "," .
+													$stripe_invoice->invoice_id . ",stripe");
 											}
 											break;
 										case 'MX297':
 											if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 												$pending_comms += 120;
-//												$this->line("[STRIPE] [COMMS] Added!");
-												$this->line($user->email .",".
-													$affiliate->email.",120,".
-													$stripe_charge->charge_id.",".
-													$stripe_invoice->invoice_id.",stripe");
+												//												$this->line("[STRIPE] [COMMS] Added!");
+												$this->line($user->email . "," .
+													$affiliate->email . ",120," .
+													$stripe_charge->charge_id . "," .
+													$stripe_invoice->invoice_id . ",stripe");
 											}
 											break;
 										case 'MX970':
 											if ($user->tier > 20) {
 												$pending_comms += 500;
-//												$this->line("[STRIPE] [COMMS] Added!");
-												$this->line($user->email .",".
-													$affiliate->email.",500,".
-													$stripe_charge->charge_id.",".
-													$stripe_invoice->invoice_id.",stripe");
+												//												$this->line("[STRIPE] [COMMS] Added!");
+												$this->line($user->email . "," .
+													$affiliate->email . ",500," .
+													$stripe_charge->charge_id . "," .
+													$stripe_invoice->invoice_id . ",stripe");
 											}
 											break;
 										case '0167':
@@ -173,52 +174,52 @@ class UpdatePendingCommissionPayable extends Command
 								                                                        ->where('type', 'sale')
 								                                                        ->first();
 
-//								$this->alert($braintree_transactions_completed->sub_id . " " . $braintree_transactions_completed->plan_id);
+								//								$this->alert($braintree_transactions_completed->sub_id . " " . $braintree_transactions_completed->plan_id);
 
 								switch ($braintree_transactions_completed->plan_id) {
 									case '0137':
 										if ($user->tier > 1) {
 											$pending_comms += 20;
-//											$this->line("[BRAINTREE] [COMMS] Added!");
-											$this->line($user->email .",".
-												$affiliate->email.",20,".
-												$braintree_transactions_completed->sub_id.",braintree");
+											//											$this->line("[BRAINTREE] [COMMS] Added!");
+											$this->line($user->email . "," .
+												$affiliate->email . ",20," .
+												$braintree_transactions_completed->sub_id . ",braintree");
 										}
 										break;
 									case '0297':
 										if ($user->tier > 10) {
 											$pending_comms += 50;
-//											$this->line("[BRAINTREE] [COMMS] Added!");
-											$this->line($user->email .",".
-												$affiliate->email.",50,".
-												$braintree_transactions_completed->sub_id.",braintree");
+											//											$this->line("[BRAINTREE] [COMMS] Added!");
+											$this->line($user->email . "," .
+												$affiliate->email . ",50," .
+												$braintree_transactions_completed->sub_id . ",braintree");
 										}
 										break;
 									case 'MX370':
 										if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 											$pending_comms += 200;
-//											$this->line("[BRAINTREE] [COMMS] Added!");
-											$this->line($user->email .",".
-												$affiliate->email.",200,".
-												$braintree_transactions_completed->sub_id.",braintree");
+											//											$this->line("[BRAINTREE] [COMMS] Added!");
+											$this->line($user->email . "," .
+												$affiliate->email . ",200," .
+												$braintree_transactions_completed->sub_id . ",braintree");
 										}
 										break;
 									case 'MX297':
 										if ($user->tier > 2 && $user->tier != 12 && $user->tier != 22) {
 											$pending_comms += 120;
-//											$this->line("[BRAINTREE] [COMMS] Added!");
-											$this->line($user->email .",".
-												$affiliate->email.",120,".
-												$braintree_transactions_completed->sub_id.",braintree");
+											//											$this->line("[BRAINTREE] [COMMS] Added!");
+											$this->line($user->email . "," .
+												$affiliate->email . ",120," .
+												$braintree_transactions_completed->sub_id . ",braintree");
 										}
 										break;
 									case 'MX970':
 										if ($user->tier > 20) {
 											$pending_comms += 500;
-//											$this->line("[BRAINTREE] [COMMS] Added!");
-											$this->line($user->email .",".
-												$affiliate->email.",500,".
-												$braintree_transactions_completed->sub_id.",braintree");
+											//											$this->line("[BRAINTREE] [COMMS] Added!");
+											$this->line($user->email . "," .
+												$affiliate->email . ",500," .
+												$braintree_transactions_completed->sub_id . ",braintree");
 										}
 										break;
 									case '0167':
@@ -238,7 +239,12 @@ class UpdatePendingCommissionPayable extends Command
 			$user->pending_commission_payable = $pending_comms;
 			$user->save();
 
-			$this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
+			$user_comms[] = $user->email . ',' . $pending_comms;
+			//			$this->alert('[COMMISSIONS] ' . $user->email . ' [' . $pending_comms . ']');
+		}
+		
+		foreach ($user_comms as $user_comm) {
+			$this->line($user_comm);
 		}
 	}
 
