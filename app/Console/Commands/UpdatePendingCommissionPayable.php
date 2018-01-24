@@ -65,7 +65,7 @@ class UpdatePendingCommissionPayable extends Command
 			$date_to_retrieve_invoices_from = $last_pay_out_date->day(1)->hour(0)->minute(0);
 			$this->line($user->email . "," . $date_to_retrieve_invoices_from);
 			continue;
-			
+
 			$pending_comms = 0;
 			$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
 
@@ -234,7 +234,7 @@ class UpdatePendingCommissionPayable extends Command
 				}
 			}
 			$user->pending_commission_payable = $pending_comms;
-			$user->save();
+//			$user->save();
 
 			$user_comms[] = $user->email . ',' . $pending_comms;
 		}
