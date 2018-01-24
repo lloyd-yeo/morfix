@@ -44,7 +44,7 @@ class SettingsController extends Controller
 		$invoices      = [];
 		$invoices_     = [];
 
-		if (Auth::user()->paypal != 1) {
+		if (Auth::user()->paypal != 1 && Auth::user()->braintree_id != NULL) {
 			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
 			foreach ($user_stripe_details as $user_stripe_detail) {
 				$stripe_id   = $user_stripe_detail->stripe_id;
