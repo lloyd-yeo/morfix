@@ -163,7 +163,7 @@ class UpdatePendingCommissionPayable extends Command
 							$braintree_transactions = BraintreeTransaction::select('sub_id')
 							                                              ->distinct()
 							                                              ->where('braintree_id', $affiliate->braintree_id)
-							                                              ->where('created_at', '>=', $start_date)
+							                                              ->where('created_at', '>=', $date_to_retrieve_invoices_from)
 							                                              ->where('created_at', '<=', $end_date)
 							                                              ->where('status', '!=', 'processor_declined')
 							                                              ->get();
