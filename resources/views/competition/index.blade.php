@@ -82,6 +82,7 @@
 
 		<div class="content content-boxed">
 			<div class="row statistics" style="display:none;">
+
 				<div class="col-xs-6 col-sm-2 col-lg-3">
 					<div class="font-w700 text-gray-darker animated fadeIn">DAILY REFERRAL</div>
 					<div class="text-muted animated fadeIn">

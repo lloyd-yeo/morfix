@@ -49,7 +49,7 @@ class GenerateBraintreeReferralCharges extends Command
 		\Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		\Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		\Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
-		$date_to_retrieve_from = "2017-12-01 00:00:00";
+		$date_to_retrieve_from = "2018-01-01 00:00:00";
 		$users                 = [];
 
 		$user_payout_comms = [];
@@ -108,7 +108,8 @@ class GenerateBraintreeReferralCharges extends Command
 					}
 
 					$paypal_charges_for_referrer = PaypalCharges::where('email', $referrer_email)
-					                                            ->where('status', 'Completed')->where('time_stamp', '<', '2017-12-01 00:00:00')->get();
+					                                            ->where('status', 'Completed')
+					                                            ->where('time_stamp', '<', "2018-01-01 00:00:00")->get();
 					foreach ($paypal_charges_for_referrer as $paypal_charge_for_referrer) {
 						if ($paypal_charge_for_referrer->subscription_id == "0137") {
 							$users[$referrer_email]["premium"] = 1;
