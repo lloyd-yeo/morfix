@@ -71,8 +71,8 @@ class UpdatePendingCommissionPayable extends Command
 				$date_to_retrieve_invoices_from = \Carbon\Carbon::parse($start_date);
 			}
 
-			$this->line($user->email . "," . $date_to_retrieve_invoices_from);
-			continue;
+//			$this->line($user->email . "," . $date_to_retrieve_invoices_from);
+//			continue;
 
 			$pending_comms = 0;
 			$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
