@@ -150,6 +150,13 @@ class UpdatePendingCommissionPayable extends Command
 												}
 												break;
 											case '0167':
+												if ($user->tier > 1) {
+													$pending_comms += 50;
+													$this->line($user->email . "," .
+														$affiliate->email . ",50," .
+														$stripe_charge->charge_id . "," .
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
+												}
 												break;
 											default:
 												break;
