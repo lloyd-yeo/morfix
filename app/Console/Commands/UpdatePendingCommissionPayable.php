@@ -105,6 +105,10 @@ class UpdatePendingCommissionPayable extends Command
 								                                ->where('paid', 1)
 								                                ->get();
 
+								if ($this->argument('email') != NULL) {
+									$this->line($affiliate->email . " has invoices from [" . $date_to_retrieve_invoices_from . "] [" . $end_date . "]");
+								}
+
 								foreach ($stripe_invoices as $stripe_invoice) {
 									$stripe_charge = StripeCharge::where('charge_id', $stripe_invoice->charge_id)
 									                             ->where('invoice_id', $stripe_invoice->invoice_id)
