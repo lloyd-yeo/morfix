@@ -73,7 +73,8 @@ class UpdatePendingCommissionPayable extends Command
 				}
 
 				if ($this->argument('email') != NULL) {
-					$this->line("[DATE] " . $date_to_retrieve_invoices_from);
+					$this->line("[START DATE] " . $date_to_retrieve_invoices_from);
+					$this->line("[END DATE] " . $end_date);
 				}
 
 				$pending_comms   = 0;
