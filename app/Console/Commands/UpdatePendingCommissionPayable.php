@@ -90,6 +90,11 @@ class UpdatePendingCommissionPayable extends Command
 					} else {
 						$stripe_details = StripeDetail::where('email', $affiliate->email)->get();
 						if ($stripe_details->count() > 0) {
+
+							if ($this->argument('email') != NULL) {
+								$this->line($affiliate->email . " has a Stripe account.");
+							}
+
 							foreach ($stripe_details as $stripe_detail) {
 								$stripe_id = $stripe_detail->stripe_id;
 
