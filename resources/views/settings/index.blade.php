@@ -501,12 +501,18 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            @if(!is_null(Auth::user()->braintree_id))
-                $('#braintree-null').show();
-                $('#braintree-null-button').hide();
-                @else
+            @if(Auth::user()->braintree_id > 0){
                 $('#braintree-null').hide();
                 $('#braintree-null-button').show();
+            }
+            @elseif(is_null(Auth::user()->braintree_id)){
+                $('#braintree-null').hide();
+                $('#braintree-null-button').hide();
+            }
+            @else{
+                $('#braintree-null').show();
+                $('#braintree-null-button').hide();
+            }
             @endif
 
             $('#show-braintree-null').on('click',function(){
