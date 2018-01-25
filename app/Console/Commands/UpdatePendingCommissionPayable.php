@@ -105,7 +105,7 @@ class UpdatePendingCommissionPayable extends Command
 								                                ->where('paid', 1)
 								                                ->get();
 
-								if ($this->argument('email') != NULL) {
+								if ($this->argument('email') != NULL && $stripe_invoices->count() > 0) {
 									$this->line($affiliate->email . " has invoices from [" . $date_to_retrieve_invoices_from . "] [" . $end_date . "]");
 								}
 
@@ -181,6 +181,11 @@ class UpdatePendingCommissionPayable extends Command
 						}
 
 						if ($affiliate->braintree_id != NULL) {
+
+							if ($this->argument('email') != NULL) {
+								$this->line($affiliate->email . " has a Braintree account.");
+							}
+
 							//retrieve braintree stuff here
 							$braintree_transactions = BraintreeTransaction::select('sub_id')
 							                                              ->distinct()
