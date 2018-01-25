@@ -79,6 +79,10 @@ class UpdatePendingCommissionPayable extends Command
 				$pending_comms   = 0;
 				$user_affiliates = UserAffiliates::where('referrer', $user->user_id)->get();
 
+				if ($this->argument('email') != NULL) {
+					$this->line($this->argument('email') . " has [" . $user_affiliates->count() . "] affiliates");
+				}
+
 				foreach ($user_affiliates as $user_affiliate) {
 					$affiliate = User::find($user_affiliate->referred);
 					if ($affiliate == NULL) {
