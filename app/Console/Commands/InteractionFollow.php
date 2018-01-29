@@ -89,6 +89,44 @@ class InteractionFollow extends Command {
 
         $users = NULL;
 
+        if ($this->argument("email") == "ig") {
+
+	        $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
+		        . 'AND insta_username = ' . $this->argument("queueasjob"))->get();
+
+	        foreach ($instagram_profiles as $ig_profile) {
+
+		        if (!InstagramHelper::validForInteraction($ig_profile)) {
+			        continue;
+		        }
+
+		        if ($ig_profile->auto_follow_ban == 1 && $ig_profile->auto_follow_ban_time === NULL) {
+			        $ig_profile->auto_follow_ban = 0;
+			        $ig_profile->save();
+		        }
+
+		        if ($ig_profile->auto_follow_ban == 1 && \Carbon\Carbon::now()->lt(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+			        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Follow & the ban isn't lifted yet.");
+			        continue;
+		        }
+
+		        if ($ig_profile->next_follow_time === NULL) {
+			        $ig_profile->next_follow_time = \Carbon\Carbon::now();
+			        $ig_profile->save();
+			        dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+				        ->onQueue('follows'));
+			        $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+		        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_follow_time))) {
+			        dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
+				        ->onQueue('follows'));
+			        $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
+		        }
+	        }
+
+        	return;
+        }
+        
+
         if ($this->argument("email") == "slave") {
             $this->info("[Follow Interaction] Queueing jobs for Slave.");
             $users = User::all();
