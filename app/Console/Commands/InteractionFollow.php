@@ -92,7 +92,7 @@ class InteractionFollow extends Command {
         if ($this->argument("email") == "ig") {
 
 	        $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
-		        . 'AND insta_username = ' . $this->argument("queueasjob"))->get();
+		        . 'AND insta_username = \'' . $this->argument("queueasjob") . "\'")->get();
 
 	        foreach ($instagram_profiles as $ig_profile) {
 
