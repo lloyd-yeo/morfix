@@ -114,11 +114,13 @@ class InteractionFollow extends Command {
 			        $ig_profile->next_follow_time = \Carbon\Carbon::now();
 			        $ig_profile->save();
 			        dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-				        ->onQueue('follows'));
+				        ->onQueue('follows')
+			            ->onConnection('sync'));
 			        $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
 		        } else if (\Carbon\Carbon::now()->gte(new \Carbon\Carbon($ig_profile->next_follow_time))) {
 			        dispatch((new \App\Jobs\InteractionFollow(\App\InstagramProfile::find($ig_profile->id)))
-				        ->onQueue('follows'));
+				        ->onQueue('follows')
+				        ->onConnection('sync'));
 			        $this->line("[Follow Interactions] queued " . $ig_profile->insta_username);
 		        }
 	        }
