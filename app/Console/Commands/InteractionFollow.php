@@ -127,7 +127,7 @@ class InteractionFollow extends Command {
 
         	return;
         }
-        
+
 
         if ($this->argument("email") == "slave") {
             $this->info("[Follow Interaction] Queueing jobs for Slave.");
