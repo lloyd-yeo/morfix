@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CancellationSubscriptionWebhook;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Log;
