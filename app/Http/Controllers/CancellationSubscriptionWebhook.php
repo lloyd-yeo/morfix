@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\CancellationSubscriptionWebhook;
-namespace Laravel\Cashier\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
