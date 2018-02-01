@@ -17,6 +17,7 @@ class CancellationSubscriptionWebhook extends Controller
     public function handleDisputeOpened(Request $request)
     {
         $payload = $request->all();
-        echo $payload;
+        Log::info( $payload );
+        return new Response('Webhook Handled', 200);
     }
 }
