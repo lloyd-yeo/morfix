@@ -1,7 +1,7 @@
 <?php
 
 namespace Laravel\Cashier\Http\Controllers;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\CancellationSubscriptionWebhook;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Log;
