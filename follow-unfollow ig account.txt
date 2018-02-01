@@ -1,0 +1,33 @@
+debugging follow/unfollow
+
+Run this query on workbench
+SELECT `partition` FROM user WHERE email = 'wikiwellnesseu@gmail.com';
+
+If the partition is
+
+0: use this ip to access is 52.221.60.235
+
+1: use this ip to access is 52.23.219.76
+
+3: use this ip to access is 52.221.205.155
+
+
+login into ssh
+server ip: 52.221.60.235
+username: junril
+password: junril123
+
+
+next is to locate the morfix directory
+If the partition is
+
+0: type=> cd /var/www/app on ssh terminal
+
+1: type=> cd /home/root/morfix
+ on ssh terminal
+3: type=> cd /home/root/morfix on ssh terminal
+For 1 & 3 use sudo if you don't have enough permissions
+
+and then 
+php artisan interaction:follow ig <affected_instagram_username>
+

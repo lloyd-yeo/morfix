@@ -12,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'stripe/*', 'legacy/*', '/settings/cards/update', 'webhooks/*', 'subscribe/*', 'paypal/*'
+        'stripe/*', 'legacy/*', '/settings/cards/update', 'webhooks/*','webhook/*','subscribe/*','paypal/*'
     ];
 }
