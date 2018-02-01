@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Log;
-class WebhookController extends Controller
+class CancellationSubscriptionWebhook extends Controller
 {
     /**
      * Handle a Braintree webhook.
@@ -16,8 +16,7 @@ class WebhookController extends Controller
      */
     public function handleDisputeOpened(Request $request)
     {
-        $payload = json_decode($request->getContent(), true);
-
-        return new Response($payload, 200);
+        $payload = $request->all();
+        echo $payload;
     }
 }
