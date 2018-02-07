@@ -38,5 +38,10 @@ return [
     'telegram-bot-api' => [
         'token' => env('TELEGRAM_BOT_TOKEN', '303341867:AAE2-clHpaED7Ac_HxJ8oRzg7mMvFlHcnBo')
     ],
-
+    'braintree' => [
+        'env' => env('BRAINTREE_ENV'),
+        'merchant_id' => env('BRAINTREE_MERCHANT_ID'),
+        'key' => env('BRAINTREE_KEY'),
+        'secret' => env('BRAINTREE_SECRET'),
+        ],
 ];
