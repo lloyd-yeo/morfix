@@ -185,7 +185,7 @@ class SettingsController extends Controller
             foreach ($braintree as $braintree_cancel) {
                 $braintree_cancel->status = 'Canceled';
                 $braintree_cancel->save();
-                Braintree_Subscription::cancel($braintree_cancel->subscription_id);
+                dump(Braintree_Subscription::cancel($braintree_cancel->subscription_id));
             }
 
         } elseif($user_to_cancel->paypal == 1) {
