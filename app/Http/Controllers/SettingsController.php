@@ -170,7 +170,7 @@ class SettingsController extends Controller
         $feedback->save();
 
 
-        if(is_null(Auth::user()->braintree_id)) {
+        if(!is_null(Auth::user()->braintree_id)) {
             //cancel braintree transaction
 
             Braintree_Configuration::environment('production');

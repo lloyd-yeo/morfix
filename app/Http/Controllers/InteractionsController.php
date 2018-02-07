@@ -60,18 +60,20 @@ class InteractionsController extends Controller {
         $follows_done = 0;
         $unfollows_done = 0;
         
-        $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
-        $comments_done = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
-        $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();
-        $unfollows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)->count();
-        
+
         $likes_done_today = 0;
         $comments_done_today = 0;
         $follows_done_today = 0;
         $unfollows_done_today = 0;
         
-        if (Auth::user()->partition === 0) { 
-            $likes_done_today = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
+        if (Auth::user()->partition === 0) {
+
+	        $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
+	        $comments_done = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
+	        $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();
+	        $unfollows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)->count();
+
+	        $likes_done_today = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
                     ->whereDate('date_liked', '=', Carbon::today()->toDateString())
                     ->count();
             $comments_done_today = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
@@ -108,6 +110,7 @@ class InteractionsController extends Controller {
         $comments = \App\InstagramProfileComment::where("insta_username", $ig_profile->insta_username)->get();
         $target_usernames = \App\InstagramProfileTargetUsername::where("insta_username", $ig_profile->insta_username)->get();
         $target_hashtags = \App\InstagramProfileTargetHashtag::where("insta_username", $ig_profile->insta_username)->get();
+
         return view('interactionsettings', [
             'ig_profile' => $ig_profile,
             'user_ig_comments' => $comments,
