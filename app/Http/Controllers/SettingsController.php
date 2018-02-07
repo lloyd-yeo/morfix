@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BraintreeSubscription;
 use App\PaymentLog;
 use App\StripeActiveSubscription;
 use App\StripeDetail;
@@ -178,12 +179,15 @@ class SettingsController extends Controller
             Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
             Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
             $braintree_id = Auth::user()->braintree_id;
-            $braintree = Braintree_Subscription::where('braintree_id', $braintree_id)->get();
+	        $braintree = BraintreeSubscription::where('braintree_id', $braintree_id)->get();
+//            $braintree = Braintree_Subscription::where('braintree_id', $braintree_id)->get();
+
             foreach ($braintree as $braintree_cancel) {
                 $braintree_cancel->status = 'Canceled';
                 $braintree_cancel->save();
                 Braintree_Subscription::cancel($braintree_cancel->subscription_id);
             }
+
         } elseif($user_to_cancel->paypal == 1) {
             //if paypal user
             $paypal_charges = PaypalCharges::where('email', Auth::user()->email)->get();
