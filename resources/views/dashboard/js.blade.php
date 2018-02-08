@@ -224,8 +224,11 @@ setInterval(function(){
                     $("#challenge-url").attr("href", data.challenge_url);
                     $("#challenge-url").html(data.challenge_url);
 			    }
-			    if (data.working_on == 4) {
 
+			    if (data.working_on == 5) {
+                    jQuery('#modal-addprofile').modal('hide');
+                    localStorage.setItem("status", 'Profile successfully added!');
+                    location.reload(true);
                 }
 			} else {
                 $("#waiting-message").show();
