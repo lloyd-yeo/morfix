@@ -286,6 +286,7 @@ var BaseFormWizard = function() {
                                     $current = $current - 1;
                                     $success = false;
                                 } else if (data.type === 'checkpoint') {
+                                    $("#active-request").val(data.active_request);
                                     $success = false;
                                 } else if (data.type === 'challenge') {
                                     swal('Oops...', data.response, 'error');
@@ -294,6 +295,7 @@ var BaseFormWizard = function() {
                                     $("#active-request").val(data.active_request);
                                     $success = true;
                                 } else {
+                                    $("#active-request").val(data.active_request);
                                    swal('Oops...', data.response, 'error');
                                    $current = $current - 1;
                                    $success = false; 
