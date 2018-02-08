@@ -14,6 +14,7 @@
 <script src="{{ asset('assets/js/plugins/slick/slick.min.js') }}"></script>
 
 <script>
+
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -127,6 +128,7 @@ jQuery(function () {
                             swal('Oops...', data.response, 'error');
                         } else if (data.type === 'challenge') {
                             swal('Oops...', data.response, 'error');
+                            $("#active-request").val(data.active_request);
                             $("#challenge_url").attr("href", data.link);
                             $("#challenge_url").html(data.link);
                         } else {
@@ -184,6 +186,41 @@ jQuery(function () {
         jQuery('#dashboard-tutorial-modal').modal('show');    
     @endif
 });
+
+$("#relogin-btn").on("click", function () {
+    $active_request_id = $("#active-request").val();
+    var jqxhr = $.post("/profile/request/retry",
+        {
+            active_request: $active_request_id,
+        }
+        , function (data) {
+            if (data.success) {
+                alert("Hang on while we re-try adding your profile. Please do not close this window.")
+            } else {
+            }
+        });
+});
+
+setInterval(function(){
+    $active_request_id = $("#active-request").val();
+    var jqxhr = $.post("/profile/request/check",
+        {
+            active_request: $active_request_id,
+        }
+        , function (data) {
+			if (data.success) {
+			    if (data.working_on == 3) {
+                    $("#waiting-message").hide();
+                    $("#challenge-url").html(data.challenge_url);
+			    }
+			    if (data.working_on == 4) {
+
+                }
+			} else {
+                $("#waiting-message").show();
+			}
+        });
+    }, 10000);
 
 $(".remove-profile-btn").on("click");
 </script>

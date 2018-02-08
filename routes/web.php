@@ -103,6 +103,9 @@ Route::post('/settings/cards/update', 'SettingsController@updateCreditCard');
 Route::post('/settings/address/update', 'SettingsController@updateAddressCard');
 Route::post('/cancel-subscription', 'SettingsController@cancelUserSubscription');
 
+Route::post('/profile/request/check', 'InstagramProfileController@pollActiveProfileRequest');
+Route::post('/profile/request/retry', 'InstagramProfileController@retryActiveProfileRequest');
+
 #Route::get('/faq', 'FaqController@index');
 Route::get('/faq', 'FaqController@topic');
 Route::get('/faq/{topic}', 'FaqController@listQuestions');

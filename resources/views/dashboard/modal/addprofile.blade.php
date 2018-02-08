@@ -1,5 +1,6 @@
 <!-- Add Instagram Profile Modal -->
 <div class="modal fade" id="modal-addprofile" tabindex="-1" role="dialog" aria-hidden="true">
+    <input type="hidden" id="active-request">
     <div class="modal-dialog modal-dialog-popin modal-lg">
         <div class="modal-content">
             <div class="block block-themed block-transparent remove-margin-b">
@@ -73,6 +74,9 @@
 
                                                     <center><h4 class='push'>3. Give us a tentative time that we can contact you</h4></center>
 
+                                                    <center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>
+                                                    <center>Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" id="challenge-url"></a></center>
+                                                    <center><h4 id="confirm-verify" class='push' style="display:none;">Once you are done please click this button: <button class="btn btn-success" id="relogin-btn">Retry</button></h4></center>
                                                 </div>
                                             </div>
                                         </div>

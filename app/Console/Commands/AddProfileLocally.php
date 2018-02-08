@@ -39,11 +39,25 @@ class AddProfileLocally extends Command
     public function handle()
     {
         while (TRUE){
-	        $add_profile_requests = AddProfileRequest::where('working_on', 0)->get();
-	        foreach ($add_profile_requests as $add_profile_request) {
 
-		        $add_profile_request->working_on = 1;
-		        $add_profile_request->save();
+        	//0 means it is a new request.
+	        //1 means it is being worked on.
+	        //2 means it has a challenge_url.
+	        //3 means it has a challenge_url & the challenge_url has already been sent to the user.
+	        //4 means it has been cleared of challenge_url & should be re-attempted
+			//6 means it is currently being attempted after clearing the challenge.
+	        $add_profile_requests = AddProfileRequest::where('working_on', 0)
+	                                                 ->orWhere('working_on', 4)
+	                                                 ->get();
+	        foreach ($add_profile_requests as $add_profile_request) {
+				if ($add_profile_request->working_on == 0) {
+					$add_profile_request->working_on = 1;
+					$add_profile_request->save();
+				} else if ($add_profile_request->working_on == 4) {
+					$add_profile_request->working_on = 6;
+					$add_profile_request->save();
+				}
+
 
 		        $this->call('ig:login', [
 			        'ig_username' => $add_profile_request->insta_username,
