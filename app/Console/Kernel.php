@@ -96,6 +96,7 @@ class Kernel extends ConsoleKernel {
         Commands\CombinePayoutCSV::class,
         Commands\GetAllStripeInvoice::class,
         Commands\GetAllStripeInvoiceCharges::class,
+        Commands\AddProfileLocally::class,
     ];
 
     /**
