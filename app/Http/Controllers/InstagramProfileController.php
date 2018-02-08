@@ -176,15 +176,16 @@ class InstagramProfileController extends Controller
 		catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 			$profile_log->error_msg = $challenge_required_ex->getMessage();
 			$profile_log->save();
-
+			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
 			$new_add_profile_requests = new AddProfileRequest;
 			$new_add_profile_requests->insta_username = $ig_username;
 			$new_add_profile_requests->insta_pw       = $ig_password;
 			$new_add_profile_requests->assignee = 0;
 			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
+//			$new_add_profile_requests->challenge_url = $challenge_url;
 			$new_add_profile_requests->save();
 
-			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
+
 			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url, 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {

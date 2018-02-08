@@ -217,6 +217,7 @@ setInterval(function(){
 			    if (data.working_on == 3) {
                     $("#waiting-message").hide();
                     $("#verify-message").show();
+                    $("#challenge-url").attr("href", data.challenge_url);
                     $("#challenge-url").html(data.challenge_url);
 			    }
 			    if (data.working_on == 4) {

@@ -75,7 +75,7 @@
                                                     <center><h4 class='push'>3. Give us a tentative time that we can contact you</h4></center>
 
                                                     <center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>
-                                                    <center><h4 id="verify-message" class='push' style="display:none;" >Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" id="challenge-url"></a></h4></center>
+                                                    <center><h4 id="verify-message" class='push' style="display:none;" >Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" style="font-size: 11px;" target="_blank" id="challenge-url"></a></h4></center>
                                                     <center><h4 id="confirm-verify" class='push' style="display:none;">Once you are done please click this button: <button class="btn btn-success" id="relogin-btn">Retry</button></h4></center>
                                                 </div>
                                             </div>
