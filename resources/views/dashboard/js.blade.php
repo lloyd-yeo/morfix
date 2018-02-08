@@ -205,6 +205,10 @@ $("#relogin-btn").on("click", function () {
         });
 });
 
+$("#challenge-url").on("click", function(){
+	$("#confirm-verify").show();
+});
+
 setInterval(function(){
     $active_request_id = $("#active-request").val();
 
