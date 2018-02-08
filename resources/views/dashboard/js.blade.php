@@ -117,11 +117,14 @@ jQuery(function () {
                     'ig-password': $igPassword
                 },
                 success: function (data) {
+                    console.log(data);
+
                     if (data.success === true) {
                         jQuery('#modal-addprofile').modal('hide');
                         localStorage.setItem("status", data.response);
                         location.reload(true);
                     } else {
+                        console.log(data.type)
                         if (data.type == 'ig_added') {
                             swal('Oops...', data.response, 'error');
                         } else if (data.type == 'checkpoint') {
@@ -130,8 +133,8 @@ jQuery(function () {
                             swal('Oops...', data.response, 'error');
                             console.log(data.active_request);
                             $("#active-request").val(data.active_request);
-                            $("#challenge_url").attr("href", data.link);
-                            $("#challenge_url").html(data.link);
+//                            $("#challenge-url").attr("href", data.link);
+//                            $("#challenge-url").html(data.link);
                         } else {
                            swal('Oops...', data.response, 'error');
                         }
@@ -204,6 +207,7 @@ $("#relogin-btn").on("click", function () {
 
 setInterval(function(){
     $active_request_id = $("#active-request").val();
+
     var jqxhr = $.post("/profile/request/check",
         {
             active_request: $active_request_id,
@@ -212,6 +216,7 @@ setInterval(function(){
 			if (data.success) {
 			    if (data.working_on == 3) {
                     $("#waiting-message").hide();
+                    $("#verify-message").show();
                     $("#challenge-url").html(data.challenge_url);
 			    }
 			    if (data.working_on == 4) {
