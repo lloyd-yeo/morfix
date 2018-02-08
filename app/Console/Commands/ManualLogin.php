@@ -66,8 +66,9 @@ class ManualLogin extends Command {
             dump($instagram->login($ig_username, $ig_password));
             dump($instagram->timeline->getSelfUserFeed());
         } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
-	        $challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
 
+        	$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
+	        $add_profile_request->challenge_url = $challenge_url;
 	        $add_profile_request->working_on = 2;
 	        $add_profile_request->save();
 

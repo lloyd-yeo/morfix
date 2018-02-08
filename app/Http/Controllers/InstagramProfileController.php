@@ -143,7 +143,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->assignee = 0;
 			$new_add_profile_requests->save();
 
-			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required" ]);
+			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required", 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
@@ -168,7 +168,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->save();
 
 			//            dump($endpoint_ex);
-			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage() ]);
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage(), 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 			$profile_log->error_msg = $challenge_required_ex->getMessage();
@@ -181,7 +181,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->save();
 
 			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
-			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url ]);
+			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url, 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
