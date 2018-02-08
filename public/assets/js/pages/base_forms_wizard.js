@@ -289,8 +289,9 @@ var BaseFormWizard = function() {
                                     $success = false;
                                 } else if (data.type === 'challenge') {
                                     swal('Oops...', data.response, 'error');
-                                    $("#challenge_url").attr("href", data.link);
-                                    $("#challenge_url").html(data.link);
+                                    // $("#challenge_url").attr("href", data.link);
+                                    // $("#challenge_url").html(data.link);
+                                    $("#active-request").val(data.active_request);
                                     $success = true;
                                 } else {
                                    swal('Oops...', data.response, 'error');
