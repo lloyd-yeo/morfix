@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\AddProfileRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\Instagram as Instagram;
@@ -20,7 +21,7 @@ class ManualLogin extends Command {
      *
      * @var string
      */
-    protected $signature = 'ig:login {ig_username} {ig_password} {proxy?}';
+    protected $signature = 'ig:login {ig_username} {ig_password} {add_profile_request_id} {proxy?}';
 
     /**
      * The console command description.
@@ -46,7 +47,7 @@ class ManualLogin extends Command {
     public function handle() {
         $ig_username = $this->argument("ig_username");
         $ig_password = $this->argument("ig_password");
-
+	    $add_profile_request = AddProfileRequest::where('id', $this->argument("add_profile_request_id"))->first();
 	    $instagram = InstagramHelper::initInstagram();
 
 	    $proxy = NULL;
@@ -62,13 +63,15 @@ class ManualLogin extends Command {
         $this->line($ig_username . " " . $ig_password);
 
         try {
-            #$explorer_response = $instagram->login($ig_username, $ig_password);
-//            dd($explorer_response);
             dump($instagram->login($ig_username, $ig_password));
             dump($instagram->timeline->getSelfUserFeed());
         } catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 	        $challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
-			dump($challenge_url);
+
+	        $add_profile_request->working_on = 2;
+	        $add_profile_request->save();
+
+	        dump($challenge_url);
         } catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
             dump($emptyresponse_ex);
         } catch (\InstagramAPI\Exception\InstagramException $instagramException) {
