@@ -285,17 +285,17 @@ var BaseFormWizard = function() {
                                     swal('Oops...', data.response, 'error');
                                     $current = $current - 1;
                                     $success = false;
-                                } else if (data.type === 'checkpoint') {
+                                } else if (data.type == 'checkpoint') {
                                     $("#active-request").val(data.active_request);
                                     $success = false;
-                                } else if (data.type === 'challenge') {
+                                } else if (data.type == 'challenge') {
                                     swal('Oops...', data.response, 'error');
                                     // $("#challenge_url").attr("href", data.link);
                                     // $("#challenge_url").html(data.link);
                                     $("#active-request").val(data.active_request);
                                     $success = true;
                                 } else {
-                                    $("#active-request").val(data.active_request);
+                                   $("#active-request").val(data.active_request);
                                    swal('Oops...', data.response, 'error');
                                    $current = $current - 1;
                                    $success = false; 
