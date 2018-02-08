@@ -141,7 +141,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->insta_username = $ig_username;
 			$new_add_profile_requests->insta_pw       = $ig_password;
 			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->id;
+			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 			$new_add_profile_requests->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required", 'active_request' => $new_add_profile_requests->id ]);
@@ -154,7 +154,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->insta_username = $ig_username;
 			$new_add_profile_requests->insta_pw       = $ig_password;
 			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->id;
+			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 			$new_add_profile_requests->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
@@ -167,7 +167,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->insta_username = $ig_username;
 			$new_add_profile_requests->insta_pw       = $ig_password;
 			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->id;
+			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 			$new_add_profile_requests->save();
 
 			//            dump($endpoint_ex);
@@ -181,7 +181,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->insta_username = $ig_username;
 			$new_add_profile_requests->insta_pw       = $ig_password;
 			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->id;
+			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 			$new_add_profile_requests->save();
 
 			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
