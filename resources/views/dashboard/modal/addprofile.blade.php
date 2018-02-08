@@ -64,15 +64,15 @@
                                             <div class="form-material">
                                                 <div class='block'>
                                                     <center><h1 class='push text-modern'><i class='fa fa-info-circle'></i> Verification Required</h1></center>
-                                                    <p class='lead'>
-                                                        Morfix is unable to link-up your profile because of additional verification required from Instagram.
-                                                        To solve this, approach live chat with the following details::
-                                                    </p>
-                                                    <center><h4 class='push'>1. Morfix email</h4></center>
+                                                    {{--<p class='lead'>--}}
+                                                        {{--Morfix is unable to link-up your profile because of additional verification required from Instagram.--}}
+                                                        {{--To solve this, approach live chat with the following details::--}}
+                                                    {{--</p>--}}
+                                                    {{--<center><h4 class='push'>1. Morfix email</h4></center>--}}
 
-                                                    <center><h4 class='push'>2. Instagram username</h4></center>
+                                                    {{--<center><h4 class='push'>2. Instagram username</h4></center>--}}
 
-                                                    <center><h4 class='push'>3. Give us a tentative time that we can contact you</h4></center>
+                                                    {{--<center><h4 class='push'>3. Give us a tentative time that we can contact you</h4></center>--}}
 
                                                     <center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>
                                                     <center><h4 id="verify-message" class='push' style="display:none;" >Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" style="font-size: 11px;" target="_blank" id="challenge-url"></a></h4></center>
