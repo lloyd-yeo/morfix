@@ -119,9 +119,11 @@ class RefreshTierStatus extends Command
 							} else if ($plan == "MX970") {
 								$user_tier = $user_tier + 20;
 							} else if ($plan == "0167") {
-								$user_tier = $user_tier + 11;
+								$user_tier = $user_tier + 12;
 							} else if ($plan == "0197") {
 								$user_tier = $user_tier + 11;
+							} else if ($plan == "0297") {
+								$user_tier = $user_tier + 12;
 							}
 						}
 					}

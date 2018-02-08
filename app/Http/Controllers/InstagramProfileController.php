@@ -8,6 +8,7 @@ use App\InstagramHelper;
 use App\InstagramProfile;
 use App\Proxy;
 use App\User;
+use App\AddProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -136,11 +137,23 @@ class InstagramProfileController extends Controller
 			$profile_log->error_msg = $checkpt_ex->getMessage();
 			$profile_log->save();
 
+			$new_add_profile_requests = new AddProfileRequest;
+			$new_add_profile_requests->insta_username = $ig_username;
+			$new_add_profile_requests->insta_pw       = $ig_password;
+			$new_add_profile_requests->assignee = 0;
+			$new_add_profile_requests->save();
+
 			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required" ]);
 		}
 		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
+
+			$new_add_profile_requests = new AddProfileRequest;
+			$new_add_profile_requests->insta_username = $ig_username;
+			$new_add_profile_requests->insta_pw       = $ig_password;
+			$new_add_profile_requests->assignee = 0;
+			$new_add_profile_requests->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
 		}
@@ -148,12 +161,25 @@ class InstagramProfileController extends Controller
 			$profile_log->error_msg = $endpoint_ex->getMessage();
 			$profile_log->save();
 
+			$new_add_profile_requests = new AddProfileRequest;
+			$new_add_profile_requests->insta_username = $ig_username;
+			$new_add_profile_requests->insta_pw       = $ig_password;
+			$new_add_profile_requests->assignee = 0;
+			$new_add_profile_requests->save();
+
 			//            dump($endpoint_ex);
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage() ]);
 		}
 		catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 			$profile_log->error_msg = $challenge_required_ex->getMessage();
 			$profile_log->save();
+
+			$new_add_profile_requests = new AddProfileRequest;
+			$new_add_profile_requests->insta_username = $ig_username;
+			$new_add_profile_requests->insta_pw       = $ig_password;
+			$new_add_profile_requests->assignee = 0;
+			$new_add_profile_requests->save();
+
 			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
 			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url ]);
 		}
