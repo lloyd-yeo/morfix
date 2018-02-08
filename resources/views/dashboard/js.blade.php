@@ -122,12 +122,13 @@ jQuery(function () {
                         localStorage.setItem("status", data.response);
                         location.reload(true);
                     } else {
-                        if (data.type === 'ig_added') {
+                        if (data.type == 'ig_added') {
                             swal('Oops...', data.response, 'error');
-                        } else if (data.type === 'checkpoint') {
+                        } else if (data.type == 'checkpoint') {
                             swal('Oops...', data.response, 'error');
-                        } else if (data.type === 'challenge') {
+                        } else if (data.type == 'challenge') {
                             swal('Oops...', data.response, 'error');
+                            console.log(data.active_request);
                             $("#active-request").val(data.active_request);
                             $("#challenge_url").attr("href", data.link);
                             $("#challenge_url").html(data.link);
