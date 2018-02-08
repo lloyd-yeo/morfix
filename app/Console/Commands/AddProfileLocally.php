@@ -38,9 +38,10 @@ class AddProfileLocally extends Command
      */
     public function handle()
     {
-        while(TRUE){
+        while (TRUE){
 	        $add_profile_requests = AddProfileRequest::where('working_on', 0)->get();
 	        foreach ($add_profile_requests as $add_profile_request) {
+
 		        $add_profile_request->working_on = 1;
 		        $add_profile_request->save();
 
