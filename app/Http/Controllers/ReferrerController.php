@@ -60,6 +60,9 @@ class ReferrerController extends Controller {
 	        case "mlmvsl":
 		        return redirect('mlm');
 	        	break;
+	        case "mlm":
+		        return redirect('mlm');
+		        break;
 	        case "online":
 		        return redirect('online');
 	        	break;

@@ -184,6 +184,7 @@ Route::get('/online-sales-pro', 'FunnelsController@ospVsl');
 Route::get('/make-money-online', 'FunnelsController@mmoVsl');
 Route::get('/tool', 'FunnelsController@toolVsl');
 Route::get('/mlm', 'FunnelsController@mlmVsl');
+Route::get('/mlmvsl', 'FunnelsController@mlmVsl');
 
 /**
  * Funnel Purchase Pages
