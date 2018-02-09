@@ -454,7 +454,7 @@ class InstagramProfileController extends Controller
 			]);
 		} else if ($profile_request_id->working_on == 5) {
 			$working_on = 5;
-			$profile_request_id->delete();
+			$profile_request_id->destroy();
 			$request->session()->forget('active_request');
 			return response()->json([
 				'working_on' => $working_on,
@@ -471,7 +471,7 @@ class InstagramProfileController extends Controller
 		$profile_request_id = session('active_request');
 		$profile_request_id->working_on = 4;
 		if ($profile_request_id->save()) {
-			session(['active_request' => $new_add_profile_requests]);
+			session(['active_request' => $profile_request_id]);
 			return response()->json([
 				'success' => TRUE,
 			]);
