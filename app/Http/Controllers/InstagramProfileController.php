@@ -143,7 +143,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->assignee = 0;
 			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 			$new_add_profile_requests->save();
-
+			session(['active_request' => $new_add_profile_requests]);
 			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required", 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
@@ -156,6 +156,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->assignee = 0;
 			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 			$new_add_profile_requests->save();
+			session(['active_request' => $new_add_profile_requests]);
 
 			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
 		}
@@ -169,7 +170,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->assignee = 0;
 			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 			$new_add_profile_requests->save();
-
+			session(['active_request' => $new_add_profile_requests]);
 			//            dump($endpoint_ex);
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage(), 'active_request' => $new_add_profile_requests->id ]);
 		}
@@ -184,7 +185,7 @@ class InstagramProfileController extends Controller
 			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
 //			$new_add_profile_requests->challenge_url = $challenge_url;
 			$new_add_profile_requests->save();
-
+			session(['active_request' => $new_add_profile_requests]);
 
 			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url, 'active_request' => $new_add_profile_requests->id ]);
 		}
@@ -440,7 +441,9 @@ class InstagramProfileController extends Controller
 	}
 
 	public function pollActiveProfileRequest(Request $request) {
-		$profile_request_id = AddProfileRequest::where('id', $request->input('active_request'))->first();
+		$profile_request_id = session('active_request');
+		$profile_request_id = AddProfileRequest::where('id', $profile_request_id->id)
+		                                       ->first();
 		if ($profile_request_id->working_on == 2 && $profile_request_id->challenge_url != NULL) {
 			$profile_request_id->working_on = 3;
 			$profile_request_id->save();
@@ -452,6 +455,7 @@ class InstagramProfileController extends Controller
 		} else if ($profile_request_id->working_on == 5) {
 			$working_on = 5;
 			$profile_request_id->delete();
+			$request->session()->forget('active_request');
 			return response()->json([
 				'working_on' => $working_on,
 				'success' => TRUE,
@@ -464,9 +468,10 @@ class InstagramProfileController extends Controller
 	}
 
 	public function retryActiveProfileRequest(Request $request) {
-		$profile_request_id = AddProfileRequest::where('id', $request->input('active_request'))->first();
+		$profile_request_id = session('active_request');
 		$profile_request_id->working_on = 4;
 		if ($profile_request_id->save()) {
+			session(['active_request' => $new_add_profile_requests]);
 			return response()->json([
 				'success' => TRUE,
 			]);

@@ -97,6 +97,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetAllStripeInvoice::class,
         Commands\GetAllStripeInvoiceCharges::class,
         Commands\AddProfileLocally::class,
+        Commands\ManualLoginPrevious::class,
     ];
 
     /**
