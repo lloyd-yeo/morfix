@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel {
      * @var array
      */
     protected $commands = [
+        Commands\GeoTargetingTester::class,
         Commands\ImportInstagramSession::class,
         Commands\CheckInteractionsWorking::class,
         Commands\CheckProfileAdded::class,
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel {
         Commands\InteractionComment::class,
         Commands\InteractionFollow::class,
         Commands\InteractionLike::class,
+        Commands\InteractionLikeWithLocation::class,
         Commands\UnbanInteraction::class,
         Commands\EngagementGroup::class,
         Commands\InvalidateEngagementJob::class,
