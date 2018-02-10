@@ -48,7 +48,6 @@ class NewPremiumAffiliate extends Mailable
 
 		return $this->view('email.affiliate.premium')
 			->subject($subject)
-			->bcc("admin@morfix.co", "Morfix")
 			->with([ 'referrer_name'  => $this->referrer->name,
 			         'referred_email' => $this->referred->email ]);
 	}

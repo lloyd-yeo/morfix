@@ -38,8 +38,8 @@ class SendPremiumAffiliateEmail extends Command {
      * @return mixed
      */
     public function handle() {
-        $referrer = User::where('email', 'l-ywz@hotmail.com')->first();
-        $referred = User::where('email', 'rongronggg@gmail.com')->first();
+        $referrer = User::where('email', 'yuanjie1@live.com.sg')->first();
+        $referred = User::where('email', 'Tylernelsen@gmail.com')->first();
         Mail::to($referrer->email)->send(new NewPremiumAffiliate($referrer, $referred));
     }
 

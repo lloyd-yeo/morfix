@@ -6,6 +6,7 @@ use App\InstagramHelper;
 use Illuminate\Console\Command;
 use App\InstagramProfile;
 use App\User;
+use InstagramAPI\Signatures;
 
 class GeoTargetingTester extends Command
 {
@@ -48,9 +49,13 @@ class GeoTargetingTester extends Command
 
         $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 
-        $locations = $instagram->location->search(1.3558838980676, 103.9875301122);
-        dump($locations);
-
+        $locations = $instagram->location->search(0, 0, 'Singapore');
+	    dump($locations);
+	    $rankToken = \InstagramAPI\Signatures::generateUUID();
+        $feed = $instagram->location->getFeed('105565836144069', $rankToken, null);
+        dump($feed);
+//        $locations = $instagram->location->getFeed()
+//        dump($locations);
 
     }
 

@@ -28,7 +28,6 @@ class Kernel extends ConsoleKernel {
         Commands\InteractionComment::class,
         Commands\InteractionFollow::class,
         Commands\InteractionLike::class,
-        Commands\InteractionLikeWithLocation::class,
         Commands\UnbanInteraction::class,
         Commands\EngagementGroup::class,
         Commands\InvalidateEngagementJob::class,

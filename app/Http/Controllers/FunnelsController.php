@@ -402,7 +402,6 @@ class FunnelsController extends Controller
 
     public function ebookVsl(Request $request)
     {
-
         $consumerKey = "AkAxBcK3kI1q0yEfgw4R4c77";
         $consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
 
