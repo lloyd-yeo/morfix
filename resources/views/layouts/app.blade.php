@@ -120,25 +120,25 @@
             switch($user_plan) {
                 case("1"):
                     $user_plan = "Free Trial";
-                    break
+                    break;
                 case(2):
                     $user_plan = "Premium";
-                    break
+                    break;
                 case(3):
                     $user_plan = "Pro";
-                    break
+                    break;
                 case(12):
                     $user_plan = "Business";
-                    break
+                    break;
                 case(13):
                     $user_plan = "Pro and Business";
-                    break
+                    break;
                 case(22):
                     $user_plan = "Mastermind and Premium";
-                    break
+                    break;
                 case(23):
                     $user_plan = "Mastermind and Pro";
-                    break
+                    break;
                 default:
                     $user_plan = "Not Available";
             }
