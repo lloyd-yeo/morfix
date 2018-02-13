@@ -115,31 +115,31 @@
         <!-- END Page Container -->
         @include('layouts.modal')
         @include('payment.modal')
-        <script>
-            @switch("{{Auth::user()->tier}}")
-                @case(1)
-                    $user_plan = "Free Trial";
-                    @break
-                @case(2)
-                    $user_plan = "Premium";
-                    @break
-                @case(3)
-                    $user_plan = "Pro";
-                    @break
-                @case(12)
-                    $user_plan = "Business";
-                    @break
-                @case(13)
-                    $user_plan = "Pro and Business";
-                    @break
-                @case(22)
-                    $user_plan = "Mastermind and Premium";
-                    @break
-                @case(23)
-                    $user_plan = "Mastermind and Pro";
-                    @break
-            @endswitch
-        </script>
+<!--        <script>-->
+<!--            @switch("{{Auth::user()->tier}}")-->
+<!--                @case(1)-->
+<!--                    $user_plan = "Free Trial";-->
+<!--                    @break-->
+<!--                @case(2)-->
+<!--                    $user_plan = "Premium";-->
+<!--                    @break-->
+<!--                @case(3)-->
+<!--                    $user_plan = "Pro";-->
+<!--                    @break-->
+<!--                @case(12)-->
+<!--                    $user_plan = "Business";-->
+<!--                    @break-->
+<!--                @case(13)-->
+<!--                    $user_plan = "Pro and Business";-->
+<!--                    @break-->
+<!--                @case(22)-->
+<!--                    $user_plan = "Mastermind and Premium";-->
+<!--                    @break-->
+<!--                @case(23)-->
+<!--                    $user_plan = "Mastermind and Pro";-->
+<!--                    @break-->
+<!--            @endswitch-->
+<!--        </script>-->
 <!--        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
         <script>
             window.intercomSettings = {
