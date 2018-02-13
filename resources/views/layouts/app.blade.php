@@ -115,8 +115,8 @@
         <!-- END Page Container -->
         @include('layouts.modal')
         @include('payment.modal')
+<!--        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
         <script>
-            $user_plan = "";
             switch(Auth::user()->tier)
                 case(1)
                     $user_plan = "Free Trial";
@@ -140,9 +140,7 @@
                     $user_plan = "Mastermind and Pro";
                     break
             endswitch
-        </script>
-<!--        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
-        <script>
+
             window.intercomSettings = {
                 app_id: "z0e5hzb8",
                 name: "{{ Auth::user()->name }}", // Full name
