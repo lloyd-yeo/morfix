@@ -116,9 +116,9 @@
         @include('layouts.modal')
         @include('payment.modal')
         <script>
-            var $user_plan = "{{ Auth::user()->tier }}";
+            var $user_plan = {{ Auth::user()->tier }};
             switch($user_plan) {
-                case("1"):
+                case(1):
                     $user_plan = "Free Trial";
                     break;
                 case(2):
