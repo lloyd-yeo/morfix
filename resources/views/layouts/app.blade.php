@@ -119,7 +119,9 @@
 <!--        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
         <script>
             window.intercomSettings = {
-                app_id: "z0e5hzb8"
+                app_id: "z0e5hzb8",
+                name: "{{ Auth::user()->name }}", // Full name
+                email: "{{ Auth::user()->email }}", // Email address
             };
         </script>
         <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/z0e5hzb8';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
