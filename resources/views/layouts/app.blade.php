@@ -40,16 +40,16 @@
         <!-- Web fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Montserrat:400,900|Raleway">
-        
+
         <!-- Page JS Plugins CSS -->
         @yield('css')
 
         <!-- Bootstrap and OneUI CSS framework -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/oneui.css') }}">
-        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/app.css') }}">    
+        <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/app.css') }}">
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!--<link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/modern.min.css') }}">--> 
+        <!--<link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/modern.min.css') }}">-->
         <!-- END Stylesheets -->
 
         <!-- Scripts -->
@@ -101,7 +101,7 @@
         <div id="page-loader"></div>
         <!--<div id="payment-loader" style='display:none;'></div>-->
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
-            
+
             @yield('sidebar')
 
             @include('header')
@@ -115,8 +115,14 @@
         <!-- END Page Container -->
         @include('layouts.modal')
         @include('payment.modal')
-        
-        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+
+<!--        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
+        <script>
+            window.intercomSettings = {
+                app_id: "z0e5hzb8"
+            };
+        </script>
+        <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/z0e5hzb8';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
         <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/jquery.slimscroll.min.js') }}"></script>
@@ -126,9 +132,9 @@
         <script src="{{ asset('assets/js/core/jquery.placeholder.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/js.cookie.min.js') }}"></script>
         <script src="{{ asset('assets/js/app.js') }}"></script>
-        
+
         @yield('js')
-        
+
         @include('payment.js')
     </body>
 
