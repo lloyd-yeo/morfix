@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!--[if IE 9]>         <html class="ie9 no-focus" lang="{{ config('app.locale') }}"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-focus" lang="{{ config('app.locale') }}"> <!--<![endif]-->
+[if IE 9]>         <html class="ie9 no-focus" lang="{{ config('app.locale') }}"> <![endif]
+[if gt IE 9]>> <html class="no-focus" lang="{{ config('app.locale') }}"> <![endif]
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- CSRF Token -->
+         CSRF Token 
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'Morfix') }}</title>
 
@@ -15,8 +15,8 @@
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <!-- Icons -->
-        <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+         Icons 
+         The following icons can be replaced with your own, they are used by desktop and mobile browsers 
         <link rel="shortcut icon" href="assets/img/favicons/favicon.png">
 
         <link rel="icon" type="image/png" href="assets/img/favicons/favicon-16x16.png" sizes="16x16">
@@ -34,25 +34,25 @@
         <link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicons/apple-touch-icon-144x144.png">
         <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicons/apple-touch-icon-152x152.png">
         <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicons/apple-touch-icon-180x180.png">
-        <!-- END Icons -->
+         END Icons 
 
-        <!-- Stylesheets -->
-        <!-- Web fonts -->
+         Stylesheets 
+         Web fonts 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,400i|Montserrat:400,900|Raleway">
 
-        <!-- Page JS Plugins CSS -->
+         Page JS Plugins CSS 
         @yield('css')
 
-        <!-- Bootstrap and OneUI CSS framework -->
+         Bootstrap and OneUI CSS framework 
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/oneui.css') }}">
         <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/app.css') }}">
-        <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
-        <!--<link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/modern.min.css') }}">-->
-        <!-- END Stylesheets -->
+         You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: 
+        <link rel="stylesheet" id="css-theme" href="{{ asset('assets/css/themes/modern.min.css') }}">
+         END Stylesheets 
 
-        <!-- Scripts -->
+         Scripts 
         <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
         <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
         <script>
@@ -80,7 +80,7 @@
             gtag('config', 'UA-88362519-1');
         </script>
 
-        <!-- Facebook Pixel Code -->
+         Facebook Pixel Code 
         <script>
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -95,63 +95,67 @@
         </script>
         <noscript><img height="1" width="1" style="display:none"
           src="https://www.facebook.com/tr?id=139115763368341&ev=PageView&noscript=1"/></noscript>
-        <!-- End Facebook Pixel Code -->
+         End Facebook Pixel Code 
     </head>
     <body>
         <div id="page-loader"></div>
-        <!--<div id="payment-loader" style='display:none;'></div>-->
+        <div id="payment-loader" style='display:none;'></div>
         <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
 
             @yield('sidebar')
 
             @include('header')
 
-            <!-- Main Container -->
+             Main Container 
             @yield('content')
-            <!-- END Main Container -->
+             END Main Container 
 
             @include('footer')
         </div>
-        <!-- END Page Container -->
+         END Page Container 
         @include('layouts.modal')
         @include('payment.modal')
-<!--        <script>-->
-<!--            var $user_plan = "";-->
-<!--            switch("{{ Auth::user()->tier }}")-->
-<!--                case("1")-->
-<!--                    $user_plan = "Free Trial";-->
-<!--                    break-->
-<!--                case(2)-->
-<!--                    $user_plan = "Premium";-->
-<!--                    break-->
-<!--                case(3)-->
-<!--                    $user_plan = "Pro";-->
-<!--                    break-->
-<!--                case(12)-->
-<!--                    $user_plan = "Business";-->
-<!--                    break-->
-<!--                case(13)-->
-<!--                    $user_plan = "Pro and Business";-->
-<!--                    break-->
-<!--                case(22)-->
-<!--                    $user_plan = "Mastermind and Premium";-->
-<!--                    break-->
-<!--                case(23)-->
-<!--                    $user_plan = "Mastermind and Pro";-->
-<!--                    break-->
-<!--            endswitch-->
-<!--        </script>-->
-<!--        <script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>-->
+        <script>
+            var $user_plan = "{{ Auth::user()->tier }}";
+            switch($user_plan) {
+                case("1"):
+                    $user_plan = "Free Trial";
+                    break
+                case(2):
+                    $user_plan = "Premium";
+                    break
+                case(3):
+                    $user_plan = "Pro";
+                    break
+                case(12):
+                    $user_plan = "Business";
+                    break
+                case(13):
+                    $user_plan = "Pro and Business";
+                    break
+                case(22):
+                    $user_plan = "Mastermind and Premium";
+                    break
+                case(23):
+                    $user_plan = "Mastermind and Pro";
+                    break
+                default:
+                    $user_plan = "Not Available";
+            }
+
+        </script>
+
+        {{--<script type="text/javascript">$crisp=[];CRISP_WEBSITE_ID="44a88397-d7f6-461d-b8e2-d2133395ac5c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.im/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>--}}
         <script>
             window.intercomSettings = {
                 app_id: "z0e5hzb8",
                 name: "{{ Auth::user()->name }}", // Full name
                 email: "{{ Auth::user()->email }}", // Email address
-                user_tier:"{{ Auth::user()->tier }}" // User Tier
+                user_tier: $user_plan, // User Tier
             };
         </script>
         <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/z0e5hzb8';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
-        <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+         OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js 
         <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/jquery.slimscroll.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/jquery.scrollLock.min.js') }}"></script>

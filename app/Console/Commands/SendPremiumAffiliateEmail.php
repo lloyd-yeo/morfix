@@ -14,7 +14,7 @@ class SendPremiumAffiliateEmail extends Command {
      *
      * @var string
      */
-    protected $signature = 'mail:affiliatepremium';
+    protected $signature = 'mail:affiliatepremium {referrer} {referred}';
 
     /**
      * The console command description.
@@ -38,8 +38,8 @@ class SendPremiumAffiliateEmail extends Command {
      * @return mixed
      */
     public function handle() {
-        $referrer = User::where('email', 'yuanjie1@live.com.sg')->first();
-        $referred = User::where('email', 'Tylernelsen@gmail.com')->first();
+        $referrer = User::where('email', $this->argument('referrer'))->first();
+        $referred = User::where('email', $this->argument('referred'))->first();
         Mail::to($referrer->email)->send(new NewPremiumAffiliate($referrer, $referred));
     }
 
