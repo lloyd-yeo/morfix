@@ -99,6 +99,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetAllStripeInvoiceCharges::class,
         Commands\AddProfileLocally::class,
         Commands\ManualLoginPrevious::class,
+        Commands\GetMonthlyDMUsers::class,
     ];
 
     /**

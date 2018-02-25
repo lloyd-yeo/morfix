@@ -56,10 +56,7 @@
         <script src="https://js.braintreegateway.com/web/dropin/1.8.1/js/dropin.min.js"></script>
         <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
         <script>
-            window.Laravel = {!! json_encode([
-                    'csrfToken' => csrf_token(),
-            ]) !!}
-            ;
+            window.Laravel = {!! json_encode([ 'csrfToken' => csrf_token(), ]) !!};
         </script>
         {{--<script>--}}
             {{--(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){--}}
