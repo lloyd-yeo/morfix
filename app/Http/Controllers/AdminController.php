@@ -220,26 +220,12 @@ class AdminController extends Controller
 
 				$user_affiliate->referred = $referred->id;
 				$user_affiliate->referrer = $referrer->id;
+
 				if ($user_affiliate->save()) {
 					return Response::json([ "success"  => TRUE,
 					                        'response' => "Successfully attached referral " . $referred->email . " to " . $referred->email . "!" ]);
 				}
 			} else {
-
-			}
-
-			$user = User::where('email', $request->input("email"))->first();
-			if ($user !== NULL) {
-
-				$exitCode = Artisan::call('interaction:follow', [
-					'email' => $request->input("email"),
-				]);
-
-				return Response::json([ "success"  => TRUE,
-				                        'response' => "Ran interaction:follow for " . $request->input('email') . "!" ]);
-
-			} else {
-
 				return Response::json([ "success"  => FALSE,
 				                        'response' => "User not found! Can't run anything." ]);
 			}
