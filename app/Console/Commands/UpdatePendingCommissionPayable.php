@@ -203,6 +203,7 @@ class UpdatePendingCommissionPayable extends Command
 							                                              ->where('created_at', '>=', $date_to_retrieve_invoices_from)
 							                                              ->where('created_at', '<=', $end_date)
 							                                              ->where('status', '!=', 'processor_declined')
+																			->where('status', '!=', 'voided')
 							                                              ->get();
 
 							foreach ($braintree_transactions as $braintree_transaction) {
