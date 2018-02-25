@@ -47,8 +47,8 @@ class UpdatePendingCommissionPayable extends Command
 	public function handle()
 	{
 		try {
-			$start_date = '2017-12-01 00:00:00';
-			$end_date   = '2017-12-31 23:59:59';
+			$start_date = '2018-01-01 00:00:00';
+			$end_date   = '2018-01-31 23:59:59';
 			$users      = User::where('tier', '>=', 2);
 			//		                  ->where('last_pay_out_date', '2017-12-25 00:00:00');
 
@@ -123,6 +123,15 @@ class UpdatePendingCommissionPayable extends Command
 													$pending_comms += 20;
 													$this->line($user->email . "," .
 														$affiliate->email . ",20," .
+														$stripe_charge->charge_id . "," .
+														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
+												}
+												break;
+											case '0197':
+												if ($user->tier > 1) {
+													$pending_comms += 40;
+													$this->line($user->email . "," .
+														$affiliate->email . ",40," .
 														$stripe_charge->charge_id . "," .
 														$stripe_invoice->invoice_id . ',' . $stripe_charge->charge_created . ",stripe");
 												}
