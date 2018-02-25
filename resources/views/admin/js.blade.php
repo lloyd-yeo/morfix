@@ -15,7 +15,20 @@ $.ajaxSetup({
 jQuery(function () {
     // Init page helpers (Select2 + Tags Inputs plugins)
     App.initHelpers(['select2', 'tags-inputs', 'slimscroll']);
-    
+
+    $("#attach-referrer-btn").on("click",function(){
+        var $referrer = $("#referrer-email").val();
+        var $referred = $("#referred-email").val();
+
+        $.post('/admin/referrer/add', { referrer: $referrer, referred: $referred }, function (data) {
+            if (data.success === true) {
+                alert(data.response);
+            } else {
+                alert(data.response);
+            }
+        },"json");
+    });
+
     $("#upgrade-tier-btn").on("click", function(){ 
         var $email = $("#upgrade-tier-email").val();
         var $tier = $("#upgrade-tier").val();

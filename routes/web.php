@@ -216,6 +216,8 @@ Route::get('/cancellation', function(){ return view('cancellation'); });
 Route::get('/mailer', function(){ return view('mailer'); });
 Route::post('/mailer/send/active', 'MassMailerController@sendEmailToActiveUsers');
 Route::post('/webhook/subscription/cancelled','CancellationSubscriptionWebhook@handleDisputeOpened');
+
+Route::post('/admin/referrer/add', 'AdminController@updateUserAffiliate');
 /**
  * Routes for creation of Paypal Subscription plans.
  */
