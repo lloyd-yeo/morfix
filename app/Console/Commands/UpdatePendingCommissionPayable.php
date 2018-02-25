@@ -55,6 +55,7 @@ class UpdatePendingCommissionPayable extends Command
 			if ($this->argument('email') != NULL) {
 				$users = $users->where('email', $this->argument('email'));
 			}
+
 			$users      = $users->get();
 			$user_comms = [];
 
