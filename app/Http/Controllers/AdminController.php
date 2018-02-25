@@ -213,14 +213,19 @@ class AdminController extends Controller
 				if ($user_affiliate != NULL) {
 					$this->logAdminActions(Auth::user()->email,
 						"ATTACH_REFERRAL_USER_UPDATE",
-						"Admin tried to run new referral attaching for & replacing: " . $referred . "'s referral from " . $user_affiliate->referrer . " to " . $referrer);
+						"Admin tried to run new referral attaching for & replacing: " . $referred->email . "'s referral from " . $user_affiliate->referrer . " to " . $referrer->id);
 				} else {
 					$user_affiliate = new UserAffiliates;
 				}
 
 				$user_affiliate->referred = $referred->id;
 				$user_affiliate->referrer = $referrer->id;
-				$user_affiliate->save();
+				if ($user_affiliate->save()) {
+					return Response::json([ "success"  => TRUE,
+					                        'response' => "Successfully attached referral " . $referred->email . " to " . $referred->email . "!" ]);
+				}
+			} else {
+
 			}
 
 			$user = User::where('email', $request->input("email"))->first();
