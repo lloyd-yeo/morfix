@@ -49,7 +49,8 @@
                                             <br/>
                                             Our support will then process to help you verify your account at the timing you choose.
                                             <br/>
-                                            WE'LL NOT BEGIN YOUR SUBSCRIPTION UNTIL YOUR FIRST PROFILE IS ADDED. So you do not have to worry about paying for time you didn't use. Thank you for choosing Morfix :)</p>
+                                            <b>WE'LL NOT BEGIN YOUR SUBSCRIPTION UNTIL YOUR FIRST PROFILE IS ADDED.</b>
+                                            <br/>So you do not have to worry about paying for time you didn't use. Thank you for choosing Morfix :)</p>
 
                                         </center>
                                     </div>
