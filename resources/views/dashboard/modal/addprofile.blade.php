@@ -87,7 +87,7 @@
                                                     <center>
                                                         <h4 class='push' style="font-size:12px;">1. Join our telegram group (if you do not have one, please create an account) below:</h4>
                                                         <br/>
-                                                        <a href="https://t.me/joinchat/Cm-Skw8JCqn7RfOKPH2SvA" target="_blank">https://t.me/joinchat/Cm-Skw8JCqn7RfOKPH2SvA</a>
+                                                        <a href="https://t.me/joinchat/Cm-Skw8JCqn7RfOKPH2SvA" target="_blank">https://t.me/joinchat/Cm-SkxHx3TVMokD27OfuJw</a>
                                                         <br/>
                                                     </center>
 
