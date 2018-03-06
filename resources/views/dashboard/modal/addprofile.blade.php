@@ -80,26 +80,26 @@
                                             <div class="form-material">
                                                 <div class='block'>
                                                     <center><h1 class='push text-modern'><i class='fa fa-info-circle'></i> Verification Required</h1></center>
-                                                    <p class='lead'>
+                                                    <p class='lead' style="font-size: 12px;">
                                                         Morfix is unable to link-up your profile because of additional verification required from Instagram.
                                                         To add your profile we will need you to assist us with the following:
                                                     </p>
                                                     <center>
-                                                        <h4 class='push'>1. Join our telegram group (if you do not have one, please create an account) below:</h4>
+                                                        <h4 class='push' style="font-size:12px;">1. Join our telegram group (if you do not have one, please create an account) below:</h4>
                                                         <br/>
                                                         <a href="https://t.me/joinchat/Cm-Skw8JCqn7RfOKPH2SvA" target="_blank">https://t.me/joinchat/Cm-Skw8JCqn7RfOKPH2SvA</a>
                                                         <br/>
                                                     </center>
 
                                                     <center>
-                                                        <h4 class='push'>2. Set-up an appointment with us over here:</h4>
+                                                        <h4 class='push' style="font-size:12px;">2. Set-up an appointment with us over here:</h4>
                                                         <br/>
                                                         <a href="https://morfix.youcanbook.me" target="_blank">https://morfix.youcanbook.me</a>
                                                         <br/>
                                                     </center>
 
                                                     <center>
-                                                        <h4 class='push'>3. Come online on Telegram during the appointed time
+                                                        <h4 class='push' style="font-size:12px;">3. Come online on Telegram during the appointed time
                                                                          & our friendly Morfix operators will contact you to add in your account!</h4>
                                                     </center>
                                                     {{--<center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>--}}
