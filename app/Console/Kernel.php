@@ -38,7 +38,6 @@ class Kernel extends ConsoleKernel {
         Commands\ConvertUnicodeEmojiToShortCode::class,
         Commands\MakeStripeIdActive::class,
         Commands\GetStripeStatus::class,
-        Commands\RefreshProfileProxy::class,
         Commands\RefreshTierStatus::class,
         Commands\DeleteInvalidImages::class,
         Commands\SendTestDirectMessage::class,
@@ -59,7 +58,6 @@ class Kernel extends ConsoleKernel {
         Commands\SendDelinquentEmail::class,
         Commands\GetUsersWithPendingCommisions::class,
         Commands\ReadLastPaidCsv::class,
-        Commands\TestDoWhileContinue::class,
         Commands\ManuallyFollowBack::class,
         Commands\EngagementGroupManual::class,
         Commands\RetrieveCommentForCertainDate::class,
@@ -88,7 +86,6 @@ class Kernel extends ConsoleKernel {
         Commands\SendPremiumEmail::class,
         Commands\SendFreeTrialEmail::class,
         Commands\SendPremiumAffiliateEmail::class,
-        Commands\TestInteractionGenderFilter::class,
 	    Commands\TestFailedEngagementGroupNotification::class,
 	    Commands\UpdateMasterInstagramProfileErrorFlags::class,
         Commands\ImportCompetitorsCsv::class,
@@ -100,6 +97,7 @@ class Kernel extends ConsoleKernel {
         Commands\AddProfileLocally::class,
         Commands\ManualLoginPrevious::class,
         Commands\GetMonthlyDMUsers::class,
+        Commands\TestLoginToInstagressAPI::class,
     ];
 
     /**
