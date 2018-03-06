@@ -40,16 +40,18 @@
                                 <div class="tab-pane fade fade-right in push-30-t push-50 active" id="validation-step1">
 
                                     <div class="col-sm-8 col-sm-offset-2">
-                                        <h3>READ THIS FIRST</h3>
+                                        <center>
+                                            <h3>READ THIS FIRST</h3>
 
-                                        <p>Hi Morfix User,</p>
+                                            <p>Hi Morfix User,</p>
 
-                                        <p>With Instagram latest API, some of you could get into a verfication loop. Which means you can't link your Instagram profile to our system. In order to smoothen the process, if you are unable to verify, there will be a button on the next page to schedule a 5 minute session with our LIVE support on telegram.
+                                            <p>With Instagram latest API, some of you could get into a verfication loop. Which means you can't link your Instagram profile to our system. In order to smoothen the process, if you are unable to verify, there will be a button on the next page to schedule a 5 minute session with our LIVE support on telegram.
                                             <br/>
-                                           Our support will then process to help you verify your account at the timing you choose.
+                                            Our support will then process to help you verify your account at the timing you choose.
                                             <br/>
-                                           WE'LL NOT BEGIN YOUR SUBSCRIPTION UNTIL YOUR FIRST PROFILE IS ADDED. So you do not have to worry about paying for time you didn't use. Thank you for choosing Morfix :)</p>
+                                            WE'LL NOT BEGIN YOUR SUBSCRIPTION UNTIL YOUR FIRST PROFILE IS ADDED. So you do not have to worry about paying for time you didn't use. Thank you for choosing Morfix :)</p>
 
+                                        </center>
                                     </div>
 
 
