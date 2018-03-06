@@ -39,7 +39,7 @@
                                 <!-- Step 1 -->
                                 <div class="tab-pane fade fade-right in push-30-t push-50 active" id="validation-step1">
 
-                                    <div class="col-sm-8 col-sm-offset-2">
+                                    <div class="col-sm-8 col-sm-offset-2" style="font-size: 12px;">
                                         <center>
                                             <h3>READ THIS FIRST</h3>
 
@@ -51,7 +51,6 @@
                                             <br/>
                                             <b>WE'LL NOT BEGIN YOUR SUBSCRIPTION UNTIL YOUR FIRST PROFILE IS ADDED.</b>
                                             <br/>So you do not have to worry about paying for time you didn't use. Thank you for choosing Morfix :)</p>
-
                                         </center>
                                     </div>
 
