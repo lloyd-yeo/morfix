@@ -99,7 +99,8 @@
                                                     </center>
 
                                                     <center>
-                                                        <h4 class='push'>3. Come online on Telegram during the appointed time & our friendly Morfix operators will assist you to add in your account!</h4>
+                                                        <h4 class='push'>3. Come online on Telegram during the appointed time
+                                                                         & our friendly Morfix operators will contact you to add in your account!</h4>
                                                     </center>
                                                     {{--<center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>--}}
                                                     {{--<center><h4 id="verify-message" class='push' style="display:none;" >Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" style="font-size: 11px;" target="_blank" id="challenge-url"></a></h4></center>--}}
