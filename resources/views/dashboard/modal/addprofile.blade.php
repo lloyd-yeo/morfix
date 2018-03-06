@@ -54,7 +54,6 @@
                                         </center>
                                     </div>
 
-
                                     <div class="form-group">
                                         <div class="col-sm-8 col-sm-offset-2">
                                             <div class="form-material form-material-primary">
@@ -83,14 +82,25 @@
                                                     <center><h1 class='push text-modern'><i class='fa fa-info-circle'></i> Verification Required</h1></center>
                                                     <p class='lead'>
                                                         Morfix is unable to link-up your profile because of additional verification required from Instagram.
-                                                        To solve this, approach live chat with the following details::
+                                                        To add your profile we will need you to assist us with the following:
                                                     </p>
-                                                    <center><h4 class='push'>1. Morfix email</h4></center>
+                                                    <center>
+                                                        <h4 class='push'>1. Join our telegram group (if you do not have one, please create an account) below:</h4>
+                                                        <br/>
+                                                        <a href="https://t.me/joinchat/Cm-Skw8JCqn7RfOKPH2SvA" target="_blank">https://t.me/joinchat/Cm-Skw8JCqn7RfOKPH2SvA</a>
+                                                        <br/>
+                                                    </center>
 
-                                                    <center><h4 class='push'>2. Instagram username</h4></center>
+                                                    <center>
+                                                        <h4 class='push'>2. Set-up an appointment with us over here:</h4>
+                                                        <br/>
+                                                        <a href="https://morfix.youcanbook.me" target="_blank">https://morfix.youcanbook.me</a>
+                                                        <br/>
+                                                    </center>
 
-                                                    <center><h4 class='push'>3. Give us a tentative time that we can contact you</h4></center>
-
+                                                    <center>
+                                                        <h4 class='push'>3. Come online on Telegram during the appointed time & our friendly Morfix operators will assist you to add in your account!</h4>
+                                                    </center>
                                                     {{--<center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>--}}
                                                     {{--<center><h4 id="verify-message" class='push' style="display:none;" >Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" style="font-size: 11px;" target="_blank" id="challenge-url"></a></h4></center>--}}
                                                     {{--<center><h4 id="confirm-verify" class='push' style="display:none;">Once you are done please click this button: <a class="btn btn-success" id="relogin-btn">Retry</a></h4></center>--}}
