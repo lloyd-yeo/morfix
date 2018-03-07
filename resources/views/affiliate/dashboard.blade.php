@@ -253,7 +253,8 @@
 												         src="{{ asset('assets/img/logo/paypal-logo.png') }}"/></td>
 											@elseif ($referral->braintree_id !== NULL)
 												<td><img style="height: 20px;"
-												         src="https://s3.amazonaws.com/braintree-badges/braintree-badge-wide-dark.png" border="0"/></td>
+												         src="https://s3.amazonaws.com/braintree-badges/braintree-badge-wide-dark.png"
+												         border="0"/></td>
 											@else
 												<td><img style="height: 20px;"
 												         src="{{ asset('assets/img/logo/credit-card.png') }}"/></td>
@@ -344,6 +345,78 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row font-s13">
+				<div class="block">
+					<div class="block-header">
+						<ul class="block-options">
+							<li>
+								<button type="button" data-toggle="block-option" data-action="content_toggle"><i
+											class="si si-arrow-up"></i></button>
+							</li>
+						</ul>
+						<h2 class="h3 font-w600 text-modern text-center block-title" style="font-size: 24px;"><i
+									class="fa fa-credit-card"></i> My Referral Payments (Braintree)</h2>
+					</div>
+					<div class="block-content block-content-full">
+						<table class="table table-bordered table-striped js-dataTable-full-pagination">
+							<thead>
+							<tr>
+								<th>Email</th>
+								<th>Plan</th>
+								<th>Payment Date</th>
+								<th>Commission Earned</th>
+							</tr>
+							</thead>
+							<tbody>
+							@foreach ($braintree_invoices as $invoice)
+								@if ($loop->index % 2 == 0)
+									<tr role="row" class="even">
+								@else
+									<tr role="row" class="odd">
+										@endif
+										<td>{{ $invoice->user_email }}</td>
+
+										@if ($invoice->plan_id == "0137")
+											<td><label class="label label-info">Premium</label></td>
+										@elseif ($invoice->plan_id == "MX370")
+											<td><label class="label label-danger">Pro</label></td>
+										@elseif ($invoice->plan_id == "MX297")
+											<td><label class="label label-danger">Pro [One Time Offer]</label></td>
+										@elseif ($invoice->plan_id == "0297")
+											<td><label class="label label-primary">Business</label></td>
+										@elseif ($invoice->plan_id == "MX970")
+											<td><label class="label label-primary">Mastermind</label></td>
+										@elseif ($invoice->plan_id == "0167")
+											<td><label class="label label-primary">Business</label></td>
+										@elseif ($invoice->plan_id == "0197")
+											<td><label class="label label-primary">Business</label></td>
+										@endif
+									<!--<td>{{ \Carbon\Carbon::parse($invoice->created_at)->toFormattedDateString() }}</td>-->
+										<td>{{ $invoice->created_at }}</td>
+										@if ($invoice->plan_id == "0137")
+											<td><label class="label label-primary">$20</label></td>
+										@elseif ($invoice->plan_id == "MX370")
+											<td><label class="label label-primary">$200</label></td>
+										@elseif ($invoice->plan_id == "MX297")
+											<td><label class="label label-primary">$120</label></td>
+										@elseif ($invoice->plan_id == "0297")
+											<td><label class="label label-primary">$50</label></td>
+										@elseif ($invoice->plan_id == "MX970")
+											<td><label class="label label-primary">$500</label></td>
+										@elseif ($invoice->plan_id == "0167")
+											<td><label class="label label-primary">$50</label></td>
+										@elseif ($invoice->plan_id == "0197")
+											<td><label class="label label-primary">$50</label></td>
+										@endif
+									</tr>
+									@endforeach
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
 			<!--FREE TRIAL REFERRALS-->
 			<div class="row font-s13">
 				<div class="block">
