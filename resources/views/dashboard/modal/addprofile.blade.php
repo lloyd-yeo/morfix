@@ -93,12 +93,12 @@
 
                                                     <center>
                                                         <h4 class='push' style="font-size:12px;">1. Set-up an appointment with us over here:</h4>
-                                                        <br/>
                                                         <a href="https://morfix.youcanbook.me" target="_blank">https://morfix.youcanbook.me</a>
                                                         <br/>
                                                     </center>
 
                                                     <center>
+                                                        <br/>
                                                         <h4 class='push' style="font-size:12px;">2. Join our telegram group at the appointed time
                                                                          & our friendly Morfix operators will contact you to add in your account!</h4>
                                                     </center>
