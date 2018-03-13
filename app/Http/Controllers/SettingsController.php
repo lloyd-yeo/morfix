@@ -57,6 +57,41 @@ class SettingsController extends Controller
 			}
 		}
 
+		if (Auth::user()->stripe_id != NULL) {
+			//Remove all active subscription
+			Auth::user()->deleteStripeSubscriptions();
+			$subscriptions_      = NULL;
+			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
+			foreach ($user_stripe_details as $user_stripe_detail) {
+				$user_stripe_id         = $user_stripe_detail->stripe_id;
+				$subscriptions_listings = Subscription::all([ 'customer' => $user_stripe_id ]);
+
+				foreach ($subscriptions as $subscription) {
+					//The Invoices under this subscription
+					$invoice_listings = Invoice::all([ "subscription" => $subscription->id ]);
+					$stripe_id        = $subscription->customer;
+
+					$invoices[$subscription->id] = $invoice_listings->data[0];
+
+					$items = $subscription->items->data;
+					foreach ($items as $item) {
+						$plan                                        = $item->plan;
+						$plan_id                                     = $plan->id;
+						$active_subscription                         = new StripeActiveSubscription;
+						$active_subscription->stripe_id              = $stripe_id;
+						$active_subscription->subscription_id        = $plan_id;
+						$active_subscription->status                 = $subscription->status;
+						$active_subscription->start_date             = Carbon::createFromTimestamp($subscription->current_period_start);
+						$active_subscription->end_date               = Carbon::createFromTimestamp($subscription->current_period_end);
+						$active_subscription->stripe_subscription_id = $subscription->id;
+						$active_subscription->save();
+					}
+				}
+			}
+
+			$invoices_ = Invoice::all([ 'limit' => 100, 'customer' => Auth::user()->stripe_id ]);
+		}
+
 		//		if (Auth::user()->stripe_id === NULL) {
 		//
 		//			$customer        = \Stripe\Customer::create([
@@ -67,38 +102,38 @@ class SettingsController extends Controller
 		//			$user->save();
 		//
 		//		} else {
-		//			//Remove all active subscription
-		//			Auth::user()->deleteStripeSubscriptions();
-		//			$subscriptions_      = NULL;
-		//			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
-		//			foreach ($user_stripe_details as $user_stripe_detail) {
-		//				$user_stripe_id         = $user_stripe_detail->stripe_id;
-		//				$subscriptions_listings = Subscription::all([ 'customer' => $user_stripe_id ]);
-		//
-		//				foreach ($subscriptions as $subscription) {
-		//					//The Invoices under this subscription
-		//					$invoice_listings = Invoice::all([ "subscription" => $subscription->id ]);
-		//					$stripe_id        = $subscription->customer;
-		//
-		//					$invoices[$subscription->id] = $invoice_listings->data[0];
-		//
-		//					$items = $subscription->items->data;
-		//					foreach ($items as $item) {
-		//						$plan                                        = $item->plan;
-		//						$plan_id                                     = $plan->id;
-		//						$active_subscription                         = new StripeActiveSubscription;
-		//						$active_subscription->stripe_id              = $stripe_id;
-		//						$active_subscription->subscription_id        = $plan_id;
-		//						$active_subscription->status                 = $subscription->status;
-		//						$active_subscription->start_date             = Carbon::createFromTimestamp($subscription->current_period_start);
-		//						$active_subscription->end_date               = Carbon::createFromTimestamp($subscription->current_period_end);
-		//						$active_subscription->stripe_subscription_id = $subscription->id;
-		//						$active_subscription->save();
-		//					}
-		//				}
-		//			}
-		//
-		//			$invoices_ = Invoice::all([ 'limit' => 100, 'customer' => Auth::user()->stripe_id ]);
+//					//Remove all active subscription
+//					Auth::user()->deleteStripeSubscriptions();
+//					$subscriptions_      = NULL;
+//					$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
+//					foreach ($user_stripe_details as $user_stripe_detail) {
+//						$user_stripe_id         = $user_stripe_detail->stripe_id;
+//						$subscriptions_listings = Subscription::all([ 'customer' => $user_stripe_id ]);
+//
+//						foreach ($subscriptions as $subscription) {
+//							//The Invoices under this subscription
+//							$invoice_listings = Invoice::all([ "subscription" => $subscription->id ]);
+//							$stripe_id        = $subscription->customer;
+//
+//							$invoices[$subscription->id] = $invoice_listings->data[0];
+//
+//							$items = $subscription->items->data;
+//							foreach ($items as $item) {
+//								$plan                                        = $item->plan;
+//								$plan_id                                     = $plan->id;
+//								$active_subscription                         = new StripeActiveSubscription;
+//								$active_subscription->stripe_id              = $stripe_id;
+//								$active_subscription->subscription_id        = $plan_id;
+//								$active_subscription->status                 = $subscription->status;
+//								$active_subscription->start_date             = Carbon::createFromTimestamp($subscription->current_period_start);
+//								$active_subscription->end_date               = Carbon::createFromTimestamp($subscription->current_period_end);
+//								$active_subscription->stripe_subscription_id = $subscription->id;
+//								$active_subscription->save();
+//							}
+//						}
+//					}
+//
+//					$invoices_ = Invoice::all([ 'limit' => 100, 'customer' => Auth::user()->stripe_id ]);
 		//		}
 
 		$agreement_id = "";
