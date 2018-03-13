@@ -3,8 +3,16 @@
 namespace App\Http\Controllers;
 
 use Braintree\WebhookNotification;
+use App\User;
+use App\UserAffiliates;
+use Auth;
+use Braintree_ClientToken;
+use Braintree_Configuration;
+use Braintree_Customer;
+use Braintree_Transaction;
+use App\BraintreeTransaction;
+use Cookie;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Log;
 
 class CancellationSubscriptionWebhook extends Controller
