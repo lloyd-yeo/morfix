@@ -441,30 +441,34 @@ class InstagramProfileController extends Controller
 	}
 
 	public function pollActiveProfileRequest(Request $request) {
-		$profile_request_id = session('active_request');
-		$profile_request_id = AddProfileRequest::where('id', $profile_request_id->id)
-		                                       ->first();
-		if ($profile_request_id->working_on == 2 && $profile_request_id->challenge_url != NULL) {
-			$profile_request_id->working_on = 3;
-			$profile_request_id->save();
-			return response()->json([
-				'success' => TRUE,
-				'working_on' => $profile_request_id->working_on,
-				'challenge_url' => $profile_request_id->challenge_url,
-			]);
-		} else if ($profile_request_id->working_on == 5) {
-			$working_on = 5;
-			$profile_request_id->destroy();
-			$request->session()->forget('active_request');
-			return response()->json([
-				'working_on' => $working_on,
-				'success' => TRUE,
-			]);
-		} else {
-			return response()->json([
-				'success' => FALSE,
-			]);
-		}
+//		$profile_request_id = session('active_request');
+//		$profile_request_id = AddProfileRequest::where('id', $profile_request_id->id)
+//		                                       ->first();
+//		if ($profile_request_id->working_on == 2 && $profile_request_id->challenge_url != NULL) {
+//			$profile_request_id->working_on = 3;
+//			$profile_request_id->save();
+//			return response()->json([
+//				'success' => TRUE,
+//				'working_on' => $profile_request_id->working_on,
+//				'challenge_url' => $profile_request_id->challenge_url,
+//			]);
+//		} else if ($profile_request_id->working_on == 5) {
+//			$working_on = 5;
+//			$profile_request_id->destroy();
+//			$request->session()->forget('active_request');
+//			return response()->json([
+//				'working_on' => $working_on,
+//				'success' => TRUE,
+//			]);
+//		} else {
+//			return response()->json([
+//				'success' => FALSE,
+//			]);
+//		}
+
+		return response()->json([
+			'success' => FALSE,
+		]);
 	}
 
 	public function retryActiveProfileRequest(Request $request) {
