@@ -186,11 +186,11 @@ class PaymentController extends Controller
 
 		if ($sub_result->success) {
 
-
-
 			if ($user->tier == 1 && $user->trial_upgrade == 0) {
 				$user->trial_upgrade = 1;
 			}
+
+			$this->subscribeAweberPaid($user, $request->ip(), 2);
 
 			//Get referrer
 			$referrer       = NULL;
@@ -308,6 +308,8 @@ class PaymentController extends Controller
 					$user->trial_upgrade = 1;
 				}
 
+				$this->subscribeAweberPaid($user, $request->ip(), 3);
+
 				if ($referrer !== NULL) {
 					//Send referrer Pro congrats email
 					if ($referrer->tier % 10 == 3) {
@@ -372,6 +374,8 @@ class PaymentController extends Controller
 			if ($sub_result->success) {
 				$user->tier = 3;
 				$user->save();
+
+				$this->subscribeAweberPaid($user, $request->ip(), 3);
 
 				//Get referrer
 				$referrer       = NULL;
@@ -465,6 +469,8 @@ class PaymentController extends Controller
 			$user->tier     = $user->tier + 10;
 			$user->save();
 
+			$this->subscribeAweberPaid($user, $request->ip(), 10);
+
 			//Get referrer & add commissions
 			$referrer       = NULL;
 			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
@@ -556,6 +562,8 @@ class PaymentController extends Controller
 			$user->tier     = $user->tier + 20;
 			$user->save();
 
+			$this->subscribeAweberPaid($user, $request->ip(), 20);
+
 			//Get referrer & add commissions
 			$referrer       = NULL;
 			$user_affiliate = UserAffiliates::where('referred', $user->user_id)->first();
@@ -620,16 +628,10 @@ class PaymentController extends Controller
 				case 3:
 					$notes = "Morfix Pro Payment Page";
 					break;
-				case 12:
+				case 10:
 					$notes = "Morfix Business Payment Page";
 					break;
-				case 22:
-					$notes = "Morfix Mastermind Payment Page";
-					break;
-				case 13:
-					$notes = "Morfix Business Payment Page";
-					break;
-				case 23:
+				case 20:
 					$notes = "Morfix Mastermind Payment Page";
 					break;
 			}
