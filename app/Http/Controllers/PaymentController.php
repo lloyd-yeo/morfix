@@ -89,7 +89,7 @@ class PaymentController extends Controller
 
 		$client_token = NULL;
 		if (Auth::user()->braintree_id != NULL) {
-			$client_token = Braintree_ClientToken::generate(['customerId' => Auth::user()->braintree_id]);
+			$client_token = Braintree_ClientToken::generate([ 'customerId' => Auth::user()->braintree_id ]);
 		} else {
 			$client_token = Braintree_ClientToken::generate();
 		}
@@ -110,7 +110,7 @@ class PaymentController extends Controller
 
 		$client_token = NULL;
 		if (Auth::user()->braintree_id != NULL) {
-			$client_token = Braintree_ClientToken::generate(['customerId' => Auth::user()->braintree_id]);
+			$client_token = Braintree_ClientToken::generate([ 'customerId' => Auth::user()->braintree_id ]);
 		} else {
 			$client_token = Braintree_ClientToken::generate();
 		}
@@ -159,19 +159,18 @@ class PaymentController extends Controller
 				]);
 			} else {
 				dump($result);
-//				foreach($result->errors->deepAll() AS $error) {
-//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
-//				}
-//
-//				foreach($result->errors->forKey('customer')->shallowAll() AS $error) {
-//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
-//				}
-//
-//				foreach($result->errors->forKey('customer')->forKey('creditCard')->shallowAll() AS $error) {
-//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
-//				}
+				//				foreach($result->errors->deepAll() AS $error) {
+				//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+				//				}
+				//
+				//				foreach($result->errors->forKey('customer')->shallowAll() AS $error) {
+				//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+				//				}
+				//
+				//				foreach($result->errors->forKey('customer')->forKey('creditCard')->shallowAll() AS $error) {
+				//					dump($error->attribute . ": " . $error->code . " " . $error->message . "\n");
+				//				}
 			}
-
 
 
 		} else {
@@ -186,6 +185,8 @@ class PaymentController extends Controller
 		}
 
 		if ($sub_result->success) {
+
+
 
 			if ($user->tier == 1 && $user->trial_upgrade == 0) {
 				$user->trial_upgrade = 1;
@@ -591,12 +592,68 @@ class PaymentController extends Controller
 
 				}
 			}
+
 			return view('payment.upgrade.funnel.confirmation');
 		}
 	}
 
-	public
-	function index(Request $request)
+	public function subscribeAweberPaid (User $user, $ip_addr, $tier) {
+		$consumerKey    = "AkAxBcK3kI1q0yEfgw4R4c77";
+		$consumerSecret = "DEchWOGoptnjNSqtwPz3fgZg6wkMpOTWTYCJcgBF";
+
+		$aweber  = new AWeberAPI($consumerKey, $consumerSecret);
+		$account = $aweber->getAccount("AgI2J88WjcAhUkFlCn3OwzLx", "wdX1JHuuhIFm9AEiJt3SVUdM5S7Z8lAE7UKmP29P");
+
+		foreach ($account->lists as $offset => $list) {
+
+			$list_id = $list->id;
+
+			if ($list_id != 4485376 OR $list_id != 4631962) {
+				continue;
+			}
+
+			$notes = "";
+			switch ($tier) {
+				case 2:
+					$notes = "Morfix Premium Payment Page";
+					break;
+				case 3:
+					$notes = "Morfix Pro Payment Page";
+					break;
+				case 12:
+					$notes = "Morfix Business Payment Page";
+					break;
+				case 22:
+					$notes = "Morfix Mastermind Payment Page";
+					break;
+				case 13:
+					$notes = "Morfix Business Payment Page";
+					break;
+				case 23:
+					$notes = "Morfix Mastermind Payment Page";
+					break;
+			}
+
+			# create a subscriber
+			$params = [
+				'email'                             => $user->email,
+				'name'                              => $user->name,
+				'ip_address'                        => $ip_addr,
+				'ad_tracking'                       => 'morfix_registration',
+				'last_followup_message_number_sent' => 1,
+				'misc_notes'                        => $notes,
+			];
+
+			try {
+				$subscribers    = $list->subscribers;
+				$new_subscriber = $subscribers->create($params);
+			}
+			catch (AWeberAPIException $ex) {
+				//aweber exception just let it slide
+			}
+		}
+	}
+	public function index(Request $request)
 	{
 		return view('payment.index', [
 		]);
