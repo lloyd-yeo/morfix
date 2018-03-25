@@ -58,6 +58,7 @@ class UpdateLastPaidFromCSV extends Command
 			$current_email       = $data[0];
 			$user                = User::where('email', $current_email)->first();
 			$recent_pay_out_date = Carbon::create(2018, 02, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
+
 			if ($user !== NULL) {
 				if ($data[3] == 'PAID') {      //edit here every month
 					$tier                    = $user->tier;
@@ -80,13 +81,12 @@ class UpdateLastPaidFromCSV extends Command
 				}
 			}
 		}
-
-
 	}
 
 	public function UpdateUserChargesPaid($user, $recent_pay_out_date)
 	{
 		$this->info("Charged Paid: " . $recent_pay_out_date . " User Paid: " . $user->last_pay_out_date);
+
 		if ($user->last_pay_out_date == $recent_pay_out_date) {
 
 			$end_date = Carbon::parse($recent_pay_out_date)->subMonth()->endOfMonth();
