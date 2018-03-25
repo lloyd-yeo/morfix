@@ -45,10 +45,10 @@ class UpdateLastPaidFromCSV extends Command
 	 */
 	public function handle()
 	{
-		$path                   = app_path('jan-payout.csv');
+		$path                   = app_path('feb-payout.csv');
 		$file                   = fopen($path, "r");
 		$current_email          = "";
-		$last_pay_out_coms_date = "2018-01-25 00:00:00"; //edit here every month
+		$last_pay_out_coms_date = "2018-02-25 00:00:00"; //edit here every month
 		$paid_amount            = 0;
 		$tier                   = 0;
 
@@ -57,7 +57,7 @@ class UpdateLastPaidFromCSV extends Command
 			//            #$data[0] is first cell so on & so forth.
 			$current_email       = $data[0];
 			$user                = User::where('email', $current_email)->first();
-			$recent_pay_out_date = Carbon::create(2017, 12, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
+			$recent_pay_out_date = Carbon::create(2018, 01, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
 			if ($user !== NULL) {
 				if ($data[3] == 'PAID') {      //edit here every month
 					$tier                    = $user->tier;
