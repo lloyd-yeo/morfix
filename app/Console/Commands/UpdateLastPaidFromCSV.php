@@ -86,7 +86,7 @@ class UpdateLastPaidFromCSV extends Command
 
 	public function UpdateUserChargesPaid($user, $recent_pay_out_date)
 	{
-
+		$this->info("Charged Paid: " . $recent_pay_out_date . " User Paid: " . $user->last_pay_out_date);
 		if ($user->last_pay_out_date == $recent_pay_out_date) {
 
 			$end_date = Carbon::parse($recent_pay_out_date)->subMonth()->endOfMonth();
