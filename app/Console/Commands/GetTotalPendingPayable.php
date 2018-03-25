@@ -18,7 +18,7 @@ class GetTotalPendingPayable extends Command {
 
     /**
      * The console command description.
-     *
+     *w
      * @var string
      */
     protected $description = 'Get the total commission for each user.';

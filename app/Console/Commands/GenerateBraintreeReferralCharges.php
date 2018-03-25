@@ -49,7 +49,7 @@ class GenerateBraintreeReferralCharges extends Command
 		\Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
 		\Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
 		\Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
-		$date_to_retrieve_from = "2018-02-01 00:00:00";
+		$date_to_retrieve_from = "2018-03-01 00:00:00";
 		$users                 = [];
 
 		$user_payout_comms = [];

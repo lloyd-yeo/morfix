@@ -47,6 +47,11 @@ class GetAllStripeInvoiceCharges extends Command
 			if ($stripe_charge == NULL) {
 				$stripe_charge = new StripeCharge;
 			}
+			
+			if ($charge->customer == NULL) {
+				continue;
+			}
+			
 		    $stripe_charge->stripe_id = $charge->customer;
 		    $stripe_charge->charge_id = $charge->id;
 		    $stripe_charge->invoice_id = $charge->invoice;
