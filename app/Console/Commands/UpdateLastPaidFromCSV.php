@@ -48,7 +48,7 @@ class UpdateLastPaidFromCSV extends Command
 		$path                   = app_path('feb-payout.csv');
 		$file                   = fopen($path, "r");
 		$current_email          = "";
-		$last_pay_out_coms_date = "2018-02-25 00:00:00"; //edit here every month
+		$last_pay_out_coms_date = "2018-01-25 00:00:00"; //edit here every month
 		$paid_amount            = 0;
 		$tier                   = 0;
 
