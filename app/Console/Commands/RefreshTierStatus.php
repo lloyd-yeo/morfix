@@ -78,6 +78,10 @@ class RefreshTierStatus extends Command
 					$braintree_subscription->plan_id         = $subscription->planId;
 					$braintree_subscription->status          = $subscription->status;
 
+					if ($braintree_subscription->plan_id == 'MX970_depreciated') {
+						continue;
+					}
+
 					if ($braintree_subscription->save()) {
 						dump($braintree_subscription);
 						$plan = $braintree_subscription->plan_id;
