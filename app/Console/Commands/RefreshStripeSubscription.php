@@ -38,12 +38,14 @@ class RefreshStripeSubscription extends Command {
     public function handle() {
         \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
         $subscriptions = \Stripe\Subscription::all(array('limit' => 100, 'status' => 'all'));
+
         foreach ($subscriptions->autoPagingIterator() as $subscription) {
             $active_sub = new StripeActiveSubscription;
             $active_sub->stripe_id = $subscription->customer;
             if ($subscription->plan !== NULL) {
                 $active_sub->subscription_id = $subscription->plan->id;
                 $active_sub->status = $subscription->status;
+                $active_sub->created_at = \Carbon\Carbon::createFromTimestamp($subscription->created);
                 $active_sub->start_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_start);
                 $active_sub->end_date = \Carbon\Carbon::createFromTimestamp($subscription->current_period_end);
                 $active_sub->stripe_subscription_id = $subscription->id;
@@ -52,6 +54,7 @@ class RefreshStripeSubscription extends Command {
                 }
             }
         }
+
     }
 
 }
