@@ -55,13 +55,15 @@ class InstagramProfileController extends Controller
 		$proxy = NULL;
 		if (Auth::user()->email == 'l-ywz@hotmail.com') {
 			$proxy = 'http://7708f98575:SvEH1i87@104.203.100.176:4444';
+			Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using proxy: ' . $proxy);
 		} else {
 			$proxy = Proxy::inRandomOrder()->first();
+			Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using proxy: ' . $proxy->proxy);
 		}
 
 
-		try {
 
+		try {
 			if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
 				$profile_log->error_msg = "This instagram username has already been added!";
 				$profile_log->save();
