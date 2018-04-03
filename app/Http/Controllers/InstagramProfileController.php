@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\InstagramException as InstagramException;
 use Response;
+use Log;
 
 class InstagramProfileController extends Controller
 {
@@ -43,6 +44,7 @@ class InstagramProfileController extends Controller
 		$email       = Auth::user()->email;
 		$ig_username = $request->input("ig-username");
 		$ig_password = $request->input("ig-password");
+		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt: ' . $ig_username . ' ' . $ig_password);
 
 		$profile_log                 = new CreateInstagramProfileLog();
 		$profile_log->email          = $email;
@@ -61,13 +63,10 @@ class InstagramProfileController extends Controller
 			Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using proxy: ' . $proxy->proxy);
 		}
 
-
-
 		try {
 			if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
 				$profile_log->error_msg = "This instagram username has already been added!";
 				$profile_log->save();
-
 				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'response' => "This instagram username has already been added!" ]);
 			}
 
