@@ -58,13 +58,24 @@ class SendTestDirectMessage extends Command
         
         $debug = false;
         $truncatedDebug = false;
-        $instagram = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+
+	    $instagram = InstagramHelper::initInstagram();
+
+	    $proxy = NULL;
+	    if ($this->argument('insta_username') == 'l-ywz@hotmail.com') {
+		    $proxy = 'http://7708f98575:SvEH1i87@104.203.100.176:4444';
+		    Log::info('[TEST SENDDM] ' . Auth::user()->email . ' using proxy: ' . $proxy);
+		    $instagram->setProxy($proxy);
+	    }
         
         $sender = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
         $recipient = InstagramProfile::where('insta_username', $this->argument('recipient_username'))->first();
+
         $text = $this->argument('message');
-        
-        $instagram->setUser($sender->insta_username, $sender->insta_pw);
+
+	    $explorer_response = $instagram->login($sender->insta_username, $sender->insta_pw);
+	    var_dump($explorer_response);
+
         $recipients = array();
         $recipients["users"] = [$recipient->insta_user_id]; 
         $response = $instagram->direct->sendText($recipients, $text);
