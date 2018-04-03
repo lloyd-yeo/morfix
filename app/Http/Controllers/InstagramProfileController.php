@@ -40,7 +40,6 @@ class InstagramProfileController extends Controller
 
 	public function create(Request $request)
 	{
-
 		$email       = Auth::user()->email;
 		$ig_username = $request->input("ig-username");
 		$ig_password = $request->input("ig-password");
@@ -53,7 +52,13 @@ class InstagramProfileController extends Controller
 
 		$instagram = InstagramHelper::initInstagram();
 
-		$proxy = Proxy::inRandomOrder()->first();
+		$proxy = NULL;
+		if (Auth::user()->email == 'l-ywz@hotmail.com') {
+			$proxy = 'http://7708f98575:SvEH1i87@104.203.100.176:4444';
+		} else {
+			$proxy = Proxy::inRandomOrder()->first();
+		}
+
 
 		try {
 
