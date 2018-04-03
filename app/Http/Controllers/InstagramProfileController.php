@@ -55,7 +55,7 @@ class InstagramProfileController extends Controller
 		$instagram = InstagramHelper::initInstagram();
 
 		$proxy = NULL;
-		if (Auth::user()->email == 'l-ywz@hotmail.com') {
+		if (Auth::user()->email == 'l-ywz@hotmail.com' || Auth::user()->email == 'kamelia.pavliuc@mail.ru') {
 			$proxy = 'http://7708f98575:SvEH1i87@104.203.100.176:4444';
 			Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using proxy: ' . $proxy);
 		} else {
@@ -74,7 +74,7 @@ class InstagramProfileController extends Controller
 
 			$user = User::find(Auth::user()->user_id);
 
-			if (Auth::user()->email == 'l-ywz@hotmail.com') {
+			if (Auth::user()->email == 'l-ywz@hotmail.com' || Auth::user()->email == 'kamelia.pavliuc@mail.ru') {
 				$user->last_used_proxy = $proxy;
 				$user->save();
 				$instagram->setProxy($proxy);
@@ -109,7 +109,7 @@ class InstagramProfileController extends Controller
 
 			$morfix_ig_profile                 = new InstagramProfile();
 
-			if (Auth::user()->email != 'l-ywz@hotmail.com') {
+			if (Auth::user()->email != 'l-ywz@hotmail.com' && Auth::user()->email != 'kamelia.pavliuc@mail.ru') {
 				$morfix_ig_profile->user_id        = Auth::user()->user_id;
 				$morfix_ig_profile->email          = Auth::user()->email;
 				$morfix_ig_profile->insta_username = $ig_username;
