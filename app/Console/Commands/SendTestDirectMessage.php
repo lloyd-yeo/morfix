@@ -17,6 +17,7 @@ use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
 use Unicodeveloper\Emoji\Emoji;
 use InstagramAPI\Instagram;
+use App\InstagramHelper;
 
 class SendTestDirectMessage extends Command
 {
