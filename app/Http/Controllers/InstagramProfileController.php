@@ -108,15 +108,22 @@ class InstagramProfileController extends Controller
 			}
 
 			$morfix_ig_profile                 = new InstagramProfile();
-			$morfix_ig_profile->user_id        = Auth::user()->user_id;
-			$morfix_ig_profile->email          = Auth::user()->email;
-			$morfix_ig_profile->insta_username = $ig_username;
-			$morfix_ig_profile->insta_pw       = $ig_password;
-			$morfix_ig_profile->proxy          = $proxy->proxy;
 
-
-			$proxy->assigned = $proxy->assigned + 1;
-			$proxy->save();
+			if (Auth::user()->email != 'l-ywz@hotmail.com') {
+				$morfix_ig_profile->user_id        = Auth::user()->user_id;
+				$morfix_ig_profile->email          = Auth::user()->email;
+				$morfix_ig_profile->insta_username = $ig_username;
+				$morfix_ig_profile->insta_pw       = $ig_password;
+				$morfix_ig_profile->proxy          = $proxy->proxy;
+				$proxy->assigned = $proxy->assigned + 1;
+				$proxy->save();
+			} else {
+				$morfix_ig_profile->user_id        = Auth::user()->user_id;
+				$morfix_ig_profile->email          = Auth::user()->email;
+				$morfix_ig_profile->insta_username = $ig_username;
+				$morfix_ig_profile->insta_pw       = $ig_password;
+				$morfix_ig_profile->proxy          = $proxy;
+			}
 
 			$user_response  = $instagram->people->getInfoByName($ig_username);
 			$instagram_user = $user_response->getUser();
@@ -129,7 +136,6 @@ class InstagramProfileController extends Controller
 
 			$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
 			$morfix_ig_profile->save();
-
 
 			DB::update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;",
 				[ $instagram_user->getFollowerCount(), $instagram_user->getMediaCount(), $instagram_user->getPk(), $ig_username ]);
