@@ -67,18 +67,28 @@ class InstagramProfileController extends Controller
 			if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
 				$profile_log->error_msg = "This instagram username has already been added!";
 				$profile_log->save();
+				Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt failed: ' . $ig_username . ' ' . $ig_password);
+				Log::error('[DASHBOARD ADD PROFILE] This instagram username has already been added!');
 				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'response' => "This instagram username has already been added!" ]);
 			}
 
 			$user = User::find(Auth::user()->user_id);
 
-			$last_used_proxy = $user->last_used_proxy;
-			if ($last_used_proxy === NULL) {
-				$instagram->setProxy($proxy->proxy);
-				$user->last_used_proxy = $proxy->proxy;
+			if (Auth::user()->email == 'l-ywz@hotmail.com') {
+				$user->last_used_proxy = $proxy;
 				$user->save();
+				$instagram->setProxy($proxy);
+				Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' set proxy to: ' . $proxy);
 			} else {
-				$instagram->setProxy($user->last_used_proxy);
+				$last_used_proxy = $user->last_used_proxy;
+				if ($last_used_proxy === NULL) {
+					$instagram->setProxy($proxy->proxy);
+					$user->last_used_proxy = $proxy->proxy;
+					$user->save();
+				} else {
+					$instagram->setProxy($user->last_used_proxy);
+				}
+				Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' set proxy to: ' . $proxy->proxy);
 			}
 
 			$explorer_response = $instagram->login($ig_username, $ig_password);
@@ -140,6 +150,7 @@ class InstagramProfileController extends Controller
 
 		}
 		catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
 			$profile_log->save();
 
@@ -153,6 +164,7 @@ class InstagramProfileController extends Controller
 			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required", 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
 
@@ -167,6 +179,7 @@ class InstagramProfileController extends Controller
 			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
 		}
 		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
 			$profile_log->error_msg = $endpoint_ex->getMessage();
 			$profile_log->save();
 
@@ -181,6 +194,7 @@ class InstagramProfileController extends Controller
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage(), 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
+			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' ChallengeRequiredException: ' . $challenge_required_ex->getMessage());
 			$profile_log->error_msg = $challenge_required_ex->getMessage();
 			$profile_log->save();
 			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
@@ -196,6 +210,7 @@ class InstagramProfileController extends Controller
 			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url, 'active_request' => $new_add_profile_requests->id ]);
 		}
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
 		}
 	}
