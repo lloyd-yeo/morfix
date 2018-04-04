@@ -234,6 +234,7 @@
 					</div>
 				</div>
 			@endif
+
 			@if(empty(Auth::user()->address))
 				<div class="block">
 					<div class="block-header">
@@ -271,29 +272,8 @@
 
 					</div>
 				</div>
-				<script>
-                    // function update_card_details() {
-                    //     if(confirm("Are you sure to change your card details?")){
-                    //         var formdata = {
-                    //           'card_holder' : $('#braintree__card-view-input__cardholder-name').val(),
-                    //           'card_number' : $('#').val(),
-                    //           'expiration' : $('#expiration').val(),
-                    //           'cvv' : $('#cvv').val(),
-                    //           'postal_code' : $('#postal-code').val()
-                    //         }
-                    //         $.ajax({
-                    //             type: "POST",
-                    //             url: "/update-details",
-                    //             dataType: "json",
-                    //             success:  function(success){
-                    //                 //alert("---"+data);
-                    //                 alert("Address successfully added");
-                    //                 window.location.reload(true);
-                    //             }
-                    //         });
-                    //     }
-                    // }
 
+				<script>
                     var button = document.querySelector('#submit-button');
 
                     $(document).ready(function () {
@@ -325,7 +305,8 @@
                     });
 				</script>
 			</div>
-			@if(!is_null(Auth::user()->braintree_id))
+
+			@if(Auth::user()->braintree_id != NULL)
 				<div class="block" id="braintree-value">
 					<div class="block-header">
 						<h3 class="block-title">Update card details</h3>
