@@ -67,7 +67,6 @@ class SettingsController extends Controller
 
 			//Remove all active subscription
 			$subscriptions_      = NULL;
-			$invoices_ = NULL;
 			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
 //			foreach ($user_stripe_details as $user_stripe_detail) {
 //				$stripe_id   = $user_stripe_detail->stripe_id;

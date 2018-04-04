@@ -70,8 +70,7 @@
 								@elseif ($subscription->plan->id == "0197")
 									<td class="text-center"><label class="label label-primary">Business</label></td>
 								@elseif ($subscription->plan->id == "0247")
-									<td class="text-center"><label class="label label-primary">Additional 5
-									                                                           Accounts</label></td>
+									<td class="text-center"><label class="label label-primary">Additional 5 Accounts</label></td>
 								@endif
 								{{--<td class="text-center">{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_start)->diffForHumans() }}</td>--}}
 								{{--<td class="text-center">{{ Carbon\Carbon::createFromTimestamp($subscription->current_period_end)->toDayDateTimeString() }}</td>--}}
