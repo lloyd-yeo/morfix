@@ -10,6 +10,7 @@ use App\EngagementGroupJob;
 use App\InstagramHelper;
 use App\InstagramProfile;
 use App\InstagramProfileMedia;
+use Log;
 
 class EngagementGroupController extends Controller {
 
