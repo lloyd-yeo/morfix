@@ -7,6 +7,7 @@ use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Exception\NotFoundException;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\Signatures;
+use Log;
 
 class InstagramHelper {
 
