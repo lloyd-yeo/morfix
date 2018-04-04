@@ -79,7 +79,7 @@
         </li>
         <li class="hidden-xs hidden-sm">
             <!--Layout API, functionality initialized in App() -> uiLayoutApi()--> 
-            <button class="btn btn-default text-black" type="button" onclick="javascript:location.href = 'faq'">
+            <button class="btn btn-default text-black" type="button" onclick="javascript:location.href = 'https://app.morfix.co/faq'">
                 <i class="fa fa-question-circle-o"></i> FAQ <small style="font-style: italic;">(Having issues? 90% of it can be solved by reading our FAQ)</small>
             </button>
         </li>
