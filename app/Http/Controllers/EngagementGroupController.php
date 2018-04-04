@@ -133,17 +133,29 @@ class EngagementGroupController extends Controller
 
 	public function schedule(Request $request, $media_id)
 	{
+		Log::info("[ENGAGEMENT GROUP PROFILE ENGAGEMENT] " . Auth::user()->email . " sent [" . $media_id . "] for engagement.");
+
 		$user = User::where('email', Auth::user()->email)->first();
+
 		if ($user->engagement_quota > 0) {
+			$with_comment = $request->input('comment');
+
+			if ($with_comment) {
+				Log::info("[ENGAGEMENT GROUP PROFILE ENGAGEMENT] " . Auth::user()->email . " [" . $media_id . "] engage with comments.");
+			} else {
+				Log::info("[ENGAGEMENT GROUP PROFILE ENGAGEMENT] " . Auth::user()->email . " [" . $media_id . "] engage without comments.");
+			}
+
 			$engagement_group_job = EngagementGroupJob::where('media_id', '=', $media_id)->first();
-			if ($engagement_group_job === NULL) {
+
+			if ($engagement_group_job == NULL) {
 				$engagement_group_job           = new EngagementGroupJob;
 				$engagement_group_job->media_id = $media_id;
 				$engagement_group_job->engaged  = 0;
 				if ($engagement_group_job->save()) {
 					$user->engagement_quota = $user->engagement_quota - 1;
 					$user->save();
-					$job = new \App\Jobs\EngagementGroup($media_id, $request->input('profile_id'));
+					$job = new \App\Jobs\EngagementGroup($media_id, $request->input('profile_id'), $with_comment);
 					$job->onQueue('engagementgroup');
 					dispatch($job);
 				}
@@ -156,6 +168,7 @@ class EngagementGroupController extends Controller
 				return Response::json([ "success" => FALSE, 'message' => "Your image has already been sent for engagement before." ]);
 			}
 		} else {
+			Log::info("[ENGAGEMENT GROUP PROFILE ENGAGEMENT] " . Auth::user()->email . " ran out of engagement quotas.");
 			return Response::json([ "success" => FALSE, 'message' => "You've ran out of engagement credits. Do try again tomorrow." ]);
 		}
 	}

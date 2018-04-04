@@ -37,7 +37,7 @@ jQuery(function () {
             showLoaderOnConfirm: true,
             preConfirm: function () {
               return new Promise(function (resolve, reject) {
-                  $.post('/engagement-group/schedule/' + $media_id, { profile_id: $profile_id }, function (data) {
+                  $.post('/engagement-group/schedule/' + $media_id, { profile_id: $profile_id, comment: 1 }, function (data) {
                         if (data.success === true) {
                            resolve()
                         } else {
@@ -55,6 +55,41 @@ jQuery(function () {
             });
         });
         
+    });
+
+    $(".engagement-btn-no-comment").on("click", function(){
+        $media_id = $(this).attr('data-image-id');
+        $profile_id = $(this).attr('data-profile-id');
+
+        swal({
+            title: 'Send for Engagement Group',
+            text: "You will use 1 engagement credit for boosting this post.",
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, boost my post without Comments!',
+            showLoaderOnConfirm: true,
+            preConfirm: function () {
+              return new Promise(function (resolve, reject) {
+                  $.post('/engagement-group/schedule/' + $media_id, { profile_id: $profile_id, comment: 0 }, function (data) {
+                        if (data.success === true) {
+                           resolve()
+                        } else {
+                           reject(data.message)
+                        }
+                    },"json");
+              });
+            },
+            allowOutsideClick: false
+          }).then(function () {
+            swal({
+              type: 'success',
+              title: 'Sent!',
+              text: 'Your picture will see increased engagement within the next 24 hours!'
+            });
+        });
+
     });
     
     

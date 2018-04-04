@@ -62,6 +62,11 @@
                                                         <i class="fa fa-instagram"></i> Send for Engagement
                                                     </a>
                                                 </div>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a class="btn btn-default engagement-btn-no-comment" data-profile-id="{{ $ig_profile->id }}" data-image-id="{{ $media->media_id }}">
+                                                        <i class="fa fa-instagram"></i> Send for Engagement (w/o Comments)
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
