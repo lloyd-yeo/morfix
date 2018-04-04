@@ -41,7 +41,7 @@ class SettingsController extends Controller
 	{
 		//get recent subscription
 		\Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
-		$subscriptions = [];
+		$stripe_subscriptions = [];
 		$invoices      = [];
 		$invoices_     = [];
 		$agreement_id = "";
@@ -70,13 +70,13 @@ class SettingsController extends Controller
 				$subscriptions_listings = Subscription::all([ 'customer' => $user_stripe_id ]);
 
 				foreach ($subscriptions_listings->autoPagingIterator() as $subscription) {
-					$subscriptions[] = $subscription;
+					$stripe_subscriptions[] = $subscription;
 				}
 			}
 		}
 
 		return view('settings.index', [
-			'subscriptions' => $subscriptions,
+			'stripe_subscriptions' => $stripe_subscriptions,
 			'invoices'      => $invoices,
 			'invoices_'     => $invoices_,
 			'agreement_id'  => $agreement_id,

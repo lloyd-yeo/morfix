@@ -24,6 +24,8 @@ class EngagementGroupController extends Controller {
      */
     public function index() {
 
+    	Log::info("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " is accessing engagement group index page. Loading up pictures...");
+
         $instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
                 ->take(Auth::user()->num_acct)
                 ->get();
@@ -32,10 +34,13 @@ class EngagementGroupController extends Controller {
 
         foreach ($instagram_profiles as $ig_profile) {
             if (InstagramHelper::login($instagram, $ig_profile, 0)) {
+
                 $items = $instagram->timeline->getSelfUserFeed()->getItems();
+
                 foreach ($items as $item) {
                     try {
                         $image_url = "";
+
                         if (is_null($item->getImageVersions2())) {
                             //is carousel media
                             $image_url = $item->getCarouselMedia()[0]
@@ -47,6 +52,7 @@ class EngagementGroupController extends Controller {
                                     ->getCandidates()[0]
                                     ->getUrl();
                         }
+
                         try {
                             $new_profile_post = new InstagramProfileMedia;
                             $new_profile_post->insta_username = $ig_profile->insta_username;
