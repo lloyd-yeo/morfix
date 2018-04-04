@@ -217,13 +217,13 @@
 		<!-- END Dynamic Table Full -->
 			<div id="edit_address"></div>
 
-			@if((Auth::user()->address))
+			@if(Auth::user()->address)
 				<div class="block" id="display_address">
 					<div class="block-header">
 						<h3 class="block-title">Personal Address</h3>
 					</div>
 					<div class="block-content">
-						<?= Auth::user()->address ?>
+						{{ Auth::user()->address }}
 						<br><br>
 						<button class="btn btn-primary" type="button" onclick="edit_address_button();">Update address
 						</button>
@@ -578,7 +578,7 @@
                 '                </div>\n' +
                 '                <div class="block-content">\n' +
                 '                    <form id="address_form" action="" method="POST">\n' +
-                '                        <textarea name="address" id="address" class="form-control"><?= Auth::user()->address ?></textarea>\n' +
+                '                        <textarea name="address" id="address" class="form-control">{{ Auth::user()->address }}</textarea>\n' +
                 '                        <br>\n' +
                 '                        <button type="button" onclick="save_address();" class="btn btn-primary">Save Update</button>\n' +
                 '                    </form>\n' +
