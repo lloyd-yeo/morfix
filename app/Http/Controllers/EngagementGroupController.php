@@ -57,7 +57,7 @@ class EngagementGroupController extends Controller
 						}
 
 						try {
-							$new_profile_post = InstagramProfileMedia::where('media_id', $item->getPk())->first()
+							$new_profile_post = InstagramProfileMedia::where('media_id', $item->getPk())->first();
 							if ($new_profile_post == NULL) {
 								$new_profile_post                 = new InstagramProfileMedia;
 								$new_profile_post->insta_username = $ig_profile->insta_username;
