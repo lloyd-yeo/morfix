@@ -38,10 +38,11 @@ class EngagementGroupController extends Controller {
 
                 $items = $instagram->timeline->getSelfUserFeed()->getItems();
 
+	            Log::error("[ENGAGEMENT GROUP INDEX] GET ITEMS " . Auth::user()->email . " " . var_export($items, true));
+
                 foreach ($items as $item) {
                     try {
                         $image_url = "";
-
                         if (is_null($item->getImageVersions2())) {
                             //is carousel media
                             $image_url = $item->getCarouselMedia()[0]
@@ -63,11 +64,18 @@ class EngagementGroupController extends Controller {
                             $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->getTakenAt());
                             $new_profile_post->save();
                         } catch (\Exception $ex) {
-//                        echo $ex->getMessage();
+	                        Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $ex->getMessage());
+	                        Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $ex->getTraceAsString());
                         }
+
                     } catch (\ErrorException $e) {
+	                    Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $e->getMessage());
+	                    Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $e->getTraceAsString());
                         $this->profile->error_msg = $e->getMessage();
                         $this->profile->save();
+                    } catch (\Exception $ex) {
+	                    Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $ex->getMessage());
+	                    Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $ex->getTraceAsString());
                     }
                 }
             }
