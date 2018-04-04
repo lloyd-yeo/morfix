@@ -54,9 +54,23 @@ class InstagramProfileController extends Controller
 
 		$instagram = InstagramHelper::initInstagram();
 
+		$proxies = [
+			'http://7708f98575:SvEH1i87@104.203.100.176:4444',
+			'http://7708f98575:SvEH1i87@107.173.6.37:4444',
+			'http://7708f98575:SvEH1i87@45.57.212.163:4444',
+			'http://7708f98575:SvEH1i87@23.94.151.26:4444',
+		];
+
 		$proxy = NULL;
 		if (Auth::user()->email == 'l-ywz@hotmail.com' || Auth::user()->email == 'kamelia.pavliuc@mail.ru') {
-			$proxy = 'http://7708f98575:SvEH1i87@104.203.100.176:4444';
+			switch ($ig_username) {
+				case 'theluxurymaker':
+					$proxy = $proxies[0];
+					break;
+				case 'ruiming86':
+					$proxy = $proxies[1];
+					break;
+			}
 			Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using proxy: ' . $proxy);
 		} else {
 			$proxy = Proxy::inRandomOrder()->first();
