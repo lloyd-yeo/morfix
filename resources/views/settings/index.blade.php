@@ -47,6 +47,7 @@
 					<table class="table table-bordered table-striped js-dataTable-subscription">
 						<thead>
 						<tr>
+							<th class="text-center">Subscription ID</th>
 							<th class="text-center">Subscription</th>
 							{{--<th class="text-center"><i class="fa fa-clock-o"></i> Subscription Start (GMT+8)</th>--}}
 							{{--<th class="text-center"><i class="fa fa-clock-o"></i> Subscription End (GMT+8)</th>--}}
@@ -57,6 +58,7 @@
 						<tbody>
 						@foreach ($subscriptions as $subscription)
 							<tr>
+								<td class="text-center"><label class="label label-primary">{{ $subscription->id }}</label></td>
 								@if ($subscription->plan->id == "0137")
 									<td class="text-center"><label class="label label-info">Premium</label></td>
 								@elseif ($subscription->plan->id == "MX370")
