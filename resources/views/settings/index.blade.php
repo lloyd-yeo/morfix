@@ -102,7 +102,6 @@
 										<div class="btn-group">
 											<button class="btn btn-xs btn-success btn-pay-invoice"
 											        data-sub-id="{{ $subscription->id }}"
-											        data-invoice-id="{{ $invoices[$subscription->id]->id }}"
 											        type="button" data-toggle="tooltip" title="Pay Subscription"><i
 														class="fa fa-credit-card"></i></button>
 										</div>
