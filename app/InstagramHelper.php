@@ -56,7 +56,7 @@ class InstagramHelper {
 			echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
 		}
 
-		if ($ig_profile != "theluxurymaker") {
+		if ($ig_profile->insta_username != "theluxurymaker") {
 			InstagramHelper::verifyAndReassignProxy($ig_profile);
 			$instagram->setProxy($ig_profile->proxy);
 		} else {
