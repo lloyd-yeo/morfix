@@ -66,24 +66,24 @@ class SettingsController extends Controller
 			//Stripe user
 
 			//Remove all active subscription
-			Auth::user()->deleteStripeSubscriptions();
+//			Auth::user()->deleteStripeSubscriptions();
 			$subscriptions_      = NULL;
 
 			$user_stripe_details = StripeDetail::where('email', Auth::user()->email)->get();
-//			foreach ($user_stripe_details as $user_stripe_detail) {
-//				$stripe_id   = $user_stripe_detail->stripe_id;
-//				$active_subs = StripeActiveSubscription::where('stripe_id', $stripe_id)->get();
-//				foreach ($active_subs as $active_sub) {
-//					$subscriptions[] = Subscription::retrieve($active_sub->stripe_subscription_id);
-//				}
-//				$invoices_ = Invoice::all([ 'limit' => 100, 'customer' => $stripe_id ]);
-//			}
+			foreach ($user_stripe_details as $user_stripe_detail) {
+				$stripe_id   = $user_stripe_detail->stripe_id;
+				$active_subs = StripeActiveSubscription::where('stripe_id', $stripe_id)->get();
+				foreach ($active_subs as $active_sub) {
+					$active_sub->delete();
+				}
+			}
 
 			foreach ($user_stripe_details as $user_stripe_detail) {
 				$user_stripe_id         = $user_stripe_detail->stripe_id;
 				$subscriptions_listings = Subscription::all([ 'customer' => $user_stripe_id ]);
 
-				foreach ($subscriptions as $subscription) {
+				foreach ($subscriptions_listings->autoPagingIterator() as $subscription) {
+					$subscriptions[] = $subscription;
 					//The Invoices under this subscription
 					$invoice_listings = Invoice::all([ "subscription" => $subscription->id ]);
 					$stripe_id        = $subscription->customer;

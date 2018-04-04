@@ -38,8 +38,8 @@ class User extends Authenticatable {
     }
     
     public function deleteStripeSubscriptions() {
-        //Remove al active subscription
-        $deleted_subscriptions = StripeActiveSubscription::where('stripe_id', $this->stripe_id)->delete();
+        //Remove all active subscription
+//        $deleted_subscriptions = StripeActiveSubscription::where('stripe_id', $this->stripe_id)->delete();
     }
     
     public function refreshStripeSubscriptions() {
