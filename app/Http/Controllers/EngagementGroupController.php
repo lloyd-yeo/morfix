@@ -56,13 +56,15 @@ class EngagementGroupController extends Controller {
                         }
 
                         try {
-                            $new_profile_post = new InstagramProfileMedia;
-                            $new_profile_post->insta_username = $ig_profile->insta_username;
-                            $new_profile_post->media_id = $item->getPk();
-                            $new_profile_post->image_url = $image_url;
-                            $new_profile_post->code = $item->getCode();
-                            $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->getTakenAt());
-                            $new_profile_post->save();
+                        	if (InstagramProfileMedia::where('media_id', $item->getPk())->first() == NULL) {
+		                        $new_profile_post = new InstagramProfileMedia;
+		                        $new_profile_post->insta_username = $ig_profile->insta_username;
+		                        $new_profile_post->media_id = $item->getPk();
+		                        $new_profile_post->image_url = $image_url;
+		                        $new_profile_post->code = $item->getCode();
+		                        $new_profile_post->created_at = \Carbon\Carbon::createFromTimestamp($item->getTakenAt());
+		                        $new_profile_post->save();
+	                        }
                         } catch (\Exception $ex) {
 	                        Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $ex->getMessage());
 	                        Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $ex->getTraceAsString());
