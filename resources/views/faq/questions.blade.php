@@ -24,7 +24,8 @@
                 <a class="block block-link-hover3 question-link" href="{{ $topic->topic_url }}/{{ str_slug($qna->question) }}">
                     <div class="block-content" style='padding-bottom: 40px;'>
                         <div class="push">
-                            <em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>
+                            {{--<em class="pull-right">{{ \Carbon\Carbon::parse($qna->written_at)->diffForHumans() }}</em>--}}
+                            <em class="pull-right">{{ $qna->written_at }}</em>
                             <span class="text-primary font-w600">{{ $qna->author }}</span>
                             last updated this on {{ \Carbon\Carbon::parse($qna->written_at)->toFormattedDateString() }}
                         </div>
