@@ -129,78 +129,78 @@
 			<!-- END Dynamic Table Full -->
 
 			<!-- Dynamic Table Full -->
-			<div class="block">
-				<div class="block-header">
-					<h3 class="block-title">My Invoices</h3>
-				</div>
-				<div class="block-content">
-					<!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-					<table class="table table-bordered table-striped js-dataTable-invoices">
-						<thead>
-						<tr>
-							<th class="text-center">Invoice</th>
-							<th class="text-center"><i class="fa fa-tags"></i> Invoice Plan</th>
-							<th class="text-center"><i class="fa fa-clock-o"></i> Invoice Date (GMT+8)</th>
-							<th class="text-center">Status</th>
-							<th></th>
-						</tr>
-						</thead>
-						<tbody>
-						@if($invoices_ != NULL)
-							@foreach ($invoices_->autoPagingIterator() as $invoice)
-								<tr>
-									@foreach ($invoice->lines->data as $invoice_lines)
-										<td class="text-center">{{ $invoice->id }}</td>
+			{{--<div class="block">--}}
+				{{--<div class="block-header">--}}
+					{{--<h3 class="block-title">My Invoices</h3>--}}
+				{{--</div>--}}
+				{{--<div class="block-content">--}}
+					{{--<!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->--}}
+					{{--<table class="table table-bordered table-striped js-dataTable-invoices">--}}
+						{{--<thead>--}}
+						{{--<tr>--}}
+							{{--<th class="text-center">Invoice</th>--}}
+							{{--<th class="text-center"><i class="fa fa-tags"></i> Invoice Plan</th>--}}
+							{{--<th class="text-center"><i class="fa fa-clock-o"></i> Invoice Date (GMT+8)</th>--}}
+							{{--<th class="text-center">Status</th>--}}
+							{{--<th></th>--}}
+						{{--</tr>--}}
+						{{--</thead>--}}
+						{{--<tbody>--}}
+						{{--@if($invoices_ != NULL)--}}
+							{{--@foreach ($invoices_->autoPagingIterator() as $invoice)--}}
+								{{--<tr>--}}
+									{{--@foreach ($invoice->lines->data as $invoice_lines)--}}
+										{{--<td class="text-center">{{ $invoice->id }}</td>--}}
 
-										@if ($invoice_lines->plan->id == "0137")
-											<td class="text-center"><label class="label label-info">Premium</label></td>
-										@elseif ($invoice_lines->plan->id == "MX370")
-											<td class="text-center"><label class="label label-danger">Pro</label></td>
-										@elseif ($invoice_lines->plan->id == "0297")
-											<td class="text-center"><label class="label label-primary">Business</label>
-											</td>
-										@elseif ($invoice_lines->plan->id == "MX970")
-											<td class="text-center"><label
-														class="label label-primary">Mastermind</label>
-											</td>
-										@elseif ($invoice_lines->plan->id == "0167")
-											<td class="text-center"><label class="label label-primary">Business</label>
-											</td>
-										@elseif ($invoice_lines->plan->id == "0197")
-											<td class="text-center"><label class="label label-primary">Business</label>
-											</td>
-										@elseif ($invoice_lines->plan->id == "0247")
-											<td class="text-center"><label class="label label-primary">Additional 5
-											                                                           Accounts</label>
-											</td>
-										@endif
-										<td class="text-center">{{ \Carbon\Carbon::createFromTimestamp($invoice->date)->toDayDateTimeString() }}</td>
-										@if (!$invoice->paid)
-											<td class="text-center"><label class="label label-danger">Unpaid</label>
-											</td>
-										@else
-											<td class="text-center"><label class="label label-success">Paid</label></td>
-										@endif
-									@endforeach
+										{{--@if ($invoice_lines->plan->id == "0137")--}}
+											{{--<td class="text-center"><label class="label label-info">Premium</label></td>--}}
+										{{--@elseif ($invoice_lines->plan->id == "MX370")--}}
+											{{--<td class="text-center"><label class="label label-danger">Pro</label></td>--}}
+										{{--@elseif ($invoice_lines->plan->id == "0297")--}}
+											{{--<td class="text-center"><label class="label label-primary">Business</label>--}}
+											{{--</td>--}}
+										{{--@elseif ($invoice_lines->plan->id == "MX970")--}}
+											{{--<td class="text-center"><label--}}
+														{{--class="label label-primary">Mastermind</label>--}}
+											{{--</td>--}}
+										{{--@elseif ($invoice_lines->plan->id == "0167")--}}
+											{{--<td class="text-center"><label class="label label-primary">Business</label>--}}
+											{{--</td>--}}
+										{{--@elseif ($invoice_lines->plan->id == "0197")--}}
+											{{--<td class="text-center"><label class="label label-primary">Business</label>--}}
+											{{--</td>--}}
+										{{--@elseif ($invoice_lines->plan->id == "0247")--}}
+											{{--<td class="text-center"><label class="label label-primary">Additional 5--}}
+											                                                           {{--Accounts</label>--}}
+											{{--</td>--}}
+										{{--@endif--}}
+										{{--<td class="text-center">{{ \Carbon\Carbon::createFromTimestamp($invoice->date)->toDayDateTimeString() }}</td>--}}
+										{{--@if (!$invoice->paid)--}}
+											{{--<td class="text-center"><label class="label label-danger">Unpaid</label>--}}
+											{{--</td>--}}
+										{{--@else--}}
+											{{--<td class="text-center"><label class="label label-success">Paid</label></td>--}}
+										{{--@endif--}}
+									{{--@endforeach--}}
 
-									<td class="text-center">
-										@if (!$invoice->paid)
-											<div class="btn-group">
-												<button class="btn btn-xs btn-success btn-pay-invoice"
-												        data-invoice-id="{{ $invoice->id }}" type="button"
-												        data-toggle="tooltip" title="Pay Invoice"><i
-															class="fa fa-credit-card"></i></button>
-											</div>
-										@endif
-									</td>
+									{{--<td class="text-center">--}}
+										{{--@if (!$invoice->paid)--}}
+											{{--<div class="btn-group">--}}
+												{{--<button class="btn btn-xs btn-success btn-pay-invoice"--}}
+												        {{--data-invoice-id="{{ $invoice->id }}" type="button"--}}
+												        {{--data-toggle="tooltip" title="Pay Invoice"><i--}}
+															{{--class="fa fa-credit-card"></i></button>--}}
+											{{--</div>--}}
+										{{--@endif--}}
+									{{--</td>--}}
 
-								</tr>
-							@endforeach
-						@endif
-						</tbody>
-					</table>
-				</div>
-			</div>
+								{{--</tr>--}}
+							{{--@endforeach--}}
+						{{--@endif--}}
+						{{--</tbody>--}}
+					{{--</table>--}}
+				{{--</div>--}}
+			{{--</div>--}}
 
 			@if (Auth::user()->paypal == 1)
 				<div class="block">
