@@ -95,11 +95,29 @@ class EngagementGroupController extends Controller
 
 	public function profile(Request $request, $id)
 	{
+		Log::info("[ENGAGEMENT GROUP PROFILE UPLOADS] Retrieving user_insta_profile with ID of: " . $id);
+
 		$ig_profile = InstagramProfile::find($id);
+
+		if ($ig_profile != NULL) {
+			Log::info("[ENGAGEMENT GROUP PROFILE UPLOADS] Retrieved user_insta_profile: " . $ig_profile->insta_username);
+		} else {
+			Log::info("[ENGAGEMENT GROUP PROFILE UPLOADS] Missing user_insta_profile: " . $id);
+		}
 
 		$medias = InstagramProfileMedia::where('insta_username', $ig_profile->insta_username)
 		                               ->orderBy('created_at', 'desc')
 		                               ->get();
+
+		if ($medias->count() > 0) {
+			Log::info("[ENGAGEMENT GROUP PROFILE UPLOADS] Retrieved media count of: " . $medias->count());
+		} else {
+			if ($ig_profile != NULL) {
+				Log::info("[ENGAGEMENT GROUP PROFILE UPLOADS] No media retrieved for user_insta_profile: " . $ig_profile->insta_username);
+			} else {
+				Log::info("[ENGAGEMENT GROUP PROFILE UPLOADS] No media retrieved for missing user_insta_profile: " . $id);
+			}
+		}
 
 		return view('engagement-group.profile', [
 			'ig_profile' => $ig_profile,
