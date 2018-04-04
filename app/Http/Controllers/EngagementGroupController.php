@@ -50,17 +50,23 @@ class EngagementGroupController extends Controller
 							//is carousel media
 							$image_url = $item->getCarouselMedia()[0]
 								             ->getImageVersions2()
-								             ->getCandidates()[0]
-								->getUrl();
+								             ->getCandidates()[0]->getUrl();
 						} else {
 							$image_url = $item->getImageVersions2()
-							                  ->getCandidates()[0]
-								->getUrl();
+							                  ->getCandidates()[0]->getUrl();
 						}
 
 						try {
-							if (InstagramProfileMedia::where('media_id', $item->getPk())->first() == NULL) {
+							$new_profile_post = InstagramProfileMedia::where('media_id', $item->getPk())->first()
+							if ($new_profile_post == NULL) {
 								$new_profile_post                 = new InstagramProfileMedia;
+								$new_profile_post->insta_username = $ig_profile->insta_username;
+								$new_profile_post->media_id       = $item->getPk();
+								$new_profile_post->image_url      = $image_url;
+								$new_profile_post->code           = $item->getCode();
+								$new_profile_post->created_at     = \Carbon\Carbon::createFromTimestamp($item->getTakenAt());
+								$new_profile_post->save();
+							} else {
 								$new_profile_post->insta_username = $ig_profile->insta_username;
 								$new_profile_post->media_id       = $item->getPk();
 								$new_profile_post->image_url      = $image_url;
