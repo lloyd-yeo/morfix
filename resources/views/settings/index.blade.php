@@ -56,7 +56,7 @@
 						</tr>
 						</thead>
 						<tbody>
-						@forelse ($subscriptions as $subscription)
+						@forelse ($stripe_subscriptions as $subscription)
 							<tr>
 								<td class="text-center"><label
 											class="label label-primary">{{ $subscription->id }}</label></td>
