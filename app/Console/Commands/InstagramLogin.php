@@ -39,7 +39,7 @@ class InstagramLogin extends Command
      */
     public function handle()
     {
-        $instagram = InstagramHelper::initInstagram(true);
+        $instagram = InstagramHelper::initInstagram();
 
 //        $guzzle_options = array();
 //	    $guzzle_options['curl'] = array();
@@ -59,6 +59,8 @@ class InstagramLogin extends Command
 		    'porkpork', $guzzle_options
 	    );
 
+	    $discoverResponse = $instagram->people->discoverPeople();
+	    dump($discoverResponse);
     }
 
     public function getProxyList() {
