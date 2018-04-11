@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "912787186690bd4877ed5bcc32344b40",
+    "content-hash": "b500c23f316bdb3333cc0bf9c7de8cd9",
     "packages": [
         {
             "name": "aweber/aweber",
@@ -1906,17 +1906,17 @@
             "time": "2018-04-06T09:58:14+00:00"
         },
         {
-            "name": "mgp25/instagram-php",
+            "name": "lloydyeo/instagram-api",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mgp25/Instagram-API.git",
-                "reference": "5838b24cf3a94ef4af2d56ddc8ee276e04ec414d"
+                "url": "https://github.com/lloyd-yeo/Instagram-API.git",
+                "reference": "f1543907c4fd54cf91d0f06e5b226296a7b73dc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mgp25/Instagram-API/zipball/5838b24cf3a94ef4af2d56ddc8ee276e04ec414d",
-                "reference": "5838b24cf3a94ef4af2d56ddc8ee276e04ec414d",
+                "url": "https://api.github.com/repos/lloyd-yeo/Instagram-API/zipball/f1543907c4fd54cf91d0f06e5b226296a7b73dc4",
+                "reference": "f1543907c4fd54cf91d0f06e5b226296a7b73dc4",
                 "shasum": ""
             },
             "require": {
@@ -1968,16 +1968,21 @@
                     "name": "SteveJobzniak",
                     "homepage": "https://github.com/SteveJobzniak",
                     "role": "Developer"
+                },
+                {
+                    "name": "lloyd-yeo",
+                    "email": "ywz.lloyd@gmail.com",
+                    "role": "Developer"
                 }
             ],
-            "description": "Instagram's private API for PHP",
+            "description": "Modified Version of Instagram's private API for PHP from mgp25",
             "keywords": [
                 "api",
                 "instagram",
                 "php",
                 "private"
             ],
-            "time": "2018-04-06 18:17:00"
+            "time": "2018-04-11T17:37:41+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5929,7 +5934,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mgp25/instagram-php": 20
+        "lloydyeo/instagram-api": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

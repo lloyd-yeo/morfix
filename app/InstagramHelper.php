@@ -9,9 +9,9 @@ use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\Signatures;
 use Log;
 
-class InstagramHelper {
+class InstagramHelper extends \InstagramAPI\Request {
 
-	public static function initInstagram() {
+	public static function initInstagram($debug = false) {
 		$config = array();
 		$config["storage"] = "mysql";
 		$config['pdo'] = DB::connection('mysql_igsession')->getPdo();
@@ -21,7 +21,6 @@ class InstagramHelper {
 		//	    $config["dbhost"] = env('DB_HOST_3', '52.221.60.235');
 		//	    $config["dbname"] = env('DB_DATABASE_3', 'morfix');
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-		$debug = false;
 		$truncatedDebug = false;
 		$instagram = new Instagram($debug, $truncatedDebug, $config);
 

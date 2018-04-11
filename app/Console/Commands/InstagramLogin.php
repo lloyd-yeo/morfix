@@ -39,9 +39,16 @@ class InstagramLogin extends Command
      */
     public function handle()
     {
-        $instagram = InstagramHelper::initInstagram();
-        InstagramHelper::loginWithCustomProxy($instagram, 'adrianentrepreneur',
-	        'porkpork', 1, 'https://customer-rmofix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU@pr.oxylabs.io:8000');
+        $instagram = InstagramHelper::initInstagram(true);
+
+        $guzzle_options = array();
+	    $guzzle_options['curl'] = array();
+	    $guzzle_options['curl']['CURLOPT_PROXY'] = 'http://pr.oxylabs.io:8000';
+	    $guzzle_options['curl']['CURLOPT_PROXYUSERPWD'] = 'customer-rmofix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+
+	    $instagram->login('adrianentrepreneur',
+		    'porkpork', $guzzle_options
+	    );
 
     }
 }
