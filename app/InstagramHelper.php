@@ -146,7 +146,7 @@ class InstagramHelper extends \InstagramAPI\Request {
 		}
 
 		try {
-			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
+			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, NULL);
 			$flag = true;
 		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
 			$ig_profile->checkpoint_required = 1;
