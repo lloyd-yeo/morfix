@@ -74,6 +74,7 @@ class InstagramHelper {
 //			$ig_profile->invalid_user = 1;
 //			$ig_profile->save();
 		} catch (NetworkException $network_ex) {
+			dump($network_ex);
 //			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
 //			$ig_profile->save();
 //			InstagramHelper::verifyAndReassignProxy($ig_profile);
