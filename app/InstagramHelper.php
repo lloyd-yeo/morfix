@@ -42,6 +42,83 @@ class InstagramHelper {
 		}
 	}
 
+	/*
+	 * TRUE if the login was successful.
+	 * FALSE if the the login failed.
+	 */
+	public static function loginWithCustomProxy(Instagram $instagram, $insta_username, $insta_password, $debug = 1, $proxy) {
+		$flag = false;
+		$message = '';
+
+		if ($debug == 1) {
+			echo("Verifying proxy for profile: [" . $insta_username . "]\n");
+		}
+
+		$instagram->setProxy($proxy);
+
+		if ($debug == 1) {
+			echo("Logging in profile: [" . $insta_username . "] [" . $insta_password . "]\n");
+		}
+
+		try {
+			$explorer_response = $instagram->login($insta_username, $insta_password);
+			if ($debug == 1) {
+				dump($explorer_response);
+			}
+			$flag = true;
+		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+//			$ig_profile->checkpoint_required = 1;
+//			$ig_profile->save();
+			$message = "CheckpointRequiredException\n";
+		} catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
+//			$ig_profile->invalid_user = 1;
+//			$ig_profile->save();
+		} catch (NetworkException $network_ex) {
+//			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+//			$ig_profile->save();
+//			InstagramHelper::verifyAndReassignProxy($ig_profile);
+			$message = "NetworkException";
+//			try {
+//				$instagram->login($insta_username, $insta_password);
+//				$flag = true;
+//			} catch (\InstagramAPI\Exception\InstagramException $login_ex) {
+//				$message .= " with InstagramException\n";
+//			}
+		} catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+
+		} catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
+
+		} catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
+//			$ig_profile->incorrect_pw = 1;
+//			$ig_profile->save();
+		} catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+//			$ig_profile->incorrect_pw = 1;
+//			$ig_profile->save();
+			$message = "IncorrectPasswordException\n";
+		} catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
+//			$ig_profile->invalid_user = 1;
+//			$ig_profile->save();
+			$message = "AccountDisabledException\n";
+		} catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+//			$ig_profile->incorrect_pw = 1;
+//			$ig_profile->save();
+			$message = "IncorrectPasswordException\n";
+		} catch (\InstagramAPI\Exception\ChallengeRequiredException $challengerequired_ex) {
+//			$ig_profile->checkpoint_required = 1;
+//			$ig_profile->save();
+			$message = "ChallengeRequiredException\n";
+		} catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
+			$flag = false;
+		}
+
+		if (!$flag && $debug == 1) {
+			echo '[' . $insta_username . '] Error:  ' . $message . "\n";
+		} else if ($flag && $debug == 1) {
+			echo '[' . $insta_username . '] has been logged in.' . "\n";
+		}
+		return $flag;
+	}
+
 
 	/*
 	 * TRUE if the login was successful.

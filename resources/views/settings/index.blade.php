@@ -16,6 +16,7 @@
 
 @section('content')
 	<main id="main-container">
+
 		<div class="content bg-gray-lighter">
 			<div class="row items-push">
 				<div class="col-sm-7">
