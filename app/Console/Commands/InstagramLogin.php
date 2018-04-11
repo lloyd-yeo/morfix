@@ -41,7 +41,7 @@ class InstagramLogin extends Command
     {
         $instagram = InstagramHelper::initInstagram();
         InstagramHelper::loginWithCustomProxy($instagram, 'adrianentrepreneur',
-	        'porkpork', 1, 'http://customer-rmofix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU@pr.oxylabs.io:8000');
+	        'porkpork', 1, 'https://customer-rmofix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU@pr.oxylabs.io:8000');
 
     }
 }
