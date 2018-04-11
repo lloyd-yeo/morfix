@@ -44,7 +44,7 @@ class InstagramLogin extends Command
         $guzzle_options = array();
 	    $guzzle_options['curl'] = array();
 	    $guzzle_options['curl'][CURLOPT_PROXY] = 'http://pr.oxylabs.io:8000';
-	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmofix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
 	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 
 	    $instagram->login('adrianentrepreneur',
