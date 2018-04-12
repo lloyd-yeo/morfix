@@ -20,7 +20,7 @@ class InstagramLogin extends Command
      *
      * @var string
      */
-    protected $description = 'Manually login to Instagram';
+    protected $description = 'Manually login to Instagram {username} {password}';
 
     /**
      * Create a new command instance.
@@ -39,28 +39,29 @@ class InstagramLogin extends Command
      */
     public function handle()
     {
-        $instagram = InstagramHelper::initInstagram();
+        $instagram = InstagramHelper::initInstagram(true);
 
-//        $guzzle_options = array();
-//	    $guzzle_options['curl'] = array();
-//	    $guzzle_options['curl'][CURLOPT_PROXY] = 'http://pr.oxylabs.io:8000';
-//	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
-//	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+        $guzzle_options = array();
+	    $guzzle_options['curl'] = array();
+	    $guzzle_options['curl'][CURLOPT_PROXY] = 'http://pr.oxylabs.io:8000';
+	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 
 	    $proxy = $this->getProxyList()[0];
 	    
-	    $guzzle_options = array();
-	    $guzzle_options['curl'] = array();
-	    $guzzle_options['curl'][CURLOPT_PROXY] = $proxy;
-	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
-	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+//	    $guzzle_options = array();
+//	    $guzzle_options['curl'] = array();
+//	    $guzzle_options['curl'][CURLOPT_PROXY] = $proxy;
+//	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
+//	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 
-	    $instagram->login('adrianentrepreneur',
-		    'porkpork', $guzzle_options
+	    $login_response = $instagram->login($this->argument('username'),
+		    $this->argument('password'), $guzzle_options
 	    );
 
-	    $discoverResponse = $instagram->people->discoverPeople();
-	    dump($discoverResponse);
+//	    $discoverResponse = $instagram->people->discoverPeople();
+//	    dump($discoverResponse);
+	    dump($login_response);
     }
 
     public function getProxyList() {

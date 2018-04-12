@@ -119,12 +119,10 @@ class InstagramHelper extends \InstagramAPI\Request {
 		return $flag;
 	}
 
-
 	/*
 	 * TRUE if the login was successful.
 	 * FALSE if the the login failed.
 	 */
-
 	public static function login(Instagram $instagram, InstagramProfile $ig_profile, $debug = 1) {
 		$flag = false;
 		$message = '';
