@@ -58,6 +58,9 @@ class InstagramLogin extends Command
 				dump($challenge_response);
 				$select_verify_method_response = $instagram->selectVerifyMethod($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
 			    dump($select_verify_method_response);
+			    $verification_code = $this->ask('Please key in the 6 digit code sent by Instagram:');
+			    $finish_challenge_response = $instagram->finishChallengeVerification($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'), $verification_code);
+			    dump($finish_challenge_response);
 	    	}
 	    } catch (\Exception $ex) {
 			dump($ex);
