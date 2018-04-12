@@ -1911,12 +1911,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/lloyd-yeo/Instagram-API.git",
-                "reference": "58493ea7112508686fef8a07906ce82f3f16197e"
+                "reference": "5455848d74592463fd9fe507c879368307bf28d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lloyd-yeo/Instagram-API/zipball/58493ea7112508686fef8a07906ce82f3f16197e",
-                "reference": "58493ea7112508686fef8a07906ce82f3f16197e",
+                "url": "https://api.github.com/repos/lloyd-yeo/Instagram-API/zipball/5455848d74592463fd9fe507c879368307bf28d7",
+                "reference": "5455848d74592463fd9fe507c879368307bf28d7",
                 "shasum": ""
             },
             "require": {
@@ -1982,7 +1982,7 @@
                 "php",
                 "private"
             ],
-            "time": "2018-04-12 18:54:42"
+            "time": "2018-04-12 19:19:17"
         },
         {
             "name": "monolog/monolog",

@@ -56,7 +56,9 @@ class InstagramLogin extends Command
 		    } else {
 				$challenge_response = $instagram->makeRequestToChallengeUrl($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
 				dump($challenge_response);
-		    }
+				$select_verify_method_response = $instagram->selectVerifyMethod($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
+			    dump($select_verify_method_response);
+	    	}
 	    } catch (\Exception $ex) {
 			dump($ex);
 	    }
