@@ -41,27 +41,27 @@ class InstagramLogin extends Command
     {
         $instagram = InstagramHelper::initInstagram(true);
 
-//        $guzzle_options = array();
-//	    $guzzle_options['curl'] = array();
-//	    $guzzle_options['curl'][CURLOPT_PROXY] = 'http://pr.oxylabs.io:8000';
-//	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
-//	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-
-	    $proxy = $this->getProxyList()[0];
-	    
-	    $guzzle_options = array();
+        $guzzle_options = array();
 	    $guzzle_options['curl'] = array();
-	    $guzzle_options['curl'][CURLOPT_PROXY] = $proxy;
-	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
+	    $guzzle_options['curl'][CURLOPT_PROXY] = 'http://pr.oxylabs.io:8000';
+	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
 	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+
+//	    $proxy = $this->getProxyList()[0];
+	    
+//	    $guzzle_options = array();
+//	    $guzzle_options['curl'] = array();
+//	    $guzzle_options['curl'][CURLOPT_PROXY] = $proxy;
+//	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
+//	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 
 	    $login_response = $instagram->login($this->argument('username'),
 		    $this->argument('password'), $guzzle_options
 	    );
 
-	    $discoverResponse = $instagram->people->discoverPeople();
-	    dump($discoverResponse);
-//	    dump($login_response);
+//	    $discoverResponse = $instagram->people->discoverPeople();
+//	    dump($discoverResponse);
+	    dump($login_response);
     }
 
     public function getProxyList() {
