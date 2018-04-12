@@ -54,15 +54,8 @@ class InstagramLogin extends Command
 			    );
 			    dump($login_response);
 		    } else {
-			    $response = $this->request($this->argument('challenge_url'))
-				                    ->setGuzzleOptions($guzzle_options)
-			                     ->setNeedsAuth(false)
-			                     ->addPost('_csrftoken', $instagram->client->getToken())
-			                     ->addPost('username', $this->argument('username'))
-			                     ->addPost('device_id', $instagram->device_id)
-			                     ->addPost('password', $this->argument('password'))
-			                     ->getResponse(new \InstagramAPI\Response\LoginResponse());
-			    dump($response);
+				$challenge_response = $instagram->makeRequestToChallengeUrl($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
+				dump($challenge_response);
 		    }
 	    } catch (\Exception $ex) {
 			dump($ex);
