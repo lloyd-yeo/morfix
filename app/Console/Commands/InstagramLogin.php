@@ -13,14 +13,14 @@ class InstagramLogin extends Command
      *
      * @var string
      */
-    protected $signature = 'ig:lgin';
+    protected $signature = 'ig:lgin {username} {password}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Manually login to Instagram {username} {password}';
+    protected $description = 'Manually login to Instagram';
 
     /**
      * Create a new command instance.
