@@ -47,6 +47,10 @@ class InstagramLogin extends Command
 	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
 	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 
+	    $login_response = $instagram->login($this->argument('username'),
+		    $this->argument('password'), $guzzle_options
+	    );
+	    dump($login_response);
 	    dump($instagram->request('/challenge/4265107270/nIouDCNXO9/')->setGuzzleOptions($guzzle_options)->getRawResponse());
 
 //	    $proxy = $this->getProxyList()[0];
@@ -57,13 +61,11 @@ class InstagramLogin extends Command
 //	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
 //	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 
-//	    $login_response = $instagram->login($this->argument('username'),
-//		    $this->argument('password'), $guzzle_options
-//	    );
+
 
 //	    $discoverResponse = $instagram->people->discoverPeople();
 //	    dump($discoverResponse);
-//	    dump($login_response);
+
     }
 
     public function getProxyList() {
