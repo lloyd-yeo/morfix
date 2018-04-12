@@ -60,11 +60,14 @@ class InstagramLogin extends Command
 			} else {
 				$challenge_response = $this->makeRequestToChallengeUrl($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
 				dump($challenge_response);
-				$select_verify_method_response = $this->selectVerifyMethod($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
-				dump($select_verify_method_response);
-				$verification_code         = $this->ask('Please key in the 6 digit code sent by Instagram:');
-				$finish_challenge_response = $this->finishChallengeVerification($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'), $verification_code);
-				dump($finish_challenge_response);
+				if ($challenge_response->getStepName() == 'select_verify_method') {
+					$select_verify_method_response = $this->selectVerifyMethod($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
+					dump($select_verify_method_response);
+				} else if ($challenge_response->getStepName() == 'verify_email' || $challenge_response->getStepName() == 'verify_phone') {
+					$verification_code         = $this->ask('Please key in the 6 digit code sent by Instagram:');
+					$finish_challenge_response = $this->finishChallengeVerification($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'), $verification_code);
+					dump($finish_challenge_response);
+				}
 			}
 		}
 		catch (\Exception $ex) {
