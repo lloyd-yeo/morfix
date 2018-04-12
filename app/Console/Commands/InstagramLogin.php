@@ -58,12 +58,12 @@ class InstagramLogin extends Command
 				);
 				dump($login_response);
 			} else {
-				$challenge_response = $this->makeRequestToChallengeUrl($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
+				$challenge_response = $this->makeRequestToChallengeUrl($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
 				dump($challenge_response);
-				$select_verify_method_response = $this->selectVerifyMethod($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
+				$select_verify_method_response = $this->selectVerifyMethod($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
 				dump($select_verify_method_response);
 				$verification_code         = $this->ask('Please key in the 6 digit code sent by Instagram:');
-				$finish_challenge_response = $this->finishChallengeVerification($this->argument('username'), $this->argument('password'), $this->argument('challenge_url'), $verification_code);
+				$finish_challenge_response = $this->finishChallengeVerification($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'), $verification_code);
 				dump($finish_challenge_response);
 			}
 		}
