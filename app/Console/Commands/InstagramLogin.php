@@ -94,7 +94,7 @@ class InstagramLogin extends Command
 		if (empty($challengeUrl)) {
 			throw new \InvalidArgumentException('You must provide a challenge url to makeRequestToChallengeUrl().');
 		}
-
+		$instagram->_setUser($username, $password);
 		$response = $instagram->request($challengeUrl)
 		                 ->setNeedsAuth(FALSE)
 		                 ->addParam('_csrftoken', $instagram->client->getToken())
@@ -115,7 +115,7 @@ class InstagramLogin extends Command
 		if (empty($challengeUrl)) {
 			throw new \InvalidArgumentException('You must provide a challenge url to selectVerifyMethod().');
 		}
-
+		$instagram->_setUser($username, $password);
 		$response = $instagram->request($challengeUrl)
 		                 ->setNeedsAuth(FALSE)
 		                 ->addPost('_csrftoken', $instagram->client->getToken())
@@ -138,7 +138,7 @@ class InstagramLogin extends Command
 		if (empty($challengeUrl) || empty($verificationCode)) {
 			throw new \InvalidArgumentException('You must provide a challenge url & verification code to finishChallengeVerification().');
 		}
-
+		$instagram->_setUser($username, $password);
 		$response = $instagram->request($challengeUrl)
 		                 ->setNeedsAuth(FALSE)
 		                 ->addPost('_csrftoken', $instagram->client->getToken())
