@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use InstagramAPI\Instagram;
 use App\InstagramHelper;
+use Illuminate\Console\Command;
+use \InstagramAPI\Response\LoginResponse;
 
 class InstagramLogin extends Command
 {
@@ -54,7 +54,15 @@ class InstagramLogin extends Command
 			    );
 			    dump($login_response);
 		    } else {
-			    dump($instagram->request($this->argument('challenge_url'))->setGuzzleOptions($guzzle_options)->getRawResponse());
+			    $response = $this->request($this->argument('challenge_url'))
+				                    ->setGuzzleOptions($guzzle_options)
+			                     ->setNeedsAuth(false)
+			                     ->addPost('_csrftoken', $instagram->client->getToken())
+			                     ->addPost('username', $this->argument('username'))
+			                     ->addPost('device_id', $instagram->device_id)
+			                     ->addPost('password', $this->argument('password'))
+			                     ->getResponse(new \InstagramAPI\Response\LoginResponse());
+			    dump($response);
 		    }
 	    } catch (\Exception $ex) {
 			dump($ex);
