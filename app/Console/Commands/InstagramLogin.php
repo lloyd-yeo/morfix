@@ -60,10 +60,15 @@ class InstagramLogin extends Command
 			} else {
 				$challenge_response = $this->makeRequestToChallengeUrl($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
 				dump($challenge_response);
+
 				if ($challenge_response->getStepName() == 'select_verify_method') {
-					$select_verify_method_response = $this->selectVerifyMethod($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'));
+					$choice         = $this->ask('We will need you to verify please select a way to get notified.');
+					$select_verify_method_response = $this->selectVerifyMethod($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'), $choice);
 					dump($select_verify_method_response);
-				} else if ($challenge_response->getStepName() == 'verify_email' || $challenge_response->getStepName() == 'verify_phone') {
+					$challenge_response = $select_verify_method_response;
+				}
+
+				if ($challenge_response->getStepName() == 'verify_email' || $challenge_response->getStepName() == 'verify_phone') {
 					$verification_code         = $this->ask('Please key in the 6 digit code sent by Instagram:');
 					$finish_challenge_response = $this->finishChallengeVerification($instagram, $this->argument('username'), $this->argument('password'), $this->argument('challenge_url'), $verification_code);
 					dump($finish_challenge_response);
@@ -113,7 +118,8 @@ class InstagramLogin extends Command
 		$instagram,
 		$username,
 		$password,
-		$challengeUrl) {
+		$challengeUrl,
+		$choice) {
 
 		if (empty($challengeUrl)) {
 			throw new \InvalidArgumentException('You must provide a challenge url to selectVerifyMethod().');
@@ -125,7 +131,7 @@ class InstagramLogin extends Command
 		                 ->addPost('username', $username)
 		                 ->addPost('device_id', $instagram->device_id)
 		                 ->addPost('password', $password)
-		                 ->addPost('choice', 1)
+		                 ->addPost('choice', $choice)
 		                 ->getResponse(new ChallengeSelectVerifyMethodStepResponse());
 
 		return $response;
