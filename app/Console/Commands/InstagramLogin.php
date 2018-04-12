@@ -13,7 +13,7 @@ class InstagramLogin extends Command
      *
      * @var string
      */
-    protected $signature = 'ig:lgin {username} {password}';
+    protected $signature = 'ig:lgin {username} {password} {challenge_url?}';
 
     /**
      * The console command description.
@@ -47,11 +47,20 @@ class InstagramLogin extends Command
 	    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
 	    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 
-	    $login_response = $instagram->login($this->argument('username'),
-		    $this->argument('password'), $guzzle_options
-	    );
-	    dump($login_response);
-	    dump($instagram->request('/challenge/4265107270/nIouDCNXO9/')->setGuzzleOptions($guzzle_options)->getRawResponse());
+	    try {
+	    	if ($this->argument('challenge_url') == NULL) {
+			    $login_response = $instagram->login($this->argument('username'),
+				    $this->argument('password'), $guzzle_options
+			    );
+			    dump($login_response);
+		    } else {
+			    dump($instagram->request($this->argument('challenge_url'))->setGuzzleOptions($guzzle_options)->getRawResponse());
+		    }
+	    } catch (\Exception $ex) {
+			dump($ex);
+	    }
+
+
 
 //	    $proxy = $this->getProxyList()[0];
 	    
