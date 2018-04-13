@@ -42,7 +42,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
-
+		dump($instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options));
 		dump($instagram->account->getCurrentUser()->getUser());
 	}
 
