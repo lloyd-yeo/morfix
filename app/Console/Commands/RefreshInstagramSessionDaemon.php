@@ -103,14 +103,16 @@ class RefreshInstagramSessionDaemon extends Command
 
 							dump($login_resp);
 
-							if ($login_resp->isOk()) {
-								$instagram_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 99)];
-								$instagram_profile->save();
-								$this->line("[DEBUG] Assigned new proxy to " . $instagram_profile->insta_username . '.');
-							} else {
-								if ($login_resp->isChallenge()) {
-									$instagram_profile->challenge_required = 1;
+							if ($login_resp != NULL) {
+								if ($login_resp->isOk()) {
+									$instagram_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 99)];
 									$instagram_profile->save();
+									$this->line("[DEBUG] Assigned new proxy to " . $instagram_profile->insta_username . '.');
+								} else {
+									if ($login_resp->isChallenge()) {
+										$instagram_profile->challenge_required = 1;
+										$instagram_profile->save();
+									}
 								}
 							}
 						}
