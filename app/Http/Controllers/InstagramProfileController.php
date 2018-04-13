@@ -42,13 +42,19 @@ class InstagramProfileController extends Controller
 		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
+
 		dump($instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options));
-		$user_model = $instagram->account->getCurrentUser()->getUser();
-		dump($user_model);
-		dump($user_model->asArray());
-		dump($user_model->getFollowerCount());
-		dump($user_model->getFullName());
-		dump($user_model->getMediaCount());
+		$user_model = $instagram->account->getCurrentUser()->getUser()->asArray();
+		dump($user_model_public = $instagram->people->getSelfInfo());
+
+		$ig_profile->full_name = $user_model['full_name'];
+		$ig_profile->save();
+
+//		dump($user_model);
+//		dump($user_model->asArray());
+//		dump($user_model->getFollowerCount());
+//		dump($user_model->getFullName());
+//		dump($user_model->getMediaCount());
 	}
 
 	public function create(Request $request)
