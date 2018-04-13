@@ -91,42 +91,43 @@ class RefreshInstagramSessionDaemon extends Command
 							$this->error('[ERROR] ' . $ex->getMessage());
 						}
 					} else {
-						$guzzle_options                                 = [];
-						$guzzle_options['curl']                         = [];
-						$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $instagram_profile->proxy;
-						$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
-						$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-						$instagram->setGuzzleOptions($guzzle_options);
-
-						try {
-							$login_resp = $instagram->login($instagram_profile->insta_username, $instagram_profile->insta_pw, $guzzle_options);
-
-							dump($login_resp);
-
-							if ($login_resp != NULL) {
-								if ($login_resp->isOk()) {
-									$instagram_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 99)];
-									$instagram_profile->save();
-									$this->line("[DEBUG] Assigned new proxy to " . $instagram_profile->insta_username . '.');
-								} else {
-									if ($login_resp->isChallenge()) {
-										$instagram_profile->challenge_required = 1;
-										$instagram_profile->save();
-									}
-								}
-							}
-						}
-						catch (IncorrectPasswordException $incorrectPasswordException) {
-							$instagram_profile->incorrect_pw = 1;
-							$instagram_profile->save();
-						}
-						catch (CheckpointRequiredException $checkpointRequiredException) {
-							$instagram_profile->checkpoint_required = 1;
-							$instagram_profile->save();
-						}
-						catch (\Exception $ex) {
-							$this->error('[ERROR] ' . $ex->getMessage());
-						}
+//						$guzzle_options                                 = [];
+//						$guzzle_options['curl']                         = [];
+//						$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $instagram_profile->proxy;
+//						$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
+//						$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+//						$instagram->setGuzzleOptions($guzzle_options);
+//
+//						try {
+//							$this->line("[DEBUG NO-HTTP] Attempting to login for " . $instagram_profile->insta_username . '...');
+//							$login_resp = $instagram->login($instagram_profile->insta_username, $instagram_profile->insta_pw, $guzzle_options);
+//
+//							dump($login_resp);
+//
+//							if ($login_resp != NULL) {
+//								if ($login_resp->isOk()) {
+//									$instagram_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 99)];
+//									$instagram_profile->save();
+//									$this->line("[DEBUG] Assigned new proxy to " . $instagram_profile->insta_username . '.');
+//								} else {
+//									if ($login_resp->isChallenge()) {
+//										$instagram_profile->challenge_required = 1;
+//										$instagram_profile->save();
+//									}
+//								}
+//							}
+//						}
+//						catch (IncorrectPasswordException $incorrectPasswordException) {
+//							$instagram_profile->incorrect_pw = 1;
+//							$instagram_profile->save();
+//						}
+//						catch (CheckpointRequiredException $checkpointRequiredException) {
+//							$instagram_profile->checkpoint_required = 1;
+//							$instagram_profile->save();
+//						}
+//						catch (\Exception $ex) {
+//							$this->error('[ERROR] ' . $ex->getMessage());
+//						}
 					}
 				} else {
 					$guzzle_options                                 = [];
@@ -135,7 +136,7 @@ class RefreshInstagramSessionDaemon extends Command
 					$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin0:dXehM3e7bU';
 					$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 					$instagram->setGuzzleOptions($guzzle_options);
-					$this->line("[DEBUG] Attempting to login for " . $instagram_profile->insta_username . '...');
+					$this->line("[DEBUG NULL-PROXY] Attempting to login for " . $instagram_profile->insta_username . '...');
 					$instagram_profile->proxy = NULL;
 					$instagram_profile->save();
 
