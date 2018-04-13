@@ -826,7 +826,7 @@
 													style="color:#4f92cc">Profile Verification Required!</span></h1>
 										<p class="size-17"
 										   style="Margin-top: 20px;Margin-bottom: 0;font-size: 17px;line-height: 26px;"
-										   lang="x-size-17"><span>Hey {{first_name}},<br>
+										   lang="x-size-17"><span>Hey Lloyd,<br>
 1 or more of your profiles requires you to clear verification&nbsp;before it can resume auto-interacting with your<strong> target audience</strong>, sending out Direct Messages to <strong>new followers</strong> &amp; <strong>Scheduled Content</strong>!</span>
 										</p>
 										<p class="size-17"
@@ -907,9 +907,7 @@
 											</div>
 										</div>
 										<div style="font-size: 12px;line-height: 19px;Margin-top: 18px;">
-											<div>You have received this email because {{$email}} is a registered user of
-											     Morfix
-											</div>
+											<div>You have received this email because ywz.lloyd@gmail.com is a registered user of Morfix</div>
 										</div>
 										<!--[if mso]>&nbsp;<![endif]-->
 									</div>

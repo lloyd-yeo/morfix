@@ -221,6 +221,14 @@ Route::post('/mailer/send/active', 'MassMailerController@sendEmailToActiveUsers'
 Route::post('/webhook/subscription/cancelled','CancellationSubscriptionWebhook@handleDisputeOpened');
 
 Route::post('/admin/referrer/add', 'AdminController@updateUserAffiliate');
+
+Route::get('/verifyprofilemail', function () {
+//	return new App\Mail\InvoicePaid($invoice);
+	return view('email.profile.verify');
+});
+
+
+
 /**
  * Routes for creation of Paypal Subscription plans.
  */
