@@ -10,6 +10,7 @@ use Illuminate\Console\Command;
 use InstagramAPI\Exception\IncorrectPasswordException;
 use InstagramAPI\Exception\ChallengeRequiredException;
 use InstagramAPI\Exception\CheckpointRequiredException;
+use InstagramAPI\Exception\InvalidUserException;
 
 
 class RefreshInstagramSessionDaemon extends Command
@@ -82,9 +83,11 @@ class RefreshInstagramSessionDaemon extends Command
 						catch (IncorrectPasswordException $incorrectPasswordException) {
 							$instagram_profile->incorrect_pw = 1;
 							$instagram_profile->save();
-						}
-						catch (CheckpointRequiredException $checkpointRequiredException) {
+						} catch (CheckpointRequiredException $checkpointRequiredException) {
 							$instagram_profile->checkpoint_required = 1;
+							$instagram_profile->save();
+						} catch (InvalidUserException $invalidUserException) {
+							$instagram_profile->invalid_user = 1;
 							$instagram_profile->save();
 						}
 						catch (\Exception $ex) {
@@ -155,13 +158,14 @@ class RefreshInstagramSessionDaemon extends Command
 								$instagram_profile->save();
 							}
 						}
-					}
-					catch (IncorrectPasswordException $incorrectPasswordException) {
+					} catch (IncorrectPasswordException $incorrectPasswordException) {
 						$instagram_profile->incorrect_pw = 1;
 						$instagram_profile->save();
-					}
-					catch (CheckpointRequiredException $checkpointRequiredException) {
+					} catch (CheckpointRequiredException $checkpointRequiredException) {
 						$instagram_profile->checkpoint_required = 1;
+						$instagram_profile->save();
+					}  catch (InvalidUserException $invalidUserException) {
+						$instagram_profile->invalid_user = 1;
 						$instagram_profile->save();
 					}
 					catch (\Exception $ex) {
