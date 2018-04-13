@@ -167,8 +167,7 @@ class RefreshInstagramSessionDaemon extends Command
 					}  catch (InvalidUserException $invalidUserException) {
 						$instagram_profile->invalid_user = 1;
 						$instagram_profile->save();
-					}
-					catch (\Exception $ex) {
+					} catch (\Exception $ex) {
 						$this->error('[ERROR] ' . $ex->getMessage());
 					}
 				}
