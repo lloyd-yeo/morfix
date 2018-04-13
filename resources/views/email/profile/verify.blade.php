@@ -826,7 +826,7 @@
 													style="color:#4f92cc">Profile Verification Required!</span></h1>
 										<p class="size-14"
 										   style="Margin-top: 20px;Margin-bottom: 0;font-size: 14px;line-height: 26px;"
-										   lang="x-size-14"><span>Hey Lloyd,<br>
+										   lang="x-size-14"><span>@if ($user->name == NULL) Dear Valued Morfix User, @elseif ($user->name == $user->email) Dear Valued Morfix User, @else Hey {{ $user->name }}, @endif <br>
 1 or more of your profiles requires you to clear verification&nbsp;before it can resume auto-interacting with your<strong> Target Audience</strong>, sending out Direct Messages to <strong>New Followers</strong> &amp; <strong>Scheduled Content</strong>!</span>
 										</p>
 										<p class="size-14"
@@ -907,7 +907,7 @@
 											</div>
 										</div>
 										<div style="font-size: 12px;line-height: 19px;Margin-top: 18px;">
-											<div>You have received this email because ywz.lloyd@gmail.com is a registered user of Morfix</div>
+											<div>You have received this email because {{ $user->email }} is a paying user of Morfix</div>
 										</div>
 										<!--[if mso]>&nbsp;<![endif]-->
 									</div>
