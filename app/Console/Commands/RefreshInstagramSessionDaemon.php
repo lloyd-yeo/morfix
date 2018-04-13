@@ -56,7 +56,7 @@ class RefreshInstagramSessionDaemon extends Command
 						$guzzle_options                                 = [];
 						$guzzle_options['curl']                         = [];
 						$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-						$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+						$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin0:dXehM3e7bU';
 						$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 						$instagram->setGuzzleOptions($guzzle_options);
 						$this->line("[DEBUG] Attempting to login for " . $instagram_profile->insta_username . '...');
@@ -130,7 +130,7 @@ class RefreshInstagramSessionDaemon extends Command
 					$guzzle_options                                 = [];
 					$guzzle_options['curl']                         = [];
 					$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-					$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+					$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin0:dXehM3e7bU';
 					$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 					$instagram->setGuzzleOptions($guzzle_options);
 					$this->line("[DEBUG] Attempting to login for " . $instagram_profile->insta_username . '...');
