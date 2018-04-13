@@ -100,6 +100,7 @@ class Kernel extends ConsoleKernel {
         Commands\TestLoginToInstagressAPI::class,
         Commands\InstagramLogin::class,
         Commands\TurnOffInteractions::class,
+        Commands\RefreshInstagramSessionDaemon::class,
     ];
 
     /**
