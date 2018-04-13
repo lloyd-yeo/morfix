@@ -34,7 +34,6 @@ class InstagramProfileController extends Controller
 
 	public function refreshProfileStats(Request $request, $id) {
 		$ig_profile = InstagramProfile::where('insta_user_id', $id)->first();
-
 		$instagram = InstagramHelper::initInstagram();
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
@@ -42,11 +41,8 @@ class InstagramProfileController extends Controller
 		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD] = 'morfix:dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
-
-		dump($instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options));
+		$instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 		$user_model_public = $instagram->people->getSelfInfo()->getUser();
-		dump($user_model_public);
-
 		$ig_profile->profile_full_name = $user_model_public->getFullName();
 		$ig_profile->follower_count = $user_model_public->getFollowerCount();
 		$ig_profile->num_posts = $user_model_public->getMediaCount();
@@ -133,9 +129,9 @@ class InstagramProfileController extends Controller
 					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
-				$instagram_user = $instagram->account->getCurrentUser()->getUser();
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
 			} else if ($login_response == NULL) {
-				$instagram_user = $instagram->account->getCurrentUser()->getUser();
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
 			}
 
 			//If there's no error or checkpoint:
@@ -253,10 +249,11 @@ class InstagramProfileController extends Controller
 				} else if ($login_response->isTwoFactorRequired()) {
 					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
 				}
+			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
+			} else if ($login_response == NULL) {
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
 			}
-
-			//If there's no error or checkpoint:
-			$instagram_user = $login_response->getLoggedInUser();
 
 			$morfix_ig_profile = $this->storeInstagramProfile(Auth::user()->user_id, Auth::user()->email, $ig_username, $ig_password, $instagram_user);
 
@@ -300,6 +297,7 @@ class InstagramProfileController extends Controller
 		$morfix_ig_profile->insta_username = $ig_username;
 		$morfix_ig_profile->insta_pw       = $ig_password;
 		$morfix_ig_profile->updated_at = Carbon::now();
+		$morfix_ig_profile->profile_full_name = $instagram_user->getFullName();
 		$morfix_ig_profile->follower_count = $instagram_user->getFollowerCount();
 		$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
 		$morfix_ig_profile->num_posts = $instagram_user->getMediaCount();
