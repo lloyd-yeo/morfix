@@ -99,6 +99,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetMonthlyDMUsers::class,
         Commands\TestLoginToInstagressAPI::class,
         Commands\InstagramLogin::class,
+        Commands\TurnOffInteractions::class,
     ];
 
     /**
