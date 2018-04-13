@@ -151,13 +151,14 @@ class InstagramProfileController extends Controller
 						$user_insta_profile_media = InstagramProfileMedia::where('media_id', $item->getPk())->first();
 
 						if ($user_insta_profile_media == NULL) {
-							$user_insta_profile_media = new InstagramProfileMedia;
-							$user_insta_profile_media->insta_username = $ig_username;
-							$user_insta_profile_media->media_id = $item->getPk();
-							$user_insta_profile_media->image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
-							$user_insta_profile_media->save();
+							if ($item->getImageVersions2() != NULL) {
+								$user_insta_profile_media = new InstagramProfileMedia;
+								$user_insta_profile_media->insta_username = $ig_username;
+								$user_insta_profile_media->media_id = $item->getPk();
+								$user_insta_profile_media->image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
+								$user_insta_profile_media->save();
+							}
 						}
-
 					}
 					catch (\ErrorException $e) {
 						continue;
@@ -258,9 +259,7 @@ class InstagramProfileController extends Controller
 			$morfix_ig_profile = $this->storeInstagramProfile(Auth::user()->user_id, Auth::user()->email, $ig_username, $ig_password, $instagram_user);
 
 			if ($morfix_ig_profile != NULL) {
-
 				$items = $instagram->timeline->getSelfUserFeed()->getItems();
-
 				foreach ($items as $item) {
 					try {
 						$user_insta_profile_media = InstagramProfileMedia::where('media_id', $item->getPk())->first();
@@ -290,7 +289,6 @@ class InstagramProfileController extends Controller
 	}
 
 	protected function storeInstagramProfile($user_id, $user_email, $ig_username, $ig_password, $instagram_user) {
-
 		$morfix_ig_profile                 = new InstagramProfile();
 		$morfix_ig_profile->user_id        = $user_id;
 		$morfix_ig_profile->email          = $user_email;
