@@ -827,7 +827,7 @@
 										<p class="size-14"
 										   style="Margin-top: 20px;Margin-bottom: 0;font-size: 14px;line-height: 26px;"
 										   lang="x-size-14"><span>Hey Lloyd,<br>
-1 or more of your profiles requires you to clear verification&nbsp;before it can resume auto-interacting with your<strong> target audience</strong>, sending out Direct Messages to <strong>new followers</strong> &amp; <strong>Scheduled Content</strong>!</span>
+1 or more of your profiles requires you to clear verification&nbsp;before it can resume auto-interacting with your<strong> Target Audience</strong>, sending out Direct Messages to <strong>New Followers</strong> &amp; <strong>Scheduled Content</strong>!</span>
 										</p>
 										<p class="size-14"
 										   style="Margin-top: 20px;Margin-bottom: 20px;font-size: 14px;line-height: 26px;"
