@@ -209,32 +209,4 @@ $("#challenge-url").on("click", function(){
 	$("#confirm-verify").show();
 });
 
-setInterval(function(){
-    $active_request_id = $("#active-request").val();
-
-    var jqxhr = $.post("/profile/request/check",
-        {
-            active_request: $active_request_id,
-        }
-        , function (data) {
-			if (data.success) {
-			    if (data.working_on == 3) {
-                    $("#waiting-message").hide();
-                    $("#verify-message").show();
-                    $("#challenge-url").attr("href", data.challenge_url);
-                    $("#challenge-url").html(data.challenge_url);
-			    }
-
-			    if (data.working_on == 5) {
-                    jQuery('#modal-addprofile').modal('hide');
-                    localStorage.setItem("status", 'Profile successfully added!');
-                    location.reload(true);
-                }
-			} else {
-                $("#waiting-message").show();
-			}
-        });
-    }, 10000);
-
-$(".remove-profile-btn").on("click");
 </script>

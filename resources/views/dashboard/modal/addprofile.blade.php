@@ -33,7 +33,7 @@
                         <!-- Form -->
                         <!-- jQuery Validation (.js-form2 class is initialized in js/pages/base_forms_wizard.js) -->
                         <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
-                        <form class="js-form2 form-horizontal" action="base_forms_wizard.html" method="post">
+                        <form class="js-form2 form-horizontal" action="/dashboard" method="post">
                             <!-- Steps Content -->
                             <div class="block-content tab-content">
                                 <!-- Step 1 -->
@@ -45,12 +45,12 @@
 
                                             <p>Hi Morfix User,</p>
 
-                                            <p>With Instagram latest API, some of you could get into a verfication loop. Which means you can't link your Instagram profile to our system. In order to smoothen the process, if you are unable to verify, there will be a button on the next page to schedule a 5 minute session with our LIVE support on telegram.
+                                            <p>With Instagram's latest API, some of you could get into a verfication loop. Which means you can't link your Instagram profile to our system. In order to smoothen the process, if you are unable to verify, there will be a button on the next page to schedule a 5 minute session with our LIVE support on telegram.
                                             <br/>
                                             Our support will then process to help you verify your account at the timing you choose.
                                             <br/>
                                             <b>WE'LL NOT BEGIN YOUR SUBSCRIPTION UNTIL YOUR FIRST PROFILE IS ADDED.</b>
-                                            <br/>So you do not have to worry about paying for time you didn't use. Thank you for choosing Morfix :)</p>
+                                            <br/>So you do not have to worry about paying for time you didn't use.<br/>Thank you for choosing Morfix :)</p>
                                         </center>
                                     </div>
 
@@ -84,24 +84,33 @@
                                                         Morfix is unable to link-up your profile because of additional verification required from Instagram.
                                                         To add your profile we will need you to assist us with the following:
                                                     </p>
-                                                    <center>
-                                                        {{--<h4 class='push' style="font-size:12px;">1. Join our telegram group at the appointed time(if you do not have one, please create an account)</h4>--}}
-                                                        {{--<br/>--}}
-                                                        {{--<a href="https://t.me/joinchat/Cm-SkxHx3TVMokD27OfuJw" target="_blank">https://t.me/joinchat/Cm-SkxHx3TVMokD27OfuJw</a>--}}
-                                                        {{--<br/>--}}
+
+                                                    <center id="challenge-container">
+                                                        <h4 class='push' id="challenge-message" style="font-size:12px;">
+
+                                                        </h4>
+                                                        <br/>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-8 col-sm-offset-2">
+                                                                <div class="form-material form-material-primary">
+                                                                    <input class="form-control" type="text" id="verification-code" maxlength="6" placeholder="Enter the 6 digit code here...">
+                                                                    <label for="verification-code">Verification Code</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </center>
 
-                                                    <center>
-                                                        <h4 class='push' style="font-size:12px;">1. Set-up an appointment with us over here:</h4>
-                                                        <a href="https://morfix.youcanbook.me" target="_blank">https://morfix.youcanbook.me</a>
-                                                        <br/>
-                                                    </center>
+                                                    {{--<center>--}}
+                                                        {{--<h4 class='push' style="font-size:12px;">1. Set-up an appointment with us over here:</h4>--}}
+                                                        {{--<a href="https://morfix.youcanbook.me" target="_blank">https://morfix.youcanbook.me</a>--}}
+                                                        {{--<br/>--}}
+                                                    {{--</center>--}}
 
-                                                    <center>
-                                                        <br/>
-                                                        <h4 class='push' style="font-size:12px;">2. Join our telegram group at the appointed time
-                                                                         & our friendly Morfix operators will contact you to add in your account!</h4>
-                                                    </center>
+                                                    {{--<center>--}}
+                                                        {{--<br/>--}}
+                                                        {{--<h4 class='push' style="font-size:12px;">2. Join our telegram group at the appointed time--}}
+                                                                         {{--& our friendly Morfix operators will contact you to add in your account!</h4>--}}
+                                                    {{--</center>--}}
                                                     {{--<center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>--}}
                                                     {{--<center><h4 id="verify-message" class='push' style="display:none;" >Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" style="font-size: 11px;" target="_blank" id="challenge-url"></a></h4></center>--}}
                                                     {{--<center><h4 id="confirm-verify" class='push' style="display:none;">Once you are done please click this button: <a class="btn btn-success" id="relogin-btn">Retry</a></h4></center>--}}

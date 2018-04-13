@@ -55,6 +55,7 @@ Route::post('/profile/ig/add', 'InstagramProfileController@create');
 Route::post('/profile/ig/remove/{id}', 'InstagramProfileController@delete');
 Route::post('/profile/ig/checkpoint', 'InstagramProfileController@clearCheckpoint');
 Route::post('/profile/ig/changepassword', 'InstagramProfileController@changePassword');
+Route::post('/profile/challenge/clear', 'InstagramProfileController@clearChallenge');
 
 Route::get('/dm', 'DirectMessageController@index');
 

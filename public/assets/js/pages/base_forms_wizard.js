@@ -231,22 +231,22 @@ var BaseFormWizard = function() {
             'previousSelector': '.wizard-prev',
             'nextSelector': '.wizard-next',
             'onTabShow': function($tab, $nav, $index) {
-		var $total      = $nav.find('li').length;
-		var $current    = $index + 1;
+                var $total      = $nav.find('li').length;
+                var $current    = $index + 1;
 
                 // Get vital wizard elements
                 var $wizard     = $nav.parents('.block');
                 var $btnNext    = $wizard.find('.wizard-next');
                 var $btnFinish  = $wizard.find('.wizard-finish');
 
-		// If it's the last tab then hide the last button and show the finish instead
-		if($current >= $total) {
-                    $btnNext.hide();
-                    $btnFinish.show();
-		} else {
-                    $btnNext.show();
-                    $btnFinish.hide();
-		}
+                // If it's the last tab then hide the last button and show the finish instead
+                if($current >= $total) {
+                            $btnNext.hide();
+                            $btnFinish.show();
+                } else {
+                            $btnNext.show();
+                            $btnFinish.hide();
+                }
             },
             'onNext': function($tab, $navigation, $index) {
                 var $success    = true;
@@ -260,7 +260,7 @@ var BaseFormWizard = function() {
 
                     return false;
                 }
-                
+
                 if ($index === 1) {
                     var $igUsername = jQuery('#validation-ig-username').val();
                     var $igPassword = jQuery('#validation-ig-password').val();
@@ -286,13 +286,11 @@ var BaseFormWizard = function() {
                                     $current = $current - 1;
                                     $success = false;
                                 } else if (data.type == 'checkpoint') {
-                                    $("#active-request").val(data.active_request);
-                                    $success = false;
+                                    // $("#active-request").val(data.active_request);
+                                    // $success = false;
                                 } else if (data.type == 'challenge') {
-                                    swal('Oops...', data.response, 'error');
-                                    // $("#challenge_url").attr("href", data.link);
-                                    // $("#challenge_url").html(data.link);
-                                    $("#active-request").val(data.active_request);
+                                    // swal('Oops...', data.response, 'error');
+                                    $("#challenge-message").html(data.message);
                                     $success = true;
                                 } else {
                                    $("#active-request").val(data.active_request);
@@ -305,12 +303,38 @@ var BaseFormWizard = function() {
                         }
                     });
                 }
+
+                if ($index === 2) {
+                    $current = $current - 1;
+                    var $verificationCode = jQuery('#verification-code').val();
+
+                    App.loader("show");
+
+                    $.ajax({
+                        async: false,
+                        type: "POST",
+                        url: "profile/challenge/clear",
+                        dataType: "json",
+                        data: {
+                            'verification-code': $verificationCode
+                        },
+                        success: function (data) {
+                            if (data.success === true) {
+                                localStorage.setItem("status", data.message);
+                                location.reload(true);
+                            } else {
+                                swal('Oops...', data.message, 'error');
+                            }
+                            App.loader("hide");
+                        }
+                    });
+                }
                 
                 return $success;
                 
             },
             onTabClick: function($tab, $navigation, $index) {
-		return false;
+		        return false;
             }
         });
     };
