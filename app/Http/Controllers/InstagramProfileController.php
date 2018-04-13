@@ -90,8 +90,6 @@ class InstagramProfileController extends Controller
 					$challenge_api_url = $challenge->getApiPath();
 					$challenge_api_url = substr($challenge_api_url, 1);
 
-
-
 					$challenge_response = $this->makeRequestToChallengeUrl($instagram, $ig_username, $ig_password, $challenge_api_url);
 					$challenge_email = '';
 
@@ -122,45 +120,38 @@ class InstagramProfileController extends Controller
 
 			//If there's no error or checkpoint:
 			$instagram_user = $login_response->getLoggedInUser();
-
-			$morfix_ig_profile                 = new InstagramProfile();
-			$morfix_ig_profile->user_id        = Auth::user()->user_id;
-			$morfix_ig_profile->email          = Auth::user()->email;
-			$morfix_ig_profile->insta_username = $ig_username;
-			$morfix_ig_profile->insta_pw       = $ig_password;
-			$morfix_ig_profile->updated_at = Carbon::now();
-			$morfix_ig_profile->follower_count = $instagram_user->getMediaCount();
-			$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
-			$morfix_ig_profile->num_posts = $instagram_user->getMediaCount();
-			$morfix_ig_profile->insta_user_id = $instagram_user->getPk();
-			$datacenter_proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 100)];
-			$morfix_ig_profile->proxy = $datacenter_proxy;
-			$morfix_ig_profile->save();
-
-			$profile_log->error_msg = "Profile successfully created.";
+			$profile_log->error_msg = $instagram_user->asJson();
 			$profile_log->save();
 
-			$items = $instagram->timeline->getSelfUserFeed()->getItems();
+			$morfix_ig_profile = $this->storeInstagramProfile(Auth::user()->user_id, Auth::user()->email, $ig_username, $ig_password, $instagram_user);
 
-			foreach ($items as $item) {
-				try {
-					$user_insta_profile_media = InstagramProfileMedia::where('media_id', $item->getPk())->first();
+			if ($morfix_ig_profile != NULL) {
+				$profile_log->error_msg = "Profile successfully created.";
+				$profile_log->save();
 
-					if ($user_insta_profile_media == NULL) {
-						$user_insta_profile_media = new InstagramProfileMedia;
-						$user_insta_profile_media->insta_username = $ig_username;
-						$user_insta_profile_media->media_id = $item->getPk();
-						$user_insta_profile_media->image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
-						$user_insta_profile_media->save();
+				$items = $instagram->timeline->getSelfUserFeed()->getItems();
+
+				foreach ($items as $item) {
+					try {
+						$user_insta_profile_media = InstagramProfileMedia::where('media_id', $item->getPk())->first();
+
+						if ($user_insta_profile_media == NULL) {
+							$user_insta_profile_media = new InstagramProfileMedia;
+							$user_insta_profile_media->insta_username = $ig_username;
+							$user_insta_profile_media->media_id = $item->getPk();
+							$user_insta_profile_media->image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
+							$user_insta_profile_media->save();
+						}
+
 					}
-
+					catch (\ErrorException $e) {
+						continue;
+					}
 				}
-				catch (\ErrorException $e) {
-					continue;
-				}
+				return Response::json([ "success" => TRUE, 'response' => "Profile added!" ]);
+			} else {
+				return Response::json([ "success" => FALSE, 'response' => "Failed to add profile! Please approach live support." ]);
 			}
-
-			return Response::json([ "success" => TRUE, 'response' => "Profile added!" ]);
 		}
 		catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
@@ -183,6 +174,28 @@ class InstagramProfileController extends Controller
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
+		}
+	}
+
+	protected function storeInstagramProfile($user_id, $user_email, $ig_username, $ig_password, $instagram_user) {
+
+		$morfix_ig_profile                 = new InstagramProfile();
+		$morfix_ig_profile->user_id        = $user_id;
+		$morfix_ig_profile->email          = $user_email;
+		$morfix_ig_profile->insta_username = $ig_username;
+		$morfix_ig_profile->insta_pw       = $ig_password;
+		$morfix_ig_profile->updated_at = Carbon::now();
+		$morfix_ig_profile->follower_count = $instagram_user->getFollowerCount();
+		$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
+		$morfix_ig_profile->num_posts = $instagram_user->getMediaCount();
+		$morfix_ig_profile->insta_user_id = $instagram_user->getPk();
+		$datacenter_proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 100)];
+		$morfix_ig_profile->proxy = $datacenter_proxy;
+
+		if ($morfix_ig_profile->save()) {
+			return $morfix_ig_profile;
+		} else {
+			return NULL;
 		}
 	}
 
