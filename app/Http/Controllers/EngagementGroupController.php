@@ -92,6 +92,8 @@ class EngagementGroupController extends Controller
 						Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " " . $ex->getTraceAsString());
 					}
 				}
+			} else {
+				Log::error("[ENGAGEMENT GROUP INDEX] " . Auth::user()->email . " Unable to login to profile.");
 			}
 		}
 
