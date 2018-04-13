@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\InstagramProfile;
-use Illuminate\Console\Command;
 use App\InstagramHelper;
+use App\InstagramProfile;
+use App\User;
+use DB;
+use Illuminate\Console\Command;
 
 class RefreshInstagramSessionDaemon extends Command
 {
