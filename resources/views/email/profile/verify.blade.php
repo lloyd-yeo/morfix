@@ -825,12 +825,12 @@
 										    lang="x-size-24"><span
 													style="color:#4f92cc">Profile Verification Required!</span></h1>
 										<p class="size-17"
-										   style="Margin-top: 20px;Margin-bottom: 0;font-size: 17px;line-height: 26px;"
+										   style="Margin-top: 20px;Margin-bottom: 0;font-size: 14px;line-height: 26px;"
 										   lang="x-size-17"><span>Hey Lloyd,<br>
 1 or more of your profiles requires you to clear verification&nbsp;before it can resume auto-interacting with your<strong> target audience</strong>, sending out Direct Messages to <strong>new followers</strong> &amp; <strong>Scheduled Content</strong>!</span>
 										</p>
 										<p class="size-17"
-										   style="Margin-top: 20px;Margin-bottom: 20px;font-size: 17px;line-height: 26px;"
+										   style="Margin-top: 20px;Margin-bottom: 20px;font-size: 14px;line-height: 26px;"
 										   lang="x-size-17">Fret not, re-verification is simple &amp; straightforward
 										                    because Morfix has made it <em>easier</em> for YOU to add
 										                    &amp; re-verify new profiles without requiring intervention
