@@ -44,11 +44,13 @@ class InstagramProfileController extends Controller
 		$instagram->setGuzzleOptions($guzzle_options);
 
 		dump($instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options));
-		$user_model = $instagram->account->getCurrentUser()->getUser()->asArray();
-		$user_model_public = $instagram->people->getSelfInfo();
+//		$user_model = $instagram->account->getCurrentUser()->getUser()->asArray();
+		$user_model_public = $instagram->people->getSelfInfo()->getUser();
 		dump($user_model_public);
 
-		$ig_profile->profile_full_name = $user_model['full_name'];
+		$ig_profile->profile_full_name = $user_model_public->getFullName();
+		$ig_profile->follower_count = $user_model_public->getFollowerCount();
+		$ig_profile->num_posts = $user_model_public->getMediaCount();
 		$ig_profile->save();
 
 //		dump($user_model);
