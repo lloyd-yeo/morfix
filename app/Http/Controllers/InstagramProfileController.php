@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\AddProfileRequest;
 use App\CreateInstagramProfileLog;
 use App\Helper;
 use App\InstagramHelper;
 use App\InstagramProfile;
-use App\Proxy;
+use App\InstagramProfileMedia;
 use App\User;
-use App\AddProfileRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\InstagramException as InstagramException;
-use Response;
 use Log;
+use Response;
+use \InstagramAPI\Response\ChallengeSelectVerifyMethodStepResponse;
+use \InstagramAPI\Response\GenericResponse;
 
 class InstagramProfileController extends Controller
 {
@@ -44,6 +47,7 @@ class InstagramProfileController extends Controller
 		$email       = Auth::user()->email;
 		$ig_username = $request->input("ig-username");
 		$ig_password = $request->input("ig-password");
+
 		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt: ' . $ig_username . ' ' . $ig_password);
 
 		$profile_log                 = new CreateInstagramProfileLog();
@@ -54,343 +58,131 @@ class InstagramProfileController extends Controller
 
 		$instagram = InstagramHelper::initInstagram();
 
-		$proxies = [
-			'http://7708f98575:SvEH1i87@104.203.100.176:4444',
-			'http://7708f98575:SvEH1i87@107.173.6.37:4444',
-			'http://7708f98575:SvEH1i87@45.57.212.163:4444',
-			'http://7708f98575:SvEH1i87@23.94.151.26:4444',
-		];
-
-		$proxy = NULL;
-		if (Auth::user()->email == 'l-ywz@hotmail.com' || Auth::user()->email == 'kamelia.pavliuc@mail.ru') {
-			switch ($ig_username) {
-				case 'theluxurymaker':
-					$proxy = $proxies[0];
-					break;
-				case 'ruiming86':
-					$proxy = $proxies[1];
-					break;
-			}
-			Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using proxy: ' . $proxy);
-		} else {
-			$proxy = Proxy::inRandomOrder()->first();
-			Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using proxy: ' . $proxy->proxy);
-		}
+		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using residential proxy for adding account.');
 
 		try {
 			if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
 				$profile_log->error_msg = "This instagram username has already been added!";
 				$profile_log->save();
+
 				Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt failed: ' . $ig_username . ' ' . $ig_password);
 				Log::error('[DASHBOARD ADD PROFILE] This instagram username has already been added!');
+
 				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'response' => "This instagram username has already been added!" ]);
 			}
+			$guzzle_options                                 = [];
+			$guzzle_options['curl']                         = [];
+			$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+			$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+			$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+			$instagram->setGuzzleOptions($guzzle_options);
 
-			$user = User::find(Auth::user()->user_id);
+			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 
-			if (Auth::user()->email == 'l-ywz@hotmail.com' || Auth::user()->email == 'kamelia.pavliuc@mail.ru') {
-				$user->last_used_proxy = $proxy;
-				$user->save();
-				$instagram->setProxy($proxy);
-				Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' set proxy to: ' . $proxy);
-			} else {
-				$last_used_proxy = $user->last_used_proxy;
-				if ($last_used_proxy === NULL) {
-					$instagram->setProxy($proxy->proxy);
-					$user->last_used_proxy = $proxy->proxy;
-					$user->save();
-				} else {
-					$instagram->setProxy($user->last_used_proxy);
-				}
-				Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' set proxy to: ' . $proxy->proxy);
-			}
+			if ($login_response != NULL && $login_response->getStatus() == "fail") {
 
-			$explorer_response = $instagram->login($ig_username, $ig_password);
-
-			if ($explorer_response !== NULL) {
-				$profile_log->error_msg = $explorer_response->asJson();
+				$profile_log->error_msg = $login_response->asJson();
 				$profile_log->save();
 
-				$explorer_response_as_assoc_array = $explorer_response->asJson(1);
-				if ($explorer_response_as_assoc_array["status"] == "fail") {
-					if (array_key_exists("two_factory_required", $explorer_response_as_assoc_array)) {
-						if ($explorer_response_as_assoc_array["two_factory_required"]) {
-							return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
+				if ($login_response->isChallenge()) {
+
+					$challenge = $login_response->getChallenge();
+					$challenge_api_url = $challenge->getApiPath();
+					$challenge_api_url = substr($challenge_api_url, 1);
+
+
+
+					$challenge_response = $this->makeRequestToChallengeUrl($instagram, $ig_username, $ig_password, $challenge_api_url);
+					$challenge_email = '';
+
+					if ($challenge_response->getStepName() == 'select_verify_method') {
+						$select_verify_method_response = $this->selectVerifyMethod($instagram, $ig_username, $ig_password, $challenge_api_url, 1);
+						$challenge_response = $select_verify_method_response;
+					}
+
+					if ($challenge_response->getStepName() == 'verify_email' || $challenge_response->getStepName() == 'verify_phone') {
+						$step_data = $challenge_response->getStepData();
+						session(['challenge_url' => $challenge_api_url]);
+						if ($challenge_response->getStepName() == 'verify_email') {
+							return response()->json([
+								'success' => FALSE,
+								'message' => 'Instagram requires verification from your side. Please check the following email <b>' . $step_data->getContactPoint() . '</b> for the 6 digit code.',
+							]);
+						} else if ($challenge_response->getStepName() == 'verify_phone') {
+							return response()->json([
+								'success' => FALSE,
+								'message' => 'Instagram requires verification from your side. Please check the following phone number <b>' . $step_data->getContactPoint() . '</b> for the 6 digit code.',
+							]);
 						}
 					}
+				} else if ($login_response->isTwoFactorRequired()) {
+					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
 				}
 			}
 
+			//If there's no error or checkpoint:
+			$instagram_user = $login_response->getLoggedInUser();
+
 			$morfix_ig_profile                 = new InstagramProfile();
-
-			if (Auth::user()->email != 'l-ywz@hotmail.com' && Auth::user()->email != 'kamelia.pavliuc@mail.ru') {
-				$morfix_ig_profile->user_id        = Auth::user()->user_id;
-				$morfix_ig_profile->email          = Auth::user()->email;
-				$morfix_ig_profile->insta_username = $ig_username;
-				$morfix_ig_profile->insta_pw       = $ig_password;
-				$morfix_ig_profile->proxy          = $proxy->proxy;
-				$proxy->assigned = $proxy->assigned + 1;
-				$proxy->save();
-			} else {
-				$morfix_ig_profile->user_id        = Auth::user()->user_id;
-				$morfix_ig_profile->email          = Auth::user()->email;
-				$morfix_ig_profile->insta_username = $ig_username;
-				$morfix_ig_profile->insta_pw       = $ig_password;
-				$morfix_ig_profile->proxy          = $proxy;
-			}
-
-			$user_response  = $instagram->people->getInfoByName($ig_username);
-			$instagram_user = $user_response->getUser();
+			$morfix_ig_profile->user_id        = Auth::user()->user_id;
+			$morfix_ig_profile->email          = Auth::user()->email;
+			$morfix_ig_profile->insta_username = $ig_username;
+			$morfix_ig_profile->insta_pw       = $ig_password;
+			$morfix_ig_profile->updated_at = Carbon::now();
+			$morfix_ig_profile->follower_count = $instagram_user->getMediaCount();
+			$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
+			$morfix_ig_profile->num_posts = $instagram_user->getMediaCount();
+			$morfix_ig_profile->insta_user_id = $instagram_user->getPk();
+			$datacenter_proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 100)];
+			$morfix_ig_profile->proxy = $datacenter_proxy;
+			$morfix_ig_profile->save();
 
 			$profile_log->error_msg = "Profile successfully created.";
 			$profile_log->save();
-
-			$user->last_used_proxy = NULL;
-			$user->save();
-
-			$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
-			$morfix_ig_profile->save();
-
-			DB::update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;",
-				[ $instagram_user->getFollowerCount(), $instagram_user->getMediaCount(), $instagram_user->getPk(), $ig_username ]);
 
 			$items = $instagram->timeline->getSelfUserFeed()->getItems();
 
 			foreach ($items as $item) {
 				try {
-					DB::insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) 
-				VALUES (?,?,?);", [ $ig_username, $item->getPk(), $item->getImageVersions2()->getCandidates()[0]->getUrl() ]);
+					$user_insta_profile_media = InstagramProfileMedia::where('media_id', $item->getPk())->first();
+
+					if ($user_insta_profile_media == NULL) {
+						$user_insta_profile_media = new InstagramProfileMedia;
+						$user_insta_profile_media->insta_username = $ig_username;
+						$user_insta_profile_media->media_id = $item->getPk();
+						$user_insta_profile_media->image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
+						$user_insta_profile_media->save();
+					}
+
 				}
 				catch (\ErrorException $e) {
-					break;
+					continue;
 				}
 			}
 
 			return Response::json([ "success" => TRUE, 'response' => "Profile added!" ]);
-
 		}
 		catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
 			$profile_log->save();
-
-			$new_add_profile_requests = new AddProfileRequest;
-			$new_add_profile_requests->insta_username = $ig_username;
-			$new_add_profile_requests->insta_pw       = $ig_password;
-			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
-			$new_add_profile_requests->save();
-			session(['active_request' => $new_add_profile_requests]);
-			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required", 'active_request' => $new_add_profile_requests->id ]);
+			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required" ]);
 		}
 		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
-
-			$new_add_profile_requests = new AddProfileRequest;
-			$new_add_profile_requests->insta_username = $ig_username;
-			$new_add_profile_requests->insta_pw       = $ig_password;
-			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
-			$new_add_profile_requests->save();
-			session(['active_request' => $new_add_profile_requests]);
-
 			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
 		}
 		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
 			$profile_log->error_msg = $endpoint_ex->getMessage();
 			$profile_log->save();
-
-			$new_add_profile_requests = new AddProfileRequest;
-			$new_add_profile_requests->insta_username = $ig_username;
-			$new_add_profile_requests->insta_pw       = $ig_password;
-			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
-			$new_add_profile_requests->save();
-			session(['active_request' => $new_add_profile_requests]);
-			//            dump($endpoint_ex);
-			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage(), 'active_request' => $new_add_profile_requests->id ]);
-		}
-		catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
-			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' ChallengeRequiredException: ' . $challenge_required_ex->getMessage());
-			$profile_log->error_msg = $challenge_required_ex->getMessage();
-			$profile_log->save();
-			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
-			$new_add_profile_requests = new AddProfileRequest;
-			$new_add_profile_requests->insta_username = $ig_username;
-			$new_add_profile_requests->insta_pw       = $ig_password;
-			$new_add_profile_requests->assignee = 0;
-			$new_add_profile_requests->create_profile_log_id = $profile_log->log_id;
-//			$new_add_profile_requests->challenge_url = $challenge_url;
-			$new_add_profile_requests->save();
-			session(['active_request' => $new_add_profile_requests]);
-
-			return Response::json([ "success" => FALSE, 'type' => 'challenge', 'response' => "Verification Required", 'link' => $challenge_url, 'active_request' => $new_add_profile_requests->id ]);
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage() ]);
 		}
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
-		}
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  Request $request
-	 *
-	 * @return Response
-	 */
-	public function store(Request $request)
-	{
-		$user_id     = $request->input('user-id');
-		$user_email  = $request->input('user-email');
-		$user_email  = Auth::user()->email;
-		$ig_username = $request->input('ig-username');
-		$ig_password = $request->input('ig-password');
-
-		$log_id = DB::connection("mysql_old")->insertGetId("INSERT INTO insta_affiliate.create_insta_profile_log (insta_username, insta_pw, email ) VALUES (?,?,?);", [ $ig_username, $ig_password, $user_email ]);
-
-		if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
-			$error_msg = "This instagram profile already exists in Morfix!";
-			DB::connection("mysql_old")->update("UPDATE insta_affiliate.create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [ $error_msg, $log_id ]);
-
-			return Response::json([ "success" => FALSE, 'response' => $error_msg ]);
-		} else {
-			$config                = [];
-			$config["storage"]     = "mysql";
-			$config["dbusername"]  = "root";
-			$config["dbpassword"]  = "inst@ffiliates123";
-			$config["dbhost"]      = "52.221.60.235:3306";
-			$config["dbname"]      = "morfix";
-			$config["dbtablename"] = "instagram_sessions";
-			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-			$debug          = FALSE;
-			$truncatedDebug = FALSE;
-			$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-			$proxies = DB::connection("mysql_old")->select("SELECT proxy FROM insta_affiliate.proxy ORDER BY RAND() LIMIT 1;");
-			foreach ($proxies as $proxy) {
-				try {
-					$instagram->setProxy($proxy->proxy);
-					$instagram->setUser($ig_username, $ig_password);
-					$explorer_response = $instagram->login();
-
-					$create_log_id = DB::connection('mysql_old')->insertGetId("INSERT INTO `insta_affiliate`.`user_insta_profile`
-                        (`user_id`,`email`,`insta_username`,`insta_pw`,`proxy`) VALUES (?,?,?,?,?);", [ $user_id, $email, $user, $pw, $proxy->proxy ]);
-					DB::connection("mysql_old")->update("UPDATE insta_affiliate.proxy SET assigned = 1 WHERE proxy = ?;", [ $proxy->proxy ]);
-					$rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [ $proxy->proxy ]);
-
-					$user_response  = $instagram->getUserInfoByName($ig_username);
-					$instagram_user = $user_response->user;
-					DB::connection('mysql_old')->
-					update("UPDATE user_insta_profile SET updated_at = NOW(), follower_count = ?, num_posts = ?, insta_user_id = ? WHERE insta_username = ?;", [ $instagram_user->follower_count, $instagram_user->media_count, $instagram_user->pk, $ig_username ]);
-					$items = $instagram->getSelfUserFeed()->items;
-					$this->info(serialize($items));
-
-					foreach ($items as $item) {
-						try {
-							DB::connection('mysql_old')->
-							insert("INSERT IGNORE INTO user_insta_profile_media (insta_username, media_id, image_url) VALUES (?,?,?);", [ $ig_username, $item->id, $item->image_versions2->candidates[0]->url ]);
-						}
-						catch (\ErrorException $e) {
-							$this->error("ERROR: " . $e->getMessage());
-							break;
-						}
-					}
-
-					return Response::json([ "success" => TRUE, 'response' => "Profile added!" ]);
-				}
-				catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
-					return Response::json([ "success" => FALSE, 'response' => serialize($checkpt_ex) ]);
-					$this->error($checkpt_ex->getMessage());
-					DB::connection('mysql_old')->
-					update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [ $checkpt_ex->getMessage(), $db_log_id ]);
-				}
-				catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-					return Response::json([ "success" => FALSE, 'response' => serialize($incorrectpw_ex) ]);
-					$this->error($incorrectpw_ex->getMessage());
-					DB::connection('mysql_old')->
-					update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [ $incorrectpw_ex->getMessage(), $db_log_id ]);
-				}
-				catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-					return Response::json([ "success" => FALSE, 'response' => serialize($endpoint_ex) ]);
-					$this->error($endpoint_ex->getMessage());
-					DB::connection('mysql_old')->
-					update("UPDATE create_insta_profile_log SET error_msg = ? WHERE log_id = ?;", [ $endpoint_ex->getMessage(), $db_log_id ]);
-				}
-			}
-		}
-
-		$log                 = new CreateInstagramProfileLog;
-		$log->insta_username = $ig_username;
-		$log->insta_pw       = $ig_password;
-		$log->email          = $user_email;
-		$log->save();
-		$last_inserted_log_id = $log->log_id;
-
-		if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
-			return Response::json([ "success" => FALSE, 'response' => "This instagram profile already exists in Morfix!" ]);
-		} else {
-			$config                = [];
-			$config["storage"]     = "mysql";
-			$config["dbusername"]  = "root";
-			$config["dbpassword"]  = "inst@ffiliates123";
-			$config["dbhost"]      = "52.221.60.235:3306";
-			$config["dbname"]      = "morfix";
-			$config["dbtablename"] = "instagram_sessions";
-			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-			$debug          = FALSE;
-			$truncatedDebug = FALSE;
-			$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
-
-			$proxy   = "";
-			$proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy WHERE assigned = 0 LIMIT 1;");
-			foreach ($proxies as $proxy_) {
-				$proxy         = $proxy_->proxy;
-				$rows_affected = DB::connection('mysql_old')->update('update proxy set assigned = 1 where proxy = ?;', [ $proxy_->proxy ]);
-			}
-
-			$instagram->setProxy($proxy);
-
-			try {
-				$explorer_response = $instagram->login($ig_username, $ig_password);
-				$user_response     = $instagram->getUserInfoByName($ig_username);
-				$instagram_user    = $user_response->user;
-
-				$log              = CreateInstagramProfileLog::find($last_inserted_log_id);
-				$log->success_msg = serialize($explorer_response);
-				$log->save();
-
-				$new_profile                    = new InstagramProfile;
-				$new_profile->user_id           = Auth::user()->id;
-				$new_profile->email             = Auth::user()->email;
-				$new_profile->insta_user_id     = $instagram_user->pk;
-				$new_profile->insta_username    = $ig_username;
-				$new_profile->insta_pw          = $ig_password;
-				$new_profile->profile_pic_url   = $instagram_user->profile_pic_url;
-				$new_profile->profile_full_name = $instagram_user->full_name;
-				$new_profile->follower_count    = $instagram_user->follower_count;
-				$new_profile->num_posts         = $instagram_user->media_count;
-				$new_profile->proxy             = $proxy;
-				$new_profile->save();
-
-				return Response::json([ "success" => TRUE,
-				                        'response' => serialize($explorer_response),
-				                        'user' => serialize($user_response),
-				                        'proxy' => $proxy ]);
-
-			}
-			catch (InstagramException $ig_ex) {
-				$log            = CreateInstagramProfileLog::find($last_inserted_log_id);
-				$log->error_msg = $ig_ex->getTraceAsString();
-				$log->save();
-				$message = $ig_ex->getMessage();
-				$array   = explode(':', $message);
-
-				return Response::json([ "success" => FALSE, 'response' => trim($array[1]), "log" => $last_inserted_log_id ]);
-			}
 		}
 	}
 
@@ -521,6 +313,64 @@ class InstagramProfileController extends Controller
 				'success' => TRUE,
 			]);
 		}
+	}
 
+	//Newly implemented with residential proxies
+	public function makeRequestToChallengeUrl(
+		$instagram, $username, $password, $challengeUrl)
+	{
+		if (empty($challengeUrl)) {
+			throw new \InvalidArgumentException('You must provide a challenge url to makeRequestToChallengeUrl().');
+		}
+		$instagram->_setUser($username, $password);
+		$response = $instagram->request($challengeUrl)
+		                      ->setNeedsAuth(FALSE)
+		                      ->addParam('_csrftoken', $instagram->client->getToken())
+		                      ->addParam('username', $username)
+		                      ->addParam('device_id', $instagram->device_id)
+		                      ->addParam('password', $password)
+		                      ->getResponse(new ChallengeSelectVerifyMethodStepResponse());
+
+		return $response;
+	}
+
+	public function selectVerifyMethod(
+		$instagram, $username, $password, $challengeUrl, $choice) {
+
+		if (empty($challengeUrl)) {
+			throw new \InvalidArgumentException('You must provide a challenge url to selectVerifyMethod().');
+		}
+		$instagram->_setUser($username, $password);
+		$response = $instagram->request($challengeUrl)
+		                      ->setNeedsAuth(FALSE)
+		                      ->addPost('_csrftoken', $instagram->client->getToken())
+		                      ->addPost('username', $username)
+		                      ->addPost('device_id', $instagram->device_id)
+		                      ->addPost('password', $password)
+		                      ->addPost('choice', $choice)
+		                      ->getResponse(new ChallengeSelectVerifyMethodStepResponse());
+
+		return $response;
+	}
+
+	public function finishChallengeVerification(
+		$instagram, $username, $password, $challengeUrl, $verificationCode) {
+
+		if (empty($challengeUrl) || empty($verificationCode)) {
+			throw new \InvalidArgumentException('You must provide a challenge url & verification code to finishChallengeVerification().');
+		}
+
+		$instagram->_setUser($username, $password);
+		$response = $instagram->request($challengeUrl)
+		                      ->setNeedsAuth(FALSE)
+		                      ->addPost('_csrftoken', $instagram->client->getToken())
+		                      ->addPost('username', $username)
+		                      ->addPost('device_id', $instagram->device_id)
+		                      ->addPost('password', $password)
+		                      ->addPost('choice', 1)
+		                      ->addPost('security_code', $verificationCode)
+		                      ->getResponse(new GenericResponse());
+
+		return $response;
 	}
 }
