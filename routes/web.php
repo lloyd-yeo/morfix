@@ -223,8 +223,8 @@ Route::post('/webhook/subscription/cancelled','CancellationSubscriptionWebhook@h
 Route::post('/admin/referrer/add', 'AdminController@updateUserAffiliate');
 
 Route::get('/verifyprofilemail', function () {
-//	return new App\Mail\InvoicePaid($invoice);
-	return view('email.profile.verify');
+	return new App\Mail\VerifyAccount(\App\User::where('email', 'l-ywz@hotmail.com')->first());
+//	return view('email.profile.verify');
 });
 
 
