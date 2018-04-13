@@ -131,14 +131,6 @@ class InstagramHelper extends \InstagramAPI\Request {
 			echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
 		}
 
-		if ($ig_profile->insta_username != "theluxurymaker") {
-//			InstagramHelper::verifyAndReassignProxy($ig_profile);
-			$instagram->setProxy($ig_profile->proxy);
-		} else {
-			$proxy = 'http://7708f98575:SvEH1i87@104.203.100.176:4444';
-			$instagram->setProxy($proxy);
-		}
-
 		if ($debug == 1) {
 			echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 		}
