@@ -43,11 +43,13 @@ class TurnOffInteractions extends Command
         $users = User::where('tier', 1)->whereDate('trial_end_date', '<', Carbon::now())->get();
         foreach ($users as $user) {
 		    $user->trial_activation = 2;
+
 		    if ($user->save()) {
 		    	$this->line("[" . $user->email . "] trial activation has expired.");
 		    }
 
 	        $instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
+
 	        foreach ($instagram_profiles as $instagram_profile) {
 		        $instagram_profile->auto_like = 0;
 		        $instagram_profile->auto_follow = 0;

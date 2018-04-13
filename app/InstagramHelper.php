@@ -14,16 +14,11 @@ class InstagramHelper extends \InstagramAPI\Request {
 	public static function initInstagram($debug = false) {
 		$config = array();
 		$config["storage"] = "mysql";
-		$config['pdo'] = DB::connection('mysql_igsession')->getPdo();
+		$config['pdo'] = DB::connection()->getPdo();
 		$config["dbtablename"] = "instagram_sessions";
-		//	    $config["dbusername"] = env('DB_USERNAME_3', 'root');
-		//	    $config["dbpassword"] = env('DB_PASSWORD_3', 'inst@ffiliates123');
-		//	    $config["dbhost"] = env('DB_HOST_3', '52.221.60.235');
-		//	    $config["dbname"] = env('DB_DATABASE_3', 'morfix');
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 		$truncatedDebug = false;
 		$instagram = new Instagram($debug, $truncatedDebug, $config);
-
 		return $instagram;
 	}
 

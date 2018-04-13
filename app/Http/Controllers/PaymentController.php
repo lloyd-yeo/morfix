@@ -138,7 +138,7 @@ class PaymentController extends Controller
 		$success = FALSE;
 
 		$sub_result = NULL;
-		if ($user->braintree_id === NULL) {
+		if ($user->braintree_id == NULL) {
 
 			//if no braintree records, create new braintree customer
 			$result = Braintree_Customer::create([

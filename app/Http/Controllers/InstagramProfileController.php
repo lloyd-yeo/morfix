@@ -34,7 +34,9 @@ class InstagramProfileController extends Controller
 
 	public function refreshProfileStats(Request $request, $id) {
 		$ig_profile = InstagramProfile::where('insta_user_id', $id)->first();
+
 		$instagram = InstagramHelper::initInstagram();
+
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;

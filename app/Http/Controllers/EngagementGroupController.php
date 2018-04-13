@@ -45,7 +45,6 @@ class EngagementGroupController extends Controller
 				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
 				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 				$instagram->setGuzzleOptions($guzzle_options);
-
 				$ig_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(1,100)];
 				$ig_profile->save();
 			}
