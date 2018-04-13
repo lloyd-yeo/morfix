@@ -157,31 +157,56 @@ class InstagramHelper extends \InstagramAPI\Request {
 				$message .= " with InstagramException\n";
 			}
 		} catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+			
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $endpoint_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $endpoint_ex->getTraceAsString());
 
 		} catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
 
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $badrequest_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $badrequest_ex->getTraceAsString());
+
 		} catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
+
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $forcedpwreset_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $forcedpwreset_ex->getTraceAsString());
 			$ig_profile->incorrect_pw = 1;
 			$ig_profile->save();
+
 		} catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $incorrectpw_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $incorrectpw_ex->getTraceAsString());
 			$ig_profile->incorrect_pw = 1;
 			$ig_profile->save();
 			$message = "IncorrectPasswordException\n";
+
 		} catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $accountdisabled_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $accountdisabled_ex->getTraceAsString());
 			$ig_profile->invalid_user = 1;
 			$ig_profile->save();
 			$message = "AccountDisabledException\n";
+
 		} catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $incorrectpw_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $incorrectpw_ex->getTraceAsString());
 			$ig_profile->incorrect_pw = 1;
 			$ig_profile->save();
 			$message = "IncorrectPasswordException\n";
+
 		} catch (\InstagramAPI\Exception\ChallengeRequiredException $challengerequired_ex) {
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $challengerequired_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $challengerequired_ex->getTraceAsString());
 			$ig_profile->checkpoint_required = 1;
 			$ig_profile->save();
 			$message = "ChallengeRequiredException\n";
+
 		} catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $sentryblock_ex->getMessage());
+			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $sentryblock_ex->getTraceAsString());
 			$flag = false;
 		}
+
 		if (!$flag && $debug == 1) {
 			echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
 		} else if ($flag && $debug == 1) {
