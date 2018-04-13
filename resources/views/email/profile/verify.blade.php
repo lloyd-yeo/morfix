@@ -792,7 +792,7 @@
 						     align="center">
 							<div class="logo-center" align="center" id="emb-email-header">
 								<a style="text-decoration: none;transition: opacity 0.1s ease-in;color: #c3ced9;"
-								   href="http://morfix.createsend1.com/t/j-l-bdkxjd-l-r/" target="_blank"><img
+								   href="https://morfix.co" target="_blank"><img
 											style="display: block;height: auto;width: 100%;border: 0;max-width: 184px;"
 											src="https://i1.createsend1.com/ei/j/25/476/543/093354/csfinal/morfix-dark-logo-3.png"
 											alt="Morfix" width="184"></a>
@@ -849,13 +849,13 @@
 									<div class="btn btn--flat btn--large" style="Margin-bottom: 20px;text-align: left;">
 										<!--[if !mso]-->
 										<a style="border-radius: 4px;display: inline-block;font-size: 14px;font-weight: bold;line-height: 24px;padding: 12px 24px;text-align: center;text-decoration: none !important;transition: opacity 0.1s ease-in;color: #ffffff !important;background-color: #3987cc;font-family: Lato, Tahoma, sans-serif;"
-										   href="http://morfix.createsend1.com/t/j-l-bdkxjd-l-y/" target="_blank">Verify
+										   href="https://app.morfix.co/login" target="_blank">Verify
 										                                                                          Profiles
 										                                                                          Now!
 										</a><!--[endif]-->
 										<!--[if mso]><p style='line-height:0;margin:0;'>&nbsp;</p>
 										<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml'
-										             href='http://morfix.createsend1.com/t/j-l-bdkxjd-l-y/'
+										             href='https://app.morfix.co/login'
 										             style='width:173px' arcsize='9%' fillcolor='#3987CC' stroke='f'>
 											<v:textbox style='mso-fit-shape-to-text:t' inset='0px,11px,0px,11px'>
 												<center style='font-size:14px;line-height:24px;color:#FFFFFF;font-family:Lato,Tahoma,sans-serif;font-weight:bold;mso-line-height-rule:exactly;mso-text-raise:4px'>
