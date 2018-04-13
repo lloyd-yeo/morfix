@@ -47,7 +47,7 @@ class RefreshInstagramSessionDaemon extends Command
 	{
 		$users = User::where('tier', '>', 1)->where('partition', 0)->get();
 		foreach ($users as $user) {
-			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
+			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->where('challenge_required', 0)->get();
 			$instagram          = InstagramHelper::initInstagram();
 			foreach ($instagram_profiles as $instagram_profile) {
 				$proxy = $instagram_profile->proxy;
