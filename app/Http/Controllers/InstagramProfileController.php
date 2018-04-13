@@ -44,7 +44,6 @@ class InstagramProfileController extends Controller
 		$instagram->setGuzzleOptions($guzzle_options);
 
 		dump($instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options));
-//		$user_model = $instagram->account->getCurrentUser()->getUser()->asArray();
 		$user_model_public = $instagram->people->getSelfInfo()->getUser();
 		dump($user_model_public);
 
@@ -52,12 +51,6 @@ class InstagramProfileController extends Controller
 		$ig_profile->follower_count = $user_model_public->getFollowerCount();
 		$ig_profile->num_posts = $user_model_public->getMediaCount();
 		$ig_profile->save();
-
-//		dump($user_model);
-//		dump($user_model->asArray());
-//		dump($user_model->getFollowerCount());
-//		dump($user_model->getFullName());
-//		dump($user_model->getMediaCount());
 	}
 
 	public function create(Request $request)
