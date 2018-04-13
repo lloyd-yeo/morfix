@@ -35,6 +35,6 @@ class VerifyAccount extends Mailable
 
 	    return $this->view('email.profile.verify')
 	                ->subject($subject)
-	                ->with(['name' => $this->user->name]);
+	                ->with(['user' => $this->user]);
     }
 }
