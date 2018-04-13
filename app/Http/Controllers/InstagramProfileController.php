@@ -111,6 +111,9 @@ class InstagramProfileController extends Controller
 				} else if ($login_response->isTwoFactorRequired()) {
 					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
 				}
+			} else if ($login_response == NULL) {
+				#$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+				$instagram_user = $instagram->people->getSelfInfo();
 			}
 
 			//If there's no error or checkpoint:
