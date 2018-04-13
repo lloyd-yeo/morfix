@@ -45,7 +45,8 @@ class InstagramProfileController extends Controller
 
 		dump($instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options));
 		$user_model = $instagram->account->getCurrentUser()->getUser()->asArray();
-		dump($user_model_public = $instagram->people->getSelfInfo());
+		$user_model_public = $instagram->people->getSelfInfo();
+		dump($user_model_public);
 
 		$ig_profile->full_name = $user_model['full_name'];
 		$ig_profile->save();
