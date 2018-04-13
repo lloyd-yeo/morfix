@@ -112,13 +112,12 @@ class InstagramProfileController extends Controller
 					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
-				$instagram_user = $login_response->getLoggedInUser();
+				$instagram_user = $instagram->account->getCurrentUser()->getUser();
 			} else if ($login_response == NULL) {
 				$instagram_user = $instagram->account->getCurrentUser()->getUser();
 			}
 
 			//If there's no error or checkpoint:
-
 			$profile_log->error_msg = $instagram_user->asJson();
 			$profile_log->save();
 
