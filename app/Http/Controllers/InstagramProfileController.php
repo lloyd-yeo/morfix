@@ -48,7 +48,7 @@ class InstagramProfileController extends Controller
 		$user_model_public = $instagram->people->getSelfInfo();
 		dump($user_model_public);
 
-		$ig_profile->full_name = $user_model['full_name'];
+		$ig_profile->profile_full_name = $user_model['full_name'];
 		$ig_profile->save();
 
 //		dump($user_model);
