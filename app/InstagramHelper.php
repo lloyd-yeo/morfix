@@ -151,13 +151,13 @@ class InstagramHelper extends \InstagramAPI\Request {
 			InstagramHelper::verifyAndReassignProxy($ig_profile);
 			$message = "NetworkException";
 			try {
-				$instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
+				$instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, NULL);
 				$flag = true;
 			} catch (\InstagramAPI\Exception\InstagramException $login_ex) {
 				$message .= " with InstagramException\n";
 			}
 		} catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
-			
+
 			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $endpoint_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER login()] " . $ig_profile->insta_username . " " . $endpoint_ex->getTraceAsString());
 

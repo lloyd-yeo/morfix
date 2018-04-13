@@ -38,6 +38,18 @@ class EngagementGroupController extends Controller
 
 		foreach ($instagram_profiles as $ig_profile) {
 
+			if ($ig_profile->proxy == NULL) {
+				$guzzle_options                                 = [];
+				$guzzle_options['curl']                         = [];
+				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+				$instagram->setGuzzleOptions($guzzle_options);
+
+				$ig_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(1,100)];
+				$ig_profile->save();
+			}
+
 			if (InstagramHelper::login($instagram, $ig_profile, 0)) {
 
 				$items = $instagram->timeline->getSelfUserFeed()->getItems();
