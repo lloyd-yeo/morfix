@@ -114,7 +114,7 @@ class InstagramProfileController extends Controller
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
 				$instagram_user = $login_response->getLoggedInUser();
 			} else if ($login_response == NULL) {
-				$instagram_user = $instagram->people->getSelfInfo();
+				$instagram_user = $instagram->account->getCurrentUser();
 			}
 
 			//If there's no error or checkpoint:
