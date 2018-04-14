@@ -44,14 +44,15 @@ class RefreshInstagramProfileStats extends Command
 	public function handle()
 	{
 		$users     = User::where('tier', '>', 1)
-		                 ->where('incorrect_pw', 0)
-		                 ->where('invalid_user', 0)
 		                 ->where('vip', 0)
 		                 ->where('admin', 0)
 		                 ->where('partition', 0)->get();
 		$instagram = InstagramHelper::initInstagram();
 		foreach ($users as $user) {
-			$instagram_profiles = InstagramProfile::where('challenge_required', 0)->where('user_id', $user->user_id)->get();
+			$instagram_profiles = InstagramProfile::where('challenge_required', 0)
+			                                      ->where('incorrect_pw', 0)
+			                                      ->where('invalid_user', 0)
+			                                      ->where('user_id', $user->user_id)->get();
 			foreach ($instagram_profiles as $ig_profile) {
 				$this->line("[REFRESH] " . $user->email . " " . $ig_profile->insta_username . " " . $ig_profile->insta_pw);
 				$guzzle_options = NULL;
