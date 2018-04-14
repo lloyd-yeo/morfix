@@ -221,11 +221,11 @@ $("#challenge-confirm-credentials").on("click", function(){
         }
         , function (data) {
             console.log(data);
+            App.loader('hide');
             if (data.success) {
                 localStorage.setItem("status", data.message);
                 location.reload(true);
             } else {
-                App.loader('hide');
                 if (data.type == 'challenge') {
                     $("#challenge-verification-message").html(data.message);
                     $("#challenge-verificationcode-div").show();
