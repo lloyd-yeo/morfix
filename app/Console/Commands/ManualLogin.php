@@ -84,7 +84,16 @@ class ManualLogin extends Command {
 		    }
 
 		    $instagram->setGuzzleOptions($guzzle_options);
-		    dump($instagram->login($ig_username, $ig_password, $guzzle_options));
+		    $login_resp = $instagram->login($ig_username, $ig_password, $guzzle_options);
+		    if ($login_resp != NULL) {
+		    	dump($login_resp);
+		    } else {
+			    $user_model_public = $instagram->people->getSelfInfo()->getUser();
+			    $ig_profile->profile_full_name = $user_model_public->getFullName();
+			    $ig_profile->follower_count = $user_model_public->getFollowerCount();
+			    $ig_profile->num_posts = $user_model_public->getMediaCount();
+			    $ig_profile->save();
+		    }
 	    }
     }
 
