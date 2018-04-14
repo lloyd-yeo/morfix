@@ -383,7 +383,8 @@ class InstagramProfileController extends Controller
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
-			return Response::json([ "success" => FALSE, 'type' => 'incorrect_pw', 'message' => "Incorrect Password!" ]);
+
+			return Response::json([ "success" => FALSE, 'type' => 'incorrect_pw', 'message' => "You've entered an incorrect password!" ]);
 		}
 		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());

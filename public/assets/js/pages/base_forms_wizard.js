@@ -286,7 +286,7 @@ var BaseFormWizard = function() {
                                     $current = $current - 1;
                                     $success = false;
                                 } else if (data.type == 'incorrect_pw') {
-                                    swal('Oops...', data.message, 'error');
+                                    swal(data.message, data.message, 'error');
                                     $success = false;
                                 } else if (data.type == 'challenge') {
                                     // swal('Oops...', data.response, 'error');
