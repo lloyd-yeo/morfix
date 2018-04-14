@@ -138,7 +138,13 @@ class InstagramProfileController extends Controller
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				}
 
-				$morfix_ig_profile = $this->storeInstagramProfile(Auth::user()->user_id, Auth::user()->email, $ig_username, $ig_password, $instagram_user);
+				if ($this->updateInstagramProfileChallengeSuccess($ig_profile, $instagram_user) != NULL) {
+					return response()->json([
+						'success' => TRUE,
+						'message' => 'Successfully verified account!',
+					]);
+				}
+
 			} else {
 				return response()->json([
 					'success' => FALSE,
@@ -191,7 +197,6 @@ class InstagramProfileController extends Controller
 		$finish_challenge_response = $this->finishChallengeVerification($instagram, $ig_username, $ig_password, $challenge_url, $verification_code);
 
 		if ($finish_challenge_response->getStatus() == "ok") {
-
 			try {
 				$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 

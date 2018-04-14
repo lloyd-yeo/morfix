@@ -221,10 +221,14 @@ $("#challenge-confirm-credentials").on("click", function(){
         , function (data) {
             console.log(data);
             if (data.success) {
+                localStorage.setItem("status", data.message);
+                location.reload(true);
             } else {
                 if (data.type == 'challenge') {
                     $("#challenge-verification-message").html(data.message);
                     $("#challenge-verificationcode-div").show();
+                } else {
+                    swal('Failed', data.message, 'fail');
                 }
             }
         });
