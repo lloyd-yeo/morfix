@@ -14,6 +14,7 @@ use App\BraintreeTransaction;
 use Cookie;
 use Illuminate\Http\Request;
 use Log;
+use Response;
 
 class CancellationSubscriptionWebhook extends Controller
 {
