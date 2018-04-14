@@ -85,7 +85,7 @@ class InstagramProfileController extends Controller
 			if ($ig_profile != NULL) {
 
 				$ig_profile->insta_username = $ig_username;
-				$ig_profile->insta_password = $ig_password;
+				$ig_profile->insta_pw = $ig_password;
 				$ig_profile->save();
 
 				Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' profile found. Updated username & password with user-supplied ones.');
