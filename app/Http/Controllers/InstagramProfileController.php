@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use InstagramAPI\Exception\ChallengeRequiredException;
 use InstagramAPI\Exception\CheckpointRequiredException;
 use InstagramAPI\Exception\EndpointException;
 use InstagramAPI\Exception\IncorrectPasswordException;
@@ -160,6 +161,13 @@ class InstagramProfileController extends Controller
 					'message' => 'This Instagram profile could not be found!',
 				]);
 			}
+		} catch (ChallengeRequiredException $challengeRequiredException) {
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' ChallengeRequiredException: ' . $challengeRequiredException->getMessage());
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' ChallengeRequiredException asJson(): ' . $challengeRequiredException->getResponse()->asJson());
+			$profile_log->error_msg = $challengeRequiredException->getMessage();
+			$profile_log->save();
+
+			return Response::json([ "success" => FALSE, 'type' => 'challenge_required', 'message' =>"Verification Required" ]);
 		} catch (CheckpointRequiredException $checkpt_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
