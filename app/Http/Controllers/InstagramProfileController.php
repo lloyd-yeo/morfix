@@ -100,6 +100,8 @@ class InstagramProfileController extends Controller
 
 					if ($login_response->isChallenge()) {
 
+						Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' requires verification, encountered challenge response.');
+
 						$challenge = $login_response->getChallenge();
 						$challenge_api_url = $challenge->getApiPath();
 						$challenge_api_url = substr($challenge_api_url, 1);
@@ -107,11 +109,15 @@ class InstagramProfileController extends Controller
 						$challenge_response = $this->makeRequestToChallengeUrl($instagram, $ig_username, $ig_password, $challenge_api_url);
 
 						if ($challenge_response->getStepName() == 'select_verify_method') {
+
+							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' selecting verification method now.');
+
 							$select_verify_method_response = $this->selectVerifyMethod($instagram, $ig_username, $ig_password, $challenge_api_url, 1);
 							$challenge_response = $select_verify_method_response;
 						}
 
 						if ($challenge_response->getStepName() == 'verify_email' || $challenge_response->getStepName() == 'verify_phone') {
+							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' verifying by ' . $challenge_response->getStepName());
 							$step_data = $challenge_response->getStepData();
 							session(['challenge_url' => $challenge_api_url]);
 							if ($challenge_response->getStepName() == 'verify_email') {
