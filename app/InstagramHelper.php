@@ -190,6 +190,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 
 			if ($explorer_response != NULL) {
+				Log::info('[INSTAGRAM HELPER LOGIN ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response->asJson());
 				if ($explorer_response->isOk()) {
 					$flag = TRUE;
 				} else {
@@ -203,6 +204,7 @@ class InstagramHelper extends \InstagramAPI\Request
 					$flag = FALSE;
 				}
 			} else {
+				Log::info('[INSTAGRAM HELPER LOGIN ' . $ig_profile->insta_username . ' login_resp IS NULL.');
 				$flag = FALSE;
 			}
 
