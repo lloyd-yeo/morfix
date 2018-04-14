@@ -17,29 +17,36 @@ use InstagramAPI\Exception\SentryBlockException;
 use InstagramAPI\Instagram as Instagram;
 use Log;
 
-class InstagramHelper extends \InstagramAPI\Request {
+class InstagramHelper extends \InstagramAPI\Request
+{
 
-	public static function initInstagram($debug = false) {
-		$config = array();
-		$config["storage"] = "mysql";
-		$config['pdo'] = DB::connection()->getPdo();
-		$config["dbtablename"] = "instagram_sessions";
-		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-		$truncatedDebug = false;
-		$instagram = new Instagram($debug, $truncatedDebug, $config);
+	public static function initInstagram($debug = FALSE)
+	{
+		$config                                                     = [];
+		$config["storage"]                                          = "mysql";
+		$config['pdo']                                              = DB::connection()->getPdo();
+		$config["dbtablename"]                                      = "instagram_sessions";
+		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
+		$truncatedDebug                                             = FALSE;
+		$instagram                                                  = new Instagram($debug, $truncatedDebug, $config);
+
 		return $instagram;
 	}
 
-	public static function getFollowersViaProfileId(Instagram $instagram, InstagramProfile $ig_profile, $target_username_id, $next_max_id) {
+	public static function getFollowersViaProfileId(Instagram $instagram, InstagramProfile $ig_profile, $target_username_id, $next_max_id)
+	{
 		try {
-			$rank_token = \InstagramAPI\Signatures::generateUUID(true);
+			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
 			echo("\n[GET FOLLOWERS VIA PROFILE ID] UUID Generated: " . $rank_token);
 			$user_follower_response = $instagram->people->getFollowers($target_username_id, $rank_token, NULL, $next_max_id);
+
 			return $user_follower_response;
-		} catch (NetworkException $network_ex) {
+		}
+		catch (NetworkException $network_ex) {
 			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
 			$ig_profile->save();
 			InstagramHelper::verifyAndReassignProxy($ig_profile);
+
 			return NULL;
 		}
 	}
@@ -48,8 +55,9 @@ class InstagramHelper extends \InstagramAPI\Request {
 	 * TRUE if the login was successful.
 	 * FALSE if the the login failed.
 	 */
-	public static function loginWithCustomProxy(Instagram $instagram, $insta_username, $insta_password, $debug = 1, $proxy) {
-		$flag = false;
+	public static function loginWithCustomProxy(Instagram $instagram, $insta_username, $insta_password, $debug = 1, $proxy)
+	{
+		$flag    = FALSE;
 		$message = '';
 
 		if ($debug == 1) {
@@ -67,51 +75,62 @@ class InstagramHelper extends \InstagramAPI\Request {
 			if ($debug == 1) {
 				dump($explorer_response);
 			}
-			$flag = true;
-		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
-//			$ig_profile->checkpoint_required = 1;
-//			$ig_profile->save();
+			$flag = TRUE;
+		}
+		catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
+			//			$ig_profile->checkpoint_required = 1;
+			//			$ig_profile->save();
 			$message = "CheckpointRequiredException\n";
-		} catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
-//			$ig_profile->invalid_user = 1;
-//			$ig_profile->save();
-		} catch (NetworkException $network_ex) {
+		}
+		catch (\InstagramAPI\Exception\InvalidUserException $invalid_user_ex) {
+			//			$ig_profile->invalid_user = 1;
+			//			$ig_profile->save();
+		}
+		catch (NetworkException $network_ex) {
 			dump($network_ex);
-//			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
-//			$ig_profile->save();
-//			InstagramHelper::verifyAndReassignProxy($ig_profile);
+			//			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+			//			$ig_profile->save();
+			//			InstagramHelper::verifyAndReassignProxy($ig_profile);
 			$message = "NetworkException";
-//			try {
-//				$instagram->login($insta_username, $insta_password);
-//				$flag = true;
-//			} catch (\InstagramAPI\Exception\InstagramException $login_ex) {
-//				$message .= " with InstagramException\n";
-//			}
-		} catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+			//			try {
+			//				$instagram->login($insta_username, $insta_password);
+			//				$flag = true;
+			//			} catch (\InstagramAPI\Exception\InstagramException $login_ex) {
+			//				$message .= " with InstagramException\n";
+			//			}
+		}
+		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
 
-		} catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
+		}
+		catch (\InstagramAPI\Exception\BadRequestException $badrequest_ex) {
 
-		} catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
-//			$ig_profile->incorrect_pw = 1;
-//			$ig_profile->save();
-		} catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-//			$ig_profile->incorrect_pw = 1;
-//			$ig_profile->save();
+		}
+		catch (\InstagramAPI\Exception\ForcedPasswordResetException $forcedpwreset_ex) {
+			//			$ig_profile->incorrect_pw = 1;
+			//			$ig_profile->save();
+		}
+		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+			//			$ig_profile->incorrect_pw = 1;
+			//			$ig_profile->save();
 			$message = "IncorrectPasswordException\n";
-		} catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
-//			$ig_profile->invalid_user = 1;
-//			$ig_profile->save();
+		}
+		catch (\InstagramAPI\Exception\AccountDisabledException $accountdisabled_ex) {
+			//			$ig_profile->invalid_user = 1;
+			//			$ig_profile->save();
 			$message = "AccountDisabledException\n";
-		} catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
-//			$ig_profile->incorrect_pw = 1;
-//			$ig_profile->save();
+		}
+		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+			//			$ig_profile->incorrect_pw = 1;
+			//			$ig_profile->save();
 			$message = "IncorrectPasswordException\n";
-		} catch (\InstagramAPI\Exception\ChallengeRequiredException $challengerequired_ex) {
-//			$ig_profile->checkpoint_required = 1;
-//			$ig_profile->save();
+		}
+		catch (\InstagramAPI\Exception\ChallengeRequiredException $challengerequired_ex) {
+			//			$ig_profile->checkpoint_required = 1;
+			//			$ig_profile->save();
 			$message = "ChallengeRequiredException\n";
-		} catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
-			$flag = false;
+		}
+		catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
+			$flag = FALSE;
 		}
 
 		if (!$flag && $debug == 1) {
@@ -119,6 +138,7 @@ class InstagramHelper extends \InstagramAPI\Request {
 		} else if ($flag && $debug == 1) {
 			echo '[' . $insta_username . '] has been logged in.' . "\n";
 		}
+
 		return $flag;
 	}
 
@@ -126,8 +146,9 @@ class InstagramHelper extends \InstagramAPI\Request {
 	 * TRUE if the login was successful.
 	 * FALSE if the the login failed.
 	 */
-	public static function login(Instagram $instagram, InstagramProfile $ig_profile, $debug = 1) {
-		$flag = false;
+	public static function login(Instagram $instagram, InstagramProfile $ig_profile, $debug = 1)
+	{
+		$flag    = FALSE;
 		$message = '';
 
 		if ($debug == 1) {
@@ -154,8 +175,7 @@ class InstagramHelper extends \InstagramAPI\Request {
 				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
 				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
 				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-
-				$ig_profile->proxy = NULL;
+				$ig_profile->proxy                              = NULL;
 				$ig_profile->save();
 			} else {
 				$guzzle_options                                 = [];
@@ -171,16 +191,23 @@ class InstagramHelper extends \InstagramAPI\Request {
 
 			if ($explorer_response != NULL) {
 				if ($explorer_response->isOk()) {
+					$flag = TRUE;
+				} else {
 					if ($explorer_response->isChallenge()) {
 						$ig_profile->challenge_required = 1;
 						$ig_profile->save();
+					} else if ($explorer_response->isTwoFactorRequired()) {
+						$ig_profile->challenge_required = 1;
+						$ig_profile->save();
 					}
+					$flag = FALSE;
 				}
 			} else {
-				$flag = false;
+				$flag = FALSE;
 			}
 
-		} catch (CheckpointRequiredException $checkpoint_ex) {
+		}
+		catch (CheckpointRequiredException $checkpoint_ex) {
 
 			Log::error("[INSTAGRAM HELPER LOGIN CheckpointRequiredException] " . $ig_profile->insta_username . " " . $checkpoint_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN CheckpointRequiredException] " . $ig_profile->insta_username . " " . $checkpoint_ex->getTraceAsString());
@@ -189,9 +216,10 @@ class InstagramHelper extends \InstagramAPI\Request {
 			$ig_profile->save();
 			$message = "CheckpointRequiredException\n";
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (InvalidUserException $invalid_user_ex) {
+		}
+		catch (InvalidUserException $invalid_user_ex) {
 
 			Log::error("[INSTAGRAM HELPER LOGIN InvalidUserException] " . $ig_profile->insta_username . " " . $invalid_user_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN InvalidUserException] " . $ig_profile->insta_username . " " . $invalid_user_ex->getTraceAsString());
@@ -199,87 +227,96 @@ class InstagramHelper extends \InstagramAPI\Request {
 			$ig_profile->invalid_user = 1;
 			$ig_profile->save();
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (NetworkException $network_ex) {
+		}
+		catch (NetworkException $network_ex) {
 
 			Log::error("[INSTAGRAM HELPER LOGIN NetworkException] " . $ig_profile->insta_username . " " . $network_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN NetworkException] " . $ig_profile->insta_username . " " . $network_ex->getTraceAsString());
 
-//			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
-//			$ig_profile->save();
-//			InstagramHelper::verifyAndReassignProxy($ig_profile);
-//			$message = "NetworkException";
-//			try {
-//				$instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, NULL);
-//				$flag = true;
-//			} catch (InstagramException $login_ex) {
-//				$message .= " with InstagramException\n";
-//			}
+			//			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+			//			$ig_profile->save();
+			//			InstagramHelper::verifyAndReassignProxy($ig_profile);
+			//			$message = "NetworkException";
+			//			try {
+			//				$instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, NULL);
+			//				$flag = true;
+			//			} catch (InstagramException $login_ex) {
+			//				$message .= " with InstagramException\n";
+			//			}
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (EndpointException $endpoint_ex) {
+		}
+		catch (EndpointException $endpoint_ex) {
 
 			Log::error("[INSTAGRAM HELPER LOGIN EndpointException] " . $ig_profile->insta_username . " " . $endpoint_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN EndpointException] " . $ig_profile->insta_username . " " . $endpoint_ex->getTraceAsString());
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (BadRequestException $badrequest_ex) {
+		}
+		catch (BadRequestException $badrequest_ex) {
 
 			Log::error("[INSTAGRAM HELPER LOGIN BadRequestException] " . $ig_profile->insta_username . " " . $badrequest_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN BadRequestException] " . $ig_profile->insta_username . " " . $badrequest_ex->getTraceAsString());
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (ForcedPasswordResetException $forcedpwreset_ex) {
+		}
+		catch (ForcedPasswordResetException $forcedpwreset_ex) {
 
 			Log::error("[INSTAGRAM HELPER LOGIN ForcedPasswordResetException] " . $ig_profile->insta_username . " " . $forcedpwreset_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN ForcedPasswordResetException] " . $ig_profile->insta_username . " " . $forcedpwreset_ex->getTraceAsString());
 			$ig_profile->incorrect_pw = 1;
 			$ig_profile->save();
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (IncorrectPasswordException $incorrectpw_ex) {
+		}
+		catch (IncorrectPasswordException $incorrectpw_ex) {
 			Log::error("[INSTAGRAM HELPER LOGIN IncorrectPasswordException] " . $ig_profile->insta_username . " " . $incorrectpw_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN IncorrectPasswordException] " . $ig_profile->insta_username . " " . $incorrectpw_ex->getTraceAsString());
 			$ig_profile->incorrect_pw = 1;
 			$ig_profile->save();
 			$message = "IncorrectPasswordException\n";
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (AccountDisabledException $accountdisabled_ex) {
+		}
+		catch (AccountDisabledException $accountdisabled_ex) {
 			Log::error("[INSTAGRAM HELPER LOGIN AccountDisabledException] " . $ig_profile->insta_username . " " . $accountdisabled_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN AccountDisabledException] " . $ig_profile->insta_username . " " . $accountdisabled_ex->getTraceAsString());
 			$ig_profile->invalid_user = 1;
 			$ig_profile->save();
 			$message = "AccountDisabledException\n";
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (ChallengeRequiredException $challengerequired_ex) {
+		}
+		catch (ChallengeRequiredException $challengerequired_ex) {
 			Log::error("[INSTAGRAM HELPER LOGIN ChallengeRequiredException] " . $ig_profile->insta_username . " " . $challengerequired_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN ChallengeRequiredException] " . $ig_profile->insta_username . " " . $challengerequired_ex->getTraceAsString());
 			$ig_profile->checkpoint_required = 1;
 			$ig_profile->save();
 			$message = "ChallengeRequiredException\n";
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (SentryBlockException $sentryblock_ex) {
+		}
+		catch (SentryBlockException $sentryblock_ex) {
 			Log::error("[INSTAGRAM HELPER LOGIN SentryBlockException] " . $ig_profile->insta_username . " " . $sentryblock_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN SentryBlockException] " . $ig_profile->insta_username . " " . $sentryblock_ex->getTraceAsString());
 
-			$flag = false;
+			$flag = FALSE;
 
-		} catch (LoginRequiredException $loginRequiredException) {
+		}
+		catch (LoginRequiredException $loginRequiredException) {
 			Log::error("[INSTAGRAM HELPER LOGIN LoginRequiredException] " . $ig_profile->insta_username . " " . $loginRequiredException->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN LoginRequiredException] " . $ig_profile->insta_username . " " . $loginRequiredException->getTraceAsString());
 
-			$flag = false;
+			$flag = FALSE;
 
 		}
 
@@ -292,10 +329,11 @@ class InstagramHelper extends \InstagramAPI\Request {
 		return $flag;
 	}
 
-	public static function verifyAndReassignProxy(InstagramProfile $ig_profile, $debug = 0) {
+	public static function verifyAndReassignProxy(InstagramProfile $ig_profile, $debug = 0)
+	{
 		if ($ig_profile->proxy === NULL || $ig_profile->invalid_proxy > 0) {
-			$proxy = Proxy::inRandomOrder()->first();
-			$ig_profile->proxy = $proxy->proxy;
+			$proxy                     = Proxy::inRandomOrder()->first();
+			$ig_profile->proxy         = $proxy->proxy;
 			$ig_profile->invalid_proxy = 0;
 			$ig_profile->save();
 			$proxy->assigned = $proxy->assigned + 1;
@@ -306,66 +344,81 @@ class InstagramHelper extends \InstagramAPI\Request {
 		}
 	}
 
-	public static function forceReassignProxy(InstagramProfile $ig_profile) {
-		$proxy = Proxy::inRandomOrder()->first();
+	public static function forceReassignProxy(InstagramProfile $ig_profile)
+	{
+		$proxy             = Proxy::inRandomOrder()->first();
 		$ig_profile->proxy = $proxy->proxy;
 		$ig_profile->save();
 		$proxy->assigned = $proxy->assigned + 1;
 		if ($proxy->save()) {
-			return true;
+			return TRUE;
 		} else {
-			return false;
+			return FALSE;
 		}
 	}
 
-	public static function getUserIdForNicheUsername($instagram, $target_username) {
+	public static function getUserIdForNicheUsername($instagram, $target_username)
+	{
 		$username_id = NULL;
 		$username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
+
 		return $username_id;
 	}
 
-	public static function getUserIdForName($instagram, $target_username) {
+	public static function getUserIdForName($instagram, $target_username)
+	{
 		$username_id = NULL;
 		try {
 			$username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
-		} catch (NotFoundException $not_found_ex) {
+		}
+		catch (NotFoundException $not_found_ex) {
 			$target_username->invalid = 1;
 			$target_username->save();
 		}
+
 		return $username_id;
 	}
 
-	public static function getUserInfo($instagram, $ig_profile) {
+	public static function getUserInfo($instagram, $ig_profile)
+	{
 		try {
 			$user_response = $instagram->people->getInfoById($ig_profile->insta_user_id);
+
 			return $user_response->getUser();
-		} catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
+		}
+		catch (\InstagramAPI\Exception\InstagramException $insta_ex) {
 			echo "[" . $ig_profile->insta_username . "] " . $insta_ex->getMessage() . "\n";
 			echo $insta_ex->getTraceAsString() . "\n";
 		}
 	}
 
-	public static function getTargetUsernameFollowers($instagram, $target_username, $username_id) {
-		$rank_token = \InstagramAPI\Signatures::generateUUID(true);
+	public static function getTargetUsernameFollowers($instagram, $target_username, $username_id)
+	{
+		$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
 		echo("\n[GET TARGET USERNAME FOLLOWERS] UUID Generated: " . $rank_token);
 		$user_follower_response = $instagram->people->getFollowers($username_id, $rank_token, NULL, NULL);
-		$users_to_follow = $user_follower_response->getUsers();
+		$users_to_follow        = $user_follower_response->getUsers();
+
 		return $users_to_follow;
 	}
 
-	public static function getUserFeed(Instagram $instagram, $user_to_like) {
+	public static function getUserFeed(Instagram $instagram, $user_to_like)
+	{
 		//Get the feed of the user to like.
 		try {
 			if ($user_to_like === NULL) {
 				echo("\n" . "Null User - Target Username");
+
 				return NULL;
 			}
+
 			return $instagram->timeline->getUserFeed($user_to_like->getPk());
-		} catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
+		}
+		catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
 			echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
 			if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
 				if (BlacklistedUsername::find($user_to_like->getUsername()) === NULL) {
-					$blacklist_username = new BlacklistedUsername;
+					$blacklist_username           = new BlacklistedUsername;
 					$blacklist_username->username = $user_to_like->getUsername();
 					$blacklist_username->save();
 					echo("\n" . "Blacklisted: " . $user_to_like->getUsername());
@@ -373,75 +426,95 @@ class InstagramHelper extends \InstagramAPI\Request {
 					return NULL;
 				}
 			}
+
 			return NULL;
-		} catch (\Exception $ex) {
+		}
+		catch (\Exception $ex) {
 			echo("\n" . "Exception: " . $ex->getMessage());
+
 			return NULL;
 		}
 	}
 
-	public static function getTargetHashtagFeed(Instagram $instagram, $hashtag) {
+	public static function getTargetHashtagFeed(Instagram $instagram, $hashtag)
+	{
 		$hashtag_feed = NULL;
 		try {
 			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+
 			//            dump($hashtag_feed);
 			return $hashtag_feed;
-		} catch (NotFoundException $ex) {
+		}
+		catch (NotFoundException $ex) {
 			$hashtag->invalid = 1;
 			$hashtag->save();
+
 			return NULL;
-		} catch (NetworkException $network_ex) {
+		}
+		catch (NetworkException $network_ex) {
 			$ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
 			if ($ig_profile !== NULL) {
 				$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
 				$ig_profile->save();
 			}
+
 			return NULL;
 		}
 	}
 
-	public static function getHashtagFeed(Instagram $instagram, $hashtag) {
+	public static function getHashtagFeed(Instagram $instagram, $hashtag)
+	{
 		$hashtag_feed = NULL;
 		try {
 			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+
 			return $hashtag_feed;
-		} catch (NotFoundException $ex) {
+		}
+		catch (NotFoundException $ex) {
 			dump($ex);
+
 			return NULL;
-		} catch (NetworkException $network_ex) {
+		}
+		catch (NetworkException $network_ex) {
 			$ig_profile = InstagramProfile::where('insta_user_id', $instagram->account_id)->first();
 			if ($ig_profile !== NULL) {
 				$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
 			}
 			dump($network_ex);
+
 			return NULL;
 		}
 	}
 
-	public static function validForInteraction($ig_profile) {
+	public static function validForInteraction($ig_profile)
+	{
 		if ($ig_profile->checkpoint_required == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
 		}
 
 		if ($ig_profile->account_disabled == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] account has been disabled.\n");
-			return false;
+
+			return FALSE;
 		}
 
 		if ($ig_profile->invalid_user == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] is a invalid instagram user.\n");
-			return false;
+
+			return FALSE;
 		}
 
 		if ($ig_profile->incorrect_pw == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] is using an incorrect password.\n");
-			return false;
+
+			return FALSE;
 		}
 
-		return true;
+		return TRUE;
 	}
 
-	public static function randomizeUseHashtags(Instagram $instagram, InstagramProfile $ig_profile, $targeted_hashtags, $targeted_usernames) {
+	public static function randomizeUseHashtags(Instagram $instagram, InstagramProfile $ig_profile, $targeted_hashtags, $targeted_usernames)
+	{
 		$use_hashtags = rand(0, 1);
 		if ($use_hashtags == 1 && count($targeted_hashtags) == 0) {
 			$use_hashtags = 0;
@@ -454,10 +527,12 @@ class InstagramHelper extends \InstagramAPI\Request {
 		}
 
 		echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
+
 		return $use_hashtags;
 	}
 
-	public static function refreshUserMedia(Instagram $instagram, InstagramProfile $ig_profile) {
+	public static function refreshUserMedia(Instagram $instagram, InstagramProfile $ig_profile)
+	{
 
 	}
 
