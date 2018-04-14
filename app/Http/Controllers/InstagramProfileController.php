@@ -224,7 +224,7 @@ class InstagramProfileController extends Controller
 					} else if ($login_response->isTwoFactorRequired()) {
 						Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
 						session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
-						return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
+						return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 					}
 
 				} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
@@ -489,7 +489,7 @@ class InstagramProfileController extends Controller
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
 					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
-					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' => "Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
+					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' => "Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
 				$instagram_user = $instagram->people->getSelfInfo()->getUser();
@@ -621,7 +621,7 @@ class InstagramProfileController extends Controller
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
 					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
-					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
+					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
 				$instagram_user = $instagram->people->getSelfInfo()->getUser();

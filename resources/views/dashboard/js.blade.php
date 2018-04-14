@@ -232,7 +232,8 @@ $("#challenge-confirm-credentials").on("click", function(){
                 } else if (data.type == 'incorrect_pw') {
                     swal('Failed', data.message, 'error');
                 } else if (data.type == '2fa') {
-                    swal('Failed', data.message, 'error');
+                    $("#2fa-verification-message").html(data.message);
+                    $("#2fa-verificationcode-div").show();
                 } else {
                     swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
                 }
