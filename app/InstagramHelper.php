@@ -131,13 +131,37 @@ class InstagramHelper extends \InstagramAPI\Request {
 		}
 
 		try {
-			$guzzle_options                                 = [];
-			$guzzle_options['curl']                         = [];
-			$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
-			$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
-			$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+
+			$guzzle_options = NULL;
+
+			if ($ig_profile->proxy == NULL) {
+				$guzzle_options                                 = [];
+				$guzzle_options['curl']                         = [];
+				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+			} else if (strpos($ig_profile->proxy, 'http') === 0) {
+				$guzzle_options                                 = [];
+				$guzzle_options['curl']                         = [];
+				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+
+				$ig_profile->proxy = NULL;
+				$ig_profile->save();
+			} else {
+				$guzzle_options                                 = [];
+				$guzzle_options['curl']                         = [];
+				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
+				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
+				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+			}
+
+			$instagram->setGuzzleOptions($guzzle_options)
+
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 			$flag = true;
+
 		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
 			$ig_profile->checkpoint_required = 1;
 			$ig_profile->save();

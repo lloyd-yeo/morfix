@@ -38,6 +38,8 @@ class EngagementGroupController extends Controller
 
 		foreach ($instagram_profiles as $ig_profile) {
 
+			Log::info("[ENGAGEMENT GROUP INDEX] " . $ig_profile->insta_username . " attempting to login.");
+
 			if ($ig_profile->proxy == NULL) {
 				$guzzle_options                                 = [];
 				$guzzle_options['curl']                         = [];
