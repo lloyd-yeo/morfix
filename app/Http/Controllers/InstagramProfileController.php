@@ -142,8 +142,10 @@ class InstagramProfileController extends Controller
 					}
 
 				} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
+					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' login_resp NOT NULL but login_resp IS OK');
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				} else if ($login_response == NULL) {
+					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' login_resp IS NULL');
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				}
 
