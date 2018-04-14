@@ -157,7 +157,7 @@ class InstagramHelper extends \InstagramAPI\Request {
 				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 			}
 
-			$instagram->setGuzzleOptions($guzzle_options)
+			$instagram->setGuzzleOptions($guzzle_options);
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 			$flag = true;
