@@ -218,11 +218,13 @@ class InstagramProfileController extends Controller
 			} catch (SentryBlockException $sentryBlockException) {
 				return response()->json([
 					'success' => TRUE,
+					'type' => 'server',
 					'message' => 'Server network error! Just click the submit button again.',
 				]);
 			} catch (\Exception $ex) {
 				return response()->json([
 					'success' => FALSE,
+					'type' => 'general',
 					'message' => $ex->getMessage(),
 				]);
 			}
@@ -230,6 +232,7 @@ class InstagramProfileController extends Controller
 		} else {
 			return response()->json([
 				'success' => FALSE,
+				'type' => 'general',
 				'message' => 'Something went wrong! Do double check your 6 digit verification code!',
 			]);
 		}

@@ -230,7 +230,7 @@ $("#challenge-confirm-credentials").on("click", function(){
                     $("#challenge-verification-message").html(data.message);
                     $("#challenge-verificationcode-div").show();
                 } else {
-                    swal('Failed', data.message, 'fail');
+                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'fail');
                 }
             }
     });
@@ -250,7 +250,11 @@ $("#challenge-verification-code-submit").on("click", function(){
                 localStorage.setItem("status", data.message);
                 location.reload(true);
             } else {
-                swal('Failed', data.message, 'fail');
+                if (data.type != 'server') {
+                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'fail');
+                } else {
+                    swal('Failed', data.message, 'fail');
+                }
             }
         });
 });

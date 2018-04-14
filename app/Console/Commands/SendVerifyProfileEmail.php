@@ -45,7 +45,6 @@ class SendVerifyProfileEmail extends Command
 		             ->where('partition', 0)
 		             ->where('admin', 0)
 		             ->where('vip', 0)
-		             ->where('email', 'l-ywz@hotmail.com')
 		             ->get();
 
 		foreach ($users as $user) {
