@@ -213,6 +213,7 @@ $("#challenge-confirm-credentials").on("click", function(){
     var $ig_username = $('#challenge-ig-username').val();
     var $ig_password = $('#challenge-ig-password').val();
 
+    App.loader('show');
     var jqxhr = $.post("/profile/ig/challenge/confirm",
         {
             ig_username: $ig_username,
@@ -224,6 +225,7 @@ $("#challenge-confirm-credentials").on("click", function(){
                 localStorage.setItem("status", data.message);
                 location.reload(true);
             } else {
+                App.loader('hide');
                 if (data.type == 'challenge') {
                     $("#challenge-verification-message").html(data.message);
                     $("#challenge-verificationcode-div").show();
@@ -231,17 +233,18 @@ $("#challenge-confirm-credentials").on("click", function(){
                     swal('Failed', data.message, 'fail');
                 }
             }
-        });
+    });
 });
 
 $("#challenge-verification-code-submit").on("click", function(){
     var $verification_code = $("#challenge-verification-code").val();
-
+    App.loader('show');
     var jqxhr = $.post("/profile/ig/challenge/verification",
         {
             verification_code: $verification_code,
         }
         , function (data) {
+            App.loader('hide');
             console.log(data);
             if (data.success) {
                 localStorage.setItem("status", data.message);
