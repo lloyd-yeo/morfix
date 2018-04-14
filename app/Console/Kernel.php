@@ -102,6 +102,7 @@ class Kernel extends ConsoleKernel {
         Commands\TurnOffInteractions::class,
         Commands\RefreshInstagramSessionDaemon::class,
         Commands\SendVerifyProfileEmail::class,
+        Commands\RefreshInstagramProfileStats::class,
     ];
 
     /**
