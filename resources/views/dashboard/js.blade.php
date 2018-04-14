@@ -229,6 +229,8 @@ $("#challenge-confirm-credentials").on("click", function(){
                 if (data.type == 'challenge') {
                     $("#challenge-verification-message").html(data.message);
                     $("#challenge-verificationcode-div").show();
+                } else if (data.type == 'incorrect_pw') {
+                    swal('Failed', data.message, 'fail');
                 } else {
                     swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'fail');
                 }
@@ -250,10 +252,10 @@ $("#challenge-verification-code-submit").on("click", function(){
                 localStorage.setItem("status", data.message);
                 location.reload(true);
             } else {
-                if (data.type != 'server') {
-                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'fail');
-                } else {
+                if (data.type == 'server') {
                     swal('Failed', data.message, 'fail');
+                } else {
+                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'fail');
                 }
             }
         });

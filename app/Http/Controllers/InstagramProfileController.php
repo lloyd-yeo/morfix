@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use InstagramAPI\Exception\IncorrectPasswordException;
 use InstagramAPI\Exception\SentryBlockException;
 use InstagramAPI\InstagramException as InstagramException;
 use Log;
@@ -223,9 +224,15 @@ class InstagramProfileController extends Controller
 				}
 			} catch (SentryBlockException $sentryBlockException) {
 				return response()->json([
-					'success' => TRUE,
+					'success' => FALSE,
 					'type' => 'server',
 					'message' => 'Server network error! Just click the submit button again.',
+				]);
+			} catch (IncorrectPasswordException $incorrectPasswordException) {
+				return response()->json([
+					'success' => FALSE,
+					'type' => 'incorrect_pw',
+					'message' => 'Incorrect password! Please check your password & try again.',
 				]);
 			} catch (\Exception $ex) {
 				return response()->json([
