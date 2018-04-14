@@ -77,6 +77,29 @@
 											</center>
 										</div>
 
+										<div id="2fa-verificationcode-div" style="display:none;">
+											<center><h3 class='push'>2. Verification Code Required</h3></center>
+											<center>
+												<h4 class='push' id="2fa-verification-message" style="font-size:12px;">
+
+												</h4>
+											</center>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div class="form-material form-material-primary">
+														<input class="form-control" type="text" id="2fa-verification-code" placeholder="Please enter the 6 digit code here.">
+														<label for="2fa-verification-code">Verification Code</label>
+													</div>
+												</div>
+											</div>
+											<br/>
+											<center>
+												<button class="btn btn-minw btn-rounded btn-primary" id="2fa-verification-code-submit" style="margin-top: 10px;" type="button">
+													Submit
+												</button>
+											</center>
+										</div>
+
 										{{--<center><h4 class='push'>3. Verify "It was me"</h4></center>--}}
 										{{--<p>--}}
 											{{--Wait for the previous step to fail then switch back to Instagram & refresh the page.--}}

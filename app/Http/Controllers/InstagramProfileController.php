@@ -55,6 +55,90 @@ class InstagramProfileController extends Controller
 		$ig_profile->save();
 	}
 
+	public function clear2FA(Request $request) {
+		$verification_code = $request->input('verification_code');
+		$twofa_identifier = $request->input('2fa_identifier');
+		$ig_username = session('add_ig_user');
+		$ig_password = session('add_ig_pw');
+
+		Log::info('[CLEAR 2FA] ' . Auth::user()->email . ' using residential proxy for clearing 2FA.');
+		Log::info('[CLEAR 2FA] ' . Auth::user()->email . ' using following details:');
+		Log::info('[CLEAR 2FA] ' . Auth::user()->email . ' [' . $ig_username . '] [' . $ig_password . '] [' . $twofa_identifier . '] [' . $verification_code . ']');
+
+		$instagram = InstagramHelper::initInstagram();
+		$guzzle_options                                 = [];
+		$guzzle_options['curl']                         = [];
+		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin' . substr(Auth::user()->user_id, -2) . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+		$instagram->setGuzzleOptions($guzzle_options);
+
+
+		try {
+			$login_response = $response = $instagram->finishTwoFactorLogin($ig_username, $ig_password, $twofa_identifier, $verification_code);
+
+			$instagram_user = NULL;
+
+			if ($login_response != NULL && $login_response->getStatus() == "ok") {
+
+				Log::info('[CLEAR 2FA] ' . Auth::user()->email . ' login_resp: ' . $login_response->asJson());
+
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
+
+			} else if ($login_response == NULL) {
+
+				Log::info('[CLEAR 2FA] ' . Auth::user()->email . ' NULL login_resp');
+
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
+			}
+
+			if ($instagram_user == NULL) {
+				Log::error('[CLEAR 2FA] ' . Auth::user()->email . ' $instagram_user IS NULL');
+				return response()->json([
+					'success' => FALSE,
+					'type' => 'general',
+					'message' => 'Unable to verify account!',
+				]);
+			}
+
+			$instagram_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
+
+			foreach ($instagram_profiles as $instagram_profile) {
+				Log::info('[CLEAR 2FA] ' . $ig_username . ' updating instagram profiles now.');
+				if ($this->updateInstagramProfileChallengeSuccess($instagram_profile, $instagram_user) != NULL) {
+					return response()->json([
+						'success' => TRUE,
+						'message' => 'Successfully verified account!',
+					]);
+				}
+			}
+
+		} catch (SentryBlockException $sentryBlockException) {
+
+			Log::error('[CLEAR 2FA] ' . Auth::user()->email . ' SentryBlockException: ' . $sentryBlockException->getMessage());
+			return response()->json([
+				'success' => FALSE,
+				'type' => 'server',
+				'message' => 'Server network error! Just click the submit button again.',
+			]);
+		} catch (IncorrectPasswordException $incorrectPasswordException) {
+			Log::error('[CLEAR 2FA] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectPasswordException->getMessage());
+			return response()->json([
+				'success' => FALSE,
+				'type' => 'incorrect_pw',
+				'message' => 'Incorrect password! Please check your password & try again.',
+			]);
+		} catch (\Exception $ex) {
+			Log::error('[CLEAR 2FA] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $ex->getMessage());
+			return response()->json([
+				'success' => FALSE,
+				'type' => 'general',
+				'message' => $ex->getMessage(),
+			]);
+		}
+
+	}
+
 	public function confirmCredentialsChallenge(Request $request) {
 
 		$email       = Auth::user()->email;
@@ -139,6 +223,7 @@ class InstagramProfileController extends Controller
 						}
 					} else if ($login_response->isTwoFactorRequired()) {
 						Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
+						session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
 						return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
 					}
 
@@ -224,7 +309,7 @@ class InstagramProfileController extends Controller
 		$challenge_url = session('challenge_url');
 
 		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using residential proxy for clearing account verification.');
-		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using follow details:');
+		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using following details:');
 		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' [' . $ig_username . '] [' . $ig_password . '] [' . $challenge_url . ']');
 
 		$instagram = InstagramHelper::initInstagram();
@@ -403,6 +488,7 @@ class InstagramProfileController extends Controller
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
+					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
 					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' => "Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
@@ -534,6 +620,7 @@ class InstagramProfileController extends Controller
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
+					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
 					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {

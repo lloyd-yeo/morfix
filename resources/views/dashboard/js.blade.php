@@ -263,4 +263,27 @@ $("#challenge-verification-code-submit").on("click", function(){
         });
 });
 
+$("#2fa-verification-code-submit").on("click", function(){
+    var $verification_code = $("#2fa-verification-code").val();
+    App.loader('show');
+    var jqxhr = $.post("/profile/2fa/clear",
+        {
+            verification_code: $verification_code,
+        }
+        , function (data) {
+            App.loader('hide');
+            console.log(data);
+            if (data.success) {
+                localStorage.setItem("status", data.message);
+                location.reload(true);
+            } else {
+                if (data.type == 'server') {
+                    swal('Failed', data.message, 'error');
+                } else {
+                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
+                }
+            }
+        });
+});
+
 </script>
