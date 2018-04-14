@@ -231,11 +231,14 @@ class InstagramProfileController extends Controller
 			try {
 				$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 
+				$instagram_user = NULL;
+
 				if ($login_response != NULL && $login_response->getStatus() == "ok") {
 
 					Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' login_resp: ' . $login_response->asJson());
 
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
+
 				} else if ($login_response == NULL) {
 
 					Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' NULL login_resp');
@@ -243,7 +246,18 @@ class InstagramProfileController extends Controller
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				}
 
+				if ($instagram_user == NULL) {
+					Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' $instagram_user IS NULL');
+					return response()->json([
+						'success' => FALSE,
+						'type' => 'general',
+						'message' => 'Unable to verify account!',
+					]);
+				}
+
 				$instagram_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
+
+
 				foreach ($instagram_profiles as $instagram_profile) {
 
 					Log::info('[CLEAR CHALLENGE] ' . $ig_username . ' updating instagram profiles now.');
@@ -590,7 +604,7 @@ class InstagramProfileController extends Controller
 		$ig_profile            = InstagramProfile::find($request->input('profile-id'));
 		$config                = [];
 		$config["storage"]     = "mysql";
-		$config["pdo"]         = DB::connection('mysql_igsession')->getPdo();
+		$config["pdo"]         = DB::connection()->getPdo();
 		$config["dbtablename"] = "instagram_sessions";
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 		$debug          = FALSE;
