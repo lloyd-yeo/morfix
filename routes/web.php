@@ -52,12 +52,13 @@ Route::post('/interactions/save/advancedfollowsettings/{id}', 'InteractionsContr
 Route::post('/instagram-profile/add', 'InstagramProfileController@store');
 
 Route::post('/profile/ig/add', 'InstagramProfileController@create');
-Route::post('/profile/ig/refresh/{id}', 'InstagramProfileController@refreshProfileStats');
-Route::get('/profile/ig/refresh/{id}', 'InstagramProfileController@refreshProfileStats');
+Route::post('/profile/ig/challenge/confirm', 'InstagramProfileController@confirmCredentialsChallenge');
 Route::post('/profile/ig/remove/{id}', 'InstagramProfileController@delete');
 Route::post('/profile/ig/checkpoint', 'InstagramProfileController@clearCheckpoint');
 Route::post('/profile/ig/changepassword', 'InstagramProfileController@changePassword');
 Route::post('/profile/challenge/clear', 'InstagramProfileController@clearChallenge');
+Route::post('/profile/ig/refresh/{id}', 'InstagramProfileController@refreshProfileStats');
+Route::get('/profile/ig/refresh/{id}', 'InstagramProfileController@refreshProfileStats');
 
 Route::get('/dm', 'DirectMessageController@index');
 

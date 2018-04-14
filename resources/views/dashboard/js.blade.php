@@ -209,4 +209,17 @@ $("#challenge-url").on("click", function(){
 	$("#confirm-verify").show();
 });
 
+$("#challenge-confirm-credentials").on("click", function(){
+    var jqxhr = $.post("/profile/ig/challenge/confirm",
+        {
+            active_request: $active_request_id,
+        }
+        , function (data) {
+            if (data.success) {
+                alert("Hang on while we re-try adding your profile. Please do not close this window.")
+            } else {
+            }
+        });
+});
+
 </script>

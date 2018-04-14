@@ -33,22 +33,22 @@
 										<div class="form-group">
 											<div class="col-sm-12">
 												<div class="form-material form-material-primary">
-													<input class="form-control" type="text" id="validation-ig-username" name="validation-ig-username" placeholder="Please enter your Instagram Username/Handle">
-													<label for="validation-ig-username">Profile Username/Handle</label>
+													<input class="form-control" type="text" id="challenge-ig-username" placeholder="Please enter this profile's Instagram Username/Handle">
+													<label for="challenge-ig-username">Profile Username/Handle</label>
 												</div>
 											</div>
 										</div>
 										<div class="form-group">
 											<div class="col-sm-12">
 												<div class="form-material form-material-primary">
-													<input class="form-control" type="text" id="validation-ig-password" name="validation-ig-password" placeholder="Please enter your Instagram Password">
-													<label for="validation-ig-password">Profile Password</label>
+													<input class="form-control" type="text" id="challenge-ig-password" placeholder="Please enter this profile's Instagram Password">
+													<label for="challenge-ig-password">Profile Password</label>
 												</div>
 											</div>
 										</div>
 										<center>
-											<button class="btn btn-minw btn-rounded btn-primary" style="margin-top: 10px;" type="button">
-												Save
+											<button class="btn btn-minw btn-rounded btn-primary" id="challenge-confirm-credentials" style="margin-top: 10px;" type="button">
+												Confirm Details
 											</button>
 										</center>
 

@@ -51,6 +51,10 @@ class InstagramProfileController extends Controller
 		$ig_profile->save();
 	}
 
+	public function confirmCredentialsChallenge(Request $request) {
+
+	}
+
 	public function create(Request $request)
 	{
 		$email       = Auth::user()->email;
