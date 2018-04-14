@@ -81,7 +81,9 @@ class InstagramProfileController extends Controller
 
 		try {
 			$ig_profile = InstagramProfile::where('insta_username', $ig_username)->first();
+
 			if ($ig_profile != NULL) {
+
 				$ig_profile->insta_username = $ig_username;
 				$ig_profile->insta_password = $ig_password;
 				$ig_profile->save();
@@ -136,6 +138,12 @@ class InstagramProfileController extends Controller
 				}
 
 				$morfix_ig_profile = $this->storeInstagramProfile(Auth::user()->user_id, Auth::user()->email, $ig_username, $ig_password, $instagram_user);
+			} else {
+				return response()->json([
+					'success' => FALSE,
+					'type' => 'profile_not_found',
+					'message' => 'This Instagram profile could not be found!',
+				]);
 			}
 		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
