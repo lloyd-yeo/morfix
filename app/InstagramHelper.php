@@ -10,6 +10,7 @@ use InstagramAPI\Exception\ForcedPasswordResetException;
 use InstagramAPI\Exception\IncorrectPasswordException;
 use InstagramAPI\Exception\InstagramException;
 use InstagramAPI\Exception\InvalidUserException;
+use InstagramAPI\Exception\LoginRequiredException;
 use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Exception\NotFoundException;
 use InstagramAPI\Exception\SentryBlockException;
@@ -228,6 +229,12 @@ class InstagramHelper extends \InstagramAPI\Request {
 		} catch (SentryBlockException $sentryblock_ex) {
 			Log::error("[INSTAGRAM HELPER LOGIN SentryBlockException] " . $ig_profile->insta_username . " " . $sentryblock_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN SentryBlockException] " . $ig_profile->insta_username . " " . $sentryblock_ex->getTraceAsString());
+
+			$flag = false;
+		} catch (LoginRequiredException $loginRequiredException) {
+			Log::error("[INSTAGRAM HELPER LOGIN LoginRequiredException] " . $ig_profile->insta_username . " " . $loginRequiredException->getMessage());
+			Log::error("[INSTAGRAM HELPER LOGIN LoginRequiredException] " . $ig_profile->insta_username . " " . $loginRequiredException->getTraceAsString());
+
 			$flag = false;
 		}
 

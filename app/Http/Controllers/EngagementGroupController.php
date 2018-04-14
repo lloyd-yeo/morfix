@@ -55,7 +55,7 @@ class EngagementGroupController extends Controller
 
 				$items = $instagram->timeline->getSelfUserFeed()->getItems();
 
-				Log::error("[ENGAGEMENT GROUP INDEX] GET ITEMS " . Auth::user()->email . " " . var_export($items, TRUE));
+//				Log::error("[ENGAGEMENT GROUP INDEX] GET ITEMS " . Auth::user()->email . " " . var_export($items, TRUE));
 
 				foreach ($items as $item) {
 					try {
