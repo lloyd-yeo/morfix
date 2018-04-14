@@ -139,7 +139,7 @@ class InstagramProfileController extends Controller
 						}
 					} else if ($login_response->isTwoFactorRequired()) {
 						Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
-						return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"data.messageAccount is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
+						return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
 					}
 
 				} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
@@ -403,7 +403,7 @@ class InstagramProfileController extends Controller
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
-					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' => "data.messageAccount is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
+					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' => "Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
 				$instagram_user = $instagram->people->getSelfInfo()->getUser();
@@ -534,7 +534,7 @@ class InstagramProfileController extends Controller
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
-					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"data.messageAccount is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
+					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please disable 2FA." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
 				$instagram_user = $instagram->people->getSelfInfo()->getUser();
