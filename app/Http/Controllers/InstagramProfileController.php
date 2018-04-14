@@ -54,8 +54,8 @@ class InstagramProfileController extends Controller
 	public function confirmCredentialsChallenge(Request $request) {
 
 		$email       = Auth::user()->email;
-		$ig_username = $request->input("ig-username");
-		$ig_password = $request->input("ig-password");
+		$ig_username = $request->input("ig_username");
+		$ig_password = $request->input("ig_password");
 
 		Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' trying to confirm credentials: ' . $ig_username . ' ' . $ig_password);
 
