@@ -55,7 +55,7 @@ jQuery(function () {
                     },
                     success: function (data) {
                         if (data.success === true) {
-                            localStorage.setItem("status", data.response);
+                            localStorage.setItem("status", data.message);
                             location.reload(true);
                         } else {
                             reject('This password is incorrect.');
@@ -87,10 +87,10 @@ jQuery(function () {
             },
             success: function (data) {
                 if (data.success === true) {
-                    localStorage.setItem("status", data.response);
+                    localStorage.setItem("status", data.message);
                     location.reload(true);
                 } else {
-                    swal('Oops...', data.response, 'error');
+                    swal('Oops...', data.message, 'error');
                 }
 
             }
@@ -121,22 +121,22 @@ jQuery(function () {
 
                     if (data.success === true) {
                         jQuery('#modal-addprofile').modal('hide');
-                        localStorage.setItem("status", data.response);
+                        localStorage.setItem("status", data.message);
                         location.reload(true);
                     } else {
                         console.log(data.type)
                         if (data.type == 'ig_added') {
-                            swal('Oops...', data.response, 'error');
+                            swal('Oops...', data.message, 'error');
                         } else if (data.type == 'checkpoint') {
-                            swal('Oops...', data.response, 'error');
+                            swal('Oops...', data.message, 'error');
                         } else if (data.type == 'challenge') {
-                            swal('Oops...', data.response, 'error');
+                            swal('Oops...', data.message, 'error');
                             console.log(data.active_request);
                             $("#active-request").val(data.active_request);
 //                            $("#challenge-url").attr("href", data.link);
 //                            $("#challenge-url").html(data.link);
                         } else {
-                           swal('Oops...', data.response, 'error');
+                           swal('Oops...', data.message, 'error');
                         }
                     }
                     App.loader('hide');
@@ -158,10 +158,10 @@ jQuery(function () {
                 },
                 success: function (data) {
                     if (data.success === true) {
-                        localStorage.setItem("status", data.response);
+                        localStorage.setItem("status", data.message);
                         location.reload(true);
                     } else {
-                        swal('Failed', data.response, 'fail');
+                        swal('Failed', data.message, 'fail');
                     }
                 }
         });

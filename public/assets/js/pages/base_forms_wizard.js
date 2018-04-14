@@ -278,23 +278,23 @@ var BaseFormWizard = function() {
                         },
                         success: function (data) {
                             if (data.success === true) {
-                                localStorage.setItem("status", data.response);
+                                localStorage.setItem("status", data.message);
                                 location.reload(true);
                             } else {
                                 if (data.type === 'ig_added') {
-                                    swal('Oops...', data.response, 'error');
+                                    swal('Oops...', data.message, 'error');
                                     $current = $current - 1;
                                     $success = false;
-                                } else if (data.type == 'checkpoint') {
-                                    // $("#active-request").val(data.active_request);
-                                    // $success = false;
+                                } else if (data.type == 'incorrect_pw') {
+                                    swal('Oops...', data.message, 'error');
+                                    $success = false;
                                 } else if (data.type == 'challenge') {
                                     // swal('Oops...', data.response, 'error');
                                     $("#challenge-message").html(data.message);
                                     $success = true;
                                 } else {
                                    $("#active-request").val(data.active_request);
-                                   swal('Oops...', data.response, 'error');
+                                   swal('Oops...', data.message, 'error');
                                    $current = $current - 1;
                                    $success = false; 
                                 }

@@ -136,7 +136,7 @@ class InstagramProfileController extends Controller
 							}
 						}
 					} else if ($login_response->isTwoFactorRequired()) {
-						return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
+						return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>"Account is protected with 2FA, unable to establish connection." ]);
 					}
 
 				} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
@@ -164,26 +164,26 @@ class InstagramProfileController extends Controller
 			$profile_log->error_msg = $checkpt_ex->getMessage();
 			$profile_log->save();
 
-			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required" ]);
+			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'message' =>"Verification Required" ]);
 		}
 		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
 
-			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
+			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'message' =>"Incorrect Password!" ]);
 		}
 		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
 			$profile_log->error_msg = $endpoint_ex->getMessage();
 			$profile_log->save();
 
-			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage() ]);
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>$endpoint_ex->getMessage() ]);
 		}
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
 
-			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>"Error establishing connection with this account." ]);
 		}
 	}
 
@@ -288,7 +288,7 @@ class InstagramProfileController extends Controller
 				Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt failed: ' . $ig_username . ' ' . $ig_password);
 				Log::error('[DASHBOARD ADD PROFILE] This instagram username has already been added!');
 
-				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'response' => "This instagram username has already been added!" ]);
+				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'message' =>"This instagram username has already been added!" ]);
 			}
 
 			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
@@ -330,7 +330,7 @@ class InstagramProfileController extends Controller
 						}
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
-					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
+					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'message' => "Account is protected with 2FA, unable to establish connection." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
 				$instagram_user = $instagram->people->getSelfInfo()->getUser();
@@ -368,32 +368,32 @@ class InstagramProfileController extends Controller
 						continue;
 					}
 				}
-				return Response::json([ "success" => TRUE, 'response' => "Profile added!" ]);
+				return Response::json([ "success" => TRUE, 'message' => "Profile added!" ]);
 			} else {
-				return Response::json([ "success" => FALSE, 'response' => "Failed to add profile! Please approach live support." ]);
+				return Response::json([ "success" => FALSE, 'message' => "Failed to add profile! Please approach live support." ]);
 			}
 		}
 		catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
 			$profile_log->save();
-			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required" ]);
+			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'message' => "Verification Required" ]);
 		}
 		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
-			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
+			return Response::json([ "success" => FALSE, 'type' => 'incorrect_pw', 'message' => "Incorrect Password!" ]);
 		}
 		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
 			$profile_log->error_msg = $endpoint_ex->getMessage();
 			$profile_log->save();
-			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage() ]);
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' => $endpoint_ex->getMessage() ]);
 		}
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
-			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' => "Error establishing connection with this account." ]);
 		}
 	}
 
@@ -452,7 +452,7 @@ class InstagramProfileController extends Controller
 						}
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
-					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
+					return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>"Account is protected with 2FA, unable to establish connection." ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
 				$instagram_user = $instagram->people->getSelfInfo()->getUser();
@@ -480,9 +480,9 @@ class InstagramProfileController extends Controller
 						continue;
 					}
 				}
-				return Response::json([ "success" => TRUE, 'response' => "Profile added!" ]);
+				return Response::json([ "success" => TRUE, 'message' =>"Profile added!" ]);
 			} else {
-				return Response::json([ "success" => FALSE, 'response' => "Failed to add profile! Please approach live support." ]);
+				return Response::json([ "success" => FALSE, 'message' =>"Failed to add profile! Please approach live support." ]);
 			}
 		} else {
 			return response()->json([
@@ -557,10 +557,10 @@ class InstagramProfileController extends Controller
 				  ->update([ 'checkpoint_required' => 0 ]);
 			}
 
-			return Response::json([ "success" => TRUE, 'response' => 'Your profile has restored connectivity.' ]);
+			return Response::json([ "success" => TRUE, 'message' => 'Your profile has restored connectivity.' ]);
 		}
 		catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
-			return Response::json([ "success" => FALSE, 'response' => 'Unable to connect to your profile, please retry.' ]);
+			return Response::json([ "success" => FALSE, 'message' => 'Unable to connect to your profile, please retry.' ]);
 		}
 	}
 
@@ -602,10 +602,10 @@ class InstagramProfileController extends Controller
 				  ->update(['incorrect_pw' => 0]);
 			}
 
-			return Response::json([ "success" => TRUE, 'response' => 'Your profile has restored connectivity.' ]);
+			return Response::json([ "success" => TRUE, 'message' =>'Your profile has restored connectivity.' ]);
 		}
 		catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
-			return Response::json([ "success" => FALSE, 'response' => 'Unable to connect to your profile, please retry.' ]);
+			return Response::json([ "success" => FALSE, 'message' =>'Unable to connect to your profile, please retry.' ]);
 		}
 	}
 
@@ -613,9 +613,9 @@ class InstagramProfileController extends Controller
 	{
 		$ig_profile = InstagramProfile::find($id);
 		if ($ig_profile->delete()) {
-			return Response::json([ "success" => TRUE, 'response' => 'Your profile has been deleted.' ]);
+			return Response::json([ "success" => TRUE, 'message' =>'Your profile has been deleted.' ]);
 		} else {
-			return Response::json([ "success" => TRUE, 'response' => 'We are unable to delete your profile, please try again later.' ]);
+			return Response::json([ "success" => TRUE, 'message' =>'We are unable to delete your profile, please try again later.' ]);
 		}
 	}
 
