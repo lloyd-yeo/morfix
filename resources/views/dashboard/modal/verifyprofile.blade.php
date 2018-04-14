@@ -19,9 +19,9 @@
 							<div class="col-sm-8 col-sm-offset-2">
 								<div class="form-material">
 									<div class='block'>
-										<center><h1 class='push text-modern'><i class='fa fa-info-circle'></i> Verification Required</h1></center>
-										<p class='lead'>
-											Morfix has lost connectivity with your profile because of additional verification required from Instagram.
+										<center><h2 class='push text-modern'><i class='fa fa-info-circle'></i> Verification Steps</h2></center>
+										<p class='lead text-center' style="font-size: 18px;">
+											Morfix is unable to link-up your profile because of additional verification required from Instagram.
 											To solve this, follow the instructions below (3 mins):
 										</p>
 										<center><h4 class='push'>1. Confirm your login credentials</h4></center>
