@@ -205,7 +205,11 @@ class InstagramHelper extends \InstagramAPI\Request
 				}
 			} else {
 				Log::info('[INSTAGRAM HELPER LOGIN ' . $ig_profile->insta_username . ' login_resp IS NULL.');
-				$flag = FALSE;
+				if ($instagram->isMaybeLoggedIn()) {
+					$flag = TRUE;
+				} else {
+					$flag = FALSE;
+				}
 			}
 
 		}
