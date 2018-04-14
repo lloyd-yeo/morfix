@@ -161,7 +161,7 @@ jQuery(function () {
                         localStorage.setItem("status", data.message);
                         location.reload(true);
                     } else {
-                        swal('Failed', data.message, 'fail');
+                        swal('Failed', data.message, 'error');
                     }
                 }
         });
@@ -230,9 +230,11 @@ $("#challenge-confirm-credentials").on("click", function(){
                     $("#challenge-verification-message").html(data.message);
                     $("#challenge-verificationcode-div").show();
                 } else if (data.type == 'incorrect_pw') {
-                    swal('Failed', data.message, 'fail');
+                    swal('Failed', data.message, 'error');
+                } else if (data.type == '2fa') {
+                    swal('Failed', data.message, 'error');
                 } else {
-                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'fail');
+                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
                 }
             }
     });
@@ -253,9 +255,9 @@ $("#challenge-verification-code-submit").on("click", function(){
                 location.reload(true);
             } else {
                 if (data.type == 'server') {
-                    swal('Failed', data.message, 'fail');
+                    swal('Failed', data.message, 'error');
                 } else {
-                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'fail');
+                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
                 }
             }
         });
