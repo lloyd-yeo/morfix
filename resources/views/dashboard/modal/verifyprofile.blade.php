@@ -24,7 +24,7 @@
 											Morfix has lost connectivity with your profile because of additional verification required from Instagram.
 											To solve this, follow the instructions below (3 mins):
 										</p>
-										<center><h4 class='push'>1. Login to Instagram with your account</h4></center>
+										<center><h4 class='push'>1. Confirm your login credentials</h4></center>
 										<p>
 											Go to <a id="challenge_url" target='_blank' href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
 											Leave the page on for now & go back to Morfix.
