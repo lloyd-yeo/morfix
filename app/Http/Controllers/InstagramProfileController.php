@@ -53,6 +53,114 @@ class InstagramProfileController extends Controller
 
 	public function confirmCredentialsChallenge(Request $request) {
 
+		$email       = Auth::user()->email;
+		$ig_username = $request->input("ig-username");
+		$ig_password = $request->input("ig-password");
+
+		Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' trying to confirm credentials: ' . $ig_username . ' ' . $ig_password);
+
+		$profile_log                 = new CreateInstagramProfileLog();
+		$profile_log->email          = $email;
+		$profile_log->insta_username = $ig_username;
+		$profile_log->insta_pw       = $ig_password;
+		$profile_log->error_msg = '[CHALLENGE VERIFY CREDENTIALS] Verifying credentials stage...';
+		$profile_log->save();
+
+		session(['add_ig_user' => $ig_username]);
+		session(['add_ig_pw' => $ig_password]);
+
+		$instagram = InstagramHelper::initInstagram();
+		$guzzle_options                                 = [];
+		$guzzle_options['curl']                         = [];
+		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+		$instagram->setGuzzleOptions($guzzle_options);
+
+		Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' using residential proxy for verifying account credentials.');
+
+		try {
+			$ig_profile = InstagramProfile::where('insta_username', $ig_username)->first();
+			if ($ig_profile != NULL) {
+				$ig_profile->insta_username = $ig_username;
+				$ig_profile->insta_password = $ig_password;
+				$ig_profile->save();
+
+				Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' profile found. Updated username & password with user-supplied ones.');
+
+				$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+
+				if ($login_response != NULL && $login_response->getStatus() == "fail") {
+
+					$profile_log->error_msg = $login_response->asJson();
+					$profile_log->save();
+
+					if ($login_response->isChallenge()) {
+
+						$challenge = $login_response->getChallenge();
+						$challenge_api_url = $challenge->getApiPath();
+						$challenge_api_url = substr($challenge_api_url, 1);
+
+						$challenge_response = $this->makeRequestToChallengeUrl($instagram, $ig_username, $ig_password, $challenge_api_url);
+
+						if ($challenge_response->getStepName() == 'select_verify_method') {
+							$select_verify_method_response = $this->selectVerifyMethod($instagram, $ig_username, $ig_password, $challenge_api_url, 1);
+							$challenge_response = $select_verify_method_response;
+						}
+
+						if ($challenge_response->getStepName() == 'verify_email' || $challenge_response->getStepName() == 'verify_phone') {
+							$step_data = $challenge_response->getStepData();
+							session(['challenge_url' => $challenge_api_url]);
+							if ($challenge_response->getStepName() == 'verify_email') {
+								return response()->json([
+									'success' => FALSE,
+									'type' => 'challenge',
+									'message' => 'Instagram requires verification from your side. Please check the following email <b>' . $step_data->getContactPoint() . '</b> for the 6 digit code.',
+								]);
+							} else if ($challenge_response->getStepName() == 'verify_phone') {
+								return response()->json([
+									'success' => FALSE,
+									'type' => 'challenge',
+									'message' => 'Instagram requires verification from your side. Please check the following phone number <b>' . $step_data->getContactPoint() . '</b> for the 6 digit code.',
+								]);
+							}
+						}
+					} else if ($login_response->isTwoFactorRequired()) {
+						return response()->json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Account is protected with 2FA, unable to establish connection." ]);
+					}
+
+				} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
+					$instagram_user = $instagram->people->getSelfInfo()->getUser();
+				} else if ($login_response == NULL) {
+					$instagram_user = $instagram->people->getSelfInfo()->getUser();
+				}
+			}
+		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
+			$profile_log->error_msg = $checkpt_ex->getMessage();
+			$profile_log->save();
+
+			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'response' => "Verification Required" ]);
+		}
+		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
+			$profile_log->error_msg = $incorrectpw_ex->getMessage();
+			$profile_log->save();
+
+			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'response' => "Incorrect Password!" ]);
+		}
+		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
+			$profile_log->error_msg = $endpoint_ex->getMessage();
+			$profile_log->save();
+
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => $endpoint_ex->getMessage() ]);
+		}
+		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
+
+			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
+		}
 	}
 
 	public function create(Request $request)

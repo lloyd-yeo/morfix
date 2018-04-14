@@ -221,9 +221,10 @@ $("#challenge-confirm-credentials").on("click", function(){
         , function (data) {
             console.log(data);
             if (data.success) {
-
             } else {
-
+                if (data.type == 'challenge') {
+                    $("#challenge-verification-message").html(data.message);
+                }
             }
         });
 });

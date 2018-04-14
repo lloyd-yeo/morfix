@@ -51,12 +51,23 @@
 												Confirm Details
 											</button>
 										</center>
-										<div style="min-width:1px; margin-bottom: 20px;"></div>
 
-										<div id="challenge-response-div">
-											<center><h4 class='push'>2. Retry adding</h4></center>
-											<div>
-												<center><button class="btn btn-primary btn-retry-checkpt" type="button"><i id="retry-btn-spinner" class="fa fa-refresh"></i> Retry</button></center>
+										<div style="min-width:1px; height: 20px;"></div>
+
+										<div id="challenge-verificationcode-div">
+											<center><h3 class='push'>2. Verification Code Required</h3></center>
+											<center>
+												<h4 class='push' id="challenge-verification-message" style="font-size:12px;">
+
+												</h4>
+											</center>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div class="form-material form-material-primary">
+														<input class="form-control" type="text" id="challenge-verification-code" placeholder="Please enter the 6 digit code here.">
+														<label for="challenge-verification-code">Verification Code</label>
+													</div>
+												</div>
 											</div>
 											<br/>
 											<p class='text-danger text-center'>
