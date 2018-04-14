@@ -59,12 +59,14 @@ class ManualLogin extends Command {
 	    foreach ($ig_profiles as $ig_profile) {
 		    $guzzle_options = NULL;
 		    if ($ig_profile->proxy == NULL) {
+		    	$this->info("Using RESIDENTIAL proxy.");
 			    $guzzle_options                                 = [];
 			    $guzzle_options['curl']                         = [];
 			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
 			    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
 			    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		    } else if (strpos($ig_profile->proxy, 'http') === 0) {
+			    $this->info("Using RESIDENTIAL proxy.");
 			    $guzzle_options                                 = [];
 			    $guzzle_options['curl']                         = [];
 			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
@@ -73,6 +75,7 @@ class ManualLogin extends Command {
 			    $ig_profile->proxy                              = NULL;
 			    $ig_profile->save();
 		    } else {
+			    $this->info("Using DATACENTER proxy.");
 			    $guzzle_options                                 = [];
 			    $guzzle_options['curl']                         = [];
 			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
