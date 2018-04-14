@@ -168,7 +168,17 @@ class InstagramHelper extends \InstagramAPI\Request {
 			$instagram->setGuzzleOptions($guzzle_options);
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
-			$flag = true;
+
+			if ($explorer_response != NULL) {
+				if ($explorer_response->isOk()) {
+					if ($explorer_response->isChallenge()) {
+						$ig_profile->challenge_required = 1;
+						$ig_profile->save();
+					}
+				}
+			} else {
+				$flag = false;
+			}
 
 		} catch (CheckpointRequiredException $checkpoint_ex) {
 
