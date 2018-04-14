@@ -55,10 +55,10 @@ class EngagementGroupController extends Controller
 
 				$items = $instagram->timeline->getSelfUserFeed()->getItems();
 
-				Log::error("[ENGAGEMENT GROUP INDEX] Retrieving photos for: " . $ig_profile->insta_username);
+				Log::info("[ENGAGEMENT GROUP INDEX] Retrieving photos for: " . $ig_profile->insta_username);
 
 				foreach ($items as $item) {
-					Log::error("[ENGAGEMENT GROUP INDEX] Retrieved photos for: " . $ig_profile->insta_username . " [" . $item->getPk() . "]");
+					Log::info("[ENGAGEMENT GROUP INDEX] Retrieved photos for: " . $ig_profile->insta_username . " [" . $item->getPk() . "]");
 					try {
 						$image_url = "";
 						if (is_null($item->getImageVersions2())) {
