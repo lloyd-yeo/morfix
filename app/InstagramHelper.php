@@ -131,7 +131,12 @@ class InstagramHelper extends \InstagramAPI\Request {
 		}
 
 		try {
-			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, NULL);
+			$guzzle_options                                 = [];
+			$guzzle_options['curl']                         = [];
+			$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
+			$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
+			$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 			$flag = true;
 		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpoint_ex) {
 			$ig_profile->checkpoint_required = 1;
