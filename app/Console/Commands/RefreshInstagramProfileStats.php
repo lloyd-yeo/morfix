@@ -46,6 +46,7 @@ class RefreshInstagramProfileStats extends Command
 		foreach ($users as $user) {
 			$instagram_profiles = InstagramProfile::where('challenge_required', 0)->where('user_id', $user->user_id)->get();
 			foreach ($instagram_profiles as $ig_profile) {
+				$this->line("[REFRESH] " . $user->email . " " . $ig_profile->insta_username . " " . $ig_profile->insta_pw);
 				$guzzle_options = NULL;
 				if ($ig_profile->proxy == NULL) {
 					$this->info("Using RESIDENTIAL proxy.");
