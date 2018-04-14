@@ -41,7 +41,10 @@ class RefreshInstagramProfileStats extends Command
 	 */
 	public function handle()
 	{
-		$users     = User::where('tier', '>', 1)->where('vip', 0)->where('admin', 0)->get();
+		$users     = User::where('tier', '>', 1)
+		                 ->where('vip', 0)
+		                                        ->where('admin', 0)
+		                                        ->where('partition', 0)->get();
 		$instagram = InstagramHelper::initInstagram();
 		foreach ($users as $user) {
 			$instagram_profiles = InstagramProfile::where('challenge_required', 0)->where('user_id', $user->user_id)->get();
