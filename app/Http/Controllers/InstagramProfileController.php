@@ -201,6 +201,10 @@ class InstagramProfileController extends Controller
 		$ig_password = session('add_ig_pw');
 		$challenge_url = session('challenge_url');
 
+		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using residential proxy for clearing account verification.');
+		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using follow details:');
+		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' [' . $ig_username . '] [' . $ig_password . '] [' . $challenge_url . ']');
+
 		$instagram = InstagramHelper::initInstagram();
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
@@ -212,17 +216,29 @@ class InstagramProfileController extends Controller
 		$finish_challenge_response = $this->finishChallengeVerification($instagram, $ig_username, $ig_password, $challenge_url, $verification_code);
 
 		if ($finish_challenge_response->getStatus() == "ok") {
+
+			Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' succesfully cleared verification!');
+
 			try {
 				$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 
 				if ($login_response != NULL && $login_response->getStatus() == "ok") {
+
+					Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' login_resp: ' . $login_response->asJson());
+
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				} else if ($login_response == NULL) {
+
+					Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' NULL login_resp');
+
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				}
 
 				$instagram_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
 				foreach ($instagram_profiles as $instagram_profile) {
+
+					Log::info('[CLEAR CHALLENGE] ' . $ig_username . ' updating instagram profiles now.');
+
 					if ($this->updateInstagramProfileChallengeSuccess($instagram_profile, $instagram_user) != NULL) {
 						return response()->json([
 							'success' => TRUE,
@@ -231,18 +247,27 @@ class InstagramProfileController extends Controller
 					}
 				}
 			} catch (SentryBlockException $sentryBlockException) {
+
+				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' SentryBlockException: ' . $sentryBlockException->getMessage());
+
 				return response()->json([
 					'success' => FALSE,
 					'type' => 'server',
 					'message' => 'Server network error! Just click the submit button again.',
 				]);
 			} catch (IncorrectPasswordException $incorrectPasswordException) {
+
+				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectPasswordException->getMessage());
+
 				return response()->json([
 					'success' => FALSE,
 					'type' => 'incorrect_pw',
 					'message' => 'Incorrect password! Please check your password & try again.',
 				]);
 			} catch (\Exception $ex) {
+
+				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $ex->getMessage());
+
 				return response()->json([
 					'success' => FALSE,
 					'type' => 'general',
@@ -251,6 +276,9 @@ class InstagramProfileController extends Controller
 			}
 
 		} else {
+
+			Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' error clearing verification!');
+
 			return response()->json([
 				'success' => FALSE,
 				'type' => 'general',
