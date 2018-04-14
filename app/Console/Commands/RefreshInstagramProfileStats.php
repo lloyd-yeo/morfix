@@ -91,7 +91,9 @@ class RefreshInstagramProfileStats extends Command
 						$ig_profile->profile_full_name = $user_model_public->getFullName();
 						$ig_profile->follower_count    = $user_model_public->getFollowerCount();
 						$ig_profile->num_posts         = $user_model_public->getMediaCount();
-						$ig_profile->save();
+						if ($ig_profile->save()) {
+							$this->line("[REFRESH] Updated profile stats for: " . $ig_profile->insta_username);
+						}
 					}
 				}
 				catch (NetworkException $networkException) {
