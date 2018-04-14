@@ -83,7 +83,7 @@
 									</div>
 								@elseif ($ig_profile->feedback_required == 1 || $ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 )
 									<div class="text-center text-danger push">
-										<span>We've encountered issues with your account. Mouse-over the icons below to find out more:</span>
+										<span>We've encountered issues with your account.<br/>Mouse-over the icons below to find out more:</span>
 									</div>
 								@endif
 
@@ -111,7 +111,6 @@
 											   data-original-title="Incorrect Password"
 											   data-content="The password on your account currently is different from the one you supplied us. Click to resolve.">
 												<i class="fa fa-2x fa-fw fa-asterisk"></i>
-												<strong> Mouse over the cross to find out more.</strong>
 											</a>
 										@else
 										@endif
