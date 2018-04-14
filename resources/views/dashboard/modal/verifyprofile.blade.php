@@ -25,10 +25,33 @@
 											To solve this, follow the instructions below (3 mins):
 										</p>
 										<center><h4 class='push'>1. Confirm your login credentials</h4></center>
-										<p>
-											Go to <a id="challenge_url" target='_blank' href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.
-											Leave the page on for now & go back to Morfix.
-										</p>
+										{{--<p>--}}
+											{{--Go to <a id="challenge_url" target='_blank' href='http://www.instagram.com'>www.instagram.com</a> & login with the account that you are trying to add to Morfix.--}}
+											{{--Leave the page on for now & go back to Morfix.--}}
+										{{--</p>--}}
+
+										<div class="form-group">
+											<div class="col-sm-8 col-sm-offset-2">
+												<div class="form-material form-material-primary">
+													<input class="form-control" type="text" id="validation-ig-username" name="validation-ig-username" placeholder="Please enter your Instagram Username/Handle">
+													<label for="validation-ig-username">Profile Username/Handle</label>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-8 col-sm-offset-2">
+												<div class="form-material form-material-primary">
+													<input class="form-control" type="text" id="validation-ig-password" name="validation-ig-password" placeholder="Please enter your Instagram Password">
+													<label for="validation-ig-password">Profile Password</label>
+												</div>
+											</div>
+										</div>
+										<center>
+											<button class="btn btn-minw btn-rounded btn-primary" style="margin-top: 10px;" type="button">
+												Save
+											</button>
+										</center>
+
 										<center><h4 class='push'>2. Retry adding</h4></center>
 										<div>
 											<center><button class="btn btn-primary btn-retry-checkpt" type="button"><i id="retry-btn-spinner" class="fa fa-refresh"></i> Retry</button></center>
