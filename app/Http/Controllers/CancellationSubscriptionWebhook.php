@@ -33,7 +33,7 @@ class CancellationSubscriptionWebhook extends Controller
 
 		$notification = WebhookNotification::parse($request->bt_signature, $request->bt_payload);
 
-		Log::info($notification);
+		Log::info(var_export($notification, true));
 
 		return new Response('Webhook Handled', 200);
 	}
