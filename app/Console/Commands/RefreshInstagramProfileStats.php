@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\User;
 use App\InstagramProfile;
 use InstagramAPI\Instagram;
+use App\InstagramHelper;
 
 class RefreshInstagramProfileStats extends Command
 {
