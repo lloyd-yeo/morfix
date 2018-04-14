@@ -51,6 +51,7 @@
 												Confirm Details
 											</button>
 										</center>
+										<div style="min-width:1px; margin-bottom: 20px;"></div>
 
 										<center><h4 class='push'>2. Retry adding</h4></center>
 										<div>
@@ -60,6 +61,7 @@
 										<p class='text-danger text-center'>
 											<b>It will fail again! Do not worry.</b>
 										</p>
+										
 										<center><h4 class='push'>3. Verify "It was me"</h4></center>
 										<p>
 											Wait for the previous step to fail then switch back to Instagram & refresh the page.
