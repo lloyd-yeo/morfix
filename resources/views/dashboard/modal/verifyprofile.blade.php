@@ -54,7 +54,7 @@
 
 										<div style="min-width:1px; height: 20px;"></div>
 
-										<div id="challenge-verificationcode-div">
+										<div id="challenge-verificationcode-div" style="display:none;">
 											<center><h3 class='push'>2. Verification Code Required</h3></center>
 											<center>
 												<h4 class='push' id="challenge-verification-message" style="font-size:12px;">

@@ -224,6 +224,7 @@ $("#challenge-confirm-credentials").on("click", function(){
             } else {
                 if (data.type == 'challenge') {
                     $("#challenge-verification-message").html(data.message);
+                    $("#challenge-verificationcode-div").show();
                 }
             }
         });
