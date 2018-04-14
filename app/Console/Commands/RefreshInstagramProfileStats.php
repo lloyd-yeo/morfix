@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\User;
 use App\InstagramProfile;
+use InstagramAPI\Exception\InstagramException;
+use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Instagram;
 use App\InstagramHelper;
 
@@ -77,16 +79,25 @@ class RefreshInstagramProfileStats extends Command
 				}
 
 				$instagram->setGuzzleOptions($guzzle_options);
-				$login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
-				if ($login_resp != NULL) {
-					dump($login_resp);
-				} else {
-					$user_model_public             = $instagram->people->getSelfInfo()->getUser();
-					$ig_profile->profile_full_name = $user_model_public->getFullName();
-					$ig_profile->follower_count    = $user_model_public->getFollowerCount();
-					$ig_profile->num_posts         = $user_model_public->getMediaCount();
-					$ig_profile->save();
+				try {
+					$login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
+					if ($login_resp != NULL) {
+						dump($login_resp);
+					} else {
+						$user_model_public             = $instagram->people->getSelfInfo()->getUser();
+						$ig_profile->profile_full_name = $user_model_public->getFullName();
+						$ig_profile->follower_count    = $user_model_public->getFollowerCount();
+						$ig_profile->num_posts         = $user_model_public->getMediaCount();
+						$ig_profile->save();
+					}
+				} catch (NetworkException $networkException) {
+					$this->line($networkException->getMessage());
+					$this->line($networkException->getTraceAsString());
+				} catch (InstagramException $instagramException) {
+					$this->line($instagramException->getMessage());
+					$this->line($instagramException->getTraceAsString());
 				}
+
 			}
 		}
 
