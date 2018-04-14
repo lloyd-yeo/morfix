@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use InstagramAPI\Exception\SentryBlockException;
 use InstagramAPI\InstagramException as InstagramException;
 use Log;
 use Response;
@@ -191,23 +192,36 @@ class InstagramProfileController extends Controller
 
 		if ($finish_challenge_response->getStatus() == "ok") {
 
-			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+			try {
+				$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 
-			if ($login_response != NULL && $login_response->getStatus() == "ok") {
-				$instagram_user = $instagram->people->getSelfInfo()->getUser();
-			} else if ($login_response == NULL) {
-				$instagram_user = $instagram->people->getSelfInfo()->getUser();
-			}
-
-			$instagram_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
-			foreach ($instagram_profiles as $instagram_profile) {
-				if ($this->updateInstagramProfileChallengeSuccess($instagram_profile, $instagram_user) != NULL) {
-					return response()->json([
-						'success' => TRUE,
-						'message' => 'Successfully verified account!',
-					]);
+				if ($login_response != NULL && $login_response->getStatus() == "ok") {
+					$instagram_user = $instagram->people->getSelfInfo()->getUser();
+				} else if ($login_response == NULL) {
+					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				}
+
+				$instagram_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
+				foreach ($instagram_profiles as $instagram_profile) {
+					if ($this->updateInstagramProfileChallengeSuccess($instagram_profile, $instagram_user) != NULL) {
+						return response()->json([
+							'success' => TRUE,
+							'message' => 'Successfully verified account!',
+						]);
+					}
+				}
+			} catch (SentryBlockException $sentryBlockException) {
+				return response()->json([
+					'success' => TRUE,
+					'message' => 'Server network error! Just click the submit button again.',
+				]);
+			} catch (\Exception $ex) {
+				return response()->json([
+					'success' => FALSE,
+					'message' => $ex->getMessage(),
+				]);
 			}
+
 		} else {
 			return response()->json([
 				'success' => FALSE,
