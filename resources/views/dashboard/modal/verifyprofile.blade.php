@@ -53,20 +53,23 @@
 										</center>
 										<div style="min-width:1px; margin-bottom: 20px;"></div>
 
-										<center><h4 class='push'>2. Retry adding</h4></center>
-										<div>
-											<center><button class="btn btn-primary btn-retry-checkpt" type="button"><i id="retry-btn-spinner" class="fa fa-refresh"></i> Retry</button></center>
+										<div id="challenge-response-div">
+											<center><h4 class='push'>2. Retry adding</h4></center>
+											<div>
+												<center><button class="btn btn-primary btn-retry-checkpt" type="button"><i id="retry-btn-spinner" class="fa fa-refresh"></i> Retry</button></center>
+											</div>
+											<br/>
+											<p class='text-danger text-center'>
+												<b>It will fail again! Do not worry.</b>
+											</p>
 										</div>
-										<br/>
-										<p class='text-danger text-center'>
-											<b>It will fail again! Do not worry.</b>
-										</p>
-										
+
 										<center><h4 class='push'>3. Verify "It was me"</h4></center>
 										<p>
 											Wait for the previous step to fail then switch back to Instagram & refresh the page.
 											You will now be presented with something like this:
 										</p>
+
 										<center><img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" style="width: 70%;" alt="It was me"></center>
 										<p>
 											Click "It was me" & then press "Ok".

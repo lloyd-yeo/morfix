@@ -210,14 +210,20 @@ $("#challenge-url").on("click", function(){
 });
 
 $("#challenge-confirm-credentials").on("click", function(){
+    var $ig_username = $('#challenge-ig-username').val();
+    var $ig_password = $('#challenge-ig-password').val();
+
     var jqxhr = $.post("/profile/ig/challenge/confirm",
         {
-            active_request: $active_request_id,
+            ig_username: $ig_username,
+	        ig_password: $ig_password,
         }
         , function (data) {
+            console.log(data);
             if (data.success) {
-                alert("Hang on while we re-try adding your profile. Please do not close this window.")
+
             } else {
+
             }
         });
 });
