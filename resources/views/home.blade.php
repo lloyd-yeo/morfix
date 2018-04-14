@@ -154,7 +154,7 @@
 										@if ($ig_profile->auto_dm_new_follower == 1)
 											@if ($ig_profile->challenge_required == 1)
 												{{-- If error is there, show re-verify message --}}
-												<td class='text-warning'><i class="fa fa-fw fa-ellipsis-h"></i>
+												<td class='text-danger'><i class="fa fa-fw fa-ellipsis-h"></i>
 													Suspended, please re-verify your account
 												</td>
 											@elseif ($ig_profile->checkpoint_required == 1 ||$ig_profile->incorrect_pw == 1 ||$ig_profile->invalid_user == 1 ||$ig_profile->account_disabled == 1 || $ig_profile->feedback_required == 1)
