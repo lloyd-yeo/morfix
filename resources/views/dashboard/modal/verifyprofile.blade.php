@@ -70,9 +70,11 @@
 												</div>
 											</div>
 											<br/>
-											<p class='text-danger text-center'>
-												<b>It will fail again! Do not worry.</b>
-											</p>
+											<center>
+												<button class="btn btn-minw btn-rounded btn-primary" id="challenge-verification-code-submit" style="margin-top: 10px;" type="button">
+													Submit
+												</button>
+											</center>
 										</div>
 
 										<center><h4 class='push'>3. Verify "It was me"</h4></center>

@@ -229,4 +229,23 @@ $("#challenge-confirm-credentials").on("click", function(){
         });
 });
 
+$("#challenge-verification-code-submit").on("click", function(){
+    var $verification_code = $("#challenge-verification-code").val();
+
+    var jqxhr = $.post("/profile/ig/challenge/verification",
+        {
+            ig_username: $ig_username,
+            ig_password: $ig_password,
+        }
+        , function (data) {
+            console.log(data);
+            if (data.success) {
+            } else {
+                if (data.type == 'challenge') {
+                    $("#challenge-verification-message").html(data.message);
+                }
+            }
+        });
+});
+
 </script>

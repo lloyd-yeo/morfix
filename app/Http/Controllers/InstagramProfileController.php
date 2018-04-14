@@ -134,6 +134,8 @@ class InstagramProfileController extends Controller
 				} else if ($login_response == NULL) {
 					$instagram_user = $instagram->people->getSelfInfo()->getUser();
 				}
+
+				$morfix_ig_profile = $this->storeInstagramProfile(Auth::user()->user_id, Auth::user()->email, $ig_username, $ig_password, $instagram_user);
 			}
 		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
@@ -161,6 +163,51 @@ class InstagramProfileController extends Controller
 
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'response' => "Error establishing connection with this account." ]);
 		}
+	}
+
+	public function clearChallengeVerification(Request $request) {
+		$verification_code = $request->input('verification-code');
+		$ig_username = session('add_ig_user');
+		$ig_password = session('add_ig_pw');
+		$challenge_url = session('challenge_url');
+
+		$instagram = InstagramHelper::initInstagram();
+		$guzzle_options                                 = [];
+		$guzzle_options['curl']                         = [];
+		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+		$instagram->setGuzzleOptions($guzzle_options);
+
+		$finish_challenge_response = $this->finishChallengeVerification($instagram, $ig_username, $ig_password, $challenge_url, $verification_code);
+
+		if ($finish_challenge_response->getStatus() == "ok") {
+
+			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+
+			if ($login_response != NULL && $login_response->getStatus() == "ok") {
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
+			} else if ($login_response == NULL) {
+				$instagram_user = $instagram->people->getSelfInfo()->getUser();
+			}
+
+			$instagram_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
+			foreach ($instagram_profiles as $instagram_profile) {
+				if ($this->updateInstagramProfileChallengeSuccess($instagram_profile, $instagram_user) != NULL) {
+					return response()->json([
+						'success' => TRUE,
+						'message' => 'Successfully verified account!',
+					]);
+				}
+			}
+		} else {
+			return response()->json([
+				'success' => FALSE,
+				'message' => 'Something went wrong! Do double check your 6 digit verification code!',
+			]);
+		}
+
+
 	}
 
 	public function create(Request $request)
@@ -414,6 +461,24 @@ class InstagramProfileController extends Controller
 		$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
 		$morfix_ig_profile->num_posts = $instagram_user->getMediaCount();
 		$morfix_ig_profile->insta_user_id = $instagram_user->getPk();
+		$datacenter_proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 100)];
+		$morfix_ig_profile->proxy = $datacenter_proxy;
+
+		if ($morfix_ig_profile->save()) {
+			return $morfix_ig_profile;
+		} else {
+			return NULL;
+		}
+	}
+
+	protected function updateInstagramProfileChallengeSuccess($morfix_ig_profile, $instagram_user) {
+		$morfix_ig_profile->updated_at = Carbon::now();
+		$morfix_ig_profile->profile_full_name = $instagram_user->getFullName();
+		$morfix_ig_profile->follower_count = $instagram_user->getFollowerCount();
+		$morfix_ig_profile->profile_pic_url = $instagram_user->getProfilePicUrl();
+		$morfix_ig_profile->num_posts = $instagram_user->getMediaCount();
+		$morfix_ig_profile->insta_user_id = $instagram_user->getPk();
+		$morfix_ig_profile->challenge_required = 0;
 		$datacenter_proxy = InstagramHelper::getDatacenterProxyList()[rand(0, 100)];
 		$morfix_ig_profile->proxy = $datacenter_proxy;
 
