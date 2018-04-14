@@ -44,9 +44,11 @@ class RefreshInstagramProfileStats extends Command
 	public function handle()
 	{
 		$users     = User::where('tier', '>', 1)
+		                 ->where('incorrect_pw', 0)
+		                 ->where('invalid_user', 0)
 		                 ->where('vip', 0)
-		                                        ->where('admin', 0)
-		                                        ->where('partition', 0)->get();
+		                 ->where('admin', 0)
+		                 ->where('partition', 0)->get();
 		$instagram = InstagramHelper::initInstagram();
 		foreach ($users as $user) {
 			$instagram_profiles = InstagramProfile::where('challenge_required', 0)->where('user_id', $user->user_id)->get();
@@ -90,10 +92,12 @@ class RefreshInstagramProfileStats extends Command
 						$ig_profile->num_posts         = $user_model_public->getMediaCount();
 						$ig_profile->save();
 					}
-				} catch (NetworkException $networkException) {
+				}
+				catch (NetworkException $networkException) {
 					$this->line($networkException->getMessage());
 					$this->line($networkException->getTraceAsString());
-				} catch (InstagramException $instagramException) {
+				}
+				catch (InstagramException $instagramException) {
 					$this->line($instagramException->getMessage());
 					$this->line($instagramException->getTraceAsString());
 				}
