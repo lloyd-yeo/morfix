@@ -15,6 +15,7 @@ use InstagramAPI\Exception\CheckpointRequiredException;
 use InstagramAPI\Exception\EndpointException;
 use InstagramAPI\Exception\IncorrectPasswordException;
 use InstagramAPI\Exception\LoginRequiredException;
+use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Exception\SentryBlockException;
 use InstagramAPI\Response\ChallengeSelectVerifyMethodStepResponse;
 use InstagramAPI\Response\GenericResponse;
@@ -186,6 +187,14 @@ class InstagramProfileController extends Controller
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>"Error establishing connection with this account." ]);
 		} catch (SentryBlockException $sentryBlockException) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' SentryBlockException: ' . $sentryBlockException->getMessage());
+
+			return response()->json([
+				'success' => FALSE,
+				'type' => 'server',
+				'message' => 'Server network error! Just click the submit button again.',
+			]);
+		} catch (NetworkException $networkException) {
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' NetworkException: ' . $networkException->getMessage());
 
 			return response()->json([
 				'success' => FALSE,
@@ -409,30 +418,33 @@ class InstagramProfileController extends Controller
 				return Response::json([ "success" => FALSE, 'message' => "Failed to add profile! Please approach live support." ]);
 			}
 		}
-		catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+		catch (CheckpointRequiredException $checkpt_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
 			$profile_log->save();
 			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'message' => "Verification Required" ]);
 		}
-		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+		catch (IncorrectPasswordException $incorrectpw_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'incorrect_pw', 'message' => "You've entered an incorrect password!" ]);
 		}
-		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+		catch (EndpointException $endpoint_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
 			$profile_log->error_msg = $endpoint_ex->getMessage();
 			$profile_log->save();
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' => $endpoint_ex->getMessage() ]);
 		}
-		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+		catch (LoginRequiredException $loginrequired_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
+
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' => "Error establishing connection with this account." ]);
 		} catch (SentryBlockException $sentryBlockException) {
+			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' SentryBlockException: ' . $sentryBlockException->getMessage());
 
+			return Response::json([ "success" => FALSE, 'type' => 'server', 'message' => "Temporarily lost connection. Do try again!" ]);
 		}
 	}
 
