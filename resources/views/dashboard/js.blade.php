@@ -234,16 +234,15 @@ $("#challenge-verification-code-submit").on("click", function(){
 
     var jqxhr = $.post("/profile/ig/challenge/verification",
         {
-            ig_username: $ig_username,
-            ig_password: $ig_password,
+            verification_code: $verification_code,
         }
         , function (data) {
             console.log(data);
             if (data.success) {
+                localStorage.setItem("status", data.message);
+                location.reload(true);
             } else {
-                if (data.type == 'challenge') {
-                    $("#challenge-verification-message").html(data.message);
-                }
+                swal('Failed', data.message, 'fail');
             }
         });
 });

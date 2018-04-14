@@ -77,26 +77,26 @@
 											</center>
 										</div>
 
-										<center><h4 class='push'>3. Verify "It was me"</h4></center>
-										<p>
-											Wait for the previous step to fail then switch back to Instagram & refresh the page.
-											You will now be presented with something like this:
-										</p>
+										{{--<center><h4 class='push'>3. Verify "It was me"</h4></center>--}}
+										{{--<p>--}}
+											{{--Wait for the previous step to fail then switch back to Instagram & refresh the page.--}}
+											{{--You will now be presented with something like this:--}}
+										{{--</p>--}}
 
-										<center><img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" style="width: 70%;" alt="It was me"></center>
-										<p>
-											Click "It was me" & then press "Ok".
-											After that browse to your profile's page & switch back to Morfix.
-										</p>
-										<center><h4 class='push'>4. Retry adding</h4></center>
-										<div>
-											<center><button class="btn btn-primary btn-retry-checkpt" type="button"><i class="fa fa-refresh"></i> Retry</button></center>
-										</div>
-										<p>
-											Depending on whether your account gets added or not.<br/>
-											Repeat the process from Step 3.<br/>
-											Try for up to a total of 10 times & if you still can't add, do contact live chat on the bottom right hand corner.
-										</p>
+										{{--<center><img src="{{ asset('assets/img/checkpoint/itwasme.jpeg') }}" style="width: 70%;" alt="It was me"></center>--}}
+										{{--<p>--}}
+											{{--Click "It was me" & then press "Ok".--}}
+											{{--After that browse to your profile's page & switch back to Morfix.--}}
+										{{--</p>--}}
+										{{--<center><h4 class='push'>4. Retry adding</h4></center>--}}
+										{{--<div>--}}
+											{{--<center><button class="btn btn-primary btn-retry-checkpt" type="button"><i class="fa fa-refresh"></i> Retry</button></center>--}}
+										{{--</div>--}}
+										{{--<p>--}}
+											{{--Depending on whether your account gets added or not.<br/>--}}
+											{{--Repeat the process from Step 3.<br/>--}}
+											{{--Try for up to a total of 10 times & if you still can't add, do contact live chat on the bottom right hand corner.--}}
+										{{--</p>--}}
 									</div>
 								</div>
 							</div>

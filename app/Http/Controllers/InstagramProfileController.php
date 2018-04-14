@@ -166,7 +166,7 @@ class InstagramProfileController extends Controller
 	}
 
 	public function clearChallengeVerification(Request $request) {
-		$verification_code = $request->input('verification-code');
+		$verification_code = $request->input('verification_code');
 		$ig_username = session('add_ig_user');
 		$ig_password = session('add_ig_pw');
 		$challenge_url = session('challenge_url');
