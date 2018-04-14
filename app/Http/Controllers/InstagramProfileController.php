@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\AddProfileRequest;
 use App\CreateInstagramProfileLog;
 use App\Helper;
 use App\InstagramHelper;
 use App\InstagramProfile;
 use App\InstagramProfileMedia;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use InstagramAPI\Exception\CheckpointRequiredException;
+use InstagramAPI\Exception\EndpointException;
 use InstagramAPI\Exception\IncorrectPasswordException;
+use InstagramAPI\Exception\LoginRequiredException;
 use InstagramAPI\Exception\SentryBlockException;
-use InstagramAPI\InstagramException as InstagramException;
+use InstagramAPI\Response\ChallengeSelectVerifyMethodStepResponse;
+use InstagramAPI\Response\GenericResponse;
 use Log;
 use Response;
-use \InstagramAPI\Response\ChallengeSelectVerifyMethodStepResponse;
-use \InstagramAPI\Response\GenericResponse;
 
 class InstagramProfileController extends Controller
 {
@@ -159,31 +159,39 @@ class InstagramProfileController extends Controller
 					'message' => 'This Instagram profile could not be found!',
 				]);
 			}
-		} catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
+		} catch (CheckpointRequiredException $checkpt_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
 			$profile_log->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'checkpoint', 'message' =>"Verification Required" ]);
 		}
-		catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
+		catch (IncorrectPasswordException $incorrectpw_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectpw_ex->getMessage());
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'message' =>"Incorrect Password!" ]);
 		}
-		catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
+		catch (EndpointException $endpoint_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
 			$profile_log->error_msg = $endpoint_ex->getMessage();
 			$profile_log->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>$endpoint_ex->getMessage() ]);
 		}
-		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
+		catch (LoginRequiredException $loginrequired_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
 
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>"Error establishing connection with this account." ]);
+		} catch (SentryBlockException $sentryBlockException) {
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' SentryBlockException: ' . $sentryBlockException->getMessage());
+
+			return response()->json([
+				'success' => FALSE,
+				'type' => 'server',
+				'message' => 'Server network error! Just click the submit button again.',
+			]);
 		}
 	}
 
@@ -395,6 +403,8 @@ class InstagramProfileController extends Controller
 		catch (\InstagramAPI\Exception\LoginRequiredException $loginrequired_ex) {
 			Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' => "Error establishing connection with this account." ]);
+		} catch (SentryBlockException $sentryBlockException) {
+
 		}
 	}
 
