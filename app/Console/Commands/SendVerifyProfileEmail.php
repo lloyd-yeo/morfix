@@ -43,6 +43,8 @@ class SendVerifyProfileEmail extends Command
 	{
 		$users = User::where('tier', '>', 1)
 		             ->where('partition', 0)
+		             ->where('admin', 0)
+		             ->where('vip', 0)
 		             ->where('email', 'l-ywz@hotmail.com')
 		             ->get();
 
