@@ -455,6 +455,8 @@ class InstagramProfileController extends Controller
 		$ig_password = session('add_ig_pw');
 		$challenge_url = session('challenge_url');
 
+		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' clearing challenge with verification code: ' . $verification_code);
+
 		$instagram = InstagramHelper::initInstagram();
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
