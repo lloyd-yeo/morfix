@@ -332,6 +332,7 @@
 		@endif
 
 		@include('dashboard.modal.checkpoint')
+		@include('dashboard.modal.verifyprofile')
 	</main>
 @endsection
 
