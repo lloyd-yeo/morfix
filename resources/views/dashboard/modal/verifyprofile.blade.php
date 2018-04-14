@@ -31,7 +31,7 @@
 										{{--</p>--}}
 
 										<div class="form-group">
-											<div class="col-sm-8 col-sm-offset-2">
+											<div class="col-sm-12">
 												<div class="form-material form-material-primary">
 													<input class="form-control" type="text" id="validation-ig-username" name="validation-ig-username" placeholder="Please enter your Instagram Username/Handle">
 													<label for="validation-ig-username">Profile Username/Handle</label>
@@ -39,7 +39,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<div class="col-sm-8 col-sm-offset-2">
+											<div class="col-sm-12">
 												<div class="form-material form-material-primary">
 													<input class="form-control" type="text" id="validation-ig-password" name="validation-ig-password" placeholder="Please enter your Instagram Password">
 													<label for="validation-ig-password">Profile Password</label>
