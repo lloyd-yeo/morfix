@@ -79,6 +79,31 @@ jQuery(function () {
             }
         },"json");
     });
-    
+
+    $("#extend-free-trial-btn").on("click", function(){
+        var $email = $("#free-trial-ext-email").val();
+        var $period = $("#free-trial-ext-period").val();
+
+        $.post('/admin/user/free-trial/extend', { email: $email, period: $period }, function (data) {
+            if (data.success === true) {
+                alert(data.response);
+            } else {
+                alert(data.response);
+            }
+        },"json");
+    });
+
+    $("#adjust-ig-slot-btn").on("click", function(){
+        var $email = $("#account-slots-email").val();
+        var $num_slots = $("#account-slots").val();
+
+        $.post('/admin/user/profile-count/set', { email: $email, num_slots: $num_slots }, function (data) {
+            if (data.success === true) {
+                alert(data.response);
+            } else {
+                alert(data.response);
+            }
+        },"json");
+    });
 });
 </script>

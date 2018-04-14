@@ -129,6 +129,133 @@
                 <!-- END Material Lock -->
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Material Lock -->
+                <div class="block block-themed">
+                    <div id="upgrade-tier-block" class="block-header bg-danger">
+                        <h3 class="block-title">Extend Free-Trial Period</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <blockquote class='font-s12'>
+                                <p>
+                                    Instructions:
+                                <ol>
+                                    <li>Key in the <b>Morfix</b> email of the user to extend free-trial for.</li>
+                                    <li>Select the number of days to extend by.</li>
+                                    <li>Click extend & wait for confirmation.</li>
+                                </ol>
+                                </p>
+                            </blockquote>
+                            <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
+                        </div>
+
+                        <form class="form-horizontal push-10" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <input class="form-control" type="email" id="free-trial-ext-email" name="free-trial-ext-email"
+                                               placeholder="Enter user's email...">
+                                        <label for="free-trial-ext-email">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <select class="form-control" id="free-trial-ext-period" name="free-trial-ext-period" size="1">
+                                            <option value="1">1 Day</option>
+                                            <option value="2">2 Days</option>
+                                            <option value="3">3 Days</option>
+                                            <option value="4">4 Days</option>
+                                            <option value="5">5 Days</option>
+                                            <option value="6">6 Days</option>
+                                            <option value="7">7 Days</option>
+                                        </select>
+                                        <label for="free-trial-ext-period">Extension Period?</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button id='extend-free-trial-btn' class="btn btn-sm btn-danger" type="submit">
+                                        <i class="fa fa-angle-double-up push-5-r"></i> Extend</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END Material Lock -->
+            </div>
+
+            <div class="col-lg-6">
+                <!-- Material Lock -->
+                <div class="block block-themed">
+                    <div id="upgrade-tier-block" class="block-header bg-danger">
+                        <h3 class="block-title">Adjust Instagram Account Slot</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="text-center push-10-t push-30">
+                            <blockquote class='font-s12'>
+                                <p>
+                                    Instructions:
+                                <ol>
+                                    <li>Key in the <b>Morfix</b> email of the user to adjust slots for.</li>
+                                    <li>Select the number of slot in total for the user.</li>
+                                    <li>Click Adjust & wait for confirmation.</li>
+                                </ol>
+                                </p>
+                            </blockquote>
+                            <!--<img class="img-avatar img-avatar96" src="assets/img/avatars/avatar10.jpg" alt="">-->
+                        </div>
+
+                        <form class="form-horizontal push-10" method="post" onsubmit="return false;">
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <input class="form-control" type="email" id="account-slots-email" name="account-slots-email"
+                                               placeholder="Enter user's email...">
+                                        <label for="account-slots-email">Email</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material">
+                                        <select class="form-control" id="account-slots" name="account-slots" size="1">
+                                            <option value="1">1 Account</option>
+                                            <option value="2">2 Accounts</option>
+                                            <option value="3">3 Accounts</option>
+                                            <option value="4">4 Accounts</option>
+                                            <option value="5">5 Accounts</option>
+                                            <option value="6">6 Accounts</option>
+                                            <option value="7">7 Accounts</option>
+                                            <option value="8">8 Accounts</option>
+                                            <option value="9">9 Accounts</option>
+                                            <option value="10">10 Accounts</option>
+                                            <option value="11">11 Accounts</option>
+                                            <option value="12">12 Accounts</option>
+                                            <option value="13">13 Accounts</option>
+                                            <option value="14">14 Accounts</option>
+                                            <option value="15">15 Accounts</option>
+                                        </select>
+                                        <label for="account-slots">Accounts?</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button id='adjust-ig-slot-btn' class="btn btn-sm btn-danger" type="submit">
+                                        <i class="fa fa-angle-double-up push-5-r"></i> Adjust</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- END Material Lock -->
+            </div>
+        </div>
         
         <h2 class="content-heading">Auto Interactions</h2>
         <div class="row">

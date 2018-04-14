@@ -223,6 +223,8 @@ Route::post('/mailer/send/active', 'MassMailerController@sendEmailToActiveUsers'
 Route::post('/webhook/subscription/cancelled','CancellationSubscriptionWebhook@handleDisputeOpened');
 
 Route::post('/admin/referrer/add', 'AdminController@updateUserAffiliate');
+Route::post('/admin/user/free-trial/extend', 'AdminController@extendUserFreeTrial');
+Route::post('/admin/user/profile-count/set', 'AdminController@setInstagramProfileCount');
 
 Route::get('/verifyprofilemail', function () {
 //	return new App\Mail\VerifyAccount(\App\User::where('email', 'l-ywz@hotmail.com')->first());

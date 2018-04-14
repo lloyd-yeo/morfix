@@ -42,6 +42,64 @@ class AdminController extends Controller
 		$admin_log->save();
 	}
 
+	public function extendUserFreeTrial(Request $request) {
+
+		if (Auth::user()->admin == 1) {
+
+			$this->logAdminActions(Auth::user()->email, "EXTEND_FREE_TRIAL", "Admin tried extending free trial for " . $request->input('email') . " by " . $request->input('period') . " days.");
+
+			$user = User::where('email', $request->input('email'))->first();
+
+			if ($user !== NULL) {
+
+				$user->trial_activation = 1;
+				$user->trial_end_date = \Carbon\Carbon::now()->addDays($request->input('period'));
+
+				if ($user->save()) {
+					return Response::json([ "success"  => TRUE,
+					                        'response' => "Trial period extended!" ]);
+				} else {
+					return Response::json([ "success"  => FALSE,
+					                        'response' => "User found but updating failed. Immediately inform Lloyd." ]);
+				}
+			} else {
+				return Response::json([ "success"  => FALSE,
+				                        'response' => "User not found. Can't update." ]);
+			}
+		} else {
+			return Response::json([ "success"  => FALSE,
+			                        'response' => "You are not authorized to carry out this operation. Try again & we will hunt you down via your IP." ]);
+		}
+	}
+
+	public function setInstagramProfileCount(Request $request) {
+		if (Auth::user()->admin == 1) {
+
+			$this->logAdminActions(Auth::user()->email, "SET_NUM_ACCT", "Admin tried changing number of IG slots for " . $request->input('email') . " to " . $request->input('num_slots') . " accounts.");
+
+			$user = User::where('email', $request->input('email'))->first();
+
+			if ($user !== NULL) {
+
+				$user->num_acct = $request->input('num_slots');
+
+				if ($user->save()) {
+					return Response::json([ "success"  => TRUE,
+					                        'response' => "Number of accounts adjusted!" ]);
+				} else {
+					return Response::json([ "success"  => FALSE,
+					                        'response' => "User found but updating failed. Immediately inform Lloyd." ]);
+				}
+			} else {
+				return Response::json([ "success"  => FALSE,
+				                        'response' => "User not found. Can't update." ]);
+			}
+		} else {
+			return Response::json([ "success"  => FALSE,
+			                        'response' => "You are not authorized to carry out this operation. Try again & we will hunt you down via your IP." ]);
+		}
+	}
+
 	public function upgradeUserTier(Request $request)
 	{
 		if (Auth::user()->admin == 1) {
