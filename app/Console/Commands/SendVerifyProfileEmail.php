@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\VerifyAccount;
+use Mail;
 use Illuminate\Console\Command;
 use App\User;
 use App\InstagramProfile;
