@@ -63,7 +63,6 @@ Route::post('/profile/ig/refresh/{id}', 'InstagramProfileController@refreshProfi
 Route::get('/profile/ig/refresh/{id}', 'InstagramProfileController@refreshProfileStats');
 
 Route::get('/dm', 'DirectMessageController@index');
-
 Route::post('/dm/thread/create', 'DirectThreadController@create');
 Route::post('/dm/thread/retrieve', 'DirectThreadController@retrieve');
 Route::post('/dm/thread/update', 'DirectThreadController@update');
@@ -93,9 +92,6 @@ Route::get('/affiliate', 'AffiliateController@index');
 Route::post('/affiliate/save/paypal/{id}', 'AffiliateController@savePaypalEmail');
 Route::post('/affiliate/save/pixel', 'AffiliateController@savePixel');
 
-#Route::post('/upgrade/{plan}', 'PaymentController@upgrade');
-#Route::get('/payment', 'PaymentController@index');
-
 Route::get('/training/{type}', 'TrainingVideoController@index');
 Route::get('/engagement-group', 'EngagementGroupController@index');
 Route::get('/engagement-group/{id}', 'EngagementGroupController@profile');
@@ -112,11 +108,9 @@ Route::post('/cancel-subscription', 'SettingsController@cancelUserSubscription')
 Route::post('/profile/request/check', 'InstagramProfileController@pollActiveProfileRequest');
 Route::post('/profile/request/retry', 'InstagramProfileController@retryActiveProfileRequest');
 
-#Route::get('/faq', 'FaqController@index');
 Route::get('/faq', 'FaqController@topic');
 Route::get('/faq/{topic}', 'FaqController@listQuestions');
 Route::get('/faq/{topic}/{qna_slug}', 'FaqController@qnaSlug');
-
 
 Route::get('/post-scheduling/logs/{id}', 'PostSchedulingController@log');
 

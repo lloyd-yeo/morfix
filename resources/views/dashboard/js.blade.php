@@ -14,100 +14,99 @@
 <script src="{{ asset('assets/js/plugins/slick/slick.min.js') }}"></script>
 
 <script>
-
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
-jQuery(function () {
-    // Init page helpers (Slick Slider plugin, Appear, CountTo)
-    App.initHelpers(['slick', 'appear', 'appear-countTo']);
-    
-    var $checkpointProfileId;
-    var $incorrectPwProfileId;
-    
-    $(".checkpoint-btn").on("click", function() { 
-        $checkpointProfileId = $(this).attr("data-profile-id");
-        jQuery('#modal-checkpoint').modal('show');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
-    
-    $(".incorrect-pw-btn").on("click", function(){ 
-        $incorrectPwProfileId = $(this).attr("data-profile-id");
-        swal({
-            title: 'Enter the correct password for this profile',
-            input: 'text',
-            showCancelButton: true,
-            confirmButtonText: 'Submit',
-            showLoaderOnConfirm: true,
-            preConfirm: function (password) {
-               App.loader('show');
-              return new Promise(function (resolve, reject) {
-                $.ajax({
-                    async: true,
-                    type: "POST",
-                    url: "profile/ig/changepassword",
-                    dataType: "json",
-                    data: {
-                        'profile-id': $incorrectPwProfileId,
-                        'password': password
-                    },
-                    success: function (data) {
-                        if (data.success === true) {
-                            localStorage.setItem("status", data.message);
-                            location.reload(true);
-                        } else {
-                            reject('This password is incorrect.');
-                        }
-                    }
-                });
-              });
-            },
-            allowOutsideClick: false
-          }).then(function (email) {
-            swal({
-              type: 'success',
-              title: 'Password successfully changed!'
-            });
-          });
-    });
-    
-    $(".btn-retry-checkpt").on("click", function(){ 
-        App.loader('show');
-        var $icon = jQuery('#retry-btn-spinner');
-        $icon.addClass("fa-spin");
-        $.ajax({
-            async: true,
-            type: "POST",
-            url: "profile/ig/checkpoint",
-            dataType: "json",
-            data: {
-                'profile-id': $checkpointProfileId
-            },
-            success: function (data) {
-                if (data.success === true) {
-                    localStorage.setItem("status", data.message);
-                    location.reload(true);
-                } else {
-                    swal('Oops...', data.message, 'error');
-                }
 
-            }
+    jQuery(function () {
+        // Init page helpers (Slick Slider plugin, Appear, CountTo)
+        App.initHelpers(['slick', 'appear', 'appear-countTo']);
+
+        var $checkpointProfileId;
+        var $incorrectPwProfileId;
+
+        $(".checkpoint-btn").on("click", function () {
+            $checkpointProfileId = $(this).attr("data-profile-id");
+            jQuery('#modal-checkpoint').modal('show');
         });
-        App.loader('hide');
-    });
-    
-    $(".btn-retry").on("click", function(){
-        App.loader('show');
-        
-        var $igUsername = jQuery('#validation-ig-username').val();
-        var $igPassword = jQuery('#validation-ig-password').val();
-        var $icon = jQuery('#retry-btn-spinner');
-        
-        $icon.addClass("fa-spin");
-        
-        $.ajax({
+
+        $(".incorrect-pw-btn").on("click", function () {
+            $incorrectPwProfileId = $(this).attr("data-profile-id");
+            swal({
+                title: 'Enter the correct password for this profile',
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                showLoaderOnConfirm: true,
+                preConfirm: function (password) {
+                    App.loader('show');
+                    return new Promise(function (resolve, reject) {
+                        $.ajax({
+                            async: true,
+                            type: "POST",
+                            url: "profile/ig/changepassword",
+                            dataType: "json",
+                            data: {
+                                'profile-id': $incorrectPwProfileId,
+                                'password': password
+                            },
+                            success: function (data) {
+                                if (data.success === true) {
+                                    localStorage.setItem("status", data.message);
+                                    location.reload(true);
+                                } else {
+                                    reject('This password is incorrect.');
+                                }
+                            }
+                        });
+                    });
+                },
+                allowOutsideClick: false
+            }).then(function (email) {
+                swal({
+                    type: 'success',
+                    title: 'Password successfully changed!'
+                });
+            });
+        });
+
+        $(".btn-retry-checkpt").on("click", function () {
+            App.loader('show');
+            var $icon = jQuery('#retry-btn-spinner');
+            $icon.addClass("fa-spin");
+            $.ajax({
+                async: true,
+                type: "POST",
+                url: "profile/ig/checkpoint",
+                dataType: "json",
+                data: {
+                    'profile-id': $checkpointProfileId
+                },
+                success: function (data) {
+                    if (data.success === true) {
+                        localStorage.setItem("status", data.message);
+                        location.reload(true);
+                    } else {
+                        swal('Oops...', data.message, 'error');
+                    }
+
+                }
+            });
+            App.loader('hide');
+        });
+
+        $(".btn-retry").on("click", function () {
+            App.loader('show');
+
+            var $igUsername = jQuery('#validation-ig-username').val();
+            var $igPassword = jQuery('#validation-ig-password').val();
+            var $icon = jQuery('#retry-btn-spinner');
+
+            $icon.addClass("fa-spin");
+
+            $.ajax({
                 async: false,
                 type: "POST",
                 url: "profile/ig/add",
@@ -131,31 +130,25 @@ jQuery(function () {
                             swal('Oops...', data.message, 'error');
                         } else if (data.type == 'challenge') {
                             swal('Oops...', data.message, 'error');
-                            console.log(data.active_request);
-                            $("#active-request").val(data.active_request);
-//                            $("#challenge-url").attr("href", data.link);
-//                            $("#challenge-url").html(data.link);
                         } else {
-                           swal('Oops...', data.message, 'error');
+                            swal('Oops...', data.message, 'error');
                         }
                     }
                     App.loader('hide');
                 }
+            });
+
+            $icon.removeClass("fa-spin");
         });
-        
-        $icon.removeClass("fa-spin");
-    });
-    
-    $(".remove-profile-btn").on("click", function(){ 
-        var $igId = $(this).attr("data-id");
-        $.ajax({
+
+        $(".remove-profile-btn").on("click", function () {
+            var $igId = $(this).attr("data-id");
+            $.ajax({
                 async: false,
                 type: "POST",
                 url: "profile/ig/remove/" + $igId,
                 dataType: "json",
-                data: {
-                    
-                },
+                data: {},
                 success: function (data) {
                     if (data.success === true) {
                         localStorage.setItem("status", data.message);
@@ -164,8 +157,8 @@ jQuery(function () {
                         swal('Failed', data.message, 'error');
                     }
                 }
+            });
         });
-    });
 
     if (localStorage.status) {
         swal({
@@ -186,105 +179,104 @@ jQuery(function () {
                 $.post( "/dashboard/tutorial/hide" );
 			}
 	    });
-
         jQuery('#dashboard-tutorial-modal').modal('show');    
     @endif
 });
 
-$("#relogin-btn").on("click", function () {
-    $active_request_id = $("#active-request").val();
-    var jqxhr = $.post("/profile/request/retry",
-        {
-            active_request: $active_request_id,
-        }
-        , function (data) {
-            if (data.success) {
-                alert("Hang on while we re-try adding your profile. Please do not close this window.")
-            } else {
+    $("#relogin-btn").on("click", function () {
+        $active_request_id = $("#active-request").val();
+        var jqxhr = $.post("/profile/request/retry",
+            {
+                active_request: $active_request_id,
             }
-        });
-});
-
-$("#challenge-url").on("click", function(){
-	$("#confirm-verify").show();
-});
-
-$("#challenge-confirm-credentials").on("click", function(){
-    var $ig_username = $('#challenge-ig-username').val();
-    var $ig_password = $('#challenge-ig-password').val();
-
-    App.loader('show');
-    var jqxhr = $.post("/profile/ig/challenge/confirm",
-        {
-            ig_username: $ig_username,
-	        ig_password: $ig_password,
-        }
-        , function (data) {
-            console.log(data);
-            App.loader('hide');
-            if (data.success) {
-                localStorage.setItem("status", data.message);
-                location.reload(true);
-            } else {
-                if (data.type == 'challenge_required' || data.type == 'incorrect_pw') {
-                    swal('Failed', data.message, 'error');
-                } else if (data.type == 'challenge') {
-                    $("#challenge-verification-message").html(data.message);
-                    $("#challenge-verificationcode-div").show();
-                } else if (data.type == '2fa') {
-                    $("#2fa-verification-message").html(data.message);
-                    $("#2fa-verificationcode-div").show();
+            , function (data) {
+                if (data.success) {
+                    alert("Hang on while we re-try adding your profile. Please do not close this window.")
                 } else {
-                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
                 }
-            }
+            });
     });
-});
 
-$("#challenge-verification-code-submit").on("click", function(){
-    var $verification_code = $("#challenge-verification-code").val();
-    App.loader('show');
-    var jqxhr = $.post("/profile/ig/challenge/verification",
-        {
-            verification_code: $verification_code,
-        }
-        , function (data) {
-            App.loader('hide');
-            console.log(data);
-            if (data.success) {
-                localStorage.setItem("status", data.message);
-                location.reload(true);
-            } else {
-                if (data.type == 'server') {
-                    swal('Failed', data.message, 'error');
-                } else {
-                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
-                }
-            }
-        });
-});
+    $("#challenge-url").on("click", function () {
+        $("#confirm-verify").show();
+    });
 
-$("#2fa-verification-code-submit").on("click", function(){
-    var $verification_code = $("#2fa-verification-code").val();
-    App.loader('show');
-    var jqxhr = $.post("/profile/2fa/clear",
-        {
-            verification_code: $verification_code,
-        }
-        , function (data) {
-            App.loader('hide');
-            console.log(data);
-            if (data.success) {
-                localStorage.setItem("status", data.message);
-                location.reload(true);
-            } else {
-                if (data.type == 'server') {
-                    swal('Failed', data.message, 'error');
-                } else {
-                    swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
-                }
+    $("#challenge-confirm-credentials").on("click", function () {
+        var $ig_username = $('#challenge-ig-username').val();
+        var $ig_password = $('#challenge-ig-password').val();
+
+        App.loader('show');
+        var jqxhr = $.post("/profile/ig/challenge/confirm",
+            {
+                ig_username: $ig_username,
+                ig_password: $ig_password,
             }
-        });
-});
+            , function (data) {
+                console.log(data);
+                App.loader('hide');
+                if (data.success) {
+                    localStorage.setItem("status", data.message);
+                    location.reload(true);
+                } else {
+                    if (data.type == 'challenge_required' || data.type == 'incorrect_pw') {
+                        swal('Failed', data.message, 'error');
+                    } else if (data.type == 'challenge') {
+                        $("#challenge-verification-message").html(data.message);
+                        $("#challenge-verificationcode-div").show();
+                    } else if (data.type == '2fa') {
+                        $("#2fa-verification-message").html(data.message);
+                        $("#2fa-verificationcode-div").show();
+                    } else {
+                        swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
+                    }
+                }
+            });
+    });
+
+    $("#challenge-verification-code-submit").on("click", function () {
+        var $verification_code = $("#challenge-verification-code").val();
+        App.loader('show');
+        var jqxhr = $.post("/profile/ig/challenge/verification",
+            {
+                verification_code: $verification_code,
+            }
+            , function (data) {
+                App.loader('hide');
+                console.log(data);
+                if (data.success) {
+                    localStorage.setItem("status", data.message);
+                    location.reload(true);
+                } else {
+                    if (data.type == 'server') {
+                        swal('Failed', data.message, 'error');
+                    } else {
+                        swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
+                    }
+                }
+            });
+    });
+
+    $("#2fa-verification-code-submit").on("click", function () {
+        var $verification_code = $("#2fa-verification-code").val();
+        App.loader('show');
+        var jqxhr = $.post("/profile/2fa/clear",
+            {
+                verification_code: $verification_code,
+            }
+            , function (data) {
+                App.loader('hide');
+                console.log(data);
+                if (data.success) {
+                    localStorage.setItem("status", data.message);
+                    location.reload(true);
+                } else {
+                    if (data.type == 'server') {
+                        swal('Failed', data.message, 'error');
+                    } else {
+                        swal('Failed', 'We are unable to verify your account at the moment. Please contact our live support!', 'error');
+                    }
+                }
+            });
+    });
 
 </script>

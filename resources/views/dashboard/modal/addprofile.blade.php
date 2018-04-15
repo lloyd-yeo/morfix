@@ -86,9 +86,7 @@
                                                     </p>
 
                                                     <center id="challenge-container">
-                                                        <h4 class='push' id="challenge-message" style="font-size:12px;">
-
-                                                        </h4>
+                                                        <h4 class='push' id="challenge-message" style="font-size:12px;"></h4>
                                                         <br/>
                                                         <div class="form-group">
                                                             <div class="col-sm-8 col-sm-offset-2">

@@ -232,7 +232,6 @@ class InstagramHelper extends \InstagramAPI\Request
 					$flag = FALSE;
 				}
 			}
-
 		}
 		catch (CheckpointRequiredException $checkpoint_ex) {
 
