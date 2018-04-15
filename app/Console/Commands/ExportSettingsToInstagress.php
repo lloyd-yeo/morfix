@@ -121,6 +121,10 @@ class ExportSettingsToInstagress extends Command
                         echo"[GET USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? \n";
                         return false;
                     }
+                    if (preg_match('/\?/', $usernames[0]["full_name"])) {
+                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? USING NEW CHECK \n";
+                        return false;
+                    }
                     if (strpos($usernames[0]["username"], '?') !== false) {
                         echo"[GET USERNAME DETAILS] INVALID CHARACTERS IN USERNAME= ? \n";
                         return false;
