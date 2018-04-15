@@ -66,7 +66,7 @@ class ExportSettingsToInstagress extends Command
                 foreach ($interaction_hashtags as $interaction_hashtag) {
                     $tags[] = $interaction_hashtag->hashtag;
                 }
-                echo "$tags \n";
+                dump($tags . "\n");
 
                 $usernames = array();
                 $interaction_usernames = InstagramProfileTargetUsername::where('insta_username', $insta_username)->get();
@@ -81,7 +81,7 @@ class ExportSettingsToInstagress extends Command
 
                 }
 
-                echo "$usernames \n";
+                dump($usernames . "\n");
 
             }
         }
