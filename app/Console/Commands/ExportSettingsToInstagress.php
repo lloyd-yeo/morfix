@@ -100,7 +100,7 @@ class ExportSettingsToInstagress extends Command
             echo"[GET USERNAME DETAILS] Finished making call to Instagress Endpoint now...";
 
             $content = $response->getBody()->getContents();
-            echo"[GET USERNAME DETAILS] Reponse rcvd: " . $content;
+//            echo"[GET USERNAME DETAILS] Reponse rcvd: " . $content;
 
             $result_json = json_decode($content, true);
 
@@ -109,6 +109,7 @@ class ExportSettingsToInstagress extends Command
                 echo"[GET USERNAME DETAILS] Rcvd successful response...";
                 $usernames = $result_json['usernames'];
                 if($usernames[0]["username"] == $target_username){
+                    echo"[GET USERNAME DETAILS] FIRST USERNAME IS CORRECT!";
                     return true;
                 }
             }
