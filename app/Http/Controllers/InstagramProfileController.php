@@ -259,7 +259,8 @@ class InstagramProfileController extends Controller
 		} catch (ChallengeRequiredException $challengeRequiredException) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' ChallengeRequiredException: ' . $challengeRequiredException->getMessage());
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' ChallengeRequiredException asJson(): ' . $challengeRequiredException->getResponse()->asJson());
-			$profile_log->error_msg = $challengeRequiredException->getMessage();
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' ChallengeRequiredException: ' . print_r($challengeRequiredException->getResponse(), true));
+			$profile_log->error_msg = $challengeRequiredException->getResponse()->asJson();
 			$profile_log->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'challenge_required', 'message' =>"Verification Required" ]);
