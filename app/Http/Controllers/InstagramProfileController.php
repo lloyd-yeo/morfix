@@ -20,6 +20,7 @@ use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Exception\SentryBlockException;
 use InstagramAPI\Response\ChallengeSelectVerifyMethodStepResponse;
 use InstagramAPI\Response\GenericResponse;
+use InstagramAPI\Response\MsisdnHeaderResponse;
 use Log;
 use Response;
 
@@ -264,12 +265,17 @@ class InstagramProfileController extends Controller
 			$profile_log->error_msg = $challengeRequiredException->getResponse()->asJson();
 			$profile_log->save();
 
+			if ($challengeRequiredException->getResponse() instanceof MsisdnHeaderResponse) {
+				$ig_profile->challenge_required_phone = 1;
+				$ig_profile->save();
+			}
+
 			if ($challengeRequiredException->getResponse()->getMessage() == 'challenge_required') {
 				return Response::json([ "success" => FALSE, 'type' => 'challenge_required', 'message' =>"To fully verify this profile, you would need to logon to this Instagram profile through your phone and press 'it was me' when prompted." ]);
 			}
 
 			return Response::json([ "success" => FALSE, 'type' => 'challenge_required', 'message' =>"Verification Required" ]);
-			
+
 		} catch (CheckpointRequiredException $checkpt_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
@@ -295,6 +301,7 @@ class InstagramProfileController extends Controller
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' LoginRequiredException: ' . $loginrequired_ex->getMessage());
 
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>"Error establishing connection with this account." ]);
+
 		} catch (SentryBlockException $sentryBlockException) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' SentryBlockException: ' . $sentryBlockException->getMessage());
 
@@ -303,6 +310,7 @@ class InstagramProfileController extends Controller
 				'type' => 'server',
 				'message' => 'Server network error! Just click the submit button again.',
 			]);
+
 		} catch (NetworkException $networkException) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' NetworkException: ' . $networkException->getMessage());
 
