@@ -117,7 +117,18 @@ class ExportSettingsToInstagress extends Command
                 $usernames = $result_json['usernames'];
                 if($usernames[0]["username"] == $target_username){
                     echo"[GET USERNAME DETAILS] FIRST USERNAME IS CORRECT! \n";
+                    if (strpos($usernames[0]["full_name"], '?') !== false) {
+                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS = ? \n";
+                        return false;
+                    }else if($usernames[0]["full_name"] == ""){
+                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS = blank \n";
+                        return false;
+                    }
+
                     return $usernames[0];
+                }
+                else{
+                    echo"[GET USERNAME DETAILS] FIRST USERNAME IS WRONG! \n";
                 }
             }
             else{
