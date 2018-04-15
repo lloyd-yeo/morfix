@@ -77,26 +77,28 @@ class ExportSettingsToInstagress extends Command
 
                     if ($gress_username){
 
-                        if (strpos($usernames[0]["full_name"], "?") !== false) {
+                        if (strpos($usernames["full_name"], "?") !== false) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? USING 1st CHECK \n";
                             continue;
                         }
-                        if (preg_match('/\?/', $usernames[0]["full_name"])) {
+                        if (preg_match('/\?/', $usernames["full_name"])) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? USING 2nd CHECK \n";
                             continue;
                         }
-                        if (strstr($usernames[0]["full_name"], '?')) {
+                        if (strstr($usernames["full_name"], '?')) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? USING 3rd CHECK \n";
                             continue;
                         }
-                        if (strpos($usernames[0]["username"], '?') !== false) {
+                        if (strpos($usernames["username"], '?') !== false) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME= ? \n";
                             continue;
                         }
-                        if($usernames[0]["full_name"] == ""){
+                        if($usernames["full_name"] == ""){
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN FULL NAME = blank \n";
                             continue;
                         }
+
+                        echo"[RECEIVED USERNAME DETAILS] DATA INTEGRITY GOOD.. STORING DATA \n";
                         $usernames[] =  array("id" => $gress_username["id"], "username" => $gress_username["username"],
                             "full_name" => $gress_username["full_name"], "profile_picture" => $gress_username["profile_picture"]);
                     }
@@ -159,6 +161,7 @@ class ExportSettingsToInstagress extends Command
                         return false;
                     }
 
+                    echo"[GET USERNAME DETAILS] DATA INTEGRITY GOOD.. SENDING BACK DATA \n";
                     return $usernames[0];
                 }
                 else{
