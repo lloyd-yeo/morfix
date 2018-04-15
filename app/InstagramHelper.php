@@ -51,6 +51,50 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 	}
 
+	/**
+	 * @param Instagram        $instagram The Instagram API instance
+	 * @param InstagramProfile $ig_profile The profile to compare & set proxies for the Instagram API
+	 * @param                  $return_opts 1 for the Instagram API instance, 2 for an array of [InstagramAPI Instance, Guzzle-Options]
+	 *
+	 * @return Instagram       The Instagram API instance only or an array of [InstagramAPI Instance, Guzzle-Options]
+	 */
+	public static function setProxy(Instagram $instagram, InstagramProfile $ig_profile, $return_opts = 1) {
+		$guzzle_options = NULL;
+
+		if ($ig_profile->proxy == NULL) {
+			$guzzle_options                                 = [];
+			$guzzle_options['curl']                         = [];
+			$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+			$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+			$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+		} else if (strpos($ig_profile->proxy, 'http') === 0) {
+			$guzzle_options                                 = [];
+			$guzzle_options['curl']                         = [];
+			$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+			$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+			$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+			$ig_profile->proxy                              = NULL;
+			$ig_profile->save();
+		} else {
+			$guzzle_options                                 = [];
+			$guzzle_options['curl']                         = [];
+			$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
+			$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
+			$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+		}
+
+		$instagram->setGuzzleOptions($guzzle_options);
+
+		switch ($return_opts) {
+			case 1:
+				return $instagram;
+			case 2:
+				return [$instagram, $guzzle_options];
+			default:
+				return $instagram;
+		}
+	}
+
 	/*
 	 * TRUE if the login was successful.
 	 * FALSE if the the login failed.
@@ -160,32 +204,9 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 
 		try {
-
-			$guzzle_options = NULL;
-
-			if ($ig_profile->proxy == NULL) {
-				$guzzle_options                                 = [];
-				$guzzle_options['curl']                         = [];
-				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
-				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-			} else if (strpos($ig_profile->proxy, 'http') === 0) {
-				$guzzle_options                                 = [];
-				$guzzle_options['curl']                         = [];
-				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
-				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-				$ig_profile->proxy                              = NULL;
-				$ig_profile->save();
-			} else {
-				$guzzle_options                                 = [];
-				$guzzle_options['curl']                         = [];
-				$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
-				$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
-				$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-			}
-
-			$instagram->setGuzzleOptions($guzzle_options);
+			$proxy_settings = InstagramHelper::setProxy($instagram, $ig_profile, 2);
+			$instagram = $proxy_settings[0];
+			$guzzle_options = $proxy_settings[1];
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 
