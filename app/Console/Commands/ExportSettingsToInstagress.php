@@ -73,15 +73,22 @@ class ExportSettingsToInstagress extends Command
 
                 foreach ($interaction_usernames as $interaction_username) {
                     $target_username = $interaction_username->target_username;
-                    $valid_username = $this->searchUsernames($gress_id, $target_username);
+                    $gress_username = $this->searchUsernames($gress_id, $target_username);
 
-                    if ($valid_username){
-                        $usernames[] = $interaction_username->target_username;
+                    if ($gress_username){
+                        $usernames[] =  array("id" => $gress_username["id"], "username" => $gress_username["username"],
+                            "full_name" => $gress_username["full_name"], "profile_picture" => $gress_username["profile_picture"]);
                     }
 
                 }
 
                 dump($usernames);
+
+                echo"Moving to Calling Api to update usernames";
+
+                $this->addUsernames($gress_id, $usernames);
+
+                $this->addHashtags($gress_id, $tags);
 
             }
         }
@@ -92,12 +99,12 @@ class ExportSettingsToInstagress extends Command
 
         $token = '1d73c7c1b10f05f2048f54083e9381ac18f36261a98416a00b7eed6b00d56eb4';
 
-        echo"[GET USERNAME DETAILS] Calling activity status api for session data...";
+        echo"[GET USERNAME DETAILS] Calling activity status api for session data... \n";
 
         try {
             $response = $client->get("https://gress.io/api/activity/settings/usernames/search?token=" . $token . "&id=" . $gress_id . "&q=" . $target_username);
 
-            echo"[GET USERNAME DETAILS] Finished making call to Instagress Endpoint now...";
+            echo"[GET USERNAME DETAILS] Finished making call to Instagress Endpoint now... \n";
 
             $content = $response->getBody()->getContents();
 //            echo"[GET USERNAME DETAILS] Reponse rcvd: " . $content;
@@ -106,11 +113,11 @@ class ExportSettingsToInstagress extends Command
 
             // Instagress return in lowercase true
             if ($result_json["ok"]) {
-                echo"[GET USERNAME DETAILS] Rcvd successful response...";
+                echo"[GET USERNAME DETAILS] Rcvd successful response... \n";
                 $usernames = $result_json['usernames'];
                 if($usernames[0]["username"] == $target_username){
-                    echo"[GET USERNAME DETAILS] FIRST USERNAME IS CORRECT!";
-                    return true;
+                    echo"[GET USERNAME DETAILS] FIRST USERNAME IS CORRECT! \n";
+                    return $usernames[0];
                 }
             }
             else{
@@ -122,63 +129,56 @@ class ExportSettingsToInstagress extends Command
         }
     }
 
-//    public function addUsernames(Request $request)
-//    {
-//
-//    }
-//    public function addHashtags(Request $request)
-//    {
-//        $ig_profile = InstagramProfile::find($request->input('profile_id'));
-//        $blacklist = $request->input('blacklist');
-//
-//        if ($ig_profile == NULL) {
-//            return response()->json(['success' => FALSE]);
-//        }
-//
-//        $ig_profile_setting = InteractionSetting::where('instagram_profile_id', $request->input('profile_id'))
-//            ->first();
-//
-//        if ($ig_profile_setting == NULL) {
-//            $ig_profile_setting = new InteractionSetting;
-//            $ig_profile_setting->instagram_profile_id = $request->input('profile_id');
-//            $ig_profile_setting->save();
-//        }
-//        $ig_profile_setting = InteractionSetting::where('instagram_profile_id', $request->input('profile_id'))
-//            ->first();
-//
-//        if ($ig_profile_setting == NULL) {
-//            $ig_profile_setting = new InteractionSetting;
-//            $ig_profile_setting->instagram_profile_id = $request->input('profile_id');
-//            $ig_profile_setting->save();
-//        }
-//
-//        $tags_csv = $request->input('tags');
-//
-//        $tags = explode(',', $tags_csv);
-//
-//        foreach ($tags as $tag) {
-//            if (InteractionHashtag::where('hashtag', $tag)
-//                    ->where('instagram_profile_id', $request->input('profile_id'))
-//                    ->where('blacklist', $blacklist)
-//                    ->first() == NULL) {
-//                $ig_profile_hashtag = new InteractionHashtag;
-//                $ig_profile_hashtag->instagram_profile_id = $request->input('profile_id');
-//                $ig_profile_hashtag->blacklist = $blacklist;
-//                $ig_profile_hashtag->hashtag = $tag;
-//                $ig_profile_hashtag->save();
-//            }
-//        }
-//
-//        $this->updateHashtagList($ig_profile, $blacklist);
-//
-//        $interaction_hashtags = InteractionHashtag::where('instagram_profile_id', $request->input('profile_id'))
-//            ->where('blacklist', $blacklist)
-//            ->get();
-//
-//        if ($blacklist) {
-//            return view('interaction.tagsinput.bl-tag-result-div', ['bl_tags' => $interaction_hashtags]);
-//        } else {
-//            return view('interaction.tagsinput.tag-result-div', ['tags' => $interaction_hashtags]);
-//        }
-//    }
+    public function addUsernames($gress_id, $usernames)
+    {
+        $client = new Client();
+        $token = '1d73c7c1b10f05f2048f54083e9381ac18f36261a98416a00b7eed6b00d56eb4';
+        try {
+                $response = $client->post('https://gress.io/api/activity/settings/set?token=' . $token, [
+                    'json' => [
+                        'id' => $gress_id,
+                        'settings' => [
+                            'usernames' => $usernames,
+                        ]
+                    ]
+                ]);
+
+
+            echo"[ADD USERNAME] Finished making call to Instagress Endpoint now... \n";
+            $content = $response->getBody()->getContents();
+            echo "[ADD USERNAME] Reponse rcvd: " . $content . "\n";
+
+            return json_decode($content, true);
+
+        } catch (RequestException $e) {
+            echo"[ADD USERNAME] Request Exception encountered: " . $e->getMessage() . "\n";
+            echo"[ADD USERNAME] Request Body: " . $e->getRequest()->getBody()->getContents() . "\n";
+        }
+    }
+    public function addHashtags($gress_id, $tags)
+    {
+        $client = new Client();
+        $token = '1d73c7c1b10f05f2048f54083e9381ac18f36261a98416a00b7eed6b00d56eb4';
+        try {
+                $response = $client->post('https://gress.io/api/activity/settings/set?token=' . $token, [
+                    'json' => [
+                        'id' => $gress_id,
+                        'settings' => [
+                            'tags' => $tags,
+                        ]
+                    ]
+                ]);
+
+
+            echo"[ADD HASHTAG] Finished making call to Instagress Endpoint now... \n";
+            $content = $response->getBody()->getContents();
+            echo"[ADD HASHTAG] Reponse rcvd: " . $content . "\n";
+
+            return json_decode($content, true);
+
+        } catch (RequestException $e) {
+            echo"[ADD HASHTAG] Request Exception encountered: " . $e->getMessage(). "\n";
+            echo"[ADD HASHTAG] Request Body: " . $e->getRequest()->getBody()->getContents() . "\n";
+        }
+    }
 }
