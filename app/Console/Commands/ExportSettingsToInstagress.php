@@ -108,7 +108,9 @@ class ExportSettingsToInstagress extends Command
             if ($result_json["ok"]) {
                 echo"[GET USERNAME DETAILS] Rcvd successful response...";
                 $usernames = $result_json['usernames'];
-                echo $usernames;
+                if($usernames[0]["username"] == $target_username){
+                    return true;
+                }
             }
             else{
                 return false;
@@ -121,52 +123,7 @@ class ExportSettingsToInstagress extends Command
 
 //    public function addUsernames(Request $request)
 //    {
-//        $ig_profile = InstagramProfile::find($request->input('profile_id'));
-//        $blacklist = $request->input('blacklist');
 //
-//        Log::info("request is " . serialize($request->all()));
-//
-//        if ($ig_profile == NULL) {
-//            return response()->json(['success' => FALSE]);
-//        }
-//
-//        $ig_profile_setting = InteractionSetting::where('instagram_profile_id', $request->input('profile_id'))
-//            ->first();
-//
-//        if ($ig_profile_setting == NULL) {
-//            $ig_profile_setting = new InteractionSetting;
-//            $ig_profile_setting->instagram_profile_id = $request->input('profile_id');
-//            $ig_profile_setting->save();
-//        }
-//
-//        $usernames = $request->input('usernames');
-//
-//
-//        foreach ($usernames as $username) {
-//            if (InteractionUsername::where('gress_id', $username["id"])
-//                    ->where('instagram_profile_id', $request->input('profile_id'))
-//                    ->first() == NULL) {
-//                $ig_profile_username = new InteractionUsername;
-//                $ig_profile_username->instagram_profile_id = $request->input('profile_id');
-//                $ig_profile_username->blacklist =  $blacklist;
-//                $ig_profile_username->username = $username["username"];
-//                $ig_profile_username->gress_id = $username["id"];
-//                $ig_profile_username->gress_full_name = $username["full_name"];
-//                $ig_profile_username->gress_profile_picture = $username["profile_picture"];
-//                $ig_profile_username->save();
-//            }
-//        }
-//
-//        $this->updateUsernameList($ig_profile, $blacklist);
-//
-//        $interaction_usernames = InteractionUsername::where('instagram_profile_id', $request->input('profile_id'))
-//            ->where('blacklist',$blacklist)
-//            ->get();
-//        if($blacklist){
-//            return view('interaction.tagsinput.bl-username-result-div', [ 'bl_usernames' => $interaction_usernames ]);
-//        }else{
-//            return view('interaction.tagsinput.username-result-div', [ 'usernames' => $interaction_usernames ]);
-//        }
 //    }
 //    public function addHashtags(Request $request)
 //    {
