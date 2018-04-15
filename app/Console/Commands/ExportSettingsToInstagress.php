@@ -77,23 +77,23 @@ class ExportSettingsToInstagress extends Command
 
                     if ($gress_username){
 
-                        if (strpos($usernames["full_name"], "?") !== false) {
+                        if (strpos($gress_username["full_name"], "?") !== false) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? USING 1st CHECK \n";
                             continue;
                         }
-                        if (preg_match('/\?/', $usernames["full_name"])) {
+                        if (preg_match('/\?/', $gress_username["full_name"])) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? USING 2nd CHECK \n";
                             continue;
                         }
-                        if (strstr($usernames["full_name"], '?')) {
+                        if (strstr($gress_username["full_name"], '?')) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? USING 3rd CHECK \n";
                             continue;
                         }
-                        if (strpos($usernames["username"], '?') !== false) {
+                        if (strpos($gress_username["username"], '?') !== false) {
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN USERNAME= ? \n";
                             continue;
                         }
-                        if($usernames["full_name"] == ""){
+                        if($gress_username["full_name"] == ""){
                             echo"[RECEIVED USERNAME DETAILS] INVALID CHARACTERS IN FULL NAME = blank \n";
                             continue;
                         }
