@@ -496,7 +496,7 @@ class InstagramProfileController extends Controller
 						}
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
-					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
+					Log::info('[DASHBOARD ADD PROFILE] ' . $ig_username . ' account is protected with 2FA.');
 					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
 					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' => "Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 				}
@@ -578,7 +578,7 @@ class InstagramProfileController extends Controller
 		$ig_password = session('add_ig_pw');
 		$challenge_url = session('challenge_url');
 
-		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' clearing challenge with verification code: ' . $verification_code);
+		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' clearing challenge with verification code: ' . $verification_code);
 
 		$instagram = InstagramHelper::initInstagram();
 		$guzzle_options                                 = [];
@@ -591,6 +591,8 @@ class InstagramProfileController extends Controller
 		$finish_challenge_response = $this->finishChallengeVerification($instagram, $ig_username, $ig_password, $challenge_url, $verification_code);
 
 		if ($finish_challenge_response->getStatus() == "ok") {
+
+			Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' successfully cleared challenge!');
 
 			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 
@@ -628,7 +630,7 @@ class InstagramProfileController extends Controller
 						}
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
-					Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
+					Log::info('[CLEAR CHALLENGE] ' . $ig_username . ' account is protected with 2FA.');
 					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
 					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 				}
@@ -758,7 +760,7 @@ class InstagramProfileController extends Controller
 
 		$config                = [];
 		$config["storage"]     = "mysql";
-		$config["pdo"]         = DB::connection('mysql_igsession')->getPdo();
+		$config["pdo"]         = DB::connection()->getPdo();
 		$config["dbtablename"] = "instagram_sessions";
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 
