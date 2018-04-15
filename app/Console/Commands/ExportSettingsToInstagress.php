@@ -118,10 +118,15 @@ class ExportSettingsToInstagress extends Command
                 if($usernames[0]["username"] == $target_username){
                     echo"[GET USERNAME DETAILS] FIRST USERNAME IS CORRECT! \n";
                     if (strpos($usernames[0]["full_name"], '?') !== false) {
-                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS = ? \n";
+                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS IN USERNAME = ? \n";
                         return false;
-                    }else if($usernames[0]["full_name"] == ""){
-                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS = blank \n";
+                    }
+                    if (strpos($usernames[0]["username"], '?') !== false) {
+                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS IN USERNAME= ? \n";
+                        return false;
+                    }
+                    if($usernames[0]["full_name"] == ""){
+                        echo"[GET USERNAME DETAILS] INVALID CHARACTERS IN FULL NAME = blank \n";
                         return false;
                     }
 
