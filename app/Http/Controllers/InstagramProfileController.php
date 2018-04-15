@@ -385,6 +385,10 @@ class InstagramProfileController extends Controller
 
 				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectPasswordException->getMessage());
 
+				if ($incorrectPasswordException->getResponse()->getMessage() == 'Challenge required.') {
+					Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $incorrectPasswordException->asJson());
+				}
+
 				return response()->json([
 					'success' => FALSE,
 					'type' => 'incorrect_pw',
