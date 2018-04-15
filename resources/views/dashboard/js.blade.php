@@ -226,11 +226,11 @@ $("#challenge-confirm-credentials").on("click", function(){
                 localStorage.setItem("status", data.message);
                 location.reload(true);
             } else {
-                if (data.type == 'challenge') {
+                if (data.type == 'challenge_required' || data.type == 'incorrect_pw') {
+                    swal('Failed', data.message, 'error');
+                } else if (data.type == 'challenge') {
                     $("#challenge-verification-message").html(data.message);
                     $("#challenge-verificationcode-div").show();
-                } else if (data.type == 'incorrect_pw') {
-                    swal('Failed', data.message, 'error');
                 } else if (data.type == '2fa') {
                     $("#2fa-verification-message").html(data.message);
                     $("#2fa-verificationcode-div").show();
