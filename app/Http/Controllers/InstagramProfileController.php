@@ -264,12 +264,12 @@ class InstagramProfileController extends Controller
 			$profile_log->error_msg = $challengeRequiredException->getResponse()->asJson();
 			$profile_log->save();
 
-			if ($challengeRequiredException->getMessage() == 'challenge_required') {
+			if ($challengeRequiredException->getResponse()->getMessage() == 'challenge_required') {
 				return Response::json([ "success" => FALSE, 'type' => 'challenge_required', 'message' =>"To fully verify this profile, you would need to logon to this Instagram profile through your phone and press 'it was me' when prompted." ]);
 			}
 
 			return Response::json([ "success" => FALSE, 'type' => 'challenge_required', 'message' =>"Verification Required" ]);
-
+			
 		} catch (CheckpointRequiredException $checkpt_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' CheckpointRequiredException: ' . $checkpt_ex->getMessage());
 			$profile_log->error_msg = $checkpt_ex->getMessage();
