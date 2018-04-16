@@ -42,9 +42,6 @@ class SendVerifyProfileEmail extends Command
 	public function handle()
 	{
 		$users = User::where('tier', '>', 1)
-		             ->where('partition', 0)
-		             ->where('admin', 0)
-		             ->where('vip', 0)
 		             ->get();
 
 		foreach ($users as $user) {
