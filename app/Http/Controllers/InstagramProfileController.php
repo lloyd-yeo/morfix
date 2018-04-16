@@ -121,7 +121,7 @@ class InstagramProfileController extends Controller
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[DASHBOARD ADD PROFILE] ' . $ig_username . ' account is protected with 2FA.');
-					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
+					session(['2fa_identifier' => $login_response->getTwoFactorInfo()->getTwoFactorIdentifier()]);
 					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' => "Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
@@ -235,7 +235,9 @@ class InstagramProfileController extends Controller
 
 
 		try {
-			$login_response = $response = $instagram->finishTwoFactorLogin($ig_username, $ig_password, $twofa_identifier, $verification_code);
+			$response = $instagram->finishTwoFactorLogin($ig_username, $ig_password, $twofa_identifier, $verification_code);
+
+			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 
 			$instagram_user = NULL;
 
@@ -262,6 +264,37 @@ class InstagramProfileController extends Controller
 			}
 
 			$instagram_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
+
+			if ($instagram_profiles->count() == 0) {
+				$morfix_ig_profile = $this->storeInstagramProfile(Auth::user()->user_id, Auth::user()->email, $ig_username, $ig_password, $instagram_user);
+
+				if ($morfix_ig_profile != NULL) {
+
+					$items = $instagram->timeline->getSelfUserFeed()->getItems();
+
+					foreach ($items as $item) {
+						try {
+							$user_insta_profile_media = InstagramProfileMedia::where('media_id', $item->getPk())->first();
+
+							if ($user_insta_profile_media == NULL) {
+								if ($item->getImageVersions2() != NULL) {
+									$user_insta_profile_media = new InstagramProfileMedia;
+									$user_insta_profile_media->insta_username = $ig_username;
+									$user_insta_profile_media->media_id = $item->getPk();
+									$user_insta_profile_media->image_url = $item->getImageVersions2()->getCandidates()[0]->getUrl();
+									$user_insta_profile_media->save();
+								}
+							}
+						}
+						catch (\ErrorException $e) {
+							continue;
+						}
+					}
+					return Response::json([ "success" => TRUE, 'message' => "Profil Adaugat!" ]);
+				} else {
+					return Response::json([ "success" => FALSE, 'message' => "Adaugarea Profilului a Esuat! Te rugam sa ne contactezi folosind butonul din dreapta jos." ]);
+				}
+			}
 
 			foreach ($instagram_profiles as $instagram_profile) {
 				Log::info('[CLEAR 2FA] ' . $ig_username . ' updating instagram profiles now.');
@@ -397,7 +430,7 @@ class InstagramProfileController extends Controller
 						}
 					} else if ($login_response->isTwoFactorRequired()) {
 						Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' account is protected with 2FA.');
-						session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
+						session(['2fa_identifier' => $login_response->getTwoFactorInfo()->getTwoFactorIdentifier()]);
 						return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 					}
 
@@ -681,7 +714,7 @@ class InstagramProfileController extends Controller
 					}
 				} else if ($login_response->isTwoFactorRequired()) {
 					Log::info('[CLEAR CHALLENGE] ' . $ig_username . ' account is protected with 2FA.');
-					session('2fa_identifier', $login_response->getTwoFactorInfo()->getTwoFactorIdentifier());
+					session(['2fa_identifier' => $login_response->getTwoFactorInfo()->getTwoFactorIdentifier()]);
 					return response()->json([ "success" => FALSE, 'type' => '2fa', 'message' =>"Account is protected with 2FA, unable to establish connection. Please enter the verification code below:" ]);
 				}
 			} else if ($login_response != NULL && $login_response->getStatus() == "ok") {
