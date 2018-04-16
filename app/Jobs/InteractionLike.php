@@ -214,8 +214,8 @@ class InteractionLike implements ShouldQueue
 						//Get the feed from the targeted hashtag.
 
 						if (empty(trim($target_hashtag->hashtag))) {
-							$target_hashtag->invalid = 1;
-							$target_hashtag->save();
+//							$target_hashtag->invalid = 1;
+//							$target_hashtag->save();
 							continue;
 						}
 						$hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $target_hashtag);
