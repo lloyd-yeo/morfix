@@ -418,6 +418,15 @@ class InstagramHelper extends \InstagramAPI\Request
 		$hashtag_feed = NULL;
 		try {
 			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
+			
+			$trimmed_hashtag = trim($hashtag->hashtag);
+			$hash_pos = str_pos($trimmed_hashtag, '#');
+			if ($hash_pos !== false) {
+				$trimmed_hashtag = str_replace('#', '', $trimmed_hashtag);
+				$hashtag->hashtag = $trimmed_hashtag;
+				$hashtag->save();
+			}
+
 			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag), $rank_token);
 
 			//            dump($hashtag_feed);
@@ -445,7 +454,15 @@ class InstagramHelper extends \InstagramAPI\Request
 		$hashtag_feed = NULL;
 		try {
 			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
-			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag), $rank_token);
+			$trimmed_hashtag = trim($hashtag->hashtag);
+			$hash_pos = str_pos($trimmed_hashtag, '#');
+			if ($hash_pos !== false) {
+				$trimmed_hashtag = str_replace('#', '', $trimmed_hashtag);
+				$hashtag->hashtag = $trimmed_hashtag;
+				$hashtag->save();
+			}
+
+			$hashtag_feed = $instagram->hashtag->getFeed($trimmed_hashtag, $rank_token);
 
 			return $hashtag_feed;
 		}
