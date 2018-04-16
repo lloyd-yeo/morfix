@@ -75,7 +75,7 @@ class InstagramProfileController extends Controller
 				$profile_log->error_msg = "This instagram username has already been added!";
 				$profile_log->save();
 
-				Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt failed: ' . $ig_username . ' ' . $ig_password);
+				Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt failed, profile exists: ' . $ig_username . ' ' . $ig_password);
 				Log::error('[DASHBOARD ADD PROFILE] This instagram username has already been added!');
 
 				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'message' =>"This instagram username has already been added!" ]);
@@ -84,7 +84,7 @@ class InstagramProfileController extends Controller
 			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
 
 			if ($login_response != NULL && $login_response->getStatus() == "fail") {
-
+				Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt failed: ' . $ig_username . ' ' . $ig_password);
 				$profile_log->error_msg = $login_response->asJson();
 				$profile_log->save();
 

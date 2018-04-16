@@ -569,7 +569,7 @@ class InteractionLike implements ShouldQueue
 		                                      ->first();
 
 		//Duplicate = liked before.
-		if (count($liked_users) > 0) {
+		if ($liked_users != NULL) {
 			echo("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
 			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
 				return 1;
@@ -586,7 +586,7 @@ class InteractionLike implements ShouldQueue
 		                                      ->first();
 
 		//Duplicate = liked before.
-		if (count($liked_users_archive) > 0) {
+		if ($liked_users_archive != NULL) {
 			echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
 
 			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
