@@ -32,6 +32,10 @@ class HomeController extends Controller
 	 */
 	public function index(Request $request)
 	{
+		if (!session()->has('proxy_session_id')) {
+			session(['proxy_session_id' => str_random(9)]);
+		}
+
 		$current_user = Auth::user();
 
 		$current_user->last_login = \Carbon\Carbon::now();

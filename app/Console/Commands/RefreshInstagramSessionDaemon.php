@@ -47,6 +47,7 @@ class RefreshInstagramSessionDaemon extends Command
 	public function handle()
 	{
 		$users = User::where('tier', '>', 1)->where('partition', 0)->get();
+
 		foreach ($users as $user) {
 			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->where('challenge_required', 0)->get();
 			$instagram          = InstagramHelper::initInstagram();
