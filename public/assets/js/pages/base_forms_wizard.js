@@ -292,6 +292,10 @@ var BaseFormWizard = function() {
                                     // swal('Oops...', data.response, 'error');
                                     $("#challenge-message").html(data.message);
                                     $success = true;
+                                } else if (data.type == '2fa') {
+                                    $("#2fa-verification-message").html(data.message);
+                                    $("#2fa-verificationcode-div").show();
+                                    $success = true;
                                 } else {
                                    $("#active-request").val(data.active_request);
                                    swal('Oops...', data.message, 'error');

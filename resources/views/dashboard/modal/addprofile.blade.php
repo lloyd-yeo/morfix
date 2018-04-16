@@ -97,21 +97,6 @@
                                                             </div>
                                                         </div>
                                                     </center>
-
-                                                    {{--<center>--}}
-                                                        {{--<h4 class='push' style="font-size:12px;">1. Set-up an appointment with us over here:</h4>--}}
-                                                        {{--<a href="https://morfix.youcanbook.me" target="_blank">https://morfix.youcanbook.me</a>--}}
-                                                        {{--<br/>--}}
-                                                    {{--</center>--}}
-
-                                                    {{--<center>--}}
-                                                        {{--<br/>--}}
-                                                        {{--<h4 class='push' style="font-size:12px;">2. Join our telegram group at the appointed time--}}
-                                                                         {{--& our friendly Morfix operators will contact you to add in your account!</h4>--}}
-                                                    {{--</center>--}}
-                                                    {{--<center><h4 id="waiting-message" class='push' style="display:none;" >Please hang on...</h4></center>--}}
-                                                    {{--<center><h4 id="verify-message" class='push' style="display:none;" >Please copy & paste this link on to another tab/window to verify your account:<br/><a href="#" style="font-size: 11px;" target="_blank" id="challenge-url"></a></h4></center>--}}
-                                                    {{--<center><h4 id="confirm-verify" class='push' style="display:none;">Once you are done please click this button: <a class="btn btn-success" id="relogin-btn">Retry</a></h4></center>--}}
                                                 </div>
                                             </div>
                                         </div>

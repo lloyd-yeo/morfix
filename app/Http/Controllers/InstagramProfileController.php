@@ -216,7 +216,7 @@ class InstagramProfileController extends Controller
 
 	public function clear2FA(Request $request) {
 		$verification_code = $request->input('verification_code');
-		$twofa_identifier = $request->input('2fa_identifier');
+		$twofa_identifier = session('2fa_identifier');
 		$ig_username = session('add_ig_user');
 		$ig_password = session('add_ig_pw');
 
