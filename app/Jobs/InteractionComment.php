@@ -21,6 +21,7 @@ class InteractionComment implements ShouldQueue {
         SerializesModels;
 
     protected $profile;
+    protected $instagram;
 
     /**
      * The number of times the job may be attempted.
@@ -57,15 +58,28 @@ class InteractionComment implements ShouldQueue {
 
         echo($ig_profile->insta_username . "\t" . $ig_profile->insta_pw . "\n");
 
-        $instagram = InstagramHelper::initInstagram();
+        $this->instagram = InstagramHelper::initInstagram();
+	    $this->instagram = InstagramHelper::setProxy($this->instagram, $ig_profile, 1);
 
-        if (InstagramHelper::login($instagram, $ig_profile)) {
+        if (InstagramHelper::login($this->instagram, $ig_profile)) {
             try {
-	            InteractionCommentHelper::unengaged($ig_profile, $instagram);
+	            InteractionCommentHelper::unengaged($ig_profile, $this->instagram);
             } catch (LazyUserOptionException $ex) {
             	dump($ex);
             }
         }
     }
+
+	/**
+	 * The job failed to process.
+	 *
+	 * @param  Exception $exception
+	 *
+	 * @return void
+	 */
+	public function failed(Exception $exception)
+	{
+		unset($this->instagram);
+	}
 
 }

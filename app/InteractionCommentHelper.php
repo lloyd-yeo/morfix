@@ -3,6 +3,7 @@
 namespace App;
 
 use InstagramAPI\Exception\AccountDisabledException;
+use InstagramAPI\Exception\ChallengeRequiredException;
 use InstagramAPI\Exception\CheckpointRequiredException;
 use InstagramAPI\Exception\EndpointException;
 use InstagramAPI\Exception\IncorrectPasswordException;
@@ -61,6 +62,8 @@ class InteractionCommentHelper
 			InteractionCommentHelper::handleInstagramException($ig_profile, $acctdisabled_ex, $engaged_user);
 		} catch (RequestException $request_ex) {
 			InteractionCommentHelper::handleInstagramException($ig_profile, $request_ex, $engaged_user);
+		} catch (ChallengeRequiredException $challengeRequiredException) {
+			InteractionCommentHelper::handleInstagramException($ig_profile, $challengeRequiredException, $engaged_user);
 		} catch (\Exception $ex) {
 			dump($ex);
 		}
@@ -306,6 +309,14 @@ class InteractionCommentHelper
 										echo "\n[$ig_username] got throttled & next_comment_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
 
 										return;
+									} else {
+										if ($ex instanceof ChallengeRequiredException) {
+											$ig_profile->challenge_required = 1;
+											$ig_profile->save();
+											echo "\n[$ig_username] challenge required. \n";
+
+											return;
+										}
 									}
 								}
 							}

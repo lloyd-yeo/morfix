@@ -288,7 +288,7 @@ class InteractionFollow implements ShouldQueue
 	{
 		$this->instagram = InstagramHelper::initInstagram();
 		$this->instagram = InstagramHelper::setProxy($this->instagram, $ig_profile, 1);
-		if (!InstagramHelper::login($this->instagram, $ig_profile, InstagramHelper::setProxy($this->instagram, $ig_profile, 2)[1])) {
+		if (!InstagramHelper::login($this->instagram, $ig_profile)) {
 			exit();
 		}
 	}
