@@ -108,6 +108,7 @@ class InteractionLike implements ShouldQueue
 		$ig_username = $ig_profile->insta_username;
 
 		$instagram = $this->getInstagram();
+		$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
 
 		if (InstagramHelper::login($instagram, $ig_profile)) {
 
@@ -733,4 +734,14 @@ class InteractionLike implements ShouldQueue
 		echo("\n\n[" . $ig_profile->insta_username . "] elapsed time " . $seconds . " seconds.\n\n");
 	}
 
+	/**
+	 * The job failed to process.
+	 *
+	 * @param  Exception  $exception
+	 * @return void
+	 */
+	public function failed(Exception $exception)
+	{
+		unset($this->instagram);
+	}
 }
