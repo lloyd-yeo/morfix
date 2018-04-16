@@ -455,6 +455,8 @@ class InstagramProfileController extends Controller
 		catch (EndpointException $endpoint_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
 			$profile_log->error_msg = $endpoint_ex->getMessage();
+			$profile_log->error_msg = $endpoint_ex->getResponse()->asJson();
+			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' EndpointException asJson(): ' . $endpoint_ex->getResponse()->asJson());
 			$profile_log->save();
 
 			return Response::json([ "success" => FALSE, 'type' => 'endpoint', 'message' =>$endpoint_ex->getMessage() ]);
