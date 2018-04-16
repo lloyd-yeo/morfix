@@ -218,7 +218,7 @@
                     localStorage.setItem("status", data.message);
                     location.reload(true);
                 } else {
-                    if (data.type == 'challenge_required' || data.type == 'incorrect_pw') {
+                    if (data.type == 'challenge_required' || data.type == 'incorrect_pw' || data.type == 'incorrect_password') {
                         swal('Failed', data.message, 'error');
                     } else if (data.type == 'challenge') {
                         $("#challenge-verification-message").html(data.message);
