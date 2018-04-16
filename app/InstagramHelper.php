@@ -514,6 +514,14 @@ class InstagramHelper extends \InstagramAPI\Request
 
 	public static function validForInteraction($ig_profile)
 	{
+		if ($ig_profile->challenge_required == 1) {
+			echo("\n[" . $ig_profile->insta_username . "] requires verification.\n");
+		}
+
+		if ($ig_profile->challenge_required_phone == 1) {
+			echo("\n[" . $ig_profile->insta_username . "] requires a phone verification.\n");
+		}
+
 		if ($ig_profile->checkpoint_required == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
 		}
