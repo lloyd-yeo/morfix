@@ -33,24 +33,6 @@ class InstagramHelper extends \InstagramAPI\Request
 		return $instagram;
 	}
 
-	public static function getFollowersViaProfileId(Instagram $instagram, InstagramProfile $ig_profile, $target_username_id, $next_max_id)
-	{
-		try {
-			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
-			echo("\n[GET FOLLOWERS VIA PROFILE ID] UUID Generated: " . $rank_token);
-			$user_follower_response = $instagram->people->getFollowers($target_username_id, $rank_token, NULL, $next_max_id);
-
-			return $user_follower_response;
-		}
-		catch (NetworkException $network_ex) {
-			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
-			$ig_profile->save();
-			InstagramHelper::verifyAndReassignProxy($ig_profile);
-
-			return NULL;
-		}
-	}
-
 	/**
 	 * @param Instagram        $instagram The Instagram API instance
 	 * @param InstagramProfile $ig_profile The profile to compare & set proxies for the Instagram API
@@ -355,35 +337,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		return $flag;
 	}
 
-	public static function verifyAndReassignProxy(InstagramProfile $ig_profile, $debug = 0)
-	{
-		if ($ig_profile->proxy === NULL || $ig_profile->invalid_proxy > 0) {
-			$proxy                     = Proxy::inRandomOrder()->first();
-			$ig_profile->proxy         = $proxy->proxy;
-			$ig_profile->invalid_proxy = 0;
-			$ig_profile->save();
-			$proxy->assigned = $proxy->assigned + 1;
-			$proxy->save();
-			if ($debug = 1) {
-				echo '[' . $ig_profile->insta_username . '] has been reassigned a proxy.' . "\n";
-			}
-		}
-	}
-
-	public static function forceReassignProxy(InstagramProfile $ig_profile)
-	{
-		$proxy             = Proxy::inRandomOrder()->first();
-		$ig_profile->proxy = $proxy->proxy;
-		$ig_profile->save();
-		$proxy->assigned = $proxy->assigned + 1;
-		if ($proxy->save()) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-
-	public static function getUserIdForNicheUsername($instagram, $target_username)
+	public static function getUserIdForNicheUsername(Instagram $instagram, $target_username)
 	{
 		$username_id = NULL;
 		$username_id = $instagram->people->getUserIdForName(trim($target_username->target_username));
@@ -391,7 +345,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		return $username_id;
 	}
 
-	public static function getUserIdForName($instagram, $target_username)
+	public static function getUserIdForName(Instagram $instagram, $target_username)
 	{
 		$username_id = NULL;
 		try {
@@ -405,7 +359,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		return $username_id;
 	}
 
-	public static function getUserInfo($instagram, $ig_profile)
+	public static function getUserInfo(Instagram $instagram, $ig_profile)
 	{
 		try {
 			$user_response = $instagram->people->getInfoById($ig_profile->insta_user_id);
@@ -418,7 +372,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 	}
 
-	public static function getTargetUsernameFollowers($instagram, $target_username, $username_id)
+	public static function getTargetUsernameFollowers(Instagram $instagram, $target_username, $username_id)
 	{
 		$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
 		echo("\n[GET TARGET USERNAME FOLLOWERS] UUID Generated: " . $rank_token);
@@ -466,7 +420,8 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		$hashtag_feed = NULL;
 		try {
-			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
+			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag), $rank_token);
 
 			//            dump($hashtag_feed);
 			return $hashtag_feed;
@@ -492,7 +447,8 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		$hashtag_feed = NULL;
 		try {
-			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag));
+			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
+			$hashtag_feed = $instagram->hashtag->getFeed(trim($hashtag->hashtag), $rank_token);
 
 			return $hashtag_feed;
 		}
@@ -507,6 +463,24 @@ class InstagramHelper extends \InstagramAPI\Request
 				$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
 			}
 			dump($network_ex);
+
+			return NULL;
+		}
+	}
+
+
+	public static function getFollowersViaProfileId(Instagram $instagram, InstagramProfile $ig_profile, $target_username_id, $next_max_id)
+	{
+		try {
+			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
+			echo("\n[GET FOLLOWERS VIA PROFILE ID] UUID Generated: " . $rank_token);
+			$user_follower_response = $instagram->people->getFollowers($target_username_id, $rank_token, NULL, $next_max_id);
+			return $user_follower_response;
+		}
+		catch (NetworkException $network_ex) {
+			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+			$ig_profile->save();
+//			InstagramHelper::verifyAndReassignProxy($ig_profile);
 
 			return NULL;
 		}
