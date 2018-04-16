@@ -362,6 +362,7 @@ class InstagramProfileController extends Controller
 							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' .  $ig_username . ' challenge_response ' . $challenge_response->asJson());
 							$choice = $challenge_response->getStepData()->getChoice();
 							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' .  $ig_username . ' choice is ' . $choice);
+							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' .  $ig_username . ' challenge_url is ' . $challenge_api_url);
 							$select_verify_method_response = $this->selectVerifyMethod($instagram, $ig_username, $ig_password, $challenge_api_url, $choice);
 							$challenge_response = $select_verify_method_response;
 							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' .  $ig_username . ' response after submitting choice ' . $select_verify_method_response->asJson());
