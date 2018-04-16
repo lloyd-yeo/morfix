@@ -305,12 +305,11 @@ class InstagramHelper extends \InstagramAPI\Request
 		catch (ChallengeRequiredException $challengerequired_ex) {
 			Log::error("[INSTAGRAM HELPER LOGIN ChallengeRequiredException] " . $ig_profile->insta_username . " " . $challengerequired_ex->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN ChallengeRequiredException] " . $ig_profile->insta_username . " " . $challengerequired_ex->getTraceAsString());
-			$ig_profile->checkpoint_required = 1;
+			$ig_profile->challenge_required = 1;
 			$ig_profile->save();
 			$message = "ChallengeRequiredException\n";
 
 			$flag = FALSE;
-
 		}
 		catch (SentryBlockException $sentryblock_ex) {
 			Log::error("[INSTAGRAM HELPER LOGIN SentryBlockException] " . $ig_profile->insta_username . " " . $sentryblock_ex->getMessage());
@@ -324,7 +323,6 @@ class InstagramHelper extends \InstagramAPI\Request
 			Log::error("[INSTAGRAM HELPER LOGIN LoginRequiredException] " . $ig_profile->insta_username . " " . $loginRequiredException->getTraceAsString());
 
 			$flag = FALSE;
-
 		}
 
 		if (!$flag && $debug == 1) {
