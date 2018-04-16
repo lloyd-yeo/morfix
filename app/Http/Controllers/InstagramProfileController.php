@@ -63,7 +63,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
-		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using residential proxy for adding account.');
+		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using residential proxy [' . 'customer-rmorfix-cc-US-city-san_jose-sessid-' . substr(Auth::user()->user_id, 6) . ':dXehM3e7bU' . '] for adding account.');
 
 		try {
 			if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
@@ -565,7 +565,6 @@ class InstagramProfileController extends Controller
 
 				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' BadRequestException: ' . $badRequestException->getMessage());
 				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' BadRequestException: ' . $badRequestException->asJson());
-
 
 				return response()->json([
 					'success' => FALSE,
