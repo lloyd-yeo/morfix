@@ -21,6 +21,7 @@ use App\CreateInstagramProfileLog;
 use App\Proxy;
 use App\DmJob;
 use App\InstagramHelper;
+use Carbon\Carbon;
 
 class InteractionFollow extends Command {
 
