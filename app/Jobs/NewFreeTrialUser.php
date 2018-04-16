@@ -67,7 +67,6 @@ class NewFreeTrialUser implements ShouldQueue {
             $user->num_acct = 1;
             $user->active = 1;
             $user->verification_token = str_random(20);
-            $user->user_tier = 1;
             $user->tier = 1;
 
             if ($user->save()) {
