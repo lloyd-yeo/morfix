@@ -439,7 +439,7 @@ class InstagramProfileController extends Controller
 			$profile_log->error_msg = $incorrectpw_ex->getMessage();
 			$profile_log->save();
 
-			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'message' =>"Incorrect Password!" ]);
+			return Response::json([ "success" => FALSE, 'type' => 'incorrect_password', 'message' =>"You've entered an incorrect password. Please change your password & try again." ]);
 		}
 		catch (EndpointException $endpoint_ex) {
 			Log::error('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' EndpointException: ' . $endpoint_ex->getMessage());
