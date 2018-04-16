@@ -81,5 +81,4 @@ class InteractionComment implements ShouldQueue {
 	{
 		unset($this->instagram);
 	}
-
 }

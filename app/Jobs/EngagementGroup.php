@@ -96,6 +96,8 @@ class EngagementGroup implements ShouldQueue
 			}
 
 			$instagram = InstagramHelper::initInstagram();
+			$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
+
 			if (!InstagramHelper::login($instagram, $ig_profile)) {
 				continue;
 			}
@@ -147,6 +149,11 @@ class EngagementGroup implements ShouldQueue
 				dump($feedback_required_ex);
 				continue;
 			} catch (\InstagramAPI\Exception\SentryBlockException $sentryblock_ex) {
+				dump($feedback_required_ex);
+				continue;
+			} catch (\InstagramAPI\Exception\ChallengeRequiredException $challengeRequiredException) {
+				$ig_profile->challenge_required = 1;
+				$ig_profile->save();
 				dump($feedback_required_ex);
 				continue;
 			} catch (\InstagramAPI\Exception\ThrottledException $throttled_ex) {

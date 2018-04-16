@@ -110,158 +110,25 @@ class InteractionLike implements ShouldQueue
 
 		$instagram = $this->getInstagram();
 		$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
+		
+		try {
+			if (InstagramHelper::login($instagram, $ig_profile)) {
 
-		if (InstagramHelper::login($instagram, $ig_profile)) {
+				$use_hashtags = $this->randomizeUseHashtags();
 
-			$use_hashtags = $this->randomizeUseHashtags();
+				if (!$use_hashtags) {
 
-			if (!$use_hashtags) {
-
-				foreach ($this->targeted_usernames as $target_username) {
-
-					if ($this->like_quota > 0) {
-
-						//Get followers of the target.
-						echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
-						$target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
-						if ($target_username_id === NULL) {
-							continue;
-						} else {
-							echo("\n" . "[$ig_username] Retrieved Target Id: " . $target_username_id . "\n");
-						}
-
-						$target_target_username = $target_username->target_username;
-						$user_follower_response = NULL;
-						$next_max_id            = NULL;
-
-						$page_count = 0;
-
-						do {
-							echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
-							$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
-							if ($user_follower_response === NULL) {
-								echo("\n" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "\n");
-								continue;
-							}
-							$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
-							$target_user_followings = $user_follower_response->getUsers();
-							$next_max_id            = $user_follower_response->getNextMaxId();
-							echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
-							$page_count++;
-
-							//Foreach follower of the target.
-							foreach ($target_user_followings as $user_to_like) {
-
-								if ($this->like_quota > 0) {
-
-									echo("\n" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
-
-									$is_duplicate = $this->checkBlacklistAndDuplicates($user_to_like, $page_count);
-
-									if ($is_duplicate == 1) {
-										break;
-									} else {
-										if ($is_duplicate == 2) {
-											continue;
-										}
-									}
-
-									//Get the feed of the user to like.
-									$user_feed_response = InstagramHelper::getUserFeed($instagram, $user_to_like);
-									if ($user_feed_response === NULL) {
-										continue;
-									}
-
-									//Get the media posted by the user.
-									$user_items = $user_feed_response->getItems();
-
-									//Foreach media posted by the user.
-									foreach ($user_items as $item) {
-										if ($this->like_quota > 0) {
-											if ($this->checkDuplicateByMediaId($item)) {
-												continue;
-											}
-											if (!$this->like($user_to_like, $item)) {
-												break;
-											}
-										} else {
-											echo "\n\n[146] Exiting...\n\n";
-											$this->printElapsedTime($this->time_start, $ig_profile);
-
-											return;
-										}
-									}
-								} else {
-									echo "\n\n[151] Exiting...\n\n";
-									$this->printElapsedTime($this->time_start, $ig_profile);
-
-									return;
-								}
-							}
-						} while ($next_max_id !== NULL && $this->like_quota > 0);
-					} else {
-						echo "\n\n[157] Exiting...\n\n";
-						$this->printElapsedTime($this->time_start, $ig_profile);
-
-						return;
-					}
-				}
-			} else {
-
-				foreach ($this->targeted_hashtags as $target_hashtag) {
-
-					if ($this->like_quota > 0) {
-						echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
-						//Get the feed from the targeted hashtag.
-
-						if (empty(trim($target_hashtag->hashtag))) {
-//							$target_hashtag->invalid = 1;
-//							$target_hashtag->save();
-							continue;
-						}
-						$hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $target_hashtag);
-						if ($hashtag_feed !== NULL) {
-							foreach ($hashtag_feed->getItems() as $item) {
-								$user_to_like = $item->getUser();
-								if (!$this->checkDuplicate($user_to_like)) {
-									if ($this->like_quota > 0) {
-										if (!$this->checkDuplicateByMediaId($item)) {
-											if (!$this->like($user_to_like, $item)) {
-												continue;
-											}
-										}
-									} else {
-										echo "\n\n[186] Exiting...\n\n";
-										$this->printElapsedTime($this->time_start, $ig_profile);
-
-										return;
-									}
-								}
-							}
-						}
-					} else {
-						echo "\n\n[192] Exiting...\n\n";
-						$this->printElapsedTime($this->time_start, $ig_profile);
-
-						return;
-					}
-				}
-			}
-
-			if ($this->like_quota > 0) {
-				if ($this->profile->niche > 0) {
-					$niche         = Niche::find($this->profile->niche);
-					$niche_targets = $niche->targetUsernames();
-
-					foreach ($niche_targets as $target_username) {
+					foreach ($this->targeted_usernames as $target_username) {
 
 						if ($this->like_quota > 0) {
 
 							//Get followers of the target.
 							echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
-							$target_username_id = InstagramHelper::getUserIdForNicheUsername($instagram, $target_username);
+							$target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
 							if ($target_username_id === NULL) {
 								continue;
+							} else {
+								echo("\n" . "[$ig_username] Retrieved Target Id: " . $target_username_id . "\n");
 							}
 
 							$target_target_username = $target_username->target_username;
@@ -272,7 +139,11 @@ class InteractionLike implements ShouldQueue
 
 							do {
 								echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
-
+								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
+								if ($user_follower_response === NULL) {
+									echo("\n" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "\n");
+									continue;
+								}
 								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
 								$target_user_followings = $user_follower_response->getUsers();
 								$next_max_id            = $user_follower_response->getNextMaxId();
@@ -312,60 +183,221 @@ class InteractionLike implements ShouldQueue
 													continue;
 												}
 												if (!$this->like($user_to_like, $item)) {
-													continue;
+													break;
 												}
 											} else {
-
-												echo "\n\n[264] Exiting...\n\n";
+												echo "\n\n[146] Exiting...\n\n";
 												$this->printElapsedTime($this->time_start, $ig_profile);
 
 												return;
 											}
 										}
 									} else {
-										echo "\n\n[269] Exiting...\n\n";
+										echo "\n\n[151] Exiting...\n\n";
 										$this->printElapsedTime($this->time_start, $ig_profile);
 
 										return;
 									}
 								}
 							} while ($next_max_id !== NULL && $this->like_quota > 0);
+						} else {
+							echo "\n\n[157] Exiting...\n\n";
+							$this->printElapsedTime($this->time_start, $ig_profile);
+
+							return;
 						}
 					}
+				} else {
 
-					$niche           = Niche::find($ig_profile->niche);
-					$target_hashtags = $niche->targetHashtags();
+					foreach ($this->targeted_hashtags as $target_hashtag) {
 
-					foreach ($target_hashtags as $target_hashtag) {
 						if ($this->like_quota > 0) {
 							echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
 							//Get the feed from the targeted hashtag.
+
+							if (empty(trim($target_hashtag->hashtag))) {
+								//							$target_hashtag->invalid = 1;
+								//							$target_hashtag->save();
+								continue;
+							}
 							$hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $target_hashtag);
-							foreach ($hashtag_feed->getItems() as $item) {
-								$user_to_like = $item->getUser();
-								if (!$this->checkDuplicate($user_to_like)) {
-									if ($this->like_quota > 0) {
-										if (!$this->checkDuplicateByMediaId($item)) {
-											if (!$this->like($user_to_like, $item)) {
+							if ($hashtag_feed !== NULL) {
+								foreach ($hashtag_feed->getItems() as $item) {
+									$user_to_like = $item->getUser();
+									if (!$this->checkDuplicate($user_to_like)) {
+										if ($this->like_quota > 0) {
+											if (!$this->checkDuplicateByMediaId($item)) {
+												if (!$this->like($user_to_like, $item)) {
+													continue;
+												}
+											}
+										} else {
+											echo "\n\n[186] Exiting...\n\n";
+											$this->printElapsedTime($this->time_start, $ig_profile);
+
+											return;
+										}
+									}
+								}
+							}
+						} else {
+							echo "\n\n[192] Exiting...\n\n";
+							$this->printElapsedTime($this->time_start, $ig_profile);
+
+							return;
+						}
+					}
+				}
+
+				if ($this->like_quota > 0) {
+					if ($this->profile->niche > 0) {
+						$niche         = Niche::find($this->profile->niche);
+						$niche_targets = $niche->targetUsernames();
+
+						foreach ($niche_targets as $target_username) {
+
+							if ($this->like_quota > 0) {
+
+								//Get followers of the target.
+								echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
+								$target_username_id = InstagramHelper::getUserIdForNicheUsername($instagram, $target_username);
+								if ($target_username_id === NULL) {
+									continue;
+								}
+
+								$target_target_username = $target_username->target_username;
+								$user_follower_response = NULL;
+								$next_max_id            = NULL;
+
+								$page_count = 0;
+
+								do {
+									echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
+
+									$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
+									$target_user_followings = $user_follower_response->getUsers();
+									$next_max_id            = $user_follower_response->getNextMaxId();
+									echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
+									$page_count++;
+
+									//Foreach follower of the target.
+									foreach ($target_user_followings as $user_to_like) {
+
+										if ($this->like_quota > 0) {
+
+											echo("\n" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
+
+											$is_duplicate = $this->checkBlacklistAndDuplicates($user_to_like, $page_count);
+
+											if ($is_duplicate == 1) {
+												break;
+											} else {
+												if ($is_duplicate == 2) {
+													continue;
+												}
+											}
+
+											//Get the feed of the user to like.
+											$user_feed_response = InstagramHelper::getUserFeed($instagram, $user_to_like);
+											if ($user_feed_response === NULL) {
 												continue;
 											}
-										}
-									} else {
-										$this->printElapsedTime($this->time_start, $ig_profile);
 
-										return;
+											//Get the media posted by the user.
+											$user_items = $user_feed_response->getItems();
+
+											//Foreach media posted by the user.
+											foreach ($user_items as $item) {
+												if ($this->like_quota > 0) {
+													if ($this->checkDuplicateByMediaId($item)) {
+														continue;
+													}
+													if (!$this->like($user_to_like, $item)) {
+														continue;
+													}
+												} else {
+
+													echo "\n\n[264] Exiting...\n\n";
+													$this->printElapsedTime($this->time_start, $ig_profile);
+
+													return;
+												}
+											}
+										} else {
+											echo "\n\n[269] Exiting...\n\n";
+											$this->printElapsedTime($this->time_start, $ig_profile);
+
+											return;
+										}
+									}
+								} while ($next_max_id !== NULL && $this->like_quota > 0);
+							}
+						}
+
+						$niche           = Niche::find($ig_profile->niche);
+						$target_hashtags = $niche->targetHashtags();
+
+						foreach ($target_hashtags as $target_hashtag) {
+							if ($this->like_quota > 0) {
+								echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
+								//Get the feed from the targeted hashtag.
+								$hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $target_hashtag);
+								foreach ($hashtag_feed->getItems() as $item) {
+									$user_to_like = $item->getUser();
+									if (!$this->checkDuplicate($user_to_like)) {
+										if ($this->like_quota > 0) {
+											if (!$this->checkDuplicateByMediaId($item)) {
+												if (!$this->like($user_to_like, $item)) {
+													continue;
+												}
+											}
+										} else {
+											$this->printElapsedTime($this->time_start, $ig_profile);
+
+											return;
+										}
 									}
 								}
 							}
 						}
 					}
-				}
-			} else {
-				$this->printElapsedTime($this->time_start, $this->profile);
+				} else {
+					$this->printElapsedTime($this->time_start, $this->profile);
 
-				return;
+					return;
+				}
 			}
+		} catch (CheckpointRequiredException $checkpoint_ex) {
+			$this->handleInstagramException($ig_profile, $checkpoint_ex);
 		}
+		catch (NetworkException $network_ex) {
+			$this->handleInstagramException($ig_profile, $network_ex);
+		}
+		catch (EndpointException $endpoint_ex) {
+			$this->handleInstagramException($ig_profile, $endpoint_ex);
+		}
+		catch (IncorrectPasswordException $incorrectpw_ex) {
+			$this->handleInstagramException($ig_profile, $incorrectpw_ex);
+		}
+		catch (FeedbackRequiredException $feedback_ex) {
+			$this->handleInstagramException($ig_profile, $feedback_ex);
+		}
+		catch (EmptyResponseException $emptyresponse_ex) {
+			$this->handleInstagramException($ig_profile, $emptyresponse_ex);
+		}
+		catch (AccountDisabledException $acctdisabled_ex) {
+			$this->handleInstagramException($ig_profile, $acctdisabled_ex);
+		}
+		catch (ThrottledException $throttled_ex) {
+			$this->handleInstagramException($ig_profile, $throttled_ex);
+		}
+		catch (ChallengeRequiredException $challengeRequiredException) {
+			$this->handleInstagramException($ig_profile, $challengeRequiredException);
+		}
+		catch (\Exception $ex) {
+			dump($ex);
+		}
+
 		$this->printElapsedTime($this->time_start, $ig_profile);
 	}
 

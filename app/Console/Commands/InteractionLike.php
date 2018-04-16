@@ -50,8 +50,8 @@ class InteractionLike extends Command
 			$this->line("[Likes Interaction Master] Beginning sequence to queue jobs...");
 
 			$users = User::where('partition', 0)
-				->orderBy('user_id', 'asc')
-				->get();
+			             ->orderBy('user_id', 'asc')
+			             ->get();
 
 			$this->dispatchJobsToEligibleUsers($users);
 		} else {
@@ -79,8 +79,8 @@ class InteractionLike extends Command
 						if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
 
 							$instagram_profiles = InstagramProfile::where('auto_like', TRUE)
-								->where('user_id', $user->user_id)
-								->get();
+							                                      ->where('user_id', $user->user_id)
+							                                      ->get();
 
 							foreach ($instagram_profiles as $ig_profile) {
 
@@ -121,7 +121,7 @@ class InteractionLike extends Command
 						$this->line("[Likes Interaction Slave] Beginning sequence to queue jobs...");
 
 						$users = User::orderBy('user_id', 'asc')
-							->get();
+						             ->get();
 
 						$this->dispatchJobsToEligibleUsers($users);
 					} else {
@@ -136,7 +136,7 @@ class InteractionLike extends Command
 							$this->dispatchManualJobToUser($user);
 						}
 
-						$endtime = microtime(TRUE);
+						$endtime  = microtime(TRUE);
 						$timediff = $endtime - $starttime;
 
 						echo "\nThis run took: $timediff milliseconds.\n";
@@ -151,8 +151,8 @@ class InteractionLike extends Command
 		if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
 
 			$instagram_profiles = InstagramProfile::where('auto_like', TRUE)
-				->where('user_id', $user->user_id)
-				->get();
+			                                      ->where('user_id', $user->user_id)
+			                                      ->get();
 
 			foreach ($instagram_profiles as $ig_profile) {
 
@@ -204,7 +204,7 @@ class InteractionLike extends Command
 			if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
 
 				$instagram_profiles = InstagramProfile::where('auto_like', TRUE)->where('user_id', $user->user_id)
-					->get();
+				                                      ->get();
 
 				foreach ($instagram_profiles as $ig_profile) {
 
