@@ -486,6 +486,26 @@ class InstagramHelper extends \InstagramAPI\Request
 
 	public static function validForInteraction($ig_profile)
 	{
+		if ($ig_profile->proxy == NULL) {
+			echo("\n[" . $ig_profile->insta_username . "] does not have a proxy.\n");
+			
+			$ig_profile->challenge_required = 1;
+			$ig_profile->save();
+
+			return FALSE;
+		}
+
+		if (strpos($ig_profile->proxy, 'http') === 0) {
+
+			echo("\n[" . $ig_profile->insta_username . "] is using the old proxy.\n");
+
+			$ig_profile->proxy = NULL;
+			$ig_profile->challenge_required = 1;
+			$ig_profile->save();
+
+			return FALSE;
+		}
+
 		if ($ig_profile->challenge_required == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] requires verification.\n");
 
