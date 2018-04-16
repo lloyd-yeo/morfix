@@ -70,7 +70,12 @@ class EngagementGroup implements ShouldQueue
 			->where('invalid_user', 0)
 			->where('incorrect_pw', 0)
 			->where('invalid_proxy', 0)
+			->where('challenge_requried', 0)
+			->where('auto_follow_ban', 0)
+			->where('auto_comment_ban', 0)
 			->get();
+
+		echo count($ig_profiles) . ' profiles retrieved.\n';
 
 		$mediaId = $this->media_id;
 
@@ -173,6 +178,7 @@ class EngagementGroup implements ShouldQueue
 	 */
 	public function failed()
 	{
+		unset($this->instagram);
 		event(new EngagementGroupFailed($this->media_id));
 	}
 
