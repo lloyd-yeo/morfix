@@ -144,7 +144,7 @@ class InteractionFollow extends Command {
 
         foreach ($users as $user) {
 
-            $this->line($user->user_id);
+//            $this->line($user->user_id);
 
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
                             . 'AND user_id = ' . $user->user_id)->get();
