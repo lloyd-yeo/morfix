@@ -287,9 +287,22 @@ class InteractionFollow implements ShouldQueue
 	public function initInstagramAPI($ig_profile)
 	{
 		$this->instagram = InstagramHelper::initInstagram();
-		if (!InstagramHelper::login($this->instagram, $ig_profile)) {
+		$this->instagram = InstagramHelper::setProxy($this->instagram, $ig_profile, 1);
+		if (!InstagramHelper::login($this->instagram, $ig_profile, InstagramHelper::setProxy($this->instagram, $ig_profile, 2)[1])) {
 			exit();
 		}
+	}
+
+	/**
+	 * The job failed to process.
+	 *
+	 * @param  Exception $exception
+	 *
+	 * @return void
+	 */
+	public function failed(Exception $exception)
+	{
+		unset($this->instagram);
 	}
 
 }

@@ -488,7 +488,7 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		if ($ig_profile->proxy == NULL) {
 			echo("\n[" . $ig_profile->insta_username . "] does not have a proxy.\n");
-			
+
 			$ig_profile->challenge_required = 1;
 			$ig_profile->save();
 
