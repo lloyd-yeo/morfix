@@ -110,7 +110,7 @@ class InteractionLike implements ShouldQueue
 
 		$instagram = $this->getInstagram();
 		$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
-		
+
 		try {
 			if (InstagramHelper::login($instagram, $ig_profile)) {
 

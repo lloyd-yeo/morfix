@@ -50,6 +50,7 @@ class SendVerifyProfileEmail extends Command
 		foreach ($users as $user) {
 			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
 			$send_mail          = FALSE;
+
 			foreach ($instagram_profiles as $instagram_profile) {
 				if ($instagram_profile->challenge_required == 1) {
 					$send_mail = TRUE;
