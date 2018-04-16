@@ -420,7 +420,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
 			
 			$trimmed_hashtag = trim($hashtag->hashtag);
-			$hash_pos = str_pos($trimmed_hashtag, '#');
+			$hash_pos = strpos($trimmed_hashtag, '#');
 			if ($hash_pos !== false) {
 				$trimmed_hashtag = str_replace('#', '', $trimmed_hashtag);
 				$hashtag->hashtag = $trimmed_hashtag;
@@ -455,7 +455,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		try {
 			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
 			$trimmed_hashtag = trim($hashtag->hashtag);
-			$hash_pos = str_pos($trimmed_hashtag, '#');
+			$hash_pos = strpos($trimmed_hashtag, '#');
 			if ($hash_pos !== false) {
 				$trimmed_hashtag = str_replace('#', '', $trimmed_hashtag);
 				$hashtag->hashtag = $trimmed_hashtag;
