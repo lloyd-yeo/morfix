@@ -218,7 +218,7 @@
                     localStorage.setItem("status", data.message);
                     location.reload(true);
                 } else {
-                    if (data.type == 'challenge_required' || data.type == 'incorrect_pw' || data.type == 'incorrect_password' || data.type == 'server') {
+                    if (data.type == 'challenge_required' || data.type == 'incorrect_pw' || data.type == 'incorrect_password' || data.type == 'server' || data.type == 'challenge_big_blue_token') {
                         swal('Failed', data.message, 'error');
                     } else if (data.type == 'challenge') {
                         $("#challenge-verification-message").html(data.message);
