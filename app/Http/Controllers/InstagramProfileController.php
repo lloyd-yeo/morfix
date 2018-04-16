@@ -63,11 +63,12 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+		$residential_proxy_userpass = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = $residential_proxy_userpass;
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
-		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using residential proxy [' . 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU' . '] for adding account.');
+		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using residential proxy [' . $residential_proxy_userpass . '] for adding account.');
 
 		try {
 			if (InstagramProfile::where('insta_username', '=', $ig_username)->count() > 0) {
@@ -227,7 +228,8 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+		$residential_proxy_userpass = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = $residential_proxy_userpass;
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
@@ -319,11 +321,12 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+		$residential_proxy_userpass = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = $residential_proxy_userpass;
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
-		Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' using residential proxy for verifying account credentials.');
+		Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . Auth::user()->email . ' using residential proxy [' . $residential_proxy_userpass . '] for verifying account credentials.');
 
 		try {
 			$ig_profile = InstagramProfile::where('insta_username', $ig_username)->first();
@@ -484,7 +487,9 @@ class InstagramProfileController extends Controller
 		$ig_password = session('add_ig_pw');
 		$challenge_url = session('challenge_url');
 
-		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using residential proxy [' . 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU' . '] for adding account.');
+		$residential_proxy_userpass = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+
+		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using residential proxy [' . $residential_proxy_userpass . '] for adding account.');
 		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using following details:');
 		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' [' . $ig_username . '] [' . $ig_password . '] [' . $challenge_url . ']');
 
@@ -492,7 +497,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = $residential_proxy_userpass;
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
