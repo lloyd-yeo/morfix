@@ -584,7 +584,7 @@ class InteractionLike implements ShouldQueue
 			$target_username->invalid = 1;
 			$target_username->save();
 			echo "\n[" . $this->profile->insta_username . "] encountered error [" . $target_username->target_username . "]: " . $insta_ex->getMessage() . "\n";
-			$this->handleInstagramException($this->profile->insta_username, $insta_ex);
+			$this->handleInstagramException($this->profile, $insta_ex);
 		}
 
 		return $target_username_id;
