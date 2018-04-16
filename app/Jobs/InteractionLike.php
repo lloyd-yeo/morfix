@@ -18,6 +18,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\Exception\AccountDisabledException as AccountDisabledException;
+use InstagramAPI\Exception\ChallengeRequiredException;
 use InstagramAPI\Exception\CheckpointRequiredException as CheckpointRequiredException;
 use InstagramAPI\Exception\EndpointException as EndpointException;
 use InstagramAPI\Exception\FeedbackRequiredException as FeedbackRequiredException;
@@ -439,6 +440,9 @@ class InteractionLike implements ShouldQueue
 		catch (ThrottledException $throttled_ex) {
 			$this->handleInstagramException($ig_profile, $throttled_ex);
 		}
+		catch (ChallengeRequiredException $challengeRequiredException) {
+			$this->handleInstagramException($ig_profile, $challengeRequiredException);
+		}
 		catch (\Exception $ex) {
 			dump($ex);
 		}
@@ -686,6 +690,15 @@ class InteractionLike implements ShouldQueue
 										echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
 
 										return;
+									} else {
+										if ($ex instanceof ChallengeRequiredException) {
+											$ig_profile->challenge_required = 1;
+											$ig_profile->save();
+
+											echo "\n[$ig_username] challenge required.\n";
+
+											return;
+										}
 									}
 								}
 							}
