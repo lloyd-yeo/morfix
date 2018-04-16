@@ -58,7 +58,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin' . substr(Auth::user()->user_id, -2) . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . substr(Auth::user()->user_id, 6) . ':dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
@@ -222,7 +222,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin' . substr(Auth::user()->user_id, -2) . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . substr(Auth::user()->user_id, 6) . ':dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
@@ -314,7 +314,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin' . substr(Auth::user()->user_id, -2) . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . substr(Auth::user()->user_id, 6) . ':dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
@@ -487,7 +487,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin' . substr(Auth::user()->user_id, -2) . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . substr(Auth::user()->user_id, 6) . ':dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
@@ -598,7 +598,7 @@ class InstagramProfileController extends Controller
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin' . substr(Auth::user()->user_id, -2) . ':dXehM3e7bU';
+		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . substr(Auth::user()->user_id, 6) . ':dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		$instagram->setGuzzleOptions($guzzle_options);
 
