@@ -729,6 +729,11 @@ class InstagramProfileController extends Controller
 				$items = $instagram->timeline->getSelfUserFeed()->getItems();
 				foreach ($items as $item) {
 					try {
+
+						if ($item->getImageVersions2() == NULL) {
+							continue;
+						}
+
 						$user_insta_profile_media = InstagramProfileMedia::where('media_id', $item->getPk())->first();
 
 						if ($user_insta_profile_media == NULL) {
