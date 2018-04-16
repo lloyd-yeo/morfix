@@ -480,7 +480,7 @@ class InstagramProfileController extends Controller
 		$ig_password = session('add_ig_pw');
 		$challenge_url = session('challenge_url');
 
-		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using residential proxy for clearing account verification.');
+		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using residential proxy [' . 'customer-rmorfix-cc-US-city-san_jose-sessid-' . substr(Auth::user()->user_id, 6) . ':dXehM3e7bU' . '] for adding account.');
 		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' using following details:');
 		Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' [' . $ig_username . '] [' . $ig_password . '] [' . $challenge_url . ']');
 
