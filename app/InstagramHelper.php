@@ -19,7 +19,6 @@ use Log;
 
 class InstagramHelper extends \InstagramAPI\Request
 {
-
 	public static function initInstagram($debug = FALSE)
 	{
 		$config                                                     = [];
@@ -467,7 +466,6 @@ class InstagramHelper extends \InstagramAPI\Request
 			return NULL;
 		}
 	}
-
 
 	public static function getFollowersViaProfileId(Instagram $instagram, InstagramProfile $ig_profile, $target_username_id, $next_max_id)
 	{
