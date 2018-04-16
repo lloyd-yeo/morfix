@@ -99,12 +99,12 @@ class InteractionLike implements ShouldQueue
 		DB::reconnect();
 
 		$this->calcSpeedDelay($this->profile->speed);
-		$this->instagram = InstagramHelper::initInstagram();
-		$this->like_quota = rand(1, 3);
-		$this->targeted_hashtags = TargetHelper::getUserTargetedHashtags($this->profile);
+		$this->instagram          = InstagramHelper::initInstagram();
+		$this->like_quota         = rand(1, 3);
+		$this->targeted_hashtags  = TargetHelper::getUserTargetedHashtags($this->profile);
 		$this->targeted_usernames = TargetHelper::getUserTargetedUsernames($this->profile);
 
-		$ig_profile = $this->profile;
+		$ig_profile  = $this->profile;
 		$ig_username = $ig_profile->insta_username;
 
 		$instagram = $this->getInstagram();
@@ -131,7 +131,7 @@ class InteractionLike implements ShouldQueue
 
 						$target_target_username = $target_username->target_username;
 						$user_follower_response = NULL;
-						$next_max_id = NULL;
+						$next_max_id            = NULL;
 
 						$page_count = 0;
 
@@ -144,7 +144,7 @@ class InteractionLike implements ShouldQueue
 							}
 							$user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
 							$target_user_followings = $user_follower_response->getUsers();
-							$next_max_id = $user_follower_response->getNextMaxId();
+							$next_max_id            = $user_follower_response->getNextMaxId();
 							echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
 							$page_count++;
 
@@ -249,7 +249,7 @@ class InteractionLike implements ShouldQueue
 
 			if ($this->like_quota > 0) {
 				if ($this->profile->niche > 0) {
-					$niche = Niche::find($this->profile->niche);
+					$niche         = Niche::find($this->profile->niche);
 					$niche_targets = $niche->targetUsernames();
 
 					foreach ($niche_targets as $target_username) {
@@ -265,7 +265,7 @@ class InteractionLike implements ShouldQueue
 
 							$target_target_username = $target_username->target_username;
 							$user_follower_response = NULL;
-							$next_max_id = NULL;
+							$next_max_id            = NULL;
 
 							$page_count = 0;
 
@@ -274,7 +274,7 @@ class InteractionLike implements ShouldQueue
 
 								$user_follower_response = $instagram->people->getFollowers($target_username_id, NULL, $next_max_id);
 								$target_user_followings = $user_follower_response->getUsers();
-								$next_max_id = $user_follower_response->getNextMaxId();
+								$next_max_id            = $user_follower_response->getNextMaxId();
 								echo "\n[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
 								$page_count++;
 
@@ -332,7 +332,7 @@ class InteractionLike implements ShouldQueue
 						}
 					}
 
-					$niche = Niche::find($ig_profile->niche);
+					$niche           = Niche::find($ig_profile->niche);
 					$target_hashtags = $niche->targetHashtags();
 
 					foreach ($target_hashtags as $target_hashtag) {
@@ -372,11 +372,12 @@ class InteractionLike implements ShouldQueue
 	 *
 	 * @param InstagramUser $user_to_like
 	 * @param InstagramItem $item
+	 *
 	 * @return boolean
 	 */
 	public function like(InstagramUser $user_to_like, InstagramItem $item)
 	{
-		$ig_profile = $this->profile;
+		$ig_profile    = $this->profile;
 		$like_response = NULL;
 		try {
 			$like_response = $this->instagram->media->like($item->getId());
@@ -389,15 +390,15 @@ class InteractionLike implements ShouldQueue
 						$this->like_quota = $this->like_quota - 1;
 						echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
 						echo("\n" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
-						$like_log = new InstagramProfileLikeLog;
-						$like_log->insta_username = $ig_profile->insta_username;
-						$like_log->target_username = $user_to_like->getUsername();
-						$like_log->target_media = $item->getId();
+						$like_log                    = new InstagramProfileLikeLog;
+						$like_log->insta_username    = $ig_profile->insta_username;
+						$like_log->target_username   = $user_to_like->getUsername();
+						$like_log->target_media      = $item->getId();
 						$like_log->target_media_code = $item->getItemUrl();
-						$like_log->log = serialize($like_response);
+						$like_log->log               = serialize($like_response);
 						if ($like_log->save()) {
-							$ig_profile->next_like_time = Carbon::now()->addMinutes($this->speed_delay);
-							$ig_profile->auto_like_ban = 0;
+							$ig_profile->next_like_time     = Carbon::now()->addMinutes($this->speed_delay);
+							$ig_profile->auto_like_ban      = 0;
 							$ig_profile->auto_like_ban_time = NULL;
 							$ig_profile->save();
 
@@ -405,30 +406,40 @@ class InteractionLike implements ShouldQueue
 						} else {
 							return FALSE;
 						}
-					} catch (\Exception $ex) {
+					}
+					catch (\Exception $ex) {
 						echo "[" . $ig_profile->insta_username . "] saving error [target_username] " . $ex->getMessage() . "\n";
 
 						return FALSE;
 					}
 				}
 			}
-		} catch (CheckpointRequiredException $checkpoint_ex) {
+		}
+		catch (CheckpointRequiredException $checkpoint_ex) {
 			$this->handleInstagramException($ig_profile, $checkpoint_ex);
-		} catch (NetworkException $network_ex) {
+		}
+		catch (NetworkException $network_ex) {
 			$this->handleInstagramException($ig_profile, $network_ex);
-		} catch (EndpointException $endpoint_ex) {
+		}
+		catch (EndpointException $endpoint_ex) {
 			$this->handleInstagramException($ig_profile, $endpoint_ex);
-		} catch (IncorrectPasswordException $incorrectpw_ex) {
+		}
+		catch (IncorrectPasswordException $incorrectpw_ex) {
 			$this->handleInstagramException($ig_profile, $incorrectpw_ex);
-		} catch (FeedbackRequiredException $feedback_ex) {
+		}
+		catch (FeedbackRequiredException $feedback_ex) {
 			$this->handleInstagramException($ig_profile, $feedback_ex);
-		} catch (EmptyResponseException $emptyresponse_ex) {
+		}
+		catch (EmptyResponseException $emptyresponse_ex) {
 			$this->handleInstagramException($ig_profile, $emptyresponse_ex);
-		} catch (AccountDisabledException $acctdisabled_ex) {
+		}
+		catch (AccountDisabledException $acctdisabled_ex) {
 			$this->handleInstagramException($ig_profile, $acctdisabled_ex);
-		} catch (ThrottledException $throttled_ex) {
+		}
+		catch (ThrottledException $throttled_ex) {
 			$this->handleInstagramException($ig_profile, $throttled_ex);
-		} catch (\Exception $ex) {
+		}
+		catch (\Exception $ex) {
 			dump($ex);
 		}
 
@@ -440,15 +451,15 @@ class InteractionLike implements ShouldQueue
 		$ig_profile = $this->profile;
 
 		if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
-				->where('target_media', $item->getId())->count() > 0) {
+		                           ->where('target_media', $item->getId())->count() > 0) {
 			#duplicate. Liked before this photo with this id.
 			return TRUE;
 		}
 
 		//Check for duplicates.
 		$liked_logs = LikeLogsArchive::where('insta_username', $ig_profile->insta_username)
-			->where('target_media', $item->getId())
-			->first();
+		                             ->where('target_media', $item->getId())
+		                             ->first();
 
 		//Duplicate = liked media before.
 		if ($liked_logs !== NULL) {
@@ -471,8 +482,8 @@ class InteractionLike implements ShouldQueue
 
 		//Check for duplicates.
 		$liked_user = InstagramProfileLikeLog::where('insta_username', $this->profile->insta_username)
-			->where('target_username', $user_to_like->getUsername())
-			->first();
+		                                     ->where('target_username', $user_to_like->getUsername())
+		                                     ->first();
 
 		//Duplicate = liked before.
 		if ($liked_user !== NULL) {
@@ -484,8 +495,8 @@ class InteractionLike implements ShouldQueue
 
 		//Check for duplicates.
 		$liked_user = LikeLogsArchive::where('insta_username', $this->profile->insta_username)
-			->where('target_username', $user_to_like->getUsername())
-			->first();
+		                             ->where('target_username', $user_to_like->getUsername())
+		                             ->first();
 
 		//Duplicate = liked before.
 		if ($liked_user !== NULL) {
@@ -501,7 +512,7 @@ class InteractionLike implements ShouldQueue
 	public function checkBlacklistAndDuplicates(InstagramUser $user_to_like, $page_count)
 	{
 
-		$ig_profile = $this->profile;
+		$ig_profile  = $this->profile;
 		$ig_username = $ig_profile->insta_username;
 
 		//Blacklisted username.
@@ -518,8 +529,8 @@ class InteractionLike implements ShouldQueue
 
 		//Check for duplicates.
 		$liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
-			->where('target_username', $user_to_like->getUsername())
-			->first();
+		                                      ->where('target_username', $user_to_like->getUsername())
+		                                      ->first();
 
 		//Duplicate = liked before.
 		if (count($liked_users) > 0) {
@@ -535,8 +546,8 @@ class InteractionLike implements ShouldQueue
 
 		//Check for duplicates.
 		$liked_users_archive = LikeLogsArchive::where('insta_username', $ig_username)
-			->where('target_username', $user_to_like->getUsername())
-			->first();
+		                                      ->where('target_username', $user_to_like->getUsername())
+		                                      ->first();
 
 		//Duplicate = liked before.
 		if (count($liked_users_archive) > 0) {
@@ -567,8 +578,9 @@ class InteractionLike implements ShouldQueue
 				}
 				$target_username->save();
 			}
-		} catch (InstagramException $insta_ex) {
-			$target_username_id = NULL;
+		}
+		catch (InstagramException $insta_ex) {
+			$target_username_id       = NULL;
 			$target_username->invalid = 1;
 			$target_username->save();
 			echo "\n[" . $this->profile->insta_username . "] encountered error [" . $target_username->target_username . "]: " . $insta_ex->getMessage() . "\n";
@@ -596,7 +608,7 @@ class InteractionLike implements ShouldQueue
 	public function handleInstagramException(InstagramProfile $ig_profile, InstagramException $ex)
 	{
 		$this->like_quota = 0;
-		$ig_username = $ig_profile->insta_username;
+		$ig_username      = $ig_profile->insta_username;
 		//		dump($ex);
 
 		if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== FALSE) {
@@ -609,10 +621,10 @@ class InteractionLike implements ShouldQueue
 			if ($ex instanceof FeedbackRequiredException) {
 				if ($ex->hasResponse()) {
 					$feedback_response = $ex->getResponse()->asArray();
-					$feedback_msg = $feedback_response['feedback_message'];
+					$feedback_msg      = $feedback_response['feedback_message'];
 					if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
-						$ig_profile->next_like_time = Carbon::now()->addHours(2);
-						$ig_profile->auto_like_ban = 1;
+						$ig_profile->next_like_time     = Carbon::now()->addHours(2);
+						$ig_profile->auto_like_ban      = 1;
 						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 
 						$ig_profile->save();
@@ -622,15 +634,15 @@ class InteractionLike implements ShouldQueue
 					} else {
 						if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== FALSE) {
 							$ig_profile->next_like_time = Carbon::now()->addMinutes(15);
-							$ig_profile->invalid_proxy = 1;
+							$ig_profile->invalid_proxy  = 1;
 							$ig_profile->save();
 							echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
 
 							return;
 						} else {
 							if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== FALSE) {
-								$ig_profile->next_like_time = Carbon::now()->addHours(2);
-								$ig_profile->auto_like_ban = 1;
+								$ig_profile->next_like_time     = Carbon::now()->addHours(2);
+								$ig_profile->auto_like_ban      = 1;
 								$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 								$ig_profile->save();
 								echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
@@ -644,12 +656,12 @@ class InteractionLike implements ShouldQueue
 			} else {
 				if ($ex instanceof CheckpointRequiredException) {
 					$ig_profile->checkpoint_required = 1;
-					$ig_profile->error_msg = $ex->getMessage();
+					$ig_profile->error_msg           = $ex->getMessage();
 				} else {
 					if ($ex instanceof NetworkException) {
-						$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
-						$ig_profile->save();
-						InstagramHelper::verifyAndReassignProxy($ig_profile);
+						//						$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
+						//						$ig_profile->save();
+						//						InstagramHelper::verifyAndReassignProxy($ig_profile);
 					} else {
 						if ($ex instanceof EndpointException) {
 							if ($ex->getMessage() === "InstagramAPI\Response\LoginResponse: The username you entered doesn't appear to belong to an account. Please check your username and try again.") {
@@ -667,8 +679,8 @@ class InteractionLike implements ShouldQueue
 									$ig_profile->account_disabled = 1;
 								} else {
 									if ($ex instanceof ThrottledException) {
-										$ig_profile->next_like_time = Carbon::now()->addHours(2);
-										$ig_profile->auto_like_ban = 1;
+										$ig_profile->next_like_time     = Carbon::now()->addHours(2);
+										$ig_profile->auto_like_ban      = 1;
 										$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 										$ig_profile->save();
 										echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
@@ -728,16 +740,17 @@ class InteractionLike implements ShouldQueue
 	{
 		$time_end = microtime(TRUE);
 		$duration = ($time_end - $time_start);
-		$hours = (int)($duration / 60 / 60);
-		$minutes = (int)($duration / 60) - $hours * 60;
-		$seconds = (int)$duration - $hours * 60 * 60 - $minutes * 60;
+		$hours    = (int)($duration / 60 / 60);
+		$minutes  = (int)($duration / 60) - $hours * 60;
+		$seconds  = (int)$duration - $hours * 60 * 60 - $minutes * 60;
 		echo("\n\n[" . $ig_profile->insta_username . "] elapsed time " . $seconds . " seconds.\n\n");
 	}
 
 	/**
 	 * The job failed to process.
 	 *
-	 * @param  Exception  $exception
+	 * @param  Exception $exception
+	 *
 	 * @return void
 	 */
 	public function failed(Exception $exception)
