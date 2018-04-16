@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use InstagramAPI\Exception\BadRequestException;
 use InstagramAPI\Exception\ChallengeRequiredException;
 use InstagramAPI\Exception\CheckpointRequiredException;
 use InstagramAPI\Exception\EndpointException;
@@ -560,6 +561,18 @@ class InstagramProfileController extends Controller
 					'type' => 'incorrect_pw',
 					'message' => 'Incorrect password! Please check your password & try again.',
 				]);
+			} catch (BadRequestException $badRequestException) {
+
+				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' BadRequestException: ' . $badRequestException->getMessage());
+				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' BadRequestException: ' . $badRequestException->asJson());
+
+
+				return response()->json([
+					'success' => FALSE,
+					'type' => 'general',
+					'message' => $badRequestException->getMessage(),
+				]);
+
 			} catch (\Exception $ex) {
 
 				Log::error('[CLEAR CHALLENGE] ' . Auth::user()->email . ' IncorrectPasswordException: ' . $ex->getMessage());
