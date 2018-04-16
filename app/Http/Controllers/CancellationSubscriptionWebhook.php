@@ -36,6 +36,6 @@ class CancellationSubscriptionWebhook extends Controller
 
 		Log::info(var_export($notification, true));
 
-		return new Response('Webhook Handled', 200);
+		return response('Rcvd', 200);
 	}
 }
