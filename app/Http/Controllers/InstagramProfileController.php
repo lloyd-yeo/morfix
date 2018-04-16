@@ -363,6 +363,15 @@ class InstagramProfileController extends Controller
 							$choice = $challenge_response->getStepData()->getChoice();
 							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' .  $ig_username . ' choice is ' . $choice);
 							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' .  $ig_username . ' challenge_url is ' . $challenge_api_url);
+
+							if ($challenge_response->getStepData()->getChoice() == '3') {
+								return response()->json([
+									'success' => FALSE,
+									'type' => 'challenge_big_blue_token',
+									'message' => 'Instagram requires verification from your side. To continue logging, please head to this url<br/>http://instagram.com/' . $challenge_api_url,
+								]);
+							}
+
 							$select_verify_method_response = $this->selectVerifyMethod($instagram, $ig_username, $ig_password, $challenge_api_url, $choice);
 							$challenge_response = $select_verify_method_response;
 							Log::info('[CHALLENGE VERIFY CREDENTIALS] ' .  $ig_username . ' response after submitting choice ' . $select_verify_method_response->asJson());
