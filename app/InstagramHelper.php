@@ -488,14 +488,20 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		if ($ig_profile->challenge_required == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] requires verification.\n");
+
+			return FALSE;
 		}
 
 		if ($ig_profile->challenge_required_phone == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] requires a phone verification.\n");
+
+			return FALSE;
 		}
 
 		if ($ig_profile->checkpoint_required == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] has a checkpoint.\n");
+
+			return FALSE;
 		}
 
 		if ($ig_profile->account_disabled == 1) {
