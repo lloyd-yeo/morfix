@@ -71,6 +71,7 @@ class EngagementGroup implements ShouldQueue
 			->where('incorrect_pw', 0)
 			->where('invalid_proxy', 0)
 			->where('challenge_required', 0)
+			->where('feedback_required', 0)
 			->where('auto_like_ban', 0)
 			->where('auto_comment_ban', 0)
 			->orderBy('id', 'desc')
