@@ -73,6 +73,7 @@ class EngagementGroup implements ShouldQueue
 			->where('challenge_required', 0)
 			->where('auto_like_ban', 0)
 			->where('auto_comment_ban', 0)
+			->orderBy('id', 'desc')
 			->get();
 
 		echo count($ig_profiles) . ' profiles retrieved.\n';
