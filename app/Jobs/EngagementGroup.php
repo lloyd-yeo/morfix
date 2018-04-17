@@ -106,6 +106,7 @@ class EngagementGroup implements ShouldQueue
 			if (!InstagramHelper::login($instagram, $ig_profile)) {
 				continue;
 			}
+
 			echo "[" . $ig_profile->insta_username . "] logged in successfully.";
 			try {
 				$response = $instagram->media->like($mediaId);

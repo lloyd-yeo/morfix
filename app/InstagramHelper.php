@@ -184,6 +184,13 @@ class InstagramHelper extends \InstagramAPI\Request
 			echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 		}
 
+		if (strpos($ig_profile->proxy, 'http') === 0) {
+			if ($debug == 1) {
+				echo("Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.\n");
+			}
+			return false;
+		}
+
 		try {
 			$proxy_settings = InstagramHelper::setProxy($instagram, $ig_profile, 2);
 			$instagram = $proxy_settings[0];
