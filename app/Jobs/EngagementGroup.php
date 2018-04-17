@@ -170,6 +170,9 @@ class EngagementGroup implements ShouldQueue
 				$ig_profile->next_comment_time = \Carbon\Carbon::now()->addHour(1);
 				$ig_profile->save();
 				continue;
+			} catch (\Exception $ex) {
+				dump($ex);
+				continue;
 			}
 		}
 	}
