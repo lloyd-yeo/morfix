@@ -189,6 +189,11 @@ class InstagramHelper extends \InstagramAPI\Request
 				echo("Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.\n");
 			}
 			return false;
+		} else if ($ig_profile->proxy == NULL) {
+			if ($debug == 1) {
+				echo("Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.\n");
+			}
+			return false;
 		}
 
 		try {

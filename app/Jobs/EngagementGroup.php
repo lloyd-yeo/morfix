@@ -104,10 +104,12 @@ class EngagementGroup implements ShouldQueue
 			$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
 
 			if (!InstagramHelper::login($instagram, $ig_profile)) {
+				echo "[" . $ig_profile->insta_username . "] logged in failed.";
 				continue;
 			}
 
 			echo "[" . $ig_profile->insta_username . "] logged in successfully.";
+
 			try {
 				$response = $instagram->media->like($mediaId);
 				dump($response);
