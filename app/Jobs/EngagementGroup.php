@@ -140,6 +140,7 @@ class EngagementGroup implements ShouldQueue
 			} catch (\InstagramAPI\Exception\FeedbackRequiredException $feedback_required_ex) {
 				dump($feedback_required_ex);
 				$response = $feedback_required_ex->getResponse()->asJson();
+				dump($response);
 				if ($response['spam']) {
 					$ig_profile->feedback_required = 1;
 					$ig_profile->save();
