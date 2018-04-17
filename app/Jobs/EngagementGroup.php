@@ -106,11 +106,11 @@ class EngagementGroup implements ShouldQueue
 			if (!InstagramHelper::login($instagram, $ig_profile)) {
 				continue;
 			}
-
+			echo "[" . $ig_profile->insta_username . "] logged in successfully.";
 			try {
 				$response = $instagram->media->like($mediaId);
 				dump($response);
-				if ($ig_profile->owner()->trial_activation === 1) {
+				if ($ig_profile->owner()->trial_activation == 1) {
 					echo "[" . $ig_profile->insta_username . "] owner is on Free-Trial\n";
 				} else {
 					echo "[" . $ig_profile->insta_username . "] owner is NOT on Free-Trial\n";
