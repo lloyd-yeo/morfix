@@ -107,6 +107,7 @@ class ManualLogin extends Command {
 					    $ig_profile->save();
 					    $valid_profile_count++;
 					    dump($user_model_public);
+					    dump($instagram->account->getCurrentUser()->getUser());
 				    }
 
 			    } catch (IncorrectPasswordException $incorrectPasswordException) {
