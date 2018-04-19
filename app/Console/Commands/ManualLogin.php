@@ -55,54 +55,60 @@ class ManualLogin extends Command {
 	    $instagram = InstagramHelper::initInstagram();
 
 	    $ig_profiles = collect();
-		if ($ig_username == NULL) {
-			$ig_profiles = InstagramProfile::where('feedback_required', 1)->get();
-		} else {
-			$ig_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
-		}
+	    $users = User::where('tier' , '>', 1)->get();
+	    $valid_profile_count = 0;
+	    $profile_count = 0;
+	    foreach ($users as $user) {
+	    	$ig_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
 
-	    foreach ($ig_profiles as $ig_profile) {
-		    $guzzle_options = NULL;
-		    if ($ig_profile->proxy == NULL) {
-		    	$this->info("Using RESIDENTIAL proxy.");
-			    continue;
-			    $guzzle_options                                 = [];
-			    $guzzle_options['curl']                         = [];
-			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-			    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
-			    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-		    } else if (strpos($ig_profile->proxy, 'http') === 0) {
-			    $this->info("Using RESIDENTIAL proxy.");
-			    continue;
-			    $guzzle_options                                 = [];
-			    $guzzle_options['curl']                         = [];
-			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
-			    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
-			    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-			    $ig_profile->proxy                              = NULL;
-			    $ig_profile->save();
-		    } else {
-			    $this->info("Using DATACENTER proxy.");
-			    $guzzle_options                                 = [];
-			    $guzzle_options['curl']                         = [];
-			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
-			    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
-			    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
-		    }
+		    foreach ($ig_profiles as $ig_profile) {
+			    $profile_count++;
+			    $guzzle_options = NULL;
+			    if ($ig_profile->proxy == NULL) {
+				    $this->info("Using RESIDENTIAL proxy.");
+				    continue;
+				    $guzzle_options                                 = [];
+				    $guzzle_options['curl']                         = [];
+				    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+				    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+				    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+			    } else if (strpos($ig_profile->proxy, 'http') === 0) {
+				    $this->info("Using RESIDENTIAL proxy.");
+				    continue;
+				    $guzzle_options                                 = [];
+				    $guzzle_options['curl']                         = [];
+				    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
+				    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'customer-rmorfix-cc-US-city-san_jose-sessid-iglogin:dXehM3e7bU';
+				    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+				    $ig_profile->proxy                              = NULL;
+				    $ig_profile->save();
+			    } else {
+				    $this->info("Using DATACENTER proxy.");
+				    $guzzle_options                                 = [];
+				    $guzzle_options['curl']                         = [];
+				    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
+				    $guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = 'morfix:dXehM3e7bU';
+				    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+			    }
 
-		    $instagram->setGuzzleOptions($guzzle_options);
-		    $login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
-		    if ($login_resp != NULL) {
-		    	dump($login_resp);
-		    } else {
-			    $user_model_public = $instagram->people->getSelfInfo()->getUser();
-			    $ig_profile->profile_full_name = $user_model_public->getFullName();
-			    $ig_profile->follower_count = $user_model_public->getFollowerCount();
-			    $ig_profile->num_posts = $user_model_public->getMediaCount();
-			    $ig_profile->save();
-			    dump($user_model_public);
+			    $instagram->setGuzzleOptions($guzzle_options);
+			    $login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
+			    if ($login_resp != NULL) {
+				    dump($login_resp);
+			    } else {
+				    $user_model_public = $instagram->people->getSelfInfo()->getUser();
+				    $ig_profile->profile_full_name = $user_model_public->getFullName();
+				    $ig_profile->follower_count = $user_model_public->getFollowerCount();
+				    $ig_profile->num_posts = $user_model_public->getMediaCount();
+				    $ig_profile->save();
+				    $valid_profile_count++;
+				    dump($user_model_public);
+			    }
 		    }
 	    }
+
+	    $this->line("VALID PROFILE COUNT: " . $valid_profile_count);
+	    $this->line("PROFILE COUNT: " . $profile_count);
     }
 
 }
