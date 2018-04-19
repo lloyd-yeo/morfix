@@ -91,7 +91,7 @@ class ManualLogin extends Command {
 		    }
 
 		    $instagram->setGuzzleOptions($guzzle_options);
-		    $login_resp = $instagram->login($ig_username, $ig_password, $guzzle_options);
+		    $login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 		    if ($login_resp != NULL) {
 		    	dump($login_resp);
 		    } else {
