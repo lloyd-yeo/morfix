@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\AddProfileRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use InstagramAPI\Exception\IncorrectPasswordException;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
@@ -92,17 +93,26 @@ class ManualLogin extends Command {
 			    }
 
 			    $instagram->setGuzzleOptions($guzzle_options);
-			    $login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
-			    if ($login_resp != NULL) {
-				    dump($login_resp);
-			    } else {
-				    $user_model_public = $instagram->people->getSelfInfo()->getUser();
-				    $ig_profile->profile_full_name = $user_model_public->getFullName();
-				    $ig_profile->follower_count = $user_model_public->getFollowerCount();
-				    $ig_profile->num_posts = $user_model_public->getMediaCount();
+			    try {
+
+				    $login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
+				    if ($login_resp != NULL) {
+					    dump($login_resp);
+				    } else {
+					    $user_model_public = $instagram->people->getSelfInfo()->getUser();
+					    $ig_profile->profile_full_name = $user_model_public->getFullName();
+					    $ig_profile->follower_count = $user_model_public->getFollowerCount();
+					    $ig_profile->num_posts = $user_model_public->getMediaCount();
+					    $ig_profile->save();
+					    $valid_profile_count++;
+					    dump($user_model_public);
+				    }
+
+			    } catch (IncorrectPasswordException $incorrectPasswordException) {
+				    $ig_profile->incorrect_pw = 1;
 				    $ig_profile->save();
-				    $valid_profile_count++;
-				    dump($user_model_public);
+			    } catch (InstagramException $instagramException) {
+					dump($instagramException);
 			    }
 		    }
 	    }
