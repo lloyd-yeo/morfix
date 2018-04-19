@@ -100,6 +100,7 @@ class ManualLogin extends Command {
 			    $ig_profile->follower_count = $user_model_public->getFollowerCount();
 			    $ig_profile->num_posts = $user_model_public->getMediaCount();
 			    $ig_profile->save();
+			    dump($user_model_public);
 		    }
 	    }
     }
