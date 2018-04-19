@@ -6,6 +6,7 @@ use App\AddProfileRequest;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use InstagramAPI\Exception\IncorrectPasswordException;
+use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\SettingsAdapter as SettingsAdapter;
 use InstagramAPI\InstagramException as InstagramException;
@@ -113,6 +114,8 @@ class ManualLogin extends Command {
 				    $ig_profile->save();
 			    } catch (InstagramException $instagramException) {
 					dump($instagramException);
+			    } catch (NetworkException $networkException) {
+				    dump($networkException);
 			    }
 		    }
 	    }
