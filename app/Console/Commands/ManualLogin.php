@@ -22,7 +22,7 @@ class ManualLogin extends Command {
      *
      * @var string
      */
-    protected $signature = 'ig:login {ig_username} {ig_password} {proxy?}';
+    protected $signature = 'ig:login {ig_username?} {ig_password?} {proxy?}';
 
     /**
      * The console command description.
@@ -54,12 +54,18 @@ class ManualLogin extends Command {
 
 	    $instagram = InstagramHelper::initInstagram();
 
-	    $ig_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
+	    $ig_profiles = collect();
+		if ($ig_username == NULL) {
+			$ig_profiles = InstagramProfile::all();
+		} else {
+			$ig_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
+		}
 
 	    foreach ($ig_profiles as $ig_profile) {
 		    $guzzle_options = NULL;
 		    if ($ig_profile->proxy == NULL) {
 		    	$this->info("Using RESIDENTIAL proxy.");
+			    continue;
 			    $guzzle_options                                 = [];
 			    $guzzle_options['curl']                         = [];
 			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
@@ -67,6 +73,7 @@ class ManualLogin extends Command {
 			    $guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
 		    } else if (strpos($ig_profile->proxy, 'http') === 0) {
 			    $this->info("Using RESIDENTIAL proxy.");
+			    continue;
 			    $guzzle_options                                 = [];
 			    $guzzle_options['curl']                         = [];
 			    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
