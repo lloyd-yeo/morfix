@@ -56,7 +56,7 @@ class ManualLogin extends Command {
 
 	    $ig_profiles = collect();
 		if ($ig_username == NULL) {
-			$ig_profiles = InstagramProfile::all();
+			$ig_profiles = InstagramProfile::where('feedback_required', 1)->get();
 		} else {
 			$ig_profiles = InstagramProfile::where('insta_username', $ig_username)->get();
 		}
