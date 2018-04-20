@@ -109,7 +109,7 @@ class InstagramProfileController extends Controller
 							return response()->json([
 								'success' => FALSE,
 								'type' => 'challenge',
-								'message' => 'Instagram requires verification from your side. Please check the following email <b>' . $step_data->getContactPoint() . '</b> for the 6 digit code.',
+								'message' => 'Instagram requires verification from your side. Please check your email (<b>' . $step_data->getContactPoint() . '</b>) for a email from Instagram containing the 6 digit code & enter it below. NOTE: If you get a notification from New York, San Jose just click "It was me".',
 							]);
 						} else if ($challenge_response->getStepName() == 'verify_phone') {
 							return response()->json([

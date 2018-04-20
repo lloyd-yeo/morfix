@@ -45,7 +45,7 @@
 
                                             <p>Hi Morfix User,</p>
 
-                                            <p>With Instagram's latest API, some of you could get into a verfication loop. Which means you can't link your Instagram profile to our system. In order to smoothen the process, if you are unable to verify, there will be a button on the next page to schedule a 5 minute session with our LIVE support on telegram.
+                                            <p>With Instagram's latest API, some of you could get into a verification loop. Which means you can't link your Instagram profile to our system. In order to smoothen the process, if you are unable to verify, there will be a button on the next page to schedule a 5 minute session with our LIVE support on telegram.
                                             <br/>
                                             Our support will then process to help you verify your account at the timing you choose.
                                             <br/>
