@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "arcanedev/log-viewer": "^4.5",
         "aweber/aweber": "^1.1",
         "braintree/braintree_php": "^3.25",
         "emojione/emojione": "^2.2",
