@@ -105,6 +105,7 @@ class Kernel extends ConsoleKernel {
         Commands\RefreshInstagramProfileStats::class,
         Commands\ExportSettingsToInstagress::class,
         Commands\GetHashtagFeed::class,
+        Commands\ManualInteractionLike::class,
     ];
 
     /**
