@@ -659,14 +659,13 @@ class InteractionLike implements ShouldQueue
 				if ($ex->hasResponse()) {
 					$feedback_response = $ex->getResponse()->asArray();
 					$feedback_msg      = $feedback_response['feedback_message'];
+					Log::error(print_r($ex, true));
 					if (strpos($feedback_msg, 'This action was blocked. Please try again later. We restrict certain content and actions to protect our community. Tell us if you think we made a mistake') !== FALSE) {
 						$ig_profile->next_like_time     = Carbon::now()->addHours(2);
 						$ig_profile->auto_like_ban      = 1;
 						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
-
 						$ig_profile->save();
 						Log::info("[$ig_username] was blocked & has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "");
-
 						return;
 					} else {
 						if (strpos($feedback_msg, 'It looks like your profile contains a link that is not allowed') !== FALSE) {
@@ -674,7 +673,6 @@ class InteractionLike implements ShouldQueue
 							$ig_profile->invalid_proxy  = 1;
 							$ig_profile->save();
 							Log::info("[$ig_username] has invalid proxy & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "");
-
 							return;
 						} else {
 							if (strpos($feedback_msg, 'It looks like you were misusing this feature by going too fast') !== FALSE) {
@@ -683,7 +681,6 @@ class InteractionLike implements ShouldQueue
 								$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 								$ig_profile->save();
 								Log::info("[$ig_username] is going too fast & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "");
-
 								return;
 							}
 						}
