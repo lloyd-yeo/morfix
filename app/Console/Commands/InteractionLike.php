@@ -46,14 +46,18 @@ class InteractionLike extends Command
 	public function handle()
 	{
 
-		if (NULL === $this->argument("email")) { #master
-			$this->line("[Likes Interaction Master] Beginning sequence to queue jobs...");
+		if ($this->argument("email") == NULL) {
+			$this->line("[Likes Interaction Master] Routine queue-ing of jobs...");
 
-			$users = User::where('partition', 0)
+			$users = User::where('tier', '>', 1)
+			             ->orWhere(function ($query) {
+							$query->where('tier', 1)->where('trial_activation', 1);
+			             })
 			             ->orderBy('user_id', 'asc')
 			             ->get();
 
 			$this->dispatchJobsToEligibleUsers($users);
+
 		} else {
 
 			if ($this->argument("email") == "ig") {
@@ -211,7 +215,8 @@ class InteractionLike extends Command
 
 			if (($user->tier == 1 && $user->trial_activation == 1) || $user->tier > 1) {
 
-				$instagram_profiles = InstagramProfile::where('auto_like', TRUE)->where('user_id', $user->user_id)
+				$instagram_profiles = InstagramProfile::where('auto_like', TRUE)
+				                                      ->where('user_id', $user->user_id)
 				                                      ->get();
 
 				foreach ($instagram_profiles as $ig_profile) {
