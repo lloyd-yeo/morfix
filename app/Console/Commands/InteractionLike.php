@@ -56,11 +56,10 @@ class InteractionLike extends Command
 			$this->dispatchJobsToEligibleUsers($users);
 		} else {
 
-			if ($this->argument("email") === "ig") {
+			if ($this->argument("email") == "ig") {
 				$ig_profile = InstagramProfile::where('insta_username', $this->argument("queueasjob"))->first();
 				if ($ig_profile !== NULL) {
 					$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-
 					if ($this->argument('use_redis') == 'redis') {
 						$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
 						$job->onQueue("like");
@@ -72,7 +71,6 @@ class InteractionLike extends Command
 						$job->onConnection('sync');
 						dispatch($job);
 					}
-
 
 				} else {
 					$this->error("[" . $this->argument("queueasjob") . "] is not a valid IG profile.");

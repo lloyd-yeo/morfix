@@ -177,21 +177,25 @@ class InstagramHelper extends \InstagramAPI\Request
 		$message = '';
 
 		if ($debug == 1) {
-			echo("Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
+			Log::info("[INSTAGRAM HELPER LOGIN] Verifying proxy for profile: [" . $ig_profile->insta_username . "]");
+			echo("[INSTAGRAM HELPER LOGIN] Verifying proxy for profile: [" . $ig_profile->insta_username . "]\n");
 		}
 
 		if ($debug == 1) {
-			echo("Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
+			Log::info("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]");
+			echo("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] [" . $ig_profile->insta_pw . "]\n");
 		}
 
 		if (strpos($ig_profile->proxy, 'http') === 0) {
 			if ($debug == 1) {
-				echo("Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.\n");
+				Log::info("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.");
+				echo("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.\n");
 			}
 			return false;
 		} else if ($ig_profile->proxy == NULL) {
 			if ($debug == 1) {
-				echo("Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.\n");
+				Log::info("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.");
+				echo("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.\n");
 			}
 			return false;
 		}
@@ -204,7 +208,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
 
 			if ($explorer_response != NULL) {
-				Log::info('[INSTAGRAM HELPER LOGIN ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response->asJson());
+				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response->asJson());
 				if ($explorer_response->isOk()) {
 					$flag = TRUE;
 				} else {
@@ -218,7 +222,7 @@ class InstagramHelper extends \InstagramAPI\Request
 					$flag = FALSE;
 				}
 			} else {
-				Log::info('[INSTAGRAM HELPER LOGIN ' . $ig_profile->insta_username . ' login_resp IS NULL.');
+				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp IS NULL.');
 				if ($instagram->isMaybeLoggedIn) {
 					$flag = TRUE;
 				} else {
