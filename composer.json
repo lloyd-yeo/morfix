@@ -11,14 +11,16 @@
         "emojione/emojione": "^2.2",
         "guzzlehttp/guzzle": "^6.2",
         "intervention/image": "^2.3",
-        "laravel-notification-channels/telegram": "^0.0.3",
+        "laravel-notification-channels/telegram": "dev-master",
         "laravel/cashier": "^7.0",
-        "laravel/framework": "5.4.*",
+        "laravel/framework": "5.6.*",
+        "laravel/horizon": "^1.2",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "lazyjsonmapper/lazyjsonmapper": "^1.2",
         "lloydyeo/instagram-api": "dev-master",
         "paypal/rest-api-sdk-php": "*",
+        "predis/predis": "^1.1",
         "riverskies/laravel-mobile-detect": "^1.3",
         "sendgrid/sendgrid": "^6.0",
         "unicodeveloper/laravel-emoji": "^1.0",
@@ -50,14 +52,6 @@
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
-        ],
-        "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
         ]
     },
     "config": {

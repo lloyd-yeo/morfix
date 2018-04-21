@@ -184,6 +184,7 @@ return [
         NotificationChannels\Telegram\TelegramServiceProvider::class,
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+        Laravel\Horizon\HorizonServiceProvider::class,
     ],
 
     /*
