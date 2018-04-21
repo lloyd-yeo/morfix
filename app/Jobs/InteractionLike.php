@@ -29,6 +29,7 @@ use InstagramAPI\Exception\ThrottledException as ThrottledException;
 use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\Response\Model\Item as InstagramItem;
 use InstagramAPI\Response\Model\User as InstagramUser;
+use Log;
 
 class InteractionLike implements ShouldQueue
 {
@@ -123,12 +124,12 @@ class InteractionLike implements ShouldQueue
 						if ($this->like_quota > 0) {
 
 							//Get followers of the target.
-							echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
+							Log::info("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
 							$target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
 							if ($target_username_id === NULL) {
 								continue;
 							} else {
-								echo("\n" . "[$ig_username] Retrieved Target Id: " . $target_username_id . "\n");
+								Log::info("\n" . "[$ig_username] Retrieved Target Id: " . $target_username_id . "\n");
 							}
 
 							$target_target_username = $target_username->target_username;
@@ -141,7 +142,7 @@ class InteractionLike implements ShouldQueue
 								echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
 								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
 								if ($user_follower_response === NULL) {
-									echo("\n" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "\n");
+									Log::info("\n" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "\n");
 									continue;
 								}
 								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
@@ -155,7 +156,7 @@ class InteractionLike implements ShouldQueue
 
 									if ($this->like_quota > 0) {
 
-										echo("\n" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
+										Log::info("\n" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
 
 										$is_duplicate = $this->checkBlacklistAndDuplicates($user_to_like, $page_count);
 
@@ -212,7 +213,7 @@ class InteractionLike implements ShouldQueue
 					foreach ($this->targeted_hashtags as $target_hashtag) {
 
 						if ($this->like_quota > 0) {
-							echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
+							Log::info("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
 							//Get the feed from the targeted hashtag.
 
 							if (empty(trim($target_hashtag->hashtag))) {
@@ -259,7 +260,7 @@ class InteractionLike implements ShouldQueue
 							if ($this->like_quota > 0) {
 
 								//Get followers of the target.
-								echo("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
+								Log::info("\n" . "[$ig_username] Target Username: " . $target_username->target_username . "\n");
 								$target_username_id = InstagramHelper::getUserIdForNicheUsername($instagram, $target_username);
 								if ($target_username_id === NULL) {
 									continue;
@@ -285,7 +286,7 @@ class InteractionLike implements ShouldQueue
 
 										if ($this->like_quota > 0) {
 
-											echo("\n" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
+											Log::info("\n" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
 
 											$is_duplicate = $this->checkBlacklistAndDuplicates($user_to_like, $page_count);
 
@@ -339,7 +340,7 @@ class InteractionLike implements ShouldQueue
 
 						foreach ($target_hashtags as $target_hashtag) {
 							if ($this->like_quota > 0) {
-								echo("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
+								Log::info("\n" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "\n\n");
 								//Get the feed from the targeted hashtag.
 								$hashtag_feed = InstagramHelper::getHashtagFeed($instagram, $target_hashtag);
 								foreach ($hashtag_feed->getItems() as $item) {
@@ -421,8 +422,8 @@ class InteractionLike implements ShouldQueue
 				if ($like_response->getStatus() == "ok") {
 					try {
 						$this->like_quota = $this->like_quota - 1;
-						echo("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
-						echo("\n" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
+						Log::info("\n" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n\n");
+						Log::info("\n" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
 						$like_log                    = new InstagramProfileLikeLog;
 						$like_log->insta_username    = $ig_profile->insta_username;
 						$like_log->target_username   = $user_to_like->getUsername();
@@ -499,7 +500,7 @@ class InteractionLike implements ShouldQueue
 
 		//Duplicate = liked media before.
 		if ($liked_logs !== NULL) {
-			echo("\n" . "Duplicate Log [MEDIA] Found:\t[" . $ig_profile->insta_username . "] [" . $item->getId() . "]");
+			Log::info("\n" . "Duplicate Log [MEDIA] Found:\t[" . $ig_profile->insta_username . "] [" . $item->getId() . "]");
 
 			return TRUE;
 		}
@@ -511,7 +512,7 @@ class InteractionLike implements ShouldQueue
 	{
 		//Weird error, null user. Check to be safe.
 		if ($user_to_like === NULL) {
-			echo("\n" . "NULL user");
+			Log::info("\n" . "NULL user");
 
 			return TRUE;
 		}
@@ -523,7 +524,7 @@ class InteractionLike implements ShouldQueue
 
 		//Duplicate = liked before.
 		if ($liked_user !== NULL) {
-			echo("\n" . "[Current] Duplicate log found:\t[" . $this->profile->insta_username . "] "
+			Log::info("\n" . "[Current] Duplicate log found:\t[" . $this->profile->insta_username . "] "
 				. "[" . $user_to_like->getUsername() . "]");
 
 			return TRUE;
@@ -536,7 +537,7 @@ class InteractionLike implements ShouldQueue
 
 		//Duplicate = liked before.
 		if ($liked_user !== NULL) {
-			echo("\n" . "[Archive] Duplicate Log Found:\t[" . $this->profile->insta_username . "] "
+			Log::info("\n" . "[Archive] Duplicate Log Found:\t[" . $this->profile->insta_username . "] "
 				. "[" . $user_to_like->getUsername() . "]");
 
 			return TRUE;
@@ -570,7 +571,7 @@ class InteractionLike implements ShouldQueue
 
 		//Duplicate = liked before.
 		if ($liked_users != NULL) {
-			echo("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
+			Log::info("\n" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
 			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
 				return 1;
 			} else {
@@ -587,7 +588,7 @@ class InteractionLike implements ShouldQueue
 
 		//Duplicate = liked before.
 		if ($liked_users_archive != NULL) {
-			echo("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
+			Log::info("\n" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
 
 			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
 				return 1;
@@ -743,7 +744,7 @@ class InteractionLike implements ShouldQueue
 		if ($ex->hasResponse()) {
 			dump($ex->getResponse());
 		} else {
-			echo("\nThis exception has no response.\n");
+			Log::info("\nThis exception has no response.\n");
 		}
 
 		$ig_profile->save();
@@ -788,7 +789,7 @@ class InteractionLike implements ShouldQueue
 		$hours    = (int)($duration / 60 / 60);
 		$minutes  = (int)($duration / 60) - $hours * 60;
 		$seconds  = (int)$duration - $hours * 60 * 60 - $minutes * 60;
-		echo("\n\n[" . $ig_profile->insta_username . "] elapsed time " . $seconds . " seconds.\n\n");
+		Log::info("\n\n[" . $ig_profile->insta_username . "] elapsed time " . $seconds . " seconds.\n\n");
 	}
 
 	/**

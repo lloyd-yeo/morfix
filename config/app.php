@@ -186,6 +186,8 @@ return [
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
         Laravel\Horizon\HorizonServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
+
+
     ],
 
     /*
@@ -239,3 +241,4 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
     ],
 ];
+
