@@ -139,7 +139,7 @@ class InteractionLike implements ShouldQueue
 							$page_count = 0;
 
 							do {
-								echo "\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
+								Log::info("\n[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n");
 								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
 								if ($user_follower_response === NULL) {
 									Log::info("\n" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "\n");
@@ -187,14 +187,14 @@ class InteractionLike implements ShouldQueue
 													break;
 												}
 											} else {
-												echo "\n\n[146] Exiting...\n\n";
+												Log::info("\n\n[146] Exiting...\n\n");
 												$this->printElapsedTime($this->time_start, $ig_profile);
 
 												return;
 											}
 										}
 									} else {
-										echo "\n\n[151] Exiting...\n\n";
+										Log::info("\n\n[151] Exiting...\n\n");
 										$this->printElapsedTime($this->time_start, $ig_profile);
 
 										return;
@@ -202,7 +202,7 @@ class InteractionLike implements ShouldQueue
 								}
 							} while ($next_max_id !== NULL && $this->like_quota > 0);
 						} else {
-							echo "\n\n[157] Exiting...\n\n";
+							Log::info("\n\n[157] Exiting...\n\n");
 							$this->printElapsedTime($this->time_start, $ig_profile);
 
 							return;
@@ -233,7 +233,7 @@ class InteractionLike implements ShouldQueue
 												}
 											}
 										} else {
-											echo "\n\n[186] Exiting...\n\n";
+											Log::info("\n\n[186] Exiting...\n\n");
 											$this->printElapsedTime($this->time_start, $ig_profile);
 
 											return;
@@ -242,7 +242,7 @@ class InteractionLike implements ShouldQueue
 								}
 							}
 						} else {
-							echo "\n\n[192] Exiting...\n\n";
+							Log::info("\n\n[192] Exiting...\n\n");
 							$this->printElapsedTime($this->time_start, $ig_profile);
 
 							return;
@@ -318,14 +318,14 @@ class InteractionLike implements ShouldQueue
 													}
 												} else {
 
-													echo "\n\n[264] Exiting...\n\n";
+													Log::info("\n\n[264] Exiting...\n\n");
 													$this->printElapsedTime($this->time_start, $ig_profile);
 
 													return;
 												}
 											}
 										} else {
-											echo "\n\n[269] Exiting...\n\n";
+											Log::info("\n\n[269] Exiting...\n\n");
 											$this->printElapsedTime($this->time_start, $ig_profile);
 
 											return;
@@ -620,7 +620,7 @@ class InteractionLike implements ShouldQueue
 			$target_username_id       = NULL;
 			$target_username->invalid = 1;
 			$target_username->save();
-			echo "\n[" . $this->profile->insta_username . "] encountered error [" . $target_username->target_username . "]: " . $insta_ex->getMessage() . "\n";
+			Log::info("\n[" . $this->profile->insta_username . "] encountered error [" . $target_username->target_username . "]: " . $insta_ex->getMessage() . "\n");
 			$this->handleInstagramException($this->profile, $insta_ex);
 		}
 
@@ -637,7 +637,7 @@ class InteractionLike implements ShouldQueue
 				$use_hashtags = 1;
 			}
 		}
-		echo "[Use Hashtags] Value: " . $use_hashtags . "\n";
+		Log::info("[Use Hashtags] Value: " . $use_hashtags . "\n");
 
 		return $use_hashtags;
 	}
@@ -651,7 +651,7 @@ class InteractionLike implements ShouldQueue
 		if (strpos($ex->getMessage(), 'Throttled by Instagram because of too many API requests') !== FALSE) {
 			$ig_profile->next_like_time = Carbon::now()->addMinutes(15);
 			$ig_profile->save();
-			echo "\n[$ig_username] has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+			Log::info("\n[$ig_username] has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n");
 
 			return;
 		} else {
@@ -665,7 +665,7 @@ class InteractionLike implements ShouldQueue
 						$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 
 						$ig_profile->save();
-						echo "\n[$ig_username] was blocked & has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n";
+						Log::info("\n[$ig_username] was blocked & has next_like_time shifted forward to " . Carbon::now()->addHours(2)->toDateTimeString() . "\n");
 
 						return;
 					} else {
@@ -673,7 +673,7 @@ class InteractionLike implements ShouldQueue
 							$ig_profile->next_like_time = Carbon::now()->addMinutes(15);
 							$ig_profile->invalid_proxy  = 1;
 							$ig_profile->save();
-							echo "\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+							Log::info("\n[$ig_username] has invalid proxy & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n");
 
 							return;
 						} else {
@@ -682,7 +682,7 @@ class InteractionLike implements ShouldQueue
 								$ig_profile->auto_like_ban      = 1;
 								$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 								$ig_profile->save();
-								echo "\n[$ig_username] is going too fast & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+								Log::info("\n[$ig_username] is going too fast & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n");
 
 								return;
 							}
@@ -720,7 +720,7 @@ class InteractionLike implements ShouldQueue
 										$ig_profile->auto_like_ban      = 1;
 										$ig_profile->auto_like_ban_time = Carbon::now()->addHours(2);
 										$ig_profile->save();
-										echo "\n[$ig_username] got throttled & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n";
+										Log::info("\n[$ig_username] got throttled & next_like_time shifted forward to " . Carbon::now()->addHours(1)->toDateTimeString() . "\n");
 
 										return;
 									} else {
@@ -728,7 +728,7 @@ class InteractionLike implements ShouldQueue
 											$ig_profile->challenge_required = 1;
 											$ig_profile->save();
 
-											echo "\n[$ig_username] challenge required.\n";
+											Log::info("\n[$ig_username] challenge required.\n");
 
 											return;
 										}
