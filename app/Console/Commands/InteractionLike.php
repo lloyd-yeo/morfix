@@ -19,7 +19,7 @@ class InteractionLike extends Command
 	 *
 	 * @var string
 	 */
-	protected $signature = 'interaction:like {email?} {queueasjob?}';
+	protected $signature = 'interaction:like {email?} {queueasjob?} {use_redis?}';
 
 	/**
 	 * The console command description.
@@ -60,10 +60,20 @@ class InteractionLike extends Command
 				$ig_profile = InstagramProfile::where('insta_username', $this->argument("queueasjob"))->first();
 				if ($ig_profile !== NULL) {
 					$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
-					$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-					$job->onQueue("likes");
-					$job->onConnection('sync');
-					dispatch($job);
+
+					if ($this->argument('use_redis') == 'redis') {
+						$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+						$job->onQueue("likes");
+						$job->onConnection('redis');
+						dispatch($job);
+					} else {
+						$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
+						$job->onQueue("likes");
+						$job->onConnection('sync');
+						dispatch($job);
+					}
+
+
 				} else {
 					$this->error("[" . $this->argument("queueasjob") . "] is not a valid IG profile.");
 				}
