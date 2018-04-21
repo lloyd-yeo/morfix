@@ -186,7 +186,7 @@ return [
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
         Laravel\Horizon\HorizonServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -239,6 +239,8 @@ return [
         'Emoji' => Unicodeveloper\Emoji\Facades\Emoji::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'InstagramAPI' => \InstagramAPI\Instagram::class,
     ],
 ];
 
