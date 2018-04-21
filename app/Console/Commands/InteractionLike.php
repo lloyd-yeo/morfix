@@ -63,7 +63,7 @@ class InteractionLike extends Command
 
 					if ($this->argument('use_redis') == 'redis') {
 						$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
-						$job->onQueue("likes");
+						$job->onQueue("like");
 						$job->onConnection('redis');
 						dispatch($job);
 					} else {
