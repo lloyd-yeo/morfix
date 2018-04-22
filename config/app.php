@@ -185,7 +185,7 @@ return [
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
         Laravel\Horizon\HorizonServiceProvider::class,
-        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+//        Arcanedev\LogViewer\LogViewerServiceProvider::class,
 //        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
