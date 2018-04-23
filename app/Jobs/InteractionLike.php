@@ -8,7 +8,7 @@ use App\InstagramProfile;
 use App\InstagramProfileLikeLog;
 use App\InteractionHelper;
 use App\LikeLogsArchive;
-use Appiche;
+use App\Niche;
 use App\TargetHelper;
 use Carbon\Carbon as Carbon;
 use Illuminate\Bus\Queueable;
