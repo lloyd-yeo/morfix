@@ -45,38 +45,6 @@ class InteractionFollow extends Command {
      * @return void
      */
 
-    /**
-     *
-     *  Local Variables
-     *
-     */
-    protected $ig_username;
-    protected $ig_password;
-    protected $insta_username;
-    protected $insta_user_id;
-    protected $insta_id;
-    protected $insta_pw;
-    protected $niche;
-    protected $next_follow_time; //
-    protected $unfollow; // Not use
-    protected $follow_cycle;
-    protected $auto_unfollow;
-    protected $auto_follow;
-    protected $auto_follow_ban;
-    protected $auto_follow_ban_time;
-    protected $follow_unfollow_delay;
-    protected $speed;
-    protected $follow_min_follower;
-    protected $follow_max_follower;
-    protected $unfollow_unfollowed;
-    protected $follow_quota;
-    protected $unfollow_quota;
-    protected $proxy;
-    protected $delay;
-    protected $use_hashtags;
-    protected $target_hashtags;
-    protected $target_usernames;
-
     public function __construct() {
         parent::__construct();
     }
@@ -144,8 +112,6 @@ class InteractionFollow extends Command {
         }
 
         foreach ($users as $user) {
-
-//            $this->line($user->user_id);
 
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
                             . 'AND user_id = ' . $user->user_id)->get();
