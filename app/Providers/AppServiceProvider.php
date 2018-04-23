@@ -14,14 +14,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//	    Horizon::auth(function ($request) {
-//			$user = $request->user();
-//			if ($user != NULL) {
-//				if ($user->admin == 1) {
-//					return TRUE;
-//				}
-//			}
-//	    });
+	    Horizon::auth(function ($request) {
+			$user = $request->user();
+			if ($user != NULL) {
+				if ($user->admin == 1) {
+					return TRUE;
+				}
+			}
+	    });
     }
 
     /**
