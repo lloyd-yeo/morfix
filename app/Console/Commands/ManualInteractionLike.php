@@ -42,9 +42,9 @@ class ManualInteractionLike extends Command
     public function handle()
     {
 
-        $title = $this->argument('ig_username');
+        $ig_username = $this->argument('ig_username');
 		$instagram = InstagramHelper::initInstagram(true);
-		$ig_profile = InstagramProfile::where('insta_username', 'ig_username')->first();
+		$ig_profile = InstagramProfile::where('insta_username', $ig_username)->first();
 //	    $guzzle_options                                 = [];
 //	    $guzzle_options['curl']                         = [];
 //	    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
