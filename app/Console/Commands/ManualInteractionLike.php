@@ -122,13 +122,9 @@ class ManualInteractionLike extends Command
 //        echo ($response_array);
         $counter= 0;
         foreach ($follower_response->getUsers() as $user){
-            if ($counter > 10) {
-                break;
-            }
             Redis::hmset(
                 "test:profile:" . $user->getPk(), $user->asArray()
             );
-            $counter++;
         }
 
 
