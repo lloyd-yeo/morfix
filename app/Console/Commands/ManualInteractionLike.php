@@ -107,5 +107,6 @@ class ManualInteractionLike extends Command
         $follower_response = $instagram->people->getFollowers($userId, $rank_token);
         echo "This is follower response \n";
         echo json_encode($follower_response, JSON_PRETTY_PRINT);
+
     }
 }
