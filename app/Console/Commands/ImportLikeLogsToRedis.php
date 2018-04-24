@@ -9,6 +9,7 @@ use InstagramAPI\InstagramID;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\LikeLogsArchive;
+use App\InstagramProfileLikeLog;
 
 class ImportLikeLogsToRedis extends Command
 {
@@ -45,9 +46,11 @@ class ImportLikeLogsToRedis extends Command
     {
 		$ig_profiles = InstagramProfile::all();
 		foreach ($ig_profiles as $ig_profile) {
-			$count_like_logs = LikeLogsArchive::where('insta_username', $ig_profile->insta_username)->count();
-			dump($ig_profile->insta_username . "," . $count_like_logs);
-//			break;
+			$like_logs = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->get();
+			foreach ($like_logs as $like_log) {
+				$pk = $ig_profile->insta_user_id;
+
+			}
 		}
     }
 }
