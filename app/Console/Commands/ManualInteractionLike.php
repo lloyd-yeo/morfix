@@ -119,7 +119,7 @@ class ManualInteractionLike extends Command
                 break;
             }
             Redis::hmset(
-                "test:profile:" . $user["pk"], $user
+                "test:profile:" . $user->getPk(), $user->asArray()
             );
             $counter++;
         }
