@@ -116,7 +116,7 @@ class ManualInteractionLike extends Command
 //        $follower_response = $instagram->people->getFollowers($userId, $rank_token);
         $follower_response = $instagram->timeline->getUserFeed($userId);
         dump($follower_response);
-        echo "This is follower response \n";
+//        echo "This is follower response \n";
 //        echo json_encode($follower_response, JSON_PRETTY_PRINT);
 
 //        $pk = "test:profile:12345678";
