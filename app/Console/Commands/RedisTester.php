@@ -46,9 +46,8 @@ class RedisTester extends Command
 
         Redis::hmset(
 //            $pk, [$response_array]
-            $pk, [
-                $response_array,
-            ]
+            $pk, $response_array
+
         );
     }
 }
