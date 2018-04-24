@@ -38,7 +38,7 @@ class RedisTester extends Command
      */
     public function handle()
     {
-        $pk = 123456;
+        $pk = "test:profile:123456";
         $response_array = (array("name" => "abc", "full_name" => "long_name", "is_verified" => "false"));
         echo "This is follower response \n";
         $response_array = json_encode($response_array, JSON_PRETTY_PRINT);
@@ -47,10 +47,7 @@ class RedisTester extends Command
         Redis::hmset(
 //            $pk, [$response_array]
             $pk, [
-                'connection' => "abc",
-                'queue' => "queue",
-                'name' => "rong",
-                'status' => 'failed',
+                $response_array,
             ]
         );
     }

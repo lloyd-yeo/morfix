@@ -108,5 +108,6 @@ class ManualInteractionLike extends Command
         echo "This is follower response \n";
         echo json_encode($follower_response, JSON_PRETTY_PRINT);
 
+
     }
 }
