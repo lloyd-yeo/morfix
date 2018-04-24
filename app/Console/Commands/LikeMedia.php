@@ -9,6 +9,34 @@ use InstagramAPI\InstagramID;
 
 class LikeMedia extends Command
 {
+	/**
+	 * Base64 URL Safe Character Map.
+	 *
+	 * This is the Base64 "URL Safe" alphabet, which is what Instagram uses.
+	 *
+	 * @var string
+	 *
+	 * @see https://tools.ietf.org/html/rfc4648
+	 */
+	const BASE64URL_CHARMAP = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+	/**
+	 * Internal map of the results of all base10 digits (0-9) modulo 2.
+	 *
+	 * Used by the decimal-to-binary converter, to avoid costly bcmod() calls.
+	 * Arranged by decimal offset, so the answer for decimal 9 is in index 9.
+	 *
+	 * @var string
+	 */
+	const BASE10_MOD2 = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1'];
+
+	/**
+	 * Runtime cached bit-value lookup table.
+	 *
+	 * @var array|null
+	 */
+	public static $bitValueTable = null;
+	
     /**
      * The name and signature of the console command.
      *
