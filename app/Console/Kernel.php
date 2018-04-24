@@ -109,6 +109,7 @@ class Kernel extends ConsoleKernel {
         Commands\SendScheduledPost::class,
         Commands\LikeMedia::class,
         Commands\RedisTester::class,
+        Commands\ImportLikeLogsToRedis::class,
     ];
 
     /**
