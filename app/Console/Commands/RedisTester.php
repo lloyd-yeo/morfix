@@ -45,7 +45,13 @@ class RedisTester extends Command
         echo ($response_array);
 
         Redis::hmset(
-            $pk, [$response_array]
+//            $pk, [$response_array]
+            $pk, [
+                'connection' => "abc",
+                'queue' => "queue",
+                'name' => "rong",
+                'status' => 'failed',
+            ]
         );
     }
 }
