@@ -6,6 +6,7 @@ use App\InstagramHelper;
 use App\InstagramProfile;
 use Illuminate\Console\Command;
 use InstagramAPI\InstagramID;
+use Illuminate\Support\Facades\Redis;
 
 class LikeMedia extends Command
 {
@@ -99,11 +100,26 @@ class LikeMedia extends Command
 					$media_id = $base10;
 				}
 
-				dump($instagram->media->like($media_id));
+				$like_response = $instagram->media->like($media_id);
+				$id = $this->nextJobId();
 
+				if ($like_response->isOk()) {
+					$score = Carbon::now()->timestamp * -1;
+					Redis::zadd('test:like_logs', $score, $id);
+				}
 			}
         }
     }
+
+	/**
+	 * Get the next job ID that should be assigned.
+	 *
+	 * @return string
+	 */
+	public function nextJobId()
+	{
+		return (string) Redis::incr('test:like_log_id');
+	}
 
 	/**
 	 * Converts a binary number of any size into a decimal string.
