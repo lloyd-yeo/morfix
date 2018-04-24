@@ -70,7 +70,7 @@ class LikeMedia extends Command
     {
         $profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
         if ($profile != NULL) {
-			$instagram = InstagramHelper::initInstagram(TRUE, $profile);
+			$instagram = InstagramHelper::initInstagram(FALSE, $profile);
 			if (InstagramHelper::login($instagram, $profile)) {
 				$media_id = $this->argument('media_id');
 				if ($this->argument('media_id_type') == 'code') {
