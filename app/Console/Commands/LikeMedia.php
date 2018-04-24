@@ -72,8 +72,11 @@ class LikeMedia extends Command
         if ($profile != NULL) {
 			$instagram = InstagramHelper::initInstagram(FALSE, $profile);
 			if (InstagramHelper::login($instagram, $profile)) {
+
 				$media_id = $this->argument('media_id');
+
 				if ($this->argument('media_id_type') == 'code') {
+
 					$code = $media_id;
 
 					if (!is_string($code) || preg_match('/[^A-Za-z0-9\-_]/', $code)) {
@@ -92,8 +95,6 @@ class LikeMedia extends Command
 
 					// Now just convert the base2 binary string to a base10 decimal string.
 					$base10 = self::base2to10($base2);
-
-					return $base10;
 
 					$media_id = $base10;
 				}
