@@ -46,8 +46,8 @@ class ImportLikeLogsToRedis extends Command
 		$ig_profiles = InstagramProfile::all();
 		foreach ($ig_profiles as $ig_profile) {
 			$count_like_logs = LikeLogsArchive::where('insta_username', $ig_profile->insta_username)->count();
-			dump($ig_profile->insta_username . " " . $count_like_logs);
-			break;
+			dump($ig_profile->insta_username . "," . $count_like_logs);
+//			break;
 		}
     }
 }
