@@ -107,6 +107,7 @@ class Kernel extends ConsoleKernel {
         Commands\GetHashtagFeed::class,
         Commands\ManualInteractionLike::class,
         Commands\SendScheduledPost::class,
+        Commands\LikeMedia::class,
     ];
 
     /**
