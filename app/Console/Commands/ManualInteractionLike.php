@@ -74,6 +74,7 @@ class ManualInteractionLike extends Command
         }
 
         $instagram->setGuzzleOptions($guzzle_options);
+
         try {
 
             $login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
@@ -82,6 +83,12 @@ class ManualInteractionLike extends Command
                 $ig_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(1, 99)];
 	            $ig_profile->save();
             } else {
+                if ($instagram->isMaybeLoggedIn){
+                    if($ig_profile->proxy == NULL){
+                        $ig_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(1, 99)];
+                        $ig_profile->save();
+                    }
+                }
 //                $user_model_public = $instagram->people->getSelfInfo()->getUser();
 //                $ig_profile->profile_full_name = $user_model_public->getFullName();
 //                $ig_profile->follower_count = $user_model_public->getFollowerCount();
