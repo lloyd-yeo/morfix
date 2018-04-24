@@ -42,7 +42,7 @@ class RedisTester extends Command
         $response_array = (array("name" => "abc", "full_name" => "long_name", "is_verified" => "false"));
         echo "This is follower response \n";
 //        $response_array = json_encode($response_array, JSON_PRETTY_PRINT);
-        echo ($response_array);
+//        echo ($response_array);
 
         Redis::hmset(
 //            $pk, [$response_array]
