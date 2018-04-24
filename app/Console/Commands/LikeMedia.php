@@ -36,7 +36,7 @@ class LikeMedia extends Command
 	 * @var array|null
 	 */
 	public static $bitValueTable = null;
-	
+
     /**
      * The name and signature of the console command.
      *
@@ -149,5 +149,25 @@ class LikeMedia extends Command
 		}
 
 		return $base10;
+	}
+
+	/**
+	 * Builds a binary bit-value lookup table.
+	 *
+	 * @param int $maxBitCount Maximum number of bits to calculate values for.
+	 *
+	 * @return array The lookup table, where offset 0 has the value of bit 1,
+	 *               offset 1 has the value of bit 2, and so on.
+	 */
+	public static function buildBinaryLookupTable(
+		$maxBitCount)
+	{
+		$table = [];
+		for ($bitPosition = 0; $bitPosition < $maxBitCount; ++$bitPosition) {
+			$bitValue = bcpow('2', (string) $bitPosition, 0);
+			$table[] = $bitValue;
+		}
+
+		return $table;
 	}
 }
