@@ -99,7 +99,8 @@ class LikeMedia extends Command
 					$media_id = $base10;
 				}
 
-				dump($media_id);
+				dump($instagram->media->like($media_id));
+
 			}
         }
     }
