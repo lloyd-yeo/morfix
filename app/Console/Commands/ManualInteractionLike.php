@@ -15,7 +15,7 @@ class ManualInteractionLike extends Command
      *
      * @var string
      */
-    protected $signature = 'ig:like';
+    protected $signature = 'ig:like {ig_username}';
 
     /**
      * The console command description.
@@ -41,8 +41,10 @@ class ManualInteractionLike extends Command
      */
     public function handle()
     {
+
+        $title = $this->argument('ig_username');
 		$instagram = InstagramHelper::initInstagram(true);
-		$ig_profile = InstagramProfile::where('insta_username', 'adrianentrepreneur')->first();
+		$ig_profile = InstagramProfile::where('insta_username', 'ig_username')->first();
 //	    $guzzle_options                                 = [];
 //	    $guzzle_options['curl']                         = [];
 //	    $guzzle_options['curl'][CURLOPT_PROXY]          = 'http://' . $ig_profile->proxy;
