@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\InstagramHelper;
 use App\InstagramProfile;
 use Illuminate\Console\Command;
+use InstagramAPI\InstagramID;
 
 class LikeMedia extends Command
 {
@@ -45,7 +46,7 @@ class LikeMedia extends Command
 			if (InstagramHelper::login($instagram, $profile)) {
 				$media_id = $this->argument('media_id');
 				if ($this->argument('media_id_type') == 'code') {
-					$media_id = \InstagramAPI\InstagramID::fromCode($media_id);
+					$media_id = InstagramID::fromCode($media_id);
 				}
 
 				dump($media_id);
