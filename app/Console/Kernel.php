@@ -106,6 +106,7 @@ class Kernel extends ConsoleKernel {
         Commands\ExportSettingsToInstagress::class,
         Commands\GetHashtagFeed::class,
         Commands\ManualInteractionLike::class,
+        Commands\SendScheduledPost::class,
     ];
 
     /**
