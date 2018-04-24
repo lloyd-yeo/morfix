@@ -113,7 +113,9 @@ class ManualInteractionLike extends Command
 //        dump($userId);
         $userId = $ig_profile->insta_user_id;
         $rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
-        $follower_response = $instagram->people->getFollowers($userId, $rank_token);
+//        $follower_response = $instagram->people->getFollowers($userId, $rank_token);
+        $follower_response = $instagram->getUserFeed($userId);
+        dump($follower_response);
         echo "This is follower response \n";
 //        echo json_encode($follower_response, JSON_PRETTY_PRINT);
 
@@ -122,12 +124,12 @@ class ManualInteractionLike extends Command
 //        echo "This is follower response \n";
 //        $response_array = json_encode($response_array, JSON_PRETTY_PRINT);
 //        echo ($response_array);
-        $counter= 0;
-        foreach ($follower_response->getUsers() as $user){
-            Redis::hmset(
-                "test:profile:" . $user->getPk(), $user->asArray()
-            );
-        }
+//        $counter= 0;
+//        foreach ($follower_response->getUsers() as $user){
+//            Redis::hmset(
+//                "test:profile:" . $user->getPk(), $user->asArray()
+//            );
+//        }
 
 
     }
