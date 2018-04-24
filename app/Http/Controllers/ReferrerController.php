@@ -37,7 +37,7 @@ class ReferrerController extends Controller {
 		        return redirect('premium');
 		        break;
 	        case "home":
-		        return redirect('https://morfix.co');
+		        return redirect('https://growmaster.ro');
 		        break;
 	        case "vsl":
 		        return redirect('online');
@@ -67,7 +67,7 @@ class ReferrerController extends Controller {
 		        return redirect('online');
 	        	break;
 	        default:
-		        return redirect('https://morfix.co');
+		        return redirect('https://growmaster.ro');
 	        	break;
         }
 

@@ -137,7 +137,7 @@ class InteractionLike implements ShouldQueue
 							$next_max_id            = NULL;
 
 							$page_count = 0;
-							
+
 							do {
 								Log::info("[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "");
 								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);

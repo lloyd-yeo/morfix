@@ -79,6 +79,8 @@ class ManualInteractionLike extends Command
             $login_resp = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
             if ($login_resp != NULL) {
                 dump($login_resp);
+                $ig_profile->proxy = InstagramHelper::getDatacenterProxyList()[rand(1, 99)];
+	            $ig_profile->save();
             } else {
 //                $user_model_public = $instagram->people->getSelfInfo()->getUser();
 //                $ig_profile->profile_full_name = $user_model_public->getFullName();
@@ -98,8 +100,9 @@ class ManualInteractionLike extends Command
             dump($networkException);
         }
 
-        $userId = $instagram->people->getUserIdForName('adrianentrepreneur');
-        dump($userId);
+//        $userId = $instagram->people->getUserIdForName('adrianentrepreneur');
+//        dump($userId);
+        $userId = $ig_profile->insta_user_id;
         $rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
         $follower_response = $instagram->people->getFollowers($userId, $rank_token);
         echo "This is follower response \n";
