@@ -50,7 +50,7 @@ class SendScheduledPost extends Command
 			$instagram_profile = InstagramProfile::where('insta_username', $post_schedule->insta_username)->first();
 			$instagram = InstagramHelper::initInstagram(FALSE, $instagram_profile);
 			if (InstagramHelper::login($instagram, $instagram_profile)) {
-				$path = '/var/www/html/storage/app/public/' . $post_schedule->image_path;
+				$path = '/var/www/app/storage/app/public/' . $post_schedule->image_path;
 				$photo = new \InstagramAPI\Media\Photo\InstagramPhoto($path);
 				try {
 					if ($post_schedule->caption != NULL) {
