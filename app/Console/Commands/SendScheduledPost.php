@@ -48,38 +48,41 @@ class SendScheduledPost extends Command
 		                                                   ->get();
 		foreach ($post_schedules as $post_schedule) {
 			$instagram_profile = InstagramProfile::where('insta_username', $post_schedule->insta_username)->first();
-			$instagram = InstagramHelper::initInstagram(FALSE, $instagram_profile);
-			if (InstagramHelper::login($instagram, $instagram_profile)) {
-				$path = '/var/www/app/storage/app/public/' . $post_schedule->image_path;
-				$photo = new \InstagramAPI\Media\Photo\InstagramPhoto($path);
-				try {
-					if ($post_schedule->caption != NULL) {
-						$response = $instagram->timeline->uploadPhoto($photo->getFile(), ['caption' => $post_schedule->caption]);
-					} else {
-						$response = $instagram->timeline->uploadPhoto($photo->getFile(), []);
-					}
-					dump($response);
-					if ($response->isOk()) {
-						if ($response->getMedia() != NULL) {
-							$post_schedule->posted = 1;
-							$post_schedule->log = $response->asJson();
-							$post_schedule->media_id = $response->getMedia()->getPk();
-							$post_schedule->save();
-							if ($post_schedule->first_comment) {
-								$instagram->media->comment($response->getMedia()->getPk(), $post_schedule->first_comment);
-							}
+			$instagram         = InstagramHelper::initInstagram(FALSE, $instagram_profile);
+			if ($instagram_profile != NULL) {
+				if (InstagramHelper::login($instagram, $instagram_profile)) {
+					$path  = '/var/www/app/storage/app/public/' . $post_schedule->image_path;
+					$photo = new \InstagramAPI\Media\Photo\InstagramPhoto($path);
+					try {
+						if ($post_schedule->caption != NULL) {
+							$response = $instagram->timeline->uploadPhoto($photo->getFile(), [ 'caption' => $post_schedule->caption ]);
+						} else {
+							$response = $instagram->timeline->uploadPhoto($photo->getFile(), []);
 						}
-					} else {
+						dump($response);
+						if ($response->isOk()) {
+							if ($response->getMedia() != NULL) {
+								$post_schedule->posted   = 1;
+								$post_schedule->log      = $response->asJson();
+								$post_schedule->media_id = $response->getMedia()->getPk();
+								$post_schedule->save();
+								if ($post_schedule->first_comment) {
+									$instagram->media->comment($response->getMedia()->getPk(), $post_schedule->first_comment);
+								}
+							}
+						} else {
+							$post_schedule->posted      = 2;
+							$post_schedule->failure_msg = $response->asJson();
+							$post_schedule->save();
+						}
+					}
+					catch (InstagramException $instagramException) {
 						$post_schedule->posted = 2;
-						$post_schedule->failure_msg = $response->asJson();
+						if ($instagramException->hasResponse()) {
+							$post_schedule->failure_msg = $instagramException->getResponse()->getMessage();
+						}
 						$post_schedule->save();
 					}
-				} catch (InstagramException $instagramException) {
-					$post_schedule->posted = 2;
-					if ($instagramException->hasResponse()) {
-						$post_schedule->failure_msg = $instagramException->getResponse()->getMessage();
-					}
-					$post_schedule->save();
 				}
 			}
 		}
