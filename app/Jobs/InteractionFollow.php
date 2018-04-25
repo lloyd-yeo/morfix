@@ -14,6 +14,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class InteractionFollow implements ShouldQueue
 {
@@ -132,6 +133,11 @@ class InteractionFollow implements ShouldQueue
 								}
 
 								$users_to_follow = InstagramHelper::getTargetUsernameFollowers($this->instagram, $target_username, $username_id);
+                                foreach ($users_to_follow as $user_){
+                                    Redis::hmset(
+                                        "test:profile:" . $user_->getPk(), $user_->asArray()
+                                    );
+                                }
 
 								foreach ($users_to_follow as $user_to_follow) {
 

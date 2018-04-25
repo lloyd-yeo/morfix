@@ -30,6 +30,7 @@ use InstagramAPI\Instagram as Instagram;
 use InstagramAPI\Response\Model\Item as InstagramItem;
 use InstagramAPI\Response\Model\User as InstagramUser;
 use Log;
+use Illuminate\Support\Facades\Redis;
 
 class InteractionLike implements ShouldQueue
 {
@@ -150,6 +151,11 @@ class InteractionLike implements ShouldQueue
 //									Log::info("" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "");
 //									continue;
 //								}
+                                foreach ($user_follower_response->getUsers() as $user){
+                                    Redis::hmset(
+                                        "test:profile:" . $user->getPk(), $user->asArray()
+                                    );
+                                }
 								$target_user_followings = $user_follower_response->getUsers();
 								$next_max_id            = $user_follower_response->getNextMaxId();
 								echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "";
