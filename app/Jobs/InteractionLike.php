@@ -437,7 +437,7 @@ class InteractionLike implements ShouldQueue
 						$like_log                    = new InstagramProfileLikeLog;
 						$like_log->insta_username    = $ig_profile->insta_username;
 						$like_log->target_username   = $user_to_like->getUsername();
-						$like_log->target_media      = $item->getId();
+						$like_log->target_media      = $item->getPk();
 						$like_log->target_media_code = $item->getItemUrl();
 						$like_log->log               = serialize($like_response);
 						if ($like_log->save()) {

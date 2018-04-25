@@ -103,7 +103,7 @@ class LikeMedia extends Command
 
 				$like_response = $instagram->media->like($media_id);
 				$id = $this->nextJobId();
-
+				$instagram->timeline->getUserFeed($profile->insta_user_id);
 				if ($like_response->isOk()) {
 					$score = Carbon::now()->timestamp * -1;
 					Redis::zadd('test:like_logs', $score, $id);
