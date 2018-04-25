@@ -73,7 +73,7 @@ class GetBraintreeTransactions extends Command
 			$braintree_transaction->bt_cc_token = $transaction->creditCardDetails->token;
 			$braintree_transaction->save();
 
-//			dump($transaction);
+			dump($transaction);
 //			break;
 		}
     }

@@ -38,7 +38,7 @@ class RefreshStripeCustomerDetails extends Command
      */
     public function handle()
     {
-        \Stripe\Stripe::setApiKey("sk_live_HeS5nnfJ5qARMPsANoGw32c2");
+        \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
         $customers = \Stripe\Customer::all(array("limit" => 100))->autoPagingIterator();
         foreach ($customers as $customer) {
             $customer_id = $customer->id;
