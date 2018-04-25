@@ -47,8 +47,8 @@ class UpdatePendingCommissionPayable extends Command
 	public function handle()
 	{
 		try {
-			$start_date = '2018-02-01 00:00:00';
-			$end_date   = '2018-02-31 23:59:59';
+			$start_date = '2018-03-01 00:00:00';
+			$end_date   = '2018-03-31 23:59:59';
 			$users      = User::where('tier', '>=', 2);
 			//		                  ->where('last_pay_out_date', '2017-12-25 00:00:00');
 
