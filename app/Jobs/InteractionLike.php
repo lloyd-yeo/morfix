@@ -9,6 +9,7 @@ use App\InstagramProfileLikeLog;
 use App\InteractionHelper;
 use App\LikeLogsArchive;
 use App\Niche;
+use App\RedisRepository;
 use App\TargetHelper;
 use Carbon\Carbon as Carbon;
 use Illuminate\Bus\Queueable;
@@ -147,7 +148,7 @@ class InteractionLike implements ShouldQueue
 									continue;
 								}
 
-								InstagramHelper::saveUsersProfileToRedis($user_follower_response->getUsers());
+								RedisRepository::saveUserFollowersResponse($user_follower_response, $target_username_id);
 
 								$target_user_followings = $user_follower_response->getUsers();
 								$next_max_id            = $user_follower_response->getNextMaxId();

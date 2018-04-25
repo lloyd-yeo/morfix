@@ -48,4 +48,32 @@ class RedisRepository
 	{
 		Redis::lpush('morfix:profile:' . $liker_pk . ":liked_users", $liked_username);
 	}
+	public static function saveUsersProfile($user_follower_response)
+	{
+        foreach ($user_follower_response->getUsers() as $user){
+            Redis::hmset(
+                "morfix:profile:pk:" . $user->getPk(), $user->asArray()
+            );
+        }
+	}
+	public static function saveUsernamePk($user_follower_response)
+	{
+        foreach ($user_follower_response->getUsers() as $user){
+            Redis::set("morfix:profile:username:" . $user->getUsername(), $user->getPk());
+        }
+	}
+	public static function saveUsernameFollowers($user_follower_response, $target_username_id)
+	{
+        foreach ($user_follower_response->getUsers() as $user){
+            Redis::sadd("morfix:profile:" . $target_username_id . ":followers", $user->getPk());
+        }
+	}
+	public static function saveUserFollowersResponse($user_follower_response, $target_username_id)
+	{
+        self::saveUsersProfile($user_follower_response);
+        self::saveUsernamePk($user_follower_response);
+        self::saveUsernameFollowers($user_follower_response, $target_username_id);
+	}
+
+
 }
