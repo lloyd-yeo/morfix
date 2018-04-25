@@ -49,6 +49,7 @@ class GetBraintreeTransactions extends Command
 	    $collection = \Braintree_Transaction::search([
 		    \Braintree_TransactionSearch::amount()->greaterThanOrEqualTo('37')
 	    ]);
+	    
 		$transaction_ids = $collection->getIds();
 
 		foreach ($transaction_ids as $transaction_id) {
