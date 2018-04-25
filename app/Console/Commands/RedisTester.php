@@ -49,7 +49,7 @@ class RedisTester extends Command
 ////            $pk, [$response_array]
 //            $pk, $response_array
 //        );
-        Redis::sadd("test:profile:" . $pk . ":followers", $pk);
-        Redis::set("test:profile:username:" . $username, $pk);
+        Redis::sadd("test:profile:" . $pk . ":followers:", $pk);
+        Redis::set("test:profile:username:" . $username . ":", $pk);
     }
 }
