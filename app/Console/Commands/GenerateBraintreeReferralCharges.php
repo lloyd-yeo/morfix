@@ -10,6 +10,7 @@ use App\User;
 use App\UserAffiliates;
 use Braintree_Customer;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 
 class GenerateBraintreeReferralCharges extends Command
 {
@@ -109,7 +110,9 @@ class GenerateBraintreeReferralCharges extends Command
 
 					$paypal_charges_for_referrer = PaypalCharges::where('email', $referrer_email)
 					                                            ->where('status', 'Completed')
-					                                            ->where('time_stamp', '<', $date_to_retrieve_from)->get();
+					                                            ->where('time_stamp', '<', $date_to_retrieve_from)
+																->where('time_stamp', '>=', Carbon::parse($referrer_user->last_pay_out_date)->startOfMonth())
+					                                            ->get();
 					foreach ($paypal_charges_for_referrer as $paypal_charge_for_referrer) {
 						if ($paypal_charge_for_referrer->subscription_id == "0137") {
 							$users[$referrer_email]["premium"] = 1;
@@ -160,6 +163,7 @@ class GenerateBraintreeReferralCharges extends Command
 				                                              ->where('status', '!=', 'processor_declined')
 				                                              ->where('amount', '>', '0.02')
 				                                              ->where('created_at', '<', $date_to_retrieve_from)
+				                                              ->where('created_at', '>=', Carbon::parse($referrer_user->last_pay_out_date)->startOfMonth())
 				                                              ->orderBy('sub_id', 'desc')
 				                                              ->get();
 
