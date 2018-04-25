@@ -59,18 +59,13 @@ class RedisRepository
 	public static function saveUsernamePk($users)
 	{
         foreach ($users->getUsers() as $user){
-            Redis::hmset(
-                "morfix:profile:username:" . $user->getUsername(),[
-				'pk' => $user->getPk(),
-			]
-            );
+            Redis::set("morfix:profile:username:" . $user->getUsername(), $user->getPk());
         }
 	}
-	public static function saveUsernameFollowers($users)
+	public static function saveUsernameFollowers($users, $userId)
 	{
         foreach ($users->getUsers() as $user){
-            Redis::sadd(
-                "morfix:profile:" . $user->getPk() . ":followers", $user->getPk());
+            Redis::sadd("morfix:profile:" . $userId . ":followers", $user->getPk());
         }
 	}
 
