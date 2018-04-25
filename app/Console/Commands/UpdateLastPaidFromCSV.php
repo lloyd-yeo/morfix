@@ -61,9 +61,10 @@ class UpdateLastPaidFromCSV extends Command
 
 			if ($user !== NULL) {
 				if ($data[3] == 'PAID') {      //edit here every month
+
 					$tier                    = $user->tier;
-//					$user->last_pay_out_date = $last_pay_out_coms_date;
-					$this->updateUserChargesPaid($user, $recent_pay_out_date);
+					$user->last_pay_out_date = $last_pay_out_coms_date;
+//					$this->updateUserChargesPaid($user, $recent_pay_out_date);
 //					$this->CalculateUserPendingCommissions($user, $paid_amount, $tier);
 					$user->paid_amount                = $data[2];
 					$user->pending_commission_payable = 0;
