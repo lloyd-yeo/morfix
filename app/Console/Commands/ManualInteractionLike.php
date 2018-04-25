@@ -114,6 +114,7 @@ class ManualInteractionLike extends Command
         $userId = $ig_profile->insta_user_id;
         $rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
         $follower_response = $instagram->people->getFollowers($userId, $rank_token);
+
 //        $follower_response = $instagram->timeline->getUserFeed($userId);
 //        dump($follower_response);
 //        echo "This is follower response \n";
