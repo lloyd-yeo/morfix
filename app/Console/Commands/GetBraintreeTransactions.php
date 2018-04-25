@@ -75,9 +75,6 @@ class GetBraintreeTransactions extends Command
 			if ($braintree_transaction->save()) {
 				dump($braintree_transaction);
 			}
-
-
-//			break;
 		}
     }
 }

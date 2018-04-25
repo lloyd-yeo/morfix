@@ -43,7 +43,9 @@ class GetAllStripeInvoiceCharges extends Command
 	    \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
 	    $charges = \Stripe\Charge::all(array("limit" => 100));
 	    foreach ($charges->autoPagingIterator() as $charge) {
-	    	$stripe_charge = StripeCharge::where('stripe_id', $charge->customer)->where('charge_id', $charge->id)->first();
+	    	$stripe_charge = StripeCharge::where('stripe_id', $charge->customer)
+		                                 ->where('charge_id', $charge->id)
+		                                 ->first();
 			if ($stripe_charge == NULL) {
 				$stripe_charge = new StripeCharge;
 			}

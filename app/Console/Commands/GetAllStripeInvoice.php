@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\StripeCharge;
 use App\StripeInvoice;
-
+use Stripe\Stripe;
 
 class GetAllStripeInvoice extends Command
 {
@@ -75,5 +76,38 @@ class GetAllStripeInvoice extends Command
 			    }
 		    }
 	    }
+
+	    $charges = \Stripe\Charge::all(array("limit" => 100));
+	    foreach ($charges->autoPagingIterator() as $charge) {
+		    $stripe_charge = StripeCharge::where('stripe_id', $charge->customer)
+		                                 ->where('charge_id', $charge->id)
+		                                 ->first();
+		    if ($stripe_charge == NULL) {
+			    $stripe_charge = new StripeCharge;
+		    }
+
+		    if ($charge->customer == NULL) {
+			    continue;
+		    }
+
+		    $stripe_charge->stripe_id = $charge->customer;
+		    $stripe_charge->charge_id = $charge->id;
+		    $stripe_charge->invoice_id = $charge->invoice;
+		    $stripe_charge->charge_created = \Carbon\Carbon::createFromTimestamp($charge->created);
+		    $stripe_charge->failure_code = $charge->failure_code;
+		    $stripe_charge->failure_msg = $charge->failure_message;
+		    $stripe_charge->paid = 0;
+		    if ($charge->paid) {
+			    $stripe_charge->paid = 1;
+		    }
+		    $stripe_charge->refunded = 0;
+		    if ($charge->refunded) {
+			    $stripe_charge->refunded = 1;
+		    }
+		    if ($stripe_charge->save()) {
+			    dump($stripe_charge);
+		    }
+	    }
+
     }
 }

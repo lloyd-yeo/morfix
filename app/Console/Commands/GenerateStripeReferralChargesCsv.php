@@ -40,13 +40,12 @@ class GenerateStripeReferralChargesCsv extends Command {
      * @return mixed
      */
     public function handle() {
-    	$date_to_retrieve_from = "2018-03-01 00:00:00";;
+    	$date_to_retrieve_from = "2018-04-01 00:00:00";;
         $users = array();
         $user_payout_comms = array();
         $user_payouts = array();
 
-	    $sql_stmt = "SELECT 
-                                u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
+	    $sql_stmt = "SELECT u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
                                 u.tier, rc.referred_email, 
                                 rc.charge_id, rc.invoice_id, 
                                 rc.subscription_id, rc.charge_paid, rc.charge_refunded,
@@ -56,10 +55,9 @@ class GenerateStripeReferralChargesCsv extends Command {
                                 AND rc.charge_created < '$date_to_retrieve_from'
                                 ORDER BY referrer_email ASC, charge_created DESC;";
 
-        if ($this->argument('email') !== NULL) {
+        if ($this->argument('email') != NULL) {
         	$email = $this->argument('email');
-	        $sql_stmt = "SELECT 
-                                u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
+	        $sql_stmt = "SELECT u.last_pay_out_date, rc.charge_created, rc.referrer_email, u.paypal_email, 
                                 u.tier, rc.referred_email, 
                                 rc.charge_id, rc.invoice_id, 
                                 rc.subscription_id, rc.charge_paid, rc.charge_refunded,
@@ -136,7 +134,8 @@ class GenerateStripeReferralChargesCsv extends Command {
                 }
 
                 $paypal_charges_for_referrer = PaypalCharges::where('email', $referrer_email)
-                                ->where('status', 'Completed')->where('time_stamp', '<', "2018-03-01 00:00:00")->get();
+                                ->where('status', 'Completed')->where('time_stamp', '<', $date_to_retrieve_from)->get();
+
                 foreach ($paypal_charges_for_referrer as $paypal_charge_for_referrer) {
                     if ($paypal_charge_for_referrer->subscription_id == "0137") {
                         $users[$referrer_email]["premium"] = 1;
@@ -149,6 +148,7 @@ class GenerateStripeReferralChargesCsv extends Command {
                         $users[$referrer_email]["pro"] = 1;
                     }
                 }
+
 				if ($this->argument("debug") !== NULL) {
                     dump($users[$referrer_email]);
 				}

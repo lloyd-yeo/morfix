@@ -55,6 +55,7 @@ class UpdatePaypalChargesDaily extends Command {
                 ->get();
 
         foreach ($users as $user) {
+
             $agreementId = $user->agreement_id;
             $params = array('start_date' => date('Y-m-d', strtotime('-15 years')), 'end_date' => date('Y-m-d', strtotime('+30 days')));
             try {
@@ -62,41 +63,45 @@ class UpdatePaypalChargesDaily extends Command {
                 // dump($results);
                 foreach ($results as $result) {
 
-                    $checktransactionid = PaypalCharges::where('transaction_id', $result->transaction_id)
-                            ->first();
+                    $check_transaction_id = PaypalCharges::where('transaction_id', $result->transaction_id)->first();
 
                     if ($result->status == "Created") {
-                        if ($checktransactionid === NULL) {
-                            $this->CreateNewPaypalCharge($user, $result, $agreementId);
+                        if ($check_transaction_id === NULL) {
+                            $this->createNewPaypalCharge($user, $result, $agreementId);
                         }
                     }
                     if ($result->status == "Cancelled") {
-                        $checkexist = PaypalCharges::where('transaction_id', $result->transaction_id)
+                        $check_exist = PaypalCharges::where('transaction_id', $result->transaction_id)
                                 ->where('status', $result->status)
                                 ->first();
-                        if ($checkexist === NULL) {
-                            $this->CreateNewPaypalCharge($user, $result, $agreementId);
+                        if ($check_exist === NULL) {
+                            $this->createNewPaypalCharge($user, $result, $agreementId);
                         }
                     }
                     if ($result->status == "Refunded") {
-                        $checkexist = PaypalCharges::where('transaction_id', $result->transaction_id)
+
+                        $check_exist = PaypalCharges::where('transaction_id', $result->transaction_id)
                                 ->where('status', $result->status)
                                 ->first();
-                        if ($checkexist === NULL) {
-                            $this->CreateNewPaypalCharge($user, $result, $agreementId);
-                        } else if ($checkexist !== NULL) {
-                            $updatecharge = PaypalCharges::where('transaction_id', $result->transaction_id)
+
+                        if ($check_exist === NULL) {
+                            $this->createNewPaypalCharge($user, $result, $agreementId);
+                        } else if ($check_exist !== NULL) {
+                            $update_charge = PaypalCharges::where('transaction_id', $result->transaction_id)
                                     ->where('status', "Completed")
                                     ->update(['status' => "Refunded"]);
                         }
+
                     }
                     if ($result->status == "Completed") {
-                        $checkexist = PaypalCharges::where('transaction_id', $result->transaction_id)
+
+                        $check_exist = PaypalCharges::where('transaction_id', $result->transaction_id)
                                 ->where('status', $result->status)
                                 ->first();
-                        if ($checkexist === NULL){
-                             $this->CreateNewPaypalCharge($user, $result, $agreementId);
+                        if ($check_exist === NULL){
+                             $this->createNewPaypalCharge($user, $result, $agreementId);
                         }
+
                     }
                 }
             } catch (\Exception $ex) {
@@ -109,7 +114,7 @@ class UpdatePaypalChargesDaily extends Command {
         echo 'Total Execution Time: ' . $execution_time . ' Seconds' . "\n";
     }
 
-    public function CreateNewPaypalCharge($user, $result, $agreementId) {
+    public function createNewPaypalCharge($user, $result, $agreementId) {
         $charge = new PaypalCharges;
         $charge->email = $user->email;
         $charge->agreement_id = $agreementId;
@@ -136,12 +141,15 @@ class UpdatePaypalChargesDaily extends Command {
                     break;
             }
         }
+
         $referrers = GetReferralForUser::fromView()
                 ->where('referred', $user->email)
                 ->first();
-        if ($referrers !== NULL) {
+
+        if ($referrers != NULL) {
             $charge->referrer_email = $referrers->referrer;
         }
+
         echo 'new transaction saved: [' . $result->status . '] for [' . $user->email . "]\n";
         $charge->save();
     }
