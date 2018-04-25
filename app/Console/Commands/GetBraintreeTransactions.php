@@ -49,7 +49,7 @@ class GetBraintreeTransactions extends Command
 	    $collection = \Braintree_Transaction::search([
 		    \Braintree_TransactionSearch::amount()->greaterThanOrEqualTo('37')
 	    ]);
-	    
+
 		$transaction_ids = $collection->getIds();
 
 		foreach ($transaction_ids as $transaction_id) {
@@ -72,9 +72,11 @@ class GetBraintreeTransactions extends Command
 			$braintree_transaction->plan_id = $transaction->planId;
 			$braintree_transaction->sub_id = $transaction->subscriptionId;
 			$braintree_transaction->bt_cc_token = $transaction->creditCardDetails->token;
-			$braintree_transaction->save();
+			if ($braintree_transaction->save()) {
+				dump($braintree_transaction);
+			}
 
-			dump($transaction);
+
 //			break;
 		}
     }
