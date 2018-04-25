@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\LikeLogsArchive;
 use App\InstagramProfileLikeLog;
+use App\RedisRepository;
 
 class ImportLikeLogsToRedis extends Command
 {

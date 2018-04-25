@@ -703,4 +703,12 @@ class InstagramHelper extends \InstagramAPI\Request
 			"104.164.41.252:60000",
 			"104.164.41.254:60000" ];
 	}
+
+	public static function saveUsersProfileToRedis($users) {
+		foreach ($users as $user){
+			Redis::hmset(
+				"morfix:profile:pk:" . $user->getPk(), $user->asArray()
+			);
+		}
+	}
 }

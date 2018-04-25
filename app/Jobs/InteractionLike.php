@@ -146,16 +146,9 @@ class InteractionLike implements ShouldQueue
 									Log::info("" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "");
 									continue;
 								}
-//								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
-//								if ($user_follower_response == NULL) {
-//									Log::info("" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "");
-//									continue;
-//								}
-                                foreach ($user_follower_response->getUsers() as $user){
-                                    Redis::hmset(
-                                        "test:profile:" . $user->getPk(), $user->asArray()
-                                    );
-                                }
+
+								InstagramHelper::saveUsersProfileToRedis($user_follower_response->getUsers());
+
 								$target_user_followings = $user_follower_response->getUsers();
 								$next_max_id            = $user_follower_response->getNextMaxId();
 								echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "";
