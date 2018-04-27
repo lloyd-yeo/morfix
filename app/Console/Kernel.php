@@ -108,6 +108,7 @@ class Kernel extends ConsoleKernel {
         Commands\LikeMedia::class,
         Commands\RedisTester::class,
         Commands\ImportLikeLogsToRedis::class,
+        Commands\AddTotalLikeCountToRedis::class,
     ];
 
     /**
