@@ -71,24 +71,24 @@ return [
     */
 
     'environments' => [
-        'production' => [
-            'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['default', 'follows', 'likes', 'comments'],
-                'balance' => 'auto',
-                'processes' => 20,
-                'tries' => 3,
-            ],
-        ],
+	    'production' => [
+		    'supervisor-1' => [
+			    'connection' => 'redis',
+			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh'],
+			    'balance' => 'auto',
+			    'processes' => 30,
+			    'tries' => 3,
+		    ],
+	    ],
 
-        'local' => [
-            'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['default', 'follows', 'likes', 'comments'],
-                'balance' => 'simple',
-                'processes' => 3,
-                'tries' => 3,
-            ],
-        ],
+	    'local' => [
+		    'supervisor-1' => [
+			    'connection' => 'redis',
+			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh'],
+			    'balance' => 'simple',
+			    'processes' => 30,
+			    'tries' => 3,
+		    ],
+	    ],
     ],
 ];

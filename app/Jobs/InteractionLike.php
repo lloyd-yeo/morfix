@@ -557,7 +557,7 @@ class InteractionLike implements ShouldQueue
 		$ig_username = $ig_profile->insta_username;
 
 		//Blacklisted username.
-		$blacklisted_username = BlacklistedUsername::find($user_to_like->getUsername());
+		$blacklisted_username = BlacklistedUsername::find($user_to_like->getPk());
 		if ($blacklisted_username !== NULL) {
 			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
 				return 1;

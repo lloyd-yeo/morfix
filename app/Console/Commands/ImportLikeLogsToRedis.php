@@ -19,7 +19,7 @@ class ImportLikeLogsToRedis extends Command
      *
      * @var string
      */
-    protected $signature = 'importredis:likes';
+    protected $signature = 'redis:importlikes';
 
     /**
      * The console command description.
@@ -45,19 +45,20 @@ class ImportLikeLogsToRedis extends Command
      */
     public function handle()
     {
-		$ig_profiles = InstagramProfile::all();
-		foreach ($ig_profiles as $ig_profile) {
-			$like_logs = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->get();
-			$this->line("[" . $ig_profile->insta_username . "] like_logs count: " . $like_logs->count());
-			foreach ($like_logs as $like_log) {
-				$media_pk = explode('_', $like_log->target_media)[0];
-//				RedisRepository::savePartialMedia($media_pk, $like_log->target_media_code);
-//				RedisRepository::savePartialMediaOwner($like_log->target_username, $media_pk);
-				RedisRepository::saveUserLikedMediaByUsername($ig_profile->insta_username, $media_pk, $like_log->date_liked);
-				RedisRepository::saveUserLikedMediaByPk($ig_profile->insta_user_id, $media_pk, $like_log->date_liked);
-				RedisRepository::saveUserLikedUsername($ig_profile->insta_user_id, $like_log->target_username);
-			}
-			$this->line("[" . $ig_profile->insta_username . "] saved like_logs to redis.");
-		}
+    	$users = User::where('vip', 1)->orWhere('tier', '>', 1)->get();
+    	foreach ($users as $user) {
+		    $ig_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
+		    foreach ($ig_profiles as $ig_profile) {
+		    	$liked_media_ids = [];
+			    $like_logs = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->get();
+
+			    foreach ($like_logs as $like_log) {
+				    $liked_media_ids[explode("_", $like_log->target_media)[0]] = $like_log->target_media_code;
+				}
+				RedisRepository::saveProfileLikedMedias($ig_profile->insta_user_id, $liked_media_ids);
+			    $this->line("[" . $ig_profile->insta_username . "] like_logs count: " . $like_logs->count());
+			    $this->line("[" . $ig_profile->insta_username . "] saved like_logs to redis.");
+		    }
+	    }
     }
 }

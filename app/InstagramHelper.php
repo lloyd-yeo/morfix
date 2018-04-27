@@ -15,6 +15,7 @@ use InstagramAPI\Exception\NetworkException;
 use InstagramAPI\Exception\NotFoundException;
 use InstagramAPI\Exception\SentryBlockException;
 use InstagramAPI\Instagram as Instagram;
+use App\RedisRepository;
 use Log;
 
 class InstagramHelper extends \InstagramAPI\Request
@@ -399,7 +400,7 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		//Get the feed of the user to like.
 		try {
-			if ($user_to_like === NULL) {
+			if ($user_to_like == NULL) {
 				echo("\n" . "Null User - Target Username");
 
 				return NULL;
@@ -409,15 +410,10 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 		catch (\InstagramAPI\Exception\EndpointException $endpt_ex) {
 			echo("\n" . "Endpoint ex: " . $endpt_ex->getMessage());
+
 			if ($endpt_ex->getMessage() == "InstagramAPI\Response\UserFeedResponse: Not authorized to view user.") {
-				if (BlacklistedUsername::find($user_to_like->getUsername()) === NULL) {
-					$blacklist_username           = new BlacklistedUsername;
-					$blacklist_username->username = $user_to_like->getUsername();
-					$blacklist_username->save();
-					echo("\n" . "Blacklisted: " . $user_to_like->getUsername());
-				} else {
-					return NULL;
-				}
+				RedisRepository::saveBlacklistPk($user_to_like->getPk());
+				echo("\n" . "Blacklisted: " . $user_to_like->getPk());
 			}
 
 			return NULL;
@@ -599,6 +595,14 @@ class InstagramHelper extends \InstagramAPI\Request
 
 	}
 
+	public static function saveUsersProfileToRedis($users) {
+		foreach ($users as $user){
+			Redis::hmset(
+				"morfix:profile:pk:" . $user->getPk(), $user->asArray()
+			);
+		}
+	}
+
 	public static function getDatacenterProxyList()
 	{
 		return [
@@ -704,11 +708,4 @@ class InstagramHelper extends \InstagramAPI\Request
 			"104.164.41.254:60000" ];
 	}
 
-	public static function saveUsersProfileToRedis($users) {
-		foreach ($users as $user){
-			Redis::hmset(
-				"morfix:profile:pk:" . $user->getPk(), $user->asArray()
-			);
-		}
-	}
 }
