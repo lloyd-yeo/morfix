@@ -77,7 +77,7 @@ class RedisRepository
 
 		Redis::pipeline(function ($pipe) use ($like_count_map) {
 			foreach ($like_count_map as $profile_pk => $like_count) {
-				$pipe->set("morfix:profile:" . $profile_pk . ":likes", $like_count);
+				$pipe->incrby("morfix:profile:" . $profile_pk . ":likes", $like_count);
 			}
 		});
 	}
