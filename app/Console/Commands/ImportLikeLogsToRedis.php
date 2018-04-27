@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\LikeLogsArchive;
 use App\InstagramProfileLikeLog;
 use App\RedisRepository;
+use App\User;
 
 class ImportLikeLogsToRedis extends Command
 {
