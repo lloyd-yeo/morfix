@@ -49,7 +49,7 @@ class AddTotalLikeCountToRedis extends Command
 			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
 			foreach ($instagram_profiles as $instagram_profile) {
 				$like_count = LikeLogsArchive::where('insta_username', $instagram_profile->insta_username)->count();
-				$like_count_map[$instagram_profile->insta_username] = $like_count;
+				$like_count_map[$instagram_profile->insta_user_id] = $like_count;
 				$this->line("[Likes] Added Instagram account: " . $instagram_profile->insta_username);
 			}
 		}
