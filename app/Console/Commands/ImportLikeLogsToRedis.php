@@ -51,11 +51,12 @@ class ImportLikeLogsToRedis extends Command
 		    $ig_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
 		    foreach ($ig_profiles as $ig_profile) {
 		    	$liked_media_ids = [];
-			    $like_logs = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->get();
+			    $like_logs = InstagramProfileLikeLog::select(DB::raw("target_media_code, SPLIT_STRING(target_media, '_', 1) AS media_id"))->where('insta_username', $ig_profile->insta_username)->get();
 
 			    foreach ($like_logs as $like_log) {
-			    	$like_log->target_media = explode("_", $like_log->target_media)[0];
-			    	$like_log->save();
+			    	$this->line($like_log->media_id);
+//			    	$like_log->target_media = explode("_", $like_log->target_media)[0];
+//			    	$like_log->save();
 //				    $liked_media_ids[explode("_", $like_log->target_media)[0]] = $like_log->target_media_code;
 				}
 //				RedisRepository::saveProfileLikedMedias($ig_profile->insta_user_id, $liked_media_ids);
