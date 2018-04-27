@@ -3,6 +3,11 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\User;
+use App\InstagramProfile;
+use App\InstagramProfileLikeLog;
+use App\LikeLogsArchive;
+use App\RedisRepository;
 
 class AddTotalLikeCountToRedis extends Command
 {
@@ -11,14 +16,14 @@ class AddTotalLikeCountToRedis extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'redis:bootstraplikecount';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Bootstrap the like count for users.';
 
     /**
      * Create a new command instance.
@@ -37,6 +42,18 @@ class AddTotalLikeCountToRedis extends Command
      */
     public function handle()
     {
-        //
+	    $users = User::where('tier', '>', 1)->get();
+	    $like_count_map = array();
+
+		foreach ($users as $user) {
+			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
+			foreach ($instagram_profiles as $instagram_profile) {
+				$like_count = LikeLogsArchive::where('insta_username', $instagram_profile->insta_username)->count();
+				$like_count_map[$instagram_profile->insta_username] = $like_count;
+				$this->line("[Likes] Added Instagram account: " . $instagram_profile->insta_username);
+			}
+		}
+
+		RedisRepository::saveProfileLikeCountMap($like_count_map);
     }
 }

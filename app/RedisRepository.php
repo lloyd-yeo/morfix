@@ -68,6 +68,20 @@ class RedisRepository
             Redis::sadd("morfix:profile:" . $target_username_id . ":followers", $user->getPk());
         }
 	}
+
+	public static function saveProfileLikeCount($profile_pk, $like_count) {
+		Redis::set("morfix:profile:" . $profile_pk . ":likes", $like_count);
+	}
+
+	public static function saveProfileLikeCountMap($like_count_map) {
+
+		Redis::pipeline(function ($pipe) use ($like_count_map) {
+			foreach ($like_count_map as $profile_pk => $like_count) {
+				$pipe->set("morfix:profile:" . $profile_pk . ":likes", $like_count);
+			}
+		});
+	}
+
 	public static function saveUserFollowersResponse($user_follower_response, $target_username_id)
 	{
         self::saveUsersProfile($user_follower_response);
