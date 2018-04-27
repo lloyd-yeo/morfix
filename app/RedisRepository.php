@@ -83,12 +83,12 @@ class RedisRepository
 	}
 
 	public static function saveBlacklistPk($pk) {
-		$bucket = $pk/1000;
+		$bucket = intdiv($pk, 1000);
 		Redis::hset("morfix:blacklist:" . $bucket, $pk, 1);
 	}
 
 	public static function checkBlacklistPk($pk) {
-		$bucket = $pk/1000;
+		$bucket = intdiv($pk, 1000);
 		$pk_exists = Redis::hexists("morfix:blacklist:" . $bucket, $pk);
 		if ($pk_exists == 1) {
 			return TRUE;
@@ -100,8 +100,8 @@ class RedisRepository
 	public static function saveProfileLikedMedias($profile_pk, $media_pks) {
 		Redis::pipeline(function ($pipe) use ($profile_pk, $media_pks) {
 			foreach ($media_pks as $media_pk => $media_url) {
-				$bucket = $media_pk/1000;
-				$bucket = "$profile_pk" . $bucket;
+				$bucket = intdiv($media_pk, 1000);
+				$bucket = "$profile_pk" . "$bucket";
 				$pipe->hset("morfix:likes:" . $bucket, $media_pk, $media_url);
 			}
 		});
