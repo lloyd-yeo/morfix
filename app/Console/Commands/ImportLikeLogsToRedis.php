@@ -12,6 +12,7 @@ use App\LikeLogsArchive;
 use App\InstagramProfileLikeLog;
 use App\RedisRepository;
 use App\User;
+use DB;
 
 class ImportLikeLogsToRedis extends Command
 {
