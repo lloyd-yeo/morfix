@@ -148,7 +148,7 @@ class InteractionLike implements ShouldQueue
 									continue;
 								}
 
-								RedisRepository::saveUserFollowersResponse($user_follower_response, $target_username_id);
+//								RedisRepository::saveUserFollowersResponse($user_follower_response, $target_username_id);
 
 								$target_user_followings = $user_follower_response->getUsers();
 								$next_max_id            = $user_follower_response->getNextMaxId();
@@ -552,13 +552,11 @@ class InteractionLike implements ShouldQueue
 
 	public function checkBlacklistAndDuplicates(InstagramUser $user_to_like, $page_count)
 	{
-
 		$ig_profile  = $this->profile;
 		$ig_username = $ig_profile->insta_username;
 
 		//Blacklisted username.
-		$blacklisted_username = BlacklistedUsername::find($user_to_like->getPk());
-		if ($blacklisted_username !== NULL) {
+		if (RedisRepository::checkBlacklistPk($user_to_like->getPk())) {
 			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
 				return 1;
 			} else {
@@ -567,6 +565,16 @@ class InteractionLike implements ShouldQueue
 				}
 			}
 		}
+
+//		if ($blacklisted_username !== NULL) {
+//			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
+//				return 1;
+//			} else {
+//				if ($page_count === 2) { //if stuck on page 2 - continue browsing.
+//					return 2;
+//				}
+//			}
+//		}
 
 		//Check for duplicates.
 		$liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)

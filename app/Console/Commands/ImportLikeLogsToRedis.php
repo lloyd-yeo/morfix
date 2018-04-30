@@ -47,11 +47,6 @@ class ImportLikeLogsToRedis extends Command
      */
     public function handle()
     {
-	    $like_logs = InstagramProfileLikeLog::select(DB::raw("target_media_code, SUBSTRING_INDEX(target_media, '_', 1) AS media_id"))
-	                                        ->orderBy('media_id', 'DESC')
-	                                        ->get();
-    	return;
-
     	$users = User::where('vip', 1)->orWhere('tier', '>', 1)->get();
     	foreach ($users as $user) {
 		    $ig_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
@@ -64,11 +59,12 @@ class ImportLikeLogsToRedis extends Command
 
 			    foreach ($like_logs as $like_log) {
 			    	$this->line($like_log->media_id);
-//			    	$like_log->target_media = explode("_", $like_log->target_media)[0];
-//			    	$like_log->save();
-//				    $liked_media_ids[explode("_", $like_log->target_media)[0]] = $like_log->target_media_code;
+			    	$like_log->target_media = explode("_", $like_log->target_media)[0];
+			    	$like_log->save();
+				    $liked_media_ids[explode("_", $like_log->target_media)[0]] = $like_log->target_media_code;
 				}
-//				RedisRepository::saveProfileLikedMedias($ig_profile->insta_user_id, $liked_media_ids);
+
+				RedisRepository::saveProfileLikedMedias($ig_profile->insta_user_id, $liked_media_ids);
 			    $this->line("[" . $ig_profile->insta_username . "] like_logs count: " . $like_logs->count());
 			    $this->line("[" . $ig_profile->insta_username . "] saved like_logs to redis.");
 		    }
