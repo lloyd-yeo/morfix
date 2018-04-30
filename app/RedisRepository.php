@@ -100,9 +100,15 @@ class RedisRepository
 	public static function saveProfileLikedMedias($profile_pk, $media_pks) {
 		Redis::pipeline(function ($pipe) use ($profile_pk, $media_pks) {
 			foreach ($media_pks as $media_pk => $media_url) {
-				$bucket = intdiv($media_pk, 1000);
-				$bucket = "$profile_pk" . "$bucket";
-				$pipe->hset("morfix:likes:" . $bucket, $media_pk, $media_url);
+				try {
+					$bucket = intdiv($media_pk, 1000);
+					$bucket = "$profile_pk" . "$bucket";
+					$pipe->hset("morfix:likes:" . $bucket, $media_pk, $media_url);
+				} catch (\Exception $ex) {
+					echo("[ERROR] Parameters are: " . $media_pk);
+					echo($ex->getMessage());
+					continue;
+				}
 			}
 		});
 	}
