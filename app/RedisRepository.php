@@ -121,6 +121,14 @@ class RedisRepository
 		echo("\nmorfix:likes:" . $profile_pk . ":bucket_id to " . $bucket);
 	}
 
+	public static function saveNewProfileLikeLog($profile_pk, $media_pk, $media_url, $timestamp) {
+		$bucket = Redis::get("morfix:likes:" . $profile_pk . ":bucket_id");
+		$bucket_items = hlen("morfix:likes:" . $profile_pk . ":" . "$bucket");
+		if ($bucket_items < 999) {
+			Redis::hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url . "," . $timestamp);
+		}
+	}
+
 	public static function saveUserFollowersResponse($user_follower_response, $target_username_id)
 	{
         self::saveUsersProfile($user_follower_response);
