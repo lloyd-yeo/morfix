@@ -55,7 +55,7 @@ class ImportLikeLogsToRedis extends Command
 
 			    $like_logs = InstagramProfileLikeLog::select(DB::raw("target_media_code, SUBSTRING_INDEX(target_media, '_', 1) AS media_id, date_liked"))
 			                                        ->where('insta_username', $ig_profile->insta_username)
-				                                    ->orderBy('media_id', 'DESC')
+				                                    ->orderBy('date_liked', 'ASC')
 			                                        ->get();
 
 			    foreach ($like_logs as $like_log) {
