@@ -53,7 +53,7 @@ class ImportLikeLogsToRedis extends Command
 		    foreach ($ig_profiles as $ig_profile) {
 		    	$liked_media_ids = [];
 
-			    $like_logs = InstagramProfileLikeLog::select(DB::raw("target_media_code, SUBSTRING_INDEX(target_media, '_', 1) AS media_id"))
+			    $like_logs = InstagramProfileLikeLog::select(DB::raw("target_media_code, SUBSTRING_INDEX(target_media, '_', 1) AS media_id, date_liked"))
 			                                        ->where('insta_username', $ig_profile->insta_username)
 				                                    ->orderBy('media_id', 'DESC')
 			                                        ->get();
@@ -62,7 +62,7 @@ class ImportLikeLogsToRedis extends Command
 			    	$this->line($like_log->media_id);
 //			    	$like_log->target_media = $like_log->media_id;
 //			    	$like_log->save();
-				    $liked_media_ids[$like_log->media_id] = $like_log->target_media_code;
+				    $liked_media_ids[$like_log->media_id] = $like_log->target_media_code . "," . Carbon::parse($like_log->date_liked)->getTimestamp();
 				}
 
 				RedisRepository::saveProfileLikedMedias($ig_profile->insta_user_id, $liked_media_ids);
