@@ -100,7 +100,7 @@ class RedisRepository
 	public static function saveProfileLikedMedias($profile_pk, $media_pks) {
 
 		$bucket = 1;
-		Redis::pipeline(function ($pipe) use ($profile_pk, $media_pks, $bucket) {
+		Redis::pipeline(function ($pipe) use ($profile_pk, $media_pks, &$bucket) {
 			$i = 0;
 			foreach ($media_pks as $media_pk => $media_url) {
 				try {
