@@ -566,16 +566,6 @@ class InteractionLike implements ShouldQueue
 			}
 		}
 
-//		if ($blacklisted_username !== NULL) {
-//			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
-//				return 1;
-//			} else {
-//				if ($page_count === 2) { //if stuck on page 2 - continue browsing.
-//					return 2;
-//				}
-//			}
-//		}
-
 		//Check for duplicates.
 		$liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
 		                                      ->where('target_username', $user_to_like->getUsername())
