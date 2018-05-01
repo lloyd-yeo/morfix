@@ -125,7 +125,7 @@ class Kernel extends ConsoleKernel {
 //        $schedule->command('dm:send')->hourly();
 //        $schedule->command("engagement:add")->hourly();
         $schedule->command("analysis:follower")->daily("00:00");
-//        $schedule->command("ig:refresh")->everyThirtyMinutes();
+        $schedule->command("ig:refresh")->everyThirtyMinutes();
     }
 
     /**
