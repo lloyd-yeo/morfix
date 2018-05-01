@@ -60,8 +60,8 @@ class ImportLikeLogsToRedis extends Command
 
 			    foreach ($like_logs as $like_log) {
 			    	$this->line($like_log->media_id);
-			    	$like_log->target_media = $like_log->media_id;
-			    	$like_log->save();
+//			    	$like_log->target_media = $like_log->media_id;
+//			    	$like_log->save();
 				    $liked_media_ids[$like_log->media_id] = $like_log->target_media_code;
 				}
 
