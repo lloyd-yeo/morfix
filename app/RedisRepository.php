@@ -98,7 +98,6 @@ class RedisRepository
 	}
 
 	public static function saveProfileLikedMedias($profile_pk, $media_pks) {
-
 		$bucket = 1;
 		Redis::pipeline(function ($pipe) use ($profile_pk, $media_pks, &$bucket) {
 			$i = 0;
@@ -110,6 +109,7 @@ class RedisRepository
 					}
 					$pipe->hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url);
 					$i++;
+					echo("[HSET] " . "morfix:likes:" . $profile_pk . ":" . "$bucket");
 				} catch (\Exception $ex) {
 					echo("[ERROR] Parameters are: " . $media_pk);
 					echo($ex->getMessage());
@@ -118,6 +118,7 @@ class RedisRepository
 			}
 		});
 		Redis::set("morfix:likes:" . $profile_pk . ":bucket_id", $bucket);
+		echo("morfix:likes:" . $profile_pk . ":bucket_id to " . $bucket);
 	}
 
 	public static function saveUserFollowersResponse($user_follower_response, $target_username_id)
