@@ -109,16 +109,16 @@ class RedisRepository
 					}
 					$pipe->hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url);
 					$i++;
-					echo("[HSET] " . "morfix:likes:" . $profile_pk . ":" . "$bucket");
+					echo("\n[HSET] " . "morfix:likes:" . $profile_pk . ":" . "$bucket");
 				} catch (\Exception $ex) {
-					echo("[ERROR] Parameters are: " . $media_pk);
+					echo("\n[ERROR] Parameters are: " . $media_pk);
 					echo($ex->getMessage());
 					continue;
 				}
 			}
 		});
 		Redis::set("morfix:likes:" . $profile_pk . ":bucket_id", $bucket);
-		echo("morfix:likes:" . $profile_pk . ":bucket_id to " . $bucket);
+		echo("\nmorfix:likes:" . $profile_pk . ":bucket_id to " . $bucket);
 	}
 
 	public static function saveUserFollowersResponse($user_follower_response, $target_username_id)
