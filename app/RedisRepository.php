@@ -102,8 +102,7 @@ class RedisRepository
 			foreach ($media_pks as $media_pk => $media_url) {
 				try {
 					$bucket = intdiv($media_pk, 1000);
-					$bucket = "$profile_pk" . "$bucket";
-					$pipe->hset("morfix:likes:" . $bucket, $media_pk, $media_url);
+					$pipe->hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url);
 				} catch (\Exception $ex) {
 					echo("[ERROR] Parameters are: " . $media_pk);
 					echo($ex->getMessage());
