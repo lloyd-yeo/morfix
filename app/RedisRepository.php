@@ -48,32 +48,37 @@ class RedisRepository
 	{
 		Redis::lpush('morfix:profile:' . $liker_pk . ":liked_users", $liked_username);
 	}
+
 	public static function saveUsersProfile($user_follower_response)
 	{
-        foreach ($user_follower_response->getUsers() as $user){
-            Redis::hmset(
-                "morfix:profile:pk:" . $user->getPk(), $user->asArray()
-            );
-        }
-	}
-	public static function saveUsernamePk($user_follower_response)
-	{
-        foreach ($user_follower_response->getUsers() as $user){
-            Redis::set("morfix:profile:username:" . $user->getUsername(), $user->getPk());
-        }
-	}
-	public static function saveUsernameFollowers($user_follower_response, $target_username_id)
-	{
-        foreach ($user_follower_response->getUsers() as $user){
-            Redis::sadd("morfix:profile:" . $target_username_id . ":followers", $user->getPk());
-        }
+		foreach ($user_follower_response->getUsers() as $user) {
+			Redis::hmset(
+				"morfix:profile:pk:" . $user->getPk(), $user->asArray()
+			);
+		}
 	}
 
-	public static function saveProfileLikeCountSingle($profile_pk, $like_count) {
+	public static function saveUsernamePk($user_follower_response)
+	{
+		foreach ($user_follower_response->getUsers() as $user) {
+			Redis::set("morfix:profile:username:" . $user->getUsername(), $user->getPk());
+		}
+	}
+
+	public static function saveUsernameFollowers($user_follower_response, $target_username_id)
+	{
+		foreach ($user_follower_response->getUsers() as $user) {
+			Redis::sadd("morfix:profile:" . $target_username_id . ":followers", $user->getPk());
+		}
+	}
+
+	public static function saveProfileLikeCountSingle($profile_pk, $like_count)
+	{
 		Redis::set("morfix:profile:" . $profile_pk . ":likes", $like_count);
 	}
 
-	public static function saveProfileLikeCountMap($like_count_map) {
+	public static function saveProfileLikeCountMap($like_count_map)
+	{
 
 		Redis::pipeline(function ($pipe) use ($like_count_map) {
 			foreach ($like_count_map as $profile_pk => $like_count) {
@@ -82,13 +87,15 @@ class RedisRepository
 		});
 	}
 
-	public static function saveBlacklistPk($pk) {
+	public static function saveBlacklistPk($pk)
+	{
 		$bucket = intdiv($pk, 1000);
 		Redis::hset("morfix:blacklist:" . $bucket, $pk, 1);
 	}
 
-	public static function checkBlacklistPk($pk) {
-		$bucket = intdiv($pk, 1000);
+	public static function checkBlacklistPk($pk)
+	{
+		$bucket    = intdiv($pk, 1000);
 		$pk_exists = Redis::hexists("morfix:blacklist:" . $bucket, $pk);
 		if ($pk_exists == 1) {
 			return TRUE;
@@ -97,20 +104,22 @@ class RedisRepository
 		}
 	}
 
-	public static function saveProfileLikedMedias($profile_pk, $media_pks) {
+	public static function saveProfileLikedMedias($profile_pk, $media_pks)
+	{
 		$bucket = 1;
 		Redis::pipeline(function ($pipe) use ($profile_pk, $media_pks, &$bucket) {
 			$i = 0;
 			foreach ($media_pks as $media_pk => $media_url) {
 				try {
 					if ($i == 999) {
-						$i = 0;
+						$i      = 0;
 						$bucket = $bucket + 1;
 					}
 					$pipe->hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url);
 					$i++;
 					echo("\n[HSET] " . "morfix:likes:" . $profile_pk . ":" . "$bucket");
-				} catch (\Exception $ex) {
+				}
+				catch (\Exception $ex) {
 					echo("\n[ERROR] Parameters are: " . $media_pk);
 					echo($ex->getMessage());
 					continue;
@@ -121,19 +130,62 @@ class RedisRepository
 		echo("\nmorfix:likes:" . $profile_pk . ":bucket_id to " . $bucket);
 	}
 
-	public static function saveNewProfileLikeLog($profile_pk, $media_pk, $media_url, $timestamp) {
-		$bucket = Redis::get("morfix:likes:" . $profile_pk . ":bucket_id");
-		$bucket_items = hlen("morfix:likes:" . $profile_pk . ":" . "$bucket");
+	public static function saveNewProfileLikeLog($profile_pk, $media_pk, $media_url, $timestamp)
+	{
+		$bucket       = Redis::get("morfix:likes:" . $profile_pk . ":bucket_id");
+		$bucket_items = Redis::hlen("morfix:likes:" . $profile_pk . ":" . "$bucket");
 		if ($bucket_items < 999) {
 			Redis::hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url . "," . $timestamp);
 		}
 	}
 
+	public static function checkDuplicateLikeLog($profile_pk, $media_pk)
+	{
+		$bucket = Redis::get("morfix:likes:" . $profile_pk . ":bucket_id");
+		for ($i = 1; $i <= $bucket; $i++) {
+			$value = Redis::hexists("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk);
+			if ($value === 1) {
+				//Duplicate
+				return TRUE;
+			} else {
+				//Not duplicate
+				return FALSE;
+			}
+		}
+	}
+
+	public static function saveProfileLikedUsers($profile_pk, $liked_user_pk)
+	{
+		$bucket_exists       = Redis::exists("morfix:liked_users:" . $profile_pk . ":bucket_id");
+		$bucket = 1;
+		if ($bucket_exists == 0) {
+			Redis::set("morfix:liked_users:" . $profile_pk . ":bucket_id", $bucket);
+		} else {
+			$bucket = Redis::get("morfix:liked_users:" . $profile_pk . ":bucket_id");
+		}
+
+		Redis::hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $liked_user_pk, 1);
+	}
+
+	public static function checkDuplicateLikedUsers($profile_pk, $liked_user_pk) {
+		$bucket = Redis::get("morfix:liked_users:" . $profile_pk . ":bucket_id");
+		for ($i = 1; $i <= $bucket; $i++) {
+			$value = Redis::hexists("morfix:liked_users:" . $profile_pk . ":" . "$bucket", $liked_user_pk);
+			if ($value === 1) {
+				//Duplicate
+				return TRUE;
+			} else {
+				//Not duplicate
+				return FALSE;
+			}
+		}
+	}
+
 	public static function saveUserFollowersResponse($user_follower_response, $target_username_id)
 	{
-        self::saveUsersProfile($user_follower_response);
-        self::saveUsernamePk($user_follower_response);
-        self::saveUsernameFollowers($user_follower_response, $target_username_id);
+		self::saveUsersProfile($user_follower_response);
+		self::saveUsernamePk($user_follower_response);
+		self::saveUsernameFollowers($user_follower_response, $target_username_id);
 	}
 
 

@@ -229,19 +229,17 @@ class InteractionLike implements ShouldQueue
 							if ($hashtag_feed !== NULL) {
 								foreach ($hashtag_feed->getItems() as $item) {
 									$user_to_like = $item->getUser();
-									if (!$this->checkDuplicate($user_to_like)) {
-										if ($this->like_quota > 0) {
-											if (!$this->checkDuplicateByMediaId($item)) {
-												if (!$this->like($user_to_like, $item)) {
-													continue;
-												}
+									if ($this->like_quota > 0) {
+										if (!$this->checkDuplicateByMediaId($item)) {
+											if (!$this->like($user_to_like, $item)) {
+												continue;
 											}
-										} else {
-											Log::info("[186] Exiting...");
-											$this->printElapsedTime($this->time_start, $ig_profile);
-
-											return;
 										}
+									} else {
+										Log::info("[186] Exiting...");
+										$this->printElapsedTime($this->time_start, $ig_profile);
+
+										return;
 									}
 								}
 							}
@@ -430,6 +428,7 @@ class InteractionLike implements ShouldQueue
 						Log::info("" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
 
 						RedisRepository::saveNewProfileLikeLog($ig_profile->insta_user_id, $item->getPk(), $item->getItemUrl(), Carbon::now()->getTimestamp());
+						RedisRepository::saveProfileLikedUsers($ig_profile->insta_user_id, $item->getUser()->getPk());
 
 						$ig_profile->next_like_time     = Carbon::now()->addMinutes($this->speed_delay);
 						$ig_profile->auto_like_ban      = 0;
@@ -483,27 +482,7 @@ class InteractionLike implements ShouldQueue
 
 	public function checkDuplicateByMediaId(InstagramItem $item)
 	{
-		$ig_profile = $this->profile;
-
-		if (InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
-		                           ->where('target_media', $item->getId())->count() > 0) {
-			#duplicate. Liked before this photo with this id.
-			return TRUE;
-		}
-
-		//Check for duplicates.
-		$liked_logs = LikeLogsArchive::where('insta_username', $ig_profile->insta_username)
-		                             ->where('target_media', $item->getId())
-		                             ->first();
-
-		//Duplicate = liked media before.
-		if ($liked_logs !== NULL) {
-			Log::info("" . "Duplicate Log [MEDIA] Found:\t[" . $ig_profile->insta_username . "] [" . $item->getId() . "]");
-
-			return TRUE;
-		}
-
-		return FALSE;
+		return RedisRepository::checkDuplicateLikeLog($this->profile->insta_user_id, $item->getPk());
 	}
 
 	public function checkDuplicate(InstagramUser $user_to_like)
@@ -511,33 +490,10 @@ class InteractionLike implements ShouldQueue
 		//Weird error, null user. Check to be safe.
 		if ($user_to_like === NULL) {
 			Log::info("" . "NULL user");
-
 			return TRUE;
 		}
 
-		//Check for duplicates.
-		$liked_user = InstagramProfileLikeLog::where('insta_username', $this->profile->insta_username)
-		                                     ->where('target_username', $user_to_like->getUsername())
-		                                     ->first();
-
-		//Duplicate = liked before.
-		if ($liked_user !== NULL) {
-			Log::info("" . "[Current] Duplicate log found:\t[" . $this->profile->insta_username . "] "
-				. "[" . $user_to_like->getUsername() . "]");
-
-			return TRUE;
-		}
-
-		//Check for duplicates.
-		$liked_user = LikeLogsArchive::where('insta_username', $this->profile->insta_username)
-		                             ->where('target_username', $user_to_like->getUsername())
-		                             ->first();
-
-		//Duplicate = liked before.
-		if ($liked_user !== NULL) {
-			Log::info("" . "[Archive] Duplicate Log Found:\t[" . $this->profile->insta_username . "] "
-				. "[" . $user_to_like->getUsername() . "]");
-
+		if (RedisRepository::checkDuplicateLikedUsers($this->profile->insta_user_id, $user_to_like->getPk())) {
 			return TRUE;
 		}
 
@@ -560,32 +516,8 @@ class InteractionLike implements ShouldQueue
 			}
 		}
 
-		//Check for duplicates.
-		$liked_users = InstagramProfileLikeLog::where('insta_username', $ig_username)
-		                                      ->where('target_username', $user_to_like->getUsername())
-		                                      ->first();
-
-		//Duplicate = liked before.
-		if ($liked_users != NULL) {
+		if (RedisRepository::checkDuplicateLikedUsers($this->profile->insta_user_id, $user_to_like->getPk())) {
 			Log::info("" . "[Current] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
-			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
-				return 1;
-			} else {
-				if ($page_count === 2) { //if stuck on page 2 - continue browsing.
-					return 2;
-				}
-			}
-		}
-
-		//Check for duplicates.
-		$liked_users_archive = LikeLogsArchive::where('insta_username', $ig_username)
-		                                      ->where('target_username', $user_to_like->getUsername())
-		                                      ->first();
-
-		//Duplicate = liked before.
-		if ($liked_users_archive != NULL) {
-			Log::info("" . "[Archive] Duplicate Log Found:\t[$ig_username] [" . $user_to_like->getUsername() . "]");
-
 			if ($page_count === 1) { //if stuck on page 1 - straight on to subsequent pages.
 				return 1;
 			} else {
