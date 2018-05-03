@@ -229,6 +229,4 @@ class RedisRepository
 		self::saveUsernamePk($user_follower_response);
 		self::saveUsernameFollowers($user_follower_response, $target_username_id);
 	}
-
-
 }
