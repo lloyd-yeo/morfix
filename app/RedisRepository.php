@@ -135,7 +135,12 @@ class RedisRepository
 		$bucket       = Redis::get("morfix:likes:" . $profile_pk . ":bucket_id");
 		$bucket_items = Redis::hlen("morfix:likes:" . $profile_pk . ":" . "$bucket");
 		if ($bucket_items < 999) {
+			//Save the log itself.
 			Redis::hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url . "," . $timestamp);
+			//Increment the user's total like count
+			Redis::incrby("morfix:profile:" . $profile_pk . ":likes", 1);
+			//Increment the user's daily like count
+			Redis::incrby("morfix:profile:" . $profile_pk . ":daily_likes", 1);
 		}
 	}
 
@@ -179,6 +184,43 @@ class RedisRepository
 				return FALSE;
 			}
 		}
+	}
+
+	public static function getProfileTotalLikeCount($profile_pk) {
+		$like_count = Redis::get("morfix:profile:" . $profile_pk . ":likes");
+		$daily_like_count = self::getProfileDailyLikeCount($profile_pk);
+		return $like_count;
+	}
+
+	public static function getProfileDailyLikeCount($profile_pk) {
+
+	}
+
+	public static function incrementProfileTotalLikeCount($profile_pk) {
+		$bucket = Redis::get("morfix:likes:" . $profile_pk . ":bucket_id");
+		for ($i = 1; $i <= $bucket; $i++) {
+			$bucket_items = Redis::hlen("morfix:likes:" . $profile_pk . ":" . "$bucket");
+			Redis::incrby("morfix:profile:" . $profile_pk . ":likes", $bucket_items);
+		}
+	}
+
+	public static function incrementProfilesTotalLikeCount($profile_pks) {
+		Redis::pipeline(function ($pipe) use ($profile_pks) {
+			foreach ($profile_pks as $profile_pk) {
+				try {
+					$bucket = Redis::get("morfix:likes:" . $profile_pk . ":bucket_id");
+					for ($i = 1; $i <= $bucket; $i++) {
+						$bucket_items = Redis::hlen("morfix:likes:" . $profile_pk . ":" . "$bucket");
+						$pipe->incrby("morfix:profile:" . $profile_pk . ":likes", $bucket_items);
+					}
+				}
+				catch (\Exception $ex) {
+					echo("\n[ERROR] Parameters are: " . $profile_pk);
+					echo($ex->getMessage());
+					continue;
+				}
+			}
+		});
 	}
 
 	public static function saveUserFollowersResponse($user_follower_response, $target_username_id)

@@ -366,7 +366,6 @@ class InteractionLike implements ShouldQueue
 					}
 				} else {
 					$this->printElapsedTime($this->time_start, $this->profile);
-
 					return;
 				}
 			}

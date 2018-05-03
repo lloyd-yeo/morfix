@@ -18,6 +18,7 @@ use App\InstagramProfileFollowLog;
 use App\InstagramProfileLikeLog;
 use Unicodeveloper\Emoji\Emoji;
 use Carbon\Carbon;
+use App\RedisRepository;
 
 class InteractionsController extends Controller {
 
@@ -68,7 +69,9 @@ class InteractionsController extends Controller {
         
         if (Auth::user()->partition === 0) {
 
-	        $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
+	        $likes_done = RedisRepository::getProfileTotalLikeCount($ig_profile->insta_user_id);
+
+//	        $likes_done = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)->count();
 	        $comments_done = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
 	        $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();
 	        $unfollows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)->count();
