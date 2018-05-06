@@ -87,6 +87,7 @@ class UpdatePendingCommissionPayable extends Command
 
 				foreach ($user_affiliates as $user_affiliate) {
 					$affiliate = User::find($user_affiliate->referred);
+
 					if ($affiliate == NULL) {
 						continue;
 					} else {
