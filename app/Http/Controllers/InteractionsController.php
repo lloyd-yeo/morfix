@@ -76,9 +76,11 @@ class InteractionsController extends Controller {
 	        $follows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('follow', 1)->count();
 	        $unfollows_done = InstagramProfileFollowLog::where('insta_username', $ig_profile->insta_username)->where('unfollowed', 1)->count();
 
-	        $likes_done_today = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
-                    ->whereDate('date_liked', '=', Carbon::today()->toDateString())
-                    ->count();
+	        $likes_done_today = RedisRepository::getProfileDailyLikeCount($ig_profile->insta_user_id);
+
+//	        $likes_done_today = InstagramProfileLikeLog::where('insta_username', $ig_profile->insta_username)
+//                    ->whereDate('date_liked', '=', Carbon::today()->toDateString())
+//                    ->count();
             $comments_done_today = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)
                     ->whereDate('date_commented', '=', Carbon::today()->toDateString())
                     ->count();

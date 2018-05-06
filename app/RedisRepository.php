@@ -188,12 +188,12 @@ class RedisRepository
 
 	public static function getProfileTotalLikeCount($profile_pk) {
 		$like_count = Redis::get("morfix:profile:" . $profile_pk . ":likes");
-		$daily_like_count = self::getProfileDailyLikeCount($profile_pk);
 		return $like_count;
 	}
 
 	public static function getProfileDailyLikeCount($profile_pk) {
-
+		$like_count = Redis::get("morfix:profile:" . $profile_pk . ":daily_likes");
+		return $like_count;
 	}
 
 	public static function incrementProfileTotalLikeCount($profile_pk) {
