@@ -89,15 +89,12 @@ class RedisRepository
 
 	public static function saveBlacklistPk($pk)
 	{
-		$bucket = intdiv($pk, 1000);
-		Redis::hset("morfix:blacklist:" . $bucket, $pk, 1);
+		Redis::sadd("morfix:blacklist", $pk);
 	}
 
 	public static function checkBlacklistPk($pk)
 	{
-		$bucket    = intdiv($pk, 1000);
-		$pk_exists = Redis::hexists("morfix:blacklist:" . $bucket, $pk);
-		if ($pk_exists == 1) {
+		if (Redis::sismember("morfix:blacklist", $pk) == 1) {
 			return TRUE;
 		} else {
 			return FALSE;
