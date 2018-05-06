@@ -59,7 +59,7 @@ class UpdateLastPaidFromCSV extends Command
 			$user                = User::where('email', $current_email)->first();
 //			$recent_pay_out_date = Carbon::create(2018, 03, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
 
-			if ($user !== NULL) {
+			if ($user != NULL) {
 				echo "[UPDATING PAID OUT DATE] Processing email: " . $current_email . "...";
 				if ($data[3] == 'PAID') {
 					$user->last_pay_out_date = $last_pay_out_coms_date;
