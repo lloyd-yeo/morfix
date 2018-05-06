@@ -26,7 +26,7 @@ class UpdateLastPaidFromCSV extends Command
 	 *
 	 * @var string
 	 */
-	protected $description = '(STEP 1) updating when the user last paid from a csv file';
+	protected $description = '(STEP 1) Updating when the user was last paid out from a csv file';
 
 	/**
 	 * Create a new command instance.
@@ -45,10 +45,10 @@ class UpdateLastPaidFromCSV extends Command
 	 */
 	public function handle()
 	{
-		$path                   = app_path('march-payout.csv');
+		$path                   = app_path('apr-payout.csv');
 		$file                   = fopen($path, "r");
 		$current_email          = "";
-		$last_pay_out_coms_date = "2018-03-25 00:00:00"; //edit here every month
+		$last_pay_out_coms_date = "2018-04-25 00:00:00"; //edit here every month, March pay = 03-25, April pay = 04-25, so on & so forth...
 		$paid_amount            = 0;
 		$tier                   = 0;
 
@@ -57,26 +57,20 @@ class UpdateLastPaidFromCSV extends Command
 			//            #$data[0] is first cell so on & so forth.
 			$current_email       = $data[0];
 			$user                = User::where('email', $current_email)->first();
-			$recent_pay_out_date = Carbon::create(2018, 03, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
+//			$recent_pay_out_date = Carbon::create(2018, 03, 25, 0, 0, 0, 'Asia/Singapore'); // edit here every month
 
 			if ($user !== NULL) {
-				if ($data[3] == 'PAID') {      //edit here every month
-
-					$tier                    = $user->tier;
+				echo "[UPDATING PAID OUT DATE] Processing email: " . $current_email . "...";
+				if ($data[3] == 'PAID') {
 					$user->last_pay_out_date = $last_pay_out_coms_date;
-//					$this->updateUserChargesPaid($user, $recent_pay_out_date);
-//					$this->CalculateUserPendingCommissions($user, $paid_amount, $tier);
 					$user->paid_amount                = $data[2];
 					$user->pending_commission_payable = 0;
 					$user->all_time_commission        = $user->all_time_commission + $data[2];
 					$user->save();
-
 					echo "[$current_email] Updated last pay out date to [$last_pay_out_coms_date]\n";
 					echo "[$current_email] Updated last pay out amount to [$data[2]]\n";
 					echo "[$current_email] Updated pending commission to to [$user->pending_commission]\n";
 
-					$paid_amount = 0;
-					$tier        = 0;
 				} else {
 					echo $user->email . " doesn't exists!\n";
 				}
