@@ -47,8 +47,8 @@ class UpdatePendingCommissionPayable extends Command
 	public function handle()
 	{
 		try {
-			$start_date = '2018-03-01 00:00:00';
-			$end_date   = '2018-03-31 23:59:59';
+			$start_date = '2018-04-01 00:00:00';
+			$end_date   = '2018-04-31 23:59:59';
 			$users      = User::where('tier', '>=', 2);
 			//		                  ->where('last_pay_out_date', '2017-12-25 00:00:00');
 
@@ -65,7 +65,7 @@ class UpdatePendingCommissionPayable extends Command
 
 				$date_to_retrieve_invoices_from = NULL;
 
-				if ($user->last_pay_out_date !== NULL) {
+				if ($user->last_pay_out_date != NULL) {
 					$last_pay_out_date              = $user->last_pay_out_date;
 					$last_pay_out_date              = \Carbon\Carbon::parse($user->last_pay_out_date);
 					$date_to_retrieve_invoices_from = $last_pay_out_date->day(1)->hour(0)->minute(0);

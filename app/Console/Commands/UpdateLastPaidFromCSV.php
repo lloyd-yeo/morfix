@@ -69,8 +69,7 @@ class UpdateLastPaidFromCSV extends Command
 					$user->save();
 					echo "[$current_email] Updated last pay out date to [$last_pay_out_coms_date]\n";
 					echo "[$current_email] Updated last pay out amount to [$data[2]]\n";
-					echo "[$current_email] Updated pending commission to to [$user->pending_commission]\n";
-
+					echo "[$current_email] Updated pending commission to [$user->pending_commission]\n";
 				} else {
 					echo $user->email . " doesn't exists!\n";
 				}
