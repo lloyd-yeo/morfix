@@ -101,19 +101,19 @@ class AffiliateController extends Controller
 			$url->clicks  = $clicks;
 			$url->save();
 
-			$url_   = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=davsl";
-			$title  = "MorfiX - Digital Altitude VSL";
-			$ip     = "155.69.160.38";
-			$clicks = 0;
-
-			$keyword      = $ref_kw . "da";
-			$url          = new YourlsUrl;
-			$url->keyword = $keyword;
-			$url->url     = $url_;
-			$url->title   = $title;
-			$url->ip      = $ip;
-			$url->clicks  = $clicks;
-			$url->save();
+//			$url_   = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=davsl";
+//			$title  = "MorfiX - Digital Altitude VSL";
+//			$ip     = "155.69.160.38";
+//			$clicks = 0;
+//
+//			$keyword      = $ref_kw . "da";
+//			$url          = new YourlsUrl;
+//			$url->keyword = $keyword;
+//			$url->url     = $url_;
+//			$url->title   = $title;
+//			$url->ip      = $ip;
+//			$url->clicks  = $clicks;
+//			$url->save();
 
 			$url_   = "https://app.morfix.co/vsl/signup?referrer=" . $user_id . "&redir=ospvsl";
 			$title  = "MorfiX - Online Sales Pro VSL";
