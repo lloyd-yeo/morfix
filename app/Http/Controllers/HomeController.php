@@ -38,6 +38,13 @@ class HomeController extends Controller
 
 		$current_user = Auth::user();
 
+
+		if ($current_user->trial_activation == 2) {
+			$current_user->trial_activation = 1;
+			$current_user->trial_end_date = \Carbon\Carbon::now()->addDays(7);
+			$current_user->save();
+		}
+
 		$current_user->last_login = \Carbon\Carbon::now();
 		$current_user->save();
 
