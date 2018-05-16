@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class InstagramProfileFollowerAnalysis extends Model {
 
-    protected $table = 'instagram_profile_follower_analysis';
+    protected $table = 'user_insta_follower_analysis';
 
 }
