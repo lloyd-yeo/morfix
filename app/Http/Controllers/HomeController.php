@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\InstagramProfileFollowerAnalysis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,6 @@ class HomeController extends Controller
 
 		$current_user = Auth::user();
 
-
 		if ($current_user->trial_activation == 2) {
 			$current_user->trial_activation = 1;
 			$current_user->trial_end_date = \Carbon\Carbon::now()->addDays(7);
@@ -67,7 +67,8 @@ class HomeController extends Controller
 		}
 
 		$instagram_profiles = array();
-		if (Auth::user()->partition === 0) {
+
+		if (Auth::user()->partition == 0) {
 			$instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
 				->take($current_user->num_acct)
 				->orderBy('id', 'desc')
@@ -88,8 +89,9 @@ class HomeController extends Controller
 
 		foreach ($instagram_profiles as $ig_profile) {
 
-			$follower_analysis = DB::select("SELECT follower_count, date FROM insta_affiliate.user_insta_follower_analysis WHERE insta_username = ? ORDER BY date DESC LIMIT 10;",
-				[ $ig_profile->insta_username ]);
+			$follower_analysis = InstagramProfileFollowerAnalysis::select('follower_count', 'date')
+			                                                     ->where('insta_username', $ig_profile->insta_username)
+			                                                     ->orderBy('date', 'desc')->get();
 			$analysis_csv = "";
 			$analysis_date_csv = "";
 
@@ -129,11 +131,11 @@ class HomeController extends Controller
 
 		$user_updates = UserUpdate::where('email', Auth::user()->email)->orderBy('id', 'desc')->take(5)->get();
 
-		$remaining_quota = DB::select("SELECT COUNT(email) AS email_count FROM user_insta_profile WHERE email = \"" . Auth::user()->email . "\";");
+		$remaining_quota = InstagramProfile::where('email', Auth::user()->email)->count();
 
-		$user = User::where('email', Auth::user()->email)->first();
+//		$user = User::where('email', Auth::user()->email)->first();
 
-		$remaining_quota = $user->num_acct - $remaining_quota[0]->email_count;
+		$remaining_quota = Auth::user()->num_acct - $remaining_quota;
 
 		return view('home', [
 			'leaderboard_alltime'              => $leaderboard_alltime,
