@@ -48,7 +48,9 @@ class HomeController extends Controller
 		$current_user->last_login = \Carbon\Carbon::now();
 		$current_user->save();
 
-		DB::update("UPDATE user_insta_profile SET profile_pic_url = REPLACE(profile_pic_url, 'http://', 'https://');");
+		$current_user_email = Auth::user()->email;
+
+		DB::update("UPDATE user_insta_profile SET profile_pic_url = REPLACE(profile_pic_url, 'http://', 'https://') WHERE email = '$current_user_email';");
 
 		$leaderboard_alltime = DB::select("SELECT email, name, (SUM(pending_commission)+SUM(all_time_commission)) AS total_comms FROM user
                         GROUP BY email, name
@@ -132,8 +134,6 @@ class HomeController extends Controller
 		$user_updates = UserUpdate::where('email', Auth::user()->email)->orderBy('id', 'desc')->take(5)->get();
 
 		$remaining_quota = InstagramProfile::where('email', Auth::user()->email)->count();
-
-//		$user = User::where('email', Auth::user()->email)->first();
 
 		$remaining_quota = Auth::user()->num_acct - $remaining_quota;
 
