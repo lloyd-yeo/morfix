@@ -93,6 +93,8 @@ class SendScheduledPost extends Command
 							}
 							$post_schedule->save();
 						}
+					} else {
+
 					}
 				}
 			} else {
