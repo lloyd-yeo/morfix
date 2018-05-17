@@ -126,11 +126,11 @@ class ManualInteractionLike extends Command
 //        $response_array = json_encode($response_array, JSON_PRETTY_PRINT);
 //        echo ($response_array);
 //        $counter= 0;
-        foreach ($follower_response->getUsers() as $user){
-            Redis::hmset(
-                "test:profile:" . $user->getPk(), $user->asArray()
-            );
-        }
+//        foreach ($follower_response->getUsers() as $user){
+//            Redis::hmset(
+//                "test:profile:" . $user->getPk(), $user->asArray()
+//            );
+//        }
 
 
     }
