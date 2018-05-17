@@ -77,6 +77,7 @@ class SendScheduledPost extends Command
 						}
 					}
 					catch (InstagramException $instagramException) {
+						dump($instagramException);
 						$post_schedule->posted = 2;
 						if ($instagramException->hasResponse()) {
 							$post_schedule->failure_msg = $instagramException->getResponse()->getMessage();
