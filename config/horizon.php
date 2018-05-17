@@ -77,7 +77,7 @@ return [
 			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh'],
 			    'balance' => 'auto',
 			    'processes' => 30,
-			    'tries' => 3,
+			    'tries' => 1,
 		    ],
 	    ],
 
@@ -87,7 +87,7 @@ return [
 			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh'],
 			    'balance' => 'simple',
 			    'processes' => 30,
-			    'tries' => 3,
+			    'tries' => 1,
 		    ],
 	    ],
     ],
