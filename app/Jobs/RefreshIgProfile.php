@@ -142,6 +142,9 @@ class RefreshIgProfile implements ShouldQueue {
 
 	    $this->instagram = InstagramHelper::initInstagram();
 	    $this->instagram = InstagramHelper::setProxy($this->instagram, $ig_profile, 1);
+	    if ($this->instagram->isMaybeLoggedIn) {
+	    	exit();
+	    }
 	    if (!InstagramHelper::login($this->instagram, $ig_profile)) {
 		    exit();
 	    } else {
