@@ -67,7 +67,7 @@ class InteractionsController extends Controller {
         $follows_done_today = 0;
         $unfollows_done_today = 0;
         
-        if (Auth::user()->partition === 0) {
+        if (Auth::user()->partition == 0) {
 
 	        $likes_done = RedisRepository::getProfileTotalLikeCount($ig_profile->insta_user_id);
 

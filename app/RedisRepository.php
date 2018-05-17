@@ -133,7 +133,7 @@ class RedisRepository
 		$bucket_items = Redis::hlen("morfix:likes:" . $profile_pk . ":" . "$bucket");
 		if ($bucket_items < 999) {
 			//Save the log itself.
-			Redis::hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url . "," . $timestamp);
+//			Redis::hset("morfix:likes:" . $profile_pk . ":" . "$bucket", $media_pk, $media_url . "," . $timestamp);
 			//Increment the user's total like count
 			Redis::incrby("morfix:profile:" . $profile_pk . ":likes", 1);
 			//Increment the user's daily like count

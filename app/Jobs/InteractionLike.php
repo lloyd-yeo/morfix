@@ -427,12 +427,29 @@ class InteractionLike implements ShouldQueue
 						Log::info("" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
 
 						RedisRepository::saveNewProfileLikeLog($ig_profile->insta_user_id, $item->getPk(), $item->getItemUrl(), Carbon::now()->getTimestamp());
-						RedisRepository::saveProfileLikedUsers($ig_profile->insta_user_id, $item->getUser()->getPk());
+//						RedisRepository::saveProfileLikedUsers($ig_profile->insta_user_id, $item->getUser()->getPk());
 
-						$ig_profile->next_like_time     = Carbon::now()->addMinutes($this->speed_delay);
-						$ig_profile->auto_like_ban      = 0;
-						$ig_profile->auto_like_ban_time = NULL;
-						$ig_profile->save();
+						$like_log                    = new InstagramProfileLikeLog;
+						$like_log->insta_username    = $ig_profile->insta_username;
+						$like_log->target_username   = $user_to_like->getUsername();
+						$like_log->target_media      = $item->getPk();
+						$like_log->target_media_code = $item->getItemUrl();
+						$like_log->log               = serialize($like_response);
+						if ($like_log->save()) {
+							$ig_profile->next_like_time     = Carbon::now()->addMinutes($this->speed_delay);
+							$ig_profile->auto_like_ban      = 0;
+							$ig_profile->auto_like_ban_time = NULL;
+							$ig_profile->save();
+
+							return TRUE;
+						} else {
+							return FALSE;
+						}
+
+//						$ig_profile->next_like_time     = Carbon::now()->addMinutes($this->speed_delay);
+//						$ig_profile->auto_like_ban      = 0;
+//						$ig_profile->auto_like_ban_time = NULL;
+//						$ig_profile->save();
 
 						return TRUE;
 
