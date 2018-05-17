@@ -34,14 +34,14 @@ class HomeController extends Controller
 	public function index(Request $request)
 	{
 		if (!session()->has('proxy_session_id')) {
-			session(['proxy_session_id' => str_random(9)]);
+			session([ 'proxy_session_id' => str_random(9) ]);
 		}
 
 		$current_user = Auth::user();
 
 		if ($current_user->trial_activation == 2) {
 			$current_user->trial_activation = 1;
-			$current_user->trial_end_date = \Carbon\Carbon::now()->addDays(7);
+			$current_user->trial_end_date   = \Carbon\Carbon::now()->addDays(7);
 			$current_user->save();
 		}
 
@@ -68,54 +68,56 @@ class HomeController extends Controller
 			$ranking++;
 		}
 
-		$instagram_profiles = array();
+		$instagram_profiles = [];
 
 		if (Auth::user()->partition == 0) {
 			$instagram_profiles = InstagramProfile::where('email', Auth::user()->email)
-				->take($current_user->num_acct)
-				->orderBy('id', 'desc')
-				->get();
+			                                      ->take($current_user->num_acct)
+			                                      ->orderBy('id', 'desc')
+			                                      ->get();
 		} else {
 			$connection_name = Helper::getConnection(Auth::user()->partition);
 
 			$instagram_profiles = DB::connection($connection_name)->table('user_insta_profile')
-				->where('email', Auth::user()->email)
-				->orderBy('id', 'desc')
-				->take($current_user->num_acct)
-				->get();
+			                        ->where('email', Auth::user()->email)
+			                        ->orderBy('id', 'desc')
+			                        ->take($current_user->num_acct)
+			                        ->get();
 		}
 
-		$new_profile_follower_analysis = array();
-		$new_profile_follower_analysis_label = array();
-		$new_follower_count = array();
+		$new_profile_follower_analysis       = [];
+		$new_profile_follower_analysis_label = [];
+		$new_follower_count                  = [];
 
 		foreach ($instagram_profiles as $ig_profile) {
 
 			$follower_analysis = InstagramProfileFollowerAnalysis::select('follower_count', 'date')
 			                                                     ->where('insta_username', $ig_profile->insta_username)
-			                                                     ->orderBy('date', 'desc')->get();
-			$analysis_csv = "";
+			                                                     ->orderBy('date', 'desc')
+			                                                     ->take(10)
+			                                                     ->get();
+			$analysis_csv      = "";
 			$analysis_date_csv = "";
 
-			$new_follower = NULL;
-			$new_follower_2 = NULL;
+			$new_follower      = NULL;
+			$new_follower_2    = NULL;
 			$new_follower_diff = 0;
 
 			foreach ($follower_analysis as $analysis) {
 
 				if ($new_follower == NULL) {
 					$new_follower_diff = $new_follower;
-					$new_follower = $analysis->follower_count;
+					$new_follower      = $analysis->follower_count;
 				} else {
 					if ($new_follower_2 == NULL) {
 						$new_follower_diff = $new_follower - $analysis->follower_count;
-						$new_follower_2 = $analysis->follower_count;
+						$new_follower_2    = $analysis->follower_count;
 					}
 				}
-				$analysis_csv = $analysis->follower_count . "," . $analysis_csv;
-				$analysis_date = date_create($analysis->date);
+				$analysis_csv            = $analysis->follower_count . "," . $analysis_csv;
+				$analysis_date           = date_create($analysis->date);
 				$analysis_date_formatted = date_format($analysis_date, "d M");
-				$analysis_date_csv = $analysis_date_formatted . "," . $analysis_date_csv;
+				$analysis_date_csv       = $analysis_date_formatted . "," . $analysis_date_csv;
 			}
 
 			if ($analysis_csv != "") {
@@ -126,9 +128,9 @@ class HomeController extends Controller
 				$analysis_date_csv = substr($analysis_date_csv, 0, -1);
 			}
 
-			$new_profile_follower_analysis[$ig_profile->insta_username] = $analysis_csv;
+			$new_profile_follower_analysis[$ig_profile->insta_username]       = $analysis_csv;
 			$new_profile_follower_analysis_label[$ig_profile->insta_username] = $analysis_date_csv;
-			$new_follower_count[$ig_profile->insta_username] = $new_follower_diff;
+			$new_follower_count[$ig_profile->insta_username]                  = $new_follower_diff;
 		}
 
 		$user_updates = UserUpdate::where('email', Auth::user()->email)->orderBy('id', 'desc')->take(5)->get();
@@ -150,8 +152,9 @@ class HomeController extends Controller
 		]);
 	}
 
-	public function hideTutorial(Request $request) {
-		$user = User::find(Auth::user()->user_id);
+	public function hideTutorial(Request $request)
+	{
+		$user                      = User::find(Auth::user()->user_id);
 		$user->close_dashboard_tut = 1;
 		$user->save();
 	}
