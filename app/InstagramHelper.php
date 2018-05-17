@@ -341,6 +341,13 @@ class InstagramHelper extends \InstagramAPI\Request
 
 			$flag = FALSE;
 		}
+		catch (InstagramException $instagramException) {
+			dump($instagramException);
+			Log::error("[INSTAGRAM HELPER LOGIN InstagramException] " . $ig_profile->insta_username . " " . $instagramException->getMessage());
+			Log::error("[INSTAGRAM HELPER LOGIN InstagramException] " . $ig_profile->insta_username . " " . $instagramException->getTraceAsString());
+
+			$flag = FALSE;
+		}
 
 		if (!$flag && $debug == 1) {
 			Log::info('[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n");
