@@ -22,14 +22,10 @@ class InstagramHelper extends \InstagramAPI\Request
 {
 	public static function initInstagram($debug = FALSE)
 	{
-//		$config                                                     = [];
-//		$config["storage"]                                          = "mysql";
-//		$config['pdo']                                              = DB::connection()->getPdo();
-//		$config["dbtablename"]                                      = "instagram_sessions";
-		$config                                                     = [];
-		$config["storage"]                                          = "redis";
-		$config["redishost"]                                          = "52.221.60.235";
-		$config["redisport"]                                          = 6379;
+		$config              = [];
+		$config["storage"]   = "redis";
+		$config["redishost"] = "52.221.60.235";
+		$config["redisport"] = 6379;
 
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
 		$truncatedDebug                                             = FALSE;
@@ -39,13 +35,15 @@ class InstagramHelper extends \InstagramAPI\Request
 	}
 
 	/**
-	 * @param Instagram        $instagram The Instagram API instance
-	 * @param InstagramProfile $ig_profile The profile to compare & set proxies for the Instagram API
-	 * @param                  $return_opts 1 for the Instagram API instance, 2 for an array of [InstagramAPI Instance, Guzzle-Options]
+	 * @param Instagram        $instagram   The Instagram API instance
+	 * @param InstagramProfile $ig_profile  The profile to compare & set proxies for the Instagram API
+	 * @param                  $return_opts 1 for the Instagram API instance, 2 for an array of [InstagramAPI Instance,
+	 *                                      Guzzle-Options]
 	 *
 	 * @return Instagram       The Instagram API instance only or an array of [InstagramAPI Instance, Guzzle-Options]
 	 */
-	public static function setProxy(Instagram $instagram, InstagramProfile $ig_profile, $return_opts = 1) {
+	public static function setProxy(Instagram $instagram, InstagramProfile $ig_profile, $return_opts = 1)
+	{
 		$guzzle_options = NULL;
 
 		if ($ig_profile->proxy == NULL) {
@@ -76,7 +74,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			case 1:
 				return $instagram;
 			case 2:
-				return [$instagram, $guzzle_options];
+				return [ $instagram, $guzzle_options ];
 			default:
 				return $instagram;
 		}
@@ -197,18 +195,20 @@ class InstagramHelper extends \InstagramAPI\Request
 				Log::info("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.");
 				echo("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.\n");
 			}
-			return false;
+
+			return FALSE;
 		} else if ($ig_profile->proxy == NULL) {
 			if ($debug == 1) {
 				Log::info("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.");
 				echo("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.\n");
 			}
-			return false;
+
+			return FALSE;
 		}
 
 		try {
 			$proxy_settings = InstagramHelper::setProxy($instagram, $ig_profile, 2);
-			$instagram = $proxy_settings[0];
+			$instagram      = $proxy_settings[0];
 			$guzzle_options = $proxy_settings[1];
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
@@ -442,11 +442,11 @@ class InstagramHelper extends \InstagramAPI\Request
 		$hashtag_feed = NULL;
 		try {
 			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
-			
+
 			$trimmed_hashtag = trim($hashtag->hashtag);
-			$hash_pos = strpos($trimmed_hashtag, '#');
-			if ($hash_pos !== false) {
-				$trimmed_hashtag = str_replace('#', '', $trimmed_hashtag);
+			$hash_pos        = strpos($trimmed_hashtag, '#');
+			if ($hash_pos !== FALSE) {
+				$trimmed_hashtag  = str_replace('#', '', $trimmed_hashtag);
 				$hashtag->hashtag = $trimmed_hashtag;
 				$hashtag->save();
 			}
@@ -477,11 +477,11 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		$hashtag_feed = NULL;
 		try {
-			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
+			$rank_token      = \InstagramAPI\Signatures::generateUUID(TRUE);
 			$trimmed_hashtag = trim($hashtag->hashtag);
-			$hash_pos = strpos($trimmed_hashtag, '#');
-			if ($hash_pos !== false) {
-				$trimmed_hashtag = str_replace('#', '', $trimmed_hashtag);
+			$hash_pos        = strpos($trimmed_hashtag, '#');
+			if ($hash_pos !== FALSE) {
+				$trimmed_hashtag  = str_replace('#', '', $trimmed_hashtag);
 				$hashtag->hashtag = $trimmed_hashtag;
 				$hashtag->save();
 			}
@@ -512,12 +512,14 @@ class InstagramHelper extends \InstagramAPI\Request
 			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
 			echo("\n[GET FOLLOWERS VIA PROFILE ID] UUID Generated: " . $rank_token);
 			$user_follower_response = $instagram->people->getFollowers($target_username_id, $rank_token, NULL, $next_max_id);
+
 			return $user_follower_response;
 		}
 		catch (NetworkException $network_ex) {
 			$ig_profile->invalid_proxy = $ig_profile->invalid_proxy + 1;
 			$ig_profile->save();
-//			InstagramHelper::verifyAndReassignProxy($ig_profile);
+
+			//			InstagramHelper::verifyAndReassignProxy($ig_profile);
 
 			return NULL;
 		}
@@ -538,7 +540,7 @@ class InstagramHelper extends \InstagramAPI\Request
 
 			echo("\n[" . $ig_profile->insta_username . "] is using the old proxy.\n");
 
-			$ig_profile->proxy = NULL;
+			$ig_profile->proxy              = NULL;
 			$ig_profile->challenge_required = 1;
 			$ig_profile->save();
 
@@ -607,8 +609,9 @@ class InstagramHelper extends \InstagramAPI\Request
 
 	}
 
-	public static function saveUsersProfileToRedis($users) {
-		foreach ($users as $user){
+	public static function saveUsersProfileToRedis($users)
+	{
+		foreach ($users as $user) {
 			Redis::hmset(
 				"morfix:profile:pk:" . $user->getPk(), $user->asArray()
 			);
