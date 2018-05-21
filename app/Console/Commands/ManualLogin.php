@@ -16,6 +16,7 @@ use App\Proxy;
 use App\DmJob;
 use App\User;
 use App\InstagramHelper;
+use \Redis;
 
 class ManualLogin extends Command {
 
@@ -54,8 +55,11 @@ class ManualLogin extends Command {
 
 	    $this->line($ig_username . " " . $ig_password);
 
-	    $instagram = InstagramHelper::initInstagram();
-		dump($instagram->login($ig_username, $ig_password));
+	    $redis = new Redis();
+	    dump($redis->connect('52.221.60.235', 6379));
+
+//	    $instagram = InstagramHelper::initInstagram();
+//		dump($instagram->login($ig_username, $ig_password));
 
 //	    $ig_profiles = collect();
 //	    $users = User::where('tier' , '>', 1)->get();
