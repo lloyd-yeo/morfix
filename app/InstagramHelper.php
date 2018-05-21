@@ -32,7 +32,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
 		$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
 		$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
-		dump($redis->connect('52.221.60.235', 6379));
+		dump($redis->pconnect('52.221.60.235', 6379));
 		$config["redis"] = $redis;
 
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
