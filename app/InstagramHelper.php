@@ -22,10 +22,15 @@ class InstagramHelper extends \InstagramAPI\Request
 {
 	public static function initInstagram($debug = FALSE)
 	{
+//		$config                                                     = [];
+//		$config["storage"]                                          = "mysql";
+//		$config['pdo']                                              = DB::connection()->getPdo();
+//		$config["dbtablename"]                                      = "instagram_sessions";
 		$config                                                     = [];
-		$config["storage"]                                          = "mysql";
-		$config['pdo']                                              = DB::connection()->getPdo();
-		$config["dbtablename"]                                      = "instagram_sessions";
+		$config["storage"]                                          = "redis";
+		$config["redishost"]                                          = "52.221.60.235";
+		$config["redisport"]                                          = 6379;
+
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
 		$truncatedDebug                                             = FALSE;
 		$instagram                                                  = new Instagram($debug, $truncatedDebug, $config);
