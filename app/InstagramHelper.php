@@ -25,14 +25,14 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		$config              = [];
 		$config["storage"]   = "redis";
-		$config["redishost"] = "52.221.60.235";
-		$config["redisport"] = 6379;
+//		$config["redishost"] = "52.221.60.235";
+//		$config["redisport"] = 6379;
 
 		$redis = new Redis();
 		$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
 		$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
 		$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
-		dump($redis->pconnect('52.221.60.235', 6379));
+		$redis->pconnect('52.221.60.235', 6379);
 		$config["redis"] = $redis;
 
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
