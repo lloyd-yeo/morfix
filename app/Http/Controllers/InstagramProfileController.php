@@ -60,12 +60,14 @@ class InstagramProfileController extends Controller
 		}
 
 		$instagram = InstagramHelper::initInstagram();
+
 		$guzzle_options                                 = [];
 		$guzzle_options['curl']                         = [];
 		$guzzle_options['curl'][CURLOPT_PROXY]          = 'http://pr.oxylabs.io:8000';
 		$residential_proxy_userpass = 'customer-rmorfix-cc-US-city-san_jose-sessid-' . session('proxy_session_id') . ':dXehM3e7bU';
 		$guzzle_options['curl'][CURLOPT_PROXYUSERPWD]   = $residential_proxy_userpass;
 		$guzzle_options['curl'][CURLOPT_RETURNTRANSFER] = 1;
+
 		$instagram->setGuzzleOptions($guzzle_options);
 
 		Log::info('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' using residential proxy [' . $residential_proxy_userpass . '] for adding account.');
@@ -81,7 +83,7 @@ class InstagramProfileController extends Controller
 				return Response::json([ "success" => FALSE, 'type' => 'ig_added', 'message' =>"This instagram username has already been added!" ]);
 			}
 
-			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+			$login_response = $instagram->login($ig_username, $ig_password);
 
 			if ($login_response != NULL && $login_response->getStatus() == "fail") {
 				Log::error('[DASHBOARD ADD PROFILE] ' . Auth::user()->email . ' new profile add-attempt failed: ' . $ig_username . ' ' . $ig_password);
@@ -237,7 +239,7 @@ class InstagramProfileController extends Controller
 		try {
 			$response = $instagram->finishTwoFactorLogin($ig_username, $ig_password, $twofa_identifier, $verification_code);
 
-			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+			$login_response = $instagram->login($ig_username, $ig_password);
 
 			$instagram_user = NULL;
 
@@ -372,7 +374,7 @@ class InstagramProfileController extends Controller
 
 				Log::info('[CHALLENGE VERIFY CREDENTIALS] ' . $ig_username . ' profile found. Updated username & password with user-supplied ones.');
 
-				$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+				$login_response = $instagram->login($ig_username, $ig_password);
 
 				if ($login_response != NULL && $login_response->getStatus() == "fail") {
 
@@ -556,7 +558,7 @@ class InstagramProfileController extends Controller
 			Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' succesfully cleared verification!');
 
 			try {
-				$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+				$login_response = $instagram->login($ig_username, $ig_password);
 
 				$instagram_user = NULL;
 
@@ -677,7 +679,7 @@ class InstagramProfileController extends Controller
 
 			Log::info('[CLEAR CHALLENGE] ' . Auth::user()->email . ' successfully cleared challenge!');
 
-			$login_response = $instagram->login($ig_username, $ig_password, $guzzle_options);
+			$login_response = $instagram->login($ig_username, $ig_password);
 
 			if ($login_response != NULL && $login_response->getStatus() == "fail") {
 
