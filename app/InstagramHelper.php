@@ -30,7 +30,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			$config            = [];
 			$config["storage"] = "redis";
 			$redis             = new Redis();
-			$redis->pconnect('52.221.60.235', 6379, 0.0, 'instsagramapi');
+			$redis->connect('52.221.60.235', 6379, 0.0, 'instsagramapi');
 			$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
 			$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
 			$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
