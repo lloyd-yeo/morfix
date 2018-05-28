@@ -226,8 +226,8 @@ class InstagramHelper extends \InstagramAPI\Request
 			$proxy_settings = InstagramHelper::setProxy($instagram, $ig_profile, 2);
 			$instagram      = $proxy_settings[0];
 			$guzzle_options = $proxy_settings[1];
-
-			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw, $guzzle_options);
+			$instagram->setGuzzleOptions($guzzle_options);
+			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 
 			if ($explorer_response != NULL) {
 				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response->asJson());
