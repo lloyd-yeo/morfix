@@ -114,7 +114,7 @@ class InteractionFollow extends Command {
         foreach ($users as $user) {
 
             $instagram_profiles = InstagramProfile::whereRaw('(auto_follow = 1 OR auto_unfollow = 1) '
-                            . 'AND user_id = ' . $user->user_id)->get();
+                            . 'AND user_id = ' . $user->user_id . ' AND ig_throttled = 0 AND feedback_required = 0 AND proxy IS NOT NULL')->get();
 
             //Queueing for Master & Slave without Email
             if (NULL === $this->argument("email") || $this->argument("email") == "slave") {
