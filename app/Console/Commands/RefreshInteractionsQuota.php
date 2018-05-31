@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 use DB;
 
 class RefreshInteractionsQuota extends Command {
@@ -41,6 +42,12 @@ class RefreshInteractionsQuota extends Command {
                     'unfollow_quota' => 22,
                     'like_quota' => 30,
                     'comment_quota' => 6]);
+
+        DB::table('user_insta_profile')
+	        ->where(Carbon::now(), '>', 'throttled_date')
+	        ->where('ig_throttled', 1)
+	        ->update(['ig_throttled' => 0,
+		        'throttled_date', NULL]);
     }
 
 }
