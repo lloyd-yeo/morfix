@@ -371,6 +371,12 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 		catch (InstagramException $instagramException) {
 			dump($instagramException);
+
+			if ($instagramException->getMessage() == 'Throttled by Instagram because of too many API requests.') {
+				$ig_profile->ig_throttled = 1;
+				$ig_profile->save();
+			}
+
 			Log::error("[INSTAGRAM HELPER LOGIN InstagramException] " . $ig_profile->insta_username . " " . $instagramException->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN InstagramException] " . $ig_profile->insta_username . " " . $instagramException->getTraceAsString());
 
