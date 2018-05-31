@@ -145,12 +145,15 @@ class InteractionComment extends Command {
             }
         } else {
             $this->info("Not on Slave mode. Retrieving all user's on Master parition.");
-            
+
             foreach (User::where('partition', 0)->where('tier', '>', 1)->cursor() as $user) {
 
                 $instagram_profiles = InstagramProfile::where('auto_comment', true)
                         ->where('email', $user->email)
                         ->where('incorrect_pw', false)
+	                    ->where('ig_throttled', false)
+	                    ->where('invalid_user', false)
+	                    ->where('challenge_required', false)
                         ->get();
 
                 foreach ($instagram_profiles as $ig_profile) {
@@ -158,9 +161,9 @@ class InteractionComment extends Command {
                     if (!InstagramHelper::validForInteraction($ig_profile)) {
                         continue;
                     }
-                    
-                    if ($ig_profile->auto_comment_ban == 1 && !Carbon::now()->lt(new Carbon($ig_profile->auto_comment_ban_time))) {
-                        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Likes & the ban isn't time yet.");
+
+                    if ($ig_profile->auto_comment_ban == 1 && Carbon::now()->lt(new Carbon($ig_profile->auto_comment_ban_time))) {
+                        $this->error("[" . $ig_profile->insta_username . "] is throttled on Auto Comment & the ban isn't time yet.");
                         continue;
                     }
 

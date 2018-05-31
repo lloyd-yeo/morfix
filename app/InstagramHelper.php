@@ -23,17 +23,6 @@ class InstagramHelper extends \InstagramAPI\Request
 {
 	public static function initInstagram($debug = FALSE)
 	{
-		//		$config["redishost"] = "52.221.60.235";
-		//		$config["redisport"] = 6379;
-
-		//			$redis = new Redis();
-		//			$redis->connect(env('REDIS_HOST', '127.0.0.1'), 6379, 2.5, NULL, 0);
-		//			$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
-		//			$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
-		//			$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
-		//			$config["redis"] = $redis;
-
-
 		try {
 			$config            = [];
 			$config["storage"] = "redis";
@@ -48,7 +37,6 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 		catch (\RedisException $redisException) {
 			dump($redisException);
-
 			return NULL;
 		}
 	}
