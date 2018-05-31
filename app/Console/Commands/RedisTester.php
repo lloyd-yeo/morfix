@@ -13,7 +13,7 @@ class RedisTester extends Command
      *
      * @var string
      */
-    protected $signature = 'redistester:save';
+    protected $signature = 'redistester:save {host}';
 
     /**
      * The console command description.
@@ -40,8 +40,9 @@ class RedisTester extends Command
     public function handle()
     {
     	try {
+    		$host = $this->argument('host');
 		    $redis = new Redis();
-		    $success = $redis->connect('127.0.0.1', 6379, 2.5, NULL, 0);
+		    $success = $redis->connect($host, 6379, 2.5, NULL, 0);
 		    $this->line($success);
 		    dump($redis->info());
 		    $redis->close();
