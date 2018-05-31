@@ -47,7 +47,7 @@ class RefreshInteractionsQuota extends Command {
 	        ->where(Carbon::now(), '>', 'throttled_date')
 	        ->where('ig_throttled', 1)
 	        ->update(['ig_throttled' => 0,
-		        'throttled_date', NULL]);
+		        'throttled_date' => NULL]);
     }
 
 }
