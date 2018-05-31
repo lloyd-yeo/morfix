@@ -44,6 +44,7 @@ class RedisTester extends Command
 		    $redis = new Redis();
 		    $success = $redis->connect($host, 6379, 2.5, NULL, 0);
 		    $this->line($success);
+		    $redis->getHost();
 		    dump($redis->info());
 		    $redis->close();
 	    } catch (\RedisException $redisException) {

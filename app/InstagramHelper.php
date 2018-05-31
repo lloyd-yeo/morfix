@@ -29,7 +29,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		try {
 			$config            = [];
 			$config["storage"] = "redis";
-			$redis             = new Redis();
+
 
 //			$random_persistent_id = md5(microtime());
 //			$redis->pconnect('52.221.60.235', 6379, 0.0, 'instagramapi' . $random_persistent_id);
@@ -39,6 +39,7 @@ class InstagramHelper extends \InstagramAPI\Request
 //			$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
 //			$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
 //			$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
+			$redis             = new Redis();
 			$config["redis"] = $redis;
 
 			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
