@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
+//use Illuminate\Support\Facades\Redis;
+use \Redis;
 
 class RedisTester extends Command
 {
@@ -38,6 +39,11 @@ class RedisTester extends Command
      */
     public function handle()
     {
+    	$redis = new Redis();
+    	$redis->connect('52.221.60.235', 6379, 2.5, NULL, 0);
+	    dump($redis->info());
+	    $redis->close();
+
 //        $pk = "123456789";
 //        $username = "test";
 //        $response_array = (array("name" => "abc", "full_name" => "long_name", "is_verified" => "false", "new" => "haha"));
