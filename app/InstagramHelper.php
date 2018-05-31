@@ -30,18 +30,13 @@ class InstagramHelper extends \InstagramAPI\Request
 			$config            = [];
 			$config["storage"] = "redis";
 
-
-//			$random_persistent_id = md5(microtime());
-//			$redis->pconnect('52.221.60.235', 6379, 0.0, 'instagramapi' . $random_persistent_id);
-
-//			$redis->connect('52.221.60.235', 6379, 2.5);
-//			$redis->pconnect('52.221.60.235', 6379);
-//			$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
-//			$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
-//			$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
-			$redis             = new Redis();
+			$redis = new Redis();
 			$redis->connect(env('REDIS_HOST', '127.0.0.1'), 6379, 2.5, NULL, 0);
+			$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
+			$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
+			$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
 			$config["redis"] = $redis;
+			$redis->close();
 
 			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
 			$truncatedDebug                                             = FALSE;
@@ -51,6 +46,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 		catch (\RedisException $redisException) {
 			dump($redisException);
+
 			return NULL;
 		}
 	}
@@ -232,6 +228,12 @@ class InstagramHelper extends \InstagramAPI\Request
 			$instagram      = $proxy_settings[0];
 			$guzzle_options = $proxy_settings[1];
 			$instagram->setGuzzleOptions($guzzle_options);
+
+			if ($ig_profile->ig_throttled == 1) {
+				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is throttled.\n');
+				return FALSE;
+			}
+
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 
 			if ($explorer_response != NULL) {
@@ -368,9 +370,14 @@ class InstagramHelper extends \InstagramAPI\Request
 			$flag = FALSE;
 		}
 		catch (ThrottledException $throttledException) {
+			dump($throttledException);
 			Log::error("[INSTAGRAM HELPER LOGIN ThrottledException] " . $ig_profile->insta_username . " " . $throttledException->getMessage());
 			Log::error("[INSTAGRAM HELPER LOGIN ThrottledException] " . $ig_profile->insta_username . " " . $throttledException->getTraceAsString());
 
+			$ig_profile->ig_throttled = 1;
+			$ig_profile->save();
+
+			$flag = FALSE;
 		}
 		catch (InstagramException $instagramException) {
 			dump($instagramException);
