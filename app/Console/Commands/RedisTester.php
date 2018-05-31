@@ -39,23 +39,14 @@ class RedisTester extends Command
      */
     public function handle()
     {
-    	$redis = new Redis();
-    	$redis->connect('52.221.60.235', 6379, 2.5, NULL, 0);
-	    dump($redis->info());
-	    $redis->close();
+    	try {
+		    $redis = new Redis();
+		    $success = $redis->connect('52.221.6 0.235', 6379, 2.5, NULL, 0);
+		    $this->line($success);
+		    dump($redis->info());
+		    $redis->close();
+	    } catch (\RedisException $redisException) {
 
-//        $pk = "123456789";
-//        $username = "test";
-//        $response_array = (array("name" => "abc", "full_name" => "long_name", "is_verified" => "false", "new" => "haha"));
-//        echo "This is follower response \n";
-//        $response_array = json_encode($response_array, JSON_PRETTY_PRINT);
-//        echo ($response_array);
-
-//        Redis::hmset(
-////            $pk, [$response_array]
-//            $pk, $response_array
-//        );
-//        Redis::sadd("test:profile:" . $pk . ":followers", $pk);
-//        Redis::set("test:profile:username:" . $username, $pk);
+	    }
     }
 }
