@@ -77,7 +77,7 @@ class InteractionComment implements ShouldQueue {
 	 *
 	 * @return void
 	 */
-	public function failed(Exception $exception)
+	public function failed()
 	{
 		unset($this->instagram);
 	}
