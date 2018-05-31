@@ -38,7 +38,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			$config            = [];
 			$config["storage"] = "redis";
 			$config["redishost"] = env('REDIS_HOST', '127.0.0.1');
-			$config["redisport"] = env('REDIS_PORT', '127.0.0.1');
+			$config["redisport"] = env('REDIS_PORT', 6379);
 
 			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
 			$truncatedDebug                                             = FALSE;
