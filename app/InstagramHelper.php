@@ -227,7 +227,17 @@ class InstagramHelper extends \InstagramAPI\Request
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 
 			if ($explorer_response != NULL) {
-				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response->asJson());
+
+				$explorer_response_json = $explorer_response->asJson();
+
+				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response_json);
+
+				$response_array = json_decode($explorer_response_json, TRUE);
+
+				if (array_key_exists('logged_in_user', $response_array)) {
+					$logged_in_user = $response_array['logged_in_user'];
+				}
+
 				if ($explorer_response->isOk()) {
 					$flag = TRUE;
 				} else {
@@ -240,6 +250,7 @@ class InstagramHelper extends \InstagramAPI\Request
 					}
 					$flag = FALSE;
 				}
+
 			} else {
 				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp IS NULL.');
 				if ($instagram->isMaybeLoggedIn) {
@@ -608,6 +619,12 @@ class InstagramHelper extends \InstagramAPI\Request
 
 		if ($ig_profile->incorrect_pw == 1) {
 			echo("\n[" . $ig_profile->insta_username . "] is using an incorrect password.\n");
+
+			return FALSE;
+		}
+
+		if ($ig_profile->ig_throttled == 1) {
+			echo("\n[" . $ig_profile->insta_username . "] is being throttled at the moment.\n");
 
 			return FALSE;
 		}
