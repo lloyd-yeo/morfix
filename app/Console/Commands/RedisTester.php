@@ -46,7 +46,7 @@ class RedisTester extends Command
 		    dump($redis->info());
 		    $redis->close();
 	    } catch (\RedisException $redisException) {
-
+		    dump($redisException);
 	    }
     }
 }
