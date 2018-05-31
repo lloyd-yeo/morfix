@@ -41,7 +41,7 @@ class RedisTester extends Command
     {
     	try {
 		    $redis = new Redis();
-		    $success = $redis->connect('52.221.6 0.235', 6379, 2.5, NULL, 0);
+		    $success = $redis->connect('52.221.60.235', 6379, 2.5, NULL, 0);
 		    $this->line($success);
 		    dump($redis->info());
 		    $redis->close();
