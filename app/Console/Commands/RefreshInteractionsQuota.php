@@ -44,7 +44,7 @@ class RefreshInteractionsQuota extends Command {
                     'comment_quota' => 6]);
 
         DB::table('user_insta_profile')
-	        ->where(Carbon::now(), '>', 'throttled_date')
+	        ->where('throttled_date', '<', Carbon::now())
 	        ->where('ig_throttled', 1)
 	        ->update(['ig_throttled' => 0,
 		        'throttled_date' => NULL]);
