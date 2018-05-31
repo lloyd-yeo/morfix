@@ -30,9 +30,12 @@ class InstagramHelper extends \InstagramAPI\Request
 			$config            = [];
 			$config["storage"] = "redis";
 			$redis             = new Redis();
-			$random_persistent_id = md5(microtime());
-			$redis->pconnect('52.221.60.235', 6379, 0.0, 'instagramapi' . $random_persistent_id);
+
+//			$random_persistent_id = md5(microtime());
+//			$redis->pconnect('52.221.60.235', 6379, 0.0, 'instagramapi' . $random_persistent_id);
+
 //			$redis->connect('52.221.60.235', 6379, 2.5);
+			$redis->pconnect('52.221.60.235', 6379);
 			$redis->setOption(Redis::OPT_PREFIX, 'instagramapi:');
 			$redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_NONE);
 			$redis->setOption(Redis::OPT_SCAN, Redis::SCAN_NORETRY);
@@ -361,6 +364,11 @@ class InstagramHelper extends \InstagramAPI\Request
 			Log::error("[INSTAGRAM HELPER LOGIN LoginRequiredException] " . $ig_profile->insta_username . " " . $loginRequiredException->getTraceAsString());
 
 			$flag = FALSE;
+		}
+		catch (ThrottledException $throttledException) {
+			Log::error("[INSTAGRAM HELPER LOGIN ThrottledException] " . $ig_profile->insta_username . " " . $throttledException->getMessage());
+			Log::error("[INSTAGRAM HELPER LOGIN ThrottledException] " . $ig_profile->insta_username . " " . $throttledException->getTraceAsString());
+
 		}
 		catch (InstagramException $instagramException) {
 			dump($instagramException);
