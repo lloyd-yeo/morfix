@@ -179,6 +179,7 @@ class InstagramHelper extends \InstagramAPI\Request
 	}
 
 	/*
+	 * Wrapper function for logging in a existing Morfix Instagram Profile.
 	 * TRUE if the login was successful.
 	 * FALSE if the the login failed.
 	 */
@@ -202,14 +203,13 @@ class InstagramHelper extends \InstagramAPI\Request
 				Log::info("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.");
 				echo("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified.\n");
 			}
-
 			return FALSE;
+
 		} else if ($ig_profile->proxy == NULL) {
 			if ($debug == 1) {
 				Log::info("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.");
 				echo("[INSTAGRAM HELPER LOGIN] Logging in profile: [" . $ig_profile->insta_username . "] profile hasn't been re-verified, NULL proxy.\n");
 			}
-
 			return FALSE;
 		}
 
