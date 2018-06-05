@@ -26,8 +26,8 @@ class InstagramHelper extends \InstagramAPI\Request
 		try {
 			$config            = [];
 			$config["storage"] = "redis";
-			$config["redishost"] = env('REDIS_HOST', '127.0.0.1');
-			$config["redisport"] = env('REDIS_PORT', 6379);
+			$config["redishost"] =  config("database.redis.default.host");
+			$config["redisport"] =  config("database.redis.default.port");
 
 			Log::info("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . env('REDIS_HOST', '127.0.0.1'));
 
