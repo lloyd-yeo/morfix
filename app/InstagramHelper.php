@@ -30,6 +30,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			$config["redisport"] =  config("database.redis.default.port");
 
 			Log::info("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host"));
+			echo("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host"));
 
 			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
 			$truncatedDebug                                             = FALSE;
@@ -232,6 +233,7 @@ class InstagramHelper extends \InstagramAPI\Request
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 
+			echo("[INSTAGRAM HELPER LOGIN] Displaying explorer resp:\n");
 			dump($explorer_response);
 
 			if ($explorer_response != NULL) {
