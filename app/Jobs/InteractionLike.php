@@ -450,7 +450,7 @@ class InteractionLike implements ShouldQueue
 		$like_response = NULL;
 		try {
 			$like_response = $this->instagram->media->like($item->getId());
-			
+
 			echo "[" . $ig_profile->insta_username . "] liking [" . $user_to_like->getUsername() . "](" . $item->getId() . ")\n";
 			dump($like_response);
 
@@ -461,7 +461,9 @@ class InteractionLike implements ShouldQueue
 					try {
 						$this->like_quota = $this->like_quota - 1;
 						Log::info("" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "");
+						echo("" . "[" . $ig_profile->insta_username . "] Liked " . serialize($like_response) . "\n");
 						Log::info("" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota);
+						echo("" . "[" . $ig_profile->insta_username . "] Remaining Round Quota: " . $this->like_quota . "\n");
 
 						RedisRepository::saveNewProfileLikeLog($ig_profile->insta_user_id, $item->getPk(), $item->getItemUrl(), Carbon::now()->getTimestamp());
 //						RedisRepository::saveProfileLikedUsers($ig_profile->insta_user_id, $item->getUser()->getPk());
