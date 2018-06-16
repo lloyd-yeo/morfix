@@ -226,6 +226,8 @@ class InstagramHelper extends \InstagramAPI\Request
 				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is throttled.\n');
 				echo('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is throttled.\n');
 				return FALSE;
+			} else {
+				echo('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is not throttled.\n');
 			}
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
@@ -235,7 +237,10 @@ class InstagramHelper extends \InstagramAPI\Request
 				$explorer_response_json = $explorer_response->asJson();
 
 				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response_json);
-
+				if ($debug == 1) {
+					echo('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response_json);
+					echo $explorer_response_json;
+				}
 				$response_array = json_decode($explorer_response_json, TRUE);
 
 				if (array_key_exists('logged_in_user', $response_array)) {
