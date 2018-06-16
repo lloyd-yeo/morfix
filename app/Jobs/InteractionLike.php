@@ -103,7 +103,7 @@ class InteractionLike implements ShouldQueue
 		DB::reconnect();
 
 		$this->calcSpeedDelay($this->profile->speed);
-		$this->instagram          = InstagramHelper::initInstagram(true);
+		$this->instagram          = InstagramHelper::initInstagram();
 		$this->like_quota         = rand(1, 3);
 		$this->targeted_hashtags  = TargetHelper::getUserTargetedHashtags($this->profile);
 		$this->targeted_usernames = TargetHelper::getUserTargetedUsernames($this->profile);
