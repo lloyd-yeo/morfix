@@ -117,6 +117,8 @@ class InteractionLike implements ShouldQueue
 		try {
 			if (InstagramHelper::login($instagram, $ig_profile, 1)) {
 
+				echo("[INTERACTION LIKE] Successfully logged in.\n");
+
 				$use_hashtags = $this->randomizeUseHashtags();
 
 				if (!$use_hashtags) {
@@ -144,7 +146,7 @@ class InteractionLike implements ShouldQueue
 								Log::info("[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "");
 								$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
 								if ($user_follower_response == NULL) {
-									Log::info("" . "[$ig_username] failed to retrieve followers from: " . $target_target_username . "");
+									Log::info("[$ig_username] failed to retrieve followers from: " . $target_target_username . "");
 									continue;
 								}
 
