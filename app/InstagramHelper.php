@@ -243,6 +243,7 @@ class InstagramHelper extends \InstagramAPI\Request
 					echo('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp: ' . $explorer_response_json);
 					echo $explorer_response_json;
 				}
+
 				$response_array = json_decode($explorer_response_json, TRUE);
 
 				if (array_key_exists('logged_in_user', $response_array)) {
@@ -269,7 +270,7 @@ class InstagramHelper extends \InstagramAPI\Request
 				if ($instagram->isMaybeLoggedIn) {
 					$flag = TRUE;
 				} else {
-					dump($instagram->account->getCurrentUser());
+					dump($instagram->people->getSelfInfo());
 					$flag = FALSE;
 				}
 			}
