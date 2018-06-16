@@ -584,7 +584,7 @@ class InteractionLike implements ShouldQueue
 			}
 		}
 		Log::info("[Use Hashtags] Value: " . $use_hashtags . "");
-
+		echo("[Use Hashtags] Value: " . $use_hashtags . "\n");
 		return $use_hashtags;
 	}
 
