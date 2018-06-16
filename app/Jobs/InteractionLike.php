@@ -178,16 +178,19 @@ class InteractionLike implements ShouldQueue
 										$is_duplicate = $this->checkBlacklistAndDuplicates($user_to_like, $page_count);
 
 										if ($is_duplicate == 1) {
+											echo "[$ig_username][" . $user_to_like->getUsername() . "] is duplicate = 1\n";
 											break;
 										} else {
 											if ($is_duplicate == 2) {
+												echo "[$ig_username][" . $user_to_like->getUsername() . "] is duplicate = 2\n";
 												continue;
 											}
 										}
 
 										//Get the feed of the user to like.
 										$user_feed_response = InstagramHelper::getUserFeed($instagram, $user_to_like);
-										if ($user_feed_response === NULL) {
+										if ($user_feed_response == NULL) {
+											echo "[$ig_username][" . $user_to_like->getUsername() . "] user's feed is NULL\n";
 											continue;
 										}
 
@@ -447,6 +450,9 @@ class InteractionLike implements ShouldQueue
 		$like_response = NULL;
 		try {
 			$like_response = $this->instagram->media->like($item->getId());
+			
+			echo "[" . $ig_profile->insta_username . "] liking [" . $user_to_like->getUsername() . "](" . $item->getId() . ")\n";
+			dump($like_response);
 
 			if ($like_response == NULL) {
 				return FALSE;
