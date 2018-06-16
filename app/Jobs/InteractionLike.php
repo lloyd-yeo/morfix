@@ -502,6 +502,7 @@ class InteractionLike implements ShouldQueue
 	public function checkDuplicateByMediaId(InstagramItem $item)
 	{
 		if (InstagramProfileLikeLog::where('insta_username', $this->profile->insta_username)->where('target_media', $item->getPk())->first() != NULL) {
+			echo "[" . $this->profile->insta_username . "] has already liked media-id: [" . $item->getPk() . "] before\n";
 			return TRUE;
 		} else {
 			return FALSE;
