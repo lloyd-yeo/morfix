@@ -452,9 +452,10 @@ class InteractionLike implements ShouldQueue
 			$like_response = $this->instagram->media->like($item->getId());
 
 			echo "[" . $ig_profile->insta_username . "] liking [" . $user_to_like->getUsername() . "](" . $item->getId() . ")\n";
-			dump($like_response);
+//			dump($like_response);
 
 			if ($like_response == NULL) {
+				echo("" . "[" . $ig_profile->insta_username . "] like_response is NULL\n");
 				return FALSE;
 			} else {
 				if ($like_response->getStatus() == "ok") {
