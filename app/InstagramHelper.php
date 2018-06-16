@@ -223,11 +223,11 @@ class InstagramHelper extends \InstagramAPI\Request
 			$instagram->setGuzzleOptions($guzzle_options);
 
 			if ($ig_profile->ig_throttled == 1) {
-				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is throttled.\n');
-				echo('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is throttled.\n');
+				Log::info("[INSTAGRAM HELPER LOGIN] " . $ig_profile->insta_username . " is throttled.\n");
+				echo("[INSTAGRAM HELPER LOGIN] " . $ig_profile->insta_username . " is throttled.\n");
 				return FALSE;
 			} else {
-				echo('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is not throttled.\n');
+				echo("[INSTAGRAM HELPER LOGIN] " . $ig_profile->insta_username . " is not throttled.\n");
 			}
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
