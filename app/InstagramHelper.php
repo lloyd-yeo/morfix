@@ -398,6 +398,7 @@ class InstagramHelper extends \InstagramAPI\Request
 
 		if (!$flag && $debug == 1) {
 			Log::info('[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n");
+			echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
 		} else if ($flag && $debug == 1) {
 			Log::info('[' . $ig_profile->insta_username . '] has been logged in.' . "\n");
 		}
