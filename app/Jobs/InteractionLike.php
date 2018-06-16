@@ -289,6 +289,7 @@ class InteractionLike implements ShouldQueue
 									$next_max_id            = $user_follower_response->getNextMaxId();
 
 									echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
+									
 									$page_count++;
 
 									//Foreach follower of the target.
