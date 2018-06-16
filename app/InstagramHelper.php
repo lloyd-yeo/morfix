@@ -216,6 +216,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		}
 
 		try {
+
 			$proxy_settings = InstagramHelper::setProxy($instagram, $ig_profile, 2);
 			$instagram      = $proxy_settings[0];
 			$guzzle_options = $proxy_settings[1];
@@ -223,6 +224,7 @@ class InstagramHelper extends \InstagramAPI\Request
 
 			if ($ig_profile->ig_throttled == 1) {
 				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is throttled.\n');
+				echo('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' is throttled.\n');
 				return FALSE;
 			}
 
@@ -399,7 +401,7 @@ class InstagramHelper extends \InstagramAPI\Request
 		if (!$flag) {
 			echo '[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n";
 		}
-		
+
 		if (!$flag && $debug == 1) {
 			Log::info('[' . $ig_profile->insta_username . '] Error:  ' . $message . "\n");
 		} else if ($flag && $debug == 1) {

@@ -115,7 +115,7 @@ class InteractionLike implements ShouldQueue
 		$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
 
 		try {
-			if (InstagramHelper::login($instagram, $ig_profile)) {
+			if (InstagramHelper::login($instagram, $ig_profile, 1)) {
 
 				$use_hashtags = $this->randomizeUseHashtags();
 
