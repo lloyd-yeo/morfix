@@ -131,11 +131,15 @@ class InteractionLike implements ShouldQueue
 
 							//Get followers of the target.
 							Log::info("[$ig_username] Target Username: " . $target_username->target_username);
+							echo("[$ig_username] Target Username: " . $target_username->target_username);
+
 							$target_username_id = $this->checkValidTargetUsername($instagram, $target_username);
 							if ($target_username_id === NULL) {
+								echo("[$ig_username] target's ID is NULL");
 								continue;
 							} else {
 								Log::info("[$ig_username] Retrieved Target Id: " . $target_username_id);
+								echo("[$ig_username] Retrieved Target Id: " . $target_username_id);
 							}
 
 							$target_target_username = $target_username->target_username;
