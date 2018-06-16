@@ -232,6 +232,8 @@ class InstagramHelper extends \InstagramAPI\Request
 
 			$explorer_response = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 
+			dump($explorer_response);
+
 			if ($explorer_response != NULL) {
 
 				$explorer_response_json = $explorer_response->asJson();
@@ -261,6 +263,8 @@ class InstagramHelper extends \InstagramAPI\Request
 				}
 
 			} else {
+
+
 				Log::info('[INSTAGRAM HELPER LOGIN] ' . $ig_profile->insta_username . ' login_resp IS NULL.');
 				if ($instagram->isMaybeLoggedIn) {
 					$flag = TRUE;
