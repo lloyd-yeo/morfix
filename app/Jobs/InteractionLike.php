@@ -164,6 +164,7 @@ class InteractionLike implements ShouldQueue
 								$target_user_followings = $user_follower_response->getUsers();
 								$next_max_id            = $user_follower_response->getNextMaxId();
 								echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
+
 								$page_count++;
 
 								//Foreach follower of the target.
@@ -172,6 +173,7 @@ class InteractionLike implements ShouldQueue
 									if ($this->like_quota > 0) {
 
 										Log::info("" . $user_to_like->getUsername() . "\t" . $user_to_like->getPk());
+										echo "[$ig_username] checking " . $user_to_like->getUsername() . " (" . $user_to_like->getPk() . ")\n";
 
 										$is_duplicate = $this->checkBlacklistAndDuplicates($user_to_like, $page_count);
 
