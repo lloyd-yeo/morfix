@@ -578,7 +578,7 @@ class InstagramHelper extends \InstagramAPI\Request
 	{
 		try {
 			$rank_token = \InstagramAPI\Signatures::generateUUID(TRUE);
-			echo("\n[GET FOLLOWERS VIA PROFILE ID] UUID Generated: " . $rank_token);
+			echo("\n[GET FOLLOWERS VIA PROFILE ID] UUID Generated: " . $rank_token . "\n");
 			$user_follower_response = $instagram->people->getFollowers($target_username_id, $rank_token, NULL, $next_max_id);
 
 			return $user_follower_response;
