@@ -95,7 +95,7 @@ class TargetHelper {
 
     public static function getUserTargetedHashtags($ig_profile) {
         /*
-         * Defined target usernames take precedence.
+         * Defined target hashtags take precedence.
          */
         $target_hashtags = InstagramProfileTargetHashtag::where('insta_username', $ig_profile->insta_username)
                 ->get()

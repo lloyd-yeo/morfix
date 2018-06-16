@@ -214,8 +214,9 @@ class InteractionLike implements ShouldQueue
 							return;
 						}
 					}
-				} else {
 
+				}
+				else {
 					foreach ($this->targeted_hashtags as $target_hashtag) {
 
 						if ($this->like_quota > 0) {
