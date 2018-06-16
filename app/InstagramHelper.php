@@ -274,8 +274,11 @@ class InstagramHelper extends \InstagramAPI\Request
 				if ($instagram->isMaybeLoggedIn) {
 					$flag = TRUE;
 				} else {
-
-					$flag = FALSE;
+					if ($instagram->people->getSelfInfo()->getResponse()->isOk()) {
+						$flag = TRUE;
+					} else {
+						$flag = FALSE;
+					}
 				}
 			}
 		}
