@@ -501,7 +501,12 @@ class InteractionLike implements ShouldQueue
 
 	public function checkDuplicateByMediaId(InstagramItem $item)
 	{
-		return RedisRepository::checkDuplicateLikeLog($this->profile->insta_user_id, $item->getPk());
+		if (InstagramProfileLikeLog::where('insta_username', $this->profile->insta_username)->where('target_media', $item->getPk())->first() != NULL) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+//		return RedisRepository::checkDuplicateLikeLog($this->profile->insta_user_id, $item->getPk());
 	}
 
 	public function checkDuplicate(InstagramUser $user_to_like)
