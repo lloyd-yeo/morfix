@@ -125,6 +125,8 @@ class InteractionLike implements ShouldQueue
 
 					foreach ($this->targeted_usernames as $target_username) {
 
+						echo "[$ig_username][target_username] current like-quota: " . $this->like_quota . "\n";
+
 						if ($this->like_quota > 0) {
 
 							//Get followers of the target.
@@ -217,7 +219,10 @@ class InteractionLike implements ShouldQueue
 
 				}
 				else {
+
 					foreach ($this->targeted_hashtags as $target_hashtag) {
+
+						echo "[$ig_username][target_hashtag] current like-quota: " . $this->like_quota . "\n";
 
 						if ($this->like_quota > 0) {
 							Log::info("" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "");
@@ -255,7 +260,10 @@ class InteractionLike implements ShouldQueue
 					}
 				}
 
+				echo "[$ig_username][niche] current like-quota: " . $this->like_quota . "\n";
+
 				if ($this->like_quota > 0) {
+
 					if ($this->profile->niche > 0) {
 
 						$niche         = Niche::find($this->profile->niche);
@@ -264,6 +272,8 @@ class InteractionLike implements ShouldQueue
 						echo "[$ig_username] is using niche: " . $niche->niche . "\n";
 
 						foreach ($niche_targets as $target_username) {
+
+							echo "[$ig_username][niche_target_username] current like-quota: " . $this->like_quota . "\n";
 
 							if ($this->like_quota > 0) {
 
@@ -289,7 +299,7 @@ class InteractionLike implements ShouldQueue
 									$next_max_id            = $user_follower_response->getNextMaxId();
 
 									echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
-									
+
 									$page_count++;
 
 									//Foreach follower of the target.
@@ -350,6 +360,9 @@ class InteractionLike implements ShouldQueue
 						$target_hashtags = $niche->targetHashtags();
 
 						foreach ($target_hashtags as $target_hashtag) {
+
+							echo "[$ig_username][niche_target_hashtag] current like-quota: " . $this->like_quota . "\n";
+
 							if ($this->like_quota > 0) {
 								Log::info("" . "[$ig_username] Target Hashtag: " . $target_hashtag->hashtag . "");
 								//Get the feed from the targeted hashtag.
