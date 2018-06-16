@@ -257,15 +257,19 @@ class InteractionLike implements ShouldQueue
 
 				if ($this->like_quota > 0) {
 					if ($this->profile->niche > 0) {
+
 						$niche         = Niche::find($this->profile->niche);
 						$niche_targets = $niche->targetUsernames();
+
+						echo "[$ig_username] is using niche: " . $niche->niche . "\n";
 
 						foreach ($niche_targets as $target_username) {
 
 							if ($this->like_quota > 0) {
 
 								//Get followers of the target.
-								Log::info("" . "[$ig_username] Target Username: " . $target_username->target_username . "");
+								Log::info("[$ig_username] Target Username: " . $target_username->target_username . "");
+								echo "[$ig_username] is using niche: " . $niche->niche . "\n";
 								$target_username_id = InstagramHelper::getUserIdForNicheUsername($instagram, $target_username);
 								if ($target_username_id === NULL) {
 									continue;
@@ -278,12 +282,13 @@ class InteractionLike implements ShouldQueue
 								$page_count = 0;
 
 								do {
-									echo "[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "";
+									echo "[$ig_username] requesting [$target_target_username] with: " . $next_max_id . "\n";
 
 									$user_follower_response = InstagramHelper::getFollowersViaProfileId($instagram, $ig_profile, $target_username_id, $next_max_id);
 									$target_user_followings = $user_follower_response->getUsers();
 									$next_max_id            = $user_follower_response->getNextMaxId();
-									echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "";
+
+									echo "[$ig_username] next_max_id for [$target_target_username] is " . $next_max_id . "\n";
 									$page_count++;
 
 									//Foreach follower of the target.
