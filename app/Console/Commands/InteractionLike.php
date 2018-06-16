@@ -106,7 +106,7 @@ class InteractionLike extends Command
 									continue;
 								}
 
-								if ($ig_profile->next_like_time === NULL) {
+								if ($ig_profile->next_like_time == NULL) {
 									$ig_profile->next_like_time = Carbon::now();
 									$ig_profile->save();
 									$this->line("[" . $ig_profile->insta_username . "] queued for [Likes]");
