@@ -770,10 +770,6 @@ class InstagramProfileController extends Controller
 //		$config["storage"]     = "mysql";
 //		$config["pdo"]         = DB::connection()->getPdo();
 //		$config["dbtablename"] = "instagram_sessions";
-
-
-
-
 //		$debug          = FALSE;
 //		$truncatedDebug = FALSE;
 //		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
