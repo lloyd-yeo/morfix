@@ -764,33 +764,39 @@ class InstagramProfileController extends Controller
 
 	public function clearCheckpoint(Request $request)
 	{
-		$ig_profile            = InstagramProfile::find($request->input('profile-id'));
-		$config                = [];
-		$config["storage"]     = "mysql";
-		$config["pdo"]         = DB::connection()->getPdo();
-		$config["dbtablename"] = "instagram_sessions";
 		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-		$debug          = FALSE;
-		$truncatedDebug = FALSE;
-		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+		$ig_profile            = InstagramProfile::find($request->input('profile-id'));
+//		$config                = [];
+//		$config["storage"]     = "mysql";
+//		$config["pdo"]         = DB::connection()->getPdo();
+//		$config["dbtablename"] = "instagram_sessions";
 
-		$instagram->setProxy($ig_profile->proxy);
+
+
+
+//		$debug          = FALSE;
+//		$truncatedDebug = FALSE;
+//		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+
+		$instagram = InstagramHelper::initInstagram();
+//		$instagram->setProxy($ig_profile->proxy);
+		$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
 		try {
 			$explorer_response               = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
 			$ig_profile->checkpoint_required = 0;
 			$ig_profile->save();
 
-			if (Auth::user()->partition > 0) {
-				$connection_name = Helper::getConnection(Auth::user()->partition);
-
-				DB::connection($connection_name)->table('user_insta_profile')->where('id', $ig_profile->id)
-				  ->update([ 'checkpoint_required' => 0 ]);
-			}
+//			if (Auth::user()->partition > 0) {
+//				$connection_name = Helper::getConnection(Auth::user()->partition);
+//
+//				DB::connection($connection_name)->table('user_insta_profile')->where('id', $ig_profile->id)
+//				  ->update([ 'checkpoint_required' => 0 ]);
+//			}
 
 			return Response::json([ "success" => TRUE, 'message' => 'Your profile has restored connectivity.' ]);
 		}
 		catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
-			return Response::json([ "success" => FALSE, 'message' => 'Unable to connect to your profile, please retry.' ]);
+			return Response::json([ "success" => FALSE, 'message' => 'Unable to connect to your profile, please retry.', 'error_msg' => $ig_ex->getMessage() ]);
 		}
 	}
 
