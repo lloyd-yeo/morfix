@@ -30,7 +30,7 @@ class InstagramHelper extends \InstagramAPI\Request
 			$config["redisport"] =  config("database.redis.default.port");
 
 			Log::info("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host"));
-			echo("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host") . "\n");
+//			echo("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host") . "\n");
 
 			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
 			$truncatedDebug                                             = FALSE;
