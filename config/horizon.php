@@ -74,7 +74,7 @@ return [
 	    'production' => [
 		    'supervisor-1' => [
 			    'connection' => 'redis',
-			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh'],
+			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh', 'engagementgroup'],
 			    'balance' => 'auto',
 			    'processes' => 50,
 			    'tries' => 1,
@@ -84,7 +84,7 @@ return [
 	    'local' => [
 		    'supervisor-1' => [
 			    'connection' => 'redis',
-			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh'],
+			    'queue' => ['default', 'follows', 'likes', 'comments', 'likestrial', 'getdm', 'senddm', 'refresh', 'engagementgroup'],
 			    'balance' => 'simple',
 			    'processes' => 50,
 			    'tries' => 1,
