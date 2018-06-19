@@ -41,7 +41,7 @@
                 confirmButtonText: 'Submit',
                 showLoaderOnConfirm: true,
                 preConfirm: function (password) {
-                    App.loader('show');
+//                    App.loader('show');
                     return new Promise(function (resolve, reject) {
                         $.ajax({
                             async: true,
@@ -53,7 +53,7 @@
                                 'password': password
                             },
                             success: function (data) {
-                                if (data.success === true) {
+                                if (data.success == true) {
                                     localStorage.setItem("status", data.message);
                                     location.reload(true);
                                 } else {
