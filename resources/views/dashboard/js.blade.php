@@ -57,7 +57,7 @@
                                     localStorage.setItem("status", data.message);
                                     location.reload(true);
                                 } else {
-                                    reject('This password is incorrect.');
+                                    reject(data.message);
                                 }
                             }
                         });
