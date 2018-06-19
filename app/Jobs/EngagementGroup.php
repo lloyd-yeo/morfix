@@ -32,7 +32,7 @@ class EngagementGroup implements ShouldQueue
 	 *
 	 * @var int
 	 */
-	public $timeout = 7200;
+	public $timeout = 7200000;
 
 	/**
 	 * @var int The number of comments to give out.
