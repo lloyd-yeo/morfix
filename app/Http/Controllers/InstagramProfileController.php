@@ -779,7 +779,6 @@ class InstagramProfileController extends Controller
 //		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
 		$instagram = InstagramHelper::initInstagram();
-//		$instagram->setProxy($ig_profile->proxy);
 		$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
 		try {
 			$explorer_response               = $instagram->login($ig_profile->insta_username, $ig_profile->insta_pw);
@@ -807,41 +806,44 @@ class InstagramProfileController extends Controller
 		$ig_profile->insta_pw = $password;
 		$ig_profile->save();
 
-		if (Auth::user()->partition > 0) {
-			$connection_name = Helper::getConnection(Auth::user()->partition);
-			DB::connection($connection_name)->table('user_insta_profile')
-			  ->where('id', $ig_profile->id)
-			  ->update(['insta_pw' => $password]);
-		}
+//		if (Auth::user()->partition > 0) {
+//			$connection_name = Helper::getConnection(Auth::user()->partition);
+//			DB::connection($connection_name)->table('user_insta_profile')
+//			  ->where('id', $ig_profile->id)
+//			  ->update(['insta_pw' => $password]);
+//		}
 
-		$config                = [];
-		$config["storage"]     = "mysql";
-		$config["pdo"]         = DB::connection()->getPdo();
-		$config["dbtablename"] = "instagram_sessions";
-		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+//		$config                = [];
+//		$config["storage"]     = "mysql";
+//		$config["pdo"]         = DB::connection()->getPdo();
+//		$config["dbtablename"] = "instagram_sessions";
+//		\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
 
-		$debug          = FALSE;
-		$truncatedDebug = FALSE;
-		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
+//		$debug          = FALSE;
+//		$truncatedDebug = FALSE;
+//		$instagram      = new \InstagramAPI\Instagram($debug, $truncatedDebug, $config);
 
-		$instagram->setProxy($ig_profile->proxy);
+//		$instagram->setProxy($ig_profile->proxy);
+
+		$instagram = InstagramHelper::initInstagram();
+		$instagram = InstagramHelper::setProxy($instagram, $ig_profile, 1);
 
 		try {
 			$explorer_response        = $instagram->login($ig_profile->insta_username, $password);
 			$ig_profile->incorrect_pw = 0;
 			$ig_profile->save();
 
-			if (Auth::user()->partition > 0) {
-				$connection_name = Helper::getConnection(Auth::user()->partition);
-				DB::connection($connection_name)->table('user_insta_profile')
-				  ->where('id', $ig_profile->id)
-				  ->update(['incorrect_pw' => 0]);
-			}
+//			if (Auth::user()->partition > 0) {
+//				$connection_name = Helper::getConnection(Auth::user()->partition);
+//				DB::connection($connection_name)->table('user_insta_profile')
+//				  ->where('id', $ig_profile->id)
+//				  ->update(['incorrect_pw' => 0]);
+//			}
 
 			return Response::json([ "success" => TRUE, 'message' =>'Your profile has restored connectivity.' ]);
 		}
 		catch (\InstagramAPI\Exception\InstagramException $ig_ex) {
-			return Response::json([ "success" => FALSE, 'message' =>'Unable to connect to your profile, please retry.' ]);
+			return Response::json([ "success" => FALSE, 'message' =>'Unable to connect to your profile, please retry.', 'error_msg' => $ig_ex->getMessage() ]);
 		}
 	}
 
