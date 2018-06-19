@@ -95,7 +95,11 @@ class EngagementGroup implements ShouldQueue
 		$default_comments[] = "I really love this photo.";
 
 		foreach ($ig_profiles as $ig_profile) {
-			sleep (rand(1, 120));
+
+			$sleep_time = rand(1, 120);
+			echo "Sleeping for " . $sleep_time;
+			sleep($sleep_time);
+
 			if ($this->ig_profile_id !== NULL) {
 				if ($ig_profile->id === $this->ig_profile_id) {
 					continue;
