@@ -154,7 +154,9 @@ class SettingsController extends Controller
 			foreach ($collection as $subscription_transaction) {
 				try {
 					$subscription_id = $subscription_transaction->subscriptionId;
-					dump($gateway->subscription()->cancel($subscription_id));
+					if ($subscription_id != NULL) {
+						dump($gateway->subscription()->cancel($subscription_id));
+					}
 				} catch (\Exception $ex) {
 					dump($ex);
 				}
