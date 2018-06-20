@@ -24,6 +24,7 @@ use Braintree_Gateway;
 use Braintree_Configuration;
 use Braintree_Subscription;
 use Braintree_ClientToken;
+use Braintree_TransactionSearch;
 
 class SettingsController extends Controller
 {
