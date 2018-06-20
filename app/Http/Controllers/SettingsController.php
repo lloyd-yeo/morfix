@@ -145,15 +145,25 @@ class SettingsController extends Controller
 	        ]);
 
             $braintree_id = Auth::user()->braintree_id;
-	        $braintree = BraintreeSubscription::where('braintree_id', $braintree_id)->get();
+
+	        $collection = $gateway->transaction()->search([
+		        Braintree_TransactionSearch::customerEmail()->is(Auth::user()->email)
+	        ]);
+
+			foreach ($collection as $subscription_transaction) {
+				$subscription_id = $subscription_transaction->subscriptionId;
+				dump($gateway->subscription()->cancel($subscription_id));
+			}
+
+//	        $braintree = BraintreeSubscription::where('braintree_id', $braintree_id)->get();
 //            $braintree = Braintree_Subscription::where('braintree_id', $braintree_id)->get();
 
-            foreach ($braintree as $braintree_cancel) {
-                $braintree_cancel->status = 'Canceled';
-                $braintree_cancel->save();
-	            dump($gateway->subscription()->cancel($braintree_cancel->subscription_id));
+//            foreach ($braintree as $braintree_cancel) {
+//                $braintree_cancel->status = 'Canceled';
+//                $braintree_cancel->save();
+//	            dump($gateway->subscription()->cancel($braintree_cancel->subscription_id));
 //                dump(Braintree_Subscription::cancel($braintree_cancel->subscription_id));
-            }
+//            }
 
         } elseif($user_to_cancel->paypal == 1) {
             //if paypal user
