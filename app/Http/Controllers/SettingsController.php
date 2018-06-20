@@ -20,7 +20,7 @@ use PayPal\Api\Agreement;
 use App\PaypalCharges;
 use App\PaypalAgreement;
 use App\UserCancellationFeedback;
-
+use Braintree_Gateway;
 use Braintree_Configuration;
 use Braintree_Subscription;
 use Braintree_ClientToken;
@@ -136,6 +136,14 @@ class SettingsController extends Controller
             Braintree_Configuration::merchantId('4x5qk4ggmgf9t5vw');
             Braintree_Configuration::publicKey('vtq3w9x62s57p82y');
             Braintree_Configuration::privateKey('c578012b2eb171582133ed0372f3a2ae');
+
+	        $gateway = new Braintree_Gateway([
+		        'environment' => 'production',
+		        'merchantId' => '4x5qk4ggmgf9t5vw',
+		        'publicKey' => 'vtq3w9x62s57p82y',
+		        'privateKey' => 'c578012b2eb171582133ed0372f3a2ae'
+	        ]);
+
             $braintree_id = Auth::user()->braintree_id;
 	        $braintree = BraintreeSubscription::where('braintree_id', $braintree_id)->get();
 //            $braintree = Braintree_Subscription::where('braintree_id', $braintree_id)->get();
@@ -143,7 +151,8 @@ class SettingsController extends Controller
             foreach ($braintree as $braintree_cancel) {
                 $braintree_cancel->status = 'Canceled';
                 $braintree_cancel->save();
-                dump(Braintree_Subscription::cancel($braintree_cancel->subscription_id));
+	            dump($gateway->subscription()->cancel($braintree_cancel->subscription_id));
+//                dump(Braintree_Subscription::cancel($braintree_cancel->subscription_id));
             }
 
         } elseif($user_to_cancel->paypal == 1) {

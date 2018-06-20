@@ -231,7 +231,7 @@ class InteractionLike extends Command
 						continue;
 					}
 
-					if ($ig_profile->next_like_time === NULL) {
+					if ($ig_profile->next_like_time == NULL) {
 						$ig_profile->next_like_time = Carbon::now();
 						$ig_profile->save();
 						$job = new \App\Jobs\InteractionLike(\App\InstagramProfile::find($ig_profile->id));
