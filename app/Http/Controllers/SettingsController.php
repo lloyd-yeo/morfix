@@ -158,7 +158,7 @@ class SettingsController extends Controller
 						dump($gateway->subscription()->cancel($subscription_id));
 					}
 				} catch (\Exception $ex) {
-					dump($ex);
+//					dump($ex);
 				}
 			}
 
