@@ -43,11 +43,11 @@ class SendVerifyProfileEmail extends Command
 	public function handle()
 	{
 		$users = User::where('tier', '>', 1)
+					 ->where('verify_profile_notification_last_sent', '>', Carbon::now()->addHours(2))
 		             ->get();
 
 		foreach ($users as $user) {
 			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)
-			                                      ->where('verify_profile_notification_last_sent', '>', Carbon::now()->addHours(2))
 			                                      ->get();
 			$send_mail          = FALSE;
 
