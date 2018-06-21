@@ -7,6 +7,7 @@ use Mail;
 use Illuminate\Console\Command;
 use App\User;
 use App\InstagramProfile;
+use Carbon\Carbon;
 
 class SendVerifyProfileEmail extends Command
 {
@@ -45,7 +46,9 @@ class SendVerifyProfileEmail extends Command
 		             ->get();
 
 		foreach ($users as $user) {
-			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
+			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)
+			                                      ->where('verify_profile_notification_last_sent', '>', Carbon::now()->addHours(2))
+			                                      ->get();
 			$send_mail          = FALSE;
 
 			foreach ($instagram_profiles as $instagram_profile) {
@@ -55,8 +58,16 @@ class SendVerifyProfileEmail extends Command
 				}
 			}
 
-			if ($send_mail) {
-				Mail::to($user)->send(new VerifyAccount($user));
+			try {
+				if ($send_mail) {
+					Mail::to($user)->send(new VerifyAccount($user));
+					$user->verify_profile_notification_last_sent = Carbon::now();
+				} else {
+					$user->verify_profile_notification_last_sent = NULL;
+				}
+				$user->save();
+			} catch (\Exception $ex) {
+				dump($ex);
 			}
 		}
 	}
