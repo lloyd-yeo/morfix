@@ -37,11 +37,17 @@ class RefreshInteractionsQuota extends Command {
      * @return mixed
      */
     public function handle() {
+
         DB::table('user_insta_profile')
                 ->update(['follow_quota' => 22,
                     'unfollow_quota' => 22,
                     'like_quota' => 30,
                     'comment_quota' => 6]);
+
+        DB::table('user_insta_profile')
+	        ->where('ig_throttled', 1)
+	        ->whereNull('throttled_date')
+	        ->update(['throttled_date', Carbon::now()->addHours(2)]);
 
         DB::table('user_insta_profile')
 	        ->where('throttled_date', '<', Carbon::now())
