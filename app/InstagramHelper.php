@@ -24,13 +24,18 @@ class InstagramHelper extends \InstagramAPI\Request
 	public static function initInstagram($debug = FALSE)
 	{
 		try {
-			$config            = [];
-			$config["storage"] = "redis";
-			$config["redishost"] =  config("database.redis.default.host");
-			$config["redisport"] =  config("database.redis.default.port");
+//			$config            = [];
+//			$config["storage"] = "redis";
+//			$config["redishost"] =  config("database.redis.default.host");
+//			$config["redisport"] =  config("database.redis.default.port");
 
-			Log::info("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host"));
+//			Log::info("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host"));
 //			echo("[INSTAGRAM HELPER INIT] Initializing Instagram API with " . config("database.redis.default.host") . "\n");
+
+			$config                = [];
+			$config["storage"]     = "mysql";
+			$config["pdo"]         = DB::connection()->getPdo();
+			$config["dbtablename"] = "instagram_sessions";
 
 			\InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = TRUE;
 			$truncatedDebug                                             = FALSE;
