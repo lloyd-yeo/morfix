@@ -47,7 +47,7 @@ class RefreshInteractionsQuota extends Command {
         DB::table('user_insta_profile')
 	        ->where('ig_throttled', 1)
 	        ->whereNull('throttled_date')
-	        ->update(['throttled_date', Carbon::now()->addHours(2)]);
+	        ->update(['throttled_date' => Carbon::now()->addHours(2)]);
 
         DB::table('user_insta_profile')
 	        ->where('throttled_date', '<', Carbon::now())
