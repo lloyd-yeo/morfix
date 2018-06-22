@@ -45,8 +45,7 @@ class MigrateNiche extends Command
         DB::table('niche_targets')->delete();
         DB::table('niche_targets_hashtags')->delete();
         
-        $master_niches = DB::connection('mysql_master')
-                        ->table('niches')
+        $master_niches = DB::table('niches')
                         ->get();
         
         foreach ($master_niches as $master_niche) {
@@ -56,8 +55,7 @@ class MigrateNiche extends Command
             $niche->save();
         }
         
-        $master_niches_usernames = DB::connection('mysql_master')
-                        ->table('niche_targets')
+        $master_niches_usernames = DB::table('niche_targets')
                         ->get();
         
         foreach ($master_niches_usernames as $master_niches_username) {
@@ -68,8 +66,7 @@ class MigrateNiche extends Command
             $niches_username->save();
         }
         
-        $master_niches_hashtags = DB::connection('mysql_master')
-                        ->table('niche_targets_hashtags')
+        $master_niches_hashtags = DB::table('niche_targets_hashtags')
                         ->get();
         
         foreach ($master_niches_hashtags as $master_niches_hashtag) {

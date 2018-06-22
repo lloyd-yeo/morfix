@@ -43,8 +43,7 @@ class MigrateCommentLogs extends Command {
             $ig_profiles = InstagramProfile::orderBy('user_id', 'desc')->get();
 
             foreach ($ig_profiles as $ig_profile) {
-                $master_comment_logs = DB::connection('mysql_master')
-                        ->table('user_insta_profile_comment_log')
+                $master_comment_logs = DB::table('user_insta_profile_comment_log')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->where('date_commented', '>', '2017-08-01 00:00:00')
                         ->orderBy('date_commented', 'desc')
@@ -69,8 +68,7 @@ class MigrateCommentLogs extends Command {
         } else {
             $ig_profile = InstagramProfile::where('insta_username', $this->argument('insta_username'))->first();
 
-            $master_comment_logs = DB::connection('mysql_master')
-                    ->table('user_insta_profile_comment_log')
+            $master_comment_logs = DB::table('user_insta_profile_comment_log')
                     ->where('insta_username', $ig_profile->insta_username)
                     ->get();
 
@@ -90,5 +88,4 @@ class MigrateCommentLogs extends Command {
             }
         }
     }
-
 }

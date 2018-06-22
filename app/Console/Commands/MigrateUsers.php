@@ -47,8 +47,7 @@ class MigrateUsers extends Command {
         DB::table('user_insta_target_username')->truncate();
         DB::table('user_insta_target_hashtag')->truncate();
 
-        $master_users = DB::connection('mysql_master')
-                ->table('user')
+        $master_users = DB::table('user')
                 ->where('partition', $this->argument('partition'))
                 ->get();
 
@@ -61,8 +60,7 @@ class MigrateUsers extends Command {
             }
         }
 
-        $master_instagram_profiles = DB::connection('mysql_master')
-                ->table('user_insta_profile')
+        $master_instagram_profiles = DB::table('user_insta_profile')
                 ->whereIn('user_id', $partition_user_ids)
                 ->get();
 
@@ -74,8 +72,7 @@ class MigrateUsers extends Command {
 
                 if ($this->argument('mode') == 'import') {
                     if (IGProfileCookie::where('username', $ig_profile->insta_username)->count() == 0) {
-                        $master_instagram_profile_cookies = DB::connection('mysql_master_igsession')
-                                ->table('instagram_sessions')
+                        $master_instagram_profile_cookies = DB::table('instagram_sessions')
                                 ->where('username', $ig_profile->insta_username)
                                 ->get();
 
@@ -85,8 +82,7 @@ class MigrateUsers extends Command {
                     }
                 }
 
-                $master_user_insta_target_hashtags = DB::connection('mysql_master')
-                        ->table('user_insta_target_hashtag')
+                $master_user_insta_target_hashtags = DB::table('user_insta_target_hashtag')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
 
@@ -94,8 +90,7 @@ class MigrateUsers extends Command {
                     $this->addNewInstagramProfileHashtag($master_user_insta_target_hashtag);
                 }
 
-                $master_user_insta_target_usernames = DB::connection('mysql_master')
-                        ->table('user_insta_target_username')
+                $master_user_insta_target_usernames = DB::table('user_insta_target_username')
                         ->where('insta_username', $ig_profile->insta_username)
                         ->get();
 

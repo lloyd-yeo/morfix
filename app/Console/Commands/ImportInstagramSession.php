@@ -46,12 +46,12 @@ class ImportInstagramSession extends Command {
         $offset = $this->argument('offset');
         $limit = $this->argument('limit');
 
-        $users = DB::connection('mysql_old')->select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
+        $users = DB::select("SELECT * FROM user ORDER BY user_id ASC LIMIT ?,?;", [$offset, $limit]);
 
         foreach ($users as $user) {
             $this->line($user->user_id);
 
-            $instagram_profiles = DB::connection('mysql_old')->select("SELECT id, insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile WHERE user_id = ?;", [$user->user_id]);
+            $instagram_profiles = DB::select("SELECT id, insta_username, insta_pw, proxy, recent_activity_timestamp, insta_new_follower_template, follow_up_message FROM user_insta_profile WHERE user_id = ?;", [$user->user_id]);
 
             foreach ($instagram_profiles as $ig_profile) {
                 $this->line($ig_profile->insta_username . "\t" . $ig_profile->insta_pw);
@@ -74,7 +74,7 @@ class ImportInstagramSession extends Command {
                     $instagram->setProxy($ig_profile->proxy);
                 } else {
                     $proxy = Proxy::where('assigned', '=', 0)->first();
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
+                    $rows_affected = DB::update('update user_insta_profile set proxy = ? where id = ?;', [$proxy->proxy, $ig_profile->id]);
                     $instagram->setProxy($proxy->proxy);
                     $proxy->assigned = 1;
                     $proxy->save();
@@ -85,16 +85,16 @@ class ImportInstagramSession extends Command {
                     $this->line(serialize($instagram->getCurrentUser()));
                 } catch (\InstagramAPI\Exception\CheckpointRequiredException $checkpt_ex) {
                     $this->error($checkpt_ex->getMessage());
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
+                    $rows_affected = DB::update('update user_insta_profile set checkpoint_required = 1 where id = ?;', [$ig_profile->id]);
                 } catch (\InstagramAPI\Exception\IncorrectPasswordException $incorrectpw_ex) {
                     $this->error($incorrectpw_ex->getMessage());
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set incorrect_pw = 1 where id = ?;', [$ig_profile->id]);
+                    $rows_affected = DB::update('update user_insta_profile set incorrect_pw = 1 where id = ?;', [$ig_profile->id]);
                 } catch (\InstagramAPI\Exception\EndpointException $endpoint_ex) {
                     $this->error($endpoint_ex->getMessage());
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                    $rows_affected = DB::update('update user_insta_profile set invalid_user = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 } catch (\InstagramAPI\Exception\AccountDisabledException $acctdisabled_ex) {
                     $this->error($acctdisabled_ex->getMessage());
-                    $rows_affected = DB::connection('mysql_old')->update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
+                    $rows_affected = DB::update('update user_insta_profile set account_disabled = 1, error_msg = ? where id = ?;', [$endpoint_ex->getMessage(), $ig_profile->id]);
                 }
             }
         }

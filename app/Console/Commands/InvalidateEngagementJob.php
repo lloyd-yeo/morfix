@@ -45,10 +45,10 @@ class InvalidateEngagementJob extends Command
      */
     public function handle()
     {
-        $invalid_profiles = DB::connection("mysql_old")->select("SELECT insta_username FROM user_insta_profile WHERE incorrect_pw = 1 OR invalid_user = 1 OR checkpoint_required = 1 LIMIT 1000;");
+        $invalid_profiles = DB::select("SELECT insta_username FROM user_insta_profile WHERE incorrect_pw = 1 OR invalid_user = 1 OR checkpoint_required = 1 LIMIT 1000;");
         foreach ($invalid_profiles as $invalid_profile) {
             $insta_username = $invalid_profile->insta_username;
-            $updated = DB::connection("mysql_old")->update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE insta_username = ?;", [$insta_username]);
+            $updated = DB::update("UPDATE engagement_job_queue SET fulfilled = 2 WHERE insta_username = ?;", [$insta_username]);
         }
     }
 }

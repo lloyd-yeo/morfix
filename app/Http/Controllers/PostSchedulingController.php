@@ -65,8 +65,8 @@ class PostSchedulingController extends Controller {
         }
         
         $default_images = DefaultImageGallery::orderBy('image_id', 'desc')->get();
-        $default_categories = DB::connection('mysql_old')->select("SELECT id, category FROM insta_affiliate.default_image_category;");
-        $user_images = DB::connection('mysql_old')->select("SELECT * FROM insta_affiliate.user_images WHERE email = ?;", [Auth::user()->email]);
+        $default_categories = DB::select("SELECT id, category FROM insta_affiliate.default_image_category;");
+        $user_images = DB::select("SELECT * FROM insta_affiliate.user_images WHERE email = ?;", [Auth::user()->email]);
         $imgs = array();
 
         foreach ($default_categories as $category) { //populate categories first

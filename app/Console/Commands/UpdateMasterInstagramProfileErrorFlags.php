@@ -51,7 +51,7 @@ class UpdateMasterInstagramProfileErrorFlags extends Command
 			$auto_unfollow_ban = $ig_profile->auto_unfollow_ban;
 			$proxy = $ig_profile->proxy;
 
-			DB::connection('mysql_master')->table('user_insta_profile')->where('insta_username', $ig_profile->insta_username)
+			DB::table('user_insta_profile')->where('insta_username', $ig_profile->insta_username)
 				->update([
 					'checkpoint_required' => $checkpoint_required,
 					'account_disabled'    => $account_disabled,

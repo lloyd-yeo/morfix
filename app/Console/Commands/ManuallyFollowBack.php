@@ -62,7 +62,7 @@ class ManuallyFollowBack extends Command {
 
         $config = array();
         $config["storage"] = "mysql";
-        $config["pdo"] = DB::connection('mysql_igsession')->getPdo();
+        $config["pdo"] = DB::connection()->getPdo();
         $config["dbtablename"] = "instagram_sessions";
 
         $debug = false;

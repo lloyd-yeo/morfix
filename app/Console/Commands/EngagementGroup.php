@@ -56,8 +56,7 @@ class EngagementGroup extends Command {
 
             $this->line("UPDATED [$media_id]\n\n");
 
-            $engagement_group_users = DB::connection('mysql_old')
-                    ->select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id, u.user_tier
+            $engagement_group_users = DB::select("SELECT p.insta_username, p.insta_pw, p.proxy, p.auto_like, p.auto_comment, p.id, u.user_tier
                                 FROM user_insta_profile p, user u
                                 WHERE p.user_id = u.user_id
                                 AND p.checkpoint_required = 0
@@ -66,35 +65,27 @@ class EngagementGroup extends Command {
                                 AND p.feedback_required = 0
                                 AND p.invalid_proxy = 0
                                 AND p.account_disabled = 0
-                                AND (
-                                u.user_tier = 1 
-                                OR (u.user_tier > 1 AND p.auto_interaction = 1 AND (p.auto_like = 1 OR p.auto_comment = 1))
-                                ) ORDER BY RAND()");
+                                AND (u.user_tier = 1 OR (u.user_tier > 1 AND p.auto_interaction = 1 AND (p.auto_like = 1 OR p.auto_comment = 1))) 
+                                ORDER BY RAND()");
 
             foreach ($engagement_group_users as $ig_profile) {
                 $ig_username = $ig_profile->insta_username;
                 try {
-
                     $engagement_job = new EngagementJob;
                     $engagement_job->media_id = $media_id;
                     $engagement_job->insta_username = $ig_username;
                     $engagement_job->action = 0;
                     $engagement_job->save();
 
-//                    DB::connection('mysql_old')
-//                            ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 0]);
-
                     if (($ig_profile->auto_comment == 1 && $comment_count > 0) || $ig_profile->user_tier == 1) {
-
                         $engagement_job = new EngagementJob;
                         $engagement_job->media_id = $media_id;
                         $engagement_job->insta_username = $ig_username;
                         $engagement_job->action = 1;
                         $engagement_job->save();
-//                        DB::connection('mysql_old')
-//                                ->insert("INSERT INTO engagement_job_queue (media_id,insta_username,action) VALUES (?,?,?);", [$media_id, $ig_username, 1]);
-                        $comment_count = $comment_count - 1;
+						$comment_count = $comment_count - 1;
                     }
+
                 } catch (\PDOException $pdo_ex) {
                     continue;
                 }

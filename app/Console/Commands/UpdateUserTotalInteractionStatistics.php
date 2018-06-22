@@ -88,7 +88,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
                     . '[Unfollows: ' . $ig_profile->total_comments . ']');
         }
         
-        DB::connection('mysql_master')->table('user_insta_profile')
+        DB::table('user_insta_profile')
                 ->where('id', $ig_profile->id)
                 ->update(['daily_likes' => $ig_profile->daily_likes,
                           'daily_comments' => $ig_profile->daily_comments,
@@ -140,7 +140,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
             $this->info("Saved for profile [" . $ig_profile->insta_username . "]");
         }
         
-        DB::connection('mysql_master')->table('user_insta_profile')
+        DB::table('user_insta_profile')
                 ->where('id', $ig_profile->id)
                 ->update(['daily_likes' => $ig_profile->daily_likes,
                           'daily_comments' => $ig_profile->daily_comments,
@@ -160,7 +160,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
     }
 
     private function initialUpdateOfTotalStats($ig_profile) {
-        $master_total_likes = DB::connection('mysql_master')->table('user_insta_profile_like_log')
+        $master_total_likes = DB::table('user_insta_profile_like_log')
                                 ->where('insta_username', $ig_profile->insta_username)
                                 ->count();
         
@@ -176,7 +176,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
                 ->count();
         $ig_profile->daily_likes = $daily_likes;
         
-        $master_total_comments = DB::connection('mysql_master')->table('user_insta_profile_comment_log')
+        $master_total_comments = DB::table('user_insta_profile_comment_log')
                                 ->where('insta_username', $ig_profile->insta_username)
                                 ->count();
         $total_comments = InstagramProfileCommentLog::where('insta_username', $ig_profile->insta_username)->count();
@@ -188,7 +188,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
                 ->count();
         $ig_profile->daily_comments = $daily_comments;
         
-        $master_total_follows = DB::connection('mysql_master')->table('user_insta_profile_follow_log')
+        $master_total_follows = DB::table('user_insta_profile_follow_log')
                                 ->where('insta_username', $ig_profile->insta_username)
                                 ->where('follow', 1)
                                 ->count();
@@ -203,7 +203,7 @@ class UpdateUserTotalInteractionStatistics extends Command {
                 ->count();
         $ig_profile->daily_follows = $daily_follows;
         
-        $master_total_unfollows = DB::connection('mysql_master')->table('user_insta_profile_follow_log')
+        $master_total_unfollows = DB::table('user_insta_profile_follow_log')
                                 ->where('insta_username', $ig_profile->insta_username)
                                 ->where('unfollowed', 1)
                                 ->count();

@@ -49,8 +49,7 @@ class MigrateDmJob extends Command
                 continue;
             }
             
-            $master_dm_jobs = DB::connection('mysql_master')
-                    ->table('dm_job')
+            $master_dm_jobs = DB::table('dm_job')
                     ->where('insta_username', $instagram_profile->insta_username)
                     ->get();
             

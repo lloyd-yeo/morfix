@@ -54,46 +54,21 @@ class ManualLoginPrevious extends Command {
 			$proxy = $this->argument("proxy");
 			$instagram->setProxy($proxy);
 		} else {
-			//	        $proxy = Proxy::inRandomOrder()->first();
-			//	        $instagram->setProxy($proxy->proxy);
-			//	        $this->line("Not using Proxy.");
 		}
 
 		$this->line($ig_username . " " . $ig_password);
 
 		try {
-			#$explorer_response = $instagram->login($ig_username, $ig_password);
-			//            dd($explorer_response);
 			dump($instagram->login($ig_username, $ig_password));
 			dump($instagram->timeline->getSelfUserFeed());
 		} catch (\InstagramAPI\Exception\ChallengeRequiredException $challenge_required_ex) {
 			$challenge_url = $challenge_required_ex->getResponse()->asArray()["challenge"]["url"];
-//			$add_profile_request->working_on = 2;
-//			$add_profile_request->save();
 			dump($challenge_url);
 		} catch (\InstagramAPI\Exception\EmptyResponseException $emptyresponse_ex) {
 			dump($emptyresponse_ex);
 		} catch (\InstagramAPI\Exception\InstagramException $instagramException) {
 			dump($instagramException);
 		}
-
-		//        $proxies = DB::connection("mysql_old")->select("SELECT proxy, assigned FROM insta_affiliate.proxy ORDER BY RAND();");
-		//        foreach ($proxies as $proxy) {
-		//            $this->line($proxy->proxy);
-		//            $instagram->setProxy($proxy->proxy);
-		//            $explorer_response = $instagram->login($ig_username, $ig_password);
-		//            $this->line(serialize($explorer_response));
-		//
-		//            $ig_profile = InstagramProfile::where('insta_username', $ig_username)->first();
-		//            if ($ig_profile !== NULL) {
-		//                $profile_pics = $instagram->getCurrentUser()->user->hd_profile_pic_versions;
-		//                foreach ($profile_pics as $profile_pic) {
-		//                    $ig_profile->profile_pic_url = $profile_pic->url;
-		//                    $ig_profile->save();
-		//                }
-		//            }
-		//            break;
-		//        }
 	}
 
 }

@@ -36,7 +36,7 @@ class MakeStripeIdActive extends Command {
      * @return mixed
      */
     public function handle() {
-        $stripe_id_rows = DB::connection('mysql_old')->select('SELECT email, stripe_id, COUNT(*) c FROM user_stripe_details GROUP BY email, stripe_id HAVING c = 1 LIMIT 0, 10000');
+        $stripe_id_rows = DB::select('SELECT email, stripe_id, COUNT(*) c FROM user_stripe_details GROUP BY email, stripe_id HAVING c = 1 LIMIT 0, 10000');
         foreach ($stripe_id_rows as $stripe_id_row) {
             
             $email = $stripe_id_row->email;
@@ -45,7 +45,7 @@ class MakeStripeIdActive extends Command {
             $this->line("Retrieved: [$email]");
             
             try {
-                if (DB::connection('mysql_old')->update("UPDATE user SET stripe_id = ? WHERE email = ?", [$stripe_id, $email])) {
+                if (DB::update("UPDATE user SET stripe_id = ? WHERE email = ?", [$stripe_id, $email])) {
                     $this->line("Updated [" . $email . "]");
                 }
             } catch (\Illuminate\Database\QueryException $ex) {

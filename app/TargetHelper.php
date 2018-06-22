@@ -39,8 +39,7 @@ class TargetHelper {
                     continue;
                 }
 
-                $followed_users = DB::connection('mysql_old')
-                        ->select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;", 
+                $followed_users = DB::select("SELECT log_id FROM user_insta_profile_like_log WHERE insta_username = ? AND target_username = ?;",
                                 [$ig_username, $user_to_like->getUsername()]);
 
                 foreach ($followed_users as $followed_user) {
@@ -63,7 +62,7 @@ class TargetHelper {
 
                     echo("\n" . "liked " . serialize($like_response));
 
-                    DB::connection('mysql_old')->insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
+                    DB::insert("INSERT INTO user_insta_profile_like_log (insta_username, target_username, target_media, target_media_code, log) "
                             . "VALUES (?,?,?,?,?);", [$ig_username, $user_to_like->getUsername(), $item->getId(), 
                                 $item->getItemUrl(), serialize($like_response)]);
                     $like_quota--;

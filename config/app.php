@@ -126,6 +126,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Administrator Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Administrator Emails & other app-specific configurations.
+    |
+    */
+
+    'admin_email' => env('ADMIN_EMAIL', 'ywz.lloyd@gmail.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -187,7 +198,6 @@ return [
         Laravel\Horizon\HorizonServiceProvider::class,
 //        Arcanedev\LogViewer\LogViewerServiceProvider::class,
 //        Barryvdh\Debugbar\ServiceProvider::class,
-
     ],
 
     /*

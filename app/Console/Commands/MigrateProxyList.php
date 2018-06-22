@@ -39,8 +39,7 @@ class MigrateProxyList extends Command
      */
     public function handle()
     {
-        $proxies = DB::connection('mysql_master')
-                ->table('proxy')
+        $proxies = DB::table('proxy')
                 ->get();
         
         foreach ($proxies as $proxy) {
