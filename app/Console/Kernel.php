@@ -13,6 +13,14 @@ class Kernel extends ConsoleKernel {
      * @var array
      */
     protected $commands = [
+	    Commands\InteractionLike::class,
+	    Commands\InteractionFollow::class,
+	    Commands\InteractionComment::class,
+	    Commands\GetDm::class,
+	    Commands\SendDmJob::class,
+	    Commands\RefreshInstagramProfile::class,
+	    Commands\SnapshotFollowerAnalysis::class,
+
         Commands\GeoTargetingTester::class,
         Commands\ImportInstagramSession::class,
         Commands\CheckInteractionsWorking::class,
@@ -23,16 +31,9 @@ class Kernel extends ConsoleKernel {
         Commands\UpdatePaypalChargesDaily::class,
         Commands\UpdateLastPaidFromCSV::class,
         Commands\UpdateLastPaidFromCsv2::class,
-        Commands\GetDm::class,
-        Commands\SendDmJob::class,
-        Commands\InteractionComment::class,
-        Commands\InteractionFollow::class,
-        Commands\InteractionLike::class,
         Commands\UnbanInteraction::class,
         Commands\EngagementGroup::class,
         Commands\InvalidateEngagementJob::class,
-        Commands\RefreshInstagramProfile::class,
-        Commands\SnapshotFollowerAnalysis::class,
         Commands\ManualLogin::class,
         Commands\ReplicateSetting::class,
         Commands\ConvertUnicodeEmojiToShortCode::class,
@@ -119,14 +120,24 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
+
+    	//For dispensing auto-interactions jobs.
         $schedule->command('interaction:like')->everyFiveMinutes();
         $schedule->command('interaction:comment')->everyFiveMinutes();
         $schedule->command('interaction:follow')->everyMinute();
+
+        //For dispensing DM jobs.
         $schedule->command('dm:get')->hourly();
         $schedule->command('dm:send')->hourly();
-//        $schedule->command("engagement:add")->hourly();
+
+        //For taking a snapshot of followers for analysis
         $schedule->command("analysis:follower")->daily("00:00");
+
+		//For refreshing instagram profile sessions & stats
         $schedule->command("ig:refresh")->everyThirtyMinutes();
+
+        //For refreshing interactions quota & releasing ig_throttled
+	    $schedule->command("refresh:interactionsquota")->hourly();
     }
 
     /**

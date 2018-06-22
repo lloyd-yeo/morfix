@@ -47,8 +47,7 @@ class SendVerifyProfileEmail extends Command
 		             ->get();
 
 		foreach ($users as $user) {
-			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)
-			                                      ->get();
+			$instagram_profiles = InstagramProfile::where('user_id', $user->user_id)->get();
 			$send_mail          = FALSE;
 
 			foreach ($instagram_profiles as $instagram_profile) {
