@@ -52,20 +52,6 @@ return [
             'strict' => true,
             'engine' => null,
         ],
-        
-        'mysql_master' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST_MASTER', '52.221.60.235'),
-            'port' => env('DB_PORT_MASTER', '3306'),
-            'database' => env('DB_DATABASE_MASTER', 'insta_affiliate'),
-            'username' => env('DB_USERNAME_MASTER', 'root'),
-            'password' => env('DB_PASSWORD_MASTER', 'inst@ffiliates123'),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'strict' => true,
-            'engine' => null,
-        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
