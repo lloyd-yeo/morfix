@@ -8,7 +8,7 @@ use \Braintree_Transaction;
 use \Braintree_Configuration;
 use Carbon\Carbon;
 
-class GetBraintreeTransactions extends Command
+class BraintreeListTransactions extends Command
 {
     /**
      * The name and signature of the console command.

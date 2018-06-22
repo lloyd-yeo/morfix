@@ -6,8 +6,11 @@ use Illuminate\Console\Command;
 use App\StripeCharge;
 use App\StripeInvoice;
 use Stripe\Stripe;
+use Stripe\Charge;
+use Stripe\Invoice;
+use Carbon\Carbon;
 
-class GetAllStripeInvoice extends Command
+class StripeGetAllInvoices extends Command
 {
     /**
      * The name and signature of the console command.
@@ -21,7 +24,7 @@ class GetAllStripeInvoice extends Command
      *
      * @var string
      */
-    protected $description = 'Get & Update all Stripe Invoices';
+    protected $description = 'Get & update all the Stripe Invoices';
 
     /**
      * Create a new command instance.
@@ -40,8 +43,9 @@ class GetAllStripeInvoice extends Command
      */
     public function handle()
     {
-	    \Stripe\Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
-	    $invoices = \Stripe\Invoice::all(array("limit" => 100));
+	    Stripe::setApiKey("sk_live_gnfRoHfQNhreT79YP9b4mIoB");
+
+	    $invoices = Invoice::all(array("limit" => 100));
 	    foreach ($invoices->autoPagingIterator() as $invoice) {
 		    foreach ($invoice->lines->data as $line) {
 			    $subscription_id = $line->plan->id;
@@ -77,7 +81,7 @@ class GetAllStripeInvoice extends Command
 		    }
 	    }
 
-	    $charges = \Stripe\Charge::all(array("limit" => 100));
+	    $charges = Charge::all(array("limit" => 100));
 	    foreach ($charges->autoPagingIterator() as $charge) {
 		    $stripe_charge = StripeCharge::where('stripe_id', $charge->customer)
 		                                 ->where('charge_id', $charge->id)
@@ -93,7 +97,7 @@ class GetAllStripeInvoice extends Command
 		    $stripe_charge->stripe_id = $charge->customer;
 		    $stripe_charge->charge_id = $charge->id;
 		    $stripe_charge->invoice_id = $charge->invoice;
-		    $stripe_charge->charge_created = \Carbon\Carbon::createFromTimestamp($charge->created);
+		    $stripe_charge->charge_created = Carbon::createFromTimestamp($charge->created);
 		    $stripe_charge->failure_code = $charge->failure_code;
 		    $stripe_charge->failure_msg = $charge->failure_message;
 		    $stripe_charge->paid = 0;
@@ -108,6 +112,5 @@ class GetAllStripeInvoice extends Command
 			    dump($stripe_charge);
 		    }
 	    }
-
     }
 }

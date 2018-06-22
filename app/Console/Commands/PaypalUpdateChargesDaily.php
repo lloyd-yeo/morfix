@@ -11,14 +11,14 @@ use App\PaypalAgreement;
 use Carbon\Carbon;
 use App\GetReferralForUser;
 
-class UpdatePaypalChargesDaily extends Command {
+class PaypalUpdateChargesDaily extends Command {
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'update:paypalchargesdaily';
+    protected $signature = 'paypal:updatechargesdaily';
 
     /**
      * The console command description.
@@ -137,7 +137,7 @@ class UpdatePaypalChargesDaily extends Command {
                     $charge->subscription_id = "0297";
                     break;
                 case "0.00":
-                    $charge->subscription_id = "never pay money";
+                    $charge->subscription_id = "UNPAID";
                     break;
             }
         }
@@ -150,7 +150,7 @@ class UpdatePaypalChargesDaily extends Command {
             $charge->referrer_email = $referrers->referrer;
         }
 
-        echo 'new transaction saved: [' . $result->status . '] for [' . $user->email . "]\n";
+        echo 'New transaction saved: [' . $result->status . '] for [' . $user->email . "]\n";
         $charge->save();
     }
 
