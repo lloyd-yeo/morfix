@@ -55,7 +55,7 @@ class Kernel extends ConsoleKernel
 		Commands\ReplicateSetting::class,
 		Commands\ConvertUnicodeEmojiToShortCode::class,
 		Commands\MakeStripeIdActive::class,
-		Commands\GetStripeStatus::class,
+		
 		Commands\RefreshTierStatus::class,
 		Commands\DeleteInvalidImages::class,
 		Commands\SendTestDirectMessage::class,
